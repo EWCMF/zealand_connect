@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  reverseProxy:
+    container_name: reverseProxy
+    hostname: reverseProxy
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./configs/default.conf:/etc/nginx/nginx.conf
+    networks:
+      - cluster
+
+networks:
+  cluster:
