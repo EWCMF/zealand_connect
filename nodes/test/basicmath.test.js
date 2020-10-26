@@ -1,4 +1,5 @@
 var expect=require("chai").expect;
+var assert=require('assert');
 
 describe("BasicMath",function(){
   describe("BasicAdd",function(){
