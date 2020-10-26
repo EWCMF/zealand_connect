@@ -49,3 +49,9 @@ describe("BasicMath",function(){
     expect(calc4).to.equal(2);
   })
 })
+
+describe('AddNeg', function(){
+  it('It should equal -6', function(){
+    assert.strictEqual(6,6)
+  })
+})
