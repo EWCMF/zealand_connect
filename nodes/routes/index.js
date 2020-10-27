@@ -4,7 +4,7 @@ var router=express.Router();
 //mariadb dbconn
 const mariadb=require('mariadb/callback');
 const conn=mariadb.createConnection({
-     host:'127.0.0.1',
+     host:'172.20.0.3',
      user:'root',
      password:'changeMe'
 });
