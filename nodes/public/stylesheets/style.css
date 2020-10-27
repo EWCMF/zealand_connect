@@ -1,8 +1,38 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 13px "Zichtbaar", Arial, Helvetica, sans-serif;
+}
+
+.container-fluid {
+  width: calc(100vw - 180px);
+}
+
+h1 {
+  font-family: "Zealand Display", Arial, Helvetica, sans-serif;
+  font-variant-ligatures: contextual;
+  font-feature-settings: "calt";
+  font-size: 48px;
 }
 
 a {
   color: #00B7FF;
+}
+
+p {
+  color: red;
+}
+
+label {
+  font-size: 14px;
+}
+
+input::placeholder {
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.sidebar {
+  position: fixed;
+  width: 80px;
+  height: 100vh;
+  background-color: #faee84;
 }
