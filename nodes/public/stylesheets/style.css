@@ -6,7 +6,7 @@ body {
   width: calc(100vw - 180px);
 }
 
-h1 {
+h1, .sidebar {
   font-family: "Zealand Display", Arial, Helvetica, sans-serif;
   font-variant-ligatures: contextual;
   font-feature-settings: "calt";
@@ -31,8 +31,18 @@ input::placeholder {
 }
 
 .sidebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
-  width: 80px;
-  height: 100vh;
+  width: 100vh;
+  height: 80px;
+  padding: 0px 10px;
   background-color: #faee84;
+  transform: translate(80px, 0px) rotate(90deg) ;
+  transform-origin: top left;
+  left: 0;
+  top: 0;
+  
 }
+
