@@ -6,3 +6,19 @@ body {
 a {
   color: #00B7FF;
 }
+
+.Profil-CV {
+  font-family: Zichtbaar;
+  border: 3px solid green;
+}
+
+.row {
+  text-align: center;
+}
+
+.Save-CV{
+  text-align: center;
+  background-color: #FFF387;
+  width: 100px;
+  height: 50px;
+}
