@@ -43,3 +43,6 @@ input::placeholder {
   line-height: 36px;
 }
 
+#editor {
+  min-height: 250px;
+}
