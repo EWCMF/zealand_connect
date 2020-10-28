@@ -1,4 +1,4 @@
-# Node.js website development environment sample with docker, tdd and nginx reverse proxy
+# Zealand Connect
 
 NOTE: Hvis du køre node.js uden om docker skal du ændre host/IP i koden til 127.0.0.1, men denne IP må ikke commites. Hvis igennem docker kør disse kommandoer i rækkefølgen de bliver liste mens node.js docker og db docker kør:
 
