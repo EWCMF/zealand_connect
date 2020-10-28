@@ -1,5 +1,5 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Zichtbaar", Helvetica, Arial, sans-serif;
 }
 
 .container-fluid {
@@ -45,4 +45,25 @@ input::placeholder {
 
 #editor {
   min-height: 250px;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.btn-success, .btn-success:hover {
+  background-color: #faee84;
+  color: black;
+  border-color: #faee84;
+}
+
+.btn-danger, .btn-danger:hover {
+  background-color: black;
+  color: #faee84;
+  border-color: black;
+}
+
+.form-group.required > label:after {
+  content:" *";
+  color:red;
 }
