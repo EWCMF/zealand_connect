@@ -1,16 +1,19 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <h1>Indryk praktikopslag</h1>
+            <h1>Indryk annonce</h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-8">
             <form>
                 <div class="form-group">
+                    <label for="">Titel</label>
+                    <input type="text" name="title" id="internshipTitle" class="form-control" placeholder="Titel">
+                </div>
+                <div class="form-group">
                     <label for="email">Email adresse</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Email"
-                        aria-describedby="helpId">
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Email">
                 </div>
                 <div class="form-group">
                     <label for="education">Uddannelse</label>
@@ -22,9 +25,30 @@
                 </div>
                 <div class="form-group">
                     <label for="freetext">Fritekst</label>
-                    <textarea class="form-control" name="freetext" id="applicationFreetext" rows="3"></textarea>
+                    <div id="editor">
+                        <p>Hello World!</p>
+                    </div>
                 </div>
+
             </form>
         </div>
     </div>
 </div>
+<script src="/js/quill.min.js"></script>
+<script>
+    var toolbarOptions = [
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ 'align': [] }],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'color': [] }, { 'background': [] }],
+    ['link', 'image', 'video'],
+    ['clean']
+    ];
+    var editor = new Quill('#editor', {
+        modules: { 
+            toolbar: toolbarOptions
+        },
+        theme: 'snow'
+    });
+</script>
