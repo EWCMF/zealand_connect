@@ -48,6 +48,12 @@ Log ind som devdata (Muligheden for at logge ind som root gennem SSH er nu deakt
 	
 	sudo setsebool -P httpd_can_network_connect 1
 	
+	sudo setsebool -P selinuxuser_mysql_connect_enabled 1
+	
+	sudo setsebool -P mysql_connect_http 1
+	
+	sudo setsebool -P mysql_connect_any 1
+	
 	sudo nano /etc/nginx/nginx.conf
 	
 	 Ændre det mellem server_name og ; til det brugte domæne.
