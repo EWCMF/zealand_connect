@@ -6,3 +6,33 @@ body {
 a {
   color: #00B7FF;
 }
+
+label {
+  font-size: 14px;
+}
+
+input::placeholder {
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.sidebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100vh;
+  height: 80px;
+  padding: 0px 30px;
+  background-color: #faee84;
+  transform: translate(80px, 0px) rotate(90deg) ;
+  transform-origin: top left;
+  left: 0;
+  top: 0;
+  font-size: 36px;
+  line-height: 36px;
+}
+
+#editor {
+  min-height: 250px;
+}
