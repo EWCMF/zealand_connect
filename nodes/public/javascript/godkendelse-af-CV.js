@@ -1,7 +1,8 @@
 
-document.getElementById("submit").onclick = function() {submitButton()};
+document.getElementById("gem").onclick = function() {submitButton()};
 
 function submitButton() {
+    // få alle inputfelter ind i variabler
     let overskrift = document.getElementById("overskrift").value;
     let studieretning = document.getElementById("studieretning").value;
     let email = document.getElementById("email").value;
