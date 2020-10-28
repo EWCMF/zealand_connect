@@ -45,10 +45,10 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         script: |  
           # Stop running container
-          docker stop container
+          docker stop node-container
 
           # Remove old container
-          docker rm container
+          docker rm node-container
           
           # Remove old image
           docker rmi zealandconnect/zealandconnect	
@@ -57,5 +57,5 @@ jobs:
           docker pull zealandconnect/zealandconnect
 
           # Run a new container from a new image
-          docker run -d --restart always --name container -p 8080:3000 zealandconnect/zealandconnect
+          docker run -d --restart always --name node-container --network cluster -p 8080:3000 zealandconnect/zealandconnect
           
