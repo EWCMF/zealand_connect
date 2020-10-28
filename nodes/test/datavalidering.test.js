@@ -19,3 +19,14 @@ describe('email', function() {
     expect(regex.test('test.dk')).to.be.false 
    });
 });
+
+describe('letters only', function(){
+    it ('kun bogstaver', function(){
+    const regex = /^[A-Za-zÆØÅæøå]+$/
+    expect(regex.test('ABCDEFGHIJKLMNOPQWRSTUVXYZÆÆØÅabcdefghijklmnopqwrstuvxyzæøå')).to.be.true
+    });
+    it ('kun bogstaver', function(){
+        const regex = /^[A-Za-zÆØÅæøå]+$/
+        expect(regex.test('ABCDEFGHIJKLMNOPQWRSTUVXYZÆÆØÅabcdefghijklmnopqwrstuvxyzæøå012345678910')).to.be.false
+        });
+})
