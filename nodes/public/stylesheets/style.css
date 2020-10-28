@@ -1,16 +1,6 @@
 body {
-  font-family: 13px "Zichtbaar", Arial, Helvetica, sans-serif;
-}
-
-.container-fluid {
-  width: calc(100vw - 180px);
-}
-
-h1, .sidebar {
-  font-family: "Zealand Display", Arial, Helvetica, sans-serif;
-  font-variant-ligatures: contextual;
-  font-feature-settings: "calt";
-  font-size: 48px;
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
