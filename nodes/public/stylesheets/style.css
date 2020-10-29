@@ -80,3 +80,52 @@ input::placeholder {
   height: 50px;
 }
 
+#loginScreen {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: red;
+  flex-direction: column;
+}
+
+#loginBoxBackground {
+  display: flex;
+  background-color: #f7f7f7;
+  width: 63vw;
+  height: 35vh;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.row1 {
+  background-color: seagreen;
+  height: 50vh;
+  width: 100vw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.row2 {
+  background-color: yellow;
+  height: 50vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+#cookieBox {
+  margin-top: 20px;
+  width: 63vw;
+  height: 26px;
+  background-color: violet;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#zealandLogo {
+  margin-top: 10px;
+}
