@@ -17,14 +17,14 @@ describe('GET /users', function () {
     })
 });
 
-describe('GET /users/Mit-CV', function () {
+describe('GET /mit-CV', function () {
     it('respond with status code OK 200', function(done) {
-        request(app).get('/users/Mit-CV').expect(200, done);
+        request(app).get('/mit-CV').expect(200, done);
     })
 });
 
-describe('POST /users/Mit-CV/submit', function () {
+describe('POST /mit-CV/submit', function () {
     it('respond with status code OK 200', function(done) {
-        request(app).post('/users/Mit-CV/submit').expect(200, done);
+        request(app).post('/mit-CV/submit').expect(200, done);
     })
 });

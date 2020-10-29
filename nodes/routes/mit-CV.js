@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 
 module.exports = router;
 
-router.post('/Mit-CV/submit', function(req, res, next) {
+router.post('/submit', function(req, res, next) {
   let over = req.body.overskrift
   let studie = req.body.studieretning;
   let email = req.body.email;
