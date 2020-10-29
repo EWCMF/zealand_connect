@@ -101,8 +101,9 @@ async function asyncFunction(){
 
 /* GET home page. */
 router.get('/',function(req,res,next){
-  console.log(aDate);
-  res.render('index',{title:'Express',date:aDate});
+//  console.log(aDate);
+//  res.render('index',{title:'Express',date:aDate});
+    res.render('index',{title:'Express'});
 });
 
 module.exports=router;
