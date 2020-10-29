@@ -7,7 +7,6 @@
     "test": "mocha"
   },
   "dependencies": {
-    "bootstrap": "^4.5.3",
     "chai": "~4.2.0",
     "cookie-parser": "~1.4.5",
     "debug": "~4.2.0",
