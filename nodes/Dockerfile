@@ -10,7 +10,8 @@ RUN npm install
 
 COPY . .
 
-RUN npm test
+# Denne virker ikke nødvendig da workflow'et allerede har testet node.js
+#RUN npm test
 
 EXPOSE 3000
 

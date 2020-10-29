@@ -1,9 +1,9 @@
 body {
-  font-family: 13px "Zichtbaar", Arial, Helvetica, sans-serif;
+  font: 14px "Zichtbaar", Helvetica, Arial, sans-serif;
 }
 
 .container-fluid {
-  width: calc(100vw - 180px);
+  width: calc(100% - 180px);
 }
 
 h1, .sidebar {
@@ -17,9 +17,6 @@ a {
   color: #00B7FF;
 }
 
-p {
-  color: red;
-}
 
 label {
   font-size: 14px;
@@ -37,12 +34,49 @@ input::placeholder {
   position: fixed;
   width: 100vh;
   height: 80px;
-  padding: 0px 10px;
+  padding: 0px 30px;
   background-color: #faee84;
   transform: translate(80px, 0px) rotate(90deg) ;
   transform-origin: top left;
   left: 0;
   top: 0;
-  
+  font-size: 36px;
+  line-height: 36px;
+}
+
+#editor {
+  min-height: 250px;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.btn-success, .btn-success:hover {
+  background-color: #faee84;
+  color: black;
+  border-color: #faee84;
+}
+
+.btn-danger, .btn-danger:hover {
+  background-color: black;
+  color: #faee84;
+  border-color: black;
+}
+
+.form-group.required > label:after {
+  content:" *";
+  color:red;
+}
+
+.Profil-CV {
+  font-family: Zichtbaar;
+}
+
+.Save-CV{
+  text-align: center;
+  background-color: #FFF387;
+  width: 100px;
+  height: 50px;
 }
 

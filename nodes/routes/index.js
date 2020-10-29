@@ -1,57 +1,60 @@
 var express=require('express');
 var router=express.Router();
 
+// Tommy har udkommenteret her. Det er fordi alt dette bliver kørt når modulet importeres i app.js
+// Desuden er det også meningen at databasekoden ikke skal laves her, da det skal være clean.
+
 //mariadb dbconn
-const mariadb=require('mariadb/callback');
-const conn=mariadb.createConnection({
-     host:'172.20.0.3',
-     user:'root',
-     password:'changeMe'
-});
+// const mariadb=require('mariadb/callback');
+// const conn=mariadb.createConnection({
+//      host:'172.20.0.3',
+//      user:'root',
+//      password:'changeMe'
+// });
 
-let aDate;
+// let aDate;
 
-conn.connect(err => {
-  if (err) {
-    console.log("DB connection error: " + err);
-  } else {
-    console.log("Connected to DB with connection id: " + conn.threadId);
-  }
-});
+// conn.connect(err => {
+//   if (err) {
+//     console.log("DB connection error: " + err);
+//   } else {
+//     console.log("Connected to DB with connection id: " + conn.threadId);
+//   }
+// });
 
-conn.query("CREATE DATABASE IF NOT EXISTS testDB",(err)=>{
-  if(err){
-    console.log(err);
-  }
-});
+// conn.query("CREATE DATABASE IF NOT EXISTS testDB",(err)=>{
+//   if(err){
+//     console.log(err);
+//   }
+// });
 
-conn.query("USE testDB",(err)=>{
-  if(err){
-    console.log(err);
-  }
-});
+// conn.query("USE testDB",(err)=>{
+//   if(err){
+//     console.log(err);
+//   }
+// });
 
-conn.query("CREATE TABLE IF NOT EXISTS testTable(id INT AUTO_INCREMENT PRIMARY KEY,dt DATETIME)",(err)=>{
-  if(err){
-    console.log(err);
-  }
-});
+// conn.query("CREATE TABLE IF NOT EXISTS testTable(id INT AUTO_INCREMENT PRIMARY KEY,dt DATETIME)",(err)=>{
+//   if(err){
+//     console.log(err);
+//   }
+// });
 
-conn.query("INSERT INTO testTable(dt) VALUES(NOW())",(err)=>{
-  if(err){
-    console.log(err);
-  }
-});
+// conn.query("INSERT INTO testTable(dt) VALUES(NOW())",(err)=>{
+//   if(err){
+//     console.log(err);
+//   }
+// });
 
-conn.query("SELECT * FROM testTable ORDER BY id DESC LIMIT 1",(err,res)=>{
-  if(err){
-    console.log(err);
-  }else{
-    console.log("test");
-    console.log(res[0]);
-    aDate=res[0]["dt"];
-  }
-});
+// conn.query("SELECT * FROM testTable ORDER BY id DESC LIMIT 1",(err,res)=>{
+//   if(err){
+//     console.log(err);
+//   }else{
+//     console.log("test");
+//     console.log(res[0]);
+//     aDate=res[0]["dt"];
+//   }
+// });
 
 //conn.end();
 /*
@@ -98,8 +101,9 @@ async function asyncFunction(){
 
 /* GET home page. */
 router.get('/',function(req,res,next){
-  console.log(aDate);
-  res.render('index',{title:'Express',date:aDate});
+//  console.log(aDate);
+//  res.render('index',{title:'Express',date:aDate});
+    res.render('index',{title:'Express'});
 });
 
 module.exports=router;
