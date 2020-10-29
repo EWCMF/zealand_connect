@@ -16,3 +16,15 @@ describe('GET /users', function () {
         request(app).get('/users').expect(200, done);
     })
 });
+
+describe('GET /users/Mit-CV', function () {
+    it('respond with status code OK 200', function(done) {
+        request(app).get('/users/Mit-CV').expect(200, done);
+    })
+});
+
+describe('POST /users/Mit-CV/submit', function () {
+    it('respond with status code OK 200', function(done) {
+        request(app).post('/users/Mit-CV/submit').expect(200, done);
+    })
+});
