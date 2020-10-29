@@ -1,5 +1,5 @@
-#Node.js version 14.x erstattet med 12 for at synkronisere med github workflow'et.
-FROM node:12
+#Node.js version 14.x
+FROM node:14
 #Create app directory
 WORKDIR /usr/src/app
 
@@ -10,6 +10,7 @@ RUN npm install
 
 COPY . .
 
+# Denne virker ikke nødvendig da workflow'et allerede har testet node.js
 #RUN npm test
 
 EXPOSE 3000
