@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/Mit-CV', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('Mit-CV', {Profil: "Google Sørensen"} )
 });
+
+module.exports = router;
 
 router.post('/Mit-CV/submit', function(req, res, next) {
   let over = req.body.overskrift
