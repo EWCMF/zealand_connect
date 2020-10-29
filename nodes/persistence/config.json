@@ -1,0 +1,8 @@
+{
+    "testDB": {
+        "host": "167.99.248.139",
+        "user": "root",
+        "port": 8000,
+        "pass": "zealand12345"
+    }    
+}

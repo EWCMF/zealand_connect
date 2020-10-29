@@ -55,5 +55,6 @@ function submitButton() {
     // }
     // alert("it works")
 
-    
+
+    // document.forms["cvForm"].submit()
 }
