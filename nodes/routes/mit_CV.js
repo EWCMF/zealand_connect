@@ -1,3 +1,6 @@
+var express = require('express');
+var router = express.Router();
+
 router.get('/Mit-CV', function(req, res, next) {
   res.render('Mit-CV', {Profil: "Google Sørensen"} )
 });
