@@ -22,3 +22,9 @@ describe('GET /users/Mit-CV', function () {
         request(app).get('/users/Mit-CV').expect(200, done);
     })
 });
+
+describe('POST /users/Mit-CV', function () {
+    it('respond with status code OK 200', function(done) {
+        request(app).post('/users/Mit-CV').expect(200, done);
+    })
+});

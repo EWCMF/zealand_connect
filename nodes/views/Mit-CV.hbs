@@ -21,18 +21,18 @@
     <div class="container-fluid">
         <!-- tekst med dit navn og start på form -->
         <p class="text-center">{{Profil}}</p>
-        <form>
+        <form method="POST" action="/users/Mit-CV/submit">
             <!-- Overskrift textarea -->
             <div class="form-group">
                 <label for="exampleFormControlInput1">Overskrift</label>
-                <textarea class="form-control" id="overskrift" rows="2"></textarea>
+                <textarea class="form-control" id="overskrift" name="overskrift" rows="2"></textarea>
             </div>
             <!-- studieretning med dropdown -->
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="exampleFormControlSelect1">Studieretning</label>
-                        <select class="form-control" id="studieretning">
+                        <select class="form-control" id="studieretning" name="studieretning">
                             <option>Datamatiker</option>
                             <option>Handelsøkonom</option>
                             <option>Innovation og entreprenørskab</option>
@@ -42,7 +42,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Email address</label>
-                            <input type="email" class="form-control" placeholder="name@example.com" id="email">
+                            <input type="email" class="form-control" placeholder="name@example.com" id="email" name="email">
                         </div>
                     </div>
                 </div>
@@ -50,40 +50,40 @@
                     <!-- Telefon nummer med inputfelt -->
                     <div class="col-sm-6">
                         <label for="exampleFormControlInput1">Telefon</label>
-                        <input type="number" class="form-control" id="telefon">
+                        <input type="number" class="form-control" id="telefon" name="telefon">
                     </div>
                     <div class="col-sm-6">
                         <!-- hjemmeside med inputfelt -->
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Hjemmeside</label>
-                            <input class="form-control" id="hjemmeside">
+                            <input class="form-control" id="hjemmeside" name="hjemmeside">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <!-- textarea om mig -->
                     <label for="exampleFormControlTextarea1">Om mig</label>
-                    <textarea class="form-control" rows="3" id="om mig"></textarea>
+                    <textarea class="form-control" rows="3" id="om mig" name="om"></textarea>
                 </div>
                 <div class="form-group">
                     <!-- textarea med arbejdserfaring -->
                     <label for="exampleFormControlTextarea1">Arbejdserfaring</label>
                     <textarea class="form-control" rows="3"
-                        id="arbejdserfaring"></textarea>
+                        id="arbejdserfaring" name="arbejdserfaring"></textarea>
                 </div>
                 <div class="form-group">
                     <!-- textarea med uddannelse -->
                     <label for="exampleFormControlTextarea1">Uddannelse</label>
-                    <textarea class="form-control" rows="3" id="uddannelse"></textarea>
+                    <textarea class="form-control" rows="3" id="uddannelse" name="uddannelse"></textarea>
                 </div>
                 <div class="form-group">
                     <!-- textarea med hobby -->
                     <label for="exampleFormControlTextarea1">Hobby</label>
-                    <textarea class="form-control" rows="3" id="hobby"></textarea>
+                    <textarea class="form-control" rows="3" id="hobby" name="hobby"></textarea>
                 </div>
                 <div class="text-center">
                     <!-- Button der sender informationen videre -->
-                    <button type="submit" class="Save-CV" id="gem">Gem</button>
+                    <button type="button" class="Save-CV" id="gem">Gem</button>
                 </div>
             </div>
         </form>
