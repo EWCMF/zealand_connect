@@ -6,7 +6,8 @@
         <!-- Overskrift textarea -->
         <div class="form-group">
             <label for="exampleFormControlInput1">Overskrift</label>
-            <textarea class="form-control" id="overskrift" rows="2"></textarea>
+            <textarea class="form-control" id="overskrift" rows="2" placeholder="Må ikke være tom"></textarea>
+            <p id="OverskriftError" hidden="false">Må ikke være tom</p>
         </div>
         <!-- studieretning med dropdown -->
         <div class="form-group">
@@ -24,6 +25,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Email address</label>
                         <input type="email" class="form-control" placeholder="name@example.com" id="email" name="email">
+                        <p id="emailError" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
                     </div>
                 </div>
             </div>
@@ -31,35 +33,40 @@
                 <!-- Telefon nummer med inputfelt -->
                 <div class="col-sm-6">
                     <label for="exampleFormControlInput1">Telefon</label>
-                    <input type="number" class="form-control" id="telefon" name="telefon">
+                    <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678">
+                    <p id="telefonError" hidden="true">Du skal skrive dit nummer det skal præcist være 8 tal</p>
                 </div>
                 <div class="col-sm-6">
                     <!-- hjemmeside med inputfelt -->
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Hjemmeside</label>
-                        <input class="form-control" id="hjemmeside" name="hjemmeside">
+                        <input class="form-control" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk">
+                        <p id="homepageError" hidden="true">Du skal skrive en hjemmeside i dette felt</p>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">Om mig</label>
-                <textarea class="form-control" rows="3" id="om mig" name="om"></textarea>
+                <textarea class="form-control" rows="3" id="om mig" name="om" placeholder="Må ikke være tom"></textarea>
+                <p id="OmMigError" hidden="false">Må ikke være tom</p>
             </div>
             <div class="form-group">
                 <!-- textarea med arbejdserfaring -->
                 <label for="exampleFormControlTextarea1">Arbejdserfaring</label>
-                <textarea class="form-control" rows="3" id="arbejdserfaring" name="arbejdserfaring"></textarea>
+                <textarea class="form-control" rows="3" id="arbejdserfaring" name="arbejdserfaring" placeholder="Må ikke være tom"></textarea>
+                <p id="ArbejdserfaringError" hidden="true">Må ikke være tom</p>
             </div>
             <div class="form-group">
                 <!-- textarea med uddannelse -->
                 <label for="exampleFormControlTextarea1">Uddannelse</label>
-                <textarea class="form-control" rows="3" id="uddannelse" name="uddannelse"></textarea>
+                <textarea class="form-control" rows="3" id="uddannelse" name="uddannelse" placeholder="Må ikke være tom"></textarea>
+                <p id="UddanelsesError" hidden="true">Må ikke være tom</p>
             </div>
             <div class="form-group">
                 <!-- textarea med hobby -->
                 <label for="exampleFormControlTextarea1">Hobby</label>
-                <textarea class="form-control" rows="3" id="hobby" name="hobby"></textarea>
+                <textarea class="form-control" rows="3" id="hobby" name="hobby" placeholder="Valgfri"></textarea>
             </div>
             <div class="text-center">
                 <!-- Button der sender informationen videre -->
