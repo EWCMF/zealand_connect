@@ -11,19 +11,27 @@ const {
 var sequelize;
 
 function makeSequelizeObject() {
-    sequelize = new Sequelize({
-        host: config.testDB.host,
-        dialect: 'mariadb',
-        /* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */
-        dialectOptions: {
-            timezone: 'Etc/GMT+0'
-        },
-        username: config.testDB.user,
-        password: config.testDB.pass,
-        port: config.testDB.port,
-        database: config.testDB.database,
-        logging: false
-    });
+    if (sequelize == null) {
+        sequelize = new Sequelize({
+            host: config.testDB.host,
+            dialect: 'mariadb',
+            /* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */
+            dialectOptions: {
+                timezone: 'Etc/GMT+0'
+            },
+            username: config.testDB.user,
+            password: config.testDB.pass,
+            port: config.testDB.port,
+            database: config.testDB.database,
+            logging: false,
+            pool: {
+                max: 5,
+                min: 0,
+                acquire: 30000,
+                idle: 5000
+            }
+        });
+    }
 }
 
 function connect() {
@@ -48,7 +56,8 @@ function initCV(CV) {
         om: DataTypes.STRING,
         arbejdserfaring: DataTypes.STRING,
         uddannelse: DataTypes.STRING,
-        hobby: DataTypes.STRING
+        hobby: DataTypes.STRING,
+        offentlig: DataTypes.BOOLEAN
     }, {
         sequelize,
         modelName: 'cv'
@@ -76,10 +85,10 @@ function newCV(database, cvJSON) {
                         om: cvJSON.om,
                         arbejdserfaring: cvJSON.arbejdserfaring,
                         uddannelse: cvJSON.uddannelse,
-                        hobby: cvJSON.uddannelse
+                        hobby: cvJSON.hobby,
+                        offentlig: cvJSON.offentlig
                     });
                     // console.log(cv.toJSON());
-                    sequelize.close()
                     resolve()
                 })();
             });
@@ -90,50 +99,22 @@ function newCV(database, cvJSON) {
     })
 }
 
-// function hentCV(database, id) {
-//     return new Promise((resolve, reject) => {
-//         try {
-//             class CV extends Model {}
-//             initCV(CV);
-
-//             (async () => {
-//                 await sequelize.sync();
-//                 const cv = await CV.findOne()
-
-//             })
-//         } catch(err) {
-//             console.log(err);
-//             reject()
-//         }
-//     })
-// }
-
 async function hentCV(id) {
     connect();
 
     class CV extends Model {}
     initCV(CV);
-    // const cv = await CV.findOne({
-    //     where: {
-    //         id: id
-    //     }
-    // }).then(() => {
-    //     sequelize.close();
-    // });
-    // // console.log(cv);
-    // return cv.toJSON();
 
     return await CV.findOne({
         where: {
             id: id
         }
     }).then((cv) => {
-        sequelize.close();
+        // console.log(cv);
         return cv.toJSON();
     });
-    // console.log(cv);
-    // return cv.toJSON();
 }
+
 
 module.exports = {
     connect,
