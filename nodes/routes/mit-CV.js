@@ -6,7 +6,7 @@ router.get('/', function (req, res, next) {
   seq.hentCV(1).then((json) => {
     // console.log(json);
     res.render('Mit-CV', {
-      Profil: "Google Sørensen",
+      Profil: "Hans Sørensen",
       Overskrift: json.overskrift,
       Studieretning: json.studieretning,
       Email: json.email,
@@ -20,7 +20,8 @@ router.get('/', function (req, res, next) {
     })
   }, () => {
     res.render('Mit-CV', {
-      Profil: "Google Sørensen",
+      Profil: "Hans Sørensen",
+      Offentlig: false,
     })
   });
 });
@@ -59,6 +60,6 @@ router.post('/submit', function (req, res, next) {
     offentlig
   }
 
-  res.send(JSON.stringify(json));
+  res.send("Data er gemt (temp)");
   seq.newCV("test", json);
 });
