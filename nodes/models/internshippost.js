@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     education: DataTypes.INTEGER,
     country: DataTypes.INTEGER,
     region: DataTypes.INTEGER,
-    post_start_date: DataTypes.DATE,
-    post_end_date: DataTypes.DATE,
+    post_start_date: DataTypes.STRING,
+    post_end_date: DataTypes.STRING,
     post_text: DataTypes.TEXT
   }, {
     sequelize,
