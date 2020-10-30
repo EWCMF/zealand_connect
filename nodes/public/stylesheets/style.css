@@ -97,6 +97,7 @@ input::placeholder {
   height: 35vh;
   align-items: flex-start;
   justify-content: center;
+  flex-direction: column;
 }
 
 .row1 {
@@ -128,4 +129,58 @@ input::placeholder {
 
 #zealandLogo {
   margin-top: 10px;
+}
+
+#tempID1 {
+  display:flex;
+  background-color: tomato;
+  width: 63vw;
+  height: 17.5vh;
+  justify-content: center;
+  align-items: flex-start;
+
+}
+
+#tempID2 {
+  display:flex;
+  background-color: magenta;
+  width: 63vw;
+  height: 17.5vh;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Horatio {
+  background-color: teal;
+  height: 8.75vh;
+  width: 400px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Mecurio {
+  background-color: red;
+  height: 8.75vh;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonText {
+  padding: 10px 15px;
+}
+
+.easjLoginKnap {
+background-color:honeydew;
+height: 43.75px;
+width: 368px;
+background-color: #FFF387;
+}
+
+.easjLoginKnap img {
+  width: auto!important;
+  height: 26px;
 }
