@@ -86,7 +86,6 @@ input::placeholder {
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: red;
   flex-direction: column;
 }
 
@@ -121,7 +120,6 @@ input::placeholder {
   margin-top: 20px;
   width: 63vw;
   height: 26px;
-  background-color: violet;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -133,7 +131,7 @@ input::placeholder {
 
 #tempID1 {
   display:flex;
-  background-color: tomato;
+  background-color: #f7f7f7;
   width: 63vw;
   height: 17.5vh;
   justify-content: center;
@@ -143,7 +141,7 @@ input::placeholder {
 
 #tempID2 {
   display:flex;
-  background-color: magenta;
+  background-color: #f7f7f7;
   width: 63vw;
   justify-content: center;
   flex-direction: column;
@@ -151,7 +149,7 @@ input::placeholder {
 }
 
 .Horatio {
-  background-color: teal;
+  background-color: #f7f7f7;
   height: 8.75vh;
   width: 400px;
   display: flex;
@@ -160,7 +158,7 @@ input::placeholder {
 }
 
 .Mecurio {
-  background-color: red;
+  background-color:#f7f7f7;
   width: 400px;
   display: flex;
   justify-content: center;
@@ -169,7 +167,7 @@ input::placeholder {
 }
 
 #easjLoginKnap {
-background-color:honeydew;
+background-color:rgb(255, 255, 255);
 height: 43.75px;
 width: 368px;
 background-color: #FFF387;
