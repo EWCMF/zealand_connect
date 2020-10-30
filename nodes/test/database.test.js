@@ -1,14 +1,14 @@
 const db = require('../persistence/database-connection');
 const seq = require('../persistence/sequelize-tidlig');
 
-describe("Test database connection", function () {
-    it("should connect to mariadb", function (done) {
-        db.connect().then(conn => {
-            conn.end()
-            done();
-        });
-    })
-});
+// describe("Test database connection", function () {
+//     it("should connect to mariadb", function (done) {
+//         db.connect().then(conn => {
+//             conn.end()
+//             done();
+//         });
+//     })
+// });
 
 
 // Denne kan først implementeres når vi kan synkronisere tests
