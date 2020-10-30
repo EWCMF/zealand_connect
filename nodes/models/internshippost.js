@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     education: DataTypes.INTEGER,
     country: DataTypes.INTEGER,
     region: DataTypes.INTEGER,
-    postStartDate: DataTypes.DATE,
-    postEndDate: DataTypes.DATE,
-    postText: DataTypes.TEXT
+    post_start_date: DataTypes.DATE,
+    post_end_date: DataTypes.DATE,
+    post_text: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'InternshipPost',

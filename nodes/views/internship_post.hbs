@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-md-8">
-            <form>
+            <form method="POST">
                 <div class="form-group required">
                     <label for="">Titel</label>
                     <input type="text" name="title" id="internshipTitle" class="form-control" placeholder="Titel" required>
@@ -15,43 +15,43 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="internshipEmail">Email adresse</label>
-                            <input type="email" name="Email" id="internshipEmail" class="form-control"
+                            <input type="email" name="email" id="internshipEmail" class="form-control"
                                 placeholder="Email" required>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="internshipName">Navn på kontaktperson</label>
-                            <input type="text" name="Navn" id="internshipName" class="form-control" placeholder="Navn" required>
+                            <input type="text" name="contact" id="internshipName" class="form-control" placeholder="Navn" required>
                         </div>
                     </div>
                 </div>
                 <div class="form-group required">
                     <label for="education">Uddannelse</label>
                     <select class="form-control" name="education" id="educationSelect" required>
-                        <option>Handelsøkonom</option>
-                        <option>Datamatiker</option>
-                        <option>Bygningskonstruktør</option>
+                        <option value="1" >Handelsøkonom</option>
+                        <option value="2" >Datamatiker</option>
+                        <option value="3" >Bygningskonstruktør</option>
                     </select>
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="countrySelect">Land</label>
-                            <select class="form-control" name="Land" id="countrySelect" required>
-                                <option>Danmark</option>
-                                <option>Tyskland</option>
-                                <option>Sverige</option>
+                            <select class="form-control" name="country" id="countrySelect" required>
+                                <option value="1" >Danmark</option>
+                                <option value="2" >Tyskland</option>
+                                <option value="3" >Sverige</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="regionSelect">Region</label>
-                            <select class="form-control" name="Region" id="regionSelect">
-                                <option>Sjælland</option>
-                                <option>Jylland</option>
-                                <option>Fyn</option>
+                            <select class="form-control" name="region" id="regionSelect">
+                                <option value="1" >Sjælland</option>
+                                <option value="2" >Jylland</option>
+                                <option value="3" >Fyn</option>
                             </select>
                         </div>
                     </div>
@@ -60,26 +60,26 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="">Ansøgningsfrist</label>
-                            <input type="date" class="form-control" name="Ansøgningsfrist" id="internshipEndDate"
+                            <input type="date" class="form-control" name="applicationDeadline" id="internshipEndDate"
                                 placeholder="dd / mm / åååå">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="internshipEmploymentDate">Ansættelsestidspunkt</label>
-                            <input type="date" class="form-control" name="Ansættelsestidspunkt"
+                            <input type="date" class="form-control" name="internshipEmploymentDate"
                                 id="internshipEmploymentDate" placeholder="dd / mm / åååå">
                         </div>
                     </div>
                 </div>
                 <div class="form-group required">
+                    <input type="hidden" name="plainText" id="plainText" />
                     <label for="editor">Fritekst</label>
                     <div id="editor">
-                        <p>Hello World!</p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-success mr-2">Gem</button>
+                    <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
                     <button type="button" class="btn btn-danger">Afbryd</button>
                 </div>
 
@@ -104,4 +104,8 @@
         },
         theme: 'snow'
     });
+
+    function copyQuillHtmlToHiddenInput(){
+        document.getElementById('plainText').value = editor.root.innerHTML;
+    }
 </script>
