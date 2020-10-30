@@ -69,14 +69,7 @@ input::placeholder {
   color:red;
 }
 
-.Profil-CV {
-  font-family: Zichtbaar;
-}
-
-.Save-CV{
-  text-align: center;
-  background-color: #FFF387;
-  width: 100px;
-  height: 50px;
+.CVErrorColor{
+  color: red;
 }
 
