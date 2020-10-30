@@ -113,13 +113,26 @@ async function hentCV(id) {
 
     class CV extends Model {}
     initCV(CV);
-    const cv = await CV.findOne({
+    // const cv = await CV.findOne({
+    //     where: {
+    //         id: id
+    //     }
+    // }).then(() => {
+    //     sequelize.close();
+    // });
+    // // console.log(cv);
+    // return cv.toJSON();
+
+    return await CV.findOne({
         where: {
             id: id
         }
+    }).then((cv) => {
+        sequelize.close();
+        return cv.toJSON();
     });
     // console.log(cv);
-    return cv.toJSON();
+    // return cv.toJSON();
 }
 
 module.exports = {
