@@ -69,6 +69,11 @@ input::placeholder {
   color:red;
 }
 
+.CV-OffentligCheckBox{
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
 .CVErrorColor{
   color: red;
 }

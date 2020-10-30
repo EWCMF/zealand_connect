@@ -12,6 +12,7 @@ function submitButton() {
     let arbejdserfaring = document.getElementById("arbejdserfaring").value;
     let uddannelse = document.getElementById("uddannelse").value;
     let hobby = document.getElementById("hobby").value;
+    let Checkbox = document.getElementById("OffentligCheckBox").checked;
     
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
@@ -66,7 +67,7 @@ function submitButton() {
         document.getElementById("UddanelsesError").hidden = true;
     }
 
-    if (emailWrittenCorrectly && numbersOnly && homepage && !overskrift == "" && !omMig == "" && !arbejdserfaring == "" && !uddannelse == "") {
+    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !omMig == "" && !arbejdserfaring == "" && !uddannelse == "") {
      document.forms["cvForm"].submit()
     }
 }

@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Hjemmeside</label>
                         <input class="form-control" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk">
-                        <p id="homepageError" class="CVErrorColor" hidden="true">Du skal skrive en hjemmeside i dette felt</p>
+                        <p id="homepageError" class="CVErrorColor" hidden="true">Hvis du vil kan du skrive en hjemmeside i dette felt</p>
                     </div>
                 </div>
             </div>
@@ -69,8 +69,15 @@
                 <textarea class="form-control" rows="3" id="hobby" name="hobby" placeholder="Valgfri"></textarea>
             </div>
             <div class="text-center">
+                <!-- CheckBox til om en cv skal være offentlig -->
+                <div class="CV-OffentligCheckBox">
+                <input type="checkbox" class="form-check-input" id="OffentligCheckBox">
+                <label class="form-check-label" for="OffentligCheckBox">Offentlig</label>
+                </div>
                 <!-- Button der sender informationen videre -->
+                <div>
                 <button type="button" class="btn btn-success" id="gem">Gem</button>
+                </div>
             </div>
         </div>
     </form>
