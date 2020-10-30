@@ -51,9 +51,10 @@ describe("Test sequelize read", function () {
 
         seq.newCV("test", testJSON).then(() => {
             seq.hentCV(1).then((obj) => {
-                console.log(obj);
-                done();
+                // console.log(obj);
+                
             });
         });
+        done();
     })
 })
