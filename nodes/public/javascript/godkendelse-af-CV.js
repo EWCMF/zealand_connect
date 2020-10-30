@@ -68,6 +68,6 @@ function submitButton() {
     }
 
     if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !omMig == "" && !arbejdserfaring == "" && !uddannelse == "") {
-     document.forms["cvForm"].submit()
+     document.forms["cvForm"].submit();
     }
 }

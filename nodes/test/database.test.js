@@ -46,15 +46,16 @@ describe("Test sequelize read", function () {
             om: "om",
             arbejdserfaring: "arbejdserfaring",
             uddannelse: "uddannelse",
-            hobby: "hobby"
+            hobby: "hobby",
+            offentlig: true
         }
 
         seq.newCV("test", testJSON).then(() => {
             seq.hentCV(1).then((obj) => {
                 // console.log(obj);
-                
+                done();
             });
         });
-        done();
+        
     })
 })

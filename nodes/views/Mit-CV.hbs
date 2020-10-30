@@ -6,7 +6,8 @@
         <!-- Overskrift textarea -->
         <div class="form-group">
             <label for="exampleFormControlInput1">Overskrift</label>
-            <textarea class="form-control" id="overskrift" rows="2" placeholder="Må ikke være tom"></textarea>
+            <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
+                placeholder="Må ikke være tom">{{Overskrift}}</textarea>
             <p id="OverskriftError" class="CVErrorColor" hidden="false">Må ikke være tom</p>
         </div>
         <!-- studieretning med dropdown -->
@@ -24,8 +25,10 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Email address</label>
-                        <input type="email" class="form-control" placeholder="name@example.com" id="email" name="email">
-                        <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
+                        <input type="email" class="form-control" placeholder="name@example.com" id="email" name="email"
+                            value={{Email}}>
+                        <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst
+                            bruge et @</p>
                     </div>
                 </div>
             </div>
@@ -33,50 +36,59 @@
                 <!-- Telefon nummer med inputfelt -->
                 <div class="col-sm-6">
                     <label for="exampleFormControlInput1">Telefon</label>
-                    <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678">
-                    <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer det skal præcist være 8 tal</p>
+                    <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678"
+                        value={{Telefon}}>
+                    <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer det skal præcist
+                        være 8 tal</p>
                 </div>
                 <div class="col-sm-6">
                     <!-- hjemmeside med inputfelt -->
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Hjemmeside</label>
-                        <input class="form-control" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk">
-                        <p id="homepageError" class="CVErrorColor" hidden="true">Hvis du vil kan du skrive en hjemmeside i dette felt</p>
+                        <input class="form-control" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk"
+                            value={{Hjemmeside}}>
+                        <p id="homepageError" class="CVErrorColor" hidden="true">Hvis du vil kan du skrive en hjemmeside
+                            i dette felt</p>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">Om mig</label>
-                <textarea class="form-control" rows="3" id="om mig" name="om" placeholder="Må ikke være tom"></textarea>
+                <textarea class="form-control" rows="3" id="om mig" name="om"
+                    placeholder="Må ikke være tom">{{Om}}</textarea>
                 <p id="OmMigError" class="CVErrorColor" hidden="false">Må ikke være tom</p>
             </div>
             <div class="form-group">
                 <!-- textarea med arbejdserfaring -->
                 <label for="exampleFormControlTextarea1">Arbejdserfaring</label>
-                <textarea class="form-control" rows="3" id="arbejdserfaring" name="arbejdserfaring" placeholder="Må ikke være tom"></textarea>
+                <textarea class="form-control" rows="3" id="arbejdserfaring" name="arbejdserfaring"
+                    placeholder="Må ikke være tom">{{Arbejdserfaring}}</textarea>
                 <p id="ArbejdserfaringError" class="CVErrorColor" hidden="true">Må ikke være tom</p>
             </div>
             <div class="form-group">
                 <!-- textarea med uddannelse -->
                 <label for="exampleFormControlTextarea1">Uddannelse</label>
-                <textarea class="form-control" rows="3" id="uddannelse" name="uddannelse" placeholder="Må ikke være tom"></textarea>
+                <textarea class="form-control" rows="3" id="uddannelse" name="uddannelse"
+                    placeholder="Må ikke være tom">{{Uddannelse}}</textarea>
                 <p id="UddanelsesError" class="CVErrorColor" hidden="true">Må ikke være tom</p>
             </div>
             <div class="form-group">
                 <!-- textarea med hobby -->
                 <label for="exampleFormControlTextarea1">Hobby</label>
-                <textarea class="form-control" rows="3" id="hobby" name="hobby" placeholder="Valgfri"></textarea>
+                <textarea class="form-control" rows="3" id="hobby" name="hobby"
+                    placeholder="Valgfri">{{Hobby}}</textarea>
             </div>
             <div class="text-center">
                 <!-- CheckBox til om en cv skal være offentlig -->
                 <div class="CV-OffentligCheckBox">
-                <input type="checkbox" class="form-check-input" id="OffentligCheckBox">
-                <label class="form-check-label" for="OffentligCheckBox">Offentlig</label>
+                    <input type="checkbox" class="form-check-input" id="OffentligCheckBox" name="offentligCheckBox"
+                        checked={{Offentlig}}>
+                    <label class="form-check-label" for="OffentligCheckBox">Offentlig</label>
                 </div>
                 <!-- Button der sender informationen videre -->
                 <div>
-                <button type="button" class="btn btn-success" id="gem">Gem</button>
+                    <button type="button" class="btn btn-success" id="gem">Gem</button>
                 </div>
             </div>
         </div>
