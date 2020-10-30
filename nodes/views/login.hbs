@@ -1,3 +1,4 @@
+<script src='/javascript/login.js' defer></script>
 <div id="loginScreen">
         <div id="loginBoxBackground">
             <div id="tempID1">
@@ -5,15 +6,21 @@
             </div>
             <div id="tempID2">
                     <div class="Horatio">
-                        <input type="radio" name="tabset" id="tab1" aria-controls="login" checked="">
+                        <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked" onclick="showEASJButton()">
                         <label class="buttonText">Studerende</label>
-                        <input type="radio" name="tabset" id="tab1" aria-controls="login" checked="">
+                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login" onclick="showVirksomhedLogin()">
                         <label class="buttonText">Virksomhed</label>
                     </div>
                 <div class="Mecurio">
-                    <button class="easjLoginKnap">
+                    <button id="easjLoginKnap">
                         <img src="/images/easj-login-knap.png" alt="EASJ Login">
                     </button>
+                    <div class="form-group" id="loginForm">
+                        <input type="email" id="inputFeltEmail" class="form-control" name="
+                        email" placeholder="Email"><br>
+                        <input type="password" id="inputFeltPassword" class="form-control" 
+                        name="Password" placeholder="Adgangskode"><br>
+                    </div>
                 </div>
             </div>
         </div>

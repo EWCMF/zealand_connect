@@ -145,7 +145,6 @@ input::placeholder {
   display:flex;
   background-color: magenta;
   width: 63vw;
-  height: 17.5vh;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -162,25 +161,41 @@ input::placeholder {
 
 .Mecurio {
   background-color: red;
-  height: 8.75vh;
   width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .buttonText {
-  padding: 10px 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
 }
 
-.easjLoginKnap {
+#easjLoginKnap {
 background-color:honeydew;
 height: 43.75px;
 width: 368px;
 background-color: #FFF387;
 }
 
-.easjLoginKnap img {
+#easjLoginKnap img {
   width: auto!important;
   height: 26px;
+}
+
+#loginForm {
+  display: none;
+}
+
+#loginForm .form-control {
+  width: 339px;
+}
+
+#tab1:active {
+}
+
+#tab2:active {
 }
