@@ -12,6 +12,7 @@ function submitButton() {
     let arbejdserfaring = document.getElementById("arbejdserfaring").value;
     let uddannelse = document.getElementById("uddannelse").value;
     let hobby = document.getElementById("hobby").value;
+    let Checkbox = document.getElementById("OffentligCheckBox").checked;
     
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
@@ -21,40 +22,52 @@ function submitButton() {
     const numbersRegex = /^[0-9]{8}$/;
     var numbersOnly = numbersRegex.test(telefon);
 
-    if (!numbersOnly) {
-        alert("False");
+    const homepageRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
+    var homepage = homepageRegex.test(hjemmeside);
+
+    if (overskrift == "") {
+        document.getElementById("OverskriftError").hidden = false;
+    } else {
+        document.getElementById("OverskriftError").hidden = true;
     }
 
+    if (!emailWrittenCorrectly) {
+        document.getElementById("emailError").hidden = false;
+    } else {
+        document.getElementById("emailError").hidden = true;
+    }
 
-    // if(overskrift != null) {
-    // console.log(overskrift)
-    // }
-    // if(studieretning != null) {
-    // console.log(studieretning)
-    // }
-    // if(email != null) { 
-    // console.log(email)
-    // }
-    // if(telefon != null) { 
-    // console.log(telefon)
-    // }
-    // if(hjemmeside != null) { 
-    // console.log(hjemmeside)
-    // }
-    // if(omMig != null) { 
-    // console.log(omMig)
-    // }
-    // if(arbejdserfaring != null) { 
-    // console.log(arbejdserfaring)
-    // }
-    // if(uddannelse != null) { 
-    // console.log(uddannelse)
-    // }
-    // if(hobby != null) {
-    // console.log(hobby)
-    // }
-    // alert("it works")
+    if (!numbersOnly) {
+        document.getElementById("telefonError").hidden = false;
+    } else {
+        document.getElementById("telefonError").hidden = true;
+    }
 
+    if (!homepage) {
+        document.getElementById("homepageError").hidden = false;
+    } else {
+        document.getElementById("homepageError").hidden = true;
+    }
 
-    // document.forms["cvForm"].submit()
+    if (omMig == "") {
+        document.getElementById("OmMigError").hidden = false;
+    } else {
+        document.getElementById("OmMigError").hidden = true;
+    }
+
+    if (arbejdserfaring == "") {
+        document.getElementById("ArbejdserfaringError").hidden = false;
+    } else {
+        document.getElementById("ArbejdserfaringError").hidden = true;
+    }
+
+    if (uddannelse == "") {
+        document.getElementById("UddanelsesError").hidden = false;
+    } else {
+        document.getElementById("UddanelsesError").hidden = true;
+    }
+
+    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !omMig == "" && !arbejdserfaring == "" && !uddannelse == "") {
+     document.forms["cvForm"].submit();
+    }
 }
