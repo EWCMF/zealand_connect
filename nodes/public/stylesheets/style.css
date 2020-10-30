@@ -78,3 +78,145 @@ input::placeholder {
   color: red;
 }
 
+#loginScreen {
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+}
+
+#loginBoxBackground {
+  margin-top: 16vh;
+  display: flex;
+  background-color: #f7f7f7;
+  width: 63vw;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* .row1 {
+  background-color: seagreen;
+  height: 50vh;
+  width: 100vw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.row2 {
+  background-color: yellow;
+  height: 50vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+} */
+
+#cookieBox {
+  margin-top: 20px;
+  width: 63vw;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#zealandLogo {
+  margin-top: 15px;
+}
+
+#tempID1 {
+  display:flex;
+  background-color: #f7f7f7;
+  width: 63vw;
+  height: 17.5vh;
+  justify-content: center;
+  align-items: flex-start;
+
+}
+
+#tempID2 {
+  display:flex;
+  background-color: #f7f7f7;
+  width: 63vw;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Horatio {
+  background-color: #f7f7f7;
+  height: 8.75vh;
+  width: 400px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.Mecurio {
+  background-color:#f7f7f7;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#easjLoginKnap {
+background-color:rgb(255, 255, 255);
+height: 43.75px;
+width: 368px;
+background-color: #FFF387;
+}
+
+#easjLoginKnap img {
+  width: auto!important;
+  height: 26px;
+}
+
+#loginForm {
+  display: none;
+}
+
+#loginForm .form-control {
+  width: 339px;
+}
+
+#tab1:active {
+}
+
+#tab2:active {
+}
+
+.Horatio .radioButton {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+}
+
+.buttonText {
+  margin-top: 5px;
+  margin-left: 5px;
+} 
+
+.gulKnap {
+  width: 100%;
+  height: 39px;
+  border: transparent;
+  background-color: #FFF387;
+}
+
+#questionMarkButton {
+  border: none;
+  background-color: transparent;
+  width: 15px;
+  padding: 0;
+  margin-left: 5px;
+}
+
+#questionMarkButton img {
+  width: 100%;
+  height: auto;
+}
