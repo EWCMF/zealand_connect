@@ -97,23 +97,6 @@ input::placeholder {
   flex-direction: column;
 }
 
-/* .row1 {
-  background-color: seagreen;
-  height: 50vh;
-  width: 100vw;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.row2 {
-  background-color: yellow;
-  height: 50vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-} */
-
 #cookieBox {
   margin-top: 20px;
   width: 63vw;
@@ -169,6 +152,8 @@ background-color:rgb(255, 255, 255);
 height: 43.75px;
 width: 368px;
 background-color: #FFF387;
+margin-bottom: 16px;
+border: transparent;
 }
 
 #easjLoginKnap img {
