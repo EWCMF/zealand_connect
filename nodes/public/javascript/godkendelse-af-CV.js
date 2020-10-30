@@ -66,7 +66,7 @@ function submitButton() {
         document.getElementById("UddanelsesError").hidden = true;
     }
 
-    if (emailWrittenCorrectly && numbersOnly && homepage && !overskrift == "" && !omMig == "" && !arbejdserfaring == "" && !uddannelse == "") {
+    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !omMig == "" && !arbejdserfaring == "" && !uddannelse == "") {
      document.forms["cvForm"].submit()
     }
 }
