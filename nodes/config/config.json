@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": "changeMe",
+    "database": "ZealandConnect",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "dialect": "mariadb"
+  },
+  "test": {
+    "username": "root",
+    "password": "changeMe",
+    "database": "ZealandConnect",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "dialect": "mariadb"
+  },
+  "production": {
+    "username": "root",
+    "password": "changeMe",
+    "database": "ZealandConnect",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "dialect": "mariadb"
+  }
+}
