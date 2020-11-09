@@ -49,6 +49,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/delete', function (req, res, next) {
+  db.InternshipPost.destroy({
+    where:{id:req.query.id}
+  })
   res.render('internship_update', { title: 'Express' });
 });
 
