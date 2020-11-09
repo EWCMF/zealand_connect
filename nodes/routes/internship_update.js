@@ -33,7 +33,8 @@ router.post('/', function (req, res, next) {
     id: id
   }, /*dette skal være her for at felterne i databasen bliver opdateret*/returning: true, plain: true });
   res.render('internship_update', { title: 'Express' });
-
+  // TODO: lav delete
+ 
 });
 
 /* GET home page. */
