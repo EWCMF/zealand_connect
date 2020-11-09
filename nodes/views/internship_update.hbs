@@ -81,6 +81,7 @@
                 <div class="form-group">
                     <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
                     <button type="button" class="btn btn-danger">Afbryd</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmYeet()">Slet dette opslag</button>
                 </div>
 
             </form>
@@ -118,5 +119,12 @@
         document.getElementById('regionSelect').value = rregion;
     }
     setDefaultSelect(); 
+
+    function confirmYeet(){
+        if (confirm("Er du sikker?")){
+            window.location="/internship_update/delete?id="+{{rid}}
+
+        }
+    }
     
 </script>

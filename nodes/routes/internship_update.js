@@ -33,7 +33,7 @@ router.post('/', function (req, res, next) {
     id: id
   }, /*dette skal være her for at felterne i databasen bliver opdateret*/returning: true, plain: true });
   res.render('internship_update', { title: 'Express' });
-  // TODO: lav delete
+  
  
 });
 
@@ -46,6 +46,10 @@ router.get('/', function (req, res, next) {
     res.render('internship_update', { title: 'Express',rid: req.query.id, rtitle: result['title'], remail: result['email'], rcontact: result['contact'], reducation: result['education'], rcountry: result['country'], rregion: result['region'], rpoststart/*start date*/: result['post_start_date'], rpostend:/*end date*/ result['post_end_date'], rtext/*post_text*/:result['post_text'] });
   }).catch()
   //findOne({where:{id: req.query.id}})
+});
+
+router.get('/delete', function (req, res, next) {
+  res.render('internship_update', { title: 'Express' });
 });
 
 module.exports = router;
