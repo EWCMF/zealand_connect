@@ -1,0 +1,122 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>Indryk opslag</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <form method="POST">
+                <input type="hidden" value="{{rid}}" name="id">
+                <div class="form-group required">
+                    <label for="">Titel</label>
+                    <input type="text" value="{{rtitle}}" name="title" id="internshipTitle" class="form-control" placeholder="Titel" required>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="internshipEmail">Email adresse</label>
+                            <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
+                                placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="internshipName">Navn på kontaktperson</label>
+                            <input type="text" value="{{rcontact}}" name="contact" id="internshipName" class="form-control" placeholder="Navn" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="education">Uddannelse</label>
+                    <select class="form-control" name="education" id="educationSelect" required>
+                        <option value="1" >Handelsøkonom</option>
+                        <option value="2" >Datamatiker</option>
+                        <option value="3" >Bygningskonstruktør</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="countrySelect">Land</label>
+                            <select class="form-control" name="country" id="countrySelect" required>
+                                <option value="1" >Danmark</option>
+                                <option value="2" >Tyskland</option>
+                                <option value="3" >Sverige</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="regionSelect">Region</label>
+                            <select class="form-control" name="region" id="regionSelect">
+                                <option value="1" >Sjælland</option>
+                                <option value="2" >Jylland</option>
+                                <option value="3" >Fyn</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="post_start_date">Ansøgningsfrist</label>
+                            <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date" id="applicationDeadline"
+                                placeholder="dd / mm / åååå">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="post_end_date">Ansættelsestidspunkt</label>
+                            <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
+                                id="internshipEmploymentDate" placeholder="dd / mm / åååå">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <input type="hidden" name="post_text" id="plainText" />
+                    <label for="editor">Fritekst</label>
+                    <div id="editor">{{{rtext}}}</div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
+                    <button type="button" class="btn btn-danger">Afbryd</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/quill.min.js"></script>
+<script>
+    var toolbarOptions = [
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'align': [] }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'color': [] }, { 'background': [] }],
+        ['link', 'image', 'video'],
+        ['clean']
+    ];
+    var editor = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow'
+    });
+
+    function copyQuillHtmlToHiddenInput(){
+        document.getElementById('plainText').value = editor.root.innerHTML;
+    }
+    function setDefaultSelect(){
+        var reducation = {{reducation}};
+        var rcountry = {{rcountry}};
+        var rregion = {{rregion}};
+
+        document.getElementById('educationSelect').value = reducation;
+        document.getElementById('countrySelect').value = rcountry;
+        document.getElementById('regionSelect').value = rregion;
+    }
+    setDefaultSelect(); 
+    
+</script>

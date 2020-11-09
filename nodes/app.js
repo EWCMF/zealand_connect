@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var internshipPostRouter = require('./routes/internship_post');
+var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
 var loginRouter = require('./routes/login');
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/internship_post', internshipPostRouter);
+app.use('/internship_update', internshipUpdateRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/login', loginRouter);
 
