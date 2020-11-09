@@ -13,8 +13,7 @@ body {
 }
 
 .container-fluid {
-  width: calc(100% - 80px);
-  margin-left: 80px;
+  width: 100%;
 }
 
 h1, .sidebar {
@@ -114,21 +113,18 @@ input::placeholder {
 
 #loginContent {
   display:flex;
-  background-color: #f7f7f7;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
 }
 
 .radioBtnBox {
-  background-color: #f7f7f7;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
 .loginBtnBox {
-  background-color:#f7f7f7;
   margin-top: 15px;
   display: flex;
   justify-content: center;
@@ -205,6 +201,11 @@ input::placeholder {
 @media (min-width: 768px) {
   .sidebar {
     display: flex;
+  }
+
+  .container-fluid {
+    width: calc(100% - 80px);
+    margin-left: 80px;
   }
 }
 
