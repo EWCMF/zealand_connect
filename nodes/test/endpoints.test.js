@@ -28,3 +28,9 @@ describe('POST /mit-CV/submit', function () {
         request(app).post('/mit-CV/submit').expect(200, done);
     })
 });
+
+describe('GET /login', function () {
+    it('respond with status code OK 200', function(done) {
+        request(app).get('/login').expect(200, done);
+    })
+});
