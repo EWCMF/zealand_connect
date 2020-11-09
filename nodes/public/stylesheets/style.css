@@ -102,7 +102,7 @@ input::placeholder {
   margin-bottom: 35px;
 }
 
-#tempID1 {
+#loginContent {
   display:flex;
   background-color: #f7f7f7;
   justify-content: center;
@@ -110,14 +110,14 @@ input::placeholder {
   flex-direction: column;
 }
 
-.Horatio {
+.radioBtnBox {
   background-color: #f7f7f7;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
-.Mecurio {
+.loginBtnBox {
   background-color:#f7f7f7;
   margin-top: 15px;
   display: flex;
@@ -154,7 +154,7 @@ border: transparent;
 #tab2:active {
 }
 
-.Horatio .radioButton {
+.radioBtnBox .radioButton {
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 15px;
