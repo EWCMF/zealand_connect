@@ -1,3 +1,13 @@
+/*
+ OBS: Vi har nu 4 forskellige skærmstørrelser så du skal
+ sikre dig, at du skriver dine css regler ind i den
+ rigtige media query.
+
+ Extra small devices (portrait phones, less than 576px)
+ No media query since this is the default in Bootstrap
+ */
+
+
 body {
   font: 14px "Zichtbaar", Helvetica, Arial, sans-serif;
 }
@@ -29,7 +39,7 @@ input::placeholder {
 }
 
 .sidebar {
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
   position: fixed;
@@ -127,12 +137,12 @@ input::placeholder {
 }
 
 #easjLoginKnap {
-background-color:rgb(255, 255, 255);
-height: 43.75px;
-width: 320px;
-background-color: #FFF387;
-margin-bottom: 16px;
-border: transparent;
+  background-color:rgb(255, 255, 255);
+  height: 43.75px;
+  width: 320px;
+  background-color: #FFF387;
+  margin-bottom: 16px;
+  border: transparent;
 }
 
 #easjLoginKnap img {
@@ -184,4 +194,26 @@ border: transparent;
 #questionMarkButton img {
   width: 100%;
   height: auto;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .sidebar {
+    display: flex;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
 }
