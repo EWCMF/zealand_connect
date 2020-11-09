@@ -59,3 +59,5 @@ jobs:
           # Run a new container from a new image
           docker run -d --restart always --name node-container --network cluster -p 8080:3000 zealandconnect/zealandconnect
           
+          # Tigger DB updates if there are any.
+          docker exec -it node-container npx sequelize-cli db:migrate --env production
