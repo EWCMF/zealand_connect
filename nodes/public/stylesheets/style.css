@@ -89,10 +89,8 @@ input::placeholder {
 }
 
 #loginBoxBackground {
-  padding: 15px;
   margin-top: 150px;
   display: flex;
-  background-color: #f7f7f7;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -116,6 +114,9 @@ input::placeholder {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  padding: 30px 300px 30px 300px;
+  background-color: #f7f7f7;
+  min-width: 339px;
 }
 
 .radioBtnBox {
@@ -130,6 +131,7 @@ input::placeholder {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  min-width: 339px;
 }
 
 #easjLoginKnap {
@@ -206,6 +208,10 @@ input::placeholder {
   .container-fluid {
     width: calc(100% - 80px);
     margin-left: 80px;
+  }
+
+  #loginBoxBackground {
+    margin-top: 100px;
   }
 }
 
