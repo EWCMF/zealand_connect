@@ -15,7 +15,7 @@ COPY . .
 
 EXPOSE 3000
 
-npx sequelize-cli db:migrate
+#npx sequelize-cli db:migrate
 
 #Last command.
 CMD ["npm","start"]
