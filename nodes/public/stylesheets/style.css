@@ -79,28 +79,18 @@ input::placeholder {
   color: red;
 }
 
-#loginScreen {
-  display:flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  flex-direction: column;
-}
-
 #loginBoxBackground {
-  margin-top: 16vh;
+  padding: 15px;
+  margin-top: 150px;
   display: flex;
   background-color: #f7f7f7;
-  width: 63vw;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 
 #cookieBox {
   margin-top: 20px;
-  width: 63vw;
   height: 26px;
   display: flex;
   justify-content: center;
@@ -109,31 +99,19 @@ input::placeholder {
 
 #zealandLogo {
   margin-top: 15px;
+  margin-bottom: 35px;
 }
 
 #tempID1 {
   display:flex;
   background-color: #f7f7f7;
-  width: 63vw;
-  height: 17.5vh;
   justify-content: center;
   align-items: flex-start;
-
-}
-
-#tempID2 {
-  display:flex;
-  background-color: #f7f7f7;
-  width: 63vw;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
 }
 
 .Horatio {
   background-color: #f7f7f7;
-  height: 8.75vh;
-  width: 400px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -141,7 +119,7 @@ input::placeholder {
 
 .Mecurio {
   background-color:#f7f7f7;
-  width: 400px;
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -151,7 +129,7 @@ input::placeholder {
 #easjLoginKnap {
 background-color:rgb(255, 255, 255);
 height: 43.75px;
-width: 368px;
+width: 320px;
 background-color: #FFF387;
 margin-bottom: 16px;
 border: transparent;
@@ -192,6 +170,7 @@ border: transparent;
   height: 39px;
   border: transparent;
   background-color: #FFF387;
+  margin-top: 10px;
 }
 
 #questionMarkButton {
@@ -205,14 +184,4 @@ border: transparent;
 #questionMarkButton img {
   width: 100%;
   height: auto;
-}
-
-.col-8, .col-12, .col-sm-12 {
-  background-color: pink;
-  border: red;
-  margin: 0;
-}
-
-.container {
-  padding: 0;
 }
