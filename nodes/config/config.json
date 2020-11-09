@@ -17,9 +17,9 @@
   },
   "production": {
     "username": "root",
-    "password": "changeMe",
+    "password": "zealand12345",
     "database": "ZealandConnect",
-    "host": "127.0.0.1",
+    "host": "172.18.0.3",
     "port": "3306",
     "dialect": "mariadb"
   }
