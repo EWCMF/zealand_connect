@@ -3,7 +3,8 @@ body {
 }
 
 .container-fluid {
-  width: calc(100% - 180px);
+  width: calc(100% - 80px);
+  margin-left: 80px;
 }
 
 h1, .sidebar {
@@ -184,7 +185,7 @@ border: transparent;
 .buttonText {
   margin-top: 5px;
   margin-left: 5px;
-} 
+}
 
 .gulKnap {
   width: 100%;
@@ -204,4 +205,14 @@ border: transparent;
 #questionMarkButton img {
   width: 100%;
   height: auto;
+}
+
+.col-8, .col-12, .col-sm-12 {
+  background-color: pink;
+  border: red;
+  margin: 0;
+}
+
+.container {
+  padding: 0;
 }

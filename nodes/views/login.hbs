@@ -1,40 +1,48 @@
 <script src='/javascript/login.js' defer></script>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8">col-8 col-sm-12</div>
+    </div>
+</div>
+
 <div id="loginScreen">
-        <div id="loginBoxBackground">
-            <div id="tempID1">
-                <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
+    <div id="loginBoxBackground">
+        <div id="tempID1">
+            <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
+        </div>
+        <div id="tempID2">
+            <div class="Horatio">
+                <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked"
+                       onclick="showEASJButton()">
+                <label class="buttonText">Studerende</label>
+                <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
+                       onclick="showVirksomhedLogin()">
+                <label class="buttonText">Virksomhed</label>
             </div>
-            <div id="tempID2">
-                    <div class="Horatio">
-                        <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked" onclick="showEASJButton()">
-                        <label class="buttonText">Studerende</label>
-                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login" onclick="showVirksomhedLogin()">
-                        <label class="buttonText">Virksomhed</label>
-                    </div>
-                <div class="Mecurio">
-                    <button id="easjLoginKnap">
-                        <img src="/images/easj-login-knap.png" alt="EASJ Login">
-                    </button>
-                    <div class="form-group" id="loginForm">
-                        <input type="email" id="inputFeltEmail" class="form-control" name="
+            <div class="Mecurio">
+                <button id="easjLoginKnap">
+                    <img src="/images/easj-login-knap.png" alt="EASJ Login">
+                </button>
+                <div class="form-group" id="loginForm">
+                    <input type="email" id="inputFeltEmail" class="form-control" name="
                         email" placeholder="Email"><br>
-                        <input type="password" id="inputFeltPassword" class="form-control" 
-                        name="Password" placeholder="Adgangskode"><br>
-                        <input type="checkbox" value="name" id="huskEmailCheckbox">
-                        <label for="huskEmailCheckbox">Husk email </label>
-                        <button class="gulKnap"> Login </button>
-                    </div>
+                    <input type="password" id="inputFeltPassword" class="form-control"
+                           name="Password" placeholder="Adgangskode"><br>
+                    <input type="checkbox" value="name" id="huskEmailCheckbox">
+                    <label for="huskEmailCheckbox">Husk email </label>
+                    <button class="gulKnap"> Login</button>
                 </div>
             </div>
         </div>
- 
+    </div>
 
 
-        <div id="cookieBox">
-            <div id="cookieText">
-                Cookies skal være aktiveret i din browser
-                <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
-            </div>
+    <div id="cookieBox">
+        <div id="cookieText">
+            Cookies skal være aktiveret i din browser
+            <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
         </div>
+    </div>
 
 </div>
