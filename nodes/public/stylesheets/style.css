@@ -3,7 +3,8 @@ body {
 }
 
 .container-fluid {
-  width: calc(100% - 180px);
+  width: calc(100% - 80px);
+  margin-left: 80px;
 }
 
 h1, .sidebar {
@@ -219,4 +220,17 @@ background-color: #FFF387;
 #questionMarkButton img {
   width: 100%;
   height: auto;
+}
+
+#cvOverskrift {
+  padding-top: 16px;
+}
+
+#cvCard {
+  margin-bottom: 16px;
+}
+
+.center-cropped {
+  width: 180px;
+  height: 180px;
 }
