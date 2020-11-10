@@ -198,10 +198,6 @@ input::placeholder {
   padding-top: 16px;
 }
 
-#cvCard {
-  margin-bottom: 16px;
-}
-
 .center-cropped {
   width: 180px;
   height: 180px;
@@ -237,3 +233,5 @@ input::placeholder {
 @media (min-width: 1200px) {
 
 }
+
+
