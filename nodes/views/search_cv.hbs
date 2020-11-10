@@ -1,4 +1,3 @@
-<script src='/javascript/search-cv.js' defer></script>
 <div class="container-fluid">
     <div class="row">
         <div class="col">
@@ -6,9 +5,74 @@
             <hr>
         </div>
     </div>
-    <div class="row">
-        <div class="col-2">
-            <form>
+    <div class="row m-1">
+        <div class="col-2 border rounded h-100">
+            <form class="mt-3 mb-3">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h6 class="panel-title mb-2">
+                                <a class="text-decoration-none text-muted" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                Uddannelser
+                                </a>
+                            </h6>
+                        </div>
+                        
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Datamatiker
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                               <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Handelsøkonom
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Finansøkonom
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        International Handel og markedsføring
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Innovation og Entrepreneurship
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        BygningsKontruktør
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Byggetekniker
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Installatør, stærkstrøm
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">
@@ -16,16 +80,36 @@
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
                     <label class="form-check-label" for="defaultCheck2">
                         Disabled checkbox
                     </label>
-                </div>
+                </div> 
+                -->
             </form>
         </div>
         <div class="col">
+            <div class="mb-2 d-flex flex-row">
+                <label class="mb-0 flex-fill align-self-center">
+                    {{resultater}} resultater
+                </label>
+                <label class="mb-0 mr-1 align-self-center">
+                    sortering:     
+                </label>
+                <!--<div class="btn-group">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Action
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+                -->
+            </div>
             {{#each json}}
-            <div class="card" id="cvCard">
+            <div class="card mb-3">
                 <div class="row">
                     <div class="col-auto">
                         <img class="center-cropped"
@@ -36,10 +120,12 @@
                             <h5 class="card-title">{{overskrift}}</h5>
                             <h6 class="card-title">{{underoverskrift}}</h5>
                                 <p class="card-text">{{info}}</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                                
                         </div>
                     </div>
                 </div>
+                <a href="#" class="stretched-link"></a>
             </div>
             {{/each}}
         </div>
