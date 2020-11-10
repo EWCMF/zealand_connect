@@ -9,10 +9,10 @@
                     <div class="radioBtnBox">
                         <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked"
                                onclick="showEASJButton()">
-                        <label class="buttonText">Studerende</label>
+                        <label class="buttonText" data-key="studerende">Studerende</label>
                         <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
                                onclick="showVirksomhedLogin()">
-                        <label class="buttonText">Virksomhed</label>
+                        <label class="buttonText" data-key="virksomhed">Virksomhed</label>
                     </div>
                     <div class="loginBtnBox">
                         <button id="easjLoginKnap">
@@ -22,9 +22,9 @@
                             <input type="email" id="inputFeltEmail" class="form-control" name="
                         email" placeholder="Email"><br>
                             <input type="password" id="inputFeltPassword" class="form-control"
-                                   name="Password" placeholder="Adgangskode"><br>
+                                   name="Password" placeholder="Adgangskode" data-key="adgangskode"><br>
                             <input type="checkbox" value="name" id="huskEmailCheckbox">
-                            <label for="huskEmailCheckbox">Husk email </label>
+                            <label for="huskEmailCheckbox" data-key="husk-email">Husk email </label>
                             <button class="gulKnap"> Login</button>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
             </div>
 
             <div id="cookieBox">
-                <div id="cookieText">
+                <div id="cookieText" data-key="cookie">
                     Cookies skal være aktiveret i din browser
                     <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
                 </div>
@@ -42,3 +42,19 @@
 </div>
 
 
+<script>
+    let langdata {
+        "languages": {
+            "en":{
+                "strings": {
+                    "studerende": "Students",
+                    "virksomhed": "Business",
+                    "adgangskode": "Password",
+                    "gentagAdgangskode": "Repeat Password",
+                    "husk-email": "Remember Email",
+                    "cookie": "Cookies must be enabled in your browser"
+                }
+            }
+        }
+    }
+</script>
