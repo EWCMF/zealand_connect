@@ -143,6 +143,7 @@ input::placeholder {
   border: transparent;
 }
 
+
 #easjLoginKnap img {
   width: auto!important;
   height: 26px;
@@ -153,6 +154,18 @@ input::placeholder {
 }
 
 #loginForm .form-control {
+  width: 339px;
+}
+#virksomhedOpret {
+  display: none;
+}
+#virksomhedOpret .form-control {
+  width: 339px;
+}
+#studerendeOpret {
+  display: block;
+}
+#studerendeOpret .form-control {
   width: 339px;
 }
 

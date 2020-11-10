@@ -1,8 +1,8 @@
-function showVirksomhedButton() {
-    document.getElementById('studerendeKnap').style.display = 'none';
-    document.getElementById('opretFrom').style.display = 'block';
+function showVirksomhedLogin() {
+    document.getElementById('studerendeOpret').style.display = 'none';
+    document.getElementById('virksomhedOpret').style.display = 'block';
 }
-function showStuderendeButton () {
-    document.getElementById('studerendeKnap').style.display = 'block';
-    document.getElementById('opretForm').style.display = "none";
+function showEASJButton () {
+    document.getElementById('studerendeOpret').style.display = 'block';
+    document.getElementById('virksomhedOpret').style.display = "none";
 }
