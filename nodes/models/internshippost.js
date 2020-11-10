@@ -22,7 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     region: DataTypes.INTEGER,
     post_start_date: DataTypes.STRING,
     post_end_date: DataTypes.STRING,
-    post_text: DataTypes.TEXT
+    post_text: DataTypes.TEXT, 
+    city_text: DataTypes.TEXT,
+    cvr_number: DataTypes.INTEGER,
+    company_link: DataTypes.TEXT,
+    company_logo: DataTypes.STRING,
+    post_document: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'InternshipPost',
