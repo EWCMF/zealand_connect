@@ -67,3 +67,7 @@ Log ind som devdata (Muligheden for at logge ind som root gennem SSH er nu deakt
 	sudo systemctl enable nginx
 	
 	sudo certbot --nginx
+	
+	cd ~
+	
+	mkdir uploads
