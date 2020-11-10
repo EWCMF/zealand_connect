@@ -7,22 +7,23 @@
     <div class="row">
         <div class="col-12 col-md-8">
             <form method="POST">
+                <input type="hidden" value="{{rid}}" name="id">
                 <div class="form-group required">
                     <label for="">Titel</label>
-                    <input type="text" name="title" id="internshipTitle" class="form-control" placeholder="Titel" required>
+                    <input type="text" value="{{rtitle}}" name="title" id="internshipTitle" class="form-control" placeholder="Titel" required>
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="internshipEmail">Email adresse</label>
-                            <input type="email" name="email" id="internshipEmail" class="form-control"
+                            <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
                                 placeholder="Email" required>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="internshipName">Navn på kontaktperson</label>
-                            <input type="text" name="contact" id="internshipName" class="form-control" placeholder="Navn" required>
+                            <input type="text" value="{{rcontact}}" name="contact" id="internshipName" class="form-control" placeholder="Navn" required>
                         </div>
                     </div>
                 </div>
@@ -60,14 +61,14 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="post_start_date">Ansøgningsfrist</label>
-                            <input type="date" class="form-control" name="post_start_date" id="applicationDeadline"
+                            <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date" id="applicationDeadline"
                                 placeholder="dd / mm / åååå">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="post_end_date">Ansættelsestidspunkt</label>
-                            <input type="date" class="form-control" name="post_end_date"
+                            <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
                                 id="internshipEmploymentDate" placeholder="dd / mm / åååå">
                         </div>
                     </div>
@@ -75,12 +76,12 @@
                 <div class="form-group required">
                     <input type="hidden" name="post_text" id="plainText" />
                     <label for="editor">Fritekst</label>
-                    <div id="editor">
-                    </div>
+                    <div id="editor">{{{rtext}}}</div>
                 </div>
                 <div class="form-group">
                     <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
                     <button type="button" class="btn btn-danger">Afbryd</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmYeet()">Slet dette opslag</button>
                 </div>
 
             </form>
@@ -108,4 +109,22 @@
     function copyQuillHtmlToHiddenInput(){
         document.getElementById('plainText').value = editor.root.innerHTML;
     }
+    function setDefaultSelect(){
+        var reducation = {{reducation}};
+        var rcountry = {{rcountry}};
+        var rregion = {{rregion}};
+
+        document.getElementById('educationSelect').value = reducation;
+        document.getElementById('countrySelect').value = rcountry;
+        document.getElementById('regionSelect').value = rregion;
+    }
+    setDefaultSelect(); 
+
+    function confirmYeet(){
+        if (confirm("Er du sikker?")){
+            window.location="/internship_update/delete?id="+{{rid}}
+
+        }
+    }
+    
 </script>
