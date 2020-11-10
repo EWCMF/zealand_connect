@@ -10,6 +10,7 @@ var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
 var loginRouter = require('./routes/login');
+var opretBrugerRouter = require('./routes/opretBruger');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/login', loginRouter);
+app.use('/opretBruger', opretBrugerRouter);
 
 
 // catch 404 and forward to error handler
