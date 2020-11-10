@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
     <div class="row">
         <div class="col">
@@ -12,7 +13,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h6 class="panel-title mb-2">
-                                <a class="text-decoration-none text-muted" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                <a id="filtrerUddannelser"class="text-decoration-none" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
                                 Uddannelser
                                 </a>
                             </h6>
@@ -96,17 +97,15 @@
                 <label class="mb-0 mr-1 align-self-center">
                     sortering:     
                 </label>
-                <!--<div class="btn-group">
-                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="btn-group">
+                    <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Action
                     </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#" id="senestOpdateret" onclick="senestOpdateret()">Senest opdateret</a>
                     </div>
                 </div>
-                -->
+                
             </div>
             {{#each json}}
             <div class="card mb-3">
@@ -131,3 +130,4 @@
         </div>
     </div>
 </div>
+<script src="/javascript/search_cv.js"></script>

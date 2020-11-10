@@ -203,6 +203,10 @@ input::placeholder {
   height: 180px;
 }
 
+#filtrerUddannelser {
+  color: black;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 
