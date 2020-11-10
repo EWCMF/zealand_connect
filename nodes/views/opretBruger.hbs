@@ -16,8 +16,24 @@
                     </div>
                     <div class="loginBtnBox">
                         <div class="form-group" id="studerendeOpret"> <!-- Studerende opret form-->
-                            <input type="email" id="inputFeltEmail" class="form-control" name="
+                            <input type="text" id="studerendeNavn" class="form-control" name="
+                        navn" placeholder="Navn"><br>
+                            <input type="text" id="studerendeEfternavn" class="form-control" name="
+                        efternavn" placeholder="Efternavn"><br>
+                            <input type="number" id="studerendeCPR" class="form-control" name="
+                        cpr" placeholder="CPR-Nummer"><br>
+                            <input type="email" id="studerendeEmail" class="form-control" name="
                         email" placeholder="Email"><br>
+                            <input type="password" id="studerendeAdgangskode" class="form-control" name="
+                        adgangskode" placeholder="Adgangskode"><br>
+                            <input type="password" id="studerendeGentagAdgangskode" class="form-control" name="
+                        gentagAdgangskode" placeholder="Gentag Adgangskode"><br>
+                            <select id="uddanelse-dropdown" name="udannelse">
+                                <!-- udfyld ved brug af en metode, som tager fra en json fil-->
+                            </select>
+
+                            
+                            
                         <button class="gulKnap">Opret Bruger</button>
                         </div>
 
