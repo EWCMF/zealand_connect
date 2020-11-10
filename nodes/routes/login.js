@@ -7,4 +7,9 @@ res.render('login')
     
 });
 
+
+router.post('/authenticateZealandConnect', function (req, res, next) {
+    res.send(req)
+        
+    });
 module.exports = router;

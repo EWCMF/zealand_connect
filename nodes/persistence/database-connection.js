@@ -25,6 +25,8 @@ function createDatabase(database) {
     });
 }
 
+
+
 function dropDatabase(database) {
     return new Promise((resolve, reject) => {
         try {
