@@ -20,7 +20,7 @@
                         navn" placeholder="Navn"><br>
                             <input type="text" id="studerendeEfternavn" class="form-control" name="
                         efternavn" placeholder="Efternavn"><br>
-                            <input type="number" id="studerendeCPR" class="form-control" name="
+                            <input type="text" id="studerendeCPR" class="form-control" name="
                         cpr" placeholder="CPR-Nummer"><br>
                             <input type="email" id="studerendeEmail" class="form-control" name="
                         email" placeholder="Email"><br>
@@ -56,13 +56,21 @@
                         </div>
 
                         <div class="form-group" id="virksomhedOpret"> <!-- Virksomheds opret form-->
-                            <input type="email" id="inputFeltEmail" class="form-control" name="
-                        email" placeholder="Email"><br>
-                            <input type="password" id="inputFeltPassword" class="form-control"
+                            <input type="email" id="virksomhedEmail" class="form-control" name="
+                                    email" placeholder="Email"><br>
+                            <input type="password" id="virksomhedAdgangskode" class="form-control"
                                    name="Password" placeholder="Adgangskode"><br>
-                            <input type="checkbox" value="name" id="huskEmailCheckbox">
-                            <label for="huskEmailCheckbox">Husk email </label>
-                            <button class="gulKnap"> Login</button>
+                            <input type="password" id="virksomhedGentagAdgangskode" class="form-control"
+                                   name="GentagPassword" placeholder="Gentag Adgangskode"><br>
+                            <input type="text" id="virksomhedCVR" class="form-control"
+                                   name="cvr" placeholder="CVR-Nummer"><br>       
+
+                            <button class="gulKnap"> Opret Bruger</button>
+
+                            <p id="centerP">Eller</p>
+
+                        
+
                         </div>
                     </div>
                 </div>

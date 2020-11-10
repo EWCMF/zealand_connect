@@ -171,6 +171,11 @@ input::placeholder {
 #uddanelse-dropdown {
   width: 100%;
 }
+#centerP {
+  text-align: center;
+  margin-top: 12px;
+  font-size: medium;
+}
 
 #tab1:active {
 }
