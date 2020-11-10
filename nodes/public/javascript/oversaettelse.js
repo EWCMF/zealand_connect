@@ -7,6 +7,7 @@
 
 });
 function brugStrings(lang) {
+    var langdata = getLangdata()
     //køre igennem alt i dokumentet, leder efter data-key keys i html
     document.querySelectorAll('html [data-key]').forEach(element => {
         //for hvert data-key værdi, leder den efter det i json navngivet langdata
@@ -17,11 +18,28 @@ function brugStrings(lang) {
         }
 
         if(!key.includes('placeholder')) {
-            let temp = element.textContent;
-            element.textContent = langdata.languages[lang].strings[key];
-            if(!key.includes("+hbs")) { // hvis der er +hbs, så appender det ikke
-            element.textContent += temp
-            }
+            //let temp = element.textContent;
+            console.log(lang);
+            if(!lang.includes('da')) {element.textContent = langdata.languages[lang].strings[key];}
+            // if(!key.includes("+hbs")) { // hvis der er +hbs, så appender det ikke
+            // element.textContent += temp}
         }
     });
+}
+
+function getLangdata() {
+    var temp = {"languages":{
+        "en": {
+            "strings": {
+                "studerende": "Students",
+                "virksomhed": "Business",
+                "adgangskode": "Password",
+                "gentagAdgangskode": "Repeat Password",
+                "husk-email": "Remember Email",
+                "cookie": "Cookies must be enabled in your browser"
+            }
+        }
+    }
+    }
+    return temp;
 }

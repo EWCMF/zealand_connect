@@ -3,7 +3,9 @@ var router = express.Router();
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
-res.render('login')
+     var temp = req.acceptsLanguages('da', 'en')
+    temp.toString
+res.render('login', {language: temp})
     
 });
 
