@@ -177,6 +177,30 @@ input::placeholder {
   font-size: medium;
 }
 
+.google-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.google-btn {
+  width: 100%;
+ padding-top: 12px;
+ padding-bottom: 12px;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #0079d3;
+  color: #0079d3;
+  align-content: center;
+  font-size: 18px;
+
+}
+.google-img {
+  padding-right: 10px;
+  background-color: #fff;
+}
+
+
 #tab1:active {
 }
 
