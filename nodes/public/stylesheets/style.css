@@ -245,13 +245,13 @@ input::placeholder {
   padding-top: 16px;
 }
 
-#cvCard {
-  margin-bottom: 16px;
-}
-
 .center-cropped {
   width: 180px;
   height: 180px;
+}
+
+#filtrerUddannelser {
+  color: black;
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -284,3 +284,5 @@ input::placeholder {
 @media (min-width: 1200px) {
 
 }
+
+
