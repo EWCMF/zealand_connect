@@ -1,0 +1,42 @@
+<script src='/javascript/opretBruger.js' defer></script>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8">
+            <div id="loginBoxBackground">
+                <div id="loginContent"> <!-- ret her-->
+                    <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
+                    <div class="radioBtnBox">
+                        <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked"
+                               onclick="showStuderendeButton()">
+                        <label class="buttonText">Studerende</label>
+                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
+                               onclick="showVirksomhedButton()">
+                        <label class="buttonText">Virksomhed</label>
+                    </div>
+                    <div class="loginBtnBox"> <!--ret her -->
+                        
+                        <div class="form-group" id="loginForm">
+                            <input type="email" id="inputFeltEmail" class="form-control" name="
+                        email" placeholder="Email"><br>
+                            <input type="password" id="inputFeltPassword" class="form-control"
+                                   name="Password" placeholder="Adgangskode"><br>
+                            <input type="checkbox" value="name" id="huskEmailCheckbox">
+                            <label for="huskEmailCheckbox">Husk email </label>
+                            <button class="gulKnap"> Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cookieBox">
+                <div id="cookieText">
+                    Cookies skal være aktiveret i din browser
+                    <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
