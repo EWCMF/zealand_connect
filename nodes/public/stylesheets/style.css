@@ -198,6 +198,8 @@ input::placeholder {
 .google-img {
   padding-right: 10px;
   background-color: #fff;
+  width: 46px;
+  height: 32px;
 }
 
 
