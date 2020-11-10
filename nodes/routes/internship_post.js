@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const db = require('../models');
 const internshippost = require('../models/internshippost');
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
   //laver et objekt med alle data
-  const { title, email, contact, education, country, region, post_start_date, post_end_date, post_text } = req.body;
-  var indhold = { title, email, contact, education, country, region, post_start_date, post_end_date, post_text };
+  const { title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city_text, cvr_number, company_link, company_logo, post_document } = req.body;
+  var indhold = { title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city_text, cvr_number, company_link};
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
   var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
   var inputError = false;
@@ -39,7 +40,28 @@ router.post('/', function (req, res, next) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('internship_post', { title: 'Express' });
+  var generatedCityOptions = "";
+  function generateCityOptions() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200  ) {
+        var myObj = JSON.parse(this.responseText);
+        console.log(myObj);
+        myObj.forEach(element => {
+          console.log(element.primærtnavn);
+          generatedCityOptions += "<option value='"+element.primærtnavn+"'>"+element.primærtnavn+"</option>"
+        });
+        res.render('internship_post', { title: 'Express', generatedCityOptions: generatedCityOptions });
+      }
+    };
+    xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send();
+  }
+  generateCityOptions();
+  //res.render('internship_post', { title: 'Express', generatedCityOptions: generatedCityOptions });
 });
 
+
 module.exports = router;
+// https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by
