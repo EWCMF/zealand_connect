@@ -29,14 +29,14 @@ module.exports = router;
 
 router.post('/submit', function (req, res, next) {
   let overskrift = req.body.overskrift;
+  let uddannelse = req.body.uddannelse;
   let studieretning = req.body.studieretning;
   let email = req.body.email;
   let telefon = req.body.telefon;
   let hjemmeside = req.body.hjemmeside;
   let om = req.body.om;
   let arbejdserfaring = req.body.arbejdserfaring;
-  let uddannelse = req.body.uddannelse;
-  let hobby = req.body.hobby;
+  let fritidsinteresser = req.body.fritidsinteresser;
   let offentligCheckbox = req.body.offentligCheckBox;
 
   var offentlig;
@@ -48,6 +48,7 @@ router.post('/submit', function (req, res, next) {
 
   var json = {
     overskrift,
+    Uddannelse,
     studieretning,
     email,
     telefon,
@@ -55,10 +56,9 @@ router.post('/submit', function (req, res, next) {
     om,
     arbejdserfaring,
     uddannelse,
-    hobby,
+    fritidsinteresser,
     offentlig
   }
-
   res.send(JSON.stringify(json));
-  seq.newCV("test", json);
+  //seq.newCV("test", json);
 });
