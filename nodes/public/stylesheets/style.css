@@ -194,6 +194,19 @@ input::placeholder {
   height: auto;
 }
 
+#cvOverskrift {
+  padding-top: 16px;
+}
+
+#cvCard {
+  margin-bottom: 16px;
+}
+
+.center-cropped {
+  width: 180px;
+  height: 180px;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 
