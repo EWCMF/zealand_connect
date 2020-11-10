@@ -16,4 +16,18 @@ async function findUserByName(usrnm){
     }
 }
 
-module.exports = {findUserByName: findUserByName}
+async function findUserById(id){
+    console.log("---finding user by ID:"+id+"---");
+    const user = await User.findOne({ where: { id: id } });
+    if (user === null) {
+        console.log('user Not found!');
+        return null;
+    } else {
+        console.log("---OMG! i found the user:---");
+        console.log(user instanceof User); // true
+        console.log(user.username); // 'My Title'
+        return user;
+    }
+}
+
+module.exports = {findUserByName: findUserByName, findUserById: findUserById}

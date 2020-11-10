@@ -1,4 +1,5 @@
 const config = require('../persistence/config.json');
+const Sequelize = require('sequelize');
 
 
 const sequelize = new Sequelize(config.database, config.root, config.pass, {

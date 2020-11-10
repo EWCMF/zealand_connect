@@ -1,9 +1,7 @@
 const passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
-const becrypt = require('bcrypt');
 const findUserByName = require('../persistence/usermapping').findUserByName;
-const findUserById = require('../models/user_models.js').m2;
-const createGoogleUser = require('../models/user_models.js').m3;
-const verifyPassword = require('../models/user_models.js').m5;
+const findUserById = require('../persistence/usermapping').findUserById;
+const verifyPassword = require('../encryption/password').verifyPassword;
 
 
 //lav cookie fra user baseret på id

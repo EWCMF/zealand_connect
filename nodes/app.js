@@ -3,13 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
 var loginRouter = require('./routes/login');
+var cookieParser = require('cookie-parser');
+
+const cookieSession = require('cookie-session');
+const passportSetup = require('./config/passport_setup');
+const passport = require('passport');
+
 
 var app = express();
 
@@ -29,6 +34,12 @@ app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/login', loginRouter);
+app.use(cookieSession({
+  maxAge: 10006060*24,
+  keys: ["this_is_the_secret_cookie_encryption_key"]
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // catch 404 and forward to error handler
