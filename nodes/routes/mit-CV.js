@@ -1,27 +1,29 @@
 var express = require('express');
 var router = express.Router();
-var seq = require('../persistence/sequelize-tidlig');
 
 router.get('/', function (req, res, next) {
-  seq.hentCV(1).then((json) => {
-    // console.log(json);
-    res.render('Mit-CV', {
-      Profil: "Google Sørensen",
-      Overskrift: json.overskrift,
-      Studieretning: json.studieretning,
-      Email: json.email,
-      Telefon: json.telefon,
-      Hjemmeside: json.hjemmeside,
-      Om: json.om,
-      Arbejdserfaring: json.arbejdserfaring,
-      Uddannelse: json.uddannelse,
-      Hobby: json.hobby,
-      Offentlig: json.offentlig,
-    })
-  }, () => {
-    res.render('Mit-CV', {
-      Profil: "Google Sørensen",
-    })
+  res.render('Mit-CV', {
+    Profil: "Hans Sørensen",
+  })
+});
+
+router.get('/search', function (req, res, next) {
+  let json = [{
+      "overskrift": "hej med dig.",
+      "underoverskrift": "ttt",
+      "billede": "link her",
+      "info": "blablablablablabla1"
+    },
+    {
+      "overskrift": "hej med dig2.",
+      "underoverskrift": "ttt2",
+      "billede": "link her2",
+      "info": "blablablablablabla1"
+    }
+  ]
+
+  res.render('search_cv', {
+    json: json
   });
 });
 
