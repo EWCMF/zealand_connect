@@ -11,7 +11,7 @@ function brugStrings(lang) {
     //køre igennem alt i dokumentet, leder efter data-key keys i html
     document.querySelectorAll('html [data-key]').forEach(element => {
         if(lang.includes('da')) {
-            console.log('stopper her')
+            //console.log('stopper her')
              return;
         }
         //for hvert data-key værdi, leder den efter det i json navngivet langdata
