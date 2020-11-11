@@ -33,13 +33,44 @@ function getLangdata() {
             "strings": {
                 "studerende": "Students",
                 "virksomhed": "Business",
-                "adgangskode": "Password",
-                "gentagAdgangskode": "Repeat Password",
+                "placeholderadgangskode": "Password",
+                "placeholdergentagAdgangskode": "Repeat Password",
                 "husk-email": "Remember Email",
-                "cookie": "Cookies must be enabled in your browser"
+                "cookie": "Cookies must be enabled in your browser",
+                "placeholdernavn": "Name",
+                "placeholderefternavn": "Last name",
+                "placeholdercpr": "CPR-Number",
+                "placeholdercvr": "CVR-Number",
+                "opret": "Create User",
+                "eller": "Or",
+                "uddannelser": "Educations",
+                "opretGoogle": "Sign up with Google",
+                "administrationsøkonom": "Administration Economist",
+                "autoteknolog": "Auto technologist",
+                "Byggetekniker": "Construction technician",
+                "Datamatiker": "Computer scientist",
+                "ElInstallatør": "Electrician",
+                "Finansøkonom": "Financial economist",
+                "Handelsøkonom": "Business economist",
+                "Jordbrugsteknolog":"Agricultural technologist",
+                "Laborant": "Laboratory Technician",
+                "Logistikøkonom": "Logistics economist",
+                "Markedsføringsøkonom": "Marketing economist",
+                "Multimediedesigner": "Multimedia designer",
+                "Procesteknolog": "Process technologist",
+                "Produktionsteknolog": "Production technologist",
+                "Serviceøkonom": "Service economist",
+                "VVSInstallatør": "Plumbing installer"
             }
         }
     }
     }
     return temp;
+}
+
+
+
+module.exports = function(req) {
+    var temp = req.acceptsLanguages('da', 'en');
+    return temp.toString
 }
