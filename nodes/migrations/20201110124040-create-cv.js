@@ -1,54 +1,57 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('InternshipPosts', {
+    await queryInterface.createTable('CVs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      Overskrift: {
         type: Sequelize.STRING
       },
-      email: {
+      Uddannelse: {
         type: Sequelize.STRING
       },
-      contact: {
+      Email: {
         type: Sequelize.STRING
       },
-      education: {
+      Sprog: {
+        type: Sequelize.STRING
+      },
+      Speciale: {
+        type: Sequelize.STRING
+      },
+      Telefon: {
         type: Sequelize.INTEGER
       },
-      country: {
-        type: Sequelize.INTEGER
-      },
-      region: {
-        type: Sequelize.INTEGER
-      },
-      post_start_date: {
-        type: Sequelize.DATE
-      },
-      post_end_date: {
-        type: Sequelize.DATE
-      },
-      post_text: {
-        type: Sequelize.TEXT
-      },
-      city_text:{
-        type: Sequelize.TEXT
-      },
-      cvr_number:{
-        type: Sequelize.INTEGER
-      },
-      company_link:{
-        type: Sequelize.TEXT
-      },
-      company_logo:{
+      LinkedIn: {
         type: Sequelize.STRING
       },
-      post_document:{
+      Om_mig: {
         type: Sequelize.STRING
+      },
+      IT_Kompetencer: {
+        type: Sequelize.STRING
+      },
+      Udenlandsophold_og_frivilligt_arbejde: {
+        type: Sequelize.STRING
+      },
+      Erhvervserfaring: {
+        type: Sequelize.STRING
+      },
+      Tidligere_uddannelse: {
+        type: Sequelize.STRING
+      },
+      Hjemmeside: {
+        type: Sequelize.STRING
+      },
+      Fritidsinteresser: {
+        type: Sequelize.STRING
+      },
+      offentlig: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -61,6 +64,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('InternshipPosts');
+    await queryInterface.dropTable('CVs');
   }
 };

@@ -1,0 +1,133 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1 id="cvOverskrift">CV'er</h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row m-1">
+        <div class="col-2 border rounded h-100">
+            <form class="mt-3 mb-3">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h6 class="panel-title mb-2">
+                                <a id="filtrerUddannelser"class="text-decoration-none" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                Uddannelser
+                                </a>
+                            </h6>
+                        </div>
+                        
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Datamatiker
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                               <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Handelsøkonom
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Finansøkonom
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        International Handel og markedsføring
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Innovation og Entrepreneurship
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        BygningsKontruktør
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Byggetekniker
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Installatør, stærkstrøm
+                                    </label>
+                                    <input class="align-self-center"type="checkbox" name="" id="">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Default checkbox
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                    <label class="form-check-label" for="defaultCheck2">
+                        Disabled checkbox
+                    </label>
+                </div> 
+                -->
+            </form>
+        </div>
+        <div class="col">
+            <div class="mb-2 d-flex flex-row">
+                <label class="mb-0 flex-fill align-self-center">
+                    {{resultater}} resultater
+                </label>
+                <label class="mb-0 mr-1 align-self-center">
+                    sortering:     
+                </label>
+                <div class="btn-group">
+                    <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Action
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#" id="senestOpdateret" onclick="senestOpdateret()">Senest opdateret</a>
+                    </div>
+                </div>
+                
+            </div>
+            {{#each json}}
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-auto">
+                        <img class="center-cropped"
+                            src="https://s2.qwant.com/thumbr/0x380/6/b/2b31be557264439d00d0a6bbffa229c96cda4ba4732c856661907f645426c1/1200px-Blank_square.svg.png?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F1%2F1f%2FBlank_square.svg%2F1200px-Blank_square.svg.png&q=0&b=1&p=0&a=1">
+                    </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title">{{overskrift}}</h5>
+                            <h6 class="card-title">{{underoverskrift}}</h5>
+                                <p class="card-text">{{info}}</p>
+                                <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                                
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="stretched-link"></a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+<script src="/javascript/search_cv.js"></script>
