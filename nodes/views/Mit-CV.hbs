@@ -10,20 +10,21 @@
                 placeholder="Stilling, Status eller hvad du søger">{{Overskrift}}</textarea>
             <p id="OverskriftError" class="CVErrorColor" hidden="false">Skal udfyldes</p>
         </div>
-        <!-- studieretning med dropdown -->
+        <!-- Uddannelse med dropdown -->
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-4">
                     <label for="exampleFormControlSelect1">Uddannelse</label>
                     <select class="form-control" id="uddannelse" name="uddannelse">
-                        <option>Datamatiker</option>
-                        <option>Handelsøkonom</option>
-                        <option>Finansøkonom</option>
-                        <option>International Handel og markedsføring</option>
-                        <option>Innovation og Entrepreneurship</option>
-                        <option>BygningsKontruktør</option>
-                        <option>Byggetekniker</option>
-                        <option>Installatør, stærkstrøm</option>
+                        <option value="">Vælg din uddannelse</option>
+                        <option value="Datamatiker">Datamatiker</option>
+                        <option value="Handelsøkonom">Handelsøkonom</option>
+                        <option value="Finansøkonom">Finansøkonom</option>
+                        <option value="International Handel og markedsføring">International Handel og markedsføring</option>
+                        <option value="Innovation og Entrepreneurship">Innovation og Entrepreneurship</option>
+                        <option value="BygningsKontruktør">BygningsKontruktør</option>
+                        <option value="Byggetekniker">Byggetekniker</option>
+                        <option value="Installatør, stærkstrøm">Installatør, stærkstrøm</option>
                     </select>
                 </div>
                 <!-- email med inputfelt -->
@@ -46,7 +47,7 @@
                 </div>
             </div>
             <div class="row">
-                <!-- Telefon nummer med inputfelt -->
+                <!-- speciale indenfor din uddannelse med inputfelt -->
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Speciale</label>
@@ -64,10 +65,10 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <!-- hjemmeside med inputfelt -->
+                    <!-- LinkedIn med inputfelt -->
                     <div class="form-group">
                         <label for="exampleFormControlInput1">LinkedIn</label>
-                        <input class="form-control" id="LinkedIn" name="LinkedIn" placeholder="https://example.dk">
+                        <input class="form-control" id="linkedIn" name="linkedIn" placeholder="https://example.dk">
                     </div>
                 </div>
             </div>
@@ -81,7 +82,7 @@
             <div class="form-group">
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">IT Kompetencer</label>
-                <textarea class="form-control" rows="3" id="IT-Kompetencer" name="IT-Kompetencer"
+                <textarea class="form-control" rows="3" id="iT_Kompetencer" name="iT_Kompetencer"
                     placeholder="Skal udfyldes">{{IT-Kompetencer}}</textarea>
             </div>
             <div class="form-group">
@@ -91,16 +92,16 @@
                     placeholder="Skal udfyldes">{{UogFA}}</textarea>
             </div>
             <div class="form-group required required">
-                <!-- textarea med arbejdserfaring -->
+                <!-- textarea med erhvervserfaring -->
                 <label for="exampleFormControlTextarea1">Erhvervserfaring</label>
-                <textarea class="form-control" rows="3" id="arbejdserfaring" name="arbejdserfaring"
-                    placeholder="Tidligere eller nuværende arbejdserfaring">{{Arbejdserfaring}}</textarea>
-                <p id="ArbejdserfaringError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+                <textarea class="form-control" rows="3" id="erhvervserfaring" name="erhvervserfaring"
+                    placeholder="Tidligere eller nuværende erhvervserfaring">{{erhvervserfaring}}</textarea>
+                <p id="erhvervserfaringError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
             </div>
             <div class="form-group">
                 <!-- textarea med uddannelse -->
                 <label for="exampleFormControlTextarea1">Tidligere Uddannelse</label>
-                <textarea class="form-control" rows="3" id="Tidligere-uddannelse" name="Tidligere-uddannelse"
+                <textarea class="form-control" rows="3" id="tidligere-uddannelse" name="tidligere_uddannelse"
                     placeholder="Tidligere eller lidt om din nuværende Uddannelse">{{Tidligere-uddannelse}}</textarea>
             </div>
             <div class="form-group required">

@@ -30,14 +30,20 @@ router.get('/search', function (req, res, next) {
 module.exports = router;
 
 router.post('/submit', function (req, res, next) {
+
   let overskrift = req.body.overskrift;
-  let uddannelse = req.body.uddannelse;
-  let studieretning = req.body.studieretning;
+  let Uddannelse = req.body.uddannelse;
   let email = req.body.email;
+  let sprog = req.body.sprog;
+  let speciale = req.body.speciale;
   let telefon = req.body.telefon;
-  let hjemmeside = req.body.hjemmeside;
+  let linkedIn = req.body.linkedIn;
   let om = req.body.om;
-  let arbejdserfaring = req.body.arbejdserfaring;
+  let iT_Kompetencer = req.body.iT_Kompetencer;
+  let UogFA = req.body.UogFA;
+  let erhvervserfaring = req.body.erhvervserfaring;
+  let tidligere_uddannelse = req.body.tidligere_uddannelse;
+  let hjemmeside = req.body.hjemmeside;
   let fritidsinteresser = req.body.fritidsinteresser;
   let offentligCheckbox = req.body.offentligCheckBox;
 
@@ -51,13 +57,17 @@ router.post('/submit', function (req, res, next) {
   var json = {
     overskrift,
     Uddannelse,
-    studieretning,
     email,
+    sprog,
+    speciale,
     telefon,
-    hjemmeside,
+    linkedIn,
     om,
-    arbejdserfaring,
-    uddannelse,
+    iT_Kompetencer,
+    UogFA,
+    erhvervserfaring,
+    tidligere_uddannelse,
+    hjemmeside,
     fritidsinteresser,
     offentlig
   }
