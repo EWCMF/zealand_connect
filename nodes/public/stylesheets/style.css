@@ -254,6 +254,14 @@ input::placeholder {
   color: black;
 }
 
+.col-8 {
+  background-color: lime;
+}
+
+.col-4 {
+  background-color: pink;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 

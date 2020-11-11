@@ -3,7 +3,8 @@ var router = express.Router();
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
-res.render('loginStudent')
+res.render('login-student')
+//res.send('hello')
     
 });
 
