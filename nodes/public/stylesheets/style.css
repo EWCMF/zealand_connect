@@ -143,6 +143,7 @@ input::placeholder {
   border: transparent;
 }
 
+
 #easjLoginKnap img {
   width: auto!important;
   height: 26px;
@@ -155,6 +156,52 @@ input::placeholder {
 #loginForm .form-control {
   width: 339px;
 }
+#virksomhedOpret {
+  display: none;
+}
+#virksomhedOpret .form-control {
+  width: 339px;
+}
+#studerendeOpret {
+  display: block;
+}
+#studerendeOpret .form-control {
+  width: 339px;
+}
+#uddanelse-dropdown {
+  width: 100%;
+}
+#centerP {
+  text-align: center;
+  margin-top: 12px;
+  font-size: medium;
+}
+
+.google-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.google-btn {
+  width: 100%;
+ padding-top: 12px;
+ padding-bottom: 12px;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #0079d3;
+  color: #0079d3;
+  align-content: center;
+  font-size: 18px;
+
+}
+.google-img {
+  padding-right: 10px;
+  background-color: #fff;
+  width: 46px;
+  height: 32px;
+}
+
 
 #tab1:active {
 }
@@ -198,13 +245,13 @@ input::placeholder {
   padding-top: 16px;
 }
 
-#cvCard {
-  margin-bottom: 16px;
-}
-
 .center-cropped {
   width: 180px;
   height: 180px;
+}
+
+#filtrerUddannelser {
+  color: black;
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -237,3 +284,5 @@ input::placeholder {
 @media (min-width: 1200px) {
 
 }
+
+

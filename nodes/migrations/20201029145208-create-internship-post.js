@@ -35,6 +35,21 @@ module.exports = {
       post_text: {
         type: Sequelize.TEXT
       },
+      city_text:{
+        type: Sequelize.TEXT
+      },
+      cvr_number:{
+        type: Sequelize.INTEGER
+      },
+      company_link:{
+        type: Sequelize.TEXT
+      },
+      company_logo:{
+        type: Sequelize.STRING
+      },
+      post_document:{
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -9,7 +9,8 @@
             <form method="POST">
                 <div class="form-group required">
                     <label for="">Titel</label>
-                    <input type="text" name="title" id="internshipTitle" class="form-control" placeholder="Titel" required>
+                    <input type="text" name="title" id="internshipTitle" class="form-control" placeholder="Titel"
+                        required>
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-6">
@@ -22,16 +23,17 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="internshipName">Navn på kontaktperson</label>
-                            <input type="text" name="contact" id="internshipName" class="form-control" placeholder="Navn" required>
+                            <input type="text" name="contact" id="internshipName" class="form-control"
+                                placeholder="Navn" required>
                         </div>
                     </div>
                 </div>
                 <div class="form-group required">
                     <label for="education">Uddannelse</label>
                     <select class="form-control" name="education" id="educationSelect" required>
-                        <option value="1" >Handelsøkonom</option>
-                        <option value="2" >Datamatiker</option>
-                        <option value="3" >Bygningskonstruktør</option>
+                        <option value="1">Handelsøkonom</option>
+                        <option value="2">Datamatiker</option>
+                        <option value="3">Bygningskonstruktør</option>
                     </select>
                 </div>
                 <div class="row">
@@ -39,9 +41,9 @@
                         <div class="form-group required">
                             <label for="countrySelect">Land</label>
                             <select class="form-control" name="country" id="countrySelect" required>
-                                <option value="1" >Danmark</option>
-                                <option value="2" >Tyskland</option>
-                                <option value="3" >Sverige</option>
+                                <option value="1">Danmark</option>
+                                <option value="2">Tyskland</option>
+                                <option value="3">Sverige</option>
                             </select>
                         </div>
                     </div>
@@ -49,9 +51,9 @@
                         <div class="form-group">
                             <label for="regionSelect">Region</label>
                             <select class="form-control" name="region" id="regionSelect">
-                                <option value="1" >Sjælland</option>
-                                <option value="2" >Jylland</option>
-                                <option value="3" >Fyn</option>
+                                <option value="1">Sjælland</option>
+                                <option value="2">Jylland</option>
+                                <option value="3">Fyn</option>
                             </select>
                         </div>
                     </div>
@@ -67,8 +69,46 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="post_end_date">Ansættelsestidspunkt</label>
-                            <input type="date" class="form-control" name="post_end_date"
-                                id="internshipEmploymentDate" placeholder="dd / mm / åååå">
+                            <input type="date" class="form-control" name="post_end_date" id="internshipEmploymentDate"
+                                placeholder="dd / mm / åååå">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="cvr_number">CVR Nummer</label>
+                            <input type="number" name="cvr_number" id="companyCVR" class="form-control" placeholder="CVR"
+                                min="0" max="99999999" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="company_link">Link til Hjemmeside</label>
+                            <input type="url" name="company_link" id="companyURL" class="form-control"
+                                placeholder="virksomhed.dk">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="city_text">By</label>
+                            <select class="form-control" name="city_text" id="cityList" required>
+                                {{{generatedCityOptions}}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="post_document">Dokument</label>
+                            <input type="file" name="post_document" id="CompanyDoc" class="form-control-file">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="company_logo">Logo</label>
+                            <input type="file" name="company_logo" id="CompanyLogo" class="form-control-file">
                         </div>
                     </div>
                 </div>
@@ -79,7 +119,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
+                    <button type="submit" onclick="copyQuillHtmlToHiddenInput()"
+                        class="btn btn-success mr-2">Gem</button>
                     <button type="button" class="btn btn-danger">Afbryd</button>
                 </div>
 
@@ -105,7 +146,7 @@
         theme: 'snow'
     });
 
-    function copyQuillHtmlToHiddenInput(){
+    function copyQuillHtmlToHiddenInput() {
         document.getElementById('plainText').value = editor.root.innerHTML;
     }
 </script>
