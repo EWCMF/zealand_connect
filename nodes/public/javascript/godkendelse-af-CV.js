@@ -61,13 +61,7 @@ function submitButton() {
         document.getElementById("ArbejdserfaringError").hidden = true;
     }
 
-    if (uddannelse == "") {
-        document.getElementById("UddanelsesError").hidden = false;
-    } else {
-        document.getElementById("UddanelsesError").hidden = true;
-    }
-
-    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !omMig == "" && !arbejdserfaring == "" && !uddannelse == "") {
+   if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !omMig == "" && !arbejdserfaring == "") {
      document.forms["cvForm"].submit();
-    }
+   }
 }
