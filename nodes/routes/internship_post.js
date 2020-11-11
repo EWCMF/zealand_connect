@@ -29,7 +29,6 @@ router.post('/', function (req, res, next) {
   console.log(dateReg.test(post_end_date))
 
   if(!req.files){
-    console.log("Nooooooooooooooooooooooooooooooooooooooooooooooooooo");
   }else{
     /*fileUpload here*/
     var doc=req.files.post_document;
@@ -67,7 +66,7 @@ router.get('/', function (req, res, next) {
     xmlhttp.send();
   }
   generateCityOptions();
-  //res.render('internship_post', { title: 'Express', generatedCityOptions: generatedCityOptions });
+  
 });
 
 
