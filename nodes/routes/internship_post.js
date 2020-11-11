@@ -53,9 +53,8 @@ router.get('/', function (req, res, next) {
     xmlhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200  ) {
         var myObj = JSON.parse(this.responseText);
-        console.log(myObj);
+        
         myObj.forEach(element => {
-          console.log(element.primærtnavn);
           generatedCityOptions += "<option value='"+element.primærtnavn+"'>"+element.primærtnavn+"</option>"
         });
         res.render('internship_post', { title: 'Express', generatedCityOptions: generatedCityOptions });
