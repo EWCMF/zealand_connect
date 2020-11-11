@@ -22,6 +22,7 @@ router.post('/', function (req, res, next) {
   if (!dateReg.test(post_start_date)) {console.log('Invalid date'); inputError = true;}
   if (!dateReg.test(post_end_date)) {console.log('Invalid date'); inputError = true;}
   if (post_text.length > 65536) {console.log('Plain text is to long'); inputError = true;}
+  if (!cvr_number.length == 8) {console.log("CVR number invalid"); inputError = true;}
 
   //logger resultatet af testene
   console.log(emailRegex.test(email))
