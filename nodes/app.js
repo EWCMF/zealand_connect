@@ -9,11 +9,14 @@ var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
 var loginRouter = require('./routes/login');
+
 var cookieParser = require('cookie-parser');
 
 const cookieSession = require('cookie-session');
 const passportSetup = require('./config/passport_setup');
 const passport = require('passport');
+
+var opretBrugerRouter = require('./routes/opretBruger');
 
 
 var app = express();
@@ -40,6 +43,7 @@ app.use(cookieSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/opretBruger', opretBrugerRouter);
 
 
 // catch 404 and forward to error handler

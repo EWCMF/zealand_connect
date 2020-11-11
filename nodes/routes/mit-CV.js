@@ -1,43 +1,50 @@
 var express = require('express');
 var router = express.Router();
-var seq = require('../persistence/sequelize-tidlig');
 
 router.get('/', function (req, res, next) {
-  seq.hentCV(1).then((json) => {
-    // console.log(json);
-    res.render('Mit-CV', {
-      Profil: "Hans Sørensen",
-      Overskrift: json.overskrift,
-      Studieretning: json.studieretning,
-      Email: json.email,
-      Telefon: json.telefon,
-      Hjemmeside: json.hjemmeside,
-      Om: json.om,
-      Arbejdserfaring: json.arbejdserfaring,
-      Uddannelse: json.uddannelse,
-      Hobby: json.hobby,
-      Offentlig: json.offentlig,
-    })
-  }, () => {
-    res.render('Mit-CV', {
-      Profil: "Hans Sørensen",
-      Offentlig: false,
-    })
+  res.render('Mit-CV', {
+    Profil: "Hans Sørensen",
+  })
+});
+
+router.get('/search', function (req, res, next) {
+  let json = [{
+      "overskrift": "hej med dig.",
+      "underoverskrift": "ttt",
+      "billede": "link her",
+      "info": "blablablablablabla1"
+    },
+    {
+      "overskrift": "hej med dig2.",
+      "underoverskrift": "ttt2",
+      "billede": "link her2",
+      "info": "blablablablablabla1"
+    }
+  ]
+
+  res.render('search_cv', {
+    json: json
   });
 });
 
 module.exports = router;
 
 router.post('/submit', function (req, res, next) {
+
   let overskrift = req.body.overskrift;
-  let studieretning = req.body.studieretning;
+  let Uddannelse = req.body.uddannelse;
   let email = req.body.email;
+  let sprog = req.body.sprog;
+  let speciale = req.body.speciale;
   let telefon = req.body.telefon;
-  let hjemmeside = req.body.hjemmeside;
+  let linkedIn = req.body.linkedIn;
   let om = req.body.om;
-  let arbejdserfaring = req.body.arbejdserfaring;
-  let uddannelse = req.body.uddannelse;
-  let hobby = req.body.hobby;
+  let iT_Kompetencer = req.body.iT_Kompetencer;
+  let UogFA = req.body.UogFA;
+  let erhvervserfaring = req.body.erhvervserfaring;
+  let tidligere_uddannelse = req.body.tidligere_uddannelse;
+  let hjemmeside = req.body.hjemmeside;
+  let fritidsinteresser = req.body.fritidsinteresser;
   let offentligCheckbox = req.body.offentligCheckBox;
 
   var offentlig;
@@ -49,17 +56,21 @@ router.post('/submit', function (req, res, next) {
 
   var json = {
     overskrift,
-    studieretning,
+    Uddannelse,
     email,
+    sprog,
+    speciale,
     telefon,
-    hjemmeside,
+    linkedIn,
     om,
-    arbejdserfaring,
-    uddannelse,
-    hobby,
+    iT_Kompetencer,
+    UogFA,
+    erhvervserfaring,
+    tidligere_uddannelse,
+    hjemmeside,
+    fritidsinteresser,
     offentlig
   }
-
-  res.send("Data er gemt (temp)");
-  seq.newCV("test", json);
+  res.send(JSON.stringify(json));
+  //seq.newCV("test", json);
 });
