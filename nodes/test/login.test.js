@@ -24,7 +24,7 @@ describe('Find bruger i database baseret på username', function(){
     })  
 })
 
-/* describe('Find bruger i database baseret på id', function(){
+ describe('Find bruger i database baseret på id', function(){
     //TC3
     it('Bør ikke kunne finde en bruger hvis ingen bruger med denne id findes', function(done){
         let id = -1;
@@ -42,6 +42,8 @@ describe('Find bruger i database baseret på username', function(){
         })
     })
 })
+
+
 
 describe('Check om 2 password er ens', function(){
     //TC5
@@ -64,6 +66,8 @@ describe('Check om 2 password er ens', function(){
     })
 })
 
+/*
+
 describe('Opret en googlebruger i systemet og så check at den eksisterer', function(){
     it('Bør oprette google bruger og kunne finde brugeren baseret på username', function(done){
         let username = 'benny';
@@ -75,6 +79,7 @@ describe('Opret en googlebruger i systemet og så check at den eksisterer', func
             })
         });
     })
+    
     it('Bør oprette zealand bruger og kunne finde brugeren baseret på username', function(done){
         let username = 'benny';
         let password = 'blabla123';

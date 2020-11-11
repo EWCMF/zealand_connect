@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 async function verifyPassword(htmlPwd, dbPwd){
     return new Promise(resolve =>{
         console.log('Trying to verify password from login: '+htmlPwd);
-        becrypt.compare(htmlPwd,dbPwd, function(err, result){
+        bcrypt.compare(htmlPwd,dbPwd, function(err, result){
         if(result==true){
             console.log('--- PASSWORD MATCH THE DATABASE PASSWORD---');
             resolve(true);
