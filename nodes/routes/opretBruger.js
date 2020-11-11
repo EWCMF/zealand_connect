@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var { reqLang } = require('../public/javascript/request');
+
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
-    var temp = req.acceptsLanguages('da', 'en');
-res.render('opretBruger', {language: temp})
+res.render('opretBruger', {language: reqLang(req)})
     
 });
 

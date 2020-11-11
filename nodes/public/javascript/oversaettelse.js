@@ -10,6 +10,10 @@ function brugStrings(lang) {
     var langdata = getLangdata()
     //køre igennem alt i dokumentet, leder efter data-key keys i html
     document.querySelectorAll('html [data-key]').forEach(element => {
+        if(lang.includes('da')) {
+            console.log('stopper her')
+             return;
+        }
         //for hvert data-key værdi, leder den efter det i json navngivet langdata
         let key = element.getAttribute('data-key');
 
@@ -20,7 +24,7 @@ function brugStrings(lang) {
         if(!key.includes('placeholder')) {
             //let temp = element.textContent;
             console.log(lang);
-            if(!lang.includes('da')) {element.textContent = langdata.languages[lang].strings[key];}
+            element.textContent = langdata.languages[lang].strings[key];
             // if(!key.includes("+hbs")) { // hvis der er +hbs, så appender det ikke
             // element.textContent += temp}
         }
@@ -66,11 +70,4 @@ function getLangdata() {
     }
     }
     return temp;
-}
-
-
-
-module.exports = function(req) {
-    var temp = req.acceptsLanguages('da', 'en');
-    return temp.toString
 }
