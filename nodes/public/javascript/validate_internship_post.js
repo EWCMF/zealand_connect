@@ -25,16 +25,22 @@ function validate_internship_post(e) {
     }
     else { document.getElementById('contactError').hidden = true; }
 
+    //Ansøgningsfrist 
+    if (!document.getElementById('applicationDeadline').value == ''){
     if (!dateReg.test(document.getElementById('applicationDeadline').value)) {
         all_valid = false;
         document.getElementById('poststartdateError').hidden = false;
     }
+    else { document.getElementById('poststartdateError').hidden = true; }}
     else { document.getElementById('poststartdateError').hidden = true; }
 
+    //Ansættelsestidspunkt 
+    if (!document.getElementById('internshipEmploymentDate').value == ''){
     if (!dateReg.test(document.getElementById('internshipEmploymentDate').value)) {
         all_valid = false;
         document.getElementById('postenddateError').hidden = false;
     }
+    else { document.getElementById('postenddateError').hidden = true; }}
     else { document.getElementById('postenddateError').hidden = true; }
 
     if (document.getElementById('plainText').value.length > 65536) {
@@ -48,18 +54,40 @@ function validate_internship_post(e) {
         document.getElementById('cvrError').hidden = false;
     }
     else { document.getElementById('cvrError').hidden = true; }
-
+    if (!document.getElementById('companyURL').value == ''){
     if (!linkReg.test(document.getElementById('companyURL').value)) {
         all_valid = false;
         document.getElementById('companylinkError').hidden = false;
     }
+    else { document.getElementById('companylinkError').hidden = true; }}
     else { document.getElementById('companylinkError').hidden = true; }
 
-    if (document.getElementById('education').value == 0) {
+    if (document.getElementById('educationSelect').value == 0) {
         all_valid = false;
         document.getElementById('educationError').hidden = false;
     }
     else { document.getElementById('educationError').hidden = true; }
+    
+    
+    if (document.getElementById('countrySelect').value == 0) {
+        all_valid = false;
+        document.getElementById('countryError').hidden = false;
+    }
+    else { document.getElementById('countryError').hidden = true; }
+
+    
+    if (document.getElementById('regionSelect').value == 0) {
+        all_valid = false;
+        document.getElementById('regionError').hidden = false;
+    }
+    else { document.getElementById('regionError').hidden = true; }
+   
+
+    if (document.getElementById('citySelect').value == 0) {
+        all_valid = false;
+        document.getElementById('cityError').hidden = false;
+    }
+    else { document.getElementById('cityError').hidden = true; }
 
     if (all_valid) {
         return true;

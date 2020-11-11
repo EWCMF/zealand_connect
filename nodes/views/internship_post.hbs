@@ -44,21 +44,49 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="countrySelect">Land</label>
-                            <select class="form-control" name="country" id="countrySelect">
+                            <select class="form-control" name="country" id="countrySelect" onchange="toggleRegion()">
+                                <option value="0">Vælg et land</option>
                                 <option value="1">Danmark</option>
                                 <option value="2">Tyskland</option>
                                 <option value="3">Sverige</option>
                             </select>
+                            <p id="countryError" class="CVErrorColor" hidden="true">Du skal angive et land
+                            </p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <div class="form-group">
+                        <div class="form-group required" id="regionContainer" hidden="true">
                             <label for="regionSelect">Region</label>
                             <select class="form-control" name="region" id="regionSelect">
+                                <option value="0">Vælg en region</option>
                                 <option value="1">Sjælland</option>
                                 <option value="2">Jylland</option>
                                 <option value="3">Fyn</option>
                             </select>
+                            <p id="regionError" class="CVErrorColor" hidden="true">Du skal angive en region
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="city_text">By</label>
+                            <select class="form-control" name="city_text" id="citySelect">
+                                <option value="0">Vælg en by</option>
+                                {{{generatedCityOptions}}}
+                            </select>
+                            <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="postal_text">Postnummer</label>
+                            <select class="form-control" name="postal_text" id="postalText">
+                                <option value="0">Vælg et postnummer</option>
+                                {{{generatedPostalNumber}}}
+                            </select>
+                            <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -105,14 +133,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="form-group required">
-                            <label for="city_text">By</label>
-                            <select class="form-control" name="city_text" id="cityList">
-                                {{{generatedCityOptions}}}
-                            </select>
-                        </div>
-                    </div>
+                    
                     <div class="col-12 col-md-6">
                         <div class="form-group">
                             <label for="post_document">Vedhæft fil</label>
@@ -163,5 +184,12 @@
 
     function copyQuillHtmlToHiddenInput() {
         document.getElementById('plainText').value = editor.root.innerHTML;
+    }
+    function toggleRegion(){
+        if (document.getElementById('countrySelect').value == 1){
+            document.getElementById('regionContainer').hidden = false;
+        } else {
+            document.getElementById('regionContainer').hidden = true;
+        }
     }
 </script>
