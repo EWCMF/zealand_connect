@@ -17,6 +17,7 @@ const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
 
 var opretBrugerRouter = require('./routes/opretBruger');
+var loginStudentRouter = require('./routes/login-student');
 
 
 var app = express();
@@ -45,6 +46,7 @@ app.use(cookieSession({
 }));
 
 app.use('/opretBruger', opretBrugerRouter);
+app.use('/login-student', loginStudentRouter);
 
 
 // catch 404 and forward to error handler
