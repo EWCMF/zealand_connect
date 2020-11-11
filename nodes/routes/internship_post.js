@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-const fileUpload = require('express-fileupload');
+//const fileUpload = require('express-fileupload');
 const db = require('../models');
 const internshippost = require('../models/internshippost');
 
