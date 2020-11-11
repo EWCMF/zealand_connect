@@ -19,13 +19,13 @@
                             <img src="/images/easj-login-knap.png" alt="EASJ Login">
                         </button>
                         <form action="/login/authenticateZealandConnect" method="post" class="form-group" id="loginForm">
-                            <input type="email" id="inputFeltEmail" class="form-control" name="
-                        email" placeholder="Email"><br>
+                            <p style="color: red;">{{errormessage}}</p>
+                            <input type="email" id="inputFeltEmail" class="form-control" name="email" placeholder="Email"><br>
                             <input type="password" id="inputFeltPassword" class="form-control"
                                    name="password" placeholder="Adgangskode"><br>
                             <input type="checkbox" value="name" id="huskEmailCheckbox">
                             <label for="huskEmailCheckbox">Husk email </label>
-                            <input type="submit" class="gulKnap"> Login</input>
+                            <input type="submit" class="gulKnap"> Login</>
                         </form>
                     </div>
                 </div>
@@ -39,6 +39,13 @@
             </div>
         </div>
     </div>
+    {{#if virksomhed}}
+        <script>
+            document.getElementById("tab1").checked=false;
+            document.getElementById("tab2").checked=true;
+            document.getElementById('easjLoginKnap').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        
+        </script>
+    {{/if}}
 </div>
-
-
