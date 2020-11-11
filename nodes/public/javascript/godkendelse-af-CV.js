@@ -4,15 +4,12 @@ document.getElementById("gem").onclick = function() {submitButton()};
 function submitButton() {
     // få alle inputfelter ind i variabler
     let overskrift = document.getElementById("overskrift").value;
-    let studieretning = document.getElementById("studieretning").value;
     let email = document.getElementById("email").value;
     let telefon = parseInt(document.getElementById("telefon").value);
-    let hjemmeside = document.getElementById("hjemmeside").value;
-    let omMig = document.getElementById("om mig").value;
-    let arbejdserfaring = document.getElementById("arbejdserfaring").value;
+    let linkedIn = document.getElementById("linkedIn").value;
     let uddannelse = document.getElementById("uddannelse").value;
-    let hobby = document.getElementById("hobby").value;
-    let Checkbox = document.getElementById("OffentligCheckBox").checked;
+    let tidligere_uddannelse = document.getElementById("tidligere-uddannelse").value;
+    let sprog = document.getElementById("sprog").value;
     
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
@@ -22,13 +19,19 @@ function submitButton() {
     const numbersRegex = /^[0-9]{8}$/;
     var numbersOnly = numbersRegex.test(telefon);
 
-    const homepageRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
-    var homepage = homepageRegex.test(hjemmeside);
+    const linkedInRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
+    var Min_linkedIn = linkedInRegex.test(linkedIn);
 
     if (overskrift == "") {
         document.getElementById("OverskriftError").hidden = false;
     } else {
         document.getElementById("OverskriftError").hidden = true;
+    }
+
+    if (sprog == "") {
+        document.getElementById("sprogError").hidden = false;
+    } else {
+        document.getElementById("sprogError").hidden = true;
     }
 
     if (!emailWrittenCorrectly) {
@@ -43,25 +46,26 @@ function submitButton() {
         document.getElementById("telefonError").hidden = true;
     }
 
-    if (!homepage) {
-        document.getElementById("homepageError").hidden = false;
+    if (!Min_linkedIn && !linkedIn == "") {
+        document.getElementById("linkedInError").hidden = false;
     } else {
-        document.getElementById("homepageError").hidden = true;
+        document.getElementById("linkedInError").hidden = true;
     }
 
-    if (omMig == "") {
-        document.getElementById("OmMigError").hidden = false;
+    if (uddannelse == "") {
+        document.getElementById("UddannelsesError").hidden = false;
     } else {
-        document.getElementById("OmMigError").hidden = true;
+        document.getElementById("UddannelsesError").hidden = true;
     }
 
-    if (arbejdserfaring == "") {
-        document.getElementById("ArbejdserfaringError").hidden = false;
+    if (tidligere_uddannelse == "") {
+        document.getElementById("Tidligere-uddannelseError").hidden = false;
     } else {
-        document.getElementById("ArbejdserfaringError").hidden = true;
+        document.getElementById("Tidligere-uddannelseError").hidden = true;
     }
-
-   if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !omMig == "" && !arbejdserfaring == "") {
-     document.forms["cvForm"].submit();
-   }
+    if ( Min_linkedIn || linkedIn == "") {
+        if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "") {
+        document.forms["cvForm"].submit();
+        }
+    }
 }
