@@ -1,10 +1,4 @@
-const { Model } = require("sequelize");
-const  DataTypes = require("sequelize");
-const sequelize = require('./sequelize-connection').sequelize;
-
-
 const models = require("../models");
-
 
 async function findUserByName(usrnm){
     console.log("---finding user by name"+usrnm+"---");
