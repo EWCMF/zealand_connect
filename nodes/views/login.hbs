@@ -15,18 +15,18 @@
                         <label class="buttonText">Virksomhed</label>
                     </div>
                     <div class="loginBtnBox">
-                        <button id="easjLoginKnap">
+                        <button type="submit" id="easjLoginKnap">
                             <img src="/images/easj-login-knap.png" alt="EASJ Login">
                         </button>
-                        <div class="form-group" id="loginForm">
+                        <form action="/login/authenticateZealandConnect" method="post" class="form-group" id="loginForm">
                             <input type="email" id="inputFeltEmail" class="form-control" name="
                         email" placeholder="Email"><br>
                             <input type="password" id="inputFeltPassword" class="form-control"
-                                   name="Password" placeholder="Adgangskode"><br>
+                                   name="password" placeholder="Adgangskode"><br>
                             <input type="checkbox" value="name" id="huskEmailCheckbox">
                             <label for="huskEmailCheckbox">Husk email </label>
-                            <button class="gulKnap"> Login</button>
-                        </div>
+                            <input type="submit" class="gulKnap"> Login</input>
+                        </form>
                     </div>
                 </div>
             </div>
