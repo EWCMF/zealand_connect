@@ -9,6 +9,7 @@ var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
 var loginRouter = require('./routes/login');
+var forsideRouter = require('./routes/forside')
 
 var cookieParser = require('cookie-parser');
 
@@ -38,6 +39,7 @@ app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/login', loginRouter);
+app.use('/forside', forsideRouter);
 app.use(cookieSession({
   maxAge: 10006060*24,
   keys: ["this_is_the_secret_cookie_encryption_key"]

@@ -23,6 +23,7 @@ h1, .sidebar {
   font-size: 48px;
 }
 
+
 a {
   color: #00B7FF;
 }
@@ -253,7 +254,29 @@ input::placeholder {
 #filtrerUddannelser {
   color: black;
 }
+#nv1{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #faee84;
+  margin-left: 80px;
+  font-size: 21px;
+}
+.navbar-nav li a{
+  font-weight: 400;
+    color: #000000;
+}
+.navbar-brand{
+  font-size: 36px;
+  color: #000000;
+}
 
+.navbar-brand:hover{
+  color: #000000;
+}
+
+#cl1{
+  margin-left: 80px;
+}
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 

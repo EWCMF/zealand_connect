@@ -5,27 +5,72 @@
     <title>{{title}}</title>
     <!-- Bootstrap stylesheet here -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Quill rich text editor -->
     <link rel="stylesheet" href="/stylesheets/quill.snow.css">
     <!-- Custom stylesheet here -->
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-<!-- TODO: navigation -->
-<div class="sidebar">
-    <a>Zealand</a>
-    <span>Sjællands Erhvervsakademi</span>
-</div>
-{{{body}}}
-<!-- JQuery and Bootstrap linked here -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" 
+
+    <nav class="navbar navbar-expand-lg container-fluid" id="nv1">
+        <a class="navbar-brand" href="/forside">ZealandConnect</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="#">Profil<span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opslag
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarOpslag">
+                        <a class="dropdown-item" href="/mit-cv/search">CV'er</a>
+                        <a class="dropdown-item" href="/internship_post">Praktikopslag</a>
+                        <a class="dropdown-item" href="#">Projekter</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Virksomheder</a>
+                    </div>
+
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">English</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">login</a>
+                </li>
+            </ul>
+
+            <!-- <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </div>
+    </nav>
+
+    <!-- TODO: navigation -->
+    <div class="sidebar">
+        <a>Zealand</a>
+        <span>Sjællands Erhvervsakademi</span>
+    </div>
+    {{{body}}}
+    <!-- JQuery and Bootstrap linked here -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
-<script src="/javascript/oversaettelse.js"></script>
+    <script src="/javascript/oversaettelse.js"></script>
 
 </body>
 
