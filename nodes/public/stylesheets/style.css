@@ -181,7 +181,7 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
 }
 .google-btn {
   width: 100%;
@@ -268,6 +268,7 @@ margin-bottom: 50px;
 #gulBaggrund {
   background-color: #FFF387;
   height: 100vh;
+  display: none;
 }
 
 #logPaa {
@@ -306,6 +307,10 @@ margin-bottom: 50px;
 
   #loginBoxBackground {
     margin-top: 100px;
+  }
+
+  #gulBaggrund {
+    display: flex;
   }
 }
 
