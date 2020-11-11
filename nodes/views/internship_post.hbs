@@ -78,8 +78,7 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="cvr_number">CVR Nummer</label>
-                            <input type="number" name="cvr_number" id="companyCVR" class="form-control" placeholder="CVR"
-                                min="0" max="99999999" required>
+                            <input type="text" pattern="^[0-9]{8}$" title="CVR må kun være 8 tal" name="cvr_number" id="companyCVR" class="form-control" placeholder="CVR" required>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">

@@ -13,6 +13,7 @@ router.post('/', function (req, res, next) {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
   var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
   var inputError = false;
+  var cvrReg = /^[0-9]{8}$/
 
   //Test inputfelterne
   if (1 > title.length || title.length > 255) {console.log('Title lenght invalid'); inputError = true;}
@@ -22,12 +23,14 @@ router.post('/', function (req, res, next) {
   if (!dateReg.test(post_start_date)) {console.log('Invalid date'); inputError = true;}
   if (!dateReg.test(post_end_date)) {console.log('Invalid date'); inputError = true;}
   if (post_text.length > 65536) {console.log('Plain text is to long'); inputError = true;}
-  if (!cvr_number.length == 8) {console.log("CVR number invalid"); inputError = true;}
+  if (!cvrReg.test(cvr_number)) {console.log("CVR number invalid"); inputError = true;}
 
   //logger resultatet af testene
   console.log(emailRegex.test(email))
   console.log(dateReg.test(post_start_date))
   console.log(dateReg.test(post_end_date))
+  console.log(cvrReg.test(cvr_number))
+  
 
   if(!req.files){
   }else{
@@ -38,13 +41,15 @@ router.post('/', function (req, res, next) {
     logo.mv('../public/uploads/'+logo.name);
   }
 
-  db.InternshipPost.create(indhold).then((internshippost) => res.send(internshippost)).catch((error) => {
+  if (!inputError) {
+    db.InternshipPost.create(indhold).then((internshippost) => res.send(internshippost)).catch((error) => {
     console.log(error);
-    return res.status(400).send(error);
-  });
+     return res.status(400).send(error);
+  });}
   res.render('internship_post', { title: 'Express' });
 
 });
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
