@@ -1,11 +1,11 @@
 var express = require('express');
+var { reqLang } = require('../public/javascript/request');
 var router = express.Router();
 var passport = require('passport');
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
-res.render('login')
-    
+res.render('login', {language: reqLang(req)}) 
 });
 
 
