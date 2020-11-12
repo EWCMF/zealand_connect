@@ -8,6 +8,7 @@ var usersRouter = require('./routes/users');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
+var searchCVRouter = require('./routes/search-cv');
 var loginRouter = require('./routes/login');
 var languageRouter = require('./routes/language')
 var forsideRouter = require('./routes/forside')
@@ -41,6 +42,7 @@ app.use('/users', usersRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/mit-CV', mit_CVRouter);
+app.use('/search-cv', searchCVRouter);
 app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/forside', forsideRouter);

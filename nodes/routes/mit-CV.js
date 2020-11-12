@@ -9,91 +9,6 @@ router.get('/', function (req, res, next) {
   })
 });
 
-router.get('/search', function (req, res, next) {
-  var query = req.query;
-
-  var sort;
-  var sortName;
-
-  console.log(query);
-
-  if (query.sort == null) {
-    sort = "updatedAt";
-    sortName = "Senest opdateret";
-  } else {
-    sort = query.sort
-    switch (sort) {
-      case "overskrift":
-        sortName = "Overskrift";
-        break;
-      case "updatedAt":
-        sortName = "Senest opdateret";
-    }
-  }
-
-  var filter = JSON.parse("[]");
-  if (query.uddannelse != null) {
-    if (Array.isArray(query.uddannelse)) {
-      for (let index = 0; index < query.uddannelse.length; index++) {
-        const element = "" + query.uddannelse[index];
-        let obj = {
-          uddannelse: element
-        };
-        filter.push(obj);
-      }
-    } else {
-      let obj = {
-        uddannelse: query.uddannelse
-      };
-      console.log(obj);
-      filter.push(obj);
-    }
-
-    const {
-      Op
-    } = require("sequelize");
-    db.CV.findAll({
-      raw: true,
-      order: [
-        [sort, 'DESC']
-      ],
-      where: {
-        [Op.or]: filter
-      }
-    }).then((cvs) => {
-  
-      res.render('search_cv', {
-        json: cvs,
-        resultater: cvs.length,
-        sortName: sortName,
-        sort: sort
-      });
-    })
-  } else {
-
-  const {
-    Op
-  } = require("sequelize");
-  db.CV.findAll({
-    raw: true,
-    order: [
-      [sort, 'DESC']
-    ]
-  }).then((cvs) => {
-
-    res.render('search_cv', {
-      json: cvs,
-      resultater: cvs.length,
-      sortName: sortName,
-      sort: sort
-    });
-  })
-
-  }
-});
-
-module.exports = router;
-
 router.post('/submit', function (req, res, next) {
 
   let overskrift = req.body.overskrift;
@@ -143,3 +58,18 @@ router.post('/submit', function (req, res, next) {
     console.log(error)
   });
 });
+
+router.get('/delete', function (req, res, next) {
+  if (req.query.id == null) {
+    res.send("Use id");
+  } else {
+    db.CV.destroy({
+      where:{
+        id:req.query.id
+      }
+    });
+    res.send("Entry deleted");
+  }
+});
+
+module.exports = router;
