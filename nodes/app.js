@@ -39,7 +39,7 @@ app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/login', loginRouter);
-app.use('/language', languageRouter)
+app.use('*/language', languageRouter)
 app.use(cookieSession({
   maxAge: 10006060*24,
   keys: ["this_is_the_secret_cookie_encryption_key"]
