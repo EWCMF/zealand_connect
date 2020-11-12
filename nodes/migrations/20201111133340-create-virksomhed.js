@@ -1,57 +1,45 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('CVs', {
+    await queryInterface.createTable('Virksomheds', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      overskrift: {
-        type: Sequelize.STRING
-      },
-      uddannelse: {
-        type: Sequelize.STRING
-      },
       email: {
         type: Sequelize.STRING
       },
-      sprog: {
+      hashedPassword: {
         type: Sequelize.STRING
       },
-      speciale: {
-        type: Sequelize.STRING
-      },
-      telefon: {
+      cvrnr: {
         type: Sequelize.INTEGER
       },
-      linkedIn: {
+      navn: {
         type: Sequelize.STRING
       },
-      om_mig: {
+      addresse: {
         type: Sequelize.STRING
       },
-      iT_Kompetencer: {
+      telefonnr: {
         type: Sequelize.STRING
       },
-      udenlandsophold_og_frivilligt_arbejde: {
+      website: {
         type: Sequelize.STRING
       },
-      erhvervserfaring: {
+      ceo: {
         type: Sequelize.STRING
       },
-      tidligere_uddannelse: {
+      land: {
         type: Sequelize.STRING
       },
-      hjemmeside: {
+      postnr: {
         type: Sequelize.STRING
       },
-      fritidsinteresser: {
+      by: {
         type: Sequelize.STRING
-      },
-      offentlig: {
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -64,6 +52,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('CVs');
+    await queryInterface.dropTable('Virksomheds');
   }
 };

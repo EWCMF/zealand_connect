@@ -46,7 +46,8 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">English</a>
+                    <a class="nav-link" id="en" href="/language/en">English</a>
+                    <a class="nav-link" id="da" href="/language/da">Dansk</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login">login</a>
@@ -72,6 +73,18 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
     <script src="/javascript/oversaettelse.js"></script>
+    <script>
+        var lang=document.documentElement.lang;
+        document.getElementById('da').style.display ='none';
+        if(lang == 'da') {
+            document.getElementById('da').style.display ='none';
+            document.getElementById('en').style.display = 'block';
+        }
+        else if(lang == 'en') {
+            document.getElementById('en').style.display ='none';
+            document.getElementById('da').style.display = 'block';
+        }
+    </script>
 
 </body>
 

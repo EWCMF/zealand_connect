@@ -5,6 +5,12 @@ var passport = require('passport');
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
+res.render('login', {language: reqLang(req, res)}) 
+});
+
+
+
+router.post('/authenticateZealandConnect', function (req, res, next) {
     //REQUEST PARAMETERS:
     let error = req.query;
     //console.log("QUERY");
@@ -31,6 +37,7 @@ router.post('/authenticateVirksomhed', function (req, res, next) {
         //console.log(user);
         //handle error
         if(!user){
+            
             return res.redirect('/login'+info.message);
         }
         //todo fjern udkommentering når virksomhedstabellen er i databasen
