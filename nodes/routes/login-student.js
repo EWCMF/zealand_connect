@@ -6,12 +6,12 @@ var passport = require('passport');
 router.get('/', function (req, res, next) {
        //REQUEST PARAMETERS:
        let error = req.query;
-       console.log("QUERY");
-       console.log(req.user);
-       console.log("her er fejl json objektet:");
-       console.log("\n"+JSON.stringify(error)+"\n");
+       //console.log("QUERY");
+       //console.log(req.user);
+       //console.log("her er fejl json objektet:");
+       //console.log("\n"+JSON.stringify(error)+"\n");
        let msg = error.error;
-       console.log("THIS ERROR "+msg);
+       //console.log("THIS ERROR "+msg);
        switch(msg){
            case 'incorrectusername': res.render('login-student', { errormessage: 'Din account findes ikke i vores system gå til opret bruger for at oprette dig i systemet.'}); break;
            case 'incorrectpassword': res.render('login-student', { errormessage: 'Din account findes i vores system, men dit password er forkert.' }); break;
@@ -23,11 +23,11 @@ router.get('/', function (req, res, next) {
 
 
 router.post('/authenticate', function (req, res, next) {
-    console.log('HER ER REQUESTEN FRA POST!!!!');
-    console.log(req.body);
+    //console.log('HER ER REQUESTEN FRA POST!!!!');
+    //console.log(req.body);
     passport.authenticate('local', function(err, user, info) {
-        console.log('HER ER USER EFTER CALLBACK:');
-        console.log(user);
+        //console.log('HER ER USER EFTER CALLBACK:');
+        //console.log(user);
         //handle error
         if(!user){
             return res.redirect('/login-student'+info.message);

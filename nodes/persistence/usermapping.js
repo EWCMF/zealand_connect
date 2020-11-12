@@ -7,9 +7,9 @@ async function findUserByName(usrnm){
         console.log('user Not found!');
         return null;
     } else {
-        console.log("---OMG! i found the user:---");
-        console.log(user instanceof models.User); // true
-        console.log(user.username); // 'My Title'
+        console.log("---i found the user:---");
+        //console.log(user instanceof models.User); // true
+        //console.log(user.username); // 'My Title'
         return user;
     }
 }
@@ -21,9 +21,9 @@ async function findUserById(id){
         console.log('user Not found!');
         return null;
     } else {
-        console.log("---OMG! i found the user:---");
-        console.log(user instanceof models.User); // true
-        console.log(user.username); // 'My Title'
+        console.log("---i found the user:---");
+        //console.log(user instanceof models.User); // true
+        //console.log(user.username); // 'My Title'
         return user;
     }
 } 
