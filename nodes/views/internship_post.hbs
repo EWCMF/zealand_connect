@@ -12,6 +12,69 @@
                     <input type="text" name="title" id="internshipTitle" class="form-control" placeholder="Titel">
                     <p id="titleError" class="CVErrorColor" hidden="true">Du skal angive en titel</p>
                 </div>
+                <div class="form-group required">
+                    <label for="education">Uddannelse</label>
+                    <select class="form-control" name="education" id="educationSelect">
+                        <option value="0">Vælg en uddannelse</option>
+                        <option value="1">Handelsøkonom</option>
+                        <option value="2">Datamatiker</option>
+                        <option value="3">Bygningskonstruktør</option>
+                    </select>
+                    <p id="educationError" class="CVErrorColor" hidden="true">Du skal angive en uddannelse</p>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="countrySelect">Land</label>
+                            <select class="form-control" name="country" id="countrySelect" onchange="countryToggleFields()">
+                                <option value="0">Vælg et land</option>
+                                <option value="1">Danmark</option>
+                                <option value="2">Tyskland</option>
+                                <option value="3">Sverige</option>
+                                <option value="4">Udlandet</option>
+                            </select>
+                            <p id="countryError" class="CVErrorColor" hidden="true">Du skal angive et land
+                            </p>
+                       </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required" id="regionContainer" hidden="true">
+                            <label for="regionSelect">Region</label>
+                            <select class="form-control" name="region" id="regionSelect">
+                                <option value="0">Vælg en region</option>
+                                <option value="1">Hovedstaden</option>
+                                <option value="2">Midtjylland</option>
+                                <option value="3">Nordjylland</option>
+                                <option value="4">Sjælland</option>
+                                <option value="5">Syddanmark</option>
+                            </select>
+                            <p id="regionError" class="CVErrorColor" hidden="true">Du skal angive en region
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6" id="cityContainer" hidden="true">
+                        <div class="form-group required" >
+                            <label for="city_text">By</label>
+                            <select class="form-control" name="city_text" id="citySelect">
+                                <option value="0">Vælg en by</option>
+                                {{{generatedCityOptions}}}
+                            </select>
+                            <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6" id="postCodeContainer" hidden="true">
+                        <div class="form-group required">
+                            <label for="postal_text">Postnummer</label>
+                            <select class="form-control" name="postal_text" id="postalText">
+                                <option value="0">Vælg et postnummer</option>
+                                {{{generatedPostCodeOptions}}}
+                            </select>
+                            <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
@@ -29,64 +92,24 @@
                             <p id="contactError" class="CVErrorColor" hidden="true">Du skal angive en kontaktperson</p>
                         </div>
                     </div>
-                </div>
-                <div class="form-group required">
-                    <label for="education">Uddannelse</label>
-                    <select class="form-control" name="education" id="educationSelect">
-                        <option value="0">Vælg en uddannelse</option>
-                        <option value="1">Handelsøkonom</option>
-                        <option value="2">Datamatiker</option>
-                        <option value="3">Bygningskonstruktør</option>
-                    </select>
-                    <p id="educationError" class="CVErrorColor" hidden="true">Du skal angive en uddannelse</p>
-                </div>
-                <div class="row">
                     <div class="col-12 col-md-6">
-                        <div class="form-group required">
-                            <label for="countrySelect">Land</label>
-                            <select class="form-control" name="country" id="countrySelect" onchange="toggleRegion()">
-                                <option value="0">Vælg et land</option>
-                                <option value="1">Danmark</option>
-                                <option value="2">Tyskland</option>
-                                <option value="3">Sverige</option>
-                            </select>
-                            <p id="countryError" class="CVErrorColor" hidden="true">Du skal angive et land
-                            </p>
+                        <div class="form-group" id="containerCVR">
+                            <label for="cvr_number">CVR Nummer</label>
+                            <input type="text" pattern="^[0-9]{8}$" title="CVR må kun være 8 tal" name="cvr_number"
+                                id="companyCVR" class="form-control" placeholder="CVR">
+                            <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal
+                                præcist være 8 tal</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
-                        <div class="form-group required" id="regionContainer" hidden="true">
-                            <label for="regionSelect">Region</label>
-                            <select class="form-control" name="region" id="regionSelect">
-                                <option value="0">Vælg en region</option>
-                                <option value="1">Sjælland</option>
-                                <option value="2">Jylland</option>
-                                <option value="3">Fyn</option>
-                            </select>
-                            <p id="regionError" class="CVErrorColor" hidden="true">Du skal angive en region
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-group required">
-                            <label for="city_text">By</label>
-                            <select class="form-control" name="city_text" id="citySelect">
-                                <option value="0">Vælg en by</option>
-                                {{{generatedCityOptions}}}
-                            </select>
-                            <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-group required">
-                            <label for="postal_text">Postnummer</label>
-                            <select class="form-control" name="postal_text" id="postalText">
-                                <option value="0">Vælg et postnummer</option>
-                                {{{generatedPostalNumber}}}
-                            </select>
-                            <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by
-                            </p>
+                        <div class="form-group">
+                            <label for="company_link">Link til Hjemmeside</label>
+                            <input type="url"
+                                pattern="^(http://www.|https://www.|http://|https://)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.)?$"
+                                title="Link er ugyldigt" name="company_link" id="companyURL" class="form-control"
+                                placeholder="https://virksomhed.dk">
+                            <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link
+                                her f.eks http://www.zealandconnect.dk</p>
                         </div>
                     </div>
                 </div>
@@ -107,28 +130,6 @@
                                 placeholder="dd / mm / åååå">
                             <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive et
                                 ansættelsestidspunkt</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="form-group required">
-                            <label for="cvr_number">CVR Nummer</label>
-                            <input type="text" pattern="^[0-9]{8}$" title="CVR må kun være 8 tal" name="cvr_number"
-                                id="companyCVR" class="form-control" placeholder="CVR">
-                            <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal
-                                præcist være 8 tal</p>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="company_link">Link til Hjemmeside</label>
-                            <input type="url"
-                                pattern="^(http://www.|https://www.|http://|https://)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.)?$"
-                                title="Link er ugyldigt" name="company_link" id="companyURL" class="form-control"
-                                placeholder="https://virksomhed.dk">
-                            <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link
-                                her f.eks http://www.zealandconnect.dk</p>
                         </div>
                     </div>
                 </div>
@@ -185,11 +186,19 @@
     function copyQuillHtmlToHiddenInput() {
         document.getElementById('plainText').value = editor.root.innerHTML;
     }
-    function toggleRegion(){
+    //countryToggleFields() Toggler disse fælter: Region og CVR
+    function countryToggleFields(){
+        
         if (document.getElementById('countrySelect').value == 1){
             document.getElementById('regionContainer').hidden = false;
+            document.getElementById('containerCVR').className = "form-group required";
+            document.getElementById('cityContainer').hidden = false;
+            document.getElementById('postCodeContainer').hidden = false;
         } else {
             document.getElementById('regionContainer').hidden = true;
+            document.getElementById('containerCVR').className = "form-group";
+            document.getElementById('cityContainer').hidden = true;
+            document.getElementById('postCodeContainer').hidden = true;
         }
     }
 </script>

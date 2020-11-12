@@ -22,6 +22,7 @@
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0",
+    "sort-json-array": "^0.1.7",
     "supertest": "^6.0.0",
     "xmlhttprequest": "^1.8.0"
   }

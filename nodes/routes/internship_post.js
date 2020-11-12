@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var sortJsonArray = require('sort-json-array');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 //const fileUpload = require('express-fileupload');
 const db = require('../models');
@@ -58,23 +59,42 @@ router.post('/', function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
   var generatedCityOptions = "";
+  var generatedPostCodeOptions = "";
   function generateCityOptions() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200  ) {
         var myObj = JSON.parse(this.responseText);
-        
+        myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
         myObj.forEach(element => {
           generatedCityOptions += "<option value='"+element.primærtnavn+"'>"+element.primærtnavn+"</option>"
         });
-        res.render('internship_post', { title: 'Express', generatedCityOptions: generatedCityOptions });
+        res.render('internship_post', { title: 'Express', generatedCityOptions: generatedCityOptions, generatedPostCodeOptions: generatedPostCodeOptions });
       }
     };
     xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send();
   }
-  generateCityOptions();
+  
+  function generatePostCodeOptions() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200  ) {
+        var myObj = JSON.parse(this.responseText);
+        
+        myObj.forEach(element => {
+          generatedPostCodeOptions += "<option value='"+element.nr+"'>"+element.nr+"</option>"
+        });
+        generateCityOptions();
+      }
+    };
+    xmlhttp.open("GET", "https://dawa.aws.dk/postnumre", true);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send();
+  }
+  
+  generatePostCodeOptions()
   
 });
 

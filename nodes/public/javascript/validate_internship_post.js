@@ -43,17 +43,25 @@ function validate_internship_post(e) {
     else { document.getElementById('postenddateError').hidden = true; }}
     else { document.getElementById('postenddateError').hidden = true; }
 
+    //Opslagstekst
     if (document.getElementById('plainText').value.length > 65536) {
         all_valid = false;
         document.getElementById('posttextError').hidden = false;
     }
     else { document.getElementById('posttextError').hidden = true; }
 
+    //CVR
+    if (document.getElementById('countrySelect').value == 1){
     if (!cvrReg.test(document.getElementById('companyCVR').value)) {
         all_valid = false;
         document.getElementById('cvrError').hidden = false;
     }
-    else { document.getElementById('cvrError').hidden = true; }
+    else { document.getElementById('cvrError').hidden = true; }}
+    else {
+        document.getElementById('cvrE')
+    }
+
+    //Virksomheds Link
     if (!document.getElementById('companyURL').value == ''){
     if (!linkReg.test(document.getElementById('companyURL').value)) {
         all_valid = false;
@@ -62,27 +70,28 @@ function validate_internship_post(e) {
     else { document.getElementById('companylinkError').hidden = true; }}
     else { document.getElementById('companylinkError').hidden = true; }
 
+    //Uddanelse
     if (document.getElementById('educationSelect').value == 0) {
         all_valid = false;
         document.getElementById('educationError').hidden = false;
     }
     else { document.getElementById('educationError').hidden = true; }
     
-    
+    //Land
     if (document.getElementById('countrySelect').value == 0) {
         all_valid = false;
         document.getElementById('countryError').hidden = false;
     }
     else { document.getElementById('countryError').hidden = true; }
 
-    
+    //Region
     if (document.getElementById('regionSelect').value == 0) {
         all_valid = false;
         document.getElementById('regionError').hidden = false;
     }
     else { document.getElementById('regionError').hidden = true; }
    
-
+    //By
     if (document.getElementById('citySelect').value == 0) {
         all_valid = false;
         document.getElementById('cityError').hidden = false;
