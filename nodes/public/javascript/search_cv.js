@@ -1,6 +1,5 @@
-
 function reload() {
-    
+
     var query = "";
     var sort = document.getElementById("dropdownButton").value;
     query += sort;
@@ -29,5 +28,11 @@ function reload() {
         query += "&uddannelse=Installatør, stærkstrøm"
     }
 
-    window.location.href = 'http://localhost:3000/mit-CV/search?sort=' + query;
+    var url = location.href;
+    if (url.indexOf('?') > -1) {
+        url = location.href.substring(0, location.href.indexOf("?sort")) + "?sort=" + query;
+    } else {
+        url = location.href + "?sort=" + query;
+    }
+    window.location.href = url;
 }
