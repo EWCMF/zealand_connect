@@ -182,7 +182,7 @@ input::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
 }
 .google-btn {
   width: 100%;
@@ -277,6 +277,41 @@ input::placeholder {
   color: #000000;
 }
 
+#loginBoks {
+  background-color: white;
+  height: 100vh;
+  padding: 75px;
+}
+
+#loginBoks h1{
+font-family: Arial, Helvetica, sans-serif;
+margin-bottom: 50px;
+}
+
+#gulBaggrund {
+  background-color: #FFF387;
+  height: 100vh;
+  display: none;
+}
+
+#logPaa {
+ border: transparent;
+ margin-bottom: 30px;
+ padding-left: 25px;
+ padding-right: 25px;
+ font-family: Arial, Helvetica, sans-serif;
+}
+
+#linksHelp {
+  position: absolute;
+  bottom: 20px;
+}
+
+.bottomLink {
+  margin-right: 10px;
+  color: black;
+  font-size: 12px;
+}
 .navbar-brand:hover{
   color: #000000;
 }
@@ -303,6 +338,10 @@ input::placeholder {
 
   #loginBoxBackground {
     margin-top: 100px;
+  }
+
+  #gulBaggrund {
+    display: flex;
   }
 }
 

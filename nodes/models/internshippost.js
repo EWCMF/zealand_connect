@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     cvr_number: DataTypes.INTEGER,
     company_link: DataTypes.TEXT,
     company_logo: DataTypes.STRING,
-    post_document: DataTypes.STRING
+    post_document: DataTypes.STRING,
+    postal_number: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'InternshipPost',
