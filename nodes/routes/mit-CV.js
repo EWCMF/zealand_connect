@@ -1,5 +1,7 @@
+const e = require('express');
 var express = require('express');
 var router = express.Router();
+const db = require('../models');
 
 router.get('/', function (req, res, next) {
   res.render('Mit-CV', {
@@ -8,23 +10,86 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/search', function (req, res, next) {
-  let json = [{
-      "overskrift": "hej med dig.",
-      "underoverskrift": "ttt",
-      "billede": "link her",
-      "info": "blablablablablabla1"
-    },
-    {
-      "overskrift": "hej med dig2.",
-      "underoverskrift": "ttt2",
-      "billede": "link her2",
-      "info": "blablablablablabla1"
-    }
-  ]
+  var query = req.query;
 
-  res.render('search_cv', {
-    json: json
-  });
+  var sort;
+  var sortName;
+
+  console.log(query);
+
+  if (query.sort == null) {
+    sort = "updatedAt";
+    sortName = "Senest opdateret";
+  } else {
+    sort = query.sort
+    switch (sort) {
+      case "overskrift":
+        sortName = "Overskrift";
+        break;
+      case "updatedAt":
+        sortName = "Senest opdateret";
+    }
+  }
+
+  var filter = JSON.parse("[]");
+  if (query.uddannelse != null) {
+    if (Array.isArray(query.uddannelse)) {
+      for (let index = 0; index < query.uddannelse.length; index++) {
+        const element = "" + query.uddannelse[index];
+        let obj = {
+          uddannelse: element
+        };
+        filter.push(obj);
+      }
+    } else {
+      let obj = {
+        uddannelse: query.uddannelse
+      };
+      console.log(obj);
+      filter.push(obj);
+    }
+
+    const {
+      Op
+    } = require("sequelize");
+    db.CV.findAll({
+      raw: true,
+      order: [
+        [sort, 'DESC']
+      ],
+      where: {
+        [Op.or]: filter
+      }
+    }).then((cvs) => {
+  
+      res.render('search_cv', {
+        json: cvs,
+        resultater: cvs.length,
+        sortName: sortName,
+        sort: sort
+      });
+    })
+  } else {
+
+  const {
+    Op
+  } = require("sequelize");
+  db.CV.findAll({
+    raw: true,
+    order: [
+      [sort, 'DESC']
+    ]
+  }).then((cvs) => {
+
+    res.render('search_cv', {
+      json: cvs,
+      resultater: cvs.length,
+      sortName: sortName,
+      sort: sort
+    });
+  })
+
+  }
 });
 
 module.exports = router;
@@ -32,15 +97,15 @@ module.exports = router;
 router.post('/submit', function (req, res, next) {
 
   let overskrift = req.body.overskrift;
-  let Uddannelse = req.body.uddannelse;
+  let uddannelse = req.body.uddannelse;
   let email = req.body.email;
   let sprog = req.body.sprog;
   let speciale = req.body.speciale;
   let telefon = req.body.telefon;
   let linkedIn = req.body.linkedIn;
-  let om = req.body.om;
-  let iT_Kompetencer = req.body.iT_Kompetencer;
-  let UogFA = req.body.UogFA;
+  let om_mig = req.body.om;
+  let it_kompetencer = req.body.iT_Kompetencer;
+  let udenlandsophold_og_frivilligt_arbejde = req.body.UogFA;
   let erhvervserfaring = req.body.erhvervserfaring;
   let tidligere_uddannelse = req.body.tidligere_uddannelse;
   let hjemmeside = req.body.hjemmeside;
@@ -56,15 +121,15 @@ router.post('/submit', function (req, res, next) {
 
   var json = {
     overskrift,
-    Uddannelse,
+    uddannelse,
     email,
     sprog,
     speciale,
     telefon,
     linkedIn,
-    om,
-    iT_Kompetencer,
-    UogFA,
+    om_mig,
+    it_kompetencer,
+    udenlandsophold_og_frivilligt_arbejde,
     erhvervserfaring,
     tidligere_uddannelse,
     hjemmeside,
@@ -72,5 +137,9 @@ router.post('/submit', function (req, res, next) {
     offentlig
   }
   res.send(JSON.stringify(json));
-  //seq.newCV("test", json);
+  db.CV.create(json).then((cv) => {
+    console.log(cv);
+  }).catch((error) => {
+    console.log(error)
+  });
 });
