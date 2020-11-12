@@ -23,11 +23,12 @@ describe('GET /mit-CV', function () {
     })
 });
 
-describe('POST /mit-CV/submit', function () {
-    it('respond with status code OK 200', function(done) {
-        request(app).post('/mit-CV/submit').expect(200, done);
-    })
-});
+// Denne er udkommenteret da den ellers bare ville lave tomme CV entries i databasen.
+// describe('POST /mit-CV/submit', function () {
+//     it('respond with status code OK 200', function(done) {
+//         request(app).post('/mit-CV/submit').expect(200, done);
+//     })
+// });
 
 describe('GET /login', function () {
     it('respond with status code OK 200', function(done) {
