@@ -254,6 +254,13 @@ input::placeholder {
 #filtrerUddannelser {
   color: black;
 }
+#forside1{
+  height: 5000px; /* Make this site really long */
+  width: 1920px; /* Make this site really wide */
+  overflow: hidden; /* Hide scrollbars */
+
+
+}
 #nv1{
   padding-top: 15px;
   padding-bottom: 15px;
@@ -276,6 +283,7 @@ input::placeholder {
 
 #cl1{
   margin-left: 80px;
+  
 }
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
