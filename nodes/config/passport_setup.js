@@ -1,5 +1,5 @@
 const passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
-const findUserByName = require('../persistence/usermapping').findUserByName;
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const findUserById = require('../persistence/usermapping').findUserById;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
@@ -24,7 +24,7 @@ passport.use(new LocalStrategy({
         function(username, password, done) {
             console.log('Youve reached the local strat callback!');
             //når vi prøver at logge ind, skal vi checke om brugeren findes i db
-            findUserByName(username).then(async(user)=>{
+            findUserByEmail(username).then(async(user)=>{
                 if(user==null){
                     //redirect user back to login page with faliure message
                     console.log("ERROR: USER NOT FOUND---\nERROR: USER NOT FOUND---\nERROR: USER NOT FOUND---\n");

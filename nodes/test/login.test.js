@@ -1,6 +1,5 @@
-var assert = require('assert')
-
-const findUserByName = require('../persistence/usermapping').findUserByName;
+var assert = require('assert');
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const findUserById = require('../persistence/usermapping').findUserById;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
@@ -8,16 +7,16 @@ const verifyPassword = require('../encryption/password').verifyPassword;
 describe('Find bruger i database baseret på username', function(){
     //TC1
     it('Bør find en bruger med username som matcher det username vi indtaster', function(done){
-        let username = 'janedoe@example.com';
-        findUserByName(username).then((user)=>{
-            assert.strictEqual(user.username, username);
+        let email = 'bob@gmail.com';
+        findUserByEmail(email).then((user)=>{
+            assert.strictEqual(user.email, email);
             done();
         })
     })
     //TC2
     it('Bør ikke være i stand til at finde en bruger med en username der ikke er registreret i databasen', function(done){
-        let username = 'enbrugerderikkefindesidatabasen';
-        findUserByName(username).then((user)=>{
+        let email = 'enbrugerderikkefindesidatabasen@gmail.com';
+        findUserByEmail(email).then((user)=>{
             assert.strictEqual(user, null);
             done();
         })
