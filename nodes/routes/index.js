@@ -1,4 +1,5 @@
 var express=require('express');
+const { reqLang } = require('../public/javascript/request');
 var router=express.Router();
 
 // Tommy har udkommenteret her. Det er fordi alt dette bliver kørt når modulet importeres i app.js
@@ -103,7 +104,7 @@ async function asyncFunction(){
 router.get('/',function(req,res,next){
 //  console.log(aDate);
 //  res.render('index',{title:'Express',date:aDate});
-    res.render('index',{title:'Express'});
+    res.render('index',{title:'Express', language: reqLang(req ,res)});
 });
 
 module.exports=router;
