@@ -32,7 +32,7 @@ module.exports = {
       om_mig: {
         type: Sequelize.STRING
       },
-      iT_Kompetencer: {
+      it_kompetencer: {
         type: Sequelize.STRING
       },
       udenlandsophold_og_frivilligt_arbejde: {
