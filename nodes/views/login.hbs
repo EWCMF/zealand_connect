@@ -10,13 +10,12 @@
                         <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked"
                                onclick="showEASJButton()">
                         <label class="buttonText" data-key="studerende">Studerende</label>
-                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
-                               onclick="showVirksomhedLogin()">
+                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login" onclick="showVirksomhedLogin()">
                         <label class="buttonText" data-key="virksomhed">Virksomhed</label>
                     </div>
                     <div class="loginBtnBox">
-                        <button type="submit" id="easjLoginKnap">
-                            <img src="/images/easj-login-knap.png" alt="EASJ Login">
+                        <button type="submit" id="easjLoginKnap"onclick="location.href='/login-student'">
+                            <img src="/images/easj-login-knap.png" alt="EASJ Login" >
                         </button>
                         <form action="/login/authenticateZealandConnect" method="post" class="form-group" id="loginForm">
                             <p style="color: red;">{{errormessage}}</p>
@@ -48,8 +47,4 @@
         
         </script>
     {{/if}}
-</div>
-
-<div>
-    
 </div>
