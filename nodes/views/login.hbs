@@ -9,36 +9,42 @@
                     <div class="radioBtnBox">
                         <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked"
                                onclick="showEASJButton()">
-                        <label class="buttonText">Studerende</label>
-                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
-                               onclick="showVirksomhedLogin()">
-                        <label class="buttonText">Virksomhed</label>
+                        <label class="buttonText" data-key="studerende">Studerende</label>
+                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login" onclick="showVirksomhedLogin()">
+                        <label class="buttonText" data-key="virksomhed">Virksomhed</label>
                     </div>
                     <div class="loginBtnBox">
-                        <button id="easjLoginKnap">
-                            <img src="/images/easj-login-knap.png" alt="EASJ Login">
+                        <button type="submit" id="easjLoginKnap"onclick="location.href='/login-student'">
+                            <img src="/images/easj-login-knap.png" alt="EASJ Login" >
                         </button>
-                        <div class="form-group" id="loginForm">
-                            <input type="email" id="inputFeltEmail" class="form-control" name="
-                        email" placeholder="Email"><br>
+                        <form action="/login/authenticateVirksomhed" method="post" class="form-group" id="loginForm">
+                            <p style="color: red;">{{errormessage}}</p>
+                            <input type="email" id="inputFeltEmail" class="form-control" name="email" placeholder="Email"><br>
                             <input type="password" id="inputFeltPassword" class="form-control"
-                                   name="Password" placeholder="Adgangskode"><br>
+                                   name="password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
                             <input type="checkbox" value="name" id="huskEmailCheckbox">
-                            <label for="huskEmailCheckbox">Husk email </label>
-                            <button class="gulKnap"> Login</button>
-                        </div>
+                            <label for="huskEmailCheckbox" data-key="husk-email">Husk email </label>
+                            <input type="submit" class="gulKnap" value="Login"> </button>
+                        </form>
                     </div>
                 </div>
             </div>
 
             <div id="cookieBox">
-                <div id="cookieText">
-                    Cookies skal være aktiveret i din browser
+                <div id="cookieText" >
+                    <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
                     <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
                 </div>
             </div>
         </div>
     </div>
+    {{#if virksomhed}}
+        <script>
+            document.getElementById("tab1").checked=false;
+            document.getElementById("tab2").checked=true;
+            document.getElementById('easjLoginKnap').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        
+        </script>
+    {{/if}}
 </div>
-
-
