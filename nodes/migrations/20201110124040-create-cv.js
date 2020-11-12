@@ -8,46 +8,46 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      Overskrift: {
+      overskrift: {
         type: Sequelize.STRING
       },
-      Uddannelse: {
+      uddannelse: {
         type: Sequelize.STRING
       },
-      Email: {
+      email: {
         type: Sequelize.STRING
       },
-      Sprog: {
+      sprog: {
         type: Sequelize.STRING
       },
-      Speciale: {
+      speciale: {
         type: Sequelize.STRING
       },
-      Telefon: {
+      telefon: {
         type: Sequelize.INTEGER
       },
-      LinkedIn: {
+      linkedIn: {
         type: Sequelize.STRING
       },
-      Om_mig: {
+      om_mig: {
         type: Sequelize.STRING
       },
-      IT_Kompetencer: {
+      iT_Kompetencer: {
         type: Sequelize.STRING
       },
-      Udenlandsophold_og_frivilligt_arbejde: {
+      udenlandsophold_og_frivilligt_arbejde: {
         type: Sequelize.STRING
       },
-      Erhvervserfaring: {
+      erhvervserfaring: {
         type: Sequelize.STRING
       },
-      Tidligere_uddannelse: {
+      tidligere_uddannelse: {
         type: Sequelize.STRING
       },
-      Hjemmeside: {
+      hjemmeside: {
         type: Sequelize.STRING
       },
-      Fritidsinteresser: {
+      fritidsinteresser: {
         type: Sequelize.STRING
       },
       offentlig: {
