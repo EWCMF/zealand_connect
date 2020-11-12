@@ -255,7 +255,7 @@ input::placeholder {
   color: black;
 }
 #forside1{
-  height: 5000px; /* Make this site really long */
+  /* Find løsning til mobil!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
   width: 1920px; /* Make this site really wide */
   overflow: hidden; /* Hide scrollbars */
 
