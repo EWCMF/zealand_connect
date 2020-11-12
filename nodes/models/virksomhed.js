@@ -15,15 +15,15 @@ module.exports = (sequelize, DataTypes) => {
   };
   Virksomhed.init({
     email: DataTypes.STRING,
-    hashedPassword: DataTypes.STRING,
+    password: DataTypes.STRING,
     cvrnr: DataTypes.INTEGER,
     navn: DataTypes.STRING,
-    addresse: DataTypes.STRING,
-    telefonnr: DataTypes.STRING,
-    website: DataTypes.STRING,
-    ceo: DataTypes.STRING,
+    adresse: DataTypes.STRING,
+    tlfnr: DataTypes.INTEGER,
+    hjemmeside: DataTypes.STRING,
+    direktoer: DataTypes.STRING,
     land: DataTypes.STRING,
-    postnr: DataTypes.STRING,
+    postnr: DataTypes.INTEGER,
     by: DataTypes.STRING
   }, {
     sequelize,

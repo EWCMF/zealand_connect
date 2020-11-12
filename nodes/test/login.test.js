@@ -4,7 +4,7 @@ const findUserById = require('../persistence/usermapping').findUserById;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
 
-describe('Find bruger i database baseret på username', function(){
+describe('Find bruger i database baseret på email', function(){
     //TC1
     it('Bør find en bruger med username som matcher det username vi indtaster', function(done){
         let email = 'bob@gmail.com';
