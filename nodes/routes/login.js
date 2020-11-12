@@ -33,6 +33,10 @@ router.post('/authenticateVirksomhed', function (req, res, next) {
         if(!user){
             return res.redirect('/login'+info.message);
         }
+        //todo fjern udkommentering når virksomhedstabellen er i databasen
+        /*if(!user instanceof models.virksomhed){
+            return res.redirect('/login'+ //todo custom error message);
+        }*/
         //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
         req.logout();
         //login skal være der for, at passport laver en cookie for brugeren
