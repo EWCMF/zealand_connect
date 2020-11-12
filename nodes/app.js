@@ -14,8 +14,8 @@ var forsideRouter = require('./routes/forside')
 var cookieParser = require('cookie-parser');
 
 const cookieSession = require('cookie-session');
-const passportSetup = require('./config/passport_setup');
 const passport = require('passport');
+const passportSetup = require('./config/passport_setup');
 
 var opretBrugerRouter = require('./routes/opretBruger');
 var loginStudentRouter = require('./routes/login-student');
@@ -32,6 +32,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -44,8 +46,7 @@ app.use(cookieSession({
   maxAge: 10006060*24,
   keys: ["this_is_the_secret_cookie_encryption_key"]
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+
 app.use('/opretBruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
 

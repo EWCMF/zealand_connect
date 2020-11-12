@@ -8,14 +8,12 @@
                 <h1>LOGIN</h1>
                 <br>
                 <p>Log på med din organizationskonto</p>
-                <div class="form-group" id="studentLoginForm">
-                        <input type="email" id="inputFeltEmailStudent" class="form-control" name="
-                        email" placeholder="nogen@example.com">
-                    <br>
-                    <input type="password" id="inputFeltPasswordStudent" class="form-control" name="
-                        password" placeholder="Adgangskode"><br>
-                </div>
-                    <button class="btn btn-dark" onclick="" type="button" id="logPaa">Log på</button>
+                <form action="/login-student/authenticate" method="post"  class="form-group" id="studentLoginForm">
+                    <p style="color: red;">{{errormessage}}</p>
+                    <input type="email" id="inputFeltEmailStudent" class="form-control" name="email" placeholder="nogen@example.com"> <br>
+                    <input type="password" id="inputFeltPasswordStudent" class="form-control" name="password" placeholder="Adgangskode"><br>
+                    <input class="btn btn-dark" type="submit" id="logPaa" value="Log på">
+                </form>
                     <p>Benyt din EASJ email til at logge ind med.</p>
                     <br>
                     <p>Glemt kodeord? Send en SMS med teksten "kodeord" til 50 76 27 10.</p>
