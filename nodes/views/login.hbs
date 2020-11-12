@@ -10,19 +10,18 @@
                         <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked"
                                onclick="showEASJButton()">
                         <label class="buttonText" data-key="studerende">Studerende</label>
-                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
-                               onclick="showVirksomhedLogin()">
+                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login" onclick="showVirksomhedLogin()">
                         <label class="buttonText" data-key="virksomhed">Virksomhed</label>
                     </div>
                     <div class="loginBtnBox">
-                        <button type="submit" id="easjLoginKnap">
-                            <img src="/images/easj-login-knap.png" alt="EASJ Login">
+                        <button type="submit" id="easjLoginKnap"onclick="location.href='/login-student'">
+                            <img src="/images/easj-login-knap.png" alt="EASJ Login" >
                         </button>
-                        <form action="/login/authenticateZealandConnect" method="post" class="form-group" id="loginForm">
-                            <input type="email" id="inputFeltEmail" class="form-control" name="
-                        email" placeholder="Email"><br>
+                        <form action="/login/authenticateVirksomhed" method="post" class="form-group" id="loginForm">
+                            <p style="color: red;">{{errormessage}}</p>
+                            <input type="email" id="inputFeltEmail" class="form-control" name="email" placeholder="Email"><br>
                             <input type="password" id="inputFeltPassword" class="form-control"
-                                   name="Password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
+                                   name="password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
                             <input type="checkbox" value="name" id="huskEmailCheckbox">
                             <label for="huskEmailCheckbox" data-key="husk-email">Husk email </label>
                             <input type="submit" class="gulKnap" value="Login"> </button>
@@ -39,4 +38,13 @@
             </div>
         </div>
     </div>
+    {{#if virksomhed}}
+        <script>
+            document.getElementById("tab1").checked=false;
+            document.getElementById("tab2").checked=true;
+            document.getElementById('easjLoginKnap').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        
+        </script>
+    {{/if}}
 </div>
