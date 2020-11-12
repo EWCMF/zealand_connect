@@ -30,15 +30,21 @@ router.get('/search', function (req, res, next) {
 module.exports = router;
 
 router.post('/submit', function (req, res, next) {
+
   let overskrift = req.body.overskrift;
-  let studieretning = req.body.studieretning;
+  let Uddannelse = req.body.uddannelse;
   let email = req.body.email;
+  let sprog = req.body.sprog;
+  let speciale = req.body.speciale;
   let telefon = req.body.telefon;
-  let hjemmeside = req.body.hjemmeside;
+  let linkedIn = req.body.linkedIn;
   let om = req.body.om;
-  let arbejdserfaring = req.body.arbejdserfaring;
-  let uddannelse = req.body.uddannelse;
-  let hobby = req.body.hobby;
+  let iT_Kompetencer = req.body.iT_Kompetencer;
+  let UogFA = req.body.UogFA;
+  let erhvervserfaring = req.body.erhvervserfaring;
+  let tidligere_uddannelse = req.body.tidligere_uddannelse;
+  let hjemmeside = req.body.hjemmeside;
+  let fritidsinteresser = req.body.fritidsinteresser;
   let offentligCheckbox = req.body.offentligCheckBox;
 
   var offentlig;
@@ -50,17 +56,21 @@ router.post('/submit', function (req, res, next) {
 
   var json = {
     overskrift,
-    studieretning,
+    Uddannelse,
     email,
+    sprog,
+    speciale,
     telefon,
-    hjemmeside,
+    linkedIn,
     om,
-    arbejdserfaring,
-    uddannelse,
-    hobby,
+    iT_Kompetencer,
+    UogFA,
+    erhvervserfaring,
+    tidligere_uddannelse,
+    hjemmeside,
+    fritidsinteresser,
     offentlig
   }
-
-  res.send("Data er gemt (temp)");
-  seq.newCV("test", json);
+  res.send(JSON.stringify(json));
+  //seq.newCV("test", json);
 });

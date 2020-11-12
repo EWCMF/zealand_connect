@@ -4,31 +4,35 @@
     <p class="text-center">{{Profil}}</p>
     <form method="POST" action="mit-CV/submit" id="cvForm" name="cvForm">
         <!-- Overskrift textarea -->
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Overskrift</label>
+        <div class="form-group required">
+            <label for="exampleFormControlInput1">Hvad du søger</label>
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
-                placeholder="Stilling eller status">{{Overskrift}}</textarea>
-            <p id="OverskriftError" class="CVErrorColor" hidden="false">Må ikke være tom</p>
+                placeholder="Stilling, Status eller hvad du søger">{{Overskrift}}</textarea>
+            <p id="OverskriftError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
         </div>
-        <!-- studieretning med dropdown -->
+        <!-- Uddannelse med dropdown -->
         <div class="form-group">
             <div class="row">
-                <div class="col-sm-6">
-                    <label for="exampleFormControlSelect1">Studieretning</label>
-                    <select class="form-control" id="studieretning" name="studieretning">
-                        <option>Datamatiker</option>
-                        <option>Handelsøkonom</option>
-                        <option>Finansøkonom</option>
-                        <option>International Handel og markedsføring</option>
-                        <option>Innovation og Entrepreneurship</option>
-                        <option>BygningsKontruktør</option>
-                        <option>Byggetekniker</option>
-                        <option>Installatør, stærkstrøm</option>
-                    </select>
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="exampleFormControlSelect1">Uddannelse</label>
+                        <select class="form-control" id="uddannelse" name="uddannelse">
+                            <option value="">Vælg din uddannelse</option>
+                            <option value="Datamatiker">Datamatiker</option>
+                            <option value="Handelsøkonom">Handelsøkonom</option>
+                            <option value="Finansøkonom">Finansøkonom</option>
+                            <option value="International Handel og markedsføring">International Handel og markedsføring</option>
+                            <option value="Innovation og Entrepreneurship">Innovation og Entrepreneurship</option>
+                            <option value="BygningsKontruktør">BygningsKontruktør</option>
+                            <option value="Byggetekniker">Byggetekniker</option>
+                            <option value="Installatør, stærkstrøm">Installatør, stærkstrøm</option>
+                        </select>
+                        <p id="UddannelsesError" class="CVErrorColor" hidden="false">Du skal vælge en Uddannelse</p>
+                    </div>
                 </div>
                 <!-- email med inputfelt -->
-                <div class="col-sm-6">
-                    <div class="form-group">
+                <div class="col-sm-4">
+                    <div class="form-group required">
                         <label for="exampleFormControlInput1">Email address</label>
                         <input type="email" class="form-control" placeholder="name@example.com" id="email" name="email"
                             value={{Email}}>
@@ -36,24 +40,39 @@
                             bruge et @</p>
                     </div>
                 </div>
+                <!-- Sprog med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="exampleFormControlInput1">Sprog</label>
+                        <input class="form-control" placeholder="Dansk" id="sprog" name="sprog" value={{Sprog}}>
+                        <p id="sprogError" class="CVErrorColor" hidden="true">Du skal skrive dit ønskede sprog her</p>
+                    </div>
+                </div>
             </div>
             <div class="row">
-                <!-- Telefon nummer med inputfelt -->
-                <div class="col-sm-6">
-                    <label for="exampleFormControlInput1">Telefon</label>
-                    <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678"
-                        value={{Telefon}}>
-                    <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer det skal præcist
-                        være 8 tal</p>
-                </div>
-                <div class="col-sm-6">
-                    <!-- hjemmeside med inputfelt -->
+                <!-- speciale indenfor din uddannelse med inputfelt -->
+                <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Hjemmeside</label>
-                        <input class="form-control" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk"
-                            value={{Hjemmeside}}>
-                        <p id="homepageError" class="CVErrorColor" hidden="true">Hvis du vil kan du skrive en hjemmeside
-                            i dette felt</p>
+                        <label for="exampleFormControlSelect1">Speciale</label>
+                        <input class="form-control" id="speciale" name="speciale" value={{Speciale}}>
+                    </div>
+                </div>
+                <!-- Telefon nummer med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="exampleFormControlInput1">Telefon</label>
+                        <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678"
+                            value={{Telefon}}>
+                        <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer, det skal præcist
+                            være 8 tal</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <!-- LinkedIn med inputfelt -->
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">LinkedIn</label>
+                        <input class="form-control" id="linkedIn" name="linkedIn" placeholder="https://example.dk">
+                        <p id="linkedInError" class="CVErrorColor" hidden="true">Du skal skrive en rigtig hjemmeside</p>
                     </div>
                 </div>
             </div>
@@ -61,28 +80,42 @@
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">Om mig</label>
                 <textarea class="form-control" rows="3" id="om mig" name="om"
-                    placeholder="Må ikke være tom">{{Om}}</textarea>
-                <p id="OmMigError" class="CVErrorColor" hidden="false">Må ikke være tom</p>
+                    placeholder="Valgfri">{{Om}}</textarea>
             </div>
             <div class="form-group">
-                <!-- textarea med arbejdserfaring -->
+                <!-- textarea om mig -->
+                <label for="exampleFormControlTextarea1">IT Kompetencer</label>
+                <textarea class="form-control" rows="3" id="iT_Kompetencer" name="iT_Kompetencer"
+                    placeholder="Valgfri">{{IT-Kompetencer}}</textarea>
+            </div>
+            <div class="form-group">
+                <!-- textarea om mig -->
+                <label for="exampleFormControlTextarea1">Udenlandsophold og frivilligt arbejde</label>
+                <textarea class="form-control" rows="3" id="UogFA" name="UogFA"
+                    placeholder="Valgfri">{{UogFA}}</textarea>
+            </div>
+            <div class="form-group">
+                <!-- textarea med erhvervserfaring -->
                 <label for="exampleFormControlTextarea1">Erhvervserfaring</label>
-                <textarea class="form-control" rows="3" id="arbejdserfaring" name="arbejdserfaring"
-                    placeholder="Tidligere eller nuværende arbejdserfaring">{{Arbejdserfaring}}</textarea>
-                <p id="ArbejdserfaringError" class="CVErrorColor" hidden="true">Må ikke være tom</p>
+                <textarea class="form-control" rows="3" id="erhvervserfaring" name="erhvervserfaring"
+                    placeholder="Tidligere eller nuværende erhvervserfaring">{{erhvervserfaring}}</textarea>
+            </div>
+            <div class="form-group required">
+                <!-- textarea med uddannelse -->
+                <label for="exampleFormControlTextarea1">Tidligere Uddannelse</label>
+                <textarea class="form-control" rows="3" id="tidligere-uddannelse" name="tidligere_uddannelse"
+                    placeholder="Tidligere eller lidt om din nuværende Uddannelse">{{Tidligere-uddannelse}}</textarea>
+                    <p id="Tidligere-uddannelseError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
             </div>
             <div class="form-group">
-                <!-- textarea med uddannelse -->
-                <label for="exampleFormControlTextarea1">Uddannelse</label>
-                <textarea class="form-control" rows="3" id="uddannelse" name="uddannelse"
-                    placeholder="Tidligere eller nuværende Uddannelse">{{Uddannelse}}</textarea>
-                <p id="UddanelsesError" class="CVErrorColor" hidden="true">Må ikke være tom</p>
+                <!-- textarea om mig -->
+                <label for="exampleFormControlTextarea1">Hjemmeside</label>
+                <textarea class="form-control" rows="3" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk">{{Hjemmeside}}</textarea>
             </div>
             <div class="form-group">
                 <!-- textarea med hobby -->
-                <label for="exampleFormControlTextarea1">Hobby</label>
-                <textarea class="form-control" rows="3" id="hobby" name="hobby"
-                    placeholder="Valgfri">{{Hobby}}</textarea>
+                <label for="exampleFormControlTextarea1">Fritidsinteresser</label>
+                <textarea class="form-control" rows="3" id="fritidsinteresser" name="fritidsinteresser" placeholder="Valgfri">{{fritidsinteresser}}</textarea>
             </div>
             <div class="text-center">
                 <!-- CheckBox til om en cv skal være offentlig -->
