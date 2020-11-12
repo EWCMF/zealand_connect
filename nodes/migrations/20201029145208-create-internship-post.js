@@ -50,6 +50,9 @@ module.exports = {
       post_document:{
         type: Sequelize.STRING
       },
+      postal_number:{
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
