@@ -9,12 +9,14 @@ router.get('/', function (req, res, next) {
 
 router.get('/search', function (req, res, next) {
   let json = [{
+      "id": "1",
       "overskrift": "hej med dig.",
       "underoverskrift": "ttt",
       "billede": "link her",
       "info": "blablablablablabla1"
     },
     {
+      "id": "2",
       "overskrift": "hej med dig2.",
       "underoverskrift": "ttt2",
       "billede": "link her2",
@@ -26,6 +28,29 @@ router.get('/search', function (req, res, next) {
     json: json
   });
 });
+
+router.get('/search/:id', function(req, res) {
+  let json = [{
+    "id": "1",
+    "overskrift": "hej med dig.",
+    "underoverskrift": "ttt",
+    "billede": "link her",
+    "info": "blablablablablabla1"
+  },
+  {
+    "id": "2",
+    "overskrift": "hej med dig2.",
+    "underoverskrift": "ttt2",
+    "billede": "link her2",
+    "info": "blablablablablabla1"
+  }
+]
+
+  console.log(req.params.id);
+  let id = req.params.id
+  
+  res.render('cv', {json: json[parseInt(id)-1]});
+})
 
 module.exports = router;
 
