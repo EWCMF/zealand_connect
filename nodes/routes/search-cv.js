@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const db = require('../models');
 
+
 router.get('/', function (req, res, next) {
     var query = req.query;
 
@@ -84,5 +85,31 @@ router.get('/', function (req, res, next) {
 
     }
 });
+
+router.get('/:id', function(req, res) {
+    /*let json = [{
+      "id": "1",
+      "overskrift": "hej med dig.",
+      "underoverskrift": "ttt",
+      "billede": "link her",
+      "info": "blablablablablabla1"
+    },
+    {
+      "id": "2",
+      "overskrift": "hej med dig2.",
+      "underoverskrift": "ttt2",
+      "billede": "link her2",
+      "info": "blablablablablabla1"
+    }
+  ]*/
+    let id = req.params.id
+
+    db.CV.findOne({raw: true, where: { id: parseInt(id) } }).then((cv) => {
+        console.log(cv);
+        res.render('cv', {json: cv});
+    });
+
+  });
+
 
 module.exports = router;
