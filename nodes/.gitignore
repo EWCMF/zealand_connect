@@ -63,5 +63,9 @@ typings/
 # exclude uploads in uploads folder
 public/uploads/
 
+<<<<<<< fileupload_internship
 # excludes database config
+=======
+# database config fil
+>>>>>>> master
 config/config.json

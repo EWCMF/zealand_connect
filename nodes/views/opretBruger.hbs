@@ -1,4 +1,3 @@
-<script src='/javascript/opretBruger.js' defer></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <div class="container-fluid">
@@ -7,65 +6,25 @@
             <div id="loginBoxBackground">
                 <div id="loginContent">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
-                    <div class="radioBtnBox">
-                        <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked"
-                               onclick="showEASJButton()">
-                        <label class="buttonText" data-key="studerende">Studerende</label>
-                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
-                               onclick="showVirksomhedLogin()">
-                        <label class="buttonText" data-key="virksomhed">Virksomhed</label>
                     </div>
                     <div class="loginBtnBox">
-                        <div class="form-group" id="studerendeOpret"> <!-- Studerende opret form-->
-                            <input type="text" id="studerendeNavn" class="form-control" name="
-                        navn" placeholder="Navn" data-key="placeholdernavn"><br>
-                            <input type="text" id="studerendeEfternavn" class="form-control" name="
-                        efternavn" placeholder="Efternavn" data-key="placeholderefternavn"><br>
-                            <input type="text" id="studerendeCPR" class="form-control" name="
-                        cpr" placeholder="CPR-Nummer" data-key="placeholdercpr"><br>
-                            <input type="email" id="studerendeEmail" class="form-control" name="
-                        email" placeholder="Email"><br>
-                            <input type="password" id="studerendeAdgangskode" class="form-control" name="
-                        adgangskode" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
-                            <input type="password" id="studerendeGentagAdgangskode" class="form-control" name="
-                        gentagAdgangskode" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode"><br>
-                            <select id="uddanelse-dropdown" name="udannelse">
-                                <!-- udfyld ved brug af en metode, som tager fra en json fil, Options er midlertidig til 
-                                demonstration af funktion
-                                https://www.codebyamir.com/blog/populate-a-select-dropdown-list-with-json  -->
-                                <option value="uddannelser" data-key="uddannelser">Vælg en Uddannelse</option>
-                                <option value="Administrationsøkonom" data-key="administrationsøkonom">Administrationsøkonom</option>
-                                <option value="Autoteknolog" data-key="autoteknolog">Autoteknolog</option>
-                                <option value="Byggetekniker" data-key="Byggetekniker">Byggetekniker</option>
-                                <option value="Datamatiker" data-key="Datamatiker">Datamatiker</option>
-                                <option value="ElInstallatør" data-key="ElInstallatør">El-Installatør</option>
-                                <option value="Finansøkonom" data-key="Finansøkonom">Finansøkonom</option>
-                                <option value="Handelsøkonom" data-key="Handelsøkonom">Handelsøkonom</option>
-                                <option value="Jordbrugsteknolog" data-key="Jordbrugsteknolog">Jordbrugsteknolog</option>
-                                <option value="Laborant" data-key="Laborant">Laborant</option>
-                                <option value="Logistikøkonom" data-key="Logistikøkonom">Logistikøkonom</option>
-                                <option value="Markedsføringsøkonom" data-key="Markedsføringsøkonom">Markedsføringsøkonom</option>
-                                <option value="Multimediedesigner" data-key="Multimediedesigner">Multimediedesigner</option>
-                                <option value="Procesteknolog" data-key="Procesteknolog">Procesteknolog</option>
-                                <option value="Produktionsteknolog" data-key="Produktionsteknolog">Produktionsteknolog</option>
-                                <option value="Serviceøkonom" data-key="Serviceøkonom">Serviceøkonom</option>
-                                <option value="VVSInstallatør" data-key="VVSInstallatør">VVS-Installatør</option>
-                            </select>
-
-                            
-                            
-                        <button class="gulKnap" data-key="opret">Opret Bruger</button>
-                        </div>
-
                         <div class="form-group" id="virksomhedOpret"> <!-- Virksomheds opret form-->
-                            <input type="email" id="virksomhedEmail" class="form-control" name="
-                                    email" placeholder="Email"><br>
+                           <input type="email" id="virksomhedEmail" class="form-control" name="
+                                    Email" placeholder="Email"><br>
+                            <input type="email" id="virksomhedGentagEmail" class="form-control"
+                                   name="GentagEmail" placeholder="Gentag email"><br>
+                            <input type="string" id="virksomhedTelefonnummer" class="form-control"
+                                   name="Telefonnummer" placeholder="Telefonnummer"><br>
+                            <input type="string" id="virksomhedBy" class="form-control"
+                                   name="By" placeholder="By"><br>
+                            <input type="string" id="virksomhedPostnummer" class="form-control"
+                                   name="Postnummer" placeholder="Postnummer"><br>       
                             <input type="password" id="virksomhedAdgangskode" class="form-control"
-                                   name="Password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
+                                   name="Password" placeholder="Adgangskode"><br>
                             <input type="password" id="virksomhedGentagAdgangskode" class="form-control"
-                                   name="GentagPassword" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode"><br>
+                                   name="GentagPassword" placeholder="Gentag Adgangskode"><br>
                             <input type="text" id="virksomhedCVR" class="form-control"
-                                   name="cvr" placeholder="CVR-Nummer" data-key="placeholdercvr"><br>       
+                                   name="CVR" placeholder="CVR-Nummer"><br>  
 
                             <button class="gulKnap" data-key="opret"> Opret Bruger</button>
 
@@ -78,13 +37,12 @@
 
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div id="cookieBox">
+                    <div id="cookieBox">
                 <div id="cookieText" >
                     <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
                     <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
+                </div>
+            </div>
                 </div>
             </div>
         </div>

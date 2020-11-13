@@ -1,4 +1,4 @@
-function reload() {
+function filter() {
 
     var query = "";
     var sort = document.getElementById("dropdownButton").value;
@@ -35,4 +35,25 @@ function reload() {
         url = location.href + "?sort=" + query;
     }
     window.location.href = url;
+}
+
+function sort(attribute) {
+
+    var url = location.href;
+    if (location.href.includes("?sort=")) {
+        var first = url.substring(0, url.indexOf("?sort="));
+        var second = url.substring(url.indexOf("&"));
+        var append = "?sort=" + attribute;
+        url = first + append + second
+    } else {
+        url += "?sort=" + attribute;
+    }
+
+    window.location.href = url;
+    
+}
+
+function changePage(page) {
+    pageAsInt = parseInt(page);
+
 }

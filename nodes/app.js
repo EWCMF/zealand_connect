@@ -8,6 +8,7 @@ var usersRouter = require('./routes/users');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
+var searchCVRouter = require('./routes/search-cv');
 var loginRouter = require('./routes/login');
 var languageRouter = require('./routes/language')
 var forsideRouter = require('./routes/forside')
@@ -33,6 +34,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieSession({
+  maxAge: 1000*60*60*24,
+  keys: ["this_is_the_secret_cookie_encryption_key"]
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -41,13 +46,10 @@ app.use('/users', usersRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/mit-CV', mit_CVRouter);
+app.use('/search-cv', searchCVRouter);
 app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/forside', forsideRouter);
-app.use(cookieSession({
-  maxAge: 10006060*24,
-  keys: ["this_is_the_secret_cookie_encryption_key"]
-}));
 
 app.use('/opretBruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);

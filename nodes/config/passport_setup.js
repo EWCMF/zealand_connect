@@ -1,19 +1,19 @@
 const passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
-const findUserByName = require('../persistence/usermapping').findUserByName;
-const findUserById = require('../persistence/usermapping').findUserById;
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+// const findUserById = require('../persistence/usermapping').findUserById;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
 
 //lav cookie fra user baseret på id
 passport.serializeUser((user, done)=>{
     console.log('User is being serialized so browser has a cookie so it can be identified!');
-    done(null, user.id);
+    done(null, user.email);
 })
 
 //modtager en id fra cookie, så vi kan se om hvem der tilhører id'en
 passport.deserializeUser((cookieID, done)=>{
-    findUserById(cookieID).then((user)=>{
-        done(null, user);
+    findUserByEmail(cookieID).then((user)=>{
+        done(null, user.email);
     })
 })
 
@@ -24,7 +24,7 @@ passport.use(new LocalStrategy({
         function(username, password, done) {
             console.log('Youve reached the local strat callback!');
             //når vi prøver at logge ind, skal vi checke om brugeren findes i db
-            findUserByName(username).then(async(user)=>{
+            findUserByEmail(username).then(async(user)=>{
                 if(user==null){
                     //redirect user back to login page with faliure message
                     console.log("ERROR: USER NOT FOUND---\nERROR: USER NOT FOUND---\nERROR: USER NOT FOUND---\n");
