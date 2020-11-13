@@ -20,62 +20,62 @@
                             </h6>
                         </div>
 
-                        <div id="collapse1" class="panel-collapse collapse in">
+                        <div id="collapse1" class="panel-collapse collapse in {{show}}">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Datamatiker
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="datamatiker">
+                                    <input class="align-self-center" type="checkbox" name="" id="datamatiker" {{dtmCb}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Handelsøkonom
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="handelsøkonom">
+                                    <input class="align-self-center" type="checkbox" name="" id="handelsøkonom" {{hoeCb}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Finansøkonom
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="finansøkonom">
+                                    <input class="align-self-center" type="checkbox" name="" id="finansøkonom" {{foeCb}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         International Handel og Markedsføring
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="ihom">
+                                    <input class="align-self-center" type="checkbox" name="" id="ihom" {{ihmCb}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Innovation og Entrepreneurship
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="ioe">
+                                    <input class="align-self-center" type="checkbox" name="" id="ioe" {{ioeCb}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Bygningskontruktør
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="bygningskontruktør">
+                                    <input class="align-self-center" type="checkbox" name="" id="bygningskontruktør" {{bkCb}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Byggetekniker
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="byggetekniker">
+                                    <input class="align-self-center" type="checkbox" name="" id="byggetekniker" {{btCb}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Installatør, stærkstrøm
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="installatør">
+                                    <input class="align-self-center" type="checkbox" name="" id="installatør" {{insCb}}>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </form>
-            <button class="btn btn-success mb-2 mt-4" onclick="reload()">Filtrer</button>
+            <button class="btn btn-success mb-2 mt-4" onclick="filter()">Filtrer</button>
         </div>
         <div class="col">
             <div class="mb-2 d-flex flex-row">
@@ -91,9 +91,9 @@
                         {{sortName}}
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="/search-cv" id="senestOpdateret" >Senest
+                        <a class="dropdown-item" href="#" id="senestOpdateret" onclick="sort('updatedAt')">Senest
                             opdateret</a>
-                        <a class="dropdown-item" href="/search-cv?sort=overskrift" id="overskrift" >Overskrift</a>
+                        <a class="dropdown-item" href="#" id="overskrift" onclick="sort('overskrift')">Overskrift</a>
                     </div>
                 </div>
 
