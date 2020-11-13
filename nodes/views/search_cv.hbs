@@ -125,9 +125,9 @@
     <div class="row d-flex justify-content-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="/search-cv?page=1" onclick="changenumber()">1</a></li>
-                <li class="page-item"><a class="page-link" href="/search-cv?page=2">2</a></li>
-                <li class="page-item"><a class="page-link" href="/search-cv?page=3">3</a></li>
+                <li class="page-item {{pageItm1}}"><a class="page-link" href="/search-cv?page={{pageJson.one}}" onclick="changePage({{pageJson.one}})">{{pageJson.one}}</a></li>
+                <li class="page-item {{pageItm2}}"><a class="page-link" href="/search-cv?page={{pageJson.two}}" onclick="changePage({{pageJson.two}})">{{pageJson.two}}</a></li>
+                <li class="page-item"><a class="page-link" href="/search-cv?page={{pageJson.three}}" onclick="changePage({{pageJson.three}})">{{pageJson.three}}</a></li>
             </ul>
         </nav>
     </div>

@@ -7,6 +7,49 @@ const limit = 10;
 router.get('/', function (req, res, next) {
     var query = req.query;
     var offset = 0;
+    var singlePage;
+    var pageJson;
+    var pageItem1;
+    var pageItem2;
+    var pageItem3;
+
+    if (query.page == null) {
+        singlePage = 0; 
+    } else {
+        singlePage = parseInt(query.page);
+    }
+
+    if (singlePage == 0) {
+        pageItem1 = "active";
+        console.log(pageItem1);
+        pageJson = {
+            one: singlePage+1,
+            two: singlePage+2,
+            three: singlePage+3
+        }
+    }  
+    
+    if (singlePage == 1) {
+        pageItem1 = "active";
+        console.log(pageItem1);
+        pageJson = {
+            one: singlePage,
+            two: singlePage+1,
+            three: singlePage+2
+        }
+    }
+    
+    if (singlePage >= 2) {
+        pageItem2 = "active";
+        console.log(pageItem2);
+        pageJson = {
+            one: singlePage-1,
+            two: singlePage,
+            three: singlePage+1
+        }
+    }
+    
+    
 
     var sort;
     var sortName;
@@ -138,7 +181,10 @@ router.get('/', function (req, res, next) {
                 ioeCb:ioeCb,
                 bkCb:bkCb,
                 btCb:btCb,
-                insCb:insCb
+                insCb:insCb,
+                pageJson,
+                pageitm1: pageItem1,
+                pageItm2: pageItem2
             });
         })
     } else {
@@ -167,7 +213,10 @@ router.get('/', function (req, res, next) {
                 ioeCb:ioeCb,
                 bkCb:bkCb,
                 btCb:btCb,
-                insCb:insCb
+                insCb:insCb,
+                pageJson,
+                pageitm1: pageItem1,
+                pageItm2: pageItem2
             });
         })
 
