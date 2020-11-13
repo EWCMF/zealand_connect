@@ -158,15 +158,9 @@ input::placeholder {
   width: 339px;
 }
 #virksomhedOpret {
-  display: none;
-}
-#virksomhedOpret .form-control {
-  width: 339px;
-}
-#studerendeOpret {
   display: block;
 }
-#studerendeOpret .form-control {
+#virksomhedOpret .form-control {
   width: 339px;
 }
 #uddanelse-dropdown {
