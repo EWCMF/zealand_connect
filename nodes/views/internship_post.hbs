@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-12 col-md-8">
-            <form method="POST" onsubmit="return validate_internship_post(event)">
+            <form method="POST" onsubmit="return validate_internship_post(event)" enctype="multipart/form-data">
                 <div class="form-group required">
                     <label for="">Titel</label>
                     <input type="text" name="title" id="internshipTitle" class="form-control" placeholder="Titel">
@@ -54,8 +54,8 @@
                     </div>
                     <div class="col-12 col-md-6" id="cityContainer" hidden="true">
                         <div class="form-group required" >
-                            <label for="city_text">By</label>
-                            <select class="form-control" name="city_text" id="citySelect">
+                            <label for="city">By</label>
+                            <select class="form-control" name="city" id="citySelect">
                                 <option value="0">Vælg en by</option>
                                 {{{generatedCityOptions}}}
                             </select>
@@ -65,8 +65,8 @@
                     </div>
                     <div class="col-12 col-md-6" id="postCodeContainer" hidden="true">
                         <div class="form-group required">
-                            <label for="postal_text">Postnummer</label>
-                            <select class="form-control" name="postal_text" id="postalText">
+                            <label for="postcode">Postnummer</label>
+                            <select class="form-control" name="postcode" id="postalText">
                                 <option value="0">Vælg et postnummer</option>
                                 {{{generatedPostCodeOptions}}}
                             </select>
@@ -134,17 +134,24 @@
                     </div>
                 </div>
                 <div class="row">
-                    
                     <div class="col-12 col-md-6">
+                        <label for="post_document">Vedhæft fil</label>
                         <div class="form-group">
-                            <label for="post_document">Vedhæft fil</label>
-                            <input type="file" name="post_document" id="CompanyDoc" class="form-control-file">
+                            <div class="custom-file">
+                                <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt" class="custom-file-input" id="CompanyDoc"
+                                    onchange="updateInputLabel('docLabel', 'CompanyDoc')">
+                                <label class="custom-file-label" id="docLabel" for="CompanyDoc">Vælg fil</label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
+                        <label for="company_logo">Virksomhedslogo</label>
                         <div class="form-group">
-                            <label for="company_logo">Virksomhedslogo</label>
-                            <input type="file" name="company_logo" id="CompanyLogo" class="form-control-file">
+                            <div class="custom-file">
+                                <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input" id="CompanyLogo"
+                                    onchange="updateInputLabel('logoLabel', 'CompanyLogo')">
+                                <label class="custom-file-label" id="logoLabel" for="CompanyLogo">Vælg fil</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,7 +195,6 @@
     }
     //countryToggleFields() Toggler disse fælter: Region og CVR
     function countryToggleFields(){
-        
         if (document.getElementById('countrySelect').value == 1){
             document.getElementById('regionContainer').hidden = false;
             document.getElementById('containerCVR').className = "form-group required";
@@ -200,5 +206,8 @@
             document.getElementById('cityContainer').hidden = true;
             document.getElementById('postCodeContainer').hidden = true;
         }
+    }
+    function updateInputLabel(labelId, inputId) {
+        document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
     }
 </script>
