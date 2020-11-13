@@ -13,12 +13,17 @@ router.post('/create', async function (req, res) {
     try {
         const memeboi = await models.Virksomhed.create({email: "memeboi@nielsen.dk"});
         console.log("A memeboi was created");
-        // console.log(memeboi instanceof Virksomhed);
-        // console.log(memeboi.email);
+        console.log(memeboi instanceof models.Virksomhed);
+        console.log(memeboi.email);
+        await models.Virksomhed.destroy({
+            where:{
+                email: "mongo@nielsen.dk"
+            }
+        });
+        console.log(memeboi.email);
     } catch (e) {
         console.log(e);
     }
-
 });
 
 module.exports = router;
