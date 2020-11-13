@@ -91,9 +91,9 @@
                         {{sortName}}
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="/search-cv" id="senestOpdateret" >Senest
+                        <a class="dropdown-item" href="/search-cv" id="senestOpdateret">Senest
                             opdateret</a>
-                        <a class="dropdown-item" href="/search-cv?sort=overskrift" id="overskrift" >Overskrift</a>
+                        <a class="dropdown-item" href="/search-cv?sort=overskrift" id="overskrift">Overskrift</a>
                     </div>
                 </div>
 
@@ -121,6 +121,15 @@
                 {{/each}}
             </div>
         </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="/search-cv?page=1" onclick="changenumber()">1</a></li>
+                <li class="page-item"><a class="page-link" href="/search-cv?page=2">2</a></li>
+                <li class="page-item"><a class="page-link" href="/search-cv?page=3">3</a></li>
+            </ul>
+        </nav>
     </div>
 </div>
 <script src="/javascript/search_cv.js"></script>

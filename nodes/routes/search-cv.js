@@ -1,15 +1,21 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../models');
+const limit = 10;
 
 
 router.get('/', function (req, res, next) {
     var query = req.query;
+    var offset = 0;
 
     var sort;
     var sortName;
 
     console.log(query);
+
+    if (query.page != null) {
+        offset = limit * parseInt(query.page-1);
+    }
 
     if (query.sort == null) {
         sort = "updatedAt";
@@ -47,6 +53,8 @@ router.get('/', function (req, res, next) {
             Op
         } = require("sequelize");
         db.CV.findAll({
+            limit: limit,
+            offset: offset,
             raw: true,
             order: [
                 [sort, 'DESC']
@@ -69,6 +77,8 @@ router.get('/', function (req, res, next) {
             Op
         } = require("sequelize");
         db.CV.findAll({
+            limit: limit,
+            offset: offset,
             raw: true,
             order: [
                 [sort, 'DESC']
@@ -86,32 +96,22 @@ router.get('/', function (req, res, next) {
     }
 });
 
+
 router.get('/:id', function(req, res) {
     let id = req.params.id
-     /*console.log(Min_linkedIn)
-    if (Min_linkedIn == true) {
-        console.log("jeg er tæt på")
-        if (linkedIn.includes("https://")) {
-            linkedIn = linkedIn.replace("https://", "")
-            console.log(linkedIn)
-        } else if (linkedIn.includes("http://")) {
-            linkedIn = linkedIn.replace("http://", "")
-            console.log(linkedIn)
-        }
-    }*/
 
     db.CV.findOne({raw: true, where: { id: parseInt(id) } }).then((cv) => {
         console.log(cv);
         if (cv.hjemmeside.includes("://")) {
             console.log(cv.hjemmeside.indexOf("://") + 3)
             cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
-            console.log(cv.linkedIn);
+            //console.log(cv.linkedIn);
         } 
         
         if (cv.linkedIn.includes("://")) {
             console.log(cv.linkedIn.indexOf("://")  + 3)
             cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://")  + 3);
-            console.log(cv.linkedIn);
+            //console.log(cv.linkedIn);
         }
 
 

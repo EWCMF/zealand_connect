@@ -75,6 +75,12 @@ input::placeholder {
   border-color: black;
 }
 
+.btn-dark {
+  background-color: #faee84;
+  color: black;
+  border-color: #faee84;
+}
+
 .form-group.required > label:after {
   content:" *";
   color:red;
