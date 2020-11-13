@@ -54,7 +54,6 @@ router.post('/', function (req, res){
 
       //Stien til upload mappen skal være til stien i docker containeren.
       var publicUploadFolder="/usr/src/app/public/uploads/";
-      publicUploadFolder = "C:/Users/suneb/Documents/zealand_connect/nodes/public/uploads/"
 
       //// TODO: Filnavne skal være unikke.
       var newDocName=doc.name;
