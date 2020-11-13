@@ -5,7 +5,7 @@ var passport = require('passport');
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
-res.render('login', {language: reqLang(req, res)}) 
+    res.render('login', {language: reqLang(req, res)})
 });
 
 
@@ -37,7 +37,7 @@ router.post('/authenticateVirksomhed', function (req, res, next) {
         //console.log(user);
         //handle error
         if(!user){
-            
+
             return res.redirect('/login'+info.message);
         }
         //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
