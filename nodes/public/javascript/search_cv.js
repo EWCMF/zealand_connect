@@ -52,3 +52,8 @@ function sort(attribute) {
     window.location.href = url;
     
 }
+
+function changePage(page) {
+    pageAsInt = parseInt(page);
+
+}
