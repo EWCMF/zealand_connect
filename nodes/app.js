@@ -19,7 +19,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
 
-var opretBrugerRouter = require('./routes/opretBruger');
+var opretBrugerRouter = require('./routes/opret-bruger');
 var loginStudentRouter = require('./routes/login-student');
 
 
@@ -51,7 +51,7 @@ app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/forside', forsideRouter);
 
-app.use('/opretBruger', opretBrugerRouter);
+app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
 
 
