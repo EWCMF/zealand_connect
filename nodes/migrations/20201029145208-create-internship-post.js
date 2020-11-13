@@ -35,8 +35,11 @@ module.exports = {
       post_text: {
         type: Sequelize.TEXT
       },
-      city_text:{
+      city:{
         type: Sequelize.TEXT
+      },
+      postcode:{
+        type: Sequelize.INTEGER
       },
       cvr_number:{
         type: Sequelize.INTEGER
@@ -49,9 +52,6 @@ module.exports = {
       },
       post_document:{
         type: Sequelize.STRING
-      },
-      postal_number:{
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
