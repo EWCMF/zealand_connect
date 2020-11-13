@@ -62,3 +62,6 @@ typings/
 
 # exclude uploads in uploads folder
 public/uploads/
+
+# database config fil
+config/config.json

@@ -166,6 +166,17 @@ router.get('/', function (req, res, next) {
 
 router.get('/:id', function (req, res) {
     let id = req.params.id
+     /*console.log(Min_linkedIn)
+    if (Min_linkedIn == true) {
+        console.log("jeg er tæt på")
+        if (linkedIn.includes("https://")) {
+            linkedIn = linkedIn.replace("https://", "")
+            console.log(linkedIn)
+        } else if (linkedIn.includes("http://")) {
+            linkedIn = linkedIn.replace("http://", "")
+            console.log(linkedIn)
+        }
+    }*/
 
     db.CV.findOne({
         raw: true,
@@ -174,9 +185,21 @@ router.get('/:id', function (req, res) {
         }
     }).then((cv) => {
         console.log(cv);
-        res.render('cv', {
-            json: cv
-        });
+      
+        if (cv.hjemmeside.includes("://")) {
+            console.log(cv.hjemmeside.indexOf("://") + 3)
+            cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
+            console.log(cv.linkedIn);
+        } 
+        
+        if (cv.linkedIn.includes("://")) {
+            console.log(cv.linkedIn.indexOf("://")  + 3)
+            cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://")  + 3);
+            console.log(cv.linkedIn);
+        }
+
+        res.render('cv', {json: cv});
+      
     });
 
 });
