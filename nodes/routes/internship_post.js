@@ -19,6 +19,8 @@ router.post('/', function (req, res){
     var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
     var cvrReg = /^[0-9]{8}$/
     var linkReg = /^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(\/.)?$/
+    var validPicRegex =/\.(jpg|jpeg|png|bmp|svg)$/
+    var vaildFileRegex = /\.(pdf|docx|doc|txt)$/
     var inputError = false;
 
     //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
@@ -52,6 +54,7 @@ router.post('/', function (req, res){
 
       //Stien til upload mappen skal være til stien i docker containeren.
       var publicUploadFolder="/usr/src/app/public/uploads/";
+      publicUploadFolder = "C:/Users/suneb/Documents/zealand_connect/nodes/public/uploads/"
 
       //// TODO: Filnavne skal være unikke.
       var newDocName=doc.name;
@@ -59,27 +62,45 @@ router.post('/', function (req, res){
 
       //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
       //Nedenstående flytter og omdøber filer på sammetid
-      fs.rename(doc.path,publicUploadFolder+newDocName,(errorRename)=>{
-        if(errorRename){
-          console.log("Unable to move file.");
-        }else{
-          indhold.post_document=newDocName;
-        }
-        reNameLogo();
-      });
-
-      function reNameLogo(){
-        fs.rename(logo.path,publicUploadFolder+newLogoName,(errorRename)=>{
+      if (doc.type== "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"|| doc.type == "application/pdf" || doc.type == "application/msword") {
+        fs.rename(doc.path,publicUploadFolder+newDocName,(errorRename)=>{
           if(errorRename){
             console.log("Unable to move file.");
           }else{
-              indhold.company_logo=newLogoName;
+            console.log(doc.type)
+            indhold.post_document=newDocName;
           }
-          dbExe();
-        });
+          reNameLogo();
+        }); 
+      } else {
+        reNameLogo();
+      }
+
+      function reNameLogo(){
+        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp" ) {
+          fs.rename(logo.path,publicUploadFolder+newLogoName,(errorRename)=>{
+            if(errorRename){
+              console.log("Unable to move file.");
+            }else{
+                indhold.company_logo=newLogoName;
+            }
+            dbExe();
+          });
+        } else {
+          dbExe()
+        }
       }
     }
+    /*formData.onPart = function(part){
+      if(!part.filename && part.filename.match(vaildFileRegex)) {
+        this.handlePart(part);
+      }
+      else {
+        console.log(part.filename + 'is not allowed')
+      }
+    }*/
   })
+
 });
 
 /* GET home page. */
