@@ -18,13 +18,13 @@
                             <input type="string" id="virksomhedBy" class="form-control"
                                    name="By" placeholder="By"><br>
                             <input type="string" id="virksomhedPostnummer" class="form-control"
-                                   name="Postnummer" placeholder="Postnummer"><br>       
+                                   name="Postnummer" placeholder="Postnummer"><br>
                             <input type="password" id="virksomhedAdgangskode" class="form-control"
                                    name="Password" placeholder="Adgangskode"><br>
                             <input type="password" id="virksomhedGentagAdgangskode" class="form-control"
                                    name="GentagPassword" placeholder="Gentag Adgangskode"><br>
                             <input type="text" id="virksomhedCVR" class="form-control"
-                                   name="CVR" placeholder="CVR-Nummer"><br>  
+                                   name="CVR" placeholder="CVR-Nummer"><br>
 
                             <button class="gulKnap" data-key="opret"> Opret Bruger</button>
 
@@ -33,6 +33,14 @@
                             <div class="google-div">
                             <button class="google-btn" data-key="opretGoogle"><img class="google-img" src="https://img-authors.flaticon.com/google.jpg" > Opret med Google</button>
                             </div>
+
+                            <form action="/opretBruger/create" method="post">
+                                <button type="submit" formmethod="post">Create using POST</button>
+                            </form>
+
+                            <form action="/opretBruger/delete" method="post">
+                                <button type="submit" formmethod="post">Delete using POST</button>
+                            </form>
 
 
                         </div>
