@@ -1,19 +1,19 @@
 const passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
-const findUserById = require('../persistence/usermapping').findUserById;
+// const findUserById = require('../persistence/usermapping').findUserById;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
 
 //lav cookie fra user baseret på id
 passport.serializeUser((user, done)=>{
     console.log('User is being serialized so browser has a cookie so it can be identified!');
-    done(null, user.id);
+    done(null, user.email);
 })
 
 //modtager en id fra cookie, så vi kan se om hvem der tilhører id'en
 passport.deserializeUser((cookieID, done)=>{
-    findUserById(cookieID).then((user)=>{
-        done(null, user);
+    findUserByEmail(cookieID).then((user)=>{
+        done(null, user.email);
     })
 })
 

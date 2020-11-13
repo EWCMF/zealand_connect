@@ -1,6 +1,6 @@
 var assert = require('assert');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
-const findUserById = require('../persistence/usermapping').findUserById;
+// const findUserById = require('../persistence/usermapping').findUserById;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
 
@@ -44,7 +44,7 @@ describe('Find bruger i database baseret på email', function(){
 })
 
 
-
+/*
  describe('Find bruger i database baseret på id', function(){
     //TC5
     it('Bør ikke kunne finde en bruger hvis ingen bruger med denne id findes', function(done){
@@ -63,7 +63,7 @@ describe('Find bruger i database baseret på email', function(){
         })
     })
 })
-
+*/
 
 
 describe('Check om 2 password er ens', function(){

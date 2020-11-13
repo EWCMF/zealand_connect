@@ -34,6 +34,9 @@ async function findUserByEmail(email){
     //eller så kan denne metode deles til 3. findStudent, findVirksomhed, findAdmin. seperation of concerns?
 }
 
+// udkommenteret da den ikke bruges
+
+/*
 async function findUserById(id){
     return new Promise(resolve => {
         console.log("---finding user by ID:"+id+"---");
@@ -49,6 +52,6 @@ async function findUserById(id){
             }
         });
     })
-} 
+} */
 
-module.exports = {findUserByEmail: findUserByEmail, findUserById: findUserById}
+module.exports = {findUserByEmail: findUserByEmail, /*findUserById: findUserById*/}

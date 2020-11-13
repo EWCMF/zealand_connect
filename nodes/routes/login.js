@@ -18,12 +18,17 @@ router.get('/', function (req, res, next) {
         case 'incorrectpassword': res.render('login', { errormessage: 'Din account findes i vores system, men dit password er forkert.', virksomhed:"true", language: reqLang(req, res) }); break;
         case 'notloggedin': res.render('login', { errormessage: 'Du skal logge ind før du kan se din profil.', virksomhed:"true",language: reqLang(req, res) }); break;
         case 'incorretemaillogincombination': res.render('login', { errormessage: 'Din email findes men ikke som en virksomheds konto.', virksomhed:"true", language: reqLang(req, res)}); break;
-        case 'none': res.redirect('/profiles'); break;
+        case 'none': res.redirect('/login/profiles'); break;
         default: res.render('login'); break;
     }
     res.render('login', {language: reqLang(req, res)}) 
 });
 
+
+router.get('/profiles',function(req, res, next) {
+    res.send(req.user)
+    
+})
 
 
 router.post('/authenticateVirksomhed', function (req, res, next) {
