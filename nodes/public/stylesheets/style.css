@@ -75,6 +75,12 @@ input::placeholder {
   border-color: black;
 }
 
+.btn-dark {
+  background-color: #faee84;
+  color: black;
+  border-color: #faee84;
+}
+
 .form-group.required > label:after {
   content:" *";
   color:red;
@@ -158,15 +164,9 @@ input::placeholder {
   width: 339px;
 }
 #virksomhedOpret {
-  display: none;
-}
-#virksomhedOpret .form-control {
-  width: 339px;
-}
-#studerendeOpret {
   display: block;
 }
-#studerendeOpret .form-control {
+#virksomhedOpret .form-control {
   width: 339px;
 }
 #uddanelse-dropdown {
