@@ -30,7 +30,7 @@
                             <input type="password" id="studerendeGentagAdgangskode" class="form-control" name="
                         gentagAdgangskode" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode"><br>
                             <select id="uddanelse-dropdown" name="udannelse">
-                                <!-- udfyld ved brug af en metode, som tager fra en json fil, Options er midlertidig til 
+                                <!-- udfyld ved brug af en metode, som tager fra en json fil, Options er midlertidig til
                                 demonstration af funktion
                                 https://www.codebyamir.com/blog/populate-a-select-dropdown-list-with-json  -->
                                 <option value="uddannelser" data-key="uddannelser">Vælg en Uddannelse</option>
@@ -52,10 +52,12 @@
                                 <option value="VVSInstallatør" data-key="VVSInstallatør">VVS-Installatør</option>
                             </select>
 
-                            
-                            
                         <button class="gulKnap" data-key="opret">Opret Bruger</button>
                         </div>
+
+                        <form action="/opretBruger/create" method="post">
+                            <button type="submit" formmethod="post">Submit using POST</button>
+                        </form>
 
                         <div class="form-group" id="virksomhedOpret"> <!-- Virksomheds opret form-->
                            <input type="email" id="virksomhedEmail" class="form-control" name="
@@ -67,15 +69,19 @@
                             <input type="string" id="virksomhedBy" class="form-control"
                                    name="By" placeholder="By"><br>
                             <input type="string" id="virksomhedPostnummer" class="form-control"
-                                   name="Postnummer" placeholder="Postnummer"><br>       
+                                   name="Postnummer" placeholder="Postnummer"><br>
                             <input type="password" id="virksomhedAdgangskode" class="form-control"
                                    name="Password" placeholder="Adgangskode"><br>
                             <input type="password" id="virksomhedGentagAdgangskode" class="form-control"
                                    name="GentagPassword" placeholder="Gentag Adgangskode"><br>
                             <input type="text" id="virksomhedCVR" class="form-control"
-                                   name="CVR" placeholder="CVR-Nummer"><br>  
+                                   name="CVR" placeholder="CVR-Nummer"><br>
 
-                            <button class="gulKnap" data-key="opret"> Opret Bruger</button>
+                            <button class="gulKnap" onclick="getMemedOn()" data-key="opret">Opret Bruger</button>
+
+                            <form action="/opretBruger/create" method="post">
+                                <button type="submit" formmethod="post">Submit using POST</button>
+                            </form>
 
                             <p id="centerP" data-key="eller">Eller</p>
 
