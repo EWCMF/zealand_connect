@@ -6,13 +6,13 @@ const bcrypt = require('bcryptjs');
 
 async function verifyPassword(htmlPwd, dbPwd){
     return new Promise(resolve =>{
-        console.log('Trying to verify password from login: '+htmlPwd);
+        console.log('Trying to verify password from login:');
         bcrypt.compare(htmlPwd,dbPwd, function(err, result){
         if(result==true){
             console.log('--- PASSWORD MATCH THE DATABASE PASSWORD---');
             resolve(true);
         } else {
-            console.log('passowrds did not match');
+            console.log('passowrds did not match'+ htmlPwd);
             resolve(false);
         }
     })

@@ -11,7 +11,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      hashedPassword: {
+      password: {
         type: Sequelize.STRING
       },
       cvrnr: {
@@ -20,23 +20,23 @@ module.exports = {
       navn: {
         type: Sequelize.STRING
       },
-      addresse: {
+      adresse: {
         type: Sequelize.STRING
       },
-      telefonnr: {
+      tlfnr: {
+        type: Sequelize.INTEGER
+      },
+      hjemmeside: {
         type: Sequelize.STRING
       },
-      website: {
-        type: Sequelize.STRING
-      },
-      ceo: {
+      direktoer: {
         type: Sequelize.STRING
       },
       land: {
         type: Sequelize.STRING
       },
       postnr: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       by: {
         type: Sequelize.STRING

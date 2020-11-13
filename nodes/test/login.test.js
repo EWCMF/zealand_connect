@@ -1,31 +1,52 @@
-var assert = require('assert')
-
-const findUserByName = require('../persistence/usermapping').findUserByName;
-const findUserById = require('../persistence/usermapping').findUserById;
+var assert = require('assert');
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+// const findUserById = require('../persistence/usermapping').findUserById;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
 
-describe('Find bruger i database baseret på username', function(){
+describe('Find student i database baseret på email', function(){
     //TC1
-    it('Bør find en bruger med username som matcher det username vi indtaster', function(done){
-        let username = 'janedoe@example.com';
-        findUserByName(username).then((user)=>{
-            assert.strictEqual(user.username, username);
+    it('Bør find en bruger med username som matcher det username vi indtaster, i student tabellene', function(done){
+        let email = 'bob@gmail.com';
+        findUserByEmail(email).then((student)=>{
+            assert.strictEqual(student.email, email);
             done();
         })
     })
     //TC2
-    it('Bør ikke være i stand til at finde en bruger med en username der ikke er registreret i databasen', function(done){
-        let username = 'enbrugerderikkefindesidatabasen';
-        findUserByName(username).then((user)=>{
+    it('Bør ikke være i stand til at finde en student med en email der ikke er registreret i databasen', function(done){
+        let email = 'enbrugerderikkefindesidatabasen@gmail.com';
+        findUserByEmail(email).then((student)=>{
+            assert.strictEqual(student, null);
+            done();
+        })
+    })  
+})
+
+
+describe('Find bruger i database baseret på email', function(){
+    //TC3
+    it('Bør find en Virksomheds bruger med email som matcher det username vi indtaster', function(done){
+        let email = 'kontakt@bigfoods.dk';
+        findUserByEmail(email).then((virksomhed)=>{
+            assert.strictEqual(virksomhed.email, email);
+            done();
+        })
+    })
+    //TC4
+    it('bør ikke find en Virksomheds bruger med email  der ikke er registreret i databasen', function(done){
+        let email = 'enbrugerderikkefindesidatabasen@gmail.com';
+        findUserByEmail(email).then((user)=>{
             assert.strictEqual(user, null);
             done();
         })
     })  
 })
 
+
+/*
  describe('Find bruger i database baseret på id', function(){
-    //TC3
+    //TC5
     it('Bør ikke kunne finde en bruger hvis ingen bruger med denne id findes', function(done){
         let id = -1;
         findUserById(id).then((user)=>{
@@ -33,7 +54,7 @@ describe('Find bruger i database baseret på username', function(){
             done();
         })
     })
-    //TC4
+    //TC6
     it('Bør find en bruger med id som matcher det id vi indtaster', function(done){
         let id = 1;
         findUserById(id).then((user)=>{
@@ -42,11 +63,11 @@ describe('Find bruger i database baseret på username', function(){
         })
     })
 })
-
+*/
 
 
 describe('Check om 2 password er ens', function(){
-    //TC5
+    //TC7
     it('Bør være true, da vi har på forhånd hashed passworded', function(done){
         let htmlPwd = 'asdfg';
         let hashedPwd = '$2b$10$RZMS0Th.ntmF7xuaUYmARO8AZdpX6PpmUWgmeR0DsnMXqtS8gE7.G'
@@ -55,7 +76,7 @@ describe('Check om 2 password er ens', function(){
             done();
         })
     })
-    //TC6
+    //TC8
     it('Bør være false, da hashen er forkert', function(done){
         let htmlPwd = 'asdfg';
         let hashedPwd = 'NOTHASHGOODBAD!??###'
