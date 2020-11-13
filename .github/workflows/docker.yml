@@ -56,8 +56,8 @@ jobs:
           # pull newest image.
           docker pull zealandconnect/zealandconnect
 
-          # Run a new container from a new image and mount upload folder on VM inside the container.
-          docker run -d --restart always --name node-container --network cluster -p 8080:3000 -v ~/uploads:/usr/src/app/public/uploads zealandconnect/zealandconnect
+          # Run a new container from a new image and mount upload folder on VM inside the container and set NODE_ENV to production.
+          docker run -d --restart always -e NODE_ENV="production" --name node-container --network cluster -p 8080:3000 -v ~/uploads:/usr/src/app/public/uploads zealandconnect/zealandconnect
           
           # Tigger DB updates if there are any.
           docker exec -d node-container npx sequelize-cli db:migrate --env production
