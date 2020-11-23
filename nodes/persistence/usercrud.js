@@ -1,8 +1,8 @@
 const models = require("../models");
 
-async function createVirksomhed(email){
+async function createVirksomhed(virkObj){
     try {
-        const virksomhed = await models.Virksomhed.create({email: email});
+        const virksomhed = await models.Virksomhed.create({email: virkObj.email, tlfnr: virkObj.tlfnr, password: virkObj.password, cvrnr: virkObj.cvrnr});
         console.log("A virksomhed was created");
         console.log(virksomhed instanceof models.Virksomhed);
         console.log(virksomhed.email);

@@ -7,11 +7,10 @@ const deleteVirksomhed = require('../persistence/usercrud').deleteVirksomhed;
 /* GET login page. */
 router.get('/', function (req, res, next) {
     res.render('opret-bruger', {language: reqLang(req)})
-
 });
 
 router.post('/create', function (req, res) {
-    createVirksomhed("memeboi@nielsen.dk")
+    createVirksomhed({"email": "memeboi@nielsen.dk", "tlfnr": 35735842,"password": "Bejamintakebigcock","cvrnr": 5782312});
     res.redirect('back');
 });
 
