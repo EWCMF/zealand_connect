@@ -19,9 +19,8 @@ router.get('/', function (req, res, next) {
         case 'notloggedin': res.render('login', { errormessage: 'Du skal logge ind før du kan se din profil.', virksomhed:"true",language: reqLang(req, res) }); break;
         case 'incorretemaillogincombination': res.render('login', { errormessage: 'Din email findes men ikke som en virksomheds konto.', virksomhed:"true", language: reqLang(req, res)}); break;
         case 'none': res.redirect('/login/profiles'); break;
-        default: res.render('login'); break;
+        default: res.render('login', {language: reqLang(req, res)}); break;
     }
-    res.render('login', {language: reqLang(req, res)}) 
 });
 
 
