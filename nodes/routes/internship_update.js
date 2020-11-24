@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;//Skal bruges til kalder API'er.
+var sortJsonArray = require('sort-json-array');//Brugt til at få byer i alfabetisk orden.
+var formidable = require("formidable");//Skal bruges når man håndtere filupload og alm. input i samme POST.
+var fs = require("fs");//Bruges til filer.
 const db = require('../models');
 const internshippost = require('../models/internshippost');
 
@@ -28,24 +32,58 @@ router.post('/', function (req, res, next) {
   console.log(emailRegex.test(email))
   console.log(dateReg.test(post_start_date))
   console.log(dateReg.test(post_end_date))
-  
+
   db.InternshipPost.update(indhold, {where:{
     id: id
   }, /*dette skal være her for at felterne i databasen bliver opdateret*/returning: true, plain: true });
   res.render('internship_update', { title: 'Express' });
-  
- 
+
+
 });
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  console.log(req.query.id)
-  //console.log(internshippost.findByPk)
-  db.InternshipPost.findByPk(req.query.id, {attributes:["title","email","contact","education","country","region","post_start_date","post_end_date","post_text"]}).then(result => {
-    //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-    res.render('internship_update', { title: 'Express',rid: req.query.id, rtitle: result['title'], remail: result['email'], rcontact: result['contact'], reducation: result['education'], rcountry: result['country'], rregion: result['region'], rpoststart/*start date*/: result['post_start_date'], rpostend:/*end date*/ result['post_end_date'], rtext/*post_text*/:result['post_text'] });
-  }).catch()
-  //findOne({where:{id: req.query.id}})
+  var generatedCityOptions = "";
+  var generatedPostCodeOptions = "";
+  function generateCityOptions() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var myObj = JSON.parse(this.responseText);
+        myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
+        myObj.forEach(element => {
+          generatedCityOptions += "<option value='"+element.primærtnavn+"'>"+element.primærtnavn+"</option>"
+        });
+        console.log(req.query.id)
+        //console.log(internshippost.findByPk)
+        db.InternshipPost.findByPk(req.query.id, {attributes:["title","email","contact","education","country","region","post_start_date","post_end_date","post_text","city","postcode"]}).then(result => {
+          //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
+          res.render('internship_update', { title: 'Express',rid: req.query.id, rtitle: result['title'], remail: result['email'], rcontact: result['contact'], reducation: result['education'], rcountry: result['country'], rregion: result['region'], rpoststart/*start date*/: result['post_start_date'], rpostend:/*end date*/ result['post_end_date'], rtext/*post_text*/:result['post_text'], rcity:result['city'], rpostcode:result['postcode'], generatedCityOptions: generatedCityOptions, generatedPostCodeOptions: generatedPostCodeOptions });
+        }).catch();
+      }
+    };
+    xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send();
+  }
+
+  function generatePostCodeOptions() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var myObj = JSON.parse(this.responseText);
+        myObj.forEach(element => {
+          generatedPostCodeOptions += "<option value='"+element.nr+"'>"+element.nr+"</option>"
+        });
+        generateCityOptions();
+      }
+    };
+    xmlhttp.open("GET", "https://dawa.aws.dk/postnumre", true);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send();
+  }
+
+  generatePostCodeOptions();
 });
 
 router.get('/delete', function (req, res, next) {

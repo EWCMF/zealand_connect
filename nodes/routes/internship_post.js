@@ -182,7 +182,7 @@ router.get('/', function (req, res, next) {
     xmlhttp.send();
   }
 
-  generatePostCodeOptions()
+  generatePostCodeOptions();
 });
 
 module.exports = router;
