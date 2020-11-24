@@ -12,6 +12,7 @@ var searchCVRouter = require('./routes/search-cv');
 var loginRouter = require('./routes/login');
 var languageRouter = require('./routes/language')
 var forsideRouter = require('./routes/forside')
+var profilRouter = require('./routes/profil')
 
 var cookieParser = require('cookie-parser');
 
@@ -50,6 +51,7 @@ app.use('/search-cv', searchCVRouter);
 app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/forside', forsideRouter);
+app.use ('/profil', profilRouter)
 
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
