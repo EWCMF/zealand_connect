@@ -23,47 +23,47 @@ function submitButton() {
     const linkedInRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
     var Min_linkedIn = linkedInRegex.test(linkedIn);
 
-    // if (overskrift == "") {
-    //     document.getElementById("OverskriftError").hidden = false;
-    // } else {
-    //     document.getElementById("OverskriftError").hidden = true;
-    // }
+    if (overskrift == "") {
+        document.getElementById("OverskriftError").hidden = false;
+    } else {
+        document.getElementById("OverskriftError").hidden = true;
+    }
 
-    // if (sprog == "") {
-    //     document.getElementById("sprogError").hidden = false;
-    // } else {
-    //     document.getElementById("sprogError").hidden = true;
-    // }
+    if (sprog == "") {
+        document.getElementById("sprogError").hidden = false;
+    } else {
+        document.getElementById("sprogError").hidden = true;
+    }
 
-    // if (!emailWrittenCorrectly) {
-    //     document.getElementById("emailError").hidden = false;
-    // } else {
-    //     document.getElementById("emailError").hidden = true;
-    // }
+    if (!emailWrittenCorrectly) {
+        document.getElementById("emailError").hidden = false;
+    } else {
+        document.getElementById("emailError").hidden = true;
+    }
 
-    // if (!numbersOnly) {
-    //     document.getElementById("telefonError").hidden = false;
-    // } else {
-    //     document.getElementById("telefonError").hidden = true;
-    // }
+    if (!numbersOnly) {
+        document.getElementById("telefonError").hidden = false;
+    } else {
+        document.getElementById("telefonError").hidden = true;
+    }
 
-    // if (!Min_linkedIn && !linkedIn == "") {
-    //     document.getElementById("linkedInError").hidden = false;
-    // } else {
-    //     document.getElementById("linkedInError").hidden = true;
-    // }
+    if (!Min_linkedIn && !linkedIn == "") {
+        document.getElementById("linkedInError").hidden = false;
+    } else {
+        document.getElementById("linkedInError").hidden = true;
+    }
 
-    // if (uddannelse == "") {
-    //     document.getElementById("UddannelsesError").hidden = false;
-    // } else {
-    //     document.getElementById("UddannelsesError").hidden = true;
-    // }
+    if (uddannelse == "") {
+        document.getElementById("UddannelsesError").hidden = false;
+    } else {
+        document.getElementById("UddannelsesError").hidden = true;
+    }
 
-    // if (tidligere_uddannelse == "") {
-    //     document.getElementById("Tidligere-uddannelseError").hidden = false;
-    // } else {
-    //     document.getElementById("Tidligere-uddannelseError").hidden = true;
-    // }
+    if (tidligere_uddannelse == "") {
+        document.getElementById("Tidligere-uddannelseError").hidden = false;
+    } else {
+        document.getElementById("Tidligere-uddannelseError").hidden = true;
+    }
     if ( Min_linkedIn || linkedIn == "") {
         if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
         document.forms["cvForm"].submit();
