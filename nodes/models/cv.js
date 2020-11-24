@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     speciale: DataTypes.STRING,
     telefon: DataTypes.INTEGER,
     linkedIn: DataTypes.STRING,
+    yt_link: DataTypes.STRING,
     om_mig: DataTypes.STRING,
     it_kompetencer: DataTypes.STRING,
     udenlandsophold_og_frivilligt_arbejde: DataTypes.STRING,

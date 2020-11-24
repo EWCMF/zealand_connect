@@ -7,6 +7,7 @@ function submitButton() {
     let email = document.getElementById("email").value;
     let telefon = parseInt(document.getElementById("telefon").value);
     let linkedIn = document.getElementById("linkedIn").value;
+    let yt_link = document.getElementById("youtube_link").value;
     let uddannelse = document.getElementById("uddannelse").value;
     let tidligere_uddannelse = document.getElementById("tidligere-uddannelse").value;
     let sprog = document.getElementById("sprog").value;
@@ -22,6 +23,8 @@ function submitButton() {
 
     const linkedInRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
     var Min_linkedIn = linkedInRegex.test(linkedIn);
+
+    var Mit_yt_link = linkedInRegex.test(yt_link);
 
     // if (overskrift == "") {
     //     document.getElementById("OverskriftError").hidden = false;
