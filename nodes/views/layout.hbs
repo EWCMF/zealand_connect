@@ -11,11 +11,12 @@
     <!-- Custom stylesheet here -->
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <head>
-<style>
 
-</style>
-</head>
+    <head>
+        <style>
+
+        </style>
+    </head>
 
 <body>
 
@@ -63,6 +64,7 @@
             </form> -->
         </div>
     </nav>
+    <hr style="height:1px;background-color:black;margin-top:0px;margin-right:24px;margin-left:96px">
 
     <!-- TODO: navigation -->
     <div class="sidebar">
@@ -77,14 +79,14 @@
         crossorigin="anonymous"></script>
     <script src="/javascript/oversaettelse.js"></script>
     <script>
-        var lang=document.documentElement.lang;
-        document.getElementById('da').style.display ='none';
-        if(lang == 'da') {
-            document.getElementById('da').style.display ='none';
+        var lang = document.documentElement.lang;
+        document.getElementById('da').style.display = 'none';
+        if (lang == 'da') {
+            document.getElementById('da').style.display = 'none';
             document.getElementById('en').style.display = 'block';
         }
-        else if(lang == 'en') {
-            document.getElementById('en').style.display ='none';
+        else if (lang == 'en') {
+            document.getElementById('en').style.display = 'none';
             document.getElementById('da').style.display = 'block';
         }
     </script>
