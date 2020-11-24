@@ -3,15 +3,34 @@
 
     <div class="d-flex flex-row mt-5 ">
 
-        <div class="col-lg-6 card bg-light text-dark mx-5">
-            <div class="card-body container">
-                <h4>Virksomheds oplysninger</h5>
-                <a href="/rediger" class="font-weight-bold text-dark" ><u>Rediger profil</u></a>
+        <div class="col-lg-6 card bg-light text-dark mx-5"> <!--Div til virksomhedsoplysninger-->
+            <div class="card-body container" >
+                <h4 data-key="virksomhedsoplysninger" class="card-title mb-0">Virksomheds oplysninger</h5>
+                <a href="/rediger" class="font-weight-bold text-dark" data-key="redigerprofil"><u>Rediger profil</u></a>
                 
+                <h5 class="card-title mt-2" data-key="virksomhedsnavn">Virksomheds navn</h5>
+                <p id="virksomhedsnavn" class="card-text">Zealand Erhversakademi</p>
+                
+                <h5 class="card-title mt-2" data-key="virksomhedsemail">virksomheds Email</h5>
+                <p id="virksomhedsemail" class="card-text">Zealand@zealand.dk</p>
+
+                <h5 class="card-title mt-2" data-key="virksomhedspostnummerogby">Postnummer og By</h5>
+                <div class="d-flex flex-row">
+                    <p class="card-text pr-3">4600</p> <p class="card-text">Køge</p>
+                </div>
+
+                <h5 class="card-title mt-2" data-key="virksomhedsaddresse">Addresse</h5>
+                <p id="virksomhedsaddresse" class="card-text">Lyngvej 21</p>
+
+                <h5 class="card-title mt-2" data-key="virksomhedsland">Land</h5>
+                <p id="virksomhedsland" class="card-text">Danmark</p>
+
+                <h5 class="card-title mt-2" data-key="virksomhedsCVR">CVR-nummer</h5>
+                <p id="virksomhedsCVR" class="card-text">31661471</p>
             </div>
         </div>
 
-        <div class="col-lg-4 card bg-light text-dark mx-5">
+        <div class="col-lg-4 card bg-light text-dark mx-5"> <!--div til Logo-->
             <div class="card-body">
                 <p>side</p>
             </div>
@@ -19,10 +38,15 @@
         
     </div>
 
-    <div class="d-flex flex-row mt-5">
-        <div class="col-lg-6 card bg-light text-dark mx-5">
+<
+    <div class="d-flex flex-row mt-5"> 
+
+        <div class="col-lg-6 card bg-light text-dark mx-5"><!--div til Logo-->
             <p>under</p>
         </div>
+
+        
+
     </div>
 
 
