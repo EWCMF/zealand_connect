@@ -42,7 +42,7 @@ router.post('/', function (req, res){
         console.log(error);
          return res.status(400).send(error);
       });}
-      res.render('internship_post', { title: 'Express' });
+      res.render('internship_post', {title: 'Express'});
     }
 
     if(!files){
@@ -55,9 +55,14 @@ router.post('/', function (req, res){
       //Stien til upload mappen skal være til stien i docker containeren.
       var publicUploadFolder="/usr/src/app/public/uploads/";
 
-      //// TODO: Filnavne skal være unikke.
-      var newDocName=doc.name;
-      var newLogoName=logo.name;
+      //Generere unik data til filnavn med Date.now() og tilfældig tal.
+      var datetime = Date.now();
+
+      var randomNumber=Math.floor(Math.random() * (10 - 0 + 1) + 0);
+
+      //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
+      var newDocName=datetime+randomNumber+"_"+doc.name;
+      var newLogoName=datetime+randomNumber+"_"+logo.name;
 
       //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
       //Nedenstående flytter og omdøber filer på sammetid
@@ -70,7 +75,7 @@ router.post('/', function (req, res){
             indhold.post_document=newDocName;
           }
           reNameLogo();
-        }); 
+        });
       } else {
         reNameLogo();
       }
