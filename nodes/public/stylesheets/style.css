@@ -104,7 +104,7 @@ input::placeholder {
 }
 
 #cookieBox {
-  margin-top: 20px;
+  margin-top: 10px;
   height: 26px;
   display: flex;
   justify-content: center;
