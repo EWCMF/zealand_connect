@@ -26,7 +26,6 @@ router.get('/', function (req, res, next) {
 
 router.get('/profiles',function(req, res, next) {
     res.send(req.user)
-    
 })
 
 
@@ -40,7 +39,6 @@ router.post('/authenticateVirksomhed', function (req, res, next) {
         if(!user){
             return res.redirect('/login'+info.message);
         }
-        //todo fjern udkommentering når virksomhedstabellen er i databasen
         if(!(user instanceof models.Virksomhed)){
             return res.redirect('/login?error=incorretemaillogincombination');
         }
@@ -53,4 +51,29 @@ router.post('/authenticateVirksomhed', function (req, res, next) {
           });
     })(req, res, next);
 });
+
+//denne route bliver kaldt i layout.hbs, så den ved om man er logget ind eller ej
+router.get('/loggedIn',function(req, res, next) {
+    if(req.user === undefined){
+        //Brugeren er ikke logget ind
+        res.send({
+            email: ""
+        });
+    } else {
+        //Brugeren er logget ind
+        res.send({
+            email: req.user
+        });
+    }
+});
+
+router.get('/logout',function(req, res, next) {
+    //angående logout:
+    /*Passport exposes a logout() function on req (also aliased as logOut()) 
+    that can be called from any route handler which needs to terminate a login session. 
+    Invoking logout() will remove the req.user property and clear the login session (if any).*/
+    req.logout();
+    res.redirect("../");
+});
+
 module.exports = router;
