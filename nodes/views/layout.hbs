@@ -11,16 +11,17 @@
     <!-- Custom stylesheet here -->
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <head>
-<style>
 
-</style>
-</head>
+    <head>
+        <style>
+
+        </style>
+    </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg container-fluid" id="nv1">
-        <a class="navbar-brand" href="/forside">ZealandConnect</a>
+    <nav class="navbar navbar navbar-expand-lg container-fluid" id="nv1">
+        <a class="navbar-brand" href="/">ZealandConnect</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -32,16 +33,15 @@
                     <a class="nav-link" href="#">Profil<span class="sr-only">(current)</span></a>
                 </li>
 
-                <li class="nav-item dropdown ">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Opslag
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                        <a class="dropdown-item" href="/search-cv">CV'er</a>
+                        <a class="dropdown-item" href="/search-cv">Alle CV'er</a>
                         <a class="dropdown-item" href="/internship_post">Praktikopslag</a>
-                        <a class="dropdown-item" href="/mit-CV">mit-CV</a>
-                        <a class="dropdown-item" href="#">Projekter</a>
+                        <a class="dropdown-item" href="/mit-CV">Mit CV</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Virksomheder</a>
                     </div>
@@ -54,7 +54,7 @@
                     <a class="nav-link" id="da" href="/language/da">Dansk</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">login</a>
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
             </ul>
 
@@ -64,6 +64,7 @@
             </form> -->
         </div>
     </nav>
+    <hr style="height:1px;background-color:black;margin-top:0px;margin-right:24px;margin-left:96px">
 
     <!-- TODO: navigation -->
     <div class="sidebar">
@@ -78,14 +79,14 @@
         crossorigin="anonymous"></script>
     <script src="/javascript/oversaettelse.js"></script>
     <script>
-        var lang=document.documentElement.lang;
-        document.getElementById('da').style.display ='none';
-        if(lang == 'da') {
-            document.getElementById('da').style.display ='none';
+        var lang = document.documentElement.lang;
+        document.getElementById('da').style.display = 'none';
+        if (lang == 'da') {
+            document.getElementById('da').style.display = 'none';
             document.getElementById('en').style.display = 'block';
         }
-        else if(lang == 'en') {
-            document.getElementById('en').style.display ='none';
+        else if (lang == 'en') {
+            document.getElementById('en').style.display = 'none';
             document.getElementById('da').style.display = 'block';
         }
     </script>
