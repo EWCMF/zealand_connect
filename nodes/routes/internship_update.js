@@ -9,35 +9,84 @@ const internshippost = require('../models/internshippost');
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
-  //laver et objekt med alle data
-  const { id, title, email, contact, education, country, region, post_start_date, post_end_date, post_text } = req.body;
-  var indhold = {id, title, email, contact, education, country, region, post_start_date, post_end_date, post_text };
-  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
-  var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
-  var inputError = false;
+  //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
+  var formData = new formidable.IncomingForm();
+  formData.parse(req, function(error, fields, files){
+    //laver et objekt med alle data
+    const { id, title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document} = fields;
+    var indhold = {id, title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document};
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
+    var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
+    var cvrReg = /^[0-9]{8}$/
+    var linkReg = /^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(\/.)?$/
+    var validPicRegex =/\.(jpg|jpeg|png|bmp|svg)$/
+    var vaildFileRegex = /\.(pdf|docx|doc|txt)$/
+    var inputError = false;
 
-  console.log(req.body);
+    var cityArray=[];
 
-  //Test inputfelterne
-  if (1 > title.length || title.length > 255) { console.log('Title lenght invalid'); inputError = true; }
-  if (email.length > 255) { console.log('Email to long'); inputError = true; }
-  if (!emailRegex.test(email)) { console.log('Invalid email'); inputError = true; }
-  if (1 > contact.length || contact.length > 255) { console.log('Contact length invalid'); inputError = true; }
-  if (!dateReg.test(post_start_date)) { console.log('Invalid date'); inputError = true; }
-  if (!dateReg.test(post_end_date)) { console.log('Invalid date'); inputError = true; }
-  if (post_text.length > 65536) { console.log('Plain text is to long'); inputError = true; }
+    //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
+    if (1 > title.length || title.length > 255) {console.log('Title lenght invalid'); inputError = true;}
+    if (email.length > 255) {console.log('Email to long'); inputError = true;}
+    if (!emailRegex.test(email)) {console.log('Invalid email'); inputError = true;}
+    if (1 > contact.length || contact.length > 255) {console.log('Contact length invalid'); inputError = true;}
+    if (!dateReg.test(post_start_date)) {console.log('Invalid date'); inputError = true;}
+    if (!dateReg.test(post_end_date)) {console.log('Invalid date'); inputError = true;}
+    if (post_text.length > 65536) {console.log('Plain text is to long'); inputError = true;}
+    if (!cvrReg.test(cvr_number)) {console.log("CVR number invalid"); inputError = true;}
+    if (!linkReg.test(company_link)) {console.log("Link Invalid"); inputError = true;}
+    if (education == 0) {console.log('Invalid choice'); inputError = true;}
 
-  //logger resultatet af testene
-  console.log(emailRegex.test(email))
-  console.log(dateReg.test(post_start_date))
-  console.log(dateReg.test(post_end_date))
+    //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
+    function dbExe(){
+      if (!inputError){
+        console.log(indhold);
+        db.InternshipPost.update(indhold, {where:{
+          id: id
+        }, /*dette skal være her for at felterne i databasen bliver opdateret*/returning: true, plain: true });
+        res.render('internship_update', { title: 'Express' });
+      }else{
+        console.log("update fail");
+        res.render('internship_update', { title: 'Express' })
+      }
+    }
 
-  db.InternshipPost.update(indhold, {where:{
-    id: id
-  }, /*dette skal være her for at felterne i databasen bliver opdateret*/returning: true, plain: true });
-  res.render('internship_update', { title: 'Express' });
+    function generateAndValidateCityArray(){
+      if(country==1){
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200){
+            var myObj = JSON.parse(this.responseText);
+            myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
+            myObj.forEach(element => {
+              cityArray.push(element.primærtnavn);
+            });
 
+            isCityValid=false;
 
+            for(var i=0;i<cityArray.length;i++){
+              if(cityArray[i]===city){
+                isCityValid=true;
+                console.log('Valid city found');
+              }
+            }
+
+            if(!isCityValid){
+              inputError=true;
+              console.log('City was invalid');
+            }
+            dbExe();
+          }
+        };
+        xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send();
+      }else{
+        dbExe();
+      }
+    }
+    generateAndValidateCityArray();
+  });
 });
 
 /* GET home page. */
