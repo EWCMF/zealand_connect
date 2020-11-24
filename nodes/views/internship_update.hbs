@@ -93,7 +93,7 @@
             <div class="form-group" id="containerCVR">
               <label for="cvr_number">CVR Nummer</label>
               <input type="text" pattern="^[0-9]{8}$" title="CVR må kun være 8 tal" name="cvr_number"
-                id="companyCVR" class="form-control" placeholder="CVR">
+                id="companyCVR" class="form-control" placeholder="CVR" value="{{rcvr}}">
               <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal præcist være 8 tal</p>
             </div>
           </div>
@@ -102,7 +102,7 @@
               <label for="company_link">Link til Hjemmeside</label>
               <input type="url" pattern="^(http://www.|https://www.|http://|https://)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.)?$"
                 title="Link er ugyldigt" name="company_link" id="companyURL" class="form-control"
-                placeholder="https://virksomhed.dk">
+                placeholder="https://virksomhed.dk" value="{{rcompany}}">
               <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her f.eks http://www.zealandconnect.dk</p>
             </div>
           </div>
@@ -125,7 +125,8 @@
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
-            <label for="post_document">Vedhæft fil</label>
+            <label for="post_document">Vedhæft fil</label><br/>
+            <a id="uploadedFile" href="" target="_blank" hidden="true">Nuværende vedhæftet fil</a>
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt" class="custom-file-input"
@@ -135,7 +136,8 @@
             </div>
           </div>
           <div class="col-12 col-md-6">
-            <label for="company_logo">Virksomhedslogo</label>
+            <label for="company_logo">Virksomhedslogo</label><br>
+            <a id="uploadedLogo" href="" target="_blank" hidden="true">Nuværende vedhæftet logo</a>
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input"
@@ -238,7 +240,26 @@ function countryToggleFields() {
 countryToggleFields();
 
 function updateInputLabel(labelId, inputId) {
-  document.getElementById(labelId).innerHTML = document.getElementById(inputId)
-    .value;
+  document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
 }
+
+//Function til at sætte billed sti og dokument link hvis link findes.
+function showIfURLexist(){
+  var logoName="{{rlogo}}";
+  var docName ="{{rdoc}}";
+
+  if(logoName.length!=0){
+    console.log("Logo");
+    document.getElementById("uploadedLogo").href="uploads/"+logoName;
+    document.getElementById("uploadedLogo").hidden=false;
+  }else{console.log("No logo");}
+
+  if(docName.length!=0){
+    console.log("File");
+    document.getElementById("uploadedFile").href="uploads/"+docName;
+    document.getElementById("uploadedFile").hidden=false;
+  }else{console.log("No file");}
+}
+
+showIfURLexist();
 </script>

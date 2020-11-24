@@ -18,7 +18,6 @@ router.post('/', function (req, res, next) {
 
   console.log(req.body);
 
-
   //Test inputfelterne
   if (1 > title.length || title.length > 255) { console.log('Title lenght invalid'); inputError = true; }
   if (email.length > 255) { console.log('Email to long'); inputError = true; }
@@ -56,9 +55,9 @@ router.get('/', function (req, res, next) {
         });
         console.log(req.query.id)
         //console.log(internshippost.findByPk)
-        db.InternshipPost.findByPk(req.query.id, {attributes:["title","email","contact","education","country","region","post_start_date","post_end_date","post_text","city","postcode"]}).then(result => {
+        db.InternshipPost.findByPk(req.query.id, {attributes:["title","email","contact","education","country","region","post_start_date","post_end_date","post_text","city","postcode","cvr_number","company_link","company_logo","post_document"]}).then(result => {
           //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-          res.render('internship_update', { title: 'Express',rid: req.query.id, rtitle: result['title'], remail: result['email'], rcontact: result['contact'], reducation: result['education'], rcountry: result['country'], rregion: result['region'], rpoststart/*start date*/: result['post_start_date'], rpostend:/*end date*/ result['post_end_date'], rtext/*post_text*/:result['post_text'], rcity:result['city'], rpostcode:result['postcode'], generatedCityOptions: generatedCityOptions, generatedPostCodeOptions: generatedPostCodeOptions });
+          res.render('internship_update', {title:'Express',rid:req.query.id,rtitle:result['title'],remail:result['email'],rcontact:result['contact'],reducation:result['education'],rcountry:result['country'],rregion:result['region'], rpoststart/*start date*/: result['post_start_date'], rpostend:/*end date*/ result['post_end_date'], rtext/*post_text*/:result['post_text'], rcity:result['city'], rpostcode:result['postcode'],rcvr:result['cvr_number'],rcompany:result['company_link'],rlogo:result["company_logo"],rdoc:result["post_document"], generatedCityOptions: generatedCityOptions, generatedPostCodeOptions: generatedPostCodeOptions });
         }).catch();
       }
     };
