@@ -9,7 +9,7 @@ async function findUserByEmail(email){
                 console.log('en student med denne email findes ikke!');
             } 
             if(student instanceof models.Student) {
-                console.log("---i found the student:---");
+                console.log("---fandt en Student med mailen:---");
                 //console.log(user instanceof models.User); // true
                 //console.log(user.username); // 'My Title'
                 user = student
@@ -21,7 +21,7 @@ async function findUserByEmail(email){
                     //resolve(null);
                 } 
                 if(virksomhed instanceof models.Virksomhed) {
-                    console.log("---i found the Virksomhed:---");
+                    console.log("---fandt en Virksomhed med mailen:---");
                     //console.log(user instanceof models.User); // true
                     //console.log(user.username); // 'My Title'
                     user = virksomhed;
@@ -30,28 +30,6 @@ async function findUserByEmail(email){
             });
         }) 
     })
-    //TODO når de andre bruger tabeller laves, så skal denne metode udvides btw
-    //eller så kan denne metode deles til 3. findStudent, findVirksomhed, findAdmin. seperation of concerns?
 }
 
-// udkommenteret da den ikke bruges
-
-/*
-async function findUserById(id){
-    return new Promise(resolve => {
-        console.log("---finding user by ID:"+id+"---");
-        models.Student.findOne({ where: { id: id } }).then(async(student) => {
-            if (student === null) {
-                console.log('student Not found!');
-                resolve(null);
-            } else {
-                console.log("---i found the user:---");
-                //console.log(user instanceof models.User); // true
-                //console.log(user.username); // 'My Title'
-                resolve(student);
-            }
-        });
-    })
-} */
-
-module.exports = {findUserByEmail: findUserByEmail, /*findUserById: findUserById*/}
+module.exports = {findUserByEmail: findUserByEmail, }
