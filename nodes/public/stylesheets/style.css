@@ -257,7 +257,7 @@ input::placeholder {
 #nv1{
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #faee84;
+  background-color: rgba(250, 238, 132, 0);
   margin-left: 80px;
   font-size: 21px;
 }
