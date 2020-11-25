@@ -9,29 +9,29 @@
                     <div class="loginBtnBox">
                         <form method="post" action="opret-bruger/create" id="opretBrugerForm" name="opretBrugerForm">
                             <div class="form-group" id="virksomhedOpret"> <!-- Virksomheds opret form-->
-                                <p id="emailFejl" class="fejlFelt" hidden="false">Forkert email</p>
-                                <input type="email" id="email" class="form-control"
+                                <p style="color: red;">{{emailError}}</p>
+                                <input type="text" id="email" class="form-control"
                                        name="email" placeholder="Email"><br>
-                                <input type="email" id="gentagEmail" class="form-control"
+                                <input type="text" id="gentagEmail" class="form-control"
                                        name="gentagEmail" placeholder="Gentag email"
                                        data-key="placeholderGentagEmail"><br>
-                                <p id="passwordFejl" class="fejlFelt" hidden="true">Forkert password</p>
+                                <p style="color: red;">{{passwordError}}</p>
                                 <input type="password" id="adgangskode" class="form-control"
                                        name="password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
                                 <input type="password" id="gentagAdgangskode" class="form-control"
                                        name="gentagPassword" placeholder="Gentag Adgangskode"
                                        data-key="placeholdergentagAdgangskode"><br>
-                                <p id="cvrnrFejl" class="fejlFelt" hidden="true">Forkert postnummer</p>
+                                <p style="color: red;">{{cvrError}}</p>
                                 <input type="text" id="cvr" class="form-control"
                                        name="cvr" placeholder="CVR-Nummer" data-key="placeholdercvr"><br>
-                                <p id="tlfnrFejl" class="fejlFelt" hidden="true">Forkert telefonnr</p>
+                                <p style="color: red;">{{tlfnrError}}</p>
                                 <input type="string" id="telefonnummer" class="form-control"
                                        name="telefonnummer" placeholder="Telefonnummer"
                                        data-key="placeholderTelefonnummer"><br>
-                                <p id="byFejl" class="fejlFelt" hidden="true">Forkert by</p>
+                                <p style="color: red;">{{byError}}</p>
                                 <input type="string" id="by" class="form-control"
                                        name="by" placeholder="By" data-key="placeholderBy"><br>
-                                <p id="postnrFejl" class="fejlFelt" hidden="true">Forkert postnummer</p>
+                                <p style="color: red;">{{postnrError}}</p>
                                 <input type="string" id="postnummer" class="form-control"
                                        name="postnummer" placeholder="Postnummer" data-key="placeholderPostnummer"><br>
                             </div>
