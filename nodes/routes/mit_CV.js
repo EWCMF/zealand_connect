@@ -5,34 +5,9 @@ var router = express.Router();
 const db = require('../models');
 
 router.get('/', function (req, res, next) {
-  res.render('Mit-CV', {
+  res.render('mit_CV', {
     Profil: "Hans Sørensen",
   })
-});
-
-router.get('/Create_pdf', function (req, res, next) {
-  // https://pdfkit.org/docs/guide.pdf
-  // http://pdfkit.org/
-var pdf = require('pdfkit');
-var fs = require('fs');
-
-var myDoc = new pdf;
-
-myDoc.pipe(fs.createWriteStream('PDF/Test.pdf'));
-
-myDoc.font('Times-Roman')
-        .fontSize(48)
-        .text('Jeg tror det virker nu',100,100);
-myDoc.end().next(
-  () => {
-    res.setHeader('content-type', 'application/pdf');
-    res.download('PDF/Test2.pdf', 'pdf.pdf');
-  }
-);
-});
-
-router.get('/Download_pdf', function (req, res, next) {
-    
 });
 
 router.post('/submit', function (req, res, next) {
