@@ -40,24 +40,50 @@ router.post('/query', function (req, res) {
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
         console.log(fields);
-        var filter = [];
+    
         var where = {}
+        var uddannelse = {
+            [Op.or]: []
+        };
+        var sprog = {
+            [Op.or]: []
+        };
+
         for (var key in fields) {
             const element = key + "";
             if (element.includes("udd")) {
-                let obj = {
-                    uddannelse: element.substring(3)
-                }
-                filter.push(obj);
+
+                uddannelse[Op.or].push(element.substring(3));
             }
-            if (filter.length != 0) {
-                where = {
-                    [Op.or]: filter
-                }
+
+            if (element.includes('indland')) {
+
+                sprog[Op.or].push(
+                    'dansk'
+                );
+                sprog[Op.or].push(
+                    'Dansk'
+                )
+            }
+            
+            if (element.includes('udland')) {
+                
+                sprog[Op.or].push({
+                    [Op.not]: 'dansk'
+                })
+
+                sprog[Op.or].push({
+                    [Op.not]: 'Dansk'
+                })
             }
         }
+
+        where = {
+            uddannelse,
+            sprog
+        }
         
-        console.log(filter);
+        console.log(where);
 
         const {
             count,
