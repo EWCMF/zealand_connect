@@ -6,51 +6,94 @@
                 alt="rlogo">
         </div>
 
-        <div class="col-1">
-            <table style="width:100%">
-                <tr>
-                    <td>
+        <div class="col-10" >
+            <table id="viewpostTable">
+                <tr  style=" padding: 5px">
+                    <td colspan="2">
                         <h2>{{rtitle}}</h2>
                     </td>
                 </tr>
-                <tr>
+                <tr  style=" padding: 5px">
                     <td>Uddannelse: </td>
                     <td id=educationContainer>{{reducation}}</td>
                 </tr>
+                <tr  style=" padding: 5px">
+                    <td>
+                    Land:
+                    </td>
+                    <td id=countryContainer>
+                    {{rcountry}}
+                    </td>
+                </tr>
+                <tr  style=" padding: 5px">
+                    <td>
+                    Region:
+                    </td>
+                    <td id="regionContainer">
+                    {{rregion}}
+                    </td>
+                </tr>
+                <tr>
+                    
+                    <td>By:</label></td>
+                    <td id="cityContainer">{{rcity}}</td>
+                </tr>
+                <tr  style="">
+                    <td>Postnummer:</td>
+                    <td id="postcodeContainer">{{rpostcode}}</td>
+                </tr>
+                <tr  style="">
+                    <td>Email:</td>
+                    <td id="emailContainer"><a href="mailto:{{remail}}">{{remail}}</a></td>
+                </tr>
+                <tr  style="">
+                    <td>Kontaktperson:</td>
+                    <td id="contactContainer">{{rcontact}}</td>
+                </tr>
+                <tr  style="">
+                    <td>CVR Nummer:</td>
+                    <td id="cvrContainer">{{rcvr}}</td>
+                </tr>
+                <tr  style="">
+                    <td>Hjemmeside:</td>
+                    <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
+                </tr>
+                <tr  style="" hidden="true" id="docContainer">
+                    <td>Vedhæftet fil:</td>
+                    <td id="docContainer2"><a href="/uploads/{{rdoc}}" target="_Blank">{{rdoc}}</a></td>
+                </tr>
             </table>
-            <h6 class="mb-3">Uddannelse:</h6><h6 class="mb-3">Land:</h6><h6 class="mb-3">Region:</h6><h6 class="mb-3">By:
-            </h6>
-            <h6 class="mb-0">Postnummer:</h6><h6 class="mb-0">Email:</h6><h6 class="mb-0">Kontaktperson:</h6>
-            <h6 class="mb-0">CVR nummer:</h6><h6 class="mb-0">Hjemmeside:</h6><h6 class="mb-0">Annoncetekst:
-            </h6><h6 class="mb-0">Vedhæftet fil:</h6></div></div></div></div>
-<hr class="mb-4">
-
-<div class="row border rounded ml-1 mr-1 mb-4">
-    <div class="col mb-2">
-        <h4 class="mb-3 mt-2 d-flex align-self-center">
-            Annoncetekst:
-        </h4>
-        <p>
-            {{json.post_text}}
-        </p>
+            
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Annoncetekst:
+            </h4>
+            <p>
+                {{{rtext}}}
+            </p>
+        </div>
     </div>
 </div>
-</div>
-<div class="row"></div>
-
 <script>
     function updateLabel() {
         var educationId = {{ reducation }};
+        var docName = "{{rdoc}}";
         switch (educationId) {
-            case 1:
-                document.getElementById('educationContainer').innerHTML = 'Handelsøkonom';
-                break;
-            case 2:
-                document.getElementById('educationContainer').innerHTML = 'Datamatiker';
-                break;
-            case 3:
-                document.getElementById('educationContainer').innerHTML = 'Bygningskonstruktør';
-                break;
+        case 1:
+            document.getElementById('educationContainer').innerHTML = 'Handelsøkonom';
+            break;
+        case 2:
+            document.getElementById('educationContainer').innerHTML = 'Datamatiker';
+            break;
+        case 3:
+            document.getElementById('educationContainer').innerHTML = 'Bygningskonstruktør';
+            break;
+        }
+        if (docName != ""){
+            document.getElementById("docContainer").hidden = false;
         }
     }
     updateLabel();

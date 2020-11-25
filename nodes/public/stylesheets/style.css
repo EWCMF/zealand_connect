@@ -343,5 +343,10 @@ margin-bottom: 50px;
 @media (min-width: 1200px) {
 
 }
-
+/* styling for viewpost table in view_post.hbs */
+#viewpostTable tr td {
+  padding-top: 8.5px;
+  padding-bottom: 8.5px;
+  font-size: medium;
+}
 
