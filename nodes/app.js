@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var profilRouter = require('./routes/profil');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
@@ -43,6 +44,7 @@ app.use(passport.session());
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
+app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/mit-CV', mit_CVRouter);
