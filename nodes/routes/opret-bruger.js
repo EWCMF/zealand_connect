@@ -43,10 +43,6 @@ router.post('/create', function (req, res) {
         error += "emailmismatcherror";
         res.redirect('/opret-bruger' + error);
     }
-    else if (findUserByEmail(email) !== null){
-        error += "existingemailerror";
-        res.redirect('/opret-bruger' + error);
-    }
 
     // Password skal være mellem 8 og 16 karakterer
     else if (password.length < 8 || password.length > 16){
@@ -72,7 +68,17 @@ router.post('/create', function (req, res) {
     //     createVirksomhed(virksomhedsBruger);
     // });
 
-    res.redirect('back');
+    findUserByEmail(email).then((user) => {
+        if (user !== null){
+            error += "existingemailerror";
+            console.log(findUserByEmail(email));
+            res.redirect('/opret-bruger' + error);
+        }
+        else {
+            res.redirect('back');
+        }
+    });
+
 });
 
 router.post('/delete', function (req, res) {

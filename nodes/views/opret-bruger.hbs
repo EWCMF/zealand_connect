@@ -9,29 +9,29 @@
                     <div class="loginBtnBox">
                         <form method="post" action="opret-bruger/create" id="opretBrugerForm" name="opretBrugerForm">
                             <div class="form-group" id="virksomhedOpret"> <!-- Virksomheds opret form-->
-                                <p style="color: red;">{{emailError}}</p>
+                                <div style="color: red;">{{emailError}}</div>
                                 <input type="text" id="email" class="form-control"
                                        name="email" placeholder="Email"><br>
                                 <input type="text" id="gentagEmail" class="form-control"
                                        name="gentagEmail" placeholder="Gentag email"
                                        data-key="placeholderGentagEmail"><br>
-                                <p style="color: red;">{{passwordError}}</p>
+                                <div style="color: red;">{{passwordError}}</div>
                                 <input type="password" id="adgangskode" class="form-control"
                                        name="password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
                                 <input type="password" id="gentagAdgangskode" class="form-control"
                                        name="gentagPassword" placeholder="Gentag Adgangskode"
                                        data-key="placeholdergentagAdgangskode"><br>
-                                <p style="color: red;">{{cvrError}}</p>
+                                <div style="color: red;">{{cvrError}}</div>
                                 <input type="text" id="cvr" class="form-control"
                                        name="cvr" placeholder="CVR-Nummer" data-key="placeholdercvr"><br>
-                                <p style="color: red;">{{tlfnrError}}</p>
+                                <div style="color: red;">{{tlfnrError}}</div>
                                 <input type="string" id="telefonnummer" class="form-control"
                                        name="telefonnummer" placeholder="Telefonnummer"
                                        data-key="placeholderTelefonnummer"><br>
-                                <p style="color: red;">{{byError}}</p>
+                                <div style="color: red;">{{byError}}</div>
                                 <input type="string" id="by" class="form-control"
                                        name="by" placeholder="By" data-key="placeholderBy"><br>
-                                <p style="color: red;">{{postnrError}}</p>
+                                <div style="color: red;">{{postnrError}}</div>
                                 <input type="string" id="postnummer" class="form-control"
                                        name="postnummer" placeholder="Postnummer" data-key="placeholderPostnummer"><br>
                             </div>
