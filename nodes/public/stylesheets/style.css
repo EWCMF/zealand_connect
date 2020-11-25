@@ -258,6 +258,22 @@ input::placeholder {
   height: 180px;
 }
 
+#dropdownUddannelser {
+  transform: rotate(270deg);
+}
+
+#dropdownUddannelserRotated {
+  transform: rotate(0deg);
+}
+
+#dropdownLand {
+  transform: rotate(270deg);
+}
+
+#dropdownLandRotated {
+  transform: rotate(0deg);
+}
+
 #filtrerUddannelser {
   color: black;
 }
@@ -265,6 +281,7 @@ input::placeholder {
 #filtrerIndlandUdland {
   color: black;
 }
+
 #forside1{
   /* Find løsning til mobil!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
   width: 1920px; /* Make this site really wide */

@@ -1,3 +1,6 @@
+document.getElementById("dropdownUddannelser").disabled = !0;
+document.getElementById("dropdownLand").disabled = !0;
+
 function changePage(page) {
     pageAsInt = parseInt(page);
 
@@ -61,4 +64,33 @@ function submitForm(formElement) {
     xhr.open(formElement.method, formElement.getAttribute("action"));
     xhr.send(formData);
     return false;
+}
+
+function onDropdownUddannelserClick() {
+    let nonRotate = document.getElementById("dropdownUddannelser");
+    console.log(nonRotate);
+    let rotated = document.getElementById("dropdownUddannelserRotated");
+    console.log(rotated);
+    if (nonRotate == null) {
+        rotated.id = rotated.id.toString().replace("Rotated", "");
+    }
+    
+    if (rotated == null) {
+        nonRotate.id += "Rotated";
+    }
+
+}
+
+function onDropdownLandClick() {
+    let nonRotate = document.getElementById("dropdownLand");
+    console.log(nonRotate);
+    let rotated = document.getElementById("dropdownLandRotated");
+    console.log(rotated);
+    if (nonRotate == null) {
+        rotated.id = rotated.id.toString().replace("Rotated", "");
+    }
+    
+    if (rotated == null) {
+        nonRotate.id += "Rotated";
+    }
 }
