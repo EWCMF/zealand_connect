@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var { reqLang } = require('../public/javascript/request');
-const createVirksomhed = require('../persistence/usercrud').createVirksomhed;
-const deleteVirksomhed = require('../persistence/usercrud').deleteVirksomhed;
+const createVirksomhed = require('../persistence/usermapping').createVirksomhed;
+const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
 
 /* GET login page. */
 router.get('/', function (req, res, next) {

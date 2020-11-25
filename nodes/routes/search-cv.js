@@ -1,226 +1,84 @@
 var express = require('express');
 var router = express.Router();
+var hbs = require('handlebars');
+var fs = require('fs');
 const db = require('../models');
+var formidable = require("formidable");
 const limit = 10;
+const { Op } = require('sequelize')
 
 
-router.get('/', function (req, res, next) {
-    var query = req.query;
-    var offset = 0;
-    var singlePage;
-    var pageJson;
-    var pageItem1;
-    var pageItem2;
-    var pageItem3;
+router.get('/', async function (req, res, next) {
 
-    if (query.page == null) {
-        singlePage = 0; 
-    } else {
-        singlePage = parseInt(query.page);
-    }
+    const udd = await db.Uddannelser.findAll({
+        order: [
+            ['name', 'ASC']
+        ]
+    });
 
-    if (singlePage == 0) {
-        pageItem1 = "active";
-        console.log(pageItem1);
-        pageJson = {
-            one: singlePage+1,
-            two: singlePage+2,
-            three: singlePage+3
-        }
-    }  
-    
-    if (singlePage == 1) {
-        pageItem1 = "active";
-        console.log(pageItem1);
-        pageJson = {
-            one: singlePage,
-            two: singlePage+1,
-            three: singlePage+2
-        }
-    }
-    
-    if (singlePage >= 2) {
-        pageItem2 = "active";
-        console.log(pageItem2);
-        pageJson = {
-            one: singlePage-1,
-            two: singlePage,
-            three: singlePage+1
-        }
-    }
-    
-    
+    const {
+        count,
+        rows
+    } = await db.CV.findAndCountAll({
+        limit: 10,
+        raw: true,
+        order: [
+            ['updatedAt', 'DESC']
+        ],
+    });
 
-    var sort;
-    var sortName;
+    res.render('search_cv', {
+        json: rows,
+        resultater: count,
+        udd: udd
+    });
 
-    var dtmCb = ""
-    var hoeCb = ""
-    var foeCb = ""
-    var ihmCb = ""
-    var ioeCb = ""
-    var bkCb = ""
-    var btCb = ""
-    var insCb = ""
+});
 
-    console.log(query);
+router.post('/query', function (req, res) {
 
-    if (query.page != null) {
-        offset = limit * parseInt(query.page-1);
-    }
-
-    if (query.sort == null) {
-        sort = "updatedAt";
-        sortName = "Senest opdateret";
-    } else {
-        sort = query.sort
-        switch (sort) {
-            case "overskrift":
-                sortName = "Overskrift";
-                break;
-            case "updatedAt":
-                sortName = "Senest opdateret";
-        }
-    }
-
-    var filter = JSON.parse("[]");
-    if (query.uddannelse != null) {
-
-        if (req.query.uddannelse.includes("Datamatiker")) {
-            dtmCb = "checked";
-        }
-        if (req.query.uddannelse.includes("Handelsøkonom")) {
-            hoeCb = "checked";
-        }
-        if (req.query.uddannelse.includes("Finansøkonom")) {
-            foeCb = "checked";
-        }
-        if (req.query.uddannelse.includes("International Handel og Markedsføring")) {
-            ihmCb = "checked";
-        }
-        if (req.query.uddannelse.includes("Innovation og Entrepreneurship")) {
-            ioeCb = "checked";
-        }
-        if (req.query.uddannelse.includes("Bygningskontruktør")) {
-            bkCb = "checked";
-        }
-        if (req.query.uddannelse.includes("Byggetekniker")) {
-            btCb = "checked";
-        }
-        if (req.query.uddannelse.includes("Installatør, stærkstrøm")) {
-            insCb = "checked";
-        }
-
-        if (Array.isArray(query.uddannelse)) {
-            for (let index = 0; index < query.uddannelse.length; index++) {
-                const element = "" + query.uddannelse[index];
+    var formData = new formidable.IncomingForm();
+    formData.parse(req, async function (error, fields, files) {
+        console.log(fields);
+        var filter = [];
+        var where = {}
+        for (var key in fields) {
+            const element = key + "";
+            if (element.includes("udd")) {
                 let obj = {
-                    uddannelse: element
-                };
+                    uddannelse: element.substring(3)
+                }
                 filter.push(obj);
             }
-        } else {
-            let obj = {
-                uddannelse: query.uddannelse
-            };
-            console.log(obj);
-            filter.push(obj);
+            if (filter.length != 0) {
+                where = {
+                    [Op.or]: filter
+                }
+            }
         }
+        
         console.log(filter);
 
-        if (filter.includes("Datamatiker")) {
-            dtmCb = "checked";
-        }
-        if (filter.includes("Handelsøkonom")) {
-            hoeCb = "checked";
-        }
-        if (filter.includes("Finansøkonom")) {
-            foeCb = "checked";
-        }
-        if (filter.includes("International Handel og Markedsføring")) {
-            ihmCb = "checked";
-        }
-        if (filter.includes("Innovation og Entrepreneurship")) {
-            ioeCb = "checked";
-        }
-        if (filter.includes("Bygningskontruktør")) {
-            bkCb = "checked";
-        }
-        if (filter.includes("Byggetekniker")) {
-            btCb = "checked";
-        }
-        if (filter.includes("Installatør, stærkstrøm")) {
-            insCb = "checked";
-        }
-
         const {
-            Op
-        } = require("sequelize");
-        db.CV.findAll({
-            limit: limit,
-            offset: offset,
+            count,
+            rows
+        } = await db.CV.findAndCountAll({
+            limit: 10,
             raw: true,
             order: [
-                [sort, 'DESC']
+                [fields.sort, fields.order]
             ],
-            where: {
-                [Op.or]: filter
-            }
-        }).then((cvs) => {
+            where
+        });
 
-            res.render('search_cv', {
-                json: cvs,
-                resultater: cvs.length,
-                sortName: sortName,
-                sort: sort,
-                show: "show",
-                dtmCb:dtmCb,
-                hoeCb:hoeCb,
-                foeCb:foeCb,
-                ihmCb:ihmCb,
-                ioeCb:ioeCb,
-                bkCb:bkCb,
-                btCb:btCb,
-                insCb:insCb,
-                pageJson,
-                pageitm1: pageItem1,
-                pageItm2: pageItem2
-            });
+        fs.readFile('views\\cv-card-template.hbs', function(err, data) {
+            if (err) throw err;
+            var template = hbs.compile(data + '');
+            var html = template({json: rows});
+            var item = [count, html];
+            res.send(item);
         })
-    } else {
-
-        const {
-            Op
-        } = require("sequelize");
-        db.CV.findAll({
-            limit: limit,
-            offset: offset,
-            raw: true,
-            order: [
-                [sort, 'DESC']
-            ]
-        }).then((cvs) => {
-
-            res.render('search_cv', {
-                json: cvs,
-                resultater: cvs.length,
-                sortName: sortName,
-                sort: sort,
-                dtmCb:dtmCb,
-                hoeCb:hoeCb,
-                foeCb:foeCb,
-                ihmCb:ihmCb,
-                ioeCb:ioeCb,
-                bkCb:bkCb,
-                btCb:btCb,
-                insCb:insCb,
-                pageJson,
-                pageitm1: pageItem1,
-                pageItm2: pageItem2
-            });
-        })
-
-    }
+    });
 });
 
 router.get('/:id', function (req, res) {
@@ -233,16 +91,22 @@ router.get('/:id', function (req, res) {
         }
     }).then((cv) => {
         console.log(cv);
-      
+
         if (cv.hjemmeside.includes("://")) {
             console.log(cv.hjemmeside.indexOf("://") + 3)
             cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
             //console.log(cv.linkedIn);
-        } 
-        
+        }
+
         if (cv.linkedIn.includes("://")) {
-            console.log(cv.linkedIn.indexOf("://")  + 3)
-            cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://")  + 3);
+            console.log(cv.linkedIn.indexOf("://") + 3)
+            cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
+            //console.log(cv.linkedIn);
+        }
+
+        if (cv.yt_link.includes("://")) {
+            console.log(cv.yt_link.indexOf("://")  + 3)
+            cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://")  + 3);
             //console.log(cv.linkedIn);
         }
 

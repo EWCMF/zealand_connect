@@ -104,7 +104,7 @@ input::placeholder {
 }
 
 #cookieBox {
-  margin-top: 20px;
+  margin-top: 10px;
   height: 26px;
   display: flex;
   justify-content: center;
@@ -160,6 +160,14 @@ input::placeholder {
   display: none;
 }
 
+#opretBrugerKnapVedLogin {
+  display: none;
+}
+
+#opretBrugerLabelVedLogin {
+  display: none;
+}
+
 #loginForm .form-control {
   width: 339px;
 }
@@ -201,13 +209,6 @@ input::placeholder {
   background-color: #fff;
   width: 46px;
   height: 32px;
-}
-
-
-#tab1:active {
-}
-
-#tab2:active {
 }
 
 .radioBtnBox .radioButton {
@@ -264,7 +265,7 @@ input::placeholder {
 #nv1{
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #faee84;
+  background-color: rgba(250, 238, 132, 0);
   margin-left: 80px;
   font-size: 21px;
 }
@@ -316,10 +317,11 @@ margin-bottom: 50px;
   color: #000000;
 }
 
-#cl1{
-  margin-left: 80px;
-  
+.autobreak {
+  word-break: break-all;
 }
+
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 

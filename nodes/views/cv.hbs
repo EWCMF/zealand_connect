@@ -4,13 +4,35 @@
         <div class="col-2">
             <img class="img-thumbnail border-0" src="/images/facebook-default-no-profile-pic.jpg" alt="PROFILBILLEDE">
         </div>
-        <div class="col-10">
+        <div class="col-1">
+            <div class="col">
+                <h2 class="mb-3">
+                    Navn:
+                </h2>
+                <h6 class="mb-3">
+                    Mail:
+                </h6>
+                <h6 class="mb-3">
+                    Tlf:
+                </h6>
+                <h6 class="mb-3">
+                    Hjemmeside:
+                </h6>
+                <h6 class="mb-3">
+                    LinkedIn:
+                </h6>
+                <h6 class="mb-0">
+                    Youtube CV:
+                </h6>
+            </div>
+        </div>
+        <div class="col-9">
             <div class="col">
                 <h2 class="mb-3">
                     Navn Navnesen
                 </h2>
                 <h6 class="mb-3">
-                    {{json.email}}
+                    <a href="mailto:{{json.email}}">{{json.email}}</a>
                 </h6>
                 <h6 class="mb-3">
                     {{json.telefon}}
@@ -21,8 +43,13 @@
                     </h6>
                 </a>
                 <a href="//{{json.linkedIn}}">
-                    <h6 class="mb-0">
+                    <h6 class="mb-3">
                         {{json.linkedIn}}
+                    </h6>
+                </a>
+                <a href="//{{json.yt_link}}">
+                    <h6 class="mb-0">
+                        {{json.yt_link}}
                     </h6>
                 </a>
             </div>
@@ -37,7 +64,7 @@
                 Om mig
             </h4>
             <!--<hr class="mb-2 mt-0">-->
-            <p>
+            <p class="autobreak">
                 {{json.om_mig}}
             </p>
         </div>
@@ -47,7 +74,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Hvad jeg søger
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.overskrift}}
             </p>
         </div>
@@ -57,7 +84,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Erfaring
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.erhvervserfaring}}
             </p>
         </div>
@@ -67,7 +94,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Uddannelse
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.uddannelse}}
             </p>
         </div>
@@ -77,7 +104,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Speciale
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.speciale}}
             </p>
         </div>
@@ -87,7 +114,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Tidligere uddannelse
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.uddannelse}}
             </p>
         </div>
@@ -97,7 +124,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Udenlandsophold og frivilligt arbejde   
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.udenlandsophold_og_frivilligt_arbejde}}
             </p>
         </div>
@@ -107,7 +134,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Fritidsinteresser
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.fritidsinteresser}}
             </p>
         </div>
@@ -117,7 +144,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 It-kompetencer   
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.it_kompetencer}}
             </p>
         </div>
@@ -127,7 +154,7 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Sprog   
             </h4>
-            <p>
+            <p class="autobreak">
                 {{json.sprog}}
             </p>
         </div>
