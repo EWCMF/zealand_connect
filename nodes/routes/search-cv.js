@@ -107,7 +107,7 @@ router.post('/query', function (req, res) {
             where
         });
 
-        fs.readFile('views\\cv-card-template.hbs', function(err, data) {
+        fs.readFile('views\\search-cv-card.hbs', function(err, data) {
             if (err) throw err;
             var template = hbs.compile(data + '');
             var html = template({json: rows});
