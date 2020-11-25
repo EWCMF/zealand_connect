@@ -9,6 +9,13 @@ const { Op } = require('sequelize')
 
 
 router.get('/', async function (req, res, next) {
+    
+    var page;
+    if (req.query.page == null) {
+        page = 1
+    } else {
+        page = req.query.page
+    }
 
     const udd = await db.Uddannelser.findAll({
         order: [
@@ -20,8 +27,9 @@ router.get('/', async function (req, res, next) {
         count,
         rows
     } = await db.CV.findAndCountAll({
-        limit: 10,
+        limit: 5,
         raw: true,
+        offset: page * 5,
         order: [
             ['updatedAt', 'DESC']
         ],
@@ -30,7 +38,11 @@ router.get('/', async function (req, res, next) {
     res.render('search_cv', {
         json: rows,
         resultater: count,
-        udd: udd
+        udd: udd,
+        pagination: {
+            page: page,
+            pageCount: Math.floor(count / 5)
+        }
     });
 
 });
@@ -82,14 +94,12 @@ router.post('/query', function (req, res) {
             uddannelse,
             sprog
         }
-        
-        console.log(where);
 
         const {
             count,
             rows
         } = await db.CV.findAndCountAll({
-            limit: 10,
+            limit: 5,
             raw: true,
             order: [
                 [fields.sort, fields.order]
