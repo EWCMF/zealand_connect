@@ -5,10 +5,8 @@ const createVirksomhed = require('../persistence/usercrud').createVirksomhed;
 const deleteVirksomhed = require('../persistence/usercrud').deleteVirksomhed;
 const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
-const regex = require('../constants/regex');
 const validation = require('../validation/input-validation');
 
-/* GET login page. */
 router.get('/', function (req, res, next) {
     let error = req.query;
     let msg = error.error;
@@ -69,7 +67,7 @@ router.post('/create', function (req, res) {
         res.redirect('/opret-bruger' + error);
     }
 
-    if (!validation.validateCity()){
+    if (!validation.validateCity(by)){
         error += "invalidbyerror";
         res.redirect('/opret-bruger' + error);
     }
@@ -102,7 +100,7 @@ router.post('/create', function (req, res) {
 });
 
 router.post('/delete', function (req, res) {
-    deleteVirksomhed("memeboi@nielsen.dk")
+    deleteVirksomhed("")
     res.redirect('back');
 })
 
