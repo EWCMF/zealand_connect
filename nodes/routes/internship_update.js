@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;//Skal bruges til kalder API'er.
-var sortJsonArray = require('sort-json-array');//Brugt til at få byer i alfabetisk orden.
-var formidable = require("formidable");//Skal bruges når man håndtere filupload og alm. input i samme POST.
-var fs = require("fs");//Bruges til filer.
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; //Skal bruges til kalder API'er.
+var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabetisk orden.
+var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
+var fs = require("fs"); //Bruges til filer.
 const db = require('../models');
 const internshippost = require('../models/internshippost');
 
@@ -11,68 +11,140 @@ const internshippost = require('../models/internshippost');
 router.post('/', function (req, res, next) {
   //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
   var formData = new formidable.IncomingForm();
-  formData.parse(req, function(error, fields, files){
+  formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    const { id, title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document} = fields;
-    var indhold = {id, title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document};
+    const {
+      id,
+      title,
+      email,
+      contact,
+      education,
+      country,
+      region,
+      post_start_date,
+      post_end_date,
+      post_text,
+      city,
+      postcode,
+      cvr_number,
+      company_link,
+      company_logo,
+      post_document
+    } = fields;
+    var indhold = {
+      id,
+      title,
+      email,
+      contact,
+      education,
+      country,
+      region,
+      post_start_date,
+      post_end_date,
+      post_text,
+      city,
+      postcode,
+      cvr_number,
+      company_link,
+      company_logo,
+      post_document
+    };
     var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
     var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
     var cvrReg = /^[0-9]{8}$/
     var linkReg = /^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(\/.)?$/
-    var validPicRegex =/\.(jpg|jpeg|png|bmp|svg)$/
+    var validPicRegex = /\.(jpg|jpeg|png|bmp|svg)$/
     var vaildFileRegex = /\.(pdf|docx|doc|txt)$/
     var inputError = false;
 
-    var cityArray=[];
+    var cityArray = [];
 
     //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
-    if (1 > title.length || title.length > 255) {console.log('Title lenght invalid'); inputError = true;}
-    if (email.length > 255) {console.log('Email to long'); inputError = true;}
-    if (!emailRegex.test(email)) {console.log('Invalid email'); inputError = true;}
-    if (1 > contact.length || contact.length > 255) {console.log('Contact length invalid'); inputError = true;}
-    if (!dateReg.test(post_start_date)) {console.log('Invalid date'); inputError = true;}
-    if (!dateReg.test(post_end_date)) {console.log('Invalid date'); inputError = true;}
-    if (post_text.length > 65536) {console.log('Plain text is to long'); inputError = true;}
-    if (!cvrReg.test(cvr_number)) {console.log("CVR number invalid"); inputError = true;}
-    if (!linkReg.test(company_link)) {console.log("Link Invalid"); inputError = true;}
-    if (education == 0) {console.log('Invalid choice'); inputError = true;}
+    if (1 > title.length || title.length > 255) {
+      console.log('Title lenght invalid');
+      inputError = true;
+    }
+    if (email.length > 255) {
+      console.log('Email to long');
+      inputError = true;
+    }
+    if (!emailRegex.test(email)) {
+      console.log('Invalid email');
+      inputError = true;
+    }
+    if (1 > contact.length || contact.length > 255) {
+      console.log('Contact length invalid');
+      inputError = true;
+    }
+    if (!dateReg.test(post_start_date)) {
+      console.log('Invalid date');
+      inputError = true;
+    }
+    if (!dateReg.test(post_end_date)) {
+      console.log('Invalid date');
+      inputError = true;
+    }
+    if (post_text.length > 65536) {
+      console.log('Plain text is to long');
+      inputError = true;
+    }
+    if (!cvrReg.test(cvr_number)) {
+      console.log("CVR number invalid");
+      inputError = true;
+    }
+    if (!linkReg.test(company_link)) {
+      console.log("Link Invalid");
+      inputError = true;
+    }
+    if (education == 0) {
+      console.log('Invalid choice');
+      inputError = true;
+    }
 
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
-    function dbExe(){
-      if (!inputError){
+    function dbExe() {
+      if (!inputError) {
         console.log(indhold);
-        db.InternshipPost.update(indhold, {where:{
-          id: id
-        }, /*dette skal være her for at felterne i databasen bliver opdateret*/returning: true, plain: true });
-        res.render('internship_update', { title: 'Express' });
-      }else{
+        db.InternshipPost.update(indhold, {
+          where: {
+            id: id
+          },
+          /*dette skal være her for at felterne i databasen bliver opdateret*/ returning: true,
+          plain: true
+        });
+        res.render('internship_update', {
+          title: 'Express'
+        });
+      } else {
         console.log("update fail");
-        res.render('internship_update', { title: 'Express' })
+        res.render('internship_update', {
+          title: 'Express'
+        })
       }
     }
 
-    function generateAndValidateCityArray(){
-      if(country==1){
-        var xmlhttp=new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-          if (this.readyState == 4 && this.status == 200){
+    function generateAndValidateCityArray() {
+      if (country == 1) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
             var myObj = JSON.parse(this.responseText);
             myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
             myObj.forEach(element => {
               cityArray.push(element.primærtnavn);
             });
 
-            isCityValid=false;
+            isCityValid = false;
 
-            for(var i=0;i<cityArray.length;i++){
-              if(cityArray[i]===city){
-                isCityValid=true;
+            for (var i = 0; i < cityArray.length; i++) {
+              if (cityArray[i] === city) {
+                isCityValid = true;
                 console.log('Valid city found');
               }
             }
 
-            if(!isCityValid){
-              inputError=true;
+            if (!isCityValid) {
+              inputError = true;
               console.log('City was invalid');
             }
             dbExe();
@@ -81,32 +153,111 @@ router.post('/', function (req, res, next) {
         xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
         xmlhttp.setRequestHeader("Content-type", "application/json");
         xmlhttp.send();
-      }else{
+      } else {
         dbExe();
       }
     }
-    generateAndValidateCityArray();
+
+    /*fileUpload here*/
+    var doc = files.post_document;
+    var logo = files.company_logo;
+
+    //Stien til upload mappen skal være til stien i docker containeren.
+    var publicUploadFolder = "/usr/src/app/public/uploads/";
+    
+    //Generere unik data til filnavn med Date.now() og tilfældig tal.
+    var datetime = Date.now();
+
+    var randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
+
+    //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
+    var newDocName = datetime + randomNumber + "_" + doc.name;
+    var newLogoName = datetime + randomNumber + "_" + logo.name;
+
+    function renameDoc(docName, logoName) {
+      if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
+        unlinkOldFiles(docName)
+        fs.rename(doc.path, publicUploadFolder + newDocName, (errorRename) => {
+          if (errorRename) {
+            console.log("Unable to move file.");
+          } else {
+            console.log(doc.type)
+            indhold.post_document = newDocName;
+          }
+          reNameLogo(logoName);
+        });
+      } else {
+        reNameLogo(logoName);
+      }
+    }
+
+    function reNameLogo(logoName) {
+      if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
+        unlinkOldFiles(logoName)
+        fs.rename(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
+          if (errorRename) {
+            console.log("Unable to move file.");
+          } else {
+            indhold.company_logo = newLogoName;
+          }
+          generateAndValidateCityArray();
+        });
+      } else {
+        generateAndValidateCityArray();
+      }
+    }
+    //console.log(internshippost.findByPk)
+    db.InternshipPost.findByPk(req.query.id, {
+      attributes: ["company_logo", "post_document"]
+    }).then(result => {
+      //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
+      renameDoc(result["post_document"], result["company_logo"])
+    }).catch();
   });
 });
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   var generatedCityOptions = "";
   var generatedPostCodeOptions = "";
+
   function generateCityOptions() {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         var myObj = JSON.parse(this.responseText);
         myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
         myObj.forEach(element => {
-          generatedCityOptions += "<option value='"+element.primærtnavn+"'>"+element.primærtnavn+"</option>"
+          generatedCityOptions += "<option value='" + element.primærtnavn + "'>" + element.primærtnavn + "</option>"
         });
         console.log(req.query.id)
         //console.log(internshippost.findByPk)
-        db.InternshipPost.findByPk(req.query.id, {attributes:["title","email","contact","education","country","region","post_start_date","post_end_date","post_text","city","postcode","cvr_number","company_link","company_logo","post_document"]}).then(result => {
+        db.InternshipPost.findByPk(req.query.id, {
+          attributes: ["title", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number", "company_link", "company_logo", "post_document"]
+        }).then(result => {
           //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-          res.render('internship_update', {title:'Express',rid:req.query.id,rtitle:result['title'],remail:result['email'],rcontact:result['contact'],reducation:result['education'],rcountry:result['country'],rregion:result['region'], rpoststart/*start date*/: result['post_start_date'], rpostend:/*end date*/ result['post_end_date'], rtext/*post_text*/:result['post_text'], rcity:result['city'], rpostcode:result['postcode'],rcvr:result['cvr_number'],rcompany:result['company_link'],rlogo:result["company_logo"],rdoc:result["post_document"], generatedCityOptions: generatedCityOptions, generatedPostCodeOptions: generatedPostCodeOptions });
+          res.render('internship_update', {
+            title: 'Express',
+            rid: req.query.id,
+            rtitle: result['title'],
+            remail: result['email'],
+            rcontact: result['contact'],
+            reducation: result['education'],
+            rcountry: result['country'],
+            rregion: result['region'],
+            rpoststart /*start date*/: result['post_start_date'],
+            rpostend: /*end date*/ result['post_end_date'],
+            rtext /*post_text*/: result['post_text'],
+            rcity: result['city'],
+            rpostcode: result['postcode'],
+            rcvr: result['cvr_number'],
+            rcompany: result['company_link'],
+            rlogo: result["company_logo"],
+            rdoc: result["post_document"],
+            generatedCityOptions: generatedCityOptions,
+            generatedPostCodeOptions: generatedPostCodeOptions
+          });
         }).catch();
       }
     };
@@ -121,7 +272,7 @@ router.get('/', function (req, res, next) {
       if (this.readyState == 4 && this.status == 200) {
         var myObj = JSON.parse(this.responseText);
         myObj.forEach(element => {
-          generatedPostCodeOptions += "<option value='"+element.nr+"'>"+element.nr+"</option>"
+          generatedPostCodeOptions += "<option value='" + element.nr + "'>" + element.nr + "</option>"
         });
         generateCityOptions();
       }
@@ -135,10 +286,32 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/delete', function (req, res, next) {
-  db.InternshipPost.destroy({
-    where:{id:req.query.id}
-  })
-  res.render('internship_update', { title: 'Express' });
+  db.InternshipPost.findByPk(req.query.id, {
+    attributes: ["company_logo", "post_document"]
+  }).then(result => {
+    //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
+    unlinkOldFiles(result["post_document"])
+    unlinkOldFiles(result["company_logo"])
+    deleteFromDb()
+  }).catch();
+  function deleteFromDb(){
+    db.InternshipPost.destroy({
+      where: {
+        id: req.query.id
+      }
+    })
+    res.render('internship_update', {
+      title: 'Express'
+    });
+  }
 });
+
+function unlinkOldFiles(filename) {
+  fs.unlink("/usr/src/app/public/uploads/" + filename, (err) => {
+    if (err) throw err
+    console.log(filename + " was deleted")
+  });
+}
+
 
 module.exports = router;
