@@ -27,7 +27,7 @@
                                     <label class="form-check-label flex-fill">
                                         {{name}}
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="udd{{name}}" onclick="newFilter()">
+                                    <input class="align-self-center" type="checkbox" name="udd{{name}}" onclick="addFilter('udd', '{{id}}')">
                                 </li>
                                 {{/each}}
                             </ul>
@@ -70,7 +70,7 @@
                     {{resultater}} resultater
                 </label>
                 <label class="mb-0 mr-1 align-self-center">
-                    sortering:
+                    Sortering:
                 </label>
                 <div class="btn-group">
                     <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"

@@ -1,0 +1,6 @@
+{{#each pageJson}}
+<li class="page-item {{pageJson}}">
+    <a class="page-link" href="/search-cv?page={{pageJson.one}}"
+        onclick="changePage({{pageJson.one}})">{{pageJson.one}}</a>
+</li>
+{{/each}}
