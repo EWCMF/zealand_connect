@@ -1,6 +1,7 @@
 function changePage(page) {
-    pageAsInt = parseInt(page);
-
+    document.getElementById("page-middle").value = page;
+    var form = document.getElementById('filterForm');
+    submitForm(form);
 }
 
 function changeSort(clicked, value) {
@@ -51,6 +52,9 @@ function submitForm(formElement) {
 
     var order = document.getElementById("dropdownButton2").value;
     formData.append("order", order);
+
+    var page = document.getElementById("page-middle").value;
+    formData.append("page", page);
 
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
