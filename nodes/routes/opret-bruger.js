@@ -5,6 +5,7 @@ const createVirksomhed = require('../persistence/usercrud').createVirksomhed;
 const deleteVirksomhed = require('../persistence/usercrud').deleteVirksomhed;
 const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+const regex = require('../constants/regex');
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
@@ -38,7 +39,7 @@ router.post('/create', function (req, res) {
     let error = "?error=";
 
     // Email skal følge et specifik format givet ved regex
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
+    const emailRegex = regex.emailRegex;
     let correctEmail = emailRegex.test(email);
     if (!correctEmail){
         error += "invalidemailerror";
@@ -58,7 +59,7 @@ router.post('/create', function (req, res) {
     }
 
     // CVR skal være præcis 8 cifre
-    const cvrRegex = /^[0-9]{8}$/
+    const cvrRegex = regex.cvrRegex;
     let correctCVR = cvrRegex.test(cvrnr);
     if (!correctCVR){
         error += "invalidcvrerror";
@@ -72,7 +73,7 @@ router.post('/create', function (req, res) {
     }
 
     // Tlf tager kun imod landekode og tal
-    const tlfRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
+    const tlfRegex = regex.tlfRegex;
     let correctTlf = tlfRegex.test(tlfnr);
     if (!correctTlf){
         error += "invalidphoneerror";
@@ -80,7 +81,7 @@ router.post('/create', function (req, res) {
     }
 
     // By tager kun imod bogstaver og mellemrum
-    const byRegex = /^[a-zA-Z ]*$/
+    const byRegex = regex.byRegex;
     let correctBy = byRegex.test(by);
     if (!correctBy){
         error += "invalidbyerror";

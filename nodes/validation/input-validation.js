@@ -1,0 +1,3 @@
+function validateEmail(email){
+    
+}
