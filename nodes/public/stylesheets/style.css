@@ -331,10 +331,14 @@ margin-bottom: 50px;
   word-break: break-all;
 }
 
+.loginBtnBox .formError {
+  color: red;
+}
+
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-  
+
 }
 
 /* Medium devices (tablets, 768px and up) */
