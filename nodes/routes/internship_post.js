@@ -23,6 +23,8 @@ router.post('/', function (req, res){
     var vaildFileRegex = /\.(pdf|docx|doc|txt)$/
     var inputError = false;
 
+    var cityArray=[];
+
     //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
     if (1 > title.length || title.length > 255) {console.log('Title lenght invalid'); inputError = true;}
     if (email.length > 255) {console.log('Email to long'); inputError = true;}
@@ -42,11 +44,47 @@ router.post('/', function (req, res){
         console.log(error);
          return res.status(400).send(error);
       });}
-      res.render('internship_post', { title: 'Express' });
+      res.render('internship_post', {title: 'Express'});
+    }
+
+    //Generere og validere om byen angivet i frontend er korrekt.
+    function generateAndValidateCityArray(){
+      if(country==1){
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200){
+            var myObj = JSON.parse(this.responseText);
+            myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
+            myObj.forEach(element => {
+              cityArray.push(element.primærtnavn);
+            });
+
+            isCityValid=false;
+
+            for(var i=0;i<cityArray.length;i++){
+              if(cityArray[i]===city){
+                isCityValid=true;
+                console.log('Valid city found');
+              }
+            }
+
+            if(!isCityValid){
+              inputError=true;
+              console.log('City was invalid');
+            }
+            dbExe();
+          }
+        };
+        xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send();
+      }else{
+        dbExe();
+      }
     }
 
     if(!files){
-      dbExe();
+      generateAndValidateCityArray();
     }else{
       /*fileUpload here*/
       var doc=files.post_document;
@@ -55,13 +93,18 @@ router.post('/', function (req, res){
       //Stien til upload mappen skal være til stien i docker containeren.
       var publicUploadFolder="/usr/src/app/public/uploads/";
 
-      //// TODO: Filnavne skal være unikke.
-      var newDocName=doc.name;
-      var newLogoName=logo.name;
+      //Generere unik data til filnavn med Date.now() og tilfældig tal.
+      var datetime = Date.now();
+
+      var randomNumber=Math.floor(Math.random() * (10 - 0 + 1) + 0);
+
+      //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
+      var newDocName=datetime+randomNumber+"_"+doc.name;
+      var newLogoName=datetime+randomNumber+"_"+logo.name;
 
       //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
       //Nedenstående flytter og omdøber filer på sammetid
-      if (doc.type== "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"|| doc.type == "application/pdf" || doc.type == "application/msword") {
+      if(doc.type== "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword"){
         fs.rename(doc.path,publicUploadFolder+newDocName,(errorRename)=>{
           if(errorRename){
             console.log("Unable to move file.");
@@ -70,23 +113,23 @@ router.post('/', function (req, res){
             indhold.post_document=newDocName;
           }
           reNameLogo();
-        }); 
+        });
       } else {
         reNameLogo();
       }
 
       function reNameLogo(){
-        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp" ) {
+        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp" ){
           fs.rename(logo.path,publicUploadFolder+newLogoName,(errorRename)=>{
             if(errorRename){
               console.log("Unable to move file.");
             }else{
                 indhold.company_logo=newLogoName;
             }
-            dbExe();
+            generateAndValidateCityArray();
           });
         } else {
-          dbExe()
+          generateAndValidateCityArray();
         }
       }
     }
@@ -109,7 +152,7 @@ router.get('/', function (req, res, next) {
   function generateCityOptions() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200  ) {
+      if (this.readyState == 4 && this.status == 200) {
         var myObj = JSON.parse(this.responseText);
         myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
         myObj.forEach(element => {
@@ -139,7 +182,7 @@ router.get('/', function (req, res, next) {
     xmlhttp.send();
   }
 
-  generatePostCodeOptions()
+  generatePostCodeOptions();
 });
 
 module.exports = router;
