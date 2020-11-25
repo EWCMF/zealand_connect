@@ -160,6 +160,14 @@ input::placeholder {
   display: none;
 }
 
+#opretBrugerKnapVedLogin {
+  display: none;
+}
+
+#opretBrugerLabelVedLogin {
+  display: none;
+}
+
 #loginForm .form-control {
   width: 339px;
 }
