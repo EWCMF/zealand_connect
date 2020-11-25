@@ -1,0 +1,57 @@
+<div class="container-fluid">
+
+    <div class="row mt-4 mb-4">
+        <div class="col-2">
+            <img class="img-thumbnail border-0" src="https://www.shopinimizaj.com/frontend/web/images/no_images.png"
+                alt="rlogo">
+        </div>
+
+        <div class="col-1">
+            <table style="width:100%">
+                <tr>
+                    <td>
+                        <h2>{{rtitle}}</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Uddannelse: </td>
+                    <td id=educationContainer>{{reducation}}</td>
+                </tr>
+            </table>
+            <h6 class="mb-3">Uddannelse:</h6><h6 class="mb-3">Land:</h6><h6 class="mb-3">Region:</h6><h6 class="mb-3">By:
+            </h6>
+            <h6 class="mb-0">Postnummer:</h6><h6 class="mb-0">Email:</h6><h6 class="mb-0">Kontaktperson:</h6>
+            <h6 class="mb-0">CVR nummer:</h6><h6 class="mb-0">Hjemmeside:</h6><h6 class="mb-0">Annoncetekst:
+            </h6><h6 class="mb-0">Vedhæftet fil:</h6></div></div></div></div>
+<hr class="mb-4">
+
+<div class="row border rounded ml-1 mr-1 mb-4">
+    <div class="col mb-2">
+        <h4 class="mb-3 mt-2 d-flex align-self-center">
+            Annoncetekst:
+        </h4>
+        <p>
+            {{json.post_text}}
+        </p>
+    </div>
+</div>
+</div>
+<div class="row"></div>
+
+<script>
+    function updateLabel() {
+        var educationId = {{ reducation }};
+        switch (educationId) {
+            case 1:
+                document.getElementById('educationContainer').innerHTML = 'Handelsøkonom';
+                break;
+            case 2:
+                document.getElementById('educationContainer').innerHTML = 'Datamatiker';
+                break;
+            case 3:
+                document.getElementById('educationContainer').innerHTML = 'Bygningskonstruktør';
+                break;
+        }
+    }
+    updateLabel();
+</script>
