@@ -16,14 +16,14 @@ module.exports = (sequelize, DataTypes) => {
   Virksomhed.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    cvrnr: DataTypes.INTEGER,
+    cvrnr: DataTypes.STRING,
     navn: DataTypes.STRING,
     adresse: DataTypes.STRING,
-    tlfnr: DataTypes.INTEGER,
+    tlfnr: DataTypes.STRING,
     hjemmeside: DataTypes.STRING,
     direktoer: DataTypes.STRING,
     land: DataTypes.STRING,
-    postnr: DataTypes.INTEGER,
+    postnr: DataTypes.STRING,
     by: DataTypes.STRING
   }, {
     sequelize,
