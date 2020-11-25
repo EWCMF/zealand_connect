@@ -54,6 +54,9 @@
                     <a class="nav-link" id="da" href="/language/da">Dansk</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" id="opretbruger" href="/opret-bruger">Opret Bruger</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" id="login" href="/login">Log ind</a>
                     <a class="nav-link" id="logud" href="/login/logout">Log ud</a>
                 </li>
@@ -102,9 +105,11 @@
                     if(responseObject.email===''){
                         document.getElementById("login").style.display='block';
                         document.getElementById("logud").style.display='none';
+                        document.getElementById("opretbruger").style.display='block';
                     } else {
                         document.getElementById("login").style.display='none';
                         document.getElementById("logud").style.display='block';
+                        document.getElementById("opretbruger").style.display='none';
                     }
                 }
             };
