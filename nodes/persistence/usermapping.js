@@ -73,4 +73,25 @@ async function deleteVirksomhed(email){
     }
 }
 
-module.exports = {findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed, editVirksomhed: editVirksomhed}
+
+async function findUserByCVR(CVR){
+    let user = null;
+    return new Promise(resolve => {
+        console.log("---finding user by CVR: "+CVR+"---");
+            models.Virksomhed.findOne({ where: { cvrnr: CVR } }).then((virksomhed) => {
+                if (virksomhed === null) {
+                    console.log('en virksomhed med dette CVR findes ikke!');
+                    //resolve(null);
+                } 
+                if(virksomhed instanceof models.Virksomhed) {
+                    console.log("---i found the Virksomhed:---");
+                    //console.log(user instanceof models.User); // true
+                    //console.log(user.username); // 'My Title'
+                    user = virksomhed;
+               }
+               resolve(user);
+            });
+        }) 
+    }
+
+ module.exports = {findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed, editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR}

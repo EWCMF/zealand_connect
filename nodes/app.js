@@ -8,6 +8,7 @@ var usersRouter = require('./routes/users');
 var profilRouter = require('./routes/profil');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
+var internshipPostViewRouter = require('./routes/internship_view')
 var mit_CVRouter = require('./routes/mit-CV');
 var searchCVRouter = require('./routes/search-cv');
 var loginRouter = require('./routes/login');
@@ -48,6 +49,7 @@ app.use('/users', usersRouter);
 app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
+app.use('/view_post', internshipPostViewRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/login', loginRouter);

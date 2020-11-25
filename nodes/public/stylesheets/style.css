@@ -121,9 +121,8 @@ input::placeholder {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  padding: 30px 300px 30px 300px;
+  padding: 30px 20px 30px 20px;
   background-color: #f7f7f7;
-  min-width: 339px;
 }
 
 #redigerVirksomhedContent {
@@ -274,6 +273,11 @@ input::placeholder {
   background-color: rgba(250, 238, 132, 0);
   margin-left: 80px;
   font-size: 21px;
+  display: none;
+}
+
+#navbarLine {
+  display: none;
 }
 .navbar-nav li a{
   font-weight: 400;
@@ -330,7 +334,7 @@ margin-bottom: 50px;
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-
+  
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -351,16 +355,43 @@ margin-bottom: 50px;
   #gulBaggrund {
     display: flex;
   }
+
+  #nv1 {
+    display: flex;
+  }
+  #navbarLine {
+    display: flex;
+    height:1px;
+    background-color:black;
+    margin-top:0px;
+    margin-right:24px;
+    margin-left:96px
+  }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-
+  #loginContent {
+    padding: 30px 200px 30px 200px;
+    min-width: 339px;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-
+  #loginContent {
+    padding: 30px 300px 30px 300px;
+    min-width: 339px;
+  }
+}
+/* styling for viewpost table in view_post.hbs */
+#viewpostTable tr td {
+  padding-top: 8.5px;
+  padding-bottom: 8.5px;
+  font-size: medium;
 }
 
+#companyLogo{
+  margin-top: 8.5px;
+}
 
