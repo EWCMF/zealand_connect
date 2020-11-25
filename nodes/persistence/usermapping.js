@@ -32,6 +32,23 @@ async function findUserByEmail(email){
     })
 }
 
+async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by){
+    //vi bruger email til at finde virksomheden. 
+    findUserByEmail(email).then(virksomhed => {
+        virksomhed.update({
+            cvrnr: cvrnr,
+            navn: navn, 
+            adresse: adresse,
+            tlfnr: tlfnr,
+            hjemmeside: hjemmeside,
+            direktoer: direktoer,
+            land: land,
+            postnr: postnr,
+            by: by
+        })
+    })
+}
+
 async function createVirksomhed(email){
     try {
         const virksomhed = await models.Virksomhed.create({email: email});
@@ -56,4 +73,4 @@ async function deleteVirksomhed(email){
     }
 }
 
-module.exports = {findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed}
+module.exports = {findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed, editVirksomhed: editVirksomhed}
