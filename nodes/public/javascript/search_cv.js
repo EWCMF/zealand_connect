@@ -1,60 +1,3 @@
-const { Json } = require("sequelize/types/lib/utils");
-
-function filter() {
-
-    var query = "";
-    var sort = document.getElementById("dropdownButton").value;
-    query += sort;
-    if (document.getElementById("datamatiker").checked) {
-        query += "&uddannelse=Datamatiker"
-    }
-    if (document.getElementById("handelsøkonom").checked) {
-        query += "&uddannelse=Handelsøkonom"
-    }
-    if (document.getElementById("finansøkonom").checked) {
-        query += "&uddannelse=Finansøkonom"
-    }
-    if (document.getElementById("ihom").checked) {
-        query += "&uddannelse=International Handel og Markedsføring"
-    }
-    if (document.getElementById("ioe").checked) {
-        query += "&uddannelse=Innovation og Entrepreneurship"
-    }
-    if (document.getElementById("bygningskontruktør").checked) {
-        query += "&uddannelse=Bygningskontruktør"
-    }
-    if (document.getElementById("byggetekniker").checked) {
-        query += "&uddannelse=Byggetekniker"
-    }
-    if (document.getElementById("installatør").checked) {
-        query += "&uddannelse=Installatør, stærkstrøm"
-    }
-
-    var url = location.href;
-    if (url.indexOf('?') > -1) {
-        url = location.href.substring(0, location.href.indexOf("?sort")) + "?sort=" + query;
-    } else {
-        url = location.href + "?sort=" + query;
-    }
-    window.location.href = url;
-}
-
-function sort(attribute) {
-
-    var url = location.href;
-    if (location.href.includes("?sort=")) {
-        var first = url.substring(0, url.indexOf("?sort="));
-        var second = url.substring(url.indexOf("&"));
-        var append = "?sort=" + attribute;
-        url = first + append + second
-    } else {
-        url += "?sort=" + attribute;
-    }
-
-    window.location.href = url;
-
-}
-
 function changePage(page) {
     pageAsInt = parseInt(page);
 
@@ -74,7 +17,27 @@ function changeOrder(clicked, value) {
     submitForm(form);
 }
 
-function newFilter() {
+function addFilter(type, id) {
+    var url = window.location.href;
+    var param = type + '=' + id;
+
+    if (url.indexOf('?') > -1) {
+        if (url.includes(param)) {
+            url = url.replace(param, "");
+            if (url.substring(url.length - 1).includes('&')) {
+                url = url.substring(0, url.length - 1);
+            }
+            if (url.substring(url.length - 1).includes('?')) {
+                url = url.substring(0, url.length - 1);
+            }
+        } else {
+            url += '&' + param
+        }
+    } else {
+        url += '?' + param;
+    }
+    window.history.pushState({}, null, url);
+
     var form = document.getElementById('filterForm');
     submitForm(form);
 }
