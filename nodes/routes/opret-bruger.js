@@ -6,6 +6,7 @@ const deleteVirksomhed = require('../persistence/usercrud').deleteVirksomhed;
 const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const regex = require('../constants/regex');
+const validation = require('../validation/input-validation');
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
@@ -38,52 +39,37 @@ router.post('/create', function (req, res) {
     // Grundform for fejlbeskeden
     let error = "?error=";
 
-    // Email skal følge et specifik format givet ved regex
-    const emailRegex = regex.emailRegex;
-    let correctEmail = emailRegex.test(email);
-    if (!correctEmail){
+    if (!validation.validateEmail(email)){
         error += "invalidemailerror";
         res.redirect('/opret-bruger' + error);
     }
 
-    // Email skal være ens
-    else if (email !== gentagEmail){
+    else if (!validation.checkForIdenticals(email, gentagEmail)){
         error += "emailmismatcherror";
         res.redirect('/opret-bruger' + error);
     }
 
-    // Password skal være mellem 8 og 16 karakterer
-    else if (password.length < 8 || password.length > 16){
+    else if (!validation.validatePasswordLength(password)){
         error += "passwordlengtherror";
         res.redirect('/opret-bruger' + error);
     }
 
-    // CVR skal være præcis 8 cifre
-    const cvrRegex = regex.cvrRegex;
-    let correctCVR = cvrRegex.test(cvrnr);
-    if (!correctCVR){
+    else if (!validation.validateCVR(cvrnr)){
         error += "invalidcvrerror";
         res.redirect('/opret-bruger' + error);
     }
 
-    // Ekstra tjek på cvr længde
-    if (cvrnr.length !== 8){
+    else if (!validation.validateCvrLength(cvrnr)){
         error += "cvrlengtherror";
         res.redirect('/opret-bruger' + error);
     }
 
-    // Tlf tager kun imod landekode og tal
-    const tlfRegex = regex.tlfRegex;
-    let correctTlf = tlfRegex.test(tlfnr);
-    if (!correctTlf){
+    if (!validation.validatePhone(tlfnr)){
         error += "invalidphoneerror";
         res.redirect('/opret-bruger' + error);
     }
 
-    // By tager kun imod bogstaver og mellemrum
-    const byRegex = regex.byRegex;
-    let correctBy = byRegex.test(by);
-    if (!correctBy){
+    if (!validation.validateCity()){
         error += "invalidbyerror";
         res.redirect('/opret-bruger' + error);
     }
