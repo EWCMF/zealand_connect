@@ -6,7 +6,8 @@
             <div id="loginBoxBackground">
                 <div id="redigerVirksomhedContent" class="text-center">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
-                    <form class="text-left">
+                    <form class="text-left" action="/profil/rediger-save" method="post">
+                        <div>{{error}}</div>
                         <p class="text-center">Påkrævet</p><br>
                         <div class="form-group row">
                             <label for="virksomhedEmail" class="col-4 col-form-label">Email</label> 
