@@ -126,6 +126,12 @@ input::placeholder {
   min-width: 339px;
 }
 
+#redigerVirksomhedContent {
+  padding: 30px 300px 30px 300px;
+  background-color: #f7f7f7;
+  min-width: 678px;
+}
+
 .radioBtnBox {
   display: flex;
   justify-content: flex-start;
