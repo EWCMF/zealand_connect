@@ -3,9 +3,6 @@ const models = require("../models");
 async function createVirksomhed(virkObj){
     try {
         const virksomhed = await models.Virksomhed.create({email: virkObj.email, tlfnr: virkObj.tlfnr, password: virkObj.password, cvrnr: virkObj.cvrnr, by: virkObj.by, postnr: virkObj.postnr});
-        console.log("A virksomhed was created");
-        console.log(virksomhed instanceof models.Virksomhed);
-        console.log(virksomhed.email);
     } catch (e) {
         console.log(e);
     }

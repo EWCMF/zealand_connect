@@ -19,7 +19,8 @@ async function verifyPassword(htmlPwd, dbPwd) {
 }
 
 async function hashPassword(password) {
-    return await bcrypt.hash(password, 10);
+    let saltRounds = 10;
+    return await bcrypt.hash(password, saltRounds);
 }
 
 module.exports = {verifyPassword: verifyPassword, hashPassword: hashPassword}
