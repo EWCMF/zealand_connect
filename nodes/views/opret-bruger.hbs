@@ -7,47 +7,52 @@
                 <div id="loginContent">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
                     <div class="loginBtnBox">
-                        <div class="form-group" id="virksomhedOpret"> <!-- Virksomheds opret form-->
-                           <input type="email" id="virksomhedEmail" class="form-control" name="
+                        <form method="post" action="opret-bruger/create" id="opretBrugerForm" name="opretBrugerForm">
+                            <div class="form-group" id="virksomhedOpret"> <!-- Virksomheds opret form-->
+                                <input type="email" id="virksomhedEmail" class="form-control" name="
                                     Email" placeholder="Email"><br>
-                            <input type="email" id="virksomhedGentagEmail" class="form-control"
-                                   name="GentagEmail" placeholder="Gentag email" data-key="placeholderGentagEmail"><br>
-                            <input type="string" id="virksomhedTelefonnummer" class="form-control"
-                                   name="Telefonnummer" placeholder="Telefonnummer" data-key="placeholderTelefonnummer"><br>
-                            <input type="string" id="virksomhedBy" class="form-control"
-                                   name="By" placeholder="By" data-key="placeholderBy"><br>
-                            <input type="string" id="virksomhedPostnummer" class="form-control"
-                                   name="Postnummer" placeholder="Postnummer" data-key="placeholderPostnummer"><br>
-                            <input type="password" id="virksomhedAdgangskode" class="form-control"
-                                   name="Password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
-                            <input type="password" id="virksomhedGentagAdgangskode" class="form-control"
-                                   name="GentagPassword" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode"><br>
-                            <input type="text" id="virksomhedCVR" class="form-control"
-                                   name="CVR" placeholder="CVR-Nummer" data-key="placeholdercvr"><br>
-                                   </div>
+                                <input type="email" id="virksomhedGentagEmail" class="form-control"
+                                       name="GentagEmail" placeholder="Gentag email"
+                                       data-key="placeholderGentagEmail"><br>
+                                <input type="string" id="virksomhedTelefonnummer" class="form-control"
+                                       name="Telefonnummer" placeholder="Telefonnummer"
+                                       data-key="placeholderTelefonnummer"><br>
+                                <input type="string" id="virksomhedBy" class="form-control"
+                                       name="By" placeholder="By" data-key="placeholderBy"><br>
+                                <input type="string" id="virksomhedPostnummer" class="form-control"
+                                       name="Postnummer" placeholder="Postnummer" data-key="placeholderPostnummer"><br>
+                                <input type="password" id="virksomhedAdgangskode" class="form-control"
+                                       name="Password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
+                                <input type="password" id="virksomhedGentagAdgangskode" class="form-control"
+                                       name="GentagPassword" placeholder="Gentag Adgangskode"
+                                       data-key="placeholdergentagAdgangskode"><br>
+                                <input type="text" id="virksomhedCVR" class="form-control"
+                                       name="CVR" placeholder="CVR-Nummer" data-key="placeholdercvr"><br>
+                            </div>
                             <button class="gulKnap" data-key="opret"> Opret Bruger</button>
+                        </form>
 
-<!--                            Midlertidige knapper til CRUD:-->
-<!--                            -->
-<!--                            <form action="/opret-bruger/create" method="post">-->
-<!--                                <button type="submit" formmethod="post">Create using POST</button>-->
-<!--                            </form>-->
+                        <!--                            Midlertidige knapper til CRUD:-->
 
-<!--                            <form action="/opret-bruger/delete" method="post">-->
-<!--                                <button type="submit" formmethod="post">Delete using POST</button>-->
-<!--                            </form>-->
+                        <!--                            <form action="/opret-bruger/create" method="post">-->
+                        <!--                                <button type="submit" formmethod="post">Create using POST</button>-->
+                        <!--                            </form>-->
+
+                        <form action="/opret-bruger/delete" method="post">
+                            <button type="submit" formmethod="post">Delete using POST</button>
+                        </form>
 
 
-                        </div>
                     </div>
-                    <div id="cookieBox">
-                <div id="cookieText" >
-                    <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
-                    <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
                 </div>
-            </div>
+                <div id="cookieBox">
+                    <div id="cookieText">
+                        <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
+                        <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
