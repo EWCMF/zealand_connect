@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       cvrnr: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       navn: {
         type: Sequelize.STRING
@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       tlfnr: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       hjemmeside: {
         type: Sequelize.STRING
@@ -36,7 +36,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       postnr: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       by: {
         type: Sequelize.STRING
