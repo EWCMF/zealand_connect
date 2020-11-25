@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var { reqLang } = require('../public/javascript/request');
+var {reqLang} = require('../public/javascript/request');
 const createVirksomhed = require('../persistence/usercrud').createVirksomhed;
 const deleteVirksomhed = require('../persistence/usercrud').deleteVirksomhed;
 
@@ -10,7 +10,17 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/create', function (req, res) {
-    createVirksomhed({"email": "memeboi@nielsen.dk", "tlfnr": 35735842,"password": "Bejamintakebigcock","cvrnr": 5782312});
+
+    let virksomhedsBruger = {
+        email: req.body.email,
+        password: req.body.password,
+        telefonnummer: req.body.telefonnummer,
+        by: req.body.by,
+        postnummer: req.body.postnummer,
+        cvr: req.body.cvr
+    }
+
+    console.log(virksomhedsBruger);
     res.redirect('back');
 });
 
