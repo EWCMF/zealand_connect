@@ -14,13 +14,13 @@ router.post('/create', function (req, res) {
     let virksomhedsBruger = {
         email: req.body.email,
         password: req.body.password,
-        telefonnummer: req.body.telefonnummer,
+        tlfnr: req.body.telefonnummer,
         by: req.body.by,
-        postnummer: req.body.postnummer,
-        cvr: req.body.cvr
+        postnr: req.body.postnummer,
+        cvrnr: req.body.cvr
     }
 
-    console.log(virksomhedsBruger);
+    createVirksomhed(virksomhedsBruger);
     res.redirect('back');
 });
 
