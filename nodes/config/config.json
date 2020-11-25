@@ -8,7 +8,7 @@
     "dialect": "mariadb"
   },
   "test": {
-    "username": "root",    
+    "username": "root",
     "password": "zealand12345",
     "database": "test",
     "host": "46.101.225.211",

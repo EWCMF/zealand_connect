@@ -7,19 +7,19 @@ function validate_internship_post(e) {
     var linkReg = /^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(\/.)?$/
 
     //e.preventDefault();
-
+    //Title
     if (document.getElementById('internshipTitle').value == '' || document.getElementById('internshipTitle').value.length > 255) {
         all_valid = false;
         document.getElementById('titleError').hidden = false;
     }
     else { document.getElementById('titleError').hidden = true; }
-
+    //Email
     if (document.getElementById('internshipEmail').value == '' || document.getElementById('internshipEmail').value.length > 255 || !emailRegex.test(document.getElementById('internshipEmail').value)) {
         all_valid = false;
         document.getElementById('emailError').hidden = false;
     }
     else { document.getElementById('emailError').hidden = true; }
-
+    //Kontakt person
     if (document.getElementById('contactName').value.length == '' || document.getElementById('contactName').value.length > 255) {
         all_valid = false;
         document.getElementById('contactError').hidden = false;
@@ -92,7 +92,7 @@ function validate_internship_post(e) {
     }
 
     //Region
-    if (document.getElementById('regionSelect').value == 0){
+    if (document.getElementById('countrySelect').value == 1 && document.getElementById('regionSelect').value == 0){
         all_valid = false;
         document.getElementById('regionError').hidden = false;
     }
@@ -101,7 +101,7 @@ function validate_internship_post(e) {
     }
 
     //By
-    if (document.getElementById('citySelect').value == 0) {
+    if (document.getElementById('countrySelect').value == 1 && document.getElementById('citySelect').value == 0) {
         all_valid = false;
         document.getElementById('cityError').hidden = false;
     } else {

@@ -5,13 +5,16 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var profilRouter = require('./routes/profil');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
+var internshipPostViewRouter = require('./routes/internship_view')
 var mit_CVRouter = require('./routes/mit-CV');
 var searchCVRouter = require('./routes/search-cv');
 var loginRouter = require('./routes/login');
-var languageRouter = require('./routes/language')
-var forsideRouter = require('./routes/forside')
+var languageRouter = require('./routes/language');
+var forsideRouter = require('./routes/forside');
+var praktikforloebRouter = require('./routes/praktikforloebet');
 
 var cookieParser = require('cookie-parser');
 
@@ -59,13 +62,16 @@ app.use(passport.session());
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
+app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
+app.use('/view_post', internshipPostViewRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/', forsideRouter);
+app.use('/praktikforloebet', praktikforloebRouter);
 
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
