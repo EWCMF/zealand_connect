@@ -11,8 +11,9 @@ var internshipUpdateRouter = require('./routes/internship_update');
 var mit_CVRouter = require('./routes/mit-CV');
 var searchCVRouter = require('./routes/search-cv');
 var loginRouter = require('./routes/login');
-var languageRouter = require('./routes/language')
-var forsideRouter = require('./routes/forside')
+var languageRouter = require('./routes/language');
+var forsideRouter = require('./routes/forside');
+var praktikforloebRouter = require('./routes/praktikforloebet');
 
 var cookieParser = require('cookie-parser');
 
@@ -52,6 +53,7 @@ app.use('/search-cv', searchCVRouter);
 app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/', forsideRouter);
+app.use('/praktikforloebet', praktikforloebRouter);
 
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
