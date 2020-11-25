@@ -255,6 +255,10 @@ input::placeholder {
 #filtrerUddannelser {
   color: black;
 }
+
+#filtrerIndlandUdland {
+  color: black;
+}
 #forside1{
   /* Find løsning til mobil!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
   width: 1920px; /* Make this site really wide */

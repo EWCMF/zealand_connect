@@ -32,6 +32,33 @@
                                 {{/each}}
                             </ul>
                         </div>
+                        <div class="panel-heading">
+                            <h6 class="panel-title mb-2">
+                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                    Land
+                                </a>
+                            </h6>
+                        </div>
+
+                        <div id="collapse2" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Indland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="indland" onclick="newFilter()">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Udland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="udland" onclick="newFilter()">
+                                </li>
+                                
+                            </ul>
+                            
+
+                        </div>
                     </div>
                 </div>
                 {{!-- <button class="btn btn-success mb-2 mt-4" type="submit">Filtrer</button> --}}
