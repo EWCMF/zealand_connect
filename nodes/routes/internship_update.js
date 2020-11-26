@@ -57,7 +57,6 @@ router.post('/', function (req, res, next) {
     var validPicRegex = /\.(jpg|jpeg|png|bmp|svg)$/
     var vaildFileRegex = /\.(pdf|docx|doc|txt)$/
     var inputError = false;
-
     var cityArray = [];
 
     //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
@@ -168,21 +167,19 @@ router.post('/', function (req, res, next) {
 
     //Generere unik data til filnavn med Date.now() og tilfældig tal.
     var datetime = Date.now();
-
     var randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
 
     //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
     var newDocName = datetime + randomNumber + "_" + doc.name;
     var newLogoName = datetime + randomNumber + "_" + logo.name;
 
-    function renameDoc(docName, logoName) {
-      if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
+    function renameDoc(docName, logoName){
+      if(doc.type=="text/plain"||doc.type=="application/vnd.openxmlformats-officedocument.wordprocessingml.document"||doc.type=="application/pdf"||doc.type=="application/msword"){
         unlinkOldFiles(docName)
-        mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
+        mv(doc.path, publicUploadFolder + newDocName,(errorRename) => {
           if (errorRename) {
             console.log("Unable to move file.");
           } else {
-            console.log(doc.type)
             indhold.post_document = newDocName;
           }
           reNameLogo(logoName);
@@ -192,13 +189,13 @@ router.post('/', function (req, res, next) {
       }
     }
 
-    function reNameLogo(logoName) {
-      if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
+    function reNameLogo(logoName){
+      if(logo.type == "image/jpeg"||logo.type=="image/png"||logo.type=="image/svg+xml"||logo.type=="image/bmp"){
         unlinkOldFiles(logoName)
-        mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
-          if (errorRename) {
+        mv(logo.path,publicUploadFolder + newLogoName,(errorRename)=>{
+          if (errorRename){
             console.log("Unable to move file.");
-          } else {
+          }else{
             indhold.company_logo = newLogoName;
           }
           generateAndValidateCityArray();
