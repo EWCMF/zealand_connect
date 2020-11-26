@@ -24,7 +24,7 @@ describe('Find student i database baseret på email', function(){
 describe('Find bruger i database baseret på email', function(){
     //TC3
     it('Bør find en Virksomheds bruger med email som matcher det username vi indtaster', function(done){
-        let email = 'kontakt@bigfoods.com';
+        let email = 'kontakt@bigfoods.dk';
         findUserByEmail(email).then((virksomhed)=>{
             assert.strictEqual(virksomhed.email, email);
             done();
