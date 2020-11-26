@@ -77,7 +77,7 @@ function getLangdata() {
                 "beskrivelse": "Description",
                 "CVR": "CVR-Number",
                 "land": "Country",
-                "addresse": "Address",
+                "adresse": "Address",
                 "postnummerogby": "Zip code and city",
                 "virksomhedsemail": "Corporation email",
                 "virksomhedsnavn": "Corporation name",
