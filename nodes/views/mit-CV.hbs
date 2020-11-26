@@ -9,7 +9,7 @@
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
                 placeholder="Stilling eller Status" onkeyup="countChars(this)">{{Overskrift}}</textarea>
                 <p id="charNum">255 tegn</p>
-           <!-- <p id="OverskriftError" class="CVErrorColor" hidden="true">Skal udfyldes</p> -->
+            <p id="OverskriftError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
         </div>
         <!-- Uddannelse med dropdown -->
         <div class="form-group">
@@ -28,7 +28,7 @@
                             <option value="Byggetekniker">Byggetekniker</option>
                             <option value="Installatør, stærkstrøm">Installatør, stærkstrøm</option>
                         </select>
-                    <!-- <p id="UddannelsesError" class="CVErrorColor" hidden="false">Du skal vælge en Uddannelse</p> -->
+                     <p id="UddannelsesError" class="CVErrorColor" hidden="false">Du skal vælge en Uddannelse</p>
                     </div>
                 </div>
                 <!-- email med inputfelt -->
@@ -38,8 +38,8 @@
                         <input type="email" class="form-control" placeholder="name@example.com" id="email" name="email"
                              pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/" title="Du skal skrive din email her og mindst
                             bruge et @" value={{Email}}>
-                      <!-- <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst
-                            bruge et @</p> -->
+                      <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst
+                            bruge et @</p>
                     </div>
                 </div>
                 <!-- Sprog med inputfelt -->
@@ -47,7 +47,7 @@
                     <div class="form-group required">
                         <label for="exampleFormControlInput1">Sprog</label>
                         <input class="form-control" placeholder="Dansk" id="sprog" name="sprog" value={{Sprog}}>
-                      <!-- <p id="sprogError" class="CVErrorColor" hidden="true">Du skal skrive dit ønskede sprog her</p> -->
+                      <p id="sprogError" class="CVErrorColor" hidden="true">Du skal skrive dit ønskede sprog her</p> 
                     </div>
                 </div>
             </div>
@@ -66,8 +66,8 @@
                         <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678" pattern="/^[1-9][0-9]{3}$/" title="Du skal skrive dit nummer, det skal præcist
                             være 8 tal og må ikke starte med 0"
                             value={{Telefon}}>
-                   <!--     <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer, det skal præcist
-                            være 8 tal og må ikke starte med 0</p> -->
+                           <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer, det skal præcist
+                            være 8 tal og må ikke starte med 0</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlInput1">LinkedIn</label>
                         <input class="form-control" id="linkedIn" name="linkedIn" placeholder="https://example.dk" pattern="/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm" title="Du skal skrive en hjemmeside">
-                    <!-- <p id="linkedInError" class="CVErrorColor" hidden="true">Du skal skrive en rigtig hjemmeside</p> -->
+                     <p id="linkedInError" class="CVErrorColor" hidden="true">Du skal skrive en rigtig hjemmeside</p>
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                 <label for="exampleFormControlTextarea1">Tidligere Uddannelse</label>
                 <textarea class="form-control" rows="3" id="tidligere-uddannelse" name="tidligere_uddannelse"
                     placeholder="Tidligere eller lidt om din nuværende Uddannelse">{{Tidligere-uddannelse}}</textarea>
-                <!--    <p id="Tidligere-uddannelseError" class="CVErrorColor" hidden="true">Skal udfyldes</p> -->
+                <p id="Tidligere-uddannelseError" class="CVErrorColor" hidden="true">Skal udfyldes</p> 
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
