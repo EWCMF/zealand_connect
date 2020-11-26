@@ -9,23 +9,22 @@ const { validateEmail, validateCVR, validatePhone, validateCity, validatePasswor
     checkForIdenticals } = require('../validation/input-validation');
 
 router.get('/', function (req, res, next) {
-    let error = req.query;
-    let msg = error.error;
-
-    switch (msg) {
-        case 'invalidemailerror': res.render('opret-bruger', { emailError: "Email er ugyldig", language: reqLang(req, res)}); break;
-        case 'emailmismatcherror': res.render('opret-bruger', { emailError: "Email er ikke ens", language: reqLang(req, res)}); break;
-        case 'existingemailerror': res.render('opret-bruger', { emailError: "Email eksisterer allerede i systemet", language: reqLang(req, res)}); break;
-        case 'passwordlengtherror': res.render('opret-bruger', { passwordError: "Adgangskode skal være mellem 8 og 16 tegn", language: reqLang(req, res)}); break;
-        case 'invalidcvrerror': res.render('opret-bruger', { cvrError: "CVR-nummer er ugyldigt", language: reqLang(req, res)}); break;
-        case 'cvrlengtherror': res.render('opret-bruger', { cvrError: "CVR-nummer skal være 8 cifre", language: reqLang(req, res)}); break;
-        case 'invalidphoneerror': res.render('opret-bruger', { tlfnrError: "Telefonnummer er ugyldigt", language: reqLang(req, res)}); break;
-        case 'invalidbyerror': res.render('opret-bruger', { byError: "By er ugyldig", language: reqLang(req, res)}); break;
-        default:  res.render('opret-bruger', {language: reqLang(req)}); break;
-    }
+    let errors = req.query;
+    console.log("ERRORS!");
+    console.log(errors);
+    res.render('opret-bruger', {
+        emailError: errors.EmailError,
+        passwordError: errors.PasswordError,
+        tlfnrError: errors.TlfnrError,
+        cvrError: errors.CVRError,
+        byError: errors.ByError,
+        postnrError: errors.PostnrError,
+        language: reqLang(req)
+    });
 });
 
 router.post('/create', function (req, res) {
+
     // Indlæs variable fra viewet
     let email = req.body.email;
     let gentagEmail = req.body.gentagEmail;
@@ -35,52 +34,47 @@ router.post('/create', function (req, res) {
     let postnr = req.body.postnummer;
     let cvrnr = req.body.cvr;
 
+    let errors = {
+        EmailError: "",
+        PasswordError: "",
+        TlfnrError: "",
+        ByError: "",
+        CVRError: "",
+        PostnrError: "",
+    }
+
     // Grundform for fejlbeskeden
     let error = "?error=";
 
-    if (!validateEmail(email)){
-        error += "invalidemailerror";
-        res.redirect('/opret-bruger' + error);
+    if (!validateEmail(email)) {
+        errors.EmailError = "Email er ugyldig";
+    } else if (!checkForIdenticals(email, gentagEmail)) {
+        errors.EmailError = "Email er ikke ens";
     }
 
-    else if (!checkForIdenticals(email, gentagEmail)){
-        error += "emailmismatcherror";
-        res.redirect('/opret-bruger' + error);
+    if (!validatePasswordLength(password)) {
+        errors.PasswordError = "Adgangskode skal være mellem 8 og 16 tegn";
     }
 
-    else if (!validatePasswordLength(password)){
-        error += "passwordlengtherror";
-        res.redirect('/opret-bruger' + error);
+    if (!validateCVR(cvrnr)) {
+        errors.CVRError = "CVR-nummer er ugyldigt";
+    } else if (!validateCvrLength(cvrnr)) {
+        errors.CVRError = "CVR-nummer skal være 8 cifre";
     }
 
-    else if (!validateCVR(cvrnr)){
-        error += "invalidcvrerror";
-        res.redirect('/opret-bruger' + error);
+    if (!validatePhone(tlfnr)) {
+        errors.TlfnrError = "Telefonnummer er ugyldigt";
     }
 
-    else if (!validateCvrLength(cvrnr)){
-        error += "cvrlengtherror";
-        res.redirect('/opret-bruger' + error);
-    }
-
-    if (!validatePhone(tlfnr)){
-        error += "invalidphoneerror";
-        res.redirect('/opret-bruger' + error);
-    }
-
-    if (!validateCity(by)){
-        error += "invalidbyerror";
-        res.redirect('/opret-bruger' + error);
+    if (!validateCity(by)) {
+        errors.ByError = "By er ugyldig";
     }
 
     // Tjek om email allerede eksisterer i databasen
     findUserByEmail(email).then((user) => {
-        if (user !== null){
-            error += "existingemailerror";
-            console.log(findUserByEmail(email));
-            res.redirect('/opret-bruger' + error);
-        }
-        else {
+        if (user !== null) {
+            errors.EmailError = "Email eksisterer allerede i systemet";
+        } else {
             hashPassword(req.body.password).then((hashedPassword) => {
                 console.log(email);
                 let virksomhedsBruger = {
@@ -94,9 +88,15 @@ router.post('/create', function (req, res) {
 
                 createVirksomhed(virksomhedsBruger);
             });
-
-            res.redirect('back');
         }
+    }).then(() => {
+        res.redirect(
+            '/opret-bruger?' +
+            'EmailError=' + errors.EmailError +
+            '&PasswordError=' + errors.PasswordError +
+            '&TlfnrError=' + errors.TlfnrError +
+            '&ByError=' + errors.ByError +
+            '&CVRError=' + errors.CVRError);
     });
 });
 
