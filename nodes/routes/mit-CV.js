@@ -56,7 +56,13 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.post('/submit', function (req, res, next) {
+router.post('/submit', async function (req, res, next) {
+
+  if (req.user == null) {
+    res.send('Du har ikke adgang til denne resurse.');
+  }
+
+  var student = await findUserByEmail(req.user)
 
   let overskrift = req.body.overskrift;
   let uddannelse = req.body.uddannelse;
@@ -82,6 +88,21 @@ router.post('/submit', function (req, res, next) {
     offentlig = false;
   }
 
+
+  var gyldig;
+  var besked;
+  if (overskrift == '' || uddannelse == '' 
+  || email == '' || sprog == '' || telefon 
+  || it_kompetencer == '' || tidligere_uddannelse == '') {
+    gyldig = false;
+    besked = "CV'et er gemt men er utilgængeligt for andre indtil alle nødvendige felter er udfyldte."
+  } else {
+    gyldig = true;
+    besked = "CV'et er gemt."
+  }
+
+  var student_id = student.id
+
   var json = {
     overskrift,
     uddannelse,
@@ -98,14 +119,30 @@ router.post('/submit', function (req, res, next) {
     tidligere_uddannelse,
     hjemmeside,
     fritidsinteresser,
-    offentlig
+    offentlig,
+    gyldig,
+    student_id
   }
-  res.send(JSON.stringify(json));
-  db.CV.create(json).then((cv) => {
-
-  }).catch((error) => {
-
+  
+  const [cv, created] = await db.CV.findOrCreate({
+    where: {
+      student_id: student.id
+    },
+    defaults: json
   });
+
+  if (!created) {
+    await db.CV.update(json, {
+      where: {
+        id: cv.id
+      }
+    })
+
+    besked = 'Ændringer er gemt.'
+  }
+
+  JSON.stringify(cv);
+  res.send(cv);
 });
 
 router.get('/delete', function (req, res, next) {

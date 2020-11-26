@@ -5,11 +5,14 @@ var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
 const limit = 5;
-const { Op } = require('sequelize');
+const {
+    Op
+} = require('sequelize');
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 
 
 router.get('/', async function (req, res, next) {
-    
+
     var page;
     var offset;
     if (req.query.page == null) {
@@ -63,7 +66,7 @@ router.post('/query', function (req, res) {
 
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
-    
+
         var where = {}
         var uddannelse = {
             [Op.or]: []
@@ -88,9 +91,9 @@ router.post('/query', function (req, res) {
                     'Dansk'
                 )
             }
-            
+
             if (element.includes('udland')) {
-                
+
                 sprog[Op.or].push({
                     [Op.not]: 'dansk'
                 })
@@ -108,7 +111,7 @@ router.post('/query', function (req, res) {
 
         var page = 1;
         var offset;
-        
+
         if (page == 1) {
             offset = 0
         } else {
@@ -135,11 +138,11 @@ router.post('/query', function (req, res) {
 
         var item = [count];
 
-        fs.readFileAsync = function(filename) {
-            return new Promise(function(resolve, reject) {
-                fs.readFile(filename, function(err, data){
-                    if (err) 
-                        reject(err); 
+        fs.readFileAsync = function (filename) {
+            return new Promise(function (resolve, reject) {
+                fs.readFile(filename, function (err, data) {
+                    if (err)
+                        reject(err);
                     else
                         resolve(data);
                 });
@@ -152,16 +155,18 @@ router.post('/query', function (req, res) {
 
         getFile('views\\search-cv-card.hbs').then((data) => {
             let template = hbs.compile(data + '');
-            let html = template({json: rows});
+            let html = template({
+                json: rows
+            });
             item.push(html);
 
             getFile('views\\search-pagination-template.hbs').then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
-                
+
                 let pageCount = Math.ceil(count / limit);
                 let withPages = pageCount == 1 ? true : false;
-                
+
                 let html = template({
                     pagination: {
                         page: page,
@@ -169,7 +174,7 @@ router.post('/query', function (req, res) {
                     },
                     withPages
                 });
-            
+
                 item.push(html);
                 res.send(item);
             });
@@ -177,10 +182,10 @@ router.post('/query', function (req, res) {
     });
 });
 
-router.get('/:id', function (req, res) {
+router.get('/:id', async function (req, res) {
     let id = req.params.id
 
-    db.CV.findOne({
+    var cv = await db.CV.findOne({
         raw: true,
         nest: true,
         where: {
@@ -190,31 +195,47 @@ router.get('/:id', function (req, res) {
             model: db.Student,
             as: 'student'
         }
-    }).then((cv) => {
-        console.log(cv);
+    });
 
-        if (cv.hjemmeside.includes("://")) {
-            console.log(cv.hjemmeside.indexOf("://") + 3)
-            cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
-            //console.log(cv.linkedIn);
+    console.log(cv);
+
+    if (cv.hjemmeside.includes("://")) {
+        console.log(cv.hjemmeside.indexOf("://") + 3)
+        cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+    }
+
+    if (cv.linkedIn.includes("://")) {
+        console.log(cv.linkedIn.indexOf("://") + 3)
+        cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+    }
+
+    if (cv.yt_link.includes("://")) {
+        console.log(cv.yt_link.indexOf("://") + 3)
+        cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+    }
+
+    if (!cv.gyldig) {
+        res.send('Du har ikke adgang til denne resurse.')
+    } else if (!cv.offentlig) {
+        if (req.user == null) {
+            res.send('Du har ikke adgang til denne resurse.')
         }
+    }
 
-        if (cv.linkedIn.includes("://")) {
-            console.log(cv.linkedIn.indexOf("://") + 3)
-            cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
-            //console.log(cv.linkedIn);
+    var ejer = false;
+    if (req.user != null) {
+        var found = await findUserByEmail(req.user);
+        if (found instanceof db.Student && found.id == cv.student_id) {
+            ejer = true;
         }
+    }
 
-        if (cv.yt_link.includes("://")) {
-            console.log(cv.yt_link.indexOf("://")  + 3)
-            cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://")  + 3);
-            //console.log(cv.linkedIn);
-        }
-
-        res.render('cv', {
-            json: cv
-        });
-      
+    res.render('cv', {
+        json: cv,
+        ejer: ejer
     });
 
 });
