@@ -120,6 +120,10 @@ input::placeholder {
   border-radius: 8px; 
 }
 
+#logodiv {
+  padding-top: 5rem;
+  height: 24rem;
+}
 
 #virksomhedsbeskrivelse {
   width: 16rem;
