@@ -99,4 +99,12 @@ router.post('/rediger-save', function (req, res, next) {
     res.redirect('/profil/rediger?succesBesked='+succesBesked+'&fejlBesked='+fejlBesked+'&EmailError='+errors.EmailError+'&TlfnrError='+errors.TlfnrError+'&ByError='+errors.ByError+'&PostnrError='+errors.PostnrError+'&CVRError='+errors.CVRError+'&NavnError='+errors.NavnError+'&AdresseError='+errors.AdresseError+'&HjemmesideError='+errors.HjemmesideError+'&DirektoerError='+errors.DirektoerError+'&LandError='+errors.LandError+'&LogoError='+errors.LogoError);
 });
 
+
+
+router.get('/getUser',function(req, res, next) {
+    findUserByEmail(req.user).then((user)=>{
+        res.send(user);
+    })
+});
+
 module.exports = router;

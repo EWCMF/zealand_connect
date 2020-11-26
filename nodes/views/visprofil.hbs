@@ -7,24 +7,24 @@
                     <a href="/rediger" class="font-weight-bold text-dark" data-key="redigerprofil"><u>Rediger
                             profil</u></a>
 
-                    <h5 class="card-title mt-2" data-key="virksomhedsnavn">Virksomheds navn</h5>
+                    <h5 class="card-title mt-2" data-key="navn">Navn</h5>
                     <p id="navn" class="card-text">Zealand Erhversakademi</p>
 
-                    <h5 class="card-title mt-2" data-key="virksomhedsemail">virksomheds Email</h5>
+                    <h5 class="card-title mt-2" data-key="email">Email</h5>
                     <p id="email" class="card-text">Zealand@zealand.dk</p>
 
                     <div id="hjemmesidediv">
-                        <h5 class="card-title mt-2" data-key="virksomhedshjemmeside">virksomheds hjemmeside</h5>
+                        <h5 class="card-title mt-2" data-key="hjemmeside">Hjemmeside</h5>
                         <p id="hjemmeside" class="card-text">https://www.zealand.dk/</p>
                     </div>
 
                     <div id="telefondiv">
-                        <h5 class="card-title mt-2" data-key="virksomhedstelefon">virksomheds telefon nummer</h5>
-                        <p id="telefon" class="card-text"></p>
+                        <h5 class="card-title mt-2" data-key="telefon">Telefon nummer</h5>
+                        <p id="telefon" class="card-text">12341234</p>
                     </div>
                     <div id="direktoerdiv">
-                        <h5 class="card-title mt-2" data-key="virksomhedstelefon">virksomheds direktør</h5>
-                        <p id="direktoer" class="card-text"></p>
+                        <h5 class="card-title mt-2" data-key="direktoer">Direktør</h5>
+                        <p id="direktoer" class="card-text">temp</p>
                     </div>
 
                     <h5 class="card-title mt-2" data-key="postnummerogby">Postnummer og By</h5>
@@ -112,10 +112,10 @@
 
             let responseObject = JSON.parse(this.responseText)
             if (!responseObject.email === '') {
-                document.getElementById('email').innerText = responseObject.email;
-            }
+                document.getElementById('email').innerHTML = responseObject.email;
+            } 
 
-            if (!responseObject.navn === '') {
+            if (!responseObject.navn  === '') {
                 document.getElementById('navn').innerText = responseObject.navn;
             }
 
@@ -183,7 +183,7 @@
 
 
         }
-        xhttp.open("GET", "/", true );
+        xhttp.open("GET", "/profil/getUser", true );
         xhttp.send();
     }
 </script>
