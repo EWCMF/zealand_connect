@@ -70,7 +70,7 @@ app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/internship_view', internshipPostViewRouter);
-app.use('/mit-CV', mit_CVRouter);
+app.use('/mit-cv', mit_CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/search-praktik', searchPraktikRouter);
 app.use('/login', loginRouter);
