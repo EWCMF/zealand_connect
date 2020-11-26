@@ -109,6 +109,7 @@ router.post('/', function (req, res){
           console.log(doc.path);
           if(errorRename){
             console.log("Unable to move file.");
+            console.log(errorRename);
           }else{
             console.log(doc.type)
             indhold.post_document=newDocName;
@@ -122,9 +123,10 @@ router.post('/', function (req, res){
       function reNameLogo(){
         if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp" ){
           fs.rename(logo.path,publicUploadFolder+newLogoName,(errorRename)=>{
-            console.log(doc.path);
+            console.log(logo.path);
             if(errorRename){
               console.log("Unable to move file.");
+              console.log(errorRename);
             }else{
                 indhold.company_logo=newLogoName;
             }
