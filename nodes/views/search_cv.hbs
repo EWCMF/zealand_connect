@@ -8,8 +8,7 @@
     <div class="row m-1">
         <div class="col-2 border rounded h-100">
             <h5 class="m-2">Filter</h5>
-            <form class="mt-3 mb-3" id="filterForm" method="POST" action="search-cv/query"
-                onsubmit="return submitForm(this);">
+            <form class="mt-3 mb-3" id="filterForm" method="POST" action="search-cv/query" onsubmit="return submitForm(this);">
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -117,12 +116,12 @@
                     <div class="row">
                         <div class="col-auto">
                             <img class="center-cropped"
-                                src="https://4.bp.blogspot.com/-zsbDeAUd8aY/US7F0ta5d9I/AAAAAAAAEKY/UL2AAhHj6J8/s1600/facebook-default-no-profile-pic.jpg">
+                                src="\images\dummy-profile-pic.jpg">
                         </div>
                         <div class="col">
                             <div class="card-body">
-                                <h5 class="card-title">{{overskrift}}</h5>
-                                <h6 class="card-title">{{email}}</h6>
+                                <h5 class="card-title">{{student.fornavn}} {{student.efternavn}}</h5>
+                                <h6 class="card-title">{{overskrift}}</h6>
                                 <p class="card-text autobreak">{{om_mig}}</p>
 
                             </div>
@@ -134,17 +133,23 @@
             </div>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
+    
+    <div class="row d-flex justify-content-center" id="pagination">
+        {{#if withPages}}
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item {{pageItm1}}"><a class="page-link" href="/search-cv?page={{pageJson.one}}"
-                        onclick="changePage({{pageJson.one}})">{{pageJson.one}}</a></li>
-                <li class="page-item {{pageItm2}}"><a class="page-link" href="/search-cv?page={{pageJson.two}}"
-                        onclick="changePage({{pageJson.two}})">{{pageJson.two}}</a></li>
-                <li class="page-item"><a class="page-link" href="/search-cv?page={{pageJson.three}}"
-                        onclick="changePage({{pageJson.three}})">{{pageJson.three}}</a></li>
+                {{#paginate pagination type="previous"}}
+                <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#">Forrige</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="middle" limit="3"}}
+                <li {{#if active}} class="page-item active" {{/if}} id="page-middle" value="{{n}}" class="page-item"><a class="page-link" href="#">{{n}}</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="next"}}
+                <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#">Næste</a></li>
+                {{/paginate}}
             </ul>
         </nav>
+        {{/if}}
     </div>
 </div>
 <script src="/javascript/search_cv.js"></script>
