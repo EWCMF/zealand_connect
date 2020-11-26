@@ -56,7 +56,14 @@ function submitForm(formElement) {
     var order = document.getElementById("dropdownButton2").value;
     formData.append("order", order);
 
-    var page = document.getElementById("page-middle").value;
+    var page = document.getElementById("page-middle");
+
+    if (page != null) {
+        page = page.value;
+    } else {
+        page = '1'
+    }
+
     formData.append("page", page);
 
     var xhr = new XMLHttpRequest();
@@ -64,6 +71,7 @@ function submitForm(formElement) {
         var res = JSON.parse(xhr.responseText);
         document.getElementById('results').innerHTML = res[0] + " resultater";
         document.getElementById('cards').innerHTML = res[1];
+        document.getElementById('pagination').innerHTML = res[2];
     }
     xhr.open(formElement.method, formElement.getAttribute("action"));
     xhr.send(formData);

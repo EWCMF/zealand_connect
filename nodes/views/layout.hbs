@@ -28,9 +28,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">Profil<span class="sr-only">(current)</span></a>
-                </li>
+                
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -79,11 +77,13 @@
                     <a class="nav-link" id="da" href="/language/da">Dansk</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="opretbruger" href="/opret-bruger">Opret Bruger</a>
+                    <a class="nav-link" style="display: none;" id="opretbruger"  href="/opret-bruger">Opret Bruger</a>
+                    <a class="nav-link" style="display: none;" id="profil" href="/profil">Profil<span class="sr-only">(current)</span></a>
+                
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="login" href="/login">Log ind</a>
-                    <a class="nav-link" id="logud" href="/login/logout">Log ud</a>
+                    <a class="nav-link" style="display: none;" id="login" href="/login">Log ind</a>
+                    <a class="nav-link" style="display: none;" id="logud" href="/login/logout">Log ud</a>
                 </li>
             </ul>
 
@@ -128,13 +128,15 @@
                     //hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                     let responseObject = JSON.parse(this.responseText)
                     if(responseObject.email===''){
-                        document.getElementById("login").style.display='block';
                         document.getElementById("logud").style.display='none';
+                        document.getElementById("login").style.display='block';
+                        document.getElementById("profil").style.display='none';
                         document.getElementById("opretbruger").style.display='block';
                     } else {
                         document.getElementById("login").style.display='none';
                         document.getElementById("logud").style.display='block';
                         document.getElementById("opretbruger").style.display='none';
+                        document.getElementById("profil").style.display='block';
                     }
                 }
             };
