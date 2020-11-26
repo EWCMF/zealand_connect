@@ -77,13 +77,13 @@
                     <a class="nav-link" id="da" href="/language/da">Dansk</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="opretbruger" href="/opret-bruger">Opret Bruger</a>
-                    <a class="nav-link" id="profil" href="/profil">Profil<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" style="display: none;" id="opretbruger"  href="/opret-bruger">Opret Bruger</a>
+                    <a class="nav-link" style="display: none;" id="profil" href="/profil">Profil<span class="sr-only">(current)</span></a>
                 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="login" href="/login">Log ind</a>
-                    <a class="nav-link" id="logud" href="/login/logout">Log ud</a>
+                    <a class="nav-link" style="display: none;" id="login" href="/login">Log ind</a>
+                    <a class="nav-link" style="display: none;" id="logud" href="/login/logout">Log ud</a>
                 </li>
             </ul>
 
@@ -128,10 +128,10 @@
                     //hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                     let responseObject = JSON.parse(this.responseText)
                     if(responseObject.email===''){
-                        document.getElementById("login").style.display='block';
                         document.getElementById("logud").style.display='none';
-                        document.getElementById("opretbruger").style.display='block';
+                        document.getElementById("login").style.display='block';
                         document.getElementById("profil").style.display='none';
+                        document.getElementById("opretbruger").style.display='block';
                     } else {
                         document.getElementById("login").style.display='none';
                         document.getElementById("logud").style.display='block';
