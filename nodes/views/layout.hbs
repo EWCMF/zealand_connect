@@ -128,10 +128,10 @@
                     //hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                     let responseObject = JSON.parse(this.responseText)
                     if(responseObject.email===''){
-                        document.getElementById("login").style.display='block';
                         document.getElementById("logud").style.display='none';
-                        document.getElementById("opretbruger").style.display='block';
+                        document.getElementById("login").style.display='block';
                         document.getElementById("profil").style.display='none';
+                        document.getElementById("opretbruger").style.display='block';
                     } else {
                         document.getElementById("login").style.display='none';
                         document.getElementById("logud").style.display='block';
