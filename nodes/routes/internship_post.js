@@ -3,7 +3,8 @@ var router = express.Router();
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;//Skal bruges til kalder API'er.
 var sortJsonArray = require('sort-json-array');//Brugt til at få byer i alfabetisk orden.
 var formidable = require("formidable");//Skal bruges når man håndtere filupload og alm. input i samme POST.
-var fs = require("fs");//Bruges til filer.
+var fs = require("fs");//Bruges til grundlæggen file hændtering.
+var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
 const db = require('../models');
 const internshippost = require('../models/internshippost');
 
@@ -105,7 +106,7 @@ router.post('/', function (req, res){
       //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
       //Nedenstående flytter og omdøber filer på sammetid
       if(doc.type== "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword"){
-        fs.rename(doc.path,publicUploadFolder+newDocName,(errorRename)=>{
+        mv(doc.path,publicUploadFolder+newDocName,(errorRename)=>{
           console.log(doc.path);
           if(errorRename){
             console.log("Unable to move file.");
@@ -122,7 +123,7 @@ router.post('/', function (req, res){
 
       function reNameLogo(){
         if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp" ){
-          fs.rename(logo.path,publicUploadFolder+newLogoName,(errorRename)=>{
+          mv(logo.path,publicUploadFolder+newLogoName,(errorRename)=>{
             console.log(logo.path);
             if(errorRename){
               console.log("Unable to move file.");

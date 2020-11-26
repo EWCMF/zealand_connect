@@ -3,7 +3,8 @@ var router = express.Router();
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; //Skal bruges til kalder API'er.
 var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabetisk orden.
 var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
-var fs = require("fs"); //Bruges til filer.
+var fs = require("fs");//Bruges til grundlæggen file hændtering.
+var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
 const db = require('../models');
 const internshippost = require('../models/internshippost');
 
@@ -164,7 +165,7 @@ router.post('/', function (req, res, next) {
 
     //Stien til upload mappen skal være til stien i docker containeren.
     var publicUploadFolder = "/usr/src/app/public/uploads/";
-    
+
     //Generere unik data til filnavn med Date.now() og tilfældig tal.
     var datetime = Date.now();
 
@@ -177,7 +178,7 @@ router.post('/', function (req, res, next) {
     function renameDoc(docName, logoName) {
       if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
         unlinkOldFiles(docName)
-        fs.rename(doc.path, publicUploadFolder + newDocName, (errorRename) => {
+        mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
           if (errorRename) {
             console.log("Unable to move file.");
           } else {
@@ -194,7 +195,7 @@ router.post('/', function (req, res, next) {
     function reNameLogo(logoName) {
       if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
         unlinkOldFiles(logoName)
-        fs.rename(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
+        mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
           if (errorRename) {
             console.log("Unable to move file.");
           } else {
