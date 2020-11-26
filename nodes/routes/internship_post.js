@@ -14,7 +14,7 @@ var tempEmail = emailRegex.source
 var tempLink = linkRegex.source
 
 /* POST home page. */
-router.post('/', function (req, res) {
+router.post('/', function (req, res, next) {
   //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
@@ -82,7 +82,8 @@ router.post('/', function (req, res) {
           return res.status(400).send(error);
         });
       }
-      generatePostCodeOptions()
+      generatePostCodeOptions();
+      console.log(res.headersSent);
     }
 
     //Generere og validere om byen angivet i frontend er korrekt.
@@ -123,6 +124,9 @@ router.post('/', function (req, res) {
 
     if (!files) {
       generateAndValidateCityArray();
+      indhold.post_document = "";
+      indhold.company_logo = "";
+      
     } else {
       /*fileUpload here*/
       var doc = files.post_document;
@@ -152,6 +156,8 @@ router.post('/', function (req, res) {
           reNameLogo();
         });
       } else {
+        console.log("invalid file");
+        indhold.post_document = "";
         reNameLogo();
       }
 
@@ -166,12 +172,13 @@ router.post('/', function (req, res) {
             generateAndValidateCityArray();
           });
         } else {
+          console.log("invalid file");
+          indhold.company_logo = "";
           generateAndValidateCityArray();
         }
       }
     }
-  })
-
+  });
 });
 
 /* GET home page. */
@@ -214,7 +221,6 @@ router.get('/', function (req, res, next) {
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send();
   }
-
   generatePostCodeOptions();
 });
 
