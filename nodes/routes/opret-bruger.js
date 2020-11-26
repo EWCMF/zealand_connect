@@ -73,30 +73,30 @@ router.post('/create', function (req, res) {
         errors.ByError = "By er ugyldig";
     }
 
-    // Tjek om email allerede eksisterer i databasen
     findUserByEmail(email).then((user) => {
         if (user !== null) {
             errors.EmailError = "Email eksisterer allerede i systemet";
-        }
-    }).then(findUserByCVR(cvrnr).then((user) => {
-        if (user !== null){
-            errors.CVRError = "CVR-nummer findes allerede i systemet"
         } else {
-            hashPassword(req.body.password).then((hashedPassword) => {
-                console.log(email);
-                let virksomhedsBruger = {
-                    email: email,
-                    password: hashedPassword,
-                    tlfnr: tlfnr,
-                    by: by,
-                    postnr: postnr,
-                    cvrnr: cvrnr
+            findUserByCVR(cvrnr).then((boi) => {
+                if (boi !== null){
+                    errors.CVRError = "CVR-nummer findes allerede i systemet"
+                } else {
+                    hashPassword(req.body.password).then((hashedPassword) => {
+                        console.log(email);
+                        let virksomhedsBruger = {
+                            email: email,
+                            password: hashedPassword,
+                            tlfnr: tlfnr,
+                            by: by,
+                            postnr: postnr,
+                            cvrnr: cvrnr
+                        }
+                        createVirksomhed(virksomhedsBruger);
+                    });
                 }
-
-                createVirksomhed(virksomhedsBruger);
-            });
+            })
         }
-    })).then(() => {
+    }).then(() => {
         res.redirect(
             '/opret-bruger?' +
             'EmailError=' + errors.EmailError +
