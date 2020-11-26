@@ -230,7 +230,7 @@ router.get('/:id/Create_pdf', function (req, res, next) {
   var myDoc = new pdf ({
     bufferPages:true
   });
-  var pdfStream = fs.createWriteStream('public/PDF/test.pdf')
+  var pdfStream = fs.createWriteStream('../nodes/public/PDF/test.pdf')
   myDoc.pipe(pdfStream);
   console.log(id);
   db.CV.findOne({
@@ -574,14 +574,14 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 });
     pdfStream.addListener('finish', function() {
       res.setHeader('content-type', 'application/pdf'),
-      res.download('public/PDF/Test.pdf', 'Testpdf.pdf')
+      res.download('../nodes/public/PDF/test.pdf', 'Testpdf.pdf')
     });
   
     async function deleteFile() {
   try {
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => resolve(
-      fs.unlinkSync('public/PDF/Test.pdf', (err) => {
+      fs.unlinkSync('../nodes/public/PDF/test.pdf', (err) => {
         if (err) {
           console.error(err)
           return
