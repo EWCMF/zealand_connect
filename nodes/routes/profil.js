@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const models = require("../models");
 const validation = require("../validation/input-validation");
 
@@ -12,7 +13,6 @@ router.get('/rediger', function (req, res, next) {
     let errors = req.query;
     console.log("ERRORS");
     console.log(errors);
-    
     //todo if Student render student else virksomhed
     //todo: find bruger og indsæt dens data i render hbs.
     findUserByEmail(req.user).then((user)=>{
@@ -30,6 +30,7 @@ router.post('/rediger-save', function (req, res, next) {
     console.log(req.body);
     //validate
     // Indlæs variable fra viewet
+    let email = req.body.virksomhedEmail;
     let tlfnr = req.body.telefonnummer;
     let by = req.body.by;
     let postnr = req.body.postnummer;
@@ -67,6 +68,26 @@ router.post('/rediger-save', function (req, res, next) {
 
     if (!validation.validateCity(by)){
         errors.ByError = "Ugyldig By";
+    }
+    //update the database if no erros present
+    let atLeastOneErrorIsPresent = false;
+    for (let value of Object.values(errors)) {
+        console.log("error:");
+        console.log(value);
+        if(value!=''){
+            //an error was here!
+            atLeastOneErrorIsPresent=true;
+            break;
+        }
+    }
+    console.log("There is at least one error: "+atLeastOneErrorIsPresent);
+    if(!atLeastOneErrorIsPresent){
+        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
+        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
+        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
+        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
+        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
+        editVirksomhed(email, cvrnr, firmanavn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by);
     }
     res.redirect('/profil/rediger?'+'EmailError='+errors.EmailError+'&TlfnrError='+errors.TlfnrError+'&ByError='+errors.ByError+'&PostnrError='+errors.PostnrError+'&CVRError='+errors.CVRError+'&NavnError='+errors.NavnError+'&AdresseError='+errors.AdresseError+'&HjemmesideError='+errors.HjemmesideError+'&DirektoerError='+errors.DirektoerError+'&LandError='+errors.LandError+'&LogoError='+errors.LogoError);
 });

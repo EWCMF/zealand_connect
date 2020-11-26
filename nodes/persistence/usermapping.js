@@ -33,6 +33,11 @@ async function findUserByEmail(email){
 }
 
 async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by){
+    console.log("NU OPDATERE VI VIRKSOMHED");
+    console.log("NU OPDATERE VI VIRKSOMHED");
+    console.log("NU OPDATERE VI VIRKSOMHED");
+    console.log("NU OPDATERE VI VIRKSOMHED");
+    console.log("NU OPDATERE VI VIRKSOMHED");
     //vi bruger email til at finde virksomheden.
     findUserByEmail(email).then(virksomhed => {
         virksomhed.update({
