@@ -5,7 +5,8 @@ const createVirksomhed = require('../persistence/usermapping').createVirksomhed;
 const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
 const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
-const validation = require('../validation/input-validation');
+const { validateEmail, validateCVR, validatePhone, validateCity, validatePasswordLength, validateCvrLength,
+    checkForIdenticals } = require('../validation/input-validation');
 
 router.get('/', function (req, res, next) {
     let error = req.query;
@@ -37,65 +38,67 @@ router.post('/create', function (req, res) {
     // Grundform for fejlbeskeden
     let error = "?error=";
 
-    if (!validation.validateEmail(email)){
+    if (!validateEmail(email)){
         error += "invalidemailerror";
         res.redirect('/opret-bruger' + error);
     }
 
-    else if (!validation.checkForIdenticals(email, gentagEmail)){
+    else if (!checkForIdenticals(email, gentagEmail)){
         error += "emailmismatcherror";
         res.redirect('/opret-bruger' + error);
     }
 
-    else if (!validation.validatePasswordLength(password)){
+    else if (!validatePasswordLength(password)){
         error += "passwordlengtherror";
         res.redirect('/opret-bruger' + error);
     }
 
-    else if (!validation.validateCVR(cvrnr)){
+    else if (!validateCVR(cvrnr)){
         error += "invalidcvrerror";
         res.redirect('/opret-bruger' + error);
     }
 
-    else if (!validation.validateCvrLength(cvrnr)){
+    else if (!validateCvrLength(cvrnr)){
         error += "cvrlengtherror";
         res.redirect('/opret-bruger' + error);
     }
 
-    if (!validation.validatePhone(tlfnr)){
+    if (!validatePhone(tlfnr)){
         error += "invalidphoneerror";
         res.redirect('/opret-bruger' + error);
     }
 
-    if (!validation.validateCity(by)){
+    if (!validateCity(by)){
         error += "invalidbyerror";
         res.redirect('/opret-bruger' + error);
     }
 
     // Tjek om email allerede eksisterer i databasen
-    findUserByEmail(email).then((user) => {
-        if (user !== null){
-            error += "existingemailerror";
-            console.log(findUserByEmail(email));
-            res.redirect('/opret-bruger' + error);
-        }
-        else {
-            // hashPassword(req.body.password).then((hashedPassword) => {
-            //     let virksomhedsBruger = {
-            //         email: req.body.email,
-            //         password: hashedPassword,
-            //         tlfnr: req.body.telefonnummer,
-            //         by: req.body.by,
-            //         postnr: req.body.postnummer,
-            //         cvrnr: req.body.cvr
-            //     }
-            //
-            //     createVirksomhed(virksomhedsBruger);
-            // });
+    // findUserByEmail(email).then((user) => {
+    //     if (user !== null){
+    //         error += "existingemailerror";
+    //         console.log(findUserByEmail(email));
+    //         res.redirect('/opret-bruger' + error);
+    //     }
+    //     else {
+    //         hashPassword(req.body.password).then((hashedPassword) => {
+    //             let virksomhedsBruger = {
+    //                 email: req.body.email,
+    //                 password: hashedPassword,
+    //                 tlfnr: req.body.telefonnummer,
+    //                 by: req.body.by,
+    //                 postnr: req.body.postnummer,
+    //                 cvrnr: req.body.cvr
+    //             }
+    //
+    //             createVirksomhed(virksomhedsBruger);
+    //         });
+    //
+    //         res.redirect('back');
+    //     }
+    // });
 
-            res.redirect('back');
-        }
-    });
+    res.redirect('back');
 
 });
 
