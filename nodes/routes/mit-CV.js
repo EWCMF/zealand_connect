@@ -2,11 +2,58 @@ const e = require('express');
 var express = require('express');
 var router = express.Router();
 const db = require('../models');
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 
 router.get('/', function (req, res, next) {
-  res.render('Mit-CV', {
-    Profil: "Hans Sørensen",
-  })
+  if (req.user == null) {
+    res.send('Du har ikke adgang til denne resurse.');
+  }
+
+  findUserByEmail(req.user).then((user) => {
+
+    if (user.cv == null) {
+      res.render('mit-cv', {
+        Profil: user.fornavn + " " + user.efternavn
+      })
+    }
+
+    db.CV.findOne({
+      raw: true,
+      nest: true,
+      where: {
+        id: parseInt(user.cv.id)
+      },
+      include: {
+        model: db.Student,
+        as: 'student'
+      }
+    }).then((cv) => {
+      console.log(cv);
+
+      if (cv.hjemmeside.includes("://")) {
+        console.log(cv.hjemmeside.indexOf("://") + 3)
+        cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+      }
+
+      if (cv.linkedIn.includes("://")) {
+        console.log(cv.linkedIn.indexOf("://") + 3)
+        cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+      }
+
+      if (cv.yt_link.includes("://")) {
+        console.log(cv.yt_link.indexOf("://") + 3)
+        cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+      }
+
+      res.render('cv', {
+        json: cv
+      });
+
+    });
+  });
 });
 
 router.post('/submit', function (req, res, next) {
@@ -55,9 +102,9 @@ router.post('/submit', function (req, res, next) {
   }
   res.send(JSON.stringify(json));
   db.CV.create(json).then((cv) => {
-    console.log(cv);
+
   }).catch((error) => {
-    console.log(error)
+
   });
 });
 
@@ -66,8 +113,8 @@ router.get('/delete', function (req, res, next) {
     res.send("Use id");
   } else {
     db.CV.destroy({
-      where:{
-        id:req.query.id
+      where: {
+        id: req.query.id
       }
     });
     res.send("Entry deleted");
