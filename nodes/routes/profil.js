@@ -6,10 +6,16 @@ const models = require("../models");
 const validation = require("../validation/input-validation");
 var { reqLang } = require('../public/javascript/request');
 
-
-router.get('/', (req, res)=> {
-    res.render('visprofil', {language: reqLang(req,res)})
-})
+router.get('/', function (req, res, next) {
+    findUserByEmail(req.user).then((user) => {
+        if (user instanceof models.Virksomhed) {
+            //TODO: Her skal der være virksomhedsprofil
+            res.render('visprofil', {language: reqLang(req,res)})
+        } else if (user instanceof models.Student) {
+            res.render("studentprofil");
+        }
+    }); 
+});
 
 router.get('/rediger', function (req, res, next) {
     let errors = req.query;
