@@ -1,4 +1,5 @@
 var express = require('express');
+const { findUserByCVR } = require('../persistence/usermapping');
 var router = express.Router();
 var {reqLang} = require('../public/javascript/request');
 const createVirksomhed = require('../persistence/usermapping').createVirksomhed;
@@ -76,6 +77,10 @@ router.post('/create', function (req, res) {
     findUserByEmail(email).then((user) => {
         if (user !== null) {
             errors.EmailError = "Email eksisterer allerede i systemet";
+        }
+    }).then(findUserByCVR(cvrnr).then((user) => {
+        if (user !== null){
+            errors.CVRError = "CVR-nummer findes allerede i systemet"
         } else {
             hashPassword(req.body.password).then((hashedPassword) => {
                 console.log(email);
@@ -91,7 +96,7 @@ router.post('/create', function (req, res) {
                 createVirksomhed(virksomhedsBruger);
             });
         }
-    }).then(() => {
+    })).then(() => {
         res.redirect(
             '/opret-bruger?' +
             'EmailError=' + errors.EmailError +
