@@ -12,6 +12,12 @@ function submitButton() {
     let tidligere_uddannelse = document.getElementById("tidligere-uddannelse").value;
     let sprog = document.getElementById("sprog").value;
     let iT_Kompetencer = document.getElementById("iT_Kompetencer").value;
+    let speciale = document.getElementById("speciale").value;
+    let om_mig = document.getElementById("om mig").value;
+    let UogFA = document.getElementById("UogFA").value;
+    let erhvervserfaring = document.getElementById("erhvervserfaring").value;
+    let hjemmeside = document.getElementById("hjemmeside").value;
+    let fritidsinteresser = document.getElementById("fritidsinteresser").value;
 
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
@@ -67,10 +73,40 @@ function submitButton() {
     // } else {
     //     document.getElementById("Tidligere-uddannelseError").hidden = true;
     // }
-    if (Min_linkedIn || linkedIn == "") {
-        if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
-            document.forms["cvForm"].submit();
-        }
+    if (linkedIn == "") {
+        document.getElementById("linkedIn").value = 'Intet angivet';
+    }
+
+    if (yt_link == "") {
+        document.getElementById("youtube_link").value = 'Intet angivet';;
+    }
+
+    if (speciale == "") {
+        document.getElementById("speciale").value = 'Intet angivet';;
+    }
+
+    if (om_mig == "") {
+        document.getElementById("om mig").value = 'Intet angivet';;
+    }
+
+    if (UogFA == "") {
+        document.getElementById("UogFA").value = 'Intet angivet';;
+    }
+
+    if (erhvervserfaring == "") {
+        document.getElementById("erhvervserfaring").value = 'Intet angivet';;
+    }
+
+    if (hjemmeside == "") {
+        document.getElementById("hjemmeside").value = 'Intet angivet';;
+    }
+
+    if (fritidsinteresser == "") {
+        document.getElementById("fritidsinteresser").value = 'Intet angivet';;
+    }
+
+    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
+        document.forms["cvForm"].submit();
     }
 }
 
