@@ -1,6 +1,5 @@
 const passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
-// const findUserById = require('../persistence/usermapping').findUserById;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
 
