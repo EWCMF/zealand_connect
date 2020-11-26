@@ -1,5 +1,4 @@
 <div class="container-fluid">
-    
     <div class="row mt-4 mb-4">
         <div class="col-2">
             <img class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
@@ -26,7 +25,7 @@
                 </h6>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-7">
             <div class="col">
                 <h2 class="mb-3">
                     {{json.student.fornavn}} {{json.student.efternavn}}
@@ -54,7 +53,9 @@
                 </a>
             </div>
         </div>
-        
+        <div class="col-2">
+            <button type="button" class="btn btn-success ml-5" onclick="window.location.href='/search-cv/{{json.id}}/Create_pdf'">Download Pdf</button>
+        </div>
     </div>
     <hr class="mb-4">
 
