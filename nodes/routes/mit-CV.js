@@ -1,10 +1,11 @@
+const { SSL_OP_EPHEMERAL_RSA } = require('constants');
 const e = require('express');
 var express = require('express');
 var router = express.Router();
 const db = require('../models');
 
 router.get('/', function (req, res, next) {
-  res.render('Mit-CV', {
+  res.render('mit-CV', {
     Profil: "Hans Sørensen",
   })
 });

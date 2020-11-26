@@ -64,7 +64,7 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/index', indexRouter);
+app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
