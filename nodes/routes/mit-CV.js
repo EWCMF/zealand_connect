@@ -5,7 +5,7 @@ var router = express.Router();
 const db = require('../models');
 
 router.get('/', function (req, res, next) {
-  res.render('mit_CV', {
+  res.render('mit-CV', {
     Profil: "Hans Sørensen",
   })
 });
