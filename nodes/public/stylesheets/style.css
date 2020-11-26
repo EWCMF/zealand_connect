@@ -110,6 +110,11 @@ input::placeholder {
   justify-content: center;
   align-items: center;
 }
+#virksomhedslogodiv {
+  height: 20rem; 
+  object-fit: scale-down;
+  border-radius: 8px;
+}
 
 #zealandLogo {
   margin-top: 15px;
