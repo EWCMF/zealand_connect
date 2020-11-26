@@ -5,20 +5,24 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var profilRouter = require('./routes/profil');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
+var internshipPostViewRouter = require('./routes/internship_view')
 var mit_CVRouter = require('./routes/mit-CV');
 var searchCVRouter = require('./routes/search-cv');
 var loginRouter = require('./routes/login');
 var languageRouter = require('./routes/language')
 var forsideRouter = require('./routes/forside')
 var profilRouter = require('./routes/profil')
-
+var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
 
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
+
+const hbs = require("express-handlebars");
 
 var opretBrugerRouter = require('./routes/opret-bruger');
 var loginStudentRouter = require('./routes/login-student');
@@ -27,8 +31,25 @@ var loginStudentRouter = require('./routes/login-student');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+
+app.engine(
+  "hbs",
+  hbs({
+    helpers: {
+      paginate: require('handlebars-paginate')
+    },
+    partialsDir: ["views/partials"],
+    extname: ".hbs",
+    layoutsDir: "views",
+    defaultLayout: "layout",
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true
+    }
+  })
+);
 app.set('view engine', 'hbs');
+
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,15 +63,18 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', indexRouter);
+app.use('/index', indexRouter);
 app.use('/users', usersRouter);
+app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
+app.use('/internship_view', internshipPostViewRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
-app.use('/forside', forsideRouter);
+app.use('/', forsideRouter);
+app.use('/praktikforloebet', praktikforloebRouter);
 app.use ('/profil', profilRouter)
 
 app.use('/opret-bruger', opretBrugerRouter);

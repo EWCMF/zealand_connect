@@ -3,9 +3,11 @@ var router = express.Router();
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;//Skal bruges til kalder API'er.
 var sortJsonArray = require('sort-json-array');//Brugt til at få byer i alfabetisk orden.
 var formidable = require("formidable");//Skal bruges når man håndtere filupload og alm. input i samme POST.
-var fs = require("fs");//Bruges til filer.
+var fs = require("fs");//Bruges til grundlæggen file hændtering.
+var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
+const {emailRegex, dateRegex, cvrRegex, linkRegex} = require("../constants/regex.js")
 const db = require('../models');
-const internshippost = require('../models/internshippost');
+
 
 /* POST home page. */
 router.post('/', function (req, res){
@@ -15,14 +17,7 @@ router.post('/', function (req, res){
     //laver et objekt med alle data
     const { title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document} = fields;
     var indhold = { title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document};
-    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
-    var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
-    var cvrReg = /^[0-9]{8}$/
-    var linkReg = /^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(\/.)?$/
-    var validPicRegex =/\.(jpg|jpeg|png|bmp|svg)$/
-    var vaildFileRegex = /\.(pdf|docx|doc|txt)$/
     var inputError = false;
-
     var cityArray=[];
 
     //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
@@ -30,11 +25,11 @@ router.post('/', function (req, res){
     if (email.length > 255) {console.log('Email to long'); inputError = true;}
     if (!emailRegex.test(email)) {console.log('Invalid email'); inputError = true;}
     if (1 > contact.length || contact.length > 255) {console.log('Contact length invalid'); inputError = true;}
-    if (!dateReg.test(post_start_date)) {console.log('Invalid date'); inputError = true;}
-    if (!dateReg.test(post_end_date)) {console.log('Invalid date'); inputError = true;}
+    if (!dateRegex.test(post_start_date)) {console.log('Invalid date'); inputError = true;}
+    if (!dateRegex.test(post_end_date)) {console.log('Invalid date'); inputError = true;}
     if (post_text.length > 65536) {console.log('Plain text is to long'); inputError = true;}
-    if (!cvrReg.test(cvr_number)) {console.log("CVR number invalid"); inputError = true;}
-    if (!linkReg.test(company_link)) {console.log("Link Invalid"); inputError = true;}
+    if (!cvrRegex.test(cvr_number)) {console.log("CVR number invalid"); inputError = true;}
+    if (!linkRegex.test(company_link)) {console.log("Link Invalid"); inputError = true;}
     if (education == 0) {console.log('Invalid choice'); inputError = true;}
 
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
@@ -96,7 +91,7 @@ router.post('/', function (req, res){
       //Generere unik data til filnavn med Date.now() og tilfældig tal.
       var datetime = Date.now();
 
-      var randomNumber=Math.floor(Math.random() * (10 - 0 + 1) + 0);
+      var randomNumber=Math.floor(Math.random()*(10-0+1)+0);
 
       //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
       var newDocName=datetime+randomNumber+"_"+doc.name;
@@ -104,12 +99,11 @@ router.post('/', function (req, res){
 
       //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
       //Nedenstående flytter og omdøber filer på sammetid
-      if(doc.type== "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword"){
-        fs.rename(doc.path,publicUploadFolder+newDocName,(errorRename)=>{
+      if(doc.type=="text/plain"||doc.type=="application/vnd.openxmlformats-officedocument.wordprocessingml.document"||doc.type=="application/pdf"||doc.type=="application/msword"){
+        mv(doc.path,publicUploadFolder + newDocName,(errorRename)=>{
           if(errorRename){
             console.log("Unable to move file.");
           }else{
-            console.log(doc.type)
             indhold.post_document=newDocName;
           }
           reNameLogo();
@@ -119,12 +113,12 @@ router.post('/', function (req, res){
       }
 
       function reNameLogo(){
-        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp" ){
-          fs.rename(logo.path,publicUploadFolder+newLogoName,(errorRename)=>{
+        if(logo.type=="image/jpeg"||logo.type=="image/png"||logo.type=="image/svg+xml"||logo.type=="image/bmp"){
+          mv(logo.path,publicUploadFolder + newLogoName,(errorRename)=>{
             if(errorRename){
               console.log("Unable to move file.");
             }else{
-                indhold.company_logo=newLogoName;
+              indhold.company_logo=newLogoName;
             }
             generateAndValidateCityArray();
           });
@@ -133,14 +127,6 @@ router.post('/', function (req, res){
         }
       }
     }
-    /*formData.onPart = function(part){
-      if(!part.filename && part.filename.match(vaildFileRegex)) {
-        this.handlePart(part);
-      }
-      else {
-        console.log(part.filename + 'is not allowed')
-      }
-    }*/
   })
 
 });
@@ -182,7 +168,7 @@ router.get('/', function (req, res, next) {
     xmlhttp.send();
   }
 
-  generatePostCodeOptions()
+  generatePostCodeOptions();
 });
 
 module.exports = router;

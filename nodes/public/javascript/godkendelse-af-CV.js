@@ -1,5 +1,5 @@
 
-document.getElementById("gem").onclick = function() {submitButton()};
+document.getElementById("gem").onclick = function () { submitButton() };
 
 function submitButton() {
     // få alle inputfelter ind i variabler
@@ -7,11 +7,12 @@ function submitButton() {
     let email = document.getElementById("email").value;
     let telefon = parseInt(document.getElementById("telefon").value);
     let linkedIn = document.getElementById("linkedIn").value;
+    let yt_link = document.getElementById("youtube_link").value;
     let uddannelse = document.getElementById("uddannelse").value;
     let tidligere_uddannelse = document.getElementById("tidligere-uddannelse").value;
     let sprog = document.getElementById("sprog").value;
     let iT_Kompetencer = document.getElementById("iT_Kompetencer").value;
-    
+
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
     var emailWrittenCorrectly = emailRegex.test(email);
@@ -22,6 +23,8 @@ function submitButton() {
 
     const linkedInRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
     var Min_linkedIn = linkedInRegex.test(linkedIn);
+
+    var Mit_yt_link = linkedInRegex.test(yt_link);
 
     // if (overskrift == "") {
     //     document.getElementById("OverskriftError").hidden = false;
@@ -64,9 +67,31 @@ function submitButton() {
     // } else {
     //     document.getElementById("Tidligere-uddannelseError").hidden = true;
     // }
-    if ( Min_linkedIn || linkedIn == "") {
+    if (Min_linkedIn || linkedIn == "") {
         if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
-        document.forms["cvForm"].submit();
+            document.forms["cvForm"].submit();
         }
+    }
+}
+
+
+function countChars(obj) {
+    var maxLength = 255;
+    var strLength = obj.value.length;
+    var charRemain = (maxLength - strLength);
+    if (charRemain < 0) {
+        document.getElementById('charNum').innerHTML = '<span style="color:red;">Du har lavet mere end ' + maxLength + ' tegn</span>';
+    } else {
+        document.getElementById('charNum').innerHTML = charRemain + ' tegn tilbage';
+    }
+}
+function countChars2(obj) {
+    var maxLength = 255;
+    var strLength = obj.value.length;
+    var charRemain = (maxLength - strLength);
+    if (charRemain < 0) {
+        document.getElementById('charNum2').innerHTML = '<span style="color:red;">Du har lavet mere end ' + maxLength + ' tegn</span>';
+    } else {
+        document.getElementById('charNum2').innerHTML = charRemain + ' tegn tilbage';
     }
 }

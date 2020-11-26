@@ -18,6 +18,7 @@ router.post('/submit', function (req, res, next) {
   let speciale = req.body.speciale;
   let telefon = req.body.telefon;
   let linkedIn = req.body.linkedIn;
+  let yt_link = req.body.youtube_link;
   let om_mig = req.body.om;
   let it_kompetencer = req.body.iT_Kompetencer;
   let udenlandsophold_og_frivilligt_arbejde = req.body.UogFA;
@@ -42,6 +43,7 @@ router.post('/submit', function (req, res, next) {
     speciale,
     telefon,
     linkedIn,
+    yt_link,
     om_mig,
     it_kompetencer,
     udenlandsophold_og_frivilligt_arbejde,

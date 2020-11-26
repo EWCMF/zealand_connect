@@ -8,92 +8,104 @@
     <div class="row m-1">
         <div class="col-2 border rounded h-100">
             <h5 class="m-2">Filter</h5>
-            <form class="mt-3 mb-3" id="filterForm">
+            <form class="mt-3 mb-3" id="filterForm" method="POST" action="search-cv/query" onsubmit="return submitForm(this);">
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h6 class="panel-title mb-2">
                                 <a id="filtrerUddannelser" class="text-decoration-none" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse1">
+                                    data-parent="#accordion" href="#collapse1" onclick='onDropdownUddannelserClick()'>
                                     Uddannelser
                                 </a>
+                                <button id="dropdownUddannelser" class="btn btn-sm dropdown-toggle p-0 m-0">
+
+                                </button>
+
                             </h6>
                         </div>
 
-                        <div id="collapse1" class="panel-collapse collapse in {{show}}">
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                {{#each udd}}
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        {{name}}
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="udd{{name}}"
+                                        onclick="addFilter('udd', '{{id}}')">
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="panel-heading">
+                            <h6 class="panel-title mb-2">
+                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse"
+                                    data-parent="#accordion" href="#collapse2" onclick='onDropdownLandClick()'>
+                                    Land
+                                </a>
+                                <button id="dropdownLand" class="btn btn-sm dropdown-toggle p-0 m-0">
+
+                                </button>
+                            </h6>
+                        </div>
+
+                        <div id="collapse2" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
-                                        Datamatiker
+                                        Indland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="datamatiker" {{dtmCb}}>
+                                    <input class="align-self-center" type="checkbox" name="indland"
+                                        onclick="addFilter('lnd', 'Indland')">
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
-                                        Handelsøkonom
+                                        Udland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="handelsøkonom" {{hoeCb}}>
+                                    <input class="align-self-center" type="checkbox" name="udland"
+                                        onclick="addFilter('lnd','Udland')">
                                 </li>
-                                <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
-                                        Finansøkonom
-                                    </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="finansøkonom" {{foeCb}}>
-                                </li>
-                                <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
-                                        International Handel og Markedsføring
-                                    </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="ihom" {{ihmCb}}>
-                                </li>
-                                <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
-                                        Innovation og Entrepreneurship
-                                    </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="ioe" {{ioeCb}}>
-                                </li>
-                                <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
-                                        Bygningskontruktør
-                                    </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="bygningskontruktør" {{bkCb}}>
-                                </li>
-                                <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
-                                        Byggetekniker
-                                    </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="byggetekniker" {{btCb}}>
-                                </li>
-                                <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
-                                        Installatør, stærkstrøm
-                                    </label>
-                                    <input class="align-self-center" type="checkbox" name="" id="installatør" {{insCb}}>
-                                </li>
+
                             </ul>
+
+
                         </div>
                     </div>
                 </div>
+                {{!-- <button class="btn btn-success mb-2 mt-4" type="submit">Filtrer</button> --}}
             </form>
-            <button class="btn btn-success mb-2 mt-4" onclick="filter()">Filtrer</button>
         </div>
         <div class="col">
             <div class="mb-2 d-flex flex-row">
-                <label class="mb-0 flex-fill align-self-center">
+                <label id="results" class="mb-0 flex-fill align-self-center">
                     {{resultater}} resultater
                 </label>
                 <label class="mb-0 mr-1 align-self-center">
-                    sortering:
+                    Sortering:
                 </label>
                 <div class="btn-group">
                     <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" value={{sort}}>
-                        {{sortName}}
+                        aria-haspopup="true" aria-expanded="false" value="updatedAt">
+                        Senest opdateret
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#" id="senestOpdateret" onclick="sort('updatedAt')">Senest
+                        <a class="dropdown-item" id="senestOpdateret" onclick="changeSort(this, 'updatedAt')">Senest
                             opdateret</a>
-                        <a class="dropdown-item" href="#" id="overskrift" onclick="sort('overskrift')">Overskrift</a>
+                        <a class="dropdown-item" id="overskrift"
+                            onclick="changeSort(this, 'overskrift')">Stilling/status</a>
+                    </div>
+                </div>
+                <label class="mb-0 mr-1 align-self-center">
+                    Rækkefølge:
+                </label>
+                <div class="btn-group">
+                    <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" value="ASC">
+                        Faldende
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" id="ascending" onclick="changeOrder(this, 'ASC')">Stigende</a>
+                        <a class="dropdown-item" id="descending" onclick="changeOrder(this, 'DESC')">Faldende</a>
                     </div>
                 </div>
 
@@ -104,14 +116,13 @@
                     <div class="row">
                         <div class="col-auto">
                             <img class="center-cropped"
-                                src="https://4.bp.blogspot.com/-zsbDeAUd8aY/US7F0ta5d9I/AAAAAAAAEKY/UL2AAhHj6J8/s1600/facebook-default-no-profile-pic.jpg">
+                                src="\images\dummy-profile-pic.jpg">
                         </div>
                         <div class="col">
                             <div class="card-body">
-                                <h5 class="card-title">{{overskrift}}</h5>
-                                <h6 class="card-title">{{email}}</h5>
-                                    <p class="card-text">{{om_mig}}</p>
-                                    <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                                <h5 class="card-title">{{student.fornavn}} {{student.efternavn}}</h5>
+                                <h6 class="card-title">{{overskrift}}</h6>
+                                <p class="card-text autobreak">{{om_mig}}</p>
 
                             </div>
                         </div>
@@ -122,14 +133,23 @@
             </div>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
+    
+    <div class="row d-flex justify-content-center" id="pagination">
+        {{#if withPages}}
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item {{pageItm1}}"><a class="page-link" href="/search-cv?page={{pageJson.one}}" onclick="changePage({{pageJson.one}})">{{pageJson.one}}</a></li>
-                <li class="page-item {{pageItm2}}"><a class="page-link" href="/search-cv?page={{pageJson.two}}" onclick="changePage({{pageJson.two}})">{{pageJson.two}}</a></li>
-                <li class="page-item"><a class="page-link" href="/search-cv?page={{pageJson.three}}" onclick="changePage({{pageJson.three}})">{{pageJson.three}}</a></li>
+                {{#paginate pagination type="previous"}}
+                <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#">Forrige</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="middle" limit="3"}}
+                <li {{#if active}} class="page-item active" {{/if}} id="page-middle" value="{{n}}" class="page-item"><a class="page-link" href="#">{{n}}</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="next"}}
+                <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#">Næste</a></li>
+                {{/paginate}}
             </ul>
         </nav>
+        {{/if}}
     </div>
 </div>
 <script src="/javascript/search_cv.js"></script>

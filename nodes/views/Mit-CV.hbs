@@ -7,7 +7,8 @@
         <div class="form-group required">
             <label for="exampleFormControlInput1">Overskrift</label>
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
-                placeholder="Stilling eller Status">{{Overskrift}}</textarea>
+                placeholder="Stilling eller Status" onkeyup="countChars(this)">{{Overskrift}}</textarea>
+                <p id="charNum">255 tegn</p>
            <!-- <p id="OverskriftError" class="CVErrorColor" hidden="true">Skal udfyldes</p> -->
         </div>
         <!-- Uddannelse med dropdown -->
@@ -21,9 +22,9 @@
                             <option value="Datamatiker">Datamatiker</option>
                             <option value="Handelsøkonom">Handelsøkonom</option>
                             <option value="Finansøkonom">Finansøkonom</option>
-                            <option value="International Handel og markedsføring">International Handel og markedsføring</option>
+                            <option value="International Handel og markedsføring">International Handel og Markedsføring</option>
                             <option value="Innovation og Entrepreneurship">Innovation og Entrepreneurship</option>
-                            <option value="BygningsKontruktør">BygningsKontruktør</option>
+                            <option value="BygningsKontruktør">Bygningskontruktør</option>
                             <option value="Byggetekniker">Byggetekniker</option>
                             <option value="Installatør, stærkstrøm">Installatør, stærkstrøm</option>
                         </select>
@@ -80,6 +81,12 @@
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
+                <label for="exampleFormControlTextarea1">Link til CV på Youtube</label>
+                <textarea class="form-control" rows="3" id="youtube_link" name="youtube_link"
+                    placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">{{Yt_link}}</textarea>
+            </div>
+            <div class="form-group">
+                <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">Om mig</label>
                 <textarea class="form-control" rows="3" id="om mig" name="om"
                     placeholder="Valgfri">{{Om}}</textarea>
@@ -88,7 +95,8 @@
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">IT Kompetencer</label>
                 <textarea class="form-control" rows="3" id="iT_Kompetencer" name="iT_Kompetencer"
-                    placeholder="Word, Excel">{{IT-Kompetencer}}</textarea>
+                    placeholder="Word, Excel" onkeyup="countChars2(this)">{{IT-Kompetencer}}</textarea>
+                    <p id="charNum2">255 tegn</p>
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->

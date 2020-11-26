@@ -1,0 +1,99 @@
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8">
+            <div id="loginBoxBackground">
+                <div id="redigerVirksomhedContent" class="text-center">
+                    <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
+                    <form class="text-left">
+                        <p class="text-center">Påkrævet</p><br>
+                        <div class="form-group row">
+                            <label for="virksomhedEmail" class="col-4 col-form-label">Email</label> 
+                            <div class="col-8">
+                            <input id="virksomhedEmail" readonly name="virksomhedEmail" type="email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="telefonnummer" class="col-4 col-form-label">Telefonnummer</label> 
+                            <div class="col-8">
+                            <input id="telefonnummer" name="telefonnummer" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="by" class="col-4 col-form-label">By</label> 
+                            <div class="col-8">
+                            <input id="by" name="by" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="postnummer" class="col-4 col-form-label">Postnummer</label> 
+                            <div class="col-8">
+                            <input id="postnummer" name="postnummer" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="cvr" class="col-4 col-form-label">CVR-Nummer</label> 
+                            <div class="col-8">
+                            <input id="cvr" name="cvr" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="adgangskode" class="col-4 col-form-label">Adgangskode</label> 
+                            <div class="col-8">
+                            <input id="adgangskode" name="adgangskode" type="button" class="form-control" value="Nulstil adgangskode">
+                            </div>
+                        </div>
+                        <p class="text-center">Valgfri</p><br>
+                        <div class="form-group row">
+                            <label for="navn" class="col-4 col-form-label">Firmanavn</label> 
+                            <div class="col-8">
+                            <input id="navn" name="navn" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="adresse" class="col-4 col-form-label">Adresse</label> 
+                            <div class="col-8">
+                            <input id="adresse" name="adresse" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="hjemmeside" class="col-4 col-form-label">Hjemmeside</label> 
+                            <div class="col-8">
+                            <input id="hjemmeside" name="hjemmeside" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="direktoer" class="col-4 col-form-label">Direktør</label> 
+                            <div class="col-8">
+                            <input id="direktoer" name="direktoer" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="land" class="col-4 col-form-label">Land</label> 
+                            <div class="col-8">
+                                <input id="land" name="land" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="land" class="col-4 col-form-label">Virksomhedslogo</label>
+                            <div class="col-8">
+                                <div class="custom-file">
+                                    <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input" id="CompanyLogo"> <!--onchange="updateInputLabel('logoLabel', 'CompanyLogo')"-->
+                                    <label class="custom-file-label" id="logoLabel" for="CompanyLogo">Vælg fil</label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" name="sumit" id="submit" class="gulKnap" value="Gem Ændringer">
+                    </form>
+                    <div id="cookieBox">
+                        <div id="cookieText" >
+                            <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
+                            <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

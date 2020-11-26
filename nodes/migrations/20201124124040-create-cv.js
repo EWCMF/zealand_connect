@@ -29,26 +29,29 @@ module.exports = {
       linkedIn: {
         type: Sequelize.STRING
       },
-      om_mig: {
+      yt_link: {
         type: Sequelize.STRING
+      },
+      om_mig: {
+        type: Sequelize.TEXT
       },
       iT_Kompetencer: {
         type: Sequelize.STRING
       },
       udenlandsophold_og_frivilligt_arbejde: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       erhvervserfaring: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       tidligere_uddannelse: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       hjemmeside: {
         type: Sequelize.STRING
       },
       fritidsinteresser: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       offentlig: {
         type: Sequelize.BOOLEAN

@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      CV.belongsTo(models.Student, {
+        as: 'student',
+        foreignKey: 'student_id'
+      });
     }
   };
   CV.init({
@@ -21,13 +25,14 @@ module.exports = (sequelize, DataTypes) => {
     speciale: DataTypes.STRING,
     telefon: DataTypes.INTEGER,
     linkedIn: DataTypes.STRING,
-    om_mig: DataTypes.STRING,
+    yt_link: DataTypes.STRING,
+    om_mig: DataTypes.TEXT,
     it_kompetencer: DataTypes.STRING,
-    udenlandsophold_og_frivilligt_arbejde: DataTypes.STRING,
-    erhvervserfaring: DataTypes.STRING,
-    tidligere_uddannelse: DataTypes.STRING,
+    udenlandsophold_og_frivilligt_arbejde: DataTypes.TEXT,
+    erhvervserfaring: DataTypes.TEXT,
+    tidligere_uddannelse: DataTypes.TEXT,
     hjemmeside: DataTypes.STRING,
-    fritidsinteresser: DataTypes.STRING,
+    fritidsinteresser: DataTypes.TEXT,
     offentlig: DataTypes.BOOLEAN
   }, {
     sequelize,

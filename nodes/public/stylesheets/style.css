@@ -16,7 +16,8 @@ body {
   width: 100%;
 }
 
-h1, .sidebar {
+h1,
+.sidebar {
   font-family: "Zealand Display", Arial, Helvetica, sans-serif;
   font-variant-ligatures: contextual;
   font-feature-settings: "calt";
@@ -47,7 +48,7 @@ input::placeholder {
   height: 80px;
   padding: 0px 30px;
   background-color: #faee84;
-  transform: translate(80px, 0px) rotate(90deg) ;
+  transform: translate(80px, 0px) rotate(90deg);
   transform-origin: top left;
   left: 0;
   top: 0;
@@ -63,13 +64,15 @@ input::placeholder {
   border-radius: 0;
 }
 
-.btn-success, .btn-success:hover {
+.btn-success,
+.btn-success:hover {
   background-color: #faee84;
   color: black;
   border-color: #faee84;
 }
 
-.btn-danger, .btn-danger:hover {
+.btn-danger,
+.btn-danger:hover {
   background-color: black;
   color: #faee84;
   border-color: black;
@@ -81,17 +84,17 @@ input::placeholder {
   border-color: #faee84;
 }
 
-.form-group.required > label:after {
-  content:" *";
-  color:red;
+.form-group.required>label:after {
+  content: " *";
+  color: red;
 }
 
-.CV-OffentligCheckBox{
+.CV-OffentligCheckBox {
   margin-left: 30px;
   margin-bottom: 10px;
 }
 
-.CVErrorColor{
+.CVErrorColor {
   color: red;
 }
 
@@ -135,13 +138,18 @@ input::placeholder {
 }
 
 #loginContent {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  padding: 30px 20px 30px 20px;
+  background-color: #f7f7f7;
+}
+
+#redigerVirksomhedContent {
   padding: 30px 300px 30px 300px;
   background-color: #f7f7f7;
-  min-width: 339px;
+  min-width: 678px;
 }
 
 .radioBtnBox {
@@ -160,7 +168,7 @@ input::placeholder {
 }
 
 #easjLoginKnap {
-  background-color:rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
   height: 43.75px;
   width: 320px;
   background-color: #FFF387;
@@ -170,7 +178,7 @@ input::placeholder {
 
 
 #easjLoginKnap img {
-  width: auto!important;
+  width: auto !important;
   height: 26px;
 }
 
@@ -178,18 +186,30 @@ input::placeholder {
   display: none;
 }
 
+#opretBrugerKnapVedLogin {
+  display: none;
+}
+
+#opretBrugerLabelVedLogin {
+  display: none;
+}
+
 #loginForm .form-control {
   width: 339px;
 }
+
 #virksomhedOpret {
   display: block;
 }
+
 #virksomhedOpret .form-control {
   width: 339px;
 }
+
 #uddanelse-dropdown {
   width: 100%;
 }
+
 #centerP {
   text-align: center;
   margin-top: 12px;
@@ -202,10 +222,11 @@ input::placeholder {
   align-items: center;
 
 }
+
 .google-btn {
   width: 100%;
- padding-top: 12px;
- padding-bottom: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   background-color: #fff;
   border-radius: 6px;
   border: 1px solid #0079d3;
@@ -214,18 +235,12 @@ input::placeholder {
   font-size: 18px;
 
 }
+
 .google-img {
   padding-right: 10px;
   background-color: #fff;
   width: 46px;
   height: 32px;
-}
-
-
-#tab1:active {
-}
-
-#tab2:active {
 }
 
 .radioBtnBox .radioButton {
@@ -269,28 +284,90 @@ input::placeholder {
   height: 180px;
 }
 
+#dropdownUddannelser {
+  transform: rotate(-90deg);
+  animation-name: rotateto;
+  animation-duration: 250ms;
+}
+
+#dropdownUddannelserRotated {
+  transform: rotate(0deg);
+  animation-name: rotateback;
+  animation-duration: 250ms;
+
+}
+
+@keyframes rotateto {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-90deg);
+  }
+}
+
+@keyframes rotateback {
+  from {
+    transform: rotate(-90deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+#dropdownLand {
+  transform: rotate(-90deg);
+  animation-name: rotateto;
+  animation-duration: 250ms;
+}
+
+#dropdownLandRotated {
+  transform: rotate(0deg);
+  animation-name: rotateback;
+  animation-duration: 250ms;
+}
+
 #filtrerUddannelser {
   color: black;
 }
-#forside1{
+
+#filtrerIndlandUdland {
+  color: black;
+}
+
+
+
+#forside1 {
   /* Find løsning til mobil!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-  width: 1920px; /* Make this site really wide */
-  overflow: hidden; /* Hide scrollbars */
+  width: 1920px;
+  /* Make this site really wide */
+  overflow: hidden;
+  /* Hide scrollbars */
 
 
 }
-#nv1{
+
+#nv1 {
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #faee84;
+  background-color: rgba(250, 238, 132, 0);
   margin-left: 80px;
   font-size: 21px;
+  display: none;
 }
-.navbar-nav li a{
+
+#navbarLine {
+  display: none;
+}
+
+.navbar-nav li a {
   font-weight: 400;
-    color: #000000;
+  color: #000000;
 }
-.navbar-brand{
+
+.navbar-brand {
   font-size: 36px;
   color: #000000;
 }
@@ -301,9 +378,9 @@ input::placeholder {
   padding: 75px;
 }
 
-#loginBoks h1{
-font-family: Arial, Helvetica, sans-serif;
-margin-bottom: 50px;
+#loginBoks h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 50px;
 }
 
 #gulBaggrund {
@@ -313,11 +390,11 @@ margin-bottom: 50px;
 }
 
 #logPaa {
- border: transparent;
- margin-bottom: 30px;
- padding-left: 25px;
- padding-right: 25px;
- font-family: Arial, Helvetica, sans-serif;
+  border: transparent;
+  margin-bottom: 30px;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #linksHelp {
@@ -330,18 +407,22 @@ margin-bottom: 50px;
   color: black;
   font-size: 12px;
 }
-.navbar-brand:hover{
+
+.navbar-brand:hover {
   color: #000000;
 }
 
-#cl1{
-  margin-left: 80px;
-  
+.autobreak {
+  word-break: break-all;
 }
-/* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
 
+.loginBtnBox .formError {
+  color: red;
 }
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {}
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
@@ -361,16 +442,44 @@ margin-bottom: 50px;
   #gulBaggrund {
     display: flex;
   }
+
+  #nv1 {
+    display: flex;
+  }
+
+  #navbarLine {
+    display: flex;
+    height: 1px;
+    background-color: black;
+    margin-top: 0px;
+    margin-right: 24px;
+    margin-left: 96px
+  }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-
+  #loginContent {
+    padding: 30px 200px 30px 200px;
+    min-width: 339px;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-
+  #loginContent {
+    padding: 30px 300px 30px 300px;
+    min-width: 339px;
+  }
 }
 
+/* styling for viewpost table in view_post.hbs */
+#viewpostTable tr td {
+  padding-top: 8.5px;
+  padding-bottom: 8.5px;
+  font-size: medium;
+}
 
+#companyLogo {
+  margin-top: 8.5px;
+}

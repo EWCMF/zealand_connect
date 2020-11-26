@@ -1,0 +1,19 @@
+{{#each json}}
+<div class="card mb-3">
+    <div class="row">
+        <div class="col-auto">
+            <img class="center-cropped"
+                src="\images\dummy-profile-pic.jpg">
+        </div>
+        <div class="col">
+            <div class="card-body">
+                <h5 class="card-title">{{student.fornavn}} {{student.efternavn}}</h5>
+                <h6 class="card-title">{{overskrift}}</h6>
+                <p class="card-text autobreak">{{om_mig}}</p>
+
+            </div>
+        </div>
+    </div>
+    <a href='/search-cv/{{id}}' class="stretched-link"></a>
+</div>
+{{/each}}
