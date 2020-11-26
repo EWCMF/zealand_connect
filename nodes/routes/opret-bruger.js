@@ -74,32 +74,30 @@ router.post('/create', function (req, res) {
     }
 
     // Tjek om email allerede eksisterer i databasen
-    // findUserByEmail(email).then((user) => {
-    //     if (user !== null){
-    //         error += "existingemailerror";
-    //         console.log(findUserByEmail(email));
-    //         res.redirect('/opret-bruger' + error);
-    //     }
-    //     else {
-    //         hashPassword(req.body.password).then((hashedPassword) => {
-    //             let virksomhedsBruger = {
-    //                 email: req.body.email,
-    //                 password: hashedPassword,
-    //                 tlfnr: req.body.telefonnummer,
-    //                 by: req.body.by,
-    //                 postnr: req.body.postnummer,
-    //                 cvrnr: req.body.cvr
-    //             }
-    //
-    //             createVirksomhed(virksomhedsBruger);
-    //         });
-    //
-    //         res.redirect('back');
-    //     }
-    // });
+    findUserByEmail(email).then((user) => {
+        if (user !== null){
+            error += "existingemailerror";
+            console.log(findUserByEmail(email));
+            res.redirect('/opret-bruger' + error);
+        }
+        else {
+            hashPassword(req.body.password).then((hashedPassword) => {
+                console.log(email);
+                let virksomhedsBruger = {
+                    email: email,
+                    password: hashedPassword,
+                    tlfnr: tlfnr,
+                    by: by,
+                    postnr: postnr,
+                    cvrnr: cvrnr
+                }
 
-    res.redirect('back');
+                createVirksomhed(virksomhedsBruger);
+            });
 
+            res.redirect('back');
+        }
+    });
 });
 
 router.post('/delete', function (req, res) {
