@@ -22,6 +22,8 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
 
+const hbs = require("express-handlebars");
+
 var opretBrugerRouter = require('./routes/opret-bruger');
 var loginStudentRouter = require('./routes/login-student');
 
@@ -29,8 +31,25 @@ var loginStudentRouter = require('./routes/login-student');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+
+app.engine(
+  "hbs",
+  hbs({
+    helpers: {
+      paginate: require('handlebars-paginate')
+    },
+    partialsDir: ["views/partials"],
+    extname: ".hbs",
+    layoutsDir: "views",
+    defaultLayout: "layout",
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true
+    }
+  })
+);
 app.set('view engine', 'hbs');
+
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(logger('dev'));
 app.use(express.json());
