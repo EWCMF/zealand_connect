@@ -68,7 +68,7 @@ app.use('/users', usersRouter);
 app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
-app.use('/view_post', internshipPostViewRouter);
+app.use('/internship_view', internshipPostViewRouter);
 app.use('/mit-CV', mit_CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/login', loginRouter);
