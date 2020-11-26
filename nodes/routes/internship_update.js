@@ -5,8 +5,9 @@ var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabe
 var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
 var fs = require("fs");//Bruges til grundlæggen file hændtering.
 var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
+const {emailRegex, dateRegex, cvrRegex, linkRegex} = require("../constants/regex.js")
 const db = require('../models');
-const internshippost = require('../models/internshippost');
+
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
@@ -50,12 +51,10 @@ router.post('/', function (req, res, next) {
       company_logo,
       post_document
     };
-    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
+    
     var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
     var cvrReg = /^[0-9]{8}$/
     var linkReg = /^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(\/.)?$/
-    var validPicRegex = /\.(jpg|jpeg|png|bmp|svg)$/
-    var vaildFileRegex = /\.(pdf|docx|doc|txt)$/
     var inputError = false;
 
     var cityArray = [];
