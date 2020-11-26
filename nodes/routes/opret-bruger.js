@@ -1,4 +1,5 @@
 var express = require('express');
+const { findUserByCVR } = require('../persistence/usermapping');
 var router = express.Router();
 var {reqLang} = require('../public/javascript/request');
 const createVirksomhed = require('../persistence/usermapping').createVirksomhed;
@@ -72,24 +73,28 @@ router.post('/create', function (req, res) {
         errors.ByError = "By er ugyldig";
     }
 
-    // Tjek om email allerede eksisterer i databasen
     findUserByEmail(email).then((user) => {
         if (user !== null) {
             errors.EmailError = "Email eksisterer allerede i systemet";
         } else {
-            hashPassword(req.body.password).then((hashedPassword) => {
-                console.log(email);
-                let virksomhedsBruger = {
-                    email: email,
-                    password: hashedPassword,
-                    tlfnr: tlfnr,
-                    by: by,
-                    postnr: postnr,
-                    cvrnr: cvrnr
+            findUserByCVR(cvrnr).then((boi) => {
+                if (boi !== null){
+                    errors.CVRError = "CVR-nummer findes allerede i systemet"
+                } else {
+                    hashPassword(req.body.password).then((hashedPassword) => {
+                        console.log(email);
+                        let virksomhedsBruger = {
+                            email: email,
+                            password: hashedPassword,
+                            tlfnr: tlfnr,
+                            by: by,
+                            postnr: postnr,
+                            cvrnr: cvrnr
+                        }
+                        createVirksomhed(virksomhedsBruger);
+                    });
                 }
-
-                createVirksomhed(virksomhedsBruger);
-            });
+            })
         }
     }).then(() => {
         res.redirect(
