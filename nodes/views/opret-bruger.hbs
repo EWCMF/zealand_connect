@@ -4,50 +4,108 @@
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8">
             <div id="loginBoxBackground">
-                <div id="loginContent">
+                <div id="loginContent" class="text-center">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
                     <div class="loginBtnBox">
-                        <div class="form-group" id="virksomhedOpret"> <!-- Virksomheds opret form-->
-                           <input type="email" id="virksomhedEmail" class="form-control" name="
-                                    Email" placeholder="Email"><br>
-                            <input type="email" id="virksomhedGentagEmail" class="form-control"
-                                   name="GentagEmail" placeholder="Gentag email" data-key="placeholderGentagEmail"><br>
-                            <input type="string" id="virksomhedTelefonnummer" class="form-control"
-                                   name="Telefonnummer" placeholder="Telefonnummer" data-key="placeholderTelefonnummer"><br>
-                            <input type="string" id="virksomhedBy" class="form-control"
-                                   name="By" placeholder="By" data-key="placeholderBy"><br>
-                            <input type="string" id="virksomhedPostnummer" class="form-control"
-                                   name="Postnummer" placeholder="Postnummer" data-key="placeholderPostnummer"><br>
-                            <input type="password" id="virksomhedAdgangskode" class="form-control"
-                                   name="Password" placeholder="Adgangskode" data-key="placeholderadgangskode"><br>
-                            <input type="password" id="virksomhedGentagAdgangskode" class="form-control"
-                                   name="GentagPassword" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode"><br>
-                            <input type="text" id="virksomhedCVR" class="form-control"
-                                   name="CVR" placeholder="CVR-Nummer" data-key="placeholdercvr"><br>
-                                   </div>
-                            <button class="gulKnap" data-key="opret"> Opret Bruger</button>
-
-<!--                            Midlertidige knapper til CRUD:-->
-<!--                            -->
-<!--                            <form action="/opret-bruger/create" method="post">-->
-<!--                                <button type="submit" formmethod="post">Create using POST</button>-->
-<!--                            </form>-->
-
-<!--                            <form action="/opret-bruger/delete" method="post">-->
-<!--                                <button type="submit" formmethod="post">Delete using POST</button>-->
-<!--                            </form>-->
-
-
+                        <form class="text-left" method="post" action="opret-bruger/create" id="opretBrugerForm" name="opretBrugerForm"
+                        id="virksomhedOpret">
+                                <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7 col-form-label formError" >{{emailError}} </div>
+                                </div>
+                              <div class="form-group row">
+                            <label for="email" class="col-5 col-form-label">Email</label> 
+                            <div class="col-7">
+                            <input id="email" name="email" type="text" class="form-control" placeholder="Email">
+                            </div>
                         </div>
+                                     <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7 col-form-label formError" >{{gentagEmailError}} </div>
+                                </div>
+                               <div class="form-group row">
+                            <label for="gentagEmail" class="col-5 col-form-label">Gentag email</label> 
+                            <div class="col-7">
+                            <input id="gentagEmail" name="gentagEmail" type="text" class="form-control" placeholder="Gentag email"
+                            data-key="placeholderGentagEmail">
+                            </div>
+                        </div>
+                                <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7 col-form-label formError" >{{passwordError}} </div>
+                                </div>
+                                <div class="form-group row">
+                            <label for="adgangskode" class="col-5 col-form-label">Adgangskode</label> 
+                            <div class="col-7">
+                            <input id="adgangskode" name="password" type="password" class="form-control" placeholder="Adgangskode"
+                            data-key="placeholderadgangskode">
+                            </div>
+                        </div>
+                                     <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7 col-form-label formError" >{{gentagPasswordError}} </div>
+                                </div>
+                                <div class="form-group row">
+                            <label for="gentagAdgangskode" class="col-5 col-form-label">Gentag adgangskode</label> 
+                            <div class="col-7">
+                            <input id="gentagAdgangskode" name="gentagPassword" type="password" class="form-control" 
+                            placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode">
+                            </div>
+                        </div>
+                          <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7 col-form-label formError" >{{cvrError}} </div>
+                                </div>
+                                <div class="form-group row">
+                            <label for="cvr" class="col-5 col-form-label">CVR-Nummer</label> 
+                            <div class="col-7">
+                            <input id="cvr" name="cvr" type="text" class="form-control" 
+                            placeholder="CVR-Nummer" data-key="placeholdercvr">
+                            </div>
+                        </div>
+                                <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7 col-form-label formError" >{{tlfnrError}} </div>
+                                </div>
+                                <div class="form-group row">
+                            <label for="telefonnummer" class="col-5 col-form-label">Telefonnummer</label> 
+                            <div class="col-7">
+                            <input id="telefonnummer" name="telefonnummer" type="string" class="form-control" 
+                            placeholder="telefonnummer" data-key="placeholderTelefonnummer">
+                            </div>
+                        </div>
+                                <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7 col-form-label formError" >{{byError}} </div>
+                                </div>
+                                <div class="form-group row">
+                            <label for="by" class="col-5 col-form-label">By</label> 
+                            <div class="col-7">
+                            <input id="by" name="by" type="string" class="form-control" placeholder="By"
+                             data-key="placeholderBy">
+                            </div>
+                        </div>
+                                <div class="row">
+                                    <div class="col-5"></div>
+                                    <div class="col-7 col-form-label formError" >{{postnrError}} </div>
+                                </div>
+                                <div class="form-group row">
+                            <label for="postnummer" class="col-5 col-form-label">Postnummer</label> 
+                            <div class="col-7">
+                            <input id="postnummer" name="postnummer" type="string" class="form-control" 
+                            placeholder="Postnummer" data-key="placeholderPostnummer">
+                            </div>
+                        </div>     
+                            </div>
+                            <button class="gulKnap" data-key="opret"> Opret Bruger</button>
+                        </form>
                     </div>
-                    <div id="cookieBox">
-                <div id="cookieText" >
-                    <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
-                    <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
                 </div>
-            </div>
+                <div id="cookieBox">
+                    <div id="cookieText">
+                        <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
+                        <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>

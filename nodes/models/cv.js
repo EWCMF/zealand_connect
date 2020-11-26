@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      CV.belongsTo(models.Student, {
+        as: 'student',
+        foreignKey: 'student_id'
+      });
     }
   };
   CV.init({

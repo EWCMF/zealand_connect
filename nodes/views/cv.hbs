@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row mt-4 mb-4">
         <div class="col-2">
-            <img class="img-thumbnail border-0" src="/images/facebook-default-no-profile-pic.jpg" alt="PROFILBILLEDE">
+            <img class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
         </div>
         <div class="col-1">
             <div class="col">
@@ -28,7 +28,7 @@
         <div class="col-7">
             <div class="col">
                 <h2 class="mb-3">
-                    Navn Navnesen
+                    {{json.student.fornavn}} {{json.student.efternavn}}
                 </h2>
                 <h6 class="mb-3">
                     <a href="mailto:{{json.email}}">{{json.email}}</a>

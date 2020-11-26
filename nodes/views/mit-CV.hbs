@@ -7,8 +7,9 @@
         <div class="form-group required">
             <label for="exampleFormControlInput1">Overskrift</label>
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
-                placeholder="Stilling eller Status">{{Overskrift}}</textarea>
-                <p id="OverskriftError" class="CVErrorColor" hidden="true">Skal udfyldes</p> 
+                placeholder="Stilling eller Status" onkeyup="countChars(this)">{{Overskrift}}</textarea>
+                <p id="charNum">255 tegn</p>
+            <p id="OverskriftError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
         </div>
         <!-- Uddannelse med dropdown -->
         <div class="form-group">
@@ -94,7 +95,8 @@
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">IT Kompetencer</label>
                 <textarea class="form-control" rows="3" id="iT_Kompetencer" name="iT_Kompetencer"
-                    placeholder="Word, Excel">{{IT-Kompetencer}}</textarea>
+                    placeholder="Word, Excel" onkeyup="countChars2(this)">{{IT-Kompetencer}}</textarea>
+                    <p id="charNum2">255 tegn</p>
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
