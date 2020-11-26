@@ -29,10 +29,13 @@ router.post('/create', function (req, res) {
     let email = req.body.email;
     let gentagEmail = req.body.gentagEmail;
     let password = req.body.password;
+    let gentagPassword = req.body.gentagPassword;
     let tlfnr = req.body.telefonnummer;
     let by = req.body.by;
     let postnr = req.body.postnummer;
     let cvrnr = req.body.cvr;
+
+    console.log(gentagPassword);
 
     let errors = {
         EmailError: "",
@@ -43,9 +46,6 @@ router.post('/create', function (req, res) {
         PostnrError: "",
     }
 
-    // Grundform for fejlbeskeden
-    let error = "?error=";
-
     if (!validateEmail(email)) {
         errors.EmailError = "Email er ugyldig";
     } else if (!checkForIdenticals(email, gentagEmail)) {
@@ -54,6 +54,8 @@ router.post('/create', function (req, res) {
 
     if (!validatePasswordLength(password)) {
         errors.PasswordError = "Adgangskode skal være mellem 8 og 16 tegn";
+    } else if (!checkForIdenticals(password, gentagPassword)) {
+        errors.PasswordError = "Passwords er ikke ens";
     }
 
     if (!validateCVR(cvrnr)) {
