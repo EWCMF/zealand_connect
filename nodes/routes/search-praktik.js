@@ -7,7 +7,6 @@ var formidable = require("formidable");
 const limit = 5;
 const { Op } = require('sequelize');
 
-
 router.get('/', async function (req, res, next) {
     
     var page;
@@ -17,7 +16,7 @@ router.get('/', async function (req, res, next) {
         offset = 0;
     } else {
         page = req.query.page
-        offset = (page - 1) * limit;
+        offset = page * limit;
     }
 
     const udd = await db.Uddannelser.findAll({
@@ -29,24 +28,26 @@ router.get('/', async function (req, res, next) {
     const {
         count,
         rows
-    } = await db.CV.findAndCountAll({
+    } = await db.InternshipPost.findAndCountAll({
         limit: limit,
         raw: true,
         nest: true,
         offset: offset,
         order: [
             ['updatedAt', 'DESC']
-        ],
-        include: {
-            model: db.Student,
-            as: 'student'
-        }
+        ]
     });
 
     let pageCount = Math.ceil(count / limit);
-    let withPages = pageCount > 1 ? true : false;
+    let withPages = pageCount > 1  ? true : false;
 
-    res.render('search_cv', {
+    for (let index = 0; index < rows.length; index++) {
+        const element = rows[index];
+        element['post_start_date'] = element['post_start_date'].substring(0, 10);
+        element['post_end_date'] = element['post_end_date'].substring(0, 10);        
+    }
+
+    res.render('search_praktik', {
         json: rows,
         resultater: count,
         udd: udd,
@@ -65,10 +66,10 @@ router.post('/query', function (req, res) {
     formData.parse(req, async function (error, fields, files) {
     
         var where = {}
-        var uddannelse = {
+        var education = {
             [Op.or]: []
         };
-        var sprog = {
+        var country = {
             [Op.or]: []
         };
 
@@ -76,37 +77,37 @@ router.post('/query', function (req, res) {
             const element = key + "";
             if (element.includes("udd")) {
 
-                uddannelse[Op.or].push(element.substring(3));
+                education[Op.or].push(element.substring(3));
             }
 
             if (element.includes('indland')) {
 
-                sprog[Op.or].push(
+                country[Op.or].push(
                     'dansk'
                 );
-                sprog[Op.or].push(
+                country[Op.or].push(
                     'Dansk'
                 )
             }
             
             if (element.includes('udland')) {
                 
-                sprog[Op.or].push({
+                country[Op.or].push({
                     [Op.not]: 'dansk'
                 })
 
-                sprog[Op.or].push({
+                country[Op.or].push({
                     [Op.not]: 'Dansk'
                 })
             }
         }
 
         where = {
-            uddannelse,
-            sprog
+            education,
+            country
         }
 
-        var page = 1;
+        var page = parseInt(fields.page);
         var offset;
         
         if (page == 1) {
@@ -118,7 +119,7 @@ router.post('/query', function (req, res) {
         const {
             count,
             rows
-        } = await db.CV.findAndCountAll({
+        } = await db.InternshipPost.findAndCountAll({
             limit: limit,
             raw: true,
             nest: true,
@@ -127,13 +128,15 @@ router.post('/query', function (req, res) {
                 [fields.sort, fields.order]
             ],
             where,
-            include: {
-                model: db.Student,
-                as: 'student'
-            }
         });
 
         var item = [count];
+
+        for (let index = 0; index < rows.length; index++) {
+            const element = rows[index];
+            element['post_start_date'] = element['post_start_date'].substring(0, 10);
+            element['post_end_date'] = element['post_end_date'].substring(0, 10);        
+        }
 
         fs.readFileAsync = function(filename) {
             return new Promise(function(resolve, reject) {
@@ -150,7 +153,7 @@ router.post('/query', function (req, res) {
             return fs.readFileAsync(filename, 'utf8');
         }
 
-        getFile('views\\search-cv-card.hbs').then((data) => {
+        getFile('views\\search-praktik-card.hbs').then((data) => {
             let template = hbs.compile(data + '');
             let html = template({json: rows});
             item.push(html);
@@ -160,7 +163,8 @@ router.post('/query', function (req, res) {
                 let template = hbs.compile(data + '');
                 
                 let pageCount = Math.ceil(count / limit);
-                let withPages = pageCount == 1 ? true : false;
+                
+                let withPages = pageCount > 1 ? true : false;
                 
                 let html = template({
                     pagination: {
@@ -177,47 +181,47 @@ router.post('/query', function (req, res) {
     });
 });
 
-router.get('/:id', function (req, res) {
-    let id = req.params.id
+// router.get('/:id', function (req, res) {
+//     let id = req.params.id
 
-    db.CV.findOne({
-        raw: true,
-        nest: true,
-        where: {
-            id: parseInt(id)
-        },
-        include: {
-            model: db.Student,
-            as: 'student'
-        }
-    }).then((cv) => {
-        console.log(cv);
+//     db.CV.findOne({
+//         raw: true,
+//         nest: true,
+//         where: {
+//             id: parseInt(id)
+//         },
+//         include: {
+//             model: db.Student,
+//             as: 'student'
+//         }
+//     }).then((cv) => {
+//         console.log(cv);
 
-        if (cv.hjemmeside.includes("://")) {
-            console.log(cv.hjemmeside.indexOf("://") + 3)
-            cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
-            //console.log(cv.linkedIn);
-        }
+//         if (cv.hjemmeside.includes("://")) {
+//             console.log(cv.hjemmeside.indexOf("://") + 3)
+//             cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
+//             //console.log(cv.linkedIn);
+//         }
 
-        if (cv.linkedIn.includes("://")) {
-            console.log(cv.linkedIn.indexOf("://") + 3)
-            cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
-            //console.log(cv.linkedIn);
-        }
+//         if (cv.linkedIn.includes("://")) {
+//             console.log(cv.linkedIn.indexOf("://") + 3)
+//             cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
+//             //console.log(cv.linkedIn);
+//         }
 
-        if (cv.yt_link.includes("://")) {
-            console.log(cv.yt_link.indexOf("://")  + 3)
-            cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://")  + 3);
-            //console.log(cv.linkedIn);
-        }
+//         if (cv.yt_link.includes("://")) {
+//             console.log(cv.yt_link.indexOf("://")  + 3)
+//             cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://")  + 3);
+//             //console.log(cv.linkedIn);
+//         }
 
-        res.render('cv', {
-            json: cv
-        });
+//         res.render('cv', {
+//             json: cv
+//         });
       
-    });
+//     });
 
-});
+// });
 
 
 module.exports = router;

@@ -1,9 +1,4 @@
-const regex = require('../constants/regex');
-
-const emailRegex = regex.emailRegex;
-const cvrRegex = regex.cvrRegex;
-const phoneRegex = regex.phoneRegex;
-const cityRegex = regex.cityRegex;
+const { emailRegex, cvrRegex, phoneRegex, cityRegex } = require('../constants/regex');
 
 // Email skal følge et specifik format givet ved regex
 function validateEmail(email){

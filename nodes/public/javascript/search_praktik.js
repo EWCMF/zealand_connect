@@ -5,6 +5,7 @@ var nextPage;
 
 function changePage(page) {
     nextPage = page;
+    console.log(nextPage);
     var form = document.getElementById('filterForm');
     submitForm(form);
 }
@@ -12,15 +13,15 @@ function changePage(page) {
 function changeSort(clicked, value) {
     document.getElementById("dropdownButton").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton").value = value;
-    var form = document.getElementById('filterForm');
-    submitForm(form);
+    // var form = document.getElementById('filterForm');
+    // submitForm(form);
 }
 
 function changeOrder(clicked, value) {
     document.getElementById("dropdownButton2").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton2").value = value;
-    var form = document.getElementById('filterForm');
-    submitForm(form);
+    // var form = document.getElementById('filterForm');
+    // submitForm(form);
 }
 
 function addFilter(type, id) {

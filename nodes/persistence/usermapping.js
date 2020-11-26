@@ -1,32 +1,32 @@
 const models = require("../models");
 
-async function findUserByEmail(email){
+async function findUserByEmail(email) {
     let user = null;
     return new Promise(resolve => {
-        console.log("---finding user by email: "+email+"---");
-        models.Student.findOne({ where: { email: email } }).then((student) => {
+        console.log("---finding user by email: " + email + "---");
+        models.Student.findOne({where: {email: email}}).then((student) => {
             if (student === null) {
                 console.log('en student med denne email findes ikke!');
             }
-            if(student instanceof models.Student) {
+            if (student instanceof models.Student) {
                 console.log("---fandt en Student med mailen:---");
                 //console.log(user instanceof models.User); // true
                 //console.log(user.username); // 'My Title'
                 user = student
             }
-        }).then(()=>{
-            models.Virksomhed.findOne({ where: { email: email } }).then((virksomhed) => {
+        }).then(() => {
+            models.Virksomhed.findOne({where: {email: email}}).then((virksomhed) => {
                 if (virksomhed === null) {
                     console.log('en virksomhed med denne email findes ikke!');
                     //resolve(null);
                 }
-                if(virksomhed instanceof models.Virksomhed) {
+                if (virksomhed instanceof models.Virksomhed) {
                     console.log("---fandt en Virksomhed med mailen:---");
                     //console.log(user instanceof models.User); // true
                     //console.log(user.username); // 'My Title'
                     user = virksomhed;
-               }
-               resolve(user);
+                }
+                resolve(user);
             });
         })
     })
@@ -49,18 +49,24 @@ async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, di
     })
 }
 
-async function createVirksomhed(email){
+async function createVirksomhed(virkObj) {
     try {
-        const virksomhed = await models.Virksomhed.create({email: email});
-        console.log("A virksomhed was created");
-        console.log(virksomhed instanceof models.Virksomhed);
-        console.log(virksomhed.email);
+        const virksomhed = await models.Virksomhed.create(
+            {
+                email: virkObj.email,
+                tlfnr: virkObj.tlfnr,
+                password: virkObj.password,
+                cvrnr: virkObj.cvrnr,
+                by: virkObj.by,
+                postnr: virkObj.postnr
+            }
+        );
     } catch (e) {
         console.log(e);
     }
 }
 
-async function deleteVirksomhed(email){
+async function deleteVirksomhed(email) {
     try {
         await models.Virksomhed.destroy({
             where: {
@@ -74,27 +80,27 @@ async function deleteVirksomhed(email){
 }
 
 
-async function findUserByCVR(CVR){
+async function findUserByCVR(CVR) {
     let user = null;
     return new Promise(resolve => {
-        console.log("---finding user by CVR: "+CVR+"---");
-            models.Virksomhed.findOne({ where: { cvrnr: CVR } }).then((virksomhed) => {
-                if (virksomhed === null) {
-                    console.log('en virksomhed med dette CVR findes ikke!');
-                    //resolve(null);
-                }
-                if(virksomhed instanceof models.Virksomhed) {
-                    console.log("---i found the Virksomhed:---");
-                    //console.log(user instanceof models.User); // true
-                    //console.log(user.username); // 'My Title'
-                    user = virksomhed;
-               }
-               resolve(user);
-            });
-        })
-    }
+        console.log("---finding user by CVR: " + CVR + "---");
+        models.Virksomhed.findOne({where: {cvrnr: CVR}}).then((virksomhed) => {
+            if (virksomhed === null) {
+                console.log('en virksomhed med dette CVR findes ikke!');
+                //resolve(null);
+            }
+            if (virksomhed instanceof models.Virksomhed) {
+                console.log("---i found the Virksomhed:---");
+                //console.log(user instanceof models.User); // true
+                //console.log(user.username); // 'My Title'
+                user = virksomhed;
+            }
+            resolve(user);
+        });
+    })
+}
 
- module.exports = {
+module.exports = {
     findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed,
-     editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR
+    editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR
 }
