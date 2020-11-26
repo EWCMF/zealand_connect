@@ -35,3 +35,10 @@ describe('GET /login', function () {
         request(app).get('/login').expect(200, done);
     })
 });
+
+describe('GET /opret-bruger', function() {
+    it('respond with status code OK 200', function (done) {
+        request(app).get('/opret-bruger').expect(200, done);
+    })
+});
+
