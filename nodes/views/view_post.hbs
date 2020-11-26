@@ -1,0 +1,138 @@
+<div class="container-fluid">
+
+    <div class="row mt-4 mb-4">
+        <div class="col-2">
+            <img class="img-thumbnail border-0" id="companyLogo" src="https://www.shopinimizaj.com/frontend/web/images/no_images.png"
+                alt="rlogo">
+        </div>
+
+        <div class="col-10" >
+            <table id="viewpostTable">
+                <tr  style=" padding: 5px">
+                    <td colspan="2">
+                        <h2>{{rtitle}}</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Uddannelse: </td>
+                    <td id=educationContainer>{{reducation}}</td>
+                </tr>
+                <tr>
+                    <td>Land:</td>
+                    <td id=countryContainer>{{rcountry}}</td>
+                </tr>
+                <tr id="regionParent" hidden = "true">
+                    <td>Region:</td>
+                    <td id="regionContainer">{{rregion}}</td>
+                </tr>
+                <tr  id="cityParent" hidden = "true"> 
+                    <td>By:</label></td>
+                    <td>{{rcity}}</td>
+                </tr>
+                <tr id="postcodeParent" hidden = "true">
+                    <td>Postnummer:</td>
+                    <td>{{rpostcode}}</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td id="emailContainer"><a href="mailto:{{remail}}">{{remail}}</a></td>
+                </tr>
+                <tr>
+                    <td>Kontaktperson:</td>
+                    <td id="contactContainer">{{rcontact}}</td>
+                </tr>
+                <tr>
+                    <td>CVR Nummer:</td>
+                    <td id="cvrContainer">{{rcvr}}</td>
+                </tr>
+                <tr>
+                    <td>Hjemmeside:</td>
+                    <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
+                </tr>
+                <tr hidden="true" id="docContainer">
+                    <td>Vedhæftet fil:</td>
+                    <td id="docContainer2"><a href="/uploads/{{rdoc}}" target="_Blank">{{rdoc}}</a></td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Annoncetekst:
+            </h4>
+            <p>
+                {{{rtext}}}
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    function updateLabel() {
+        var educationId = {{ reducation }};
+        var countryId = {{ rcountry }};
+        var regionId = {{ rregion }};
+        var docName = "{{rdoc}}";
+        var logoname = "{{rlogo}}";
+        /***** vi bruger switches fordi det er mere resource venligt *****/
+        switch (educationId) {
+        case 1:
+            document.getElementById('educationContainer').innerHTML = 'Handelsøkonom';
+            break;
+        case 2:
+            document.getElementById('educationContainer').innerHTML = 'Datamatiker';
+            break;
+        case 3:
+            document.getElementById('educationContainer').innerHTML = 'Bygningskonstruktør';
+            break;
+        }
+
+        switch(countryId){
+            case 1:
+                document.getElementById('countryContainer').innerHTML = 'Danmark';
+                document.getElementById('regionParent').hidden = false
+                document.getElementById('cityParent').hidden = false
+                document.getElementById('postcodeParent').hidden = false
+                /***** Her får vi regionerne ud hvis countryId = 1 *****/
+                switch(regionId){
+                case 1:
+                document.getElementById('regionContainer').innerHTML = 'Hovedstaden';
+                break;
+                case 2:
+                document.getElementById('regionContainer').innerHTML = 'Midtjylland';
+                break;
+                case 3:
+                document.getElementById('regionContainer').innerHTML = 'Nordjylland';
+                break;
+                case 4:
+                document.getElementById('regionContainer').innerHTML = 'Sjælland';
+                break;
+                case 5:
+                document.getElementById('regionContainer').innerHTML = 'Syddanmark';
+                /***** Her slutter Region Switch *****/
+                break;
+
+        }
+                break;
+            case 2:
+                document.getElementById('countryContainer').innerHTML = 'Tyskland';
+                break;
+            case 3:
+                document.getElementById('countryContainer').innerHTML = 'Sverige';
+                break;
+            case 4:
+                document.getElementById('countryContainer').innerHTML = 'Udlandet';
+                break;
+        }
+        
+
+        if (docName != ""){
+            document.getElementById("docContainer").hidden = false;
+        }
+        if (logoname != ""){
+            document.getElementById("companyLogo").src = '/uploads/'+logoname;
+        }
+    }
+    updateLabel();
+</script>

@@ -5,10 +5,20 @@ var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
 const limit = 10;
-const { Op } = require('sequelize')
+const { Op } = require('sequelize');
 
 
 router.get('/', async function (req, res, next) {
+    
+    var page;
+    var offset;
+    if (req.query.page == null) {
+        page = 1
+        offset = 0;
+    } else {
+        page = req.query.page
+        offset = page * 5;
+    }
 
     const udd = await db.Uddannelser.findAll({
         order: [
@@ -20,17 +30,31 @@ router.get('/', async function (req, res, next) {
         count,
         rows
     } = await db.CV.findAndCountAll({
-        limit: 10,
+        limit: 5,
         raw: true,
+        nest: true,
+        offset: offset,
         order: [
             ['updatedAt', 'DESC']
         ],
+        include: {
+            model: db.Student,
+            as: 'student'
+        }
     });
+
+    let pageCount = Math.floor(count / 5);
+    let withPages = pageCount == 1 ? true : false;
 
     res.render('search_cv', {
         json: rows,
         resultater: count,
-        udd: udd
+        udd: udd,
+        pagination: {
+            page: page,
+            pageCount: pageCount
+        },
+        withPages
     });
 
 });
@@ -39,44 +63,115 @@ router.post('/query', function (req, res) {
 
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
-        console.log(fields);
-        var filter = [];
+    
         var where = {}
+        var uddannelse = {
+            [Op.or]: []
+        };
+        var sprog = {
+            [Op.or]: []
+        };
+
         for (var key in fields) {
             const element = key + "";
             if (element.includes("udd")) {
-                let obj = {
-                    uddannelse: element.substring(3)
-                }
-                filter.push(obj);
+
+                uddannelse[Op.or].push(element.substring(3));
             }
-            if (filter.length != 0) {
-                where = {
-                    [Op.or]: filter
-                }
+
+            if (element.includes('indland')) {
+
+                sprog[Op.or].push(
+                    'dansk'
+                );
+                sprog[Op.or].push(
+                    'Dansk'
+                )
+            }
+            
+            if (element.includes('udland')) {
+                
+                sprog[Op.or].push({
+                    [Op.not]: 'dansk'
+                })
+
+                sprog[Op.or].push({
+                    [Op.not]: 'Dansk'
+                })
             }
         }
+
+        where = {
+            uddannelse,
+            sprog
+        }
+
+        var page = 1;
+        var offset;
         
-        console.log(filter);
+        if (page == 1) {
+            offset = 0
+        } else {
+            offset = page * 5;
+        }
 
         const {
             count,
             rows
         } = await db.CV.findAndCountAll({
-            limit: 10,
+            limit: 5,
             raw: true,
+            nest: true,
+            offset: offset,
             order: [
                 [fields.sort, fields.order]
             ],
-            where
+            where,
+            include: {
+                model: db.Student,
+                as: 'student'
+            }
         });
 
-        fs.readFile('views\\cv-card-template.hbs', function(err, data) {
-            if (err) throw err;
-            var template = hbs.compile(data + '');
-            var html = template({json: rows});
-            var item = [count, html];
-            res.send(item);
+        var item = [count];
+
+        fs.readFileAsync = function(filename) {
+            return new Promise(function(resolve, reject) {
+                fs.readFile(filename, function(err, data){
+                    if (err) 
+                        reject(err); 
+                    else
+                        resolve(data);
+                });
+            });
+        };
+
+        function getFile(filename) {
+            return fs.readFileAsync(filename, 'utf8');
+        }
+
+        getFile('views\\search-cv-card.hbs').then((data) => {
+            let template = hbs.compile(data + '');
+            let html = template({json: rows});
+            item.push(html);
+
+            getFile('views\\search-cv-pagination-template.hbs').then((data) => {
+                let template = hbs.compile(data + '');
+                
+                let pageCount = Math.floor(count / 5);
+                let withPages = pageCount == 1 ? true : false;
+                
+                let html = template({
+                    pagination: {
+                        page: page,
+                        pageCount: pageCount
+                    },
+                    withPages
+                });
+            
+                item.push(html);
+                res.send(item);
+            });
         })
     });
 });
@@ -86,8 +181,13 @@ router.get('/:id', function (req, res) {
 
     db.CV.findOne({
         raw: true,
+        nest: true,
         where: {
             id: parseInt(id)
+        },
+        include: {
+            model: db.Student,
+            as: 'student'
         }
     }).then((cv) => {
         console.log(cv);
@@ -110,7 +210,9 @@ router.get('/:id', function (req, res) {
             //console.log(cv.linkedIn);
         }
 
-        res.render('cv', {json: cv});
+        res.render('cv', {
+            json: cv
+        });
       
     });
 

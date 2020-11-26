@@ -14,9 +14,13 @@
                         <div class="panel-heading">
                             <h6 class="panel-title mb-2">
                                 <a id="filtrerUddannelser" class="text-decoration-none" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse1">
+                                    data-parent="#accordion" href="#collapse1" onclick='onDropdownUddannelserClick()'>
                                     Uddannelser
                                 </a>
+                                <button id="dropdownUddannelser" class="btn btn-sm dropdown-toggle p-0 m-0">
+
+                                </button>
+
                             </h6>
                         </div>
 
@@ -27,10 +31,44 @@
                                     <label class="form-check-label flex-fill">
                                         {{name}}
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="udd{{name}}" onclick="addFilter('udd', '{{id}}')">
+                                    <input class="align-self-center" type="checkbox" name="udd{{name}}"
+                                        onclick="addFilter('udd', '{{id}}')">
                                 </li>
                                 {{/each}}
                             </ul>
+                        </div>
+                        <div class="panel-heading">
+                            <h6 class="panel-title mb-2">
+                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse"
+                                    data-parent="#accordion" href="#collapse2" onclick='onDropdownLandClick()'>
+                                    Land
+                                </a>
+                                <button id="dropdownLand" class="btn btn-sm dropdown-toggle p-0 m-0">
+
+                                </button>
+                            </h6>
+                        </div>
+
+                        <div id="collapse2" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Indland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="indland"
+                                        onclick="addFilter('lnd', 'Indland')">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Udland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="udland"
+                                        onclick="addFilter('lnd','Udland')">
+                                </li>
+
+                            </ul>
+
+
                         </div>
                     </div>
                 </div>
@@ -53,7 +91,8 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" id="senestOpdateret" onclick="changeSort(this, 'updatedAt')">Senest
                             opdateret</a>
-                        <a class="dropdown-item" id="overskrift" onclick="changeSort(this, 'overskrift')">Stilling/status</a>
+                        <a class="dropdown-item" id="overskrift"
+                            onclick="changeSort(this, 'overskrift')">Stilling/status</a>
                     </div>
                 </div>
                 <label class="mb-0 mr-1 align-self-center">
@@ -77,13 +116,13 @@
                     <div class="row">
                         <div class="col-auto">
                             <img class="center-cropped"
-                                src="https://4.bp.blogspot.com/-zsbDeAUd8aY/US7F0ta5d9I/AAAAAAAAEKY/UL2AAhHj6J8/s1600/facebook-default-no-profile-pic.jpg">
+                                src="\images\dummy-profile-pic.jpg">
                         </div>
                         <div class="col">
                             <div class="card-body">
-                                <h5 class="card-title">{{overskrift}}</h5>
-                                <h6 class="card-title">{{email}}</h6>
-                                    <p class="card-text autobreak">{{om_mig}}</p>
+                                <h5 class="card-title">{{student.fornavn}} {{student.efternavn}}</h5>
+                                <h6 class="card-title">{{overskrift}}</h6>
+                                <p class="card-text autobreak">{{om_mig}}</p>
 
                             </div>
                         </div>
@@ -94,14 +133,23 @@
             </div>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
+    
+    <div class="row d-flex justify-content-center" id="pagination">
+        {{#if withPages}}
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item {{pageItm1}}"><a class="page-link" href="/search-cv?page={{pageJson.one}}" onclick="changePage({{pageJson.one}})">{{pageJson.one}}</a></li>
-                <li class="page-item {{pageItm2}}"><a class="page-link" href="/search-cv?page={{pageJson.two}}" onclick="changePage({{pageJson.two}})">{{pageJson.two}}</a></li>
-                <li class="page-item"><a class="page-link" href="/search-cv?page={{pageJson.three}}" onclick="changePage({{pageJson.three}})">{{pageJson.three}}</a></li>
+                {{#paginate pagination type="previous"}}
+                <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#">Forrige</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="middle" limit="3"}}
+                <li {{#if active}} class="page-item active" {{/if}} id="page-middle" value="{{n}}" class="page-item"><a class="page-link" href="#">{{n}}</a></li>
+                {{/paginate}}
+                {{#paginate pagination type="next"}}
+                <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#">Næste</a></li>
+                {{/paginate}}
             </ul>
         </nav>
+        {{/if}}
     </div>
 </div>
 <script src="/javascript/search_cv.js"></script>

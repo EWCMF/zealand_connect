@@ -19,7 +19,6 @@
     </head>
 
 <body>
-
     <nav class="navbar navbar navbar-expand-lg container-fluid" id="nv1">
         <a class="navbar-brand" href="/">ZealandConnect</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -29,9 +28,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">Profil<span class="sr-only">(current)</span></a>
-                </li>
+                
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -81,6 +78,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="opretbruger" href="/opret-bruger">Opret Bruger</a>
+                    <a class="nav-link" id="profil" href="/profil">Profil<span class="sr-only">(current)</span></a>
+                
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="login" href="/login">Log ind</a>
@@ -94,7 +93,7 @@
             </form> -->
         </div>
     </nav>
-    <hr style="height:1px;background-color:black;margin-top:0px;margin-right:24px;margin-left:96px">
+    <hr id="navbarLine">
 
     <!-- TODO: navigation -->
     <div class="sidebar">
@@ -132,10 +131,12 @@
                         document.getElementById("login").style.display='block';
                         document.getElementById("logud").style.display='none';
                         document.getElementById("opretbruger").style.display='block';
+                        document.getElementById("profil").style.display='none';
                     } else {
                         document.getElementById("login").style.display='none';
                         document.getElementById("logud").style.display='block';
                         document.getElementById("opretbruger").style.display='none';
+                        document.getElementById("profil").style.display='block';
                     }
                 }
             };

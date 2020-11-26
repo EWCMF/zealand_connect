@@ -1,6 +1,10 @@
-function changePage(page) {
-    pageAsInt = parseInt(page);
+document.getElementById("dropdownUddannelser").disabled = !0;
+document.getElementById("dropdownLand").disabled = !0;
 
+function changePage(page) {
+    document.getElementById("page-middle").value = page;
+    var form = document.getElementById('filterForm');
+    submitForm(form);
 }
 
 function changeSort(clicked, value) {
@@ -52,13 +56,53 @@ function submitForm(formElement) {
     var order = document.getElementById("dropdownButton2").value;
     formData.append("order", order);
 
+    var page = document.getElementById("page-middle");
+
+    if (page != null) {
+        page = page.value;
+    } else {
+        page = '1'
+    }
+
+    formData.append("page", page);
+
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
         var res = JSON.parse(xhr.responseText);
         document.getElementById('results').innerHTML = res[0] + " resultater";
         document.getElementById('cards').innerHTML = res[1];
+        document.getElementById('pagination').innerHTML = res[2];
     }
     xhr.open(formElement.method, formElement.getAttribute("action"));
     xhr.send(formData);
     return false;
+}
+
+function onDropdownUddannelserClick() {
+    let nonRotate = document.getElementById("dropdownUddannelser");
+    console.log(nonRotate);
+    let rotated = document.getElementById("dropdownUddannelserRotated");
+    console.log(rotated);
+    if (nonRotate == null) {
+        rotated.id = rotated.id.toString().replace("Rotated", "");
+    }
+    
+    if (rotated == null) {
+        nonRotate.id += "Rotated";
+    }
+
+}
+
+function onDropdownLandClick() {
+    let nonRotate = document.getElementById("dropdownLand");
+    console.log(nonRotate);
+    let rotated = document.getElementById("dropdownLandRotated");
+    console.log(rotated);
+    if (nonRotate == null) {
+        rotated.id = rotated.id.toString().replace("Rotated", "");
+    }
+    
+    if (rotated == null) {
+        nonRotate.id += "Rotated";
+    }
 }
