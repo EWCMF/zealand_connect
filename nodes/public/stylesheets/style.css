@@ -113,6 +113,30 @@ input::placeholder {
   justify-content: center;
   align-items: center;
 }
+#virksomhedslogodiv {
+  height: 16rem; 
+  width: 16rem;
+  object-fit: scale-down;
+  border-radius: 8px; 
+}
+
+#logodiv {
+  padding-top: 5rem;
+  height: 25rem;
+}
+
+#virksomhedsbeskrivelse {
+  width: 16rem;
+  height: 8rem;
+}
+#dokumenterhertil,a {
+  text-decoration: underline;
+  color: #000000;
+  font-weight: bold;
+  padding-bottom: 1rem;
+  
+
+}
 
 #zealandLogo {
   margin-top: 15px;
@@ -404,7 +428,11 @@ input::placeholder {
 
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+  .card-columns {
+    column-count: 1;
+  }
+}
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
@@ -415,6 +443,10 @@ input::placeholder {
   .container-fluid {
     width: calc(100% - 80px);
     margin-left: 80px;
+  }
+
+  .card-columns {
+    column-count: 2;
   }
 
   #loginBoxBackground {
@@ -437,6 +469,7 @@ input::placeholder {
     margin-right: 24px;
     margin-left: 96px
   }
+  
 }
 
 /* Large devices (desktops, 992px and up) */

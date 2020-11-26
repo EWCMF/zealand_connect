@@ -68,7 +68,22 @@ function getLangdata() {
                 "Procesteknolog": "Process technologist",
                 "Produktionsteknolog": "Production technologist",
                 "Serviceøkonom": "Service economist",
-                "VVSInstallatør": "Plumbing installer"
+                "VVSInstallatør": "Plumbing installer",
+                "dokumenter": "Documents",
+                "stilling": "Position",
+                "efternavn": "Last Name",
+                "navn": "First name",
+                "kontaktperson": "Contact person",
+                "beskrivelse": "Description",
+                "CVR": "CVR-Number",
+                "land": "Country",
+                "addresse": "Address",
+                "postnummerogby": "Zip code and city",
+                "virksomhedsemail": "Corporation email",
+                "virksomhedsnavn": "Corporation name",
+                "virksomhedsoplysninger": "Corporation informations"
+
+
             }
         }
     }

@@ -4,12 +4,13 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const models = require("../models");
 const validation = require("../validation/input-validation");
+var { reqLang } = require('../public/javascript/request');
 
 router.get('/', function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
         if (user instanceof models.Virksomhed) {
             //TODO: Her skal der være virksomhedsprofil
-            res.send("HER SKAL DER VÆRE VIRKSOMHEDSPROFIL");
+            res.render('visprofil', {language: reqLang(req,res)})
         } else if (user instanceof models.Student) {
             res.render("studentprofil");
         }
