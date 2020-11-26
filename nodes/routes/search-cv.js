@@ -124,7 +124,11 @@ router.get('/:id/Create_pdf', function (req, res, next) {
   var pdf = require('pdfkit');
   var fs = require('fs');
   
-  var myDoc = new pdf;
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var myDoc = new pdf ({
+    bufferPages:true
+  });
   var pdfStream = fs.createWriteStream('PDF/Test.pdf')
   myDoc.pipe(pdfStream);
   console.log(id);
@@ -135,35 +139,348 @@ router.get('/:id/Create_pdf', function (req, res, next) {
         id: parseInt(id)
     }
 }).then((cv) => {
+    var height = 12;
+    // om mig ekstra højde
+    var om_mig_characters = cv.om_mig.length;
+    console.log('antal characters ' + om_mig_characters)
+    var ekstra_height_om_mig = 0;
+    while(om_mig_characters > 100) {
+        ekstra_height_om_mig = ekstra_height_om_mig + height;
+        om_mig_characters = om_mig_characters - 100
+    }
+
+    // overskrift ekstra højde
+    var overskrift_characters = cv.overskrift.length;
+    console.log('antal characters ' + overskrift_characters)
+    var ekstra_height_overskrift = 0;
+    while(overskrift_characters > 100) {
+        ekstra_height_overskrift = ekstra_height_overskrift + height;
+        overskrift_characters = overskrift_characters - 100;
+    }
+
+    // erhvervserfaring ekstra højde
+    var erhvervserfaring_characters = cv.erhvervserfaring.length;
+    console.log('antal characters ' + erhvervserfaring_characters)
+    var ekstra_height_erhvervserfaring = 0;
+    while(erhvervserfaring_characters > 100) {
+        ekstra_height_erhvervserfaring = ekstra_height_erhvervserfaring + height;
+        erhvervserfaring_characters = erhvervserfaring_characters - 100;
+    }
+
+    // uddannelse ekstra højde mest til testing af responsiv
+    var uddannelse_characters = cv.uddannelse.length;
+    console.log('antal characters ' + uddannelse_characters)
+    var ekstra_height_uddannelse = 0;
+    while(uddannelse_characters > 100) {
+        ekstra_height_uddannelse = ekstra_height_uddannelse + height;
+        uddannelse_characters = uddannelse_characters - 100;
+    }
+
+    //Speciale ekstra højde
+    var speciale_characters = cv.speciale.length;
+    console.log('antal characters ' + speciale_characters)
+    var ekstra_height_speciale = 0;
+    while(speciale_characters > 100) {
+        ekstra_height_speciale = ekstra_height_speciale + height;
+        speciale_characters = speciale_characters - 100;
+    }
+
+    //Tidligere_uddannelse ekstra højde
+    var tidligere_uddannelse_characters = cv.tidligere_uddannelse.length;
+    console.log('antal characters ' + tidligere_uddannelse_characters)
+    var ekstra_height_tidligere_uddannelse = 0;
+    while(tidligere_uddannelse_characters > 100) {
+        ekstra_height_tidligere_uddannelse = ekstra_height_tidligere_uddannelse + height;
+        tidligere_uddannelse_characters = tidligere_uddannelse_characters - 100;
+    }
+
+    //Udenlandsophold og frivilligt arbejde ekstra højde
+    var udenlandsophold_og_frivilligt_arbejde_characters = cv.udenlandsophold_og_frivilligt_arbejde.length;
+    console.log('antal characters ' + udenlandsophold_og_frivilligt_arbejde_characters)
+    var ekstra_height_udenlandsophold_og_frivilligt_arbejde = 0;
+    while(udenlandsophold_og_frivilligt_arbejde_characters > 100) {
+        ekstra_height_udenlandsophold_og_frivilligt_arbejde = ekstra_height_udenlandsophold_og_frivilligt_arbejde + height;
+        udenlandsophold_og_frivilligt_arbejde_characters = udenlandsophold_og_frivilligt_arbejde_characters - 100;
+    }
+
+    //fritidsinteresser ekstra højde
+    var fritidsinteresser_characters = cv.fritidsinteresser.length;
+    console.log('antal characters ' + fritidsinteresser_characters)
+    var ekstra_height_fritidsinteresser = 0;
+    while(fritidsinteresser_characters > 100) {
+        ekstra_height_fritidsinteresser = ekstra_height_fritidsinteresser + height;
+        fritidsinteresser_characters = fritidsinteresser_characters - 100;
+    }
+
+    //It-Kompetencer ekstra højde
+    var it_Kompetencer_characters = cv.it_kompetencer.length;
+    console.log('antal characters ' + it_Kompetencer_characters)
+    var ekstra_height_it_Kompetencer = 0;
+    while(it_Kompetencer_characters > 100) {
+        ekstra_height_it_Kompetencer = ekstra_height_it_Kompetencer + height;
+        it_Kompetencer_characters = it_Kompetencer_characters - 100;
+    }
+
+    var height = 330;
+    var new_page = 660;
+    var page = 0;
+
+    console.log('antal højde ' + ekstra_height_it_Kompetencer)
+    console.log('antal characters ' + it_Kompetencer_characters)
     myDoc.image('public/images/facebook-default-no-profile-pic.jpg', 40, 40, {width: 150, height: 150})
   
     myDoc.font('Times-Roman')
         .fontSize(24)
+        .lineGap(2)
         .text('Navn Navnesen',220,50)
     
     myDoc.font('Times-Roman')
         .fontSize(10.72)
-        .text(cv.email,220,90)
+        .text('Email:',220,90)
+        .text(cv.email,300,90)
 
     myDoc.font('Times-Roman')
         .fontSize(10.72)
-        .text(cv.telefon,220,120)
+        .text('Telefon:',220,120)
+        .text(cv.telefon,300,120)
 
     myDoc.font('Times-Roman')
         .fontSize(10.72)
-        .text(cv.hjemmeside,220,150)
+        .text('Hjemmeside:',220,150)
+        .text(cv.hjemmeside,300,150)
 
     myDoc.font('Times-Roman')
         .fontSize(10.72)
-        .text(cv.linkedIn,220,180)
+        .text('LinkedIn:',220,180)
+        .text(cv.linkedIn,300,180)
+        
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text('youtube CV:',220,210)
+        .fillColor('blue')
+        .link(300,210,15,20,cv.yt_link)
+        .text('link',300,210);
 
-    myDoc.moveTo(0,210)
-        .lineTo(612,210)
+    myDoc.font('Times-Roman')
+        .fillColor('black')
+        .fontSize(10.72)
+        .text('Downloadet:', 10,210)
+        .text(date,70,210)
+
+    myDoc.moveTo(0,240)
+        .lineTo(612,240)
         .stroke()
 
-    // myDoc.font('Times-Roman')
-    //     .fontSize(10.72)
-    //     .text(cv.om_mig,220,180)
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Om mig',50,260)
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.om_mig,50,290)
+
+    height = height + ekstra_height_om_mig;
+    if (height + ekstra_height_overskrift > new_page) {
+        page = page + 1
+        height = height + ekstra_height_overskrift - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Hvad jeg søger',50 ,height)
+
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.overskrift,50, height)
+
+    height = height + 60 + ekstra_height_overskrift;
+    if (height + ekstra_height_erhvervserfaring > new_page) {
+        page = page + 1
+        height = height + ekstra_height_erhvervserfaring - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Erfaring',50,height)
+
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.erhvervserfaring,50,height)
+
+    height = height + 60 + ekstra_height_erhvervserfaring;
+    if (height + ekstra_height_uddannelse> new_page) {
+        page = page + 1
+        height = height + ekstra_height_uddannelse - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Uddannelse',50 ,height)
+
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.uddannelse,50,height)
+
+    height = height + 60 + ekstra_height_uddannelse
+    if (height + ekstra_height_speciale > new_page) {
+        page = page + 1
+        height = height + ekstra_height_speciale - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Speciale',50 ,height)
+
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.speciale,50,height)
+
+    height = height + 60 + ekstra_height_speciale;
+    if (height + ekstra_height_tidligere_uddannelse> new_page) {
+        page = page + 1
+        height = height + ekstra_height_tidligere_uddannelse - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Tidligere uddannelse',50 ,height)
+
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.tidligere_uddannelse,50 ,height)
+
+    height = height + 60 + ekstra_height_tidligere_uddannelse;
+    if (height + ekstra_height_udenlandsophold_og_frivilligt_arbejde> new_page) {
+        page = page + 1
+        height = height + ekstra_height_udenlandsophold_og_frivilligt_arbejde - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Udenlandsophold og frivilligt arbejde',50 , height)
+
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.udenlandsophold_og_frivilligt_arbejde,50 , height)
+
+    height = height + 60 + ekstra_height_udenlandsophold_og_frivilligt_arbejde;
+    if (height + ekstra_height_fritidsinteresser> new_page) {
+        page = page + 1
+        height = height + ekstra_height_fritidsinteresser - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+    
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Fritidsinteresser',50 ,height)
+
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.fritidsinteresser,50 ,height)
+
+    height = height + 60 + ekstra_height_fritidsinteresser;
+    if (height + ekstra_height_it_Kompetencer> new_page) {
+        page = page + 1
+        height = height + ekstra_height_it_Kompetencer - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('It-Kompetencer',50 , height)
+
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.it_kompetencer,50 ,height)
+
+    height = height + 60 + ekstra_height_it_Kompetencer;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+    
+    myDoc.font('Times-Roman')
+        .fontSize(16)
+        .text('Sprog',50 ,height)
+    
+    height = height + 30;
+    if (height > new_page) {
+        page = page + 1
+        height = height - new_page
+        myDoc.addPage().switchToPage(page)
+    };
+
+    myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text(cv.sprog,50 ,height)
+
+    // see the range of buffered pages
+    const range = myDoc.bufferedPageRange(); // => { start: 0, count: 2 }
+
+    for (i = range.start, end = range.start + range.count, range.start <= end; i < end; i++) {
+        myDoc.switchToPage(i);
+        myDoc.text(`Side ${i + 1} af ${range.count}`,545,755);
+    }
     myDoc.end()
 });
     pdfStream.addListener('finish', function() {
