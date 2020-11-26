@@ -78,7 +78,7 @@
           <div class="col-12 col-md-6">
             <div class="form-group required">
               <label for="internshipEmail">Email adresse</label>
-              <input type="email" name="email" id="internshipEmail" class="form-control" placeholder="Email">
+              <input type="email" name="email" id="internshipEmail" class="form-control" placeholder="Email" pattern="{{{emailRegex}}}">
               <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
             </div>
           </div>
@@ -92,7 +92,7 @@
           <div class="col-12 col-md-6">
             <div class="form-group" id="containerCVR">
               <label for="cvr_number">CVR Nummer</label>
-              <input type="text" pattern="^[0-9]{8}$" title="CVR må kun være 8 tal" name="cvr_number"
+              <input type="text" pattern="{{{cvrRegex}}}" title="CVR må kun være 8 tal" name="cvr_number"
                 id="companyCVR" class="form-control" placeholder="CVR">
               <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal præcist være 8 tal</p>
             </div>
@@ -100,7 +100,7 @@
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="company_link">Link til Hjemmeside</label>
-              <input type="url" pattern="^(http://www.|https://www.|http://|https://)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.)?$"
+              <input type="text" pattern="{{{linkRegex}}}"
                 title="Link er ugyldigt" name="company_link" id="companyURL" class="form-control"
                 placeholder="virksomhed.dk">
               <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her f.eks http://www.zealandconnect.dk</p>
@@ -112,7 +112,7 @@
             <div class="form-group">
               <label for="post_start_date">Ansøgningsfrist</label>
               <input type="date" class="form-control" name="post_start_date" id="applicationDeadline"
-                placeholder="dd / mm / åååå">
+                placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
               <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en start dato
               </p>
             </div>
@@ -121,7 +121,7 @@
             <div class="form-group">
               <label for="post_end_date">Ansættelsestidspunkt</label>
               <input type="date" class="form-control" name="post_end_date" id="internshipEmploymentDate"
-                placeholder="dd / mm / åååå">
+                placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
               <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive et ansættelsestidspunkt
               </p>
             </div>
@@ -166,6 +166,7 @@
 <script src="/js/quill.min.js"></script>
 <script src="/javascript/validate_internship_post.js"></script>
 <script>
+
 var toolbarOptions = [
   [{
     'size': ['small', false, 'large', 'huge']
@@ -197,6 +198,12 @@ var editor = new Quill('#editor', {
 function copyQuillHtmlToHiddenInput() {
   document.getElementById('plainText').value = editor.root.innerHTML;
 }
+
+var emailRegex = /{{{emailRegex}}}/;
+var dateRegex = /{{{dateRegex}}}/;
+var cvrRegex = /{{{cvrRegex}}}/;
+var linkRegex = /{{{linkRegex}}}/;
+
 //countryToggleFields() Toggler disse fælter: Region og CVR
 function countryToggleFields() {
   if (document.getElementById('countrySelect').value == 1) {
