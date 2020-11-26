@@ -20,7 +20,7 @@ router.get('/rediger', function (req, res, next) {
             res.send("not implemented yet mate");
         } else {
             //render with potential errors and information about the profile
-            res.render("rediger-virksomhedsprofil", {EmailError: errors.EmailError, TlfnrError: errors.TlfnrError, ByError: errors.ByError, PostnrError: errors.PostnrError, CVRError: errors.CVRError, NavnError: errors.NavnError, AdresseError: errors.AdresseError, HjemmesideError: errors.HjemmesideError, DirektoerError: errors.DirektoerError, LandError: errors.LandError, LogoError: errors.LogoError, email: user.email, tlfnr: user.tlfnr, by: user.by, postnummer:user.postnr, cvr: user.cvrnr, firmanavn: user.navn, adresse: user.adresse, hjemmeside: user.hjemmeside, direktoer: user.direktoer, land: user.land});
+            res.render("rediger-virksomhedsprofil", {succesBesked: req.query.succesBesked, fejlBesked: req.query.fejlBesked, EmailError: errors.EmailError, TlfnrError: errors.TlfnrError, ByError: errors.ByError, PostnrError: errors.PostnrError, CVRError: errors.CVRError, NavnError: errors.NavnError, AdresseError: errors.AdresseError, HjemmesideError: errors.HjemmesideError, DirektoerError: errors.DirektoerError, LandError: errors.LandError, LogoError: errors.LogoError, email: user.email, tlfnr: user.tlfnr, by: user.by, postnummer:user.postnr, cvr: user.cvrnr, firmanavn: user.navn, adresse: user.adresse, hjemmeside: user.hjemmeside, direktoer: user.direktoer, land: user.land});
         }
     });
 });
@@ -80,16 +80,15 @@ router.post('/rediger-save', function (req, res, next) {
             break;
         }
     }
-    console.log("There is at least one error: "+atLeastOneErrorIsPresent);
+    let succesBesked = '';
+    let fejlBesked = '';
     if(!atLeastOneErrorIsPresent){
-        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
-        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
-        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
-        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
-        console.log("INGEN FEJL DERMED OPDATER VIRKSOMHED");
         editVirksomhed(email, cvrnr, firmanavn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by);
+        succesBesked = 'Succesfuldt opdateret brugeren';
+    } else {
+        fejlBesked = 'Fejl ved opdatering af brugeren';
     }
-    res.redirect('/profil/rediger?'+'EmailError='+errors.EmailError+'&TlfnrError='+errors.TlfnrError+'&ByError='+errors.ByError+'&PostnrError='+errors.PostnrError+'&CVRError='+errors.CVRError+'&NavnError='+errors.NavnError+'&AdresseError='+errors.AdresseError+'&HjemmesideError='+errors.HjemmesideError+'&DirektoerError='+errors.DirektoerError+'&LandError='+errors.LandError+'&LogoError='+errors.LogoError);
+    res.redirect('/profil/rediger?succesBesked='+succesBesked+'&fejlBesked='+fejlBesked+'&EmailError='+errors.EmailError+'&TlfnrError='+errors.TlfnrError+'&ByError='+errors.ByError+'&PostnrError='+errors.PostnrError+'&CVRError='+errors.CVRError+'&NavnError='+errors.NavnError+'&AdresseError='+errors.AdresseError+'&HjemmesideError='+errors.HjemmesideError+'&DirektoerError='+errors.DirektoerError+'&LandError='+errors.LandError+'&LogoError='+errors.LogoError);
 });
 
 module.exports = router;
