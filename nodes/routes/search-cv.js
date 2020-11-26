@@ -222,9 +222,7 @@ router.get('/:id', function (req, res) {
 router.get('/:id/Create_pdf', function (req, res, next) {
     let id = req.params.id
 
-    // https://pdfkit.org/docs/guide.pdf
-    // http://pdfkit.org/
-  var pdf = require('pdfkit');
+  var pdf = require('pdfkit'); // bruger pdfkit til at lave gennerer vores pdf
   var fs = require('fs');
   
   var today = new Date();
@@ -235,7 +233,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
   var pdfStream = fs.createWriteStream('PDF/Test.pdf')
   myDoc.pipe(pdfStream);
   console.log(id);
-  // var design = require('../Scripts/design_af_CV');
   db.CV.findOne({
     raw: true,
     where: {
@@ -245,7 +242,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
     var height = 12;
     // om mig ekstra højde
     var om_mig_characters = cv.om_mig.length;
-    console.log('antal characters ' + om_mig_characters)
     var ekstra_height_om_mig = 0;
     while(om_mig_characters > 100) {
         ekstra_height_om_mig = ekstra_height_om_mig + height;
@@ -254,7 +250,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     // overskrift ekstra højde
     var overskrift_characters = cv.overskrift.length;
-    console.log('antal characters ' + overskrift_characters)
     var ekstra_height_overskrift = 0;
     while(overskrift_characters > 100) {
         ekstra_height_overskrift = ekstra_height_overskrift + height;
@@ -263,7 +258,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     // erhvervserfaring ekstra højde
     var erhvervserfaring_characters = cv.erhvervserfaring.length;
-    console.log('antal characters ' + erhvervserfaring_characters)
     var ekstra_height_erhvervserfaring = 0;
     while(erhvervserfaring_characters > 100) {
         ekstra_height_erhvervserfaring = ekstra_height_erhvervserfaring + height;
@@ -272,7 +266,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     // uddannelse ekstra højde mest til testing af responsiv
     var uddannelse_characters = cv.uddannelse.length;
-    console.log('antal characters ' + uddannelse_characters)
     var ekstra_height_uddannelse = 0;
     while(uddannelse_characters > 100) {
         ekstra_height_uddannelse = ekstra_height_uddannelse + height;
@@ -281,7 +274,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     //Speciale ekstra højde
     var speciale_characters = cv.speciale.length;
-    console.log('antal characters ' + speciale_characters)
     var ekstra_height_speciale = 0;
     while(speciale_characters > 100) {
         ekstra_height_speciale = ekstra_height_speciale + height;
@@ -290,7 +282,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     //Tidligere_uddannelse ekstra højde
     var tidligere_uddannelse_characters = cv.tidligere_uddannelse.length;
-    console.log('antal characters ' + tidligere_uddannelse_characters)
     var ekstra_height_tidligere_uddannelse = 0;
     while(tidligere_uddannelse_characters > 100) {
         ekstra_height_tidligere_uddannelse = ekstra_height_tidligere_uddannelse + height;
@@ -299,7 +290,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     //Udenlandsophold og frivilligt arbejde ekstra højde
     var udenlandsophold_og_frivilligt_arbejde_characters = cv.udenlandsophold_og_frivilligt_arbejde.length;
-    console.log('antal characters ' + udenlandsophold_og_frivilligt_arbejde_characters)
     var ekstra_height_udenlandsophold_og_frivilligt_arbejde = 0;
     while(udenlandsophold_og_frivilligt_arbejde_characters > 100) {
         ekstra_height_udenlandsophold_og_frivilligt_arbejde = ekstra_height_udenlandsophold_og_frivilligt_arbejde + height;
@@ -308,7 +298,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     //fritidsinteresser ekstra højde
     var fritidsinteresser_characters = cv.fritidsinteresser.length;
-    console.log('antal characters ' + fritidsinteresser_characters)
     var ekstra_height_fritidsinteresser = 0;
     while(fritidsinteresser_characters > 100) {
         ekstra_height_fritidsinteresser = ekstra_height_fritidsinteresser + height;
@@ -317,7 +306,6 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     //It-Kompetencer ekstra højde
     var it_Kompetencer_characters = cv.it_kompetencer.length;
-    console.log('antal characters ' + it_Kompetencer_characters)
     var ekstra_height_it_Kompetencer = 0;
     while(it_Kompetencer_characters > 100) {
         ekstra_height_it_Kompetencer = ekstra_height_it_Kompetencer + height;
@@ -328,9 +316,7 @@ router.get('/:id/Create_pdf', function (req, res, next) {
     var new_page = 660;
     var page = 0;
 
-    console.log('antal højde ' + ekstra_height_it_Kompetencer)
-    console.log('antal characters ' + it_Kompetencer_characters)
-    myDoc.image('public/images/facebook-default-no-profile-pic.jpg', 40, 40, {width: 150, height: 150})
+    myDoc.image('public/images/dummy-profile-pic.jpg', 40, 40, {width: 150, height: 150})
   
     myDoc.font('Times-Roman')
         .fontSize(24)
