@@ -4,10 +4,12 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const models = require("../models");
 const validation = require("../validation/input-validation");
+var { reqLang } = require('../public/javascript/request');
 
-router.get('/', function (req, res, next) {
-    res.send("PROFIl: "+req.user);
-});
+
+router.get('/', (req, res)=> {
+    res.render('visprofil', {language: reqLang(req,res)})
+})
 
 router.get('/rediger', function (req, res, next) {
     let errors = req.query;
