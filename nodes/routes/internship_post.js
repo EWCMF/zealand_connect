@@ -91,7 +91,7 @@ router.post('/', function (req, res){
       //Generere unik data til filnavn med Date.now() og tilfældig tal.
       var datetime = Date.now();
 
-      var randomNumber=Math.floor(Math.random() * (10 - 0 + 1) + 0);
+      var randomNumber=Math.floor(Math.random()*(10-0+1)+0);
 
       //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
       var newDocName=datetime+randomNumber+"_"+doc.name;
@@ -99,14 +99,11 @@ router.post('/', function (req, res){
 
       //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
       //Nedenstående flytter og omdøber filer på sammetid
-      if(doc.type== "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword"){
-        mv(doc.path,publicUploadFolder+newDocName,(errorRename)=>{
-          console.log(doc.path);
+      if(doc.type=="text/plain"||doc.type=="application/vnd.openxmlformats-officedocument.wordprocessingml.document"||doc.type=="application/pdf"||doc.type=="application/msword"){
+        mv(doc.path,publicUploadFolder + newDocName,(errorRename)=>{
           if(errorRename){
             console.log("Unable to move file.");
-            console.log(errorRename);
           }else{
-            console.log(doc.type)
             indhold.post_document=newDocName;
           }
           reNameLogo();
@@ -116,14 +113,12 @@ router.post('/', function (req, res){
       }
 
       function reNameLogo(){
-        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp" ){
-          mv(logo.path,publicUploadFolder+newLogoName,(errorRename)=>{
-            console.log(logo.path);
+        if(logo.type=="image/jpeg"||logo.type=="image/png"||logo.type=="image/svg+xml"||logo.type=="image/bmp"){
+          mv(logo.path,publicUploadFolder + newLogoName,(errorRename)=>{
             if(errorRename){
               console.log("Unable to move file.");
-              console.log(errorRename);
             }else{
-                indhold.company_logo=newLogoName;
+              indhold.company_logo=newLogoName;
             }
             generateAndValidateCityArray();
           });
@@ -132,14 +127,6 @@ router.post('/', function (req, res){
         }
       }
     }
-    /*formData.onPart = function(part){
-      if(!part.filename && part.filename.match(vaildFileRegex)) {
-        this.handlePart(part);
-      }
-      else {
-        console.log(part.filename + 'is not allowed')
-      }
-    }*/
   })
 
 });
