@@ -111,9 +111,22 @@ input::placeholder {
   align-items: center;
 }
 #virksomhedslogodiv {
-  height: 20rem; 
+  height: 16rem; 
+  width: 90%;
   object-fit: scale-down;
-  border-radius: 8px;
+  border-radius: 8px; 
+}
+#virksomhedsbeskrivelse {
+  width: 16rem;
+  height: 8rem;
+}
+#dokumenterhertil,a {
+  text-decoration: underline;
+  color: #000000;
+  font-weight: bold;
+  padding-bottom: 1rem;
+  
+
 }
 
 #zealandLogo {
