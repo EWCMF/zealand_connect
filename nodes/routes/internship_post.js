@@ -22,7 +22,7 @@ router.post('/', function (req, res) {
     const { title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document } = fields;
     var indhold = { title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document };
     var inputError = false;
-    var cityArray =[];
+    var cityArray = [];
 
     var generatedCityOptions = "";
     var generatedPostCodeOptions = "";
@@ -38,8 +38,7 @@ router.post('/', function (req, res) {
 
           res.render('internship_post', {
             title: 'Express', generatedCityOptions: generatedCityOptions,
-            generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
-          });
+            generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR});
         }
       };
       xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
