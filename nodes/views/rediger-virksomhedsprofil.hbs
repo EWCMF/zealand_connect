@@ -9,7 +9,7 @@
                     <form class="text-left" action="/profil/rediger-save" method="post">
                         <div style="color: red;" class="text-center">{{fejlBesked}}</div>
                         <div style="color: green;" class="text-center">{{succesBesked}}</div><br>
-                        <p class="text-center">Påkrævet</p><br>
+                        <p class="text-center" data-key="labelPaakraevet">Påkrævet</p><br>
                         <div class="row">
                             <div class="col-4"></div>
                             <div class="col-8 col-form-label" style="color: red;">{{EmailError}}</div>
@@ -25,7 +25,7 @@
                             <div class="col-8 col-form-label" style="color: red;">{{TlfnrError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="telefonnummer" class="col-4 col-form-label">Telefonnummer</label> 
+                            <label for="telefonnummer" data-key="labelTelefonnummer" class="col-4 col-form-label">Telefonnummer</label> 
                             <div class="col-8">
                             <input id="telefonnummer" name="telefonnummer" type="text" class="form-control" value="{{tlfnr}}">
                             </div>
@@ -35,7 +35,7 @@
                             <div class="col-8 col-form-label" style="color: red;">{{ByError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="by" class="col-4 col-form-label">By</label> 
+                            <label for="by" data-key="labelBy" class="col-4 col-form-label">By</label> 
                             <div class="col-8">
                             <input id="by" name="by" type="text" class="form-control" value="{{by}}">
                             </div>
@@ -45,7 +45,7 @@
                             <div class="col-8 col-form-label" style="color: red;">{{PostnrError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="postnummer" class="col-4 col-form-label">Postnummer</label> 
+                            <label for="postnummer" data-key="labelPostnummer" class="col-4 col-form-label">Postnummer</label> 
                             <div class="col-8">
                             <input id="postnummer" name="postnummer" type="text" class="form-control" value="{{postnummer}}">
                             </div>
@@ -55,26 +55,26 @@
                             <div class="col-8 col-form-label" style="color: red;">{{CVRError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="cvr" class="col-4 col-form-label">CVR-Nummer</label> 
+                            <label for="cvr" data-key="labelcvr" class="col-4 col-form-label">CVR-Nummer</label> 
                             <div class="col-8">
                             <input id="cvr" name="cvr" type="text" class="form-control" value="{{cvr}}">
                             </div>
                         </div>
                         <div class="col-12 col-form-label row"></div>
                         <div class="form-group row">
-                            <label for="adgangskode" class="col-4 col-form-label">Adgangskode</label> 
+                            <label for="adgangskode" data-key="labeladgangskode" class="col-4 col-form-label">Adgangskode</label> 
                             <div class="col-8">
                             <input id="adgangskode" name="adgangskode" type="button" class="form-control" value="Nulstil adgangskode">
                             </div>
                         </div>
                         <div class="col-12 col-form-label row"></div>
-                        <p class="text-center">Valgfri</p><br>
+                        <p class="text-center" data-key="labelValgfri">Valgfri</p><br>
                         <div class="row">
                             <div class="col-4"></div>
                             <div class="col-8 col-form-label" style="color: red;">{{NavnError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="navn" class="col-4 col-form-label">Firmanavn</label> 
+                            <label for="navn" data-key="labelFirmanavn" class="col-4 col-form-label">Firmanavn</label> 
                             <div class="col-8">
                             <input id="navn" name="navn" type="text" class="form-control" value="{{firmanavn}}">
                             </div>
@@ -84,7 +84,7 @@
                             <div class="col-8 col-form-label" style="color: red;">{{AdresseError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="adresse" class="col-4 col-form-label">Adresse</label> 
+                            <label for="adresse" data-key="labelAdresse" class="col-4 col-form-label">Adresse</label> 
                             <div class="col-8">
                             <input id="adresse" name="adresse" type="text" class="form-control" value="{{adresse}}">
                             </div>
@@ -94,7 +94,7 @@
                             <div class="col-8 col-form-label" style="color: red;">{{HjemmesideError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="hjemmeside" class="col-4 col-form-label">Hjemmeside</label> 
+                            <label for="hjemmeside" data-key="labelHjemmeside" class="col-4 col-form-label">Hjemmeside</label> 
                             <div class="col-8">
                             <input id="hjemmeside" name="hjemmeside" type="text" class="form-control" value="{{hjemmeside}}">
                             </div>
@@ -104,7 +104,7 @@
                             <div class="col-8 col-form-label" style="color: red;">{{DirektoerError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="direktoer" class="col-4 col-form-label">Direktør</label> 
+                            <label for="direktoer" data-key="labelDirektoer" class="col-4 col-form-label">Direktør</label> 
                             <div class="col-8">
                             <input id="direktoer" name="direktoer" type="text" class="form-control" value="{{direktoer}}">
                             </div>
@@ -114,7 +114,7 @@
                             <div class="col-8 col-form-label" style="color: red;">{{LandError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="land" class="col-4 col-form-label">Land</label> 
+                            <label for="land" data-key="labelLand" class="col-4 col-form-label">Land</label> 
                             <div class="col-8">
                                 <input id="land" name="land" type="text" class="form-control" value="{{land}}">
                             </div>
@@ -124,7 +124,7 @@
                             <div class="col-8 col-form-label" style="color: red;">{{LogoError}}</div>
                         </div>
                         <div class="form-group row">
-                            <label for="land" class="col-4 col-form-label">Virksomhedslogo</label>
+                            <label for="land" data-key="labelLogo" class="col-4 col-form-label">Virksomhedslogo</label>
                             <div class="col-8">
                                 <div class="custom-file">
                                     <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input" id="CompanyLogo"> <!--onchange="updateInputLabel('logoLabel', 'CompanyLogo')"-->

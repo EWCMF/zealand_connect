@@ -17,6 +17,8 @@ router.get('/', function (req, res, next) {
             })
         } else if (user instanceof models.Student) {
             res.render("studentprofil");
+        } else {
+            res.redirect("/");
         }
     });
 });
@@ -55,7 +57,8 @@ router.get('/rediger', function (req, res, next) {
                 adresse: user.adresse,
                 hjemmeside: user.hjemmeside,
                 direktoer: user.direktoer,
-                land: user.land
+                land: user.land,
+                language: reqLang(req)
             });
         }
     });
