@@ -55,13 +55,14 @@ describe('POST /opret-bruger/create', () => {
             telefonnummer: "12345678",
             by: "Testby",
             postnummer: "0000",
-            cvr: "12345678"
+            cvr: "66666666"
         }
         chai.request(app)
             .post('/opret-bruger/create')
             .send(virksomhed)
             .end((err, res) => {
                 expect(err).to.be.null;
+                expect(res).to.be.html;
                 expect(res).to.have.status(200);
                 done();
             });
@@ -69,7 +70,7 @@ describe('POST /opret-bruger/create', () => {
 });
 
 describe('POST /opret-bruger/create', () => {
-    it('it should meme', (done) => {
+    it('the html should contain errors', (done) => {
         let virksomhed = {
             email: "3wty4e",
             gentagEmail: "wegy45u4",
@@ -113,6 +114,8 @@ describe('POST /opret-bruger/create', () => {
             .send(virksomhed)
             .end((err, res) => {
                 expect(res).to.have.status(200);
+                console.log(res.header);
+                expect(res).to.have.cookie('sessionid');
                 done();
             });
     });
