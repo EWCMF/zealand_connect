@@ -38,6 +38,7 @@ xhttp.onreadystatechange = function () {
             } else {
                 document.getElementById('cv').style.display = 'none';
                 document.getElementById('praktik').style.display = 'block';
+                document.getElementById('lav_praktik').style.display = 'block';
                 document.getElementById("profileDropdownName").innerHTML = responseObject.navn;
                 
             }
