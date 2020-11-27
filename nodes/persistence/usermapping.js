@@ -4,7 +4,13 @@ async function findUserByEmail(email) {
     let user = null;
     return new Promise(resolve => {
         console.log("---finding user by email: " + email + "---");
-        models.Student.findOne({where: {email: email}}).then((student) => {
+        models.Student.findOne({
+            nest: true,
+            where: {email: email}, 
+            include: {
+                model: models.CV,
+                as: 'cv'
+        }}).then((student) => {
             if (student === null) {
                 console.log('en student med denne email findes ikke!');
             }

@@ -106,9 +106,11 @@ function submitButton() {
         document.getElementById("fritidsinteresser").value = 'Intet angivet';;
     }
 
-    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
-        document.forms["cvForm"].submit();
-    }
+    // if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
+    //     document.forms["cvForm"].submit();
+    // }
+
+    document.forms["cvForm"].submit();
 }
 
 
