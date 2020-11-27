@@ -127,7 +127,7 @@ router.post('/query', function (req, res) {
             order: [
                 [fields.sort, fields.order]
             ],
-            where,
+            where
         });
 
         var item = [count];
