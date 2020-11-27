@@ -4,17 +4,28 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const models = require("../models");
 const validation = require("../validation/input-validation");
-var { reqLang } = require('../public/javascript/request');
+var {
+    reqLang
+} = require('../public/javascript/request');
 
 router.get('/', function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
         if (user instanceof models.Virksomhed) {
             //TODO: Her skal der være virksomhedsprofil
-            res.render('visprofil', {language: reqLang(req,res)})
+            res.render('visprofil', {
+                language: reqLang(req, res)
+
+            })
         } else if (user instanceof models.Student) {
-            res.render("studentprofil");
+            let loggedInUser = {
+                email: user.email,
+                fornavn: user.fornavn,
+                efternavn: user.efternavn,
+                tlfnr: user.tlfnr,
+            }
+            res.render("studentprofil", {loggedInUser});
         }
-    }); 
+    });
 });
 
 router.get('/rediger', function (req, res, next) {
@@ -23,12 +34,36 @@ router.get('/rediger', function (req, res, next) {
     console.log(errors);
     //todo if Student render student else virksomhed
     //todo: find bruger og indsæt dens data i render hbs.
-    findUserByEmail(req.user).then((user)=>{
-        if(user instanceof models.Student){
+    findUserByEmail(req.user).then((user) => {
+        if (user instanceof models.Student) {
             res.send("not implemented yet mate");
         } else {
             //render with potential errors and information about the profile
-            res.render("rediger-virksomhedsprofil", {succesBesked: req.query.succesBesked, fejlBesked: req.query.fejlBesked, EmailError: errors.EmailError, TlfnrError: errors.TlfnrError, ByError: errors.ByError, PostnrError: errors.PostnrError, CVRError: errors.CVRError, NavnError: errors.NavnError, AdresseError: errors.AdresseError, HjemmesideError: errors.HjemmesideError, DirektoerError: errors.DirektoerError, LandError: errors.LandError, LogoError: errors.LogoError, email: user.email, tlfnr: user.tlfnr, by: user.by, postnummer:user.postnr, cvr: user.cvrnr, firmanavn: user.navn, adresse: user.adresse, hjemmeside: user.hjemmeside, direktoer: user.direktoer, land: user.land});
+            res.render("rediger-virksomhedsprofil", {
+                succesBesked: req.query.succesBesked,
+                fejlBesked: req.query.fejlBesked,
+                EmailError: errors.EmailError,
+                TlfnrError: errors.TlfnrError,
+                ByError: errors.ByError,
+                PostnrError: errors.PostnrError,
+                CVRError: errors.CVRError,
+                NavnError: errors.NavnError,
+                AdresseError: errors.AdresseError,
+                HjemmesideError: errors.HjemmesideError,
+                DirektoerError: errors.DirektoerError,
+                LandError: errors.LandError,
+                LogoError: errors.LogoError,
+                email: user.email,
+                tlfnr: user.tlfnr,
+                by: user.by,
+                postnummer: user.postnr,
+                cvr: user.cvrnr,
+                firmanavn: user.navn,
+                adresse: user.adresse,
+                hjemmeside: user.hjemmeside,
+                direktoer: user.direktoer,
+                land: user.land
+            });
         }
     });
 });
@@ -62,19 +97,17 @@ router.post('/rediger-save', function (req, res, next) {
         LandError: "",
         LogoError: "",
     }
-    if (!validation.validateCVR(cvrnr)){
+    if (!validation.validateCVR(cvrnr)) {
         errors.CVRError = "Ugyldigt CVR";
-    }
-
-    else if (!validation.validateCvrLength(cvrnr)){
+    } else if (!validation.validateCvrLength(cvrnr)) {
         errors.CVRError = "Ugyldigt CVR længde";
     }
 
-    if (!validation.validatePhone(tlfnr)){
+    if (!validation.validatePhone(tlfnr)) {
         errors.TlfnrError = "Ugyldigt Telefonnummer";
     }
 
-    if (!validation.validateCity(by)){
+    if (!validation.validateCity(by)) {
         errors.ByError = "Ugyldig By";
     }
     //update the database if no erros present
@@ -82,21 +115,33 @@ router.post('/rediger-save', function (req, res, next) {
     for (let value of Object.values(errors)) {
         console.log("error:");
         console.log(value);
-        if(value!=''){
+        if (value != '') {
             //an error was here!
-            atLeastOneErrorIsPresent=true;
+            atLeastOneErrorIsPresent = true;
             break;
         }
     }
     let succesBesked = '';
     let fejlBesked = '';
-    if(!atLeastOneErrorIsPresent){
+    if (!atLeastOneErrorIsPresent) {
         editVirksomhed(email, cvrnr, firmanavn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by);
         succesBesked = 'Succesfuldt opdateret brugeren';
     } else {
         fejlBesked = 'Fejl ved opdatering af brugeren';
     }
-    res.redirect('/profil/rediger?succesBesked='+succesBesked+'&fejlBesked='+fejlBesked+'&EmailError='+errors.EmailError+'&TlfnrError='+errors.TlfnrError+'&ByError='+errors.ByError+'&PostnrError='+errors.PostnrError+'&CVRError='+errors.CVRError+'&NavnError='+errors.NavnError+'&AdresseError='+errors.AdresseError+'&HjemmesideError='+errors.HjemmesideError+'&DirektoerError='+errors.DirektoerError+'&LandError='+errors.LandError+'&LogoError='+errors.LogoError);
+    res.redirect('/profil/rediger?succesBesked=' + succesBesked + '&fejlBesked=' + fejlBesked + '&EmailError=' + errors.EmailError + '&TlfnrError=' + errors.TlfnrError + '&ByError=' + errors.ByError + '&PostnrError=' + errors.PostnrError + '&CVRError=' + errors.CVRError + '&NavnError=' + errors.NavnError + '&AdresseError=' + errors.AdresseError + '&HjemmesideError=' + errors.HjemmesideError + '&DirektoerError=' + errors.DirektoerError + '&LandError=' + errors.LandError + '&LogoError=' + errors.LogoError);
+});
+
+router.get('/getUser', function (req, res, next) {
+    if (req.user != null) {
+        findUserByEmail(req.user).then((user) => {
+            res.send(user);
+        });
+    } else {
+        res.send({
+            email: ""
+        });
+    }
 });
 
 module.exports = router;

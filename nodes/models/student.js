@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Student.hasOne(models.CV, {
-        as: 'student',
+        as: 'cv',
         foreignKey: 'student_id'
       });
     }

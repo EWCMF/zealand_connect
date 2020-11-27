@@ -21,8 +21,8 @@ describe('GET /users', function () {
 });
 
 describe('GET /mit-CV', function () {
-    it('respond with status code OK 200', function (done) {
-        request(app).get('/mit-CV').expect(200, done);
+    it('respond with status code Access denied 403', function(done) {
+        request(app).get('/mit-cv').expect(403, done);
     })
 });
 
