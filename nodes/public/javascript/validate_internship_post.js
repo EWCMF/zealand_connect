@@ -1,10 +1,6 @@
 function validate_internship_post(e) {
     console.log("Yes")
     var all_valid = true;
-    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
-    var dateReg = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
-    var cvrReg = /^[0-9]{8}$/
-    var linkReg = /^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(\/.)?$/
 
     //e.preventDefault();
     //Title
@@ -28,7 +24,7 @@ function validate_internship_post(e) {
 
     //Ansøgningsfrist
     if (!document.getElementById('applicationDeadline').value == ''){
-    if (!dateReg.test(document.getElementById('applicationDeadline').value)) {
+    if (!dateRegex.test(document.getElementById('applicationDeadline').value)) {
         all_valid = false;
         document.getElementById('poststartdateError').hidden = false;
     }
@@ -37,7 +33,7 @@ function validate_internship_post(e) {
 
     //Ansættelsestidspunkt
     if (!document.getElementById('internshipEmploymentDate').value == ''){
-    if (!dateReg.test(document.getElementById('internshipEmploymentDate').value)) {
+    if (!dateRegex.test(document.getElementById('internshipEmploymentDate').value)) {
         all_valid = false;
         document.getElementById('postenddateError').hidden = false;
     }
@@ -54,7 +50,7 @@ function validate_internship_post(e) {
 
     //CVR
     if (document.getElementById('countrySelect').value == 1){
-    if (!cvrReg.test(document.getElementById('companyCVR').value)) {
+    if (!cvrRegex.test(document.getElementById('companyCVR').value)) {
         all_valid = false;
         document.getElementById('cvrError').hidden = false;
     } else {
@@ -65,7 +61,7 @@ function validate_internship_post(e) {
 
     //Virksomheds Link
     if (!document.getElementById('companyURL').value == ''){
-      if (!linkReg.test(document.getElementById('companyURL').value)){
+      if (!linkRegex.test(document.getElementById('companyURL').value)){
         all_valid = false;
         document.getElementById('companylinkError').hidden = false;
       } else {

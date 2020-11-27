@@ -32,37 +32,37 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-key="aOpslag">
                         Opslag
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                        <a class="dropdown-item" href="/search-cv">Alle CV'er</a>
-                        <a class="dropdown-item" href="/search-praktik">Alle Praktikopslag</a>
-                        <a class="dropdown-item" href="/internship_post">Lav Praktikopslag</a>
+                        <a class="dropdown-item" href="/search-cv" data-key="aAlleCVer">Alle CV'er</a>
+                        <a class="dropdown-item" href="/search-praktik" data-key="aAllePraktikopslag">Alle Praktikopslag</a>
+                        <a class="dropdown-item" href="/internship_post" data-key="aLavPraktikopslag">Lav Praktikopslag</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Virksomheder</a>
+                        <a class="dropdown-item" href="#" data-key="aVirksomheder">Virksomheder</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="flase">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="flase" data-key="aForVirksomheder">
                         For Virksomheder
                     </a>
                 <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                    <a class="dropdown-item"href="/">Få en praktikant</a>
-                    <a class="dropdown-item"href="/praktikforloebet">Praktikforløbet</a>
-                    <a class="dropdown-item"href="/">Arbejdstid og læringsmål</a>
-                    <a class="dropdown-item"href="/">Løn</a>
-                    <a class="dropdown-item"href="/">Samarbejde og sparring</a>
-                    <a class="dropdown-item"href="/">Forsikring</a>
-                    <a class="dropdown-item"href="/">Kontaktperson</a>
-                    <a class="dropdown-item"href="/">Praktikkontrakten</a>
-                    <a class="dropdown-item"href="/">Evt. problemer</a>
+                    <a class="dropdown-item"href="/" data-key="aFaaEnPraktikant">Få en praktikant</a>
+                    <a class="dropdown-item"href="/praktikforloebet" data-key="aPraktikForloebet">Praktikforløbet</a>
+                    <a class="dropdown-item"href="/" data-key="aArbejdstidOgLæringsmål">Arbejdstid og læringsmål</a>
+                    <a class="dropdown-item"href="/" data-key="aLoen">Løn</a>
+                    <a class="dropdown-item"href="/" data-key="aSamarbajdeOgSparring">Samarbejde og sparring</a>
+                    <a class="dropdown-item"href="/" data-key="aForsikring">Forsikring</a>
+                    <a class="dropdown-item"href="/" data-key="aKontaktperson">Kontaktperson</a>
+                    <a class="dropdown-item"href="/" data-key="aPraktikkontrakten">Praktikkontrakten</a>
+                    <a class="dropdown-item"href="/" data-key="aEvtProblemer">Evt. problemer</a>
                 </div>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="flase">
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="flase" data-key="aForStuderende">
                         For Studerende
                     </a>
                 <div class="dropdown-menu" aria-labelledby="navbarOpslag">
@@ -76,7 +76,7 @@
                     <a class="nav-link" id="da" href="/language/da">Dansk</a>
                 </li>
                 <li class="nav-item" style="display: none;" id="ikkeLoggedeInd">
-                    <a class="nav-link" href="/opret-bruger">Opret Bruger</a>
+                    <a class="nav-link" href="/opret-bruger" data-key="aOpretBruger">Opret Bruger</a>
                     {{!-- <a class="nav-link" style="display: none;" id="profil" href="/profil">Profil<span class="sr-only">(current)</span></a> --}}
                 
                 </li>
@@ -86,15 +86,16 @@
                         Opslag
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                        <a class="dropdown-item" href="/profil">Profil</a>
-                        <a id="cv" class="dropdown-item" style="display: none;" href="/mit-cv">Mit CV</a>
-                        <a id="praktik" class="dropdown-item" style="display: none;" href="/mit-cv">Mine Praktikopslag</a>
+                        <a class="dropdown-item" data-key="aProfil" href="/profil">Profil</a>
+                        <a id="cv" class="dropdown-item" style="display: none;" data-key="aMitCV" href="/mit-cv">Mit CV</a>
+                        <a id="praktik" class="dropdown-item" style="display: none;" data-key="aMinePraktikOpslag" href="#">Mine Praktikopslag</a>
+                        <a id="lav_praktik" class="dropdown-item" style="display: none;" data-key="aLavPraktikOpslag" href="/internship_post">Lav Praktikopslag</a>
                     </div>
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="display: none;" id="login" href="/login">Log ind</a>
-                    <a class="nav-link" style="display: none;" id="logud" href="/login/logout">Log ud</a>
+                    <a class="nav-link" style="display: none;" id="login" href="/login" data-key="aLogin">Log ind</a>
+                    <a class="nav-link" style="display: none;" id="logud" href="/login/logout" data-key="aLogud">Log ud</a>
                 </li>
             </ul>
 

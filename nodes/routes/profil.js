@@ -62,7 +62,8 @@ router.get('/rediger', function (req, res, next) {
                 adresse: user.adresse,
                 hjemmeside: user.hjemmeside,
                 direktoer: user.direktoer,
-                land: user.land
+                land: user.land,
+                language: reqLang(req)
             });
         }
     });
