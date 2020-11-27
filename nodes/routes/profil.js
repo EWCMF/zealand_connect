@@ -14,9 +14,16 @@ router.get('/', function (req, res, next) {
             //TODO: Her skal der være virksomhedsprofil
             res.render('visprofil', {
                 language: reqLang(req, res)
+
             })
         } else if (user instanceof models.Student) {
-            res.render("studentprofil");
+            let loggedInUser = {
+                email: user.email,
+                fornavn: user.fornavn,
+                efternavn: user.efternavn,
+                tlfnr: user.tlfnr,
+            }
+            res.render("studentprofil", {loggedInUser});
         }
     });
 });
@@ -55,7 +62,8 @@ router.get('/rediger', function (req, res, next) {
                 adresse: user.adresse,
                 hjemmeside: user.hjemmeside,
                 direktoer: user.direktoer,
-                land: user.land
+                land: user.land,
+                language: reqLang(req)
             });
         }
     });
