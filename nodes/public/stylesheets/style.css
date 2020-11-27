@@ -471,7 +471,6 @@ input::placeholder {
 
   #navbarLine {
     display: flex;
-    height: 1px;
     background-color: black;
     margin-top: 0px;
     margin-right: 24px;

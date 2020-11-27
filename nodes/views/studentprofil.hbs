@@ -1,1 +1,33 @@
-<h1>STUDENTPROFIL</h1>
+<div class="container-fluid">
+    <div class="card-columns mt-5 mr-5">
+
+        <div class="container">
+            <div class="card bg-light text-dark mx-5 pl-4 pt-2 pb-3">
+                <h4 class="card-title mb-2">
+                    Brugeroplysninger
+                </h4>
+                <a href="/redigerStudent" class="font-weight-bold text-dark ">
+                    Rediger profil
+                </a>
+
+                <h5 class="card-title mt-2" data-key="studentNavn">Navn</h5>
+                <p id="studentNavn" class="card-text">{{loggedInUser.fornavn}} {{loggedInUser.efternavn}}</p>
+
+                <h5 class="card-title mt-2" data-key="studentEmail">Email</h5>
+                <p id="studentEmail" class="card-text">{{loggedInUser.email}}</p>
+
+                <h5 class="card-title mt-2" data-key="studentTelefon">Telefon</h5>
+                <p id="studentTelefon" class="card-text">{{loggedInUser.tlfnr}}</p>
+                
+            </div>
+        </div>
+
+        <div class="container mr-5 ml-5">
+            <div class="card bg-light" id="profildiv">
+                    <img class="card-img align-self-center" id="profilbillede" style="max-width: 30%; padding-top:10px; padding-left:10px; padding-bottom:10px"
+                        src="../images/fiskemobning.png" alt="Logo">
+            
+            </div>
+        </div>
+    </div>
+</div>
