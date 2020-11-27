@@ -1,28 +1,37 @@
 <div class="container-fluid ">
-    <div id="cardContainerProfil" class="card-columns mt-5 mr-5">
+    <div id="cardContainerProfile" class="card-columns mt-5 mr-5">
 
         <div class="container">
             <div class="card bg-light text-dark mx-5 pl-4 pt-2 pb-3">
-                <h4 data-key="virksomhedsoplysninger" class="card-title mb-0">Virksomheds oplysninger</h4>
-                <a href="/profil/rediger" class="font-weight-bold text-dark" data-key="redigerprofil"><u>Rediger
+                <div class="profileDetailContainer">
+                    <h4 data-key="virksomhedsoplysninger" class="card-title mb-0">Virksomheds oplysninger</h4>
+                </div>
+
+                <div class="profileDetailContainer">
+                    <a href="/profil/rediger" class="font-weight-bold text-dark" data-key="redigerprofil"><u>Rediger
                         profil</u></a>
+                </div>
 
-                <h5 class="card-title mt-2" data-key="navn">Navn</h5>
-                <p id="navn" class="card-text">Zealand Erhversakademi</p>
+                <div class="profileDetailContainer">
+                    <h5 class="card-title mt-2" data-key="navn">Navn</h5>
+                    <p id="navn" class="card-text">Zealand Erhversakademi</p>
+                </div>
 
-                <h5 class="card-title mt-2" data-key="email">Email</h5>
-                <p id="email" class="card-text">Zealand@zealand.dk</p>
+                <div class="profileDetailContainer">
+                    <h5 class="card-title mt-2" data-key="email">Email</h5>
+                    <p id="email" class="card-text">Zealand@zealand.dk</p>
+                </div>
 
-                <div id="hjemmesidediv">
+                <div id="hjemmesidediv" class="profileDetailContainer">
                     <h5 class="card-title mt-2" data-key="hjemmeside">Hjemmeside</h5>
                     <p id="hjemmeside" class="card-text">https://www.zealand.dk/</p>
                 </div>
 
-                <div id="telefondiv">
+                <div id="telefondiv" class="profileDetailContainer">
                     <h5 class="card-title mt-2" data-key="telefon">Telefon nummer</h5>
                     <p id="telefon" class="card-text">12341234</p>
                 </div>
-                <div id="direktoerdiv">
+                <div id="direktoerdiv" class="profileDetailContainer">
                     <h5 class="card-title mt-2" data-key="direktoer">Direktør</h5>
                     <p id="direktoer" class="card-text">temp</p>
                 </div>
@@ -33,30 +42,45 @@
                     <p class="card-text" id="by">Køge</p>
                 </div>
 
-                <h5 class="card-title mt-2" data-key="adresse">Addresse</h5>
-                <p id="adresse" class="card-text">Lyngvej 21</p>
+                <div class="profileDetailContainer">
+                    <h5 class="card-title mt-2" data-key="adresse">Addresse</h5>
+                    <p id="adresse" class="card-text">Lyngvej 21</p>
+                </div>
 
-                <h5 class="card-title mt-2" data-key="land">Land</h5>
-                <p id="land" class="card-text">Danmark</p>
+                <div class="profileDetailContainer">
+                    <h5 class="card-title mt-2" data-key="land">Land</h5>
+                    <p id="land" class="card-text">Danmark</p>
+                </div>
 
-                <h5 class="card-title mt-2" data-key="CVR">CVR-nummer</h5>
-                <p id="CVR" class="card-text">31661471</p>
+                <div class="profileDetailContainer">
+                    <h5 class="card-title mt-2" data-key="CVR">CVR-nummer</h5>
+                    <p id="CVR" class="card-text">31661471</p>
+                </div>
             </div>
             <div class="card bg-light text-dark mx-5 pl-4 pt-2 pb-3 " id="beskrivelsediv">
                 <h4 class="card-title mb-0" data-key="beskrivelse">Beskrivelse:</h4>
                 <div class="w-100 h-100 pr-3 pt-2" id="beskrivelse" style="text-align:justify">orem ipsum dolor sit
-                    amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                    aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
-                    lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in
-                    vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-                    accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te
+                    amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore
+                    magna
+                    aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+                    suscipit
+                    lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit
+                    in
+                    vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero
+                    eros et
+                    accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore
+                    te
                     feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet
                     doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus
-                    legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius
-                    quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium
+                    legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me
+                    lius
+                    quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem
+                    consuetudium
                     lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit
-                    litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc
-                    nobis videntur parum clari, fiant sollemnes in futurum. </div>
+                    litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui
+                    nunc
+                    nobis videntur parum clari, fiant sollemnes in futurum.
+                </div>
             </div>
         </div>
 
@@ -65,24 +89,32 @@
             <div class="card bg-light text-dark  mr-5 ml-5 " id="logodiv">
 
                 <img class="card-img " id="virksomhedslogodiv"
-                    src="https://www.strunkmedia.com/wp-content/uploads/2018/05/bigstock-221516158.jpg" alt="Logo">
+                     src="https://www.strunkmedia.com/wp-content/uploads/2018/05/bigstock-221516158.jpg" alt="Logo">
 
             </div>
 
             <div class="card bg-light text-dark pl-4 pt-2 pb-3 mr-5 ml-5" id="kontaktdiv">
-                <h4 class="card-title mb-0" data-key="kontaktperson"> Kontakt person</h5>
+                <h4 class="card-title mb-0" data-key="kontaktperson"> Kontakt person</h4>
 
+                <div class="profileDetailContainer">
                     <h5 class="card-title mt-2" data-key="navn">Fornavn</h5>
                     <p id="kontaktnavn" class="card-text">eksempel</p>
+                </div>
 
+                <div class="profileDetailContainer">
                     <h5 class="card-title mt-2" data-key="efternavn">Efternavn</h5>
                     <p id="kontaktefternavn" class="card-text">eksempel</p>
+                </div>
 
+                <div class="profileDetailContainer">
                     <h5 class="card-title mt-2">Email</h5>
                     <p id="kontaktemail" class="card-text">eksempel</p>
+                </div>
 
+                <div class="profileDetailContainer">
                     <h5 class="card-title mt-2" data-key="stilling">Stlling</h5>
                     <p id="kontaktstilling" class="card-text">eksempel</p>
+                </div>
 
             </div>
 
@@ -125,30 +157,34 @@
 
             if (responseObject.beskrivelse === undefined) {
                 document.getElementById('beskrivelsediv').style.display = 'none'
+            } else {
+                document.getElementById('beskrivelse').innerText = responseObject.beskrivelse;
             }
-            else {document.getElementById('beskrivelse').innerText = responseObject.beskrivelse;}
 
-            if ( responseObject.kontaktnavn === undefined) {
+            if (responseObject.kontaktnavn === undefined) {
                 document.getElementById('kontaktdiv').style.display = 'none'
-            }
-            else {
+            } else {
                 document.getElementById('kontaktnavn').innerText = responseObject.kontaktnavn
                 document.getElementById('kontaktemail').innerText = responseObject.kontaktemail
                 document.getElementById('kontaktefternavn').innerText = responseObject.kontaktefternavn
                 document.getElementById('kontaktstilling').innerText = responseObject.kontaktstilling
             }
 
-            if ( responseObject.dokumenter === undefined) {
+            if (responseObject.dokumenter === undefined) {
                 document.getElementById('dokumentdiv').style.display = 'none'
+            } else {
+                document.getElementById('dokumenterhertil').innerText = responseObject.dokumenter
             }
-            else {document.getElementById('dokumenterhertil').innerText = responseObject.dokumenter}
 
-            if ( responseObject.logo === undefined) {
+            if (responseObject.logo === undefined) {
                 document.getElementById('logodiv').style.display = 'none'
-            } else {document.getElementById('virksomhedslogodiv').src = responseObject.logo}
+            } else {
+                document.getElementById('virksomhedslogodiv').src = responseObject.logo
+            }
 
-            document.getElementById('cardContainerProfil').style.display = 'flex';
-        };
+            document.getElementById('cardContainerProfile').style.display = 'flex';
+        }
+        ;
     }
     xhttp.open("GET", "/profil/getUser", true);
     xhttp.send();

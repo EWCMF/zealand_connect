@@ -16,8 +16,13 @@ body {
   width: 100%;
 }
 
-.container-fluid #cardContainerProfil {
+.container-fluid #cardContainerProfile {
   display: none;
+}
+
+
+#cardContainerProfile .profileDetailContainer{
+  margin-bottom: 30px;
 }
 
 h1,
