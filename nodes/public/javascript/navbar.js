@@ -1,3 +1,4 @@
+
 var lang = document.documentElement.lang;
 document.getElementById('da').style.display = 'none';
 if (lang == 'da') {
@@ -29,7 +30,18 @@ xhttp.onreadystatechange = function () {
 
             document.getElementById("ikkeLoggedeInd").style.display = 'none';
             document.getElementById("profileDropdown").style.display = 'block';
-            document.getElementById("profileDropdownName").innerHTML = responseObject.fornavn + " " + responseObject.efternavn
+            
+
+            if (responseObject.cvrnr == null) {
+                document.getElementById('cv').style.display = 'block';
+                document.getElementById('praktik').style.display = 'none';
+                document.getElementById("profileDropdownName").innerHTML = responseObject.fornavn + " " + responseObject.efternavn;
+            } else {
+                document.getElementById('cv').style.display = 'none';
+                document.getElementById('praktik').style.display = 'block';
+                document.getElementById("profileDropdownName").innerHTML = responseObject.navn;
+                
+            }
         }
 
     }
