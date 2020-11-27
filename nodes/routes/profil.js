@@ -14,11 +14,16 @@ router.get('/', function (req, res, next) {
             //TODO: Her skal der være virksomhedsprofil
             res.render('visprofil', {
                 language: reqLang(req, res)
+
             })
         } else if (user instanceof models.Student) {
-            res.render("studentprofil");
-        } else {
-            res.redirect("/");
+            let loggedInUser = {
+                email: user.email,
+                fornavn: user.fornavn,
+                efternavn: user.efternavn,
+                tlfnr: user.tlfnr,
+            }
+            res.render("studentprofil", {loggedInUser});
         }
     });
 });

@@ -254,19 +254,27 @@ router.get('/:id/Create_pdf', function (req, res, next) {
   var fs = require('fs');
   
   var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
   var myDoc = new pdf ({
     bufferPages:true
   });
-  var pdfStream = fs.createWriteStream('public/PDF/test.pdf')
+  var cvOutside;
+  var pdfStream = fs.createWriteStream('public/PDF/temp.pdf')
   myDoc.pipe(pdfStream);
   console.log(id);
   db.CV.findOne({
     raw: true,
+    nest: true,
     where: {
         id: parseInt(id)
+    },
+    include: {
+        model: db.Student,
+        as: 'student'
     }
 }).then((cv) => {
+    cvOutside = cv;
+
     var height = 12;
     // om mig ekstra højde
     var om_mig_characters = cv.om_mig.length;
@@ -349,7 +357,7 @@ router.get('/:id/Create_pdf', function (req, res, next) {
     myDoc.font('Times-Roman')
         .fontSize(24)
         .lineGap(2)
-        .text('Navn Navnesen',220,50)
+        .text(cv.student.fornavn + " " + cv.student.efternavn,220,50)
     
     myDoc.font('Times-Roman')
         .fontSize(10.72)
@@ -602,14 +610,14 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 });
     pdfStream.addListener('finish', function() {
       res.setHeader('content-type', 'application/pdf'),
-      res.download('public/PDF/test.pdf', 'Testpdf.pdf')
+      res.download('public/PDF/temp.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
     });
   
     async function deleteFile() {
   try {
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => resolve(
-      fs.unlinkSync('public/PDF/test.pdf', (err) => {
+      fs.unlinkSync('public/PDF/temp.pdf', (err) => {
         if (err) {
           console.error(err)
           return
