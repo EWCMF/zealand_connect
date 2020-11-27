@@ -27,11 +27,11 @@ describe('GET /mit-CV', function () {
 });
 
 // Denne er udkommenteret da den ellers bare ville lave tomme CV entries i databasen.
-describe('POST /mit-CV/submit', function () {
-    it('respond with status code OK 200', function(done) {
-        request(app).post('/mit-CV/submit').expect(200, done);
-    })
-});
+// describe('POST /mit-CV/submit', function () {
+//     it('respond with status code OK 200', function(done) {
+//         request(app).post('/mit-CV/submit').expect(200, done);
+//     })
+// });
 
 describe('GET /login', function () {
     it('respond with status code OK 200', function (done) {
@@ -84,6 +84,12 @@ describe('POST /opret-bruger/create', () => {
             .send(virksomhed)
             .end((err, res) => {
                 expect(res).to.have.status(200);
+                expect(res.text).to.include("Fejl ved oprettelse af bruger");
+                expect(res.text).to.include("Email findes allerede i systemet");
+                expect(res.text).to.include("Adgangskode skal være mellem 8 og 16 tegn");
+                expect(res.text).to.include("Telefonnummer er ugyldigt");
+                expect(res.text).to.include("By er ugyldig");
+                expect(res.text).to.include("CVR-nummer er ugyldigt");
                 done();
             });
     });
