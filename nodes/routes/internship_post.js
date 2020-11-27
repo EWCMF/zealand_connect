@@ -5,7 +5,7 @@ var sortJsonArray = require('sort-json-array');//Brugt til at få byer i alfabet
 var formidable = require("formidable");//Skal bruges når man håndtere filupload og alm. input i samme POST.
 var fs = require("fs");//Bruges til grundlæggen file hændtering.
 var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
-const { emailRegex, dateRegex, cvrRegex, linkRegex } = require("../constants/regex.js")
+const { emailRegex, dateRegex, cvrRegex, linkRegex } = require("../constants/regex.js");
 const db = require('../models');
 
 var tempDate = dateRegex.source
@@ -83,12 +83,11 @@ router.post('/', function (req, res, next) {
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
     function dbExe() {
       if (!inputError) {
-        db.InternshipPost.create(indhold).then((internshippost) => res.send(internshippost)).catch((error) => {
+        db.InternshipPost.create(indhold).then(generatePostCodeOptions()).catch((error) => {
           console.log(error);
           return res.status(400).send(error);
         });
       }
-      generatePostCodeOptions();
     }
 
     //Generere og validere om byen angivet i frontend er korrekt.
