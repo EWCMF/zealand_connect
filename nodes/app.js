@@ -9,7 +9,7 @@ var profilRouter = require('./routes/profil');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
 var internshipPostViewRouter = require('./routes/internship_view')
-var mit_CVRouter = require('./routes/mit-CV');
+var mit_CVRouter = require('./routes/mit-cv');
 var searchCVRouter = require('./routes/search-cv');
 var searchPraktikRouter = require('./routes/search-praktik');
 var loginRouter = require('./routes/login');
@@ -37,7 +37,21 @@ app.engine(
   "hbs",
   hbs({
     helpers: {
-      paginate: require('handlebars-paginate')
+      paginate: require('handlebars-paginate'),
+
+      selectState: (state, value) => {
+        if(state === value) {
+            return 'selected';
+        }
+        return '';
+      },
+
+      checkedState: (state) => {
+        if(state === 'true' || state === true){
+            return 'checked';
+        }
+        return '';
+      }
     },
     partialsDir: ["views/partials"],
     extname: ".hbs",
@@ -70,7 +84,7 @@ app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/internship_view', internshipPostViewRouter);
-app.use('/mit-CV', mit_CVRouter);
+app.use('/mit-cv', mit_CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/search-praktik', searchPraktikRouter);
 app.use('/login', loginRouter);
@@ -96,7 +110,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {layout: false});
 });
 
 module.exports = app;
