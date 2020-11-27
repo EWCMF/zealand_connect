@@ -76,10 +76,22 @@
                     <a class="nav-link" id="en" href="/language/en">English</a>
                     <a class="nav-link" id="da" href="/language/da">Dansk</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="display: none;" id="opretbruger"  href="/opret-bruger">Opret Bruger</a>
-                    <a class="nav-link" style="display: none;" id="profil" href="/profil">Profil<span class="sr-only">(current)</span></a>
+                <li class="nav-item" style="display: none;" id="ikkeLoggedeInd">
+                    <a class="nav-link" href="/opret-bruger">Opret Bruger</a>
+                    {{!-- <a class="nav-link" style="display: none;" id="profil" href="/profil">Profil<span class="sr-only">(current)</span></a> --}}
                 
+                </li>
+                <li class="nav-item dropdown" id="profileDropdown" style="display: none;">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdownName" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opslag
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarOpslag">
+                        <a class="dropdown-item" href="/profil">Profil</a>
+                        <a id="cv" class="dropdown-item" style="display: none;" href="/mit-cv">Mit CV</a>
+                        <a id="praktik" class="dropdown-item" style="display: none;" href="/mit-cv">Mine Praktikopslag</a>
+                    </div>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="display: none;" id="login" href="/login">Log ind</a>
@@ -107,41 +119,6 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
     <script src="/javascript/oversaettelse.js"></script>
-    <script>
-        var lang = document.documentElement.lang;
-        document.getElementById('da').style.display = 'none';
-        if (lang == 'da') {
-            document.getElementById('da').style.display = 'none';
-            document.getElementById('en').style.display = 'block';
-        }
-        else if (lang == 'en') {
-            document.getElementById('en').style.display = 'none';
-            document.getElementById('da').style.display = 'block';
-        }
-    </script>
-        <script>
-            //send get request til login route for at spørge om man er logget ind, render login knap hvis man ikke er logget ud, 
-            // ellers render logud knap hvis man er logget ind
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    //hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
-                    let responseObject = JSON.parse(this.responseText)
-                    if(responseObject.email===''){
-                        document.getElementById("logud").style.display='none';
-                        document.getElementById("login").style.display='block';
-                        document.getElementById("profil").style.display='none';
-                        document.getElementById("opretbruger").style.display='block';
-                    } else {
-                        document.getElementById("login").style.display='none';
-                        document.getElementById("logud").style.display='block';
-                        document.getElementById("opretbruger").style.display='none';
-                        document.getElementById("profil").style.display='block';
-                    }
-                }
-            };
-            xhttp.open("GET", "/login/loggedIn", true);
-            xhttp.send();
-        </script>
+    <script src="/javascript/navbar.js"></script>
     </body>
 </html>
