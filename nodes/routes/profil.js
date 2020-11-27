@@ -145,4 +145,12 @@ router.get('/getUser', function (req, res, next) {
     }
 });
 
+
+
+router.get('/getUser',function(req, res, next) {
+    findUserByEmail(req.user).then((user)=>{
+        res.send(user);
+    })
+});
+
 module.exports = router;
