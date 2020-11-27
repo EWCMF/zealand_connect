@@ -116,7 +116,7 @@ router.post('/query', function (req, res) {
             sprog
         }
 
-        var page = 1;
+        var page = parseInt(fields.page);
         var offset;
 
         if (page == 1) {
