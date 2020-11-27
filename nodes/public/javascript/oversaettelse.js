@@ -28,6 +28,9 @@ function brugStrings(lang) {
             // if(!key.includes("+hbs")) { // hvis der er +hbs, så appender det ikke
             // element.textContent += temp}
         }
+        if(key.includes('input')) { // beregnet til input, så placeholder kan vises på dansk og engelsk
+            element.value = langdata.languages[lang].strings[key]
+        }
     });
 }
 
@@ -45,7 +48,32 @@ function getLangdata() {
                 "labelHjemmeside": "Website",
                 "labelDirektoer": "CEO",
                 "labelLand": "Country",
+                "labelVaelgFil": "Select File",
                 "labeladgangskode": "Password",
+                "aAlleCVer": "All Resumes",
+                "aAllePraktikopslag": "All Internship posts",
+                "aLavPraktikopslag": "Create Internship post",
+                "aVirksomheder": "Companies",
+                "aOpslag": "Posts",
+                "aForVirksomheder": "For Companies",
+                "aFaaEnPraktikant": "Get an Intern",
+                "aPraktikForloebet": "Internship Course",
+                "aArbejdstidOgLæringsmål": "Working hours and Learning Objectives",
+                "aLoen": "Salary",
+                "aSamarbajdeOgSparring": "Cooperation and Sparring",
+                "aForsikring": "Insurance",
+                "aKontaktperson": "Contact",
+                "aPraktikkontrakten": "Internship Contract",
+                "aEvtProblemer": "Issues",
+                "aForStuderende": "For Students",
+                "aLogin": "Login",
+                "aLogud": "Log out",
+                "aProfil": "Profile",
+                "aMitCV": "My Resume",
+                "aMinePraktikOpslag": "My Internship posts",
+                "aOpretBruger": "Sign Up",
+                "inputNulstilAdgangskode": "Reset Password",
+                "inputGemAendringer": "Save Changes",
                 "placeholderadgangskode": "Password",
                 "labelgentagAdgangskode": "Repeat Password",
                 "placeholdergentagAdgangskode": "Repeat Password",
