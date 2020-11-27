@@ -496,3 +496,14 @@ input::placeholder {
 #companyLogo {
   margin-top: 8.5px;
 }
+
+#forsideText{
+  
+}
+
+#forsideLine{
+  margin-top: 10px;
+  background-color: #000000;
+  margin-left: 10%;
+  margin-right: 10%;
+}
