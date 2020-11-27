@@ -61,6 +61,7 @@ describe('POST /opret-bruger/create', () => {
             .post('/opret-bruger/create')
             .send(virksomhed)
             .end((err, res) => {
+                expect(err).to.be.null;
                 expect(res).to.have.status(200);
                 done();
             });
@@ -90,6 +91,28 @@ describe('POST /opret-bruger/create', () => {
                 expect(res.text).to.include("Telefonnummer er ugyldigt");
                 expect(res.text).to.include("By er ugyldig");
                 expect(res.text).to.include("CVR-nummer er ugyldigt");
+                done();
+            });
+    });
+});
+
+describe('POST /opret-bruger/create', () => {
+    it('it should meme', (done) => {
+        let virksomhed = {
+            email: "3wty4e",
+            gentagEmail: "wegy45u4",
+            password: "1234",
+            gentagPassword: "921jgre",
+            telefonnummer: "23ty35u",
+            by: "h434",
+            postnummer: "f43y",
+            cvr: "f4ey56"
+        }
+        chai.request(app)
+            .post('/opret-bruger/create')
+            .send(virksomhed)
+            .end((err, res) => {
+                expect(res).to.have.status(200);
                 done();
             });
     });
