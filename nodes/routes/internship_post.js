@@ -19,14 +19,19 @@ router.post('/', function (req, res, next) {
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    const { title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document } = fields;
-    var indhold = { title, email, contact, education, country, region, post_start_date, post_end_date, post_text, city, postcode, cvr_number, company_link, company_logo, post_document };
+    const { title, email, contact, education, country, region, post_start_date, post_end_date, post_text,
+      city, postcode, cvr_number, company_link, company_logo, post_document } = fields;
+    var indhold = {
+      title, email, contact, education, country, region, post_start_date, post_end_date,
+      post_text, city, postcode, cvr_number, company_link, company_logo, post_document };
+
     var inputError = false;
     var cityArray = [];
 
     var generatedCityOptions = "";
     var generatedPostCodeOptions = "";
     function generateCityOptions() {
+
       var xmlhttp = new XMLHttpRequest();
       xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -38,7 +43,8 @@ router.post('/', function (req, res, next) {
 
           res.render('internship_post', {
             title: 'Express', generatedCityOptions: generatedCityOptions,
-            generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR});
+            generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink,
+            dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR});
         }
       };
       xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
@@ -83,7 +89,6 @@ router.post('/', function (req, res, next) {
         });
       }
       generatePostCodeOptions();
-      console.log(res.headersSent);
     }
 
     //Generere og validere om byen angivet i frontend er korrekt.
@@ -124,9 +129,6 @@ router.post('/', function (req, res, next) {
 
     if (!files) {
       generateAndValidateCityArray();
-      indhold.post_document = "";
-      indhold.company_logo = "";
-      
     } else {
       /*fileUpload here*/
       var doc = files.post_document;
@@ -157,7 +159,6 @@ router.post('/', function (req, res, next) {
         });
       } else {
         console.log("invalid file");
-        indhold.post_document = "";
         reNameLogo();
       }
 
@@ -173,7 +174,6 @@ router.post('/', function (req, res, next) {
           });
         } else {
           console.log("invalid file");
-          indhold.company_logo = "";
           generateAndValidateCityArray();
         }
       }
