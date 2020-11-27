@@ -1,13 +1,13 @@
 <script src='/javascript/godkendelse-af-CV.js' defer></script>
 <div class="container-fluid">
     <!-- tekst med dit navn og start på form -->
-    <p class="text-center">{{Profil}}</p>
-    <form method="POST" action="mit-CV/submit" id="cvForm" name="cvForm">
+    <p class="text-center">{{profil}}</p>
+    <form method="POST" action="../mit-cv/submit" id="cvForm" name="cvForm">
         <!-- Overskrift textarea -->
         <div class="form-group required">
             <label for="exampleFormControlInput1">Overskrift</label>
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
-                placeholder="Stilling eller Status" onkeyup="countChars(this)">{{Overskrift}}</textarea>
+                placeholder="Stilling eller Status" onkeyup="countChars(this)">{{overskrift}}</textarea>
                 <p id="charNum">255 tegn</p>
             <p id="OverskriftError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
         </div>
@@ -19,14 +19,9 @@
                         <label for="exampleFormControlSelect1">Uddannelse</label>
                         <select class="form-control" id="uddannelse" name="uddannelse">
                             <option value="">Vælg din uddannelse</option>
-                            <option value="Datamatiker">Datamatiker</option>
-                            <option value="Handelsøkonom">Handelsøkonom</option>
-                            <option value="Finansøkonom">Finansøkonom</option>
-                            <option value="International Handel og markedsføring">International Handel og Markedsføring</option>
-                            <option value="Innovation og Entrepreneurship">Innovation og Entrepreneurship</option>
-                            <option value="BygningsKontruktør">Bygningskontruktør</option>
-                            <option value="Byggetekniker">Byggetekniker</option>
-                            <option value="Installatør, stærkstrøm">Installatør, stærkstrøm</option>
+                            {{#each uddannelser}}
+                            <option {{selectState name ../uddannelse }} value="{{name}}">{{name}}</option>
+                            {{/each}}
                         </select>
                      <p id="UddannelsesError" class="CVErrorColor" hidden="false">Du skal vælge en Uddannelse</p>
                     </div>
@@ -37,7 +32,7 @@
                         <label for="exampleFormControlInput1">Email adresse</label>
                         <input type="email" class="form-control" placeholder="name@example.com" id="email" name="email"
                              pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/" title="Du skal skrive din email her og mindst
-                            bruge et @" value={{Email}}>
+                            bruge et @" value={{email}}>
                       <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst
                             bruge et @</p>
                     </div>
@@ -46,7 +41,7 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlInput1">Sprog</label>
-                        <input class="form-control" placeholder="Dansk" id="sprog" name="sprog" value={{Sprog}}>
+                        <input class="form-control" placeholder="Dansk" id="sprog" name="sprog" value={{sprog}}>
                       <p id="sprogError" class="CVErrorColor" hidden="true">Du skal skrive dit ønskede sprog her</p> 
                     </div>
                 </div>
@@ -56,7 +51,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Speciale</label>
-                        <input class="form-control" id="speciale" name="speciale" value={{Speciale}}>
+                        <input class="form-control" id="speciale" name="speciale" value={{speciale}}>
                     </div>
                 </div>
                 <!-- Telefon nummer med inputfelt -->
@@ -65,7 +60,7 @@
                         <label for="exampleFormControlInput1">Telefon</label>
                         <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678" pattern="/^[1-9][0-9]{3}$/" title="Du skal skrive dit nummer, det skal præcist
                             være 8 tal og må ikke starte med 0"
-                            value={{Telefon}}>
+                            value={{telefon}}>
                            <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer, det skal præcist
                             være 8 tal og må ikke starte med 0</p>
                     </div>
@@ -74,7 +69,7 @@
                     <!-- LinkedIn med inputfelt -->
                     <div class="form-group">
                         <label for="exampleFormControlInput1">LinkedIn</label>
-                        <input class="form-control" id="linkedIn" name="linkedIn" placeholder="https://example.dk" pattern="/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm" title="Du skal skrive en hjemmeside">
+                        <input class="form-control" id="linkedIn" name="linkedIn" value='{{linkedIn}}' placeholder="https://example.dk" pattern="/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm" title="Du skal skrive en hjemmeside">
                      <p id="linkedInError" class="CVErrorColor" hidden="true">Du skal skrive en rigtig hjemmeside</p>
                     </div>
                 </div>
@@ -83,26 +78,26 @@
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">Link til CV på Youtube</label>
                 <textarea class="form-control" rows="3" id="youtube_link" name="youtube_link"
-                    placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">{{Yt_link}}</textarea>
+                    placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">{{yt_link}}</textarea>
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">Om mig</label>
                 <textarea class="form-control" rows="3" id="om mig" name="om"
-                    placeholder="Valgfri">{{Om}}</textarea>
+                    placeholder="Valgfri">{{om}}</textarea>
             </div>
             <div class="form-group required">
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">IT Kompetencer</label>
                 <textarea class="form-control" rows="3" id="iT_Kompetencer" name="iT_Kompetencer"
-                    placeholder="Word, Excel" onkeyup="countChars2(this)">{{IT-Kompetencer}}</textarea>
+                    placeholder="Word, Excel" onkeyup="countChars2(this)">{{it_kompetencer}}</textarea>
                     <p id="charNum2">255 tegn</p>
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">Udenlandsophold og frivilligt arbejde</label>
                 <textarea class="form-control" rows="3" id="UogFA" name="UogFA"
-                    placeholder="Valgfri">{{UogFA}}</textarea>
+                    placeholder="Valgfri">{{u_og_fa}}</textarea>
             </div>
             <div class="form-group">
                 <!-- textarea med erhvervserfaring -->
@@ -114,13 +109,13 @@
                 <!-- textarea med uddannelse -->
                 <label for="exampleFormControlTextarea1">Tidligere Uddannelse</label>
                 <textarea class="form-control" rows="3" id="tidligere-uddannelse" name="tidligere_uddannelse"
-                    placeholder="Tidligere eller lidt om din nuværende Uddannelse">{{Tidligere-uddannelse}}</textarea>
+                    placeholder="Tidligere eller lidt om din nuværende Uddannelse">{{tidligere_uddannelse}}</textarea>
                 <p id="Tidligere-uddannelseError" class="CVErrorColor" hidden="true">Skal udfyldes</p> 
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1">Hjemmeside</label>
-                <textarea class="form-control" rows="3" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk">{{Hjemmeside}}</textarea>
+                <textarea class="form-control" rows="3" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk">{{hjemmeside}}</textarea>
             </div>
             <div class="form-group">
                 <!-- textarea med hobby -->
@@ -130,8 +125,7 @@
             <div class="text-center">
                 <!-- CheckBox til om en cv skal være offentlig -->
                 <div class="CV-OffentligCheckBox">
-                    <input type="checkbox" class="form-check-input" id="OffentligCheckBox" name="offentligCheckBox"
-                        checked={{Offentlig}}>
+                    <input {{checkedState offentlig}} type="checkbox" class="form-check-input" id="OffentligCheckBox" name="offentligCheckBox">
                     <label class="form-check-label" for="OffentligCheckBox">Offentlig</label>
                 </div>
                 <!-- Button der sender informationen videre -->

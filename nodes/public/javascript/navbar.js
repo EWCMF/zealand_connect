@@ -16,7 +16,6 @@ xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         //hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
         let responseObject = JSON.parse(this.responseText)
-        console.log(responseObject);
 
         if (responseObject.email === '') {
             document.getElementById("logud").style.display = 'none';

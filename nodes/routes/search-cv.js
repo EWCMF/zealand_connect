@@ -43,6 +43,10 @@ router.get('/', async function (req, res, next) {
         include: {
             model: db.Student,
             as: 'student'
+        },
+        where: {
+            offentlig: true,
+            gyldig: true
         }
     });
 
@@ -67,7 +71,10 @@ router.post('/query', function (req, res) {
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
 
-        var where = {}
+        var where = {
+            offentlig: true,
+            gyldig: true
+        }
         var uddannelse = {
             [Op.or]: []
         };
@@ -165,7 +172,7 @@ router.post('/query', function (req, res) {
                 let template = hbs.compile(data + '');
 
                 let pageCount = Math.ceil(count / limit);
-                let withPages = pageCount == 1 ? true : false;
+                let withPages = pageCount > 1 ? true : false;
 
                 let html = template({
                     pagination: {
@@ -197,8 +204,6 @@ router.get('/:id', async function (req, res) {
         }
     });
 
-    console.log(cv);
-
     if (cv.hjemmeside.includes("://")) {
         console.log(cv.hjemmeside.indexOf("://") + 3)
         cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
@@ -217,19 +222,21 @@ router.get('/:id', async function (req, res) {
         //console.log(cv.linkedIn);
     }
 
-    if (!cv.gyldig) {
-        res.send('Du har ikke adgang til denne resurse.')
-    } else if (!cv.offentlig) {
-        if (req.user == null) {
-            res.send('Du har ikke adgang til denne resurse.')
-        }
-    }
-
     var ejer = false;
     if (req.user != null) {
         var found = await findUserByEmail(req.user);
-        if (found instanceof db.Student && found.id == cv.student_id) {
+        if (found instanceof db.Student && found.cv.id == cv.id) {
             ejer = true;
+        }
+    }
+
+    if (!cv.gyldig) {
+        if (!ejer) {
+            res.status(403).render('error403', {layout: false});
+        }
+    } else if (!cv.offentlig) {
+        if (req.user == null) {
+            res.status(403).render('error403', {layout: false});
         }
     }
 
