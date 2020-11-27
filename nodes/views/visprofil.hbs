@@ -1,5 +1,5 @@
 <div class="container-fluid ">
-    <div class="card-columns mt-5 mr-5">
+    <div id="cardContainerProfil" class="card-columns mt-5 mr-5">
 
         <div class="container">
             <div class="card bg-light text-dark mx-5 pl-4 pt-2 pb-3">
@@ -123,7 +123,6 @@
             document.getElementById('telefon').innerText = responseObject.tlfnr;
             document.getElementById('direktoer').innerText = responseObject.direktoer;
 
-           
             if (responseObject.beskrivelse === undefined) {
                 document.getElementById('beskrivelsediv').style.display = 'none'
             }
@@ -136,7 +135,7 @@
                 document.getElementById('kontaktnavn').innerText = responseObject.kontaktnavn
                 document.getElementById('kontaktemail').innerText = responseObject.kontaktemail
                 document.getElementById('kontaktefternavn').innerText = responseObject.kontaktefternavn
-                document.getElementById('kontaktstilling').innerText = responseObject.kontaktstilling 
+                document.getElementById('kontaktstilling').innerText = responseObject.kontaktstilling
             }
 
             if ( responseObject.dokumenter === undefined) {
@@ -147,7 +146,8 @@
             if ( responseObject.logo === undefined) {
                 document.getElementById('logodiv').style.display = 'none'
             } else {document.getElementById('virksomhedslogodiv').src = responseObject.logo}
-           
+
+            document.getElementById('cardContainerProfil').style.display = 'flex';
         };
     }
     xhttp.open("GET", "/profil/getUser", true);
