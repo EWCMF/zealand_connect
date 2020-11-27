@@ -29,6 +29,7 @@ module.exports = {
       hjemmeside: 'www.bilka.dk',
       fritidsinteresser: 'Ingen',
       offentlig: true,
+      gyldig: true,
       createdAt: new Date(),
       updatedAt: new Date(),
     }], {

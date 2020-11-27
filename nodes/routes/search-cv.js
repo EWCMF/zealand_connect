@@ -5,11 +5,14 @@ var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
 const limit = 5;
-const { Op } = require('sequelize');
+const {
+    Op
+} = require('sequelize');
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 
 
 router.get('/', async function (req, res, next) {
-    
+
     var page;
     var offset;
     if (req.query.page == null) {
@@ -40,6 +43,10 @@ router.get('/', async function (req, res, next) {
         include: {
             model: db.Student,
             as: 'student'
+        },
+        where: {
+            offentlig: true,
+            gyldig: true
         }
     });
 
@@ -63,8 +70,11 @@ router.post('/query', function (req, res) {
 
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
-    
-        var where = {}
+
+        var where = {
+            offentlig: true,
+            gyldig: true
+        }
         var uddannelse = {
             [Op.or]: []
         };
@@ -88,9 +98,9 @@ router.post('/query', function (req, res) {
                     'Dansk'
                 )
             }
-            
+
             if (element.includes('udland')) {
-                
+
                 sprog[Op.or].push({
                     [Op.not]: 'dansk'
                 })
@@ -108,7 +118,7 @@ router.post('/query', function (req, res) {
 
         var page = 1;
         var offset;
-        
+
         if (page == 1) {
             offset = 0
         } else {
@@ -135,11 +145,11 @@ router.post('/query', function (req, res) {
 
         var item = [count];
 
-        fs.readFileAsync = function(filename) {
-            return new Promise(function(resolve, reject) {
-                fs.readFile(filename, function(err, data){
-                    if (err) 
-                        reject(err); 
+        fs.readFileAsync = function (filename) {
+            return new Promise(function (resolve, reject) {
+                fs.readFile(filename, function (err, data) {
+                    if (err)
+                        reject(err);
                     else
                         resolve(data);
                 });
@@ -152,16 +162,18 @@ router.post('/query', function (req, res) {
 
         getFile('views\\search-cv-card.hbs').then((data) => {
             let template = hbs.compile(data + '');
-            let html = template({json: rows});
+            let html = template({
+                json: rows
+            });
             item.push(html);
 
             getFile('views\\search-pagination-template.hbs').then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
-                
+
                 let pageCount = Math.ceil(count / limit);
-                let withPages = pageCount == 1 ? true : false;
-                
+                let withPages = pageCount > 1 ? true : false;
+
                 let html = template({
                     pagination: {
                         page: page,
@@ -169,7 +181,7 @@ router.post('/query', function (req, res) {
                     },
                     withPages
                 });
-            
+
                 item.push(html);
                 res.send(item);
             });
@@ -177,10 +189,10 @@ router.post('/query', function (req, res) {
     });
 });
 
-router.get('/:id', function (req, res) {
+router.get('/:id', async function (req, res) {
     let id = req.params.id
 
-    db.CV.findOne({
+    var cv = await db.CV.findOne({
         raw: true,
         nest: true,
         where: {
@@ -190,31 +202,47 @@ router.get('/:id', function (req, res) {
             model: db.Student,
             as: 'student'
         }
-    }).then((cv) => {
-        console.log(cv);
+    });
 
-        if (cv.hjemmeside.includes("://")) {
-            console.log(cv.hjemmeside.indexOf("://") + 3)
-            cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
-            //console.log(cv.linkedIn);
+    if (cv.hjemmeside.includes("://")) {
+        console.log(cv.hjemmeside.indexOf("://") + 3)
+        cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+    }
+
+    if (cv.linkedIn.includes("://")) {
+        console.log(cv.linkedIn.indexOf("://") + 3)
+        cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+    }
+
+    if (cv.yt_link.includes("://")) {
+        console.log(cv.yt_link.indexOf("://") + 3)
+        cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://") + 3);
+        //console.log(cv.linkedIn);
+    }
+
+    var ejer = false;
+    if (req.user != null) {
+        var found = await findUserByEmail(req.user);
+        if (found instanceof db.Student && found.cv.id == cv.id) {
+            ejer = true;
         }
+    }
 
-        if (cv.linkedIn.includes("://")) {
-            console.log(cv.linkedIn.indexOf("://") + 3)
-            cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
-            //console.log(cv.linkedIn);
+    if (!cv.gyldig) {
+        if (!ejer) {
+            res.status(403).render('error403', {layout: false});
         }
-
-        if (cv.yt_link.includes("://")) {
-            console.log(cv.yt_link.indexOf("://")  + 3)
-            cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://")  + 3);
-            //console.log(cv.linkedIn);
+    } else if (!cv.offentlig) {
+        if (req.user == null) {
+            res.status(403).render('error403', {layout: false});
         }
+    }
 
-        res.render('cv', {
-            json: cv
-        });
-      
+    res.render('cv', {
+        json: cv,
+        ejer: ejer
     });
 
 });
@@ -230,7 +258,7 @@ router.get('/:id/Create_pdf', function (req, res, next) {
   var myDoc = new pdf ({
     bufferPages:true
   });
-  var pdfStream = fs.createWriteStream('../nodes/public/PDF/test.pdf')
+  var pdfStream = fs.createWriteStream('public/PDF/test.pdf')
   myDoc.pipe(pdfStream);
   console.log(id);
   db.CV.findOne({
@@ -574,14 +602,14 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 });
     pdfStream.addListener('finish', function() {
       res.setHeader('content-type', 'application/pdf'),
-      res.download('../nodes/public/PDF/test.pdf', 'Testpdf.pdf')
+      res.download('public/PDF/test.pdf', 'Testpdf.pdf')
     });
   
     async function deleteFile() {
   try {
     let promise = new Promise((resolve, reject) => {
       setTimeout(() => resolve(
-      fs.unlinkSync('../nodes/public/PDF/test.pdf', (err) => {
+      fs.unlinkSync('public/PDF/test.pdf', (err) => {
         if (err) {
           console.error(err)
           return

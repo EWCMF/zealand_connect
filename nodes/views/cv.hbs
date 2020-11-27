@@ -53,8 +53,11 @@
                 </a>
             </div>
         </div>
-        <div class="col-2">
-            <button type="button" class="btn btn-success ml-5" onclick="window.location.href='/search-cv/{{json.id}}/Create_pdf'">Download Pdf</button>
+        <div class="col-2 d-flex flex-column">
+            <button type="button" class="btn btn-success " onclick="window.location.href='/search-cv/{{json.id}}/Create_pdf'">Download Pdf</button>
+            {{#if ejer}}
+            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger CV</button>
+            {{/if}}
         </div>
     </div>
     <hr class="mb-4">
