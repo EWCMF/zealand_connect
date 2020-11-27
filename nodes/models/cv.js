@@ -33,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     tidligere_uddannelse: DataTypes.TEXT,
     hjemmeside: DataTypes.STRING,
     fritidsinteresser: DataTypes.TEXT,
-    offentlig: DataTypes.BOOLEAN
+    offentlig: DataTypes.BOOLEAN,
+    gyldig: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'CV',
