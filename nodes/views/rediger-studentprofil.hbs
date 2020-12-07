@@ -16,11 +16,11 @@
             <textarea class="form-control" name="efternavn" id="efternavn" rows="2">{{loggedInUser.efternavn}}</textarea>
             <p id="efternavnError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
         </div>
-        {{!-- <div class="form-group required">
+        <div class="form-group required" style="display: none;">
             <label for="email">Email</label>
             <textarea class="form-control" name="email" id="email" rows="2">{{loggedInUser.email}}</textarea>
             <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
-        </div> --}}
+        </div>
         <div class="form-group required">
             <label for="telefon">Telefon</label>
             <textarea type="number" class="form-control" name="telefon" id="telefon" rows="2">{{loggedInUser.tlfnr}}</textarea>
