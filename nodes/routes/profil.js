@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
+const editStudent = require('../persistence/usermapping').editStudent;
 const models = require("../models");
 const validation = require("../validation/input-validation");
 var {
@@ -36,7 +37,15 @@ router.get('/rediger', function (req, res, next) {
     //todo: find bruger og indsæt dens data i render hbs.
     findUserByEmail(req.user).then((user) => {
         if (user instanceof models.Student) {
-            res.send("not implemented yet mate");
+            let loggedInUser = {
+                email: user.email,
+                fornavn: user.fornavn,
+                efternavn: user.efternavn,
+                tlfnr: user.tlfnr,
+            }
+
+            res.render("rediger-studentprofil", {loggedInUser});
+
         } else {
             //render with potential errors and information about the profile
             res.render("rediger-virksomhedsprofil", {
@@ -67,6 +76,22 @@ router.get('/rediger', function (req, res, next) {
             });
         }
     });
+});
+
+router.post('/redigerstudent-save', function(req, res) {
+    console.log("her er post request fra redigering af student");
+    console.log(req.body);
+    let email = req.body.email;
+    let fornavn = req.body.fornavn;
+    let efternavn = req.body.efternavn;
+    let telefon = parseInt(req.body.telefon);
+
+    editStudent(email, fornavn, efternavn, telefon);
+    res.redirect('/profil')
+
+
+
+    console.log(email + fornavn + efternavn + telefon);
 });
 
 router.post('/rediger-save', function (req, res, next) {
