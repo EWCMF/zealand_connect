@@ -19,7 +19,7 @@ router.post('/', function (req, res, next) {
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    const { title, email, contact, education, country, region, post_start_date, post_end_date, post_text,
+    const {title, email, contact, education, country, region, post_start_date, post_end_date, post_text,
       city, postcode, cvr_number, company_link, company_logo, post_document } = fields;
     var indhold = {
       title, email, contact, education, country, region, post_start_date, post_end_date,
@@ -40,12 +40,8 @@ router.post('/', function (req, res, next) {
           myObj.forEach(element => {
             generatedCityOptions += "<option value='" + element.primærtnavn + "'>" + element.primærtnavn + "</option>"
           });
-
-          res.render('internship_post', {
-            title: 'Express', generatedCityOptions: generatedCityOptions,
-            generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink,
-            dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR});
-        }
+          
+          }
       };
       xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
       xmlhttp.setRequestHeader("Content-type", "application/json");
@@ -81,12 +77,14 @@ router.post('/', function (req, res, next) {
     if (education == 0) { console.log('Invalid choice'); inputError = true; }
 
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
-    function dbExe() {
+    async function dbExe() {
       if (!inputError) {
-        db.InternshipPost.create(indhold).then(generatePostCodeOptions()).catch((error) => {
-          console.log(error);
-          return res.status(400).send(error);
-        });
+          const post = await db.InternshipPost.create(indhold).catch((error) => {
+            console.log(error);
+            return res.status(400).send(error);
+          });
+          res.redirect('../internship_view/'+post.id)
+          
       }
     }
 
@@ -195,7 +193,7 @@ router.get('/', function (req, res, next) {
         });
 
         res.render('internship_post', {
-          title: 'Express', generatedCityOptions: generatedCityOptions,
+          title: 'Opret Praktikopslag', generatedCityOptions: generatedCityOptions,
           generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
         });
       }
