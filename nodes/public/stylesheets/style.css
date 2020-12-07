@@ -497,3 +497,12 @@ input::placeholder {
 #companyLogo {
   margin-top: 8.5px;
 }
+
+.tooltiphelp{
+  background-color: #faee84;
+  border-radius: 100%;
+  display: inline-block;
+  text-align: center;
+  width: 1rem;
+  height: 1rem;
+}
