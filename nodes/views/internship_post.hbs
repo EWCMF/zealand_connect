@@ -142,8 +142,9 @@
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt" class="custom-file-input"
-                  id="CompanyDoc" onchange="updateInputLabel('docLabel', 'CompanyDoc')">
+                  id="companyDoc" onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
                 <label class="custom-file-label" id="docLabel" for="CompanyDoc">Vælg fil</label>
+                <p id="companyDocError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
               </div>
             </div>
           </div>
@@ -152,8 +153,9 @@
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input"
-                  id="CompanyLogo" onchange="updateInputLabel('logoLabel', 'CompanyLogo')">
-                <label class="custom-file-label" id="logoLabel" for="CompanyLogo">Vælg fil</label>
+                  id="companyLogo" onchange="validateAndUpdateInputLabel('logoLabel', 'companyLogo')">
+                <label class="custom-file-label" id="logoLabel" for="companyLogo">Vælg fil</label>
+                <p id="companyLogoError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
               </div>
             </div>
           </div>
@@ -228,8 +230,18 @@
     }
   }
 
-  function updateInputLabel(labelId, inputId) {
-    document.getElementById(labelId).innerHTML = document.getElementById(inputId)
-      .value;
+  function validateAndUpdateInputLabel(labelId, inputId) {
+    var file = document.getElementById(inputId).files[0];
+    console.log(file)
+    //Checker om der er tilføjet filer
+    //Henter den indexerede fil i og sætter dens str til kilobytes
+    var fsize = Math.round(file.size / 1000);
+
+    //Check fil størrelsen på hver fil
+    if (fsize >= 10240) {
+      alert("File selected is too big, maximum size is 10MB")
+    }
+
+    document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
   }
 </script>
