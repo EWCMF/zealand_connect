@@ -1,4 +1,148 @@
 <div class="container-fluid">
+    <div class="row mt-4 mb-4">
+        <div class="col-2">
+            <img class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
+        </div>
+        <div class="col-1">
+            <div class="col">
+                <h2 class="mb-3">
+                    Navn:
+                </h2>
+                <h6 class="mb-3">
+                    Mail:
+                </h6>
+                <h6 class="mb-3">
+                    Tlf:
+                </h6>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="col">
+                <h2 class="mb-3">
+                    {{loggedInUser.fornavn}} {{loggedInUser.efternavn}}
+                </h2>
+                <h6 class="mb-3">
+                    <a href="mailto:{{loggedInUser.email}}">{{loggedInUser.email}}</a>
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInUser.tlfnr}}
+                </h6>
+            </div>
+        </div>
+        <div class="col-2 d-flex flex-column">
+            <button type="button" class="btn btn-success " onclick="window.location.href='/profil/rediger'">Rediger profil</button>
+
+            {{!-- {{#if ejer}}
+            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger CV</button>
+            {{/if}} --}}
+        </div>
+    </div>
+    <hr class="mb-4">
+
+    {{!-- <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Om mig
+            </h4>
+            <!--<hr class="mb-2 mt-0">-->
+            <p class="autobreak">
+                {{json.om_mig}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Hvad jeg søger
+            </h4>
+            <p class="autobreak">
+                {{json.overskrift}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Erfaring
+            </h4>
+            <p class="autobreak">
+                {{json.erhvervserfaring}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Uddannelse
+            </h4>
+            <p class="autobreak">
+                {{json.uddannelse}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Speciale
+            </h4>
+            <p class="autobreak">
+                {{json.speciale}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Tidligere uddannelse
+            </h4>
+            <p class="autobreak">
+                {{json.uddannelse}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Udenlandsophold og frivilligt arbejde   
+            </h4>
+            <p class="autobreak">
+                {{json.udenlandsophold_og_frivilligt_arbejde}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Fritidsinteresser
+            </h4>
+            <p class="autobreak">
+                {{json.fritidsinteresser}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                It-kompetencer   
+            </h4>
+            <p class="autobreak">
+                {{json.it_kompetencer}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center">
+                Sprog   
+            </h4>
+            <p class="autobreak">
+                {{json.sprog}}
+            </p>
+        </div>
+    </div> --}}
+
+</div>
+{{!-- <div class="container-fluid">
     <div class="card-columns mt-5 mr-5">
 
         <div class="container">
@@ -30,4 +174,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
