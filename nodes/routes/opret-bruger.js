@@ -10,36 +10,41 @@ const { validateEmail, validateCVR, validatePhone, validateCity, validatePasswor
     checkForIdenticals } = require('../validation/input-validation');
 
 router.get('/', function (req, res, next) {
-    let errors = req.query;
-    console.log("ERRORS!");
-    console.log(errors);
+   // let errors = req.query;
+   // console.log("ERRORS!");
+   // console.log(errors);
     res.render('opret-bruger', {
-        succesBesked: errors.succesBesked,
-        fejlBesked: errors.fejlBesked,
-        emailError: errors.EmailError,
-        passwordError: errors.PasswordError,
-        tlfnrError: errors.TlfnrError,
-        cvrError: errors.CVRError,
-        byError: errors.ByError,
-        postnrError: errors.PostnrError,
+       // succesBesked: errors.succesBesked,
+       // fejlBesked: errors.fejlBesked,
+       // emailError: errors.EmailError,
+       // passwordError: errors.PasswordError,
+       // tlfnrError: errors.TlfnrError,
+       // cvrError: errors.CVRError,
+       // byError: errors.ByError,
+       // postnrError: errors.PostnrError,
         language: reqLang(req)
     });
 });
 
-router.post('/create', function (req, res) {
-    let atLeastOneErrorIsPresent = false;
+router.post('/createErrors', (req, res) => {
+     // Indlæs variable fra viewet
+     console.log('before email req.body')
+     let jsonBody = JSON.parse(req.body);
+     let email = jsonBody.email;
 
-    // Indlæs variable fra viewet
-    let email = req.body.email;
-    let gentagEmail = req.body.gentagEmail;
-    let password = req.body.password;
-    let gentagPassword = req.body.gentagPassword;
-    let tlfnr = req.body.telefonnummer;
-    let by = req.body.by;
-    let postnr = req.body.postnummer;
-    let cvrnr = req.body.cvr;
+     console.log(jsonBody)
 
-    let errors = {
+     let gentagEmail = jsonBody.gentagEmail;
+     let password = jsonBody.password;
+     let gentagPassword = jsonBody.gentagPassword;
+     let tlfnr = jsonBody.tlfnr;
+     let by = jsonBody.by;
+     let postnr = jsonBody.postnr;
+     let cvrnr = jsonBody.cvrnr;
+
+     //reset errors
+     let atLeastOneErrorIsPresent = false;
+     let errors = {
         EmailError: "",
         PasswordError: "",
         TlfnrError: "",
@@ -47,7 +52,9 @@ router.post('/create', function (req, res) {
         CVRError: "",
         PostnrError: "",
     }
+    
 
+    // valider 
     if (!validateEmail(email)) {
         errors.EmailError = "Email er ugyldig";
         atLeastOneErrorIsPresent = true;
@@ -82,6 +89,29 @@ router.post('/create', function (req, res) {
         atLeastOneErrorIsPresent = true;
     }
 
+    
+    findUserByEmail(email).then((userFoundByEmail) => {
+        let aUserExistsWithThatEmail = false;
+        if (userFoundByEmail !== null) {
+            errors.EmailError = "Email findes allerede i systemet";
+            aUserExistsWithThatEmail = true;
+            atLeastOneErrorIsPresent = true;
+        }
+        findUserByCVR(cvrnr).then((userFoundByCVR) => {
+            if (userFoundByCVR !== null){
+                errors.CVRError = "CVR-nummer findes allerede i systemet";
+                atLeastOneErrorIsPresent = true;
+            } 
+            res.send(errors);
+        })
+    })
+});
+    
+
+
+router.post('/create', function (req, res) {
+
+   
     findUserByEmail(email).then((userFoundByEmail) => {
         let aUserExistsWithThatEmail = false;
         if (userFoundByEmail !== null) {
@@ -115,6 +145,7 @@ router.post('/create', function (req, res) {
         } else {
             succesBesked='Succesfuld brugeroprettelse';
         }
+        
         res.redirect(
             '/opret-bruger?' +
             'succesBesked=' + succesBesked +

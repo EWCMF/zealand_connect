@@ -18,6 +18,8 @@ var forsideRouter = require('./routes/forside')
 var profilRouter = require('./routes/profil')
 var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser')
+
 
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -77,6 +79,8 @@ app.use(cookieSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(bodyParser.text({ type: "text/plain"}))
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);

@@ -1,19 +1,21 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<div class="container-fluid">
+<div
+    class="container-fluid">
+    <!-- metode .submit tæller på samme måde som input submit og så kalde form's id  -->
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8">
             <div id="loginBoxBackground">
                 <div id="loginContent" class="text-center">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
                     <div class="loginBtnBox">
-                        <form class="text-left" method="post" action="opret-bruger/create" id="opretBrugerForm"
-                            name="opretBrugerForm" id="virksomhedOpret">
-                            <div style="color: red;" class="text-center">{{fejlBesked}}</div>
-                            <div style="color: green;" class="text-center">{{succesBesked}}</div><br>
+                        <form class="text-left" id="opretBrugerForm" name="opretBrugerForm" id="virksomhedOpret">
+                            <div style="color: red;" class="text-center" id="fejlBesked">{{fejlBesked}}</div>
+                            <div style="color: green;" class="text-center" id="succesBesked">{{succesBesked}}</div><br>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{emailError}} </div>
+                                <div class="col-7 col-form-label formError" id="emailError">{{emailError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="email" class="col-5 col-form-label">Email</label>
@@ -23,84 +25,84 @@
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{gentagEmailError}} </div>
+                                <div class="col-7 col-form-label formError" id="ge">{{gentagEmailError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="gentagEmail" data-key="labelGentagEmail" class="col-5 col-form-label">Gentag email</label>
                                 <div class="col-7">
-                                    <input id="gentagEmail" name="gentagEmail" type="text" class="form-control"
-                                        placeholder="Gentag email" data-key="placeholderGentagEmail" required>
+                                    <input id="gentagEmail" name="gentagEmail" type="text" class="form-control" placeholder="Gentag email" data-key="placeholderGentagEmail" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{passwordError}} </div>
+                                <div class="col-7 col-form-label formError" id="passwordError">{{passwordError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="adgangskode" data-key="labeladgangskode" class="col-5 col-form-label">Adgangskode</label>
                                 <div class="col-7">
-                                    <input id="adgangskode" name="password" type="password" class="form-control"
-                                        placeholder="Adgangskode" data-key="placeholderadgangskode" required>
+                                    <input id="adgangskode" name="password" type="password" class="form-control" placeholder="Adgangskode" data-key="placeholderadgangskode" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{gentagPasswordError}} </div>
+                                <div class="col-7 col-form-label formError">{{gentagPasswordError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="gentagAdgangskode" data-key="labelgentagAdgangskode" class="col-5 col-form-label">Gentag adgangskode</label>
                                 <div class="col-7">
-                                    <input id="gentagAdgangskode" name="gentagPassword" type="password"
-                                        class="form-control" placeholder="Gentag Adgangskode"
-                                        data-key="placeholdergentagAdgangskode" required>
+                                    <input id="gentagAdgangskode" name="gentagPassword" type="password" class="form-control" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{cvrError}} </div>
+                                <div class="col-7 col-form-label formError" id="cvrError">{{cvrError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="cvr" data-key="labelcvr" class="col-5 col-form-label">CVR-Nummer</label>
                                 <div class="col-7">
-                                    <input id="cvr" name="cvr" type="text" class="form-control" placeholder="CVR-Nummer"
-                                        data-key="placeholdercvr" required>
+                                    <input id="cvr" name="cvr" type="text" class="form-control" placeholder="CVR-Nummer" data-key="placeholdercvr" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{tlfnrError}} </div>
+                                <div class="col-7 col-form-label formError" id="tlfnrError">{{tlfnrError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="telefonnummer" data-key="labelTelefonnummer" class="col-5 col-form-label">Telefonnummer</label>
                                 <div class="col-7">
-                                    <input id="telefonnummer" name="telefonnummer" type="string" class="form-control"
-                                        placeholder="telefonnummer" data-key="placeholderTelefonnummer" required>
+                                    <input id="telefonnummer" name="telefonnummer" type="string" class="form-control" placeholder="telefonnummer" data-key="placeholderTelefonnummer" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{byError}} </div>
+                                <div class="col-7 col-form-label formError" id="byteError">{{byError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="by" data-key="labelBy" class="col-5 col-form-label">By</label>
                                 <div class="col-7">
-                                    <input id="by" name="by" type="string" class="form-control" placeholder="By"
-                                        data-key="placeholderBy" required>
+                                    <input id="by" name="by" type="string" class="form-control" placeholder="By" data-key="placeholderBy" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{postnrError}} </div>
+                                <div class="col-7 col-form-label formError" id="postnrError">{{postnrError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="postnummer" data-key="labelPostnummer" class="col-5 col-form-label">Postnummer</label>
                                 <div class="col-7">
-                                    <input id="postnummer" name="postnummer" type="string" class="form-control"
-                                        placeholder="Postnummer" data-key="placeholderPostnummer" required>
+                                    <input id="postnummer" name="postnummer" type="string" class="form-control" placeholder="Postnummer" data-key="placeholderPostnummer" required>
                                 </div>
                             </div>
-                    </div>
-                    <button class="gulKnap" data-key="opret"> Opret Bruger</button>
+                        </div>
+                        <button class="gulKnap" data-key="opret" type="button" id="submitBtn" onclick="submitCheck()">
+                            Opret Bruger</button>
                     </form>
                 </div>
             </div>
@@ -112,3 +114,29 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        function submitCheck() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
+                    let responseObject = JSON.parse(this.responseText)
+
+                    //document.getElementById('fejlBesked').innerHTML = responseObject.email
+                }
+            }
+            xhttp.open("POST", "/opret-bruger/createErrors", true);
+            xhttp.setRequestHeader("Content-Type", "text/plain")
+            xhttp.send(JSON.stringify ({
+                email: "email@emgail.com",
+                gentagEmail: "email@emgail.com",
+                password: "11111111",
+                gentagPassword: "11111111",
+                tflnr: "99999999",
+                by: "by",
+                postnr: "1111",
+                cvrnr: "00000000"
+            }));
+        };
+    </script>
