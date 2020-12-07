@@ -434,6 +434,16 @@ input::placeholder {
   color: red;
 }
 
+#memeForm .col-sm-12 .col-sm-4{
+  padding: 0;
+  margin: 0;
+}
+
+#profilbillede {
+  max-height: 250px;
+  max-width: 250px;
+}
+
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
@@ -517,7 +527,7 @@ input::placeholder {
 }
 
 #forsideText{
-  
+
 }
 
 #forsideLine{
