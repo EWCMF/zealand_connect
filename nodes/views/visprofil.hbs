@@ -1,4 +1,93 @@
-<div class="container-fluid ">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1 id="cvOverskrift">Virksomhed</h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt-3 mb-4">
+        <div class="col-2">
+            <img class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
+        </div>
+        <div class="col-1">
+            <div class="col">
+                <h2 class="mb-3">
+                    Navn:
+                </h2>
+                <h6 class="mb-3">
+                    Mail:
+                </h6>
+                <h6 class="mb-3">
+                    Tlf:
+                </h6>
+                <h6 class="mb-3">
+                    CVR:
+                </h6>
+                <h6 class="mb-3">
+                    Address:
+                </h6>
+                <h6 class="mb-3">
+                    Hjemmeside:
+                </h6>
+                <h6 class="mb-3">
+                    Direktør:
+                </h6>
+                <h6 class="mb-3">
+                    Land:
+                </h6>
+                <h6 class="mb-3">
+                    Postnummer:
+                </h6>
+                <h6 class="mb-3">
+                    By:
+                </h6>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="col">
+                <h2 class="mb-3">
+                    {{loggedInVirksomhed.navn}}
+                </h2>
+                <h6 class="mb-3">
+                    <a href="mailto:{{loggedInVirksomhed.email}}">{{loggedInVirksomhed.email}}</a>
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.tlfnr}}
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.cvrnr}}
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.adresse}}
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.hjemmeside}}
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.direktoer}}
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.land}}
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.postnr}}
+                </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.by}}
+                </h6>
+            </div>
+        </div>
+        <div class="col-2 d-flex flex-column">
+            <button type="button" class="btn btn-success " onclick="window.location.href='/profil/rediger'">Rediger profil</button>
+
+            {{!-- {{#if ejer}}
+            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger CV</button>
+            {{/if}} --}}
+        </div>
+    </div>
+    <hr class="mb-4">
+
+{{!-- <div class="container-fluid ">
     <div id="cardContainerProfile" class="card-columns mt-5 mr-5">
 
         <div class="container">
@@ -189,4 +278,4 @@
     xhttp.open("GET", "/profil/getUser", true);
     xhttp.send();
 
-</script>
+</script> --}}
