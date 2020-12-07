@@ -122,7 +122,7 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                     let responseObject = JSON.parse(this.responseText)
-
+                    console.log(responseObject)
                     //document.getElementById('fejlBesked').innerHTML = responseObject.email
                 }
             }
@@ -133,7 +133,7 @@
                 gentagEmail: "email@emgail.com",
                 password: "11111111",
                 gentagPassword: "11111111",
-                tflnr: "99999999",
+                tflnr: "1234",
                 by: "by",
                 postnr: "1111",
                 cvrnr: "00000000"
