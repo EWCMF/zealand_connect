@@ -1,3 +1,4 @@
+
 var lang = document.documentElement.lang;
 document.getElementById('da').style.display = 'none';
 if (lang == 'da') {
@@ -15,7 +16,6 @@ xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         //hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
         let responseObject = JSON.parse(this.responseText)
-        console.log(responseObject);
 
         if (responseObject.email === '') {
             document.getElementById("logud").style.display = 'none';
@@ -29,7 +29,19 @@ xhttp.onreadystatechange = function () {
 
             document.getElementById("ikkeLoggedeInd").style.display = 'none';
             document.getElementById("profileDropdown").style.display = 'block';
-            document.getElementById("profileDropdownName").innerHTML = responseObject.fornavn + " " + responseObject.efternavn
+            
+
+            if (responseObject.cvrnr == null) {
+                document.getElementById('cv').style.display = 'block';
+                document.getElementById('praktik').style.display = 'none';
+                document.getElementById("profileDropdownName").innerHTML = responseObject.fornavn + " " + responseObject.efternavn;
+            } else {
+                document.getElementById('cv').style.display = 'none';
+                document.getElementById('praktik').style.display = 'block';
+                document.getElementById('lav_praktik').style.display = 'block';
+                document.getElementById("profileDropdownName").innerHTML = responseObject.navn;
+                
+            }
         }
 
     }
