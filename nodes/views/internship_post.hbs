@@ -203,7 +203,8 @@
   dawaAutocomplete.dawaAutocomplete(document.getElementById("addressSearch"), {
     select: function (selected) {
       document.getElementById("selectedAddress").innerHTML = selected.tekst;
-    }
+    },
+    params: {per_side: '5'}
   });
 
   function validateAndUpdateInputLabel(labelId, inputId) {
