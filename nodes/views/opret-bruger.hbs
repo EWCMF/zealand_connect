@@ -80,7 +80,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="byteError">{{byError}}
+                                <div class="col-7 col-form-label formError" id="byError">{{byError}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -123,20 +123,25 @@
                 if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                     let responseObject = JSON.parse(this.responseText)
                     console.log(responseObject)
-                    //document.getElementById('fejlBesked').innerHTML = responseObject.email
+ 
+                    document.getElementById('emailError').innerHTML = responseObject.EmailError;
+                    document.getElementById('passwordError').innerHTML = responseObject.PasswordError;
+                    document.getElementById('tlfnrError').innerHTML = responseObject.TlfnrError
+                    document.getElementById('byError').innerHTML = responseObject.ByError
+                    document.getElementById('cvrError').innerHTML = responseObject.CVRError
                 }
             }
             xhttp.open("POST", "/opret-bruger/createErrors", true);
             xhttp.setRequestHeader("Content-Type", "text/plain")
             xhttp.send(JSON.stringify ({
-                email: "email@emgail.com",
-                gentagEmail: "email@emgail.com",
-                password: "11111111",
-                gentagPassword: "11111111",
-                tflnr: "1234",
-                by: "by",
-                postnr: "1111",
-                cvrnr: "00000000"
+                email: document.getElementById('email').value,
+                gentagEmail: document.getElementById('gentagEmail').value,
+                password: document.getElementById('adgangskode').value,
+                gentagPassword: document.getElementById('gentagAdgangskode').value,
+                tflnr: document.getElementById('telefonnummer').value,
+                by: document.getElementById('by').value,
+                postnr: document.getElementById('postnummer').value,
+                cvrnr: document.getElementById('cvr').value
             }));
         };
     </script>
