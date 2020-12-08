@@ -1,9 +1,8 @@
-<div class="container-fluid">
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-12 col-sm-8">
-
-            <p>Uddannelses opret</p>
-            <button id="opretBtn" onclick="opret()">Opret datamatiker</button>
+        <div class="mt-5">
+            <label class="mr-2">Uddannelses navn</label><input id="uddannelse" type="text">
+            <button id="opretBtn" onclick="opret()">Opret uddannelsen</button>
         </div>
     </div>
 
@@ -22,7 +21,7 @@
         xhttp.open('POST', '/uddannelser/create', true);
         xhttp.setRequestHeader("Content-Type", "text/plain")
         xhttp.send(JSON.stringify ({
-            name: "datamatiker"
+            name: document.getElementById('uddannelse').value
         }));
     }
 </script>

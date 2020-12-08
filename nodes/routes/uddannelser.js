@@ -11,7 +11,6 @@ router.get('/', (req,res) =>{
 
 router.post('/create', (req,res) =>{
     var jsonBody = JSON.parse(req.body)
-    console.log(jsonBody)
     createUddanelse(jsonBody.name)
 })
 
