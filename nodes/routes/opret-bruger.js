@@ -39,8 +39,6 @@ router.post('/create', function (req, res) {
     let postnr = req.body.postnummer;
     let cvrnr = req.body.cvr;
 
-    console.log(gentagPassword);
-
     let errors = {
         EmailError: "",
         PasswordError: "",
@@ -87,7 +85,7 @@ router.post('/create', function (req, res) {
     findUserByEmail(email).then((userFoundByEmail) => {
         let aUserExistsWithThatEmail = false;
         if (userFoundByEmail !== null) {
-            errors.EmailError = "Email eksisterer allerede i systemet";
+            errors.EmailError = "Email findes allerede i systemet";
             aUserExistsWithThatEmail = true;
             atLeastOneErrorIsPresent = true;
         }
@@ -97,7 +95,6 @@ router.post('/create', function (req, res) {
                 atLeastOneErrorIsPresent = true;
             } else if(!atLeastOneErrorIsPresent){
                 hashPassword(req.body.password).then((hashedPassword) => {
-                    console.log(email);
                     let virksomhedsBruger = {
                         email: email,
                         password: hashedPassword,

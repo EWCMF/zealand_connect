@@ -1,6 +1,69 @@
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src='/javascript/godkendelse-af-virksomhed.js' defer></script>
 
 <div class="container-fluid">
+    <h3 class="text-center">
+        {{loggedInVirksomhed.navn}}
+    </h3>
+
+    <form action="/profil/rediger-save" method="POST" id="redigerVirksomhedForm" name="redigerVirksomhedForm">
+        <div class="form-group required">
+            <label for="navn">Virksomheds Navn</label>
+            <textarea class="form-control" name="navn" id="navn" rows="2">{{loggedInVirksomhed.navn}}</textarea>
+            <p id="navnError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+        </div>
+        <div class="form-group required" style="display: none;">
+            <label for="email">Email</label>
+            <textarea class="form-control" name="email" id="email" rows="2">{{loggedInVirksomhed.email}}</textarea>
+            <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
+        </div>
+        <div class="form-group required">
+            <label for="telefon">Telefon</label>
+            <textarea type="number" class="form-control" name="telefon" id="telefon" rows="2">{{loggedInVirksomhed.tlfnr}}</textarea>
+            <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer, det skal præcist være 8 tal og må ikke starte med 0</p>
+        </div>
+        <div class="form-group required">
+            <label for="telefon">CVR Nummer</label>
+            <textarea type="number" class="form-control" name="cvrnr" id="cvrnr" rows="2">{{loggedInVirksomhed.cvrnr}}</textarea>
+            <p id="cvrnrError" class="CVErrorColor" hidden="true">Du skal skrive dit CVR nummer, det skal præcist være 8 tal og må ikke starte med 0</p>
+        </div>
+        <div class="form-group required">
+            <label for="telefon">Address</label>
+            <textarea type="number" class="form-control" name="address" id="address" rows="2">{{loggedInVirksomhed.adresse}}</textarea>
+            <p id="addressError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+        </div>
+        <div class="form-group required">
+            <label for="telefon">Hjemmeside</label>
+            <textarea type="number" class="form-control" name="hjemmeside" id="hjemmeside" rows="2">{{loggedInVirksomhed.hjemmeside}}</textarea>
+            <p id="hjemmesideError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+        </div>
+        <div class="form-group required">
+            <label for="telefon">Direktør</label>
+            <textarea type="number" class="form-control" name="direkoer" id="direkoer" rows="2">{{loggedInVirksomhed.direktoer}}</textarea>
+            <p id="direkoerError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+        </div>
+        <div class="form-group required">
+            <label for="telefon">Land</label>
+            <textarea type="number" class="form-control" name="land" id="land" rows="2">{{loggedInVirksomhed.land}}</textarea>
+            <p id="landError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+        </div>
+        <div class="form-group required">
+            <label for="telefon">Postnummer</label>
+            <textarea type="number" class="form-control" name="postnr" id="postnr" rows="2">{{loggedInVirksomhed.postnr}}</textarea>
+            <p id="postnrError" class="CVErrorColor" hidden="true">Du skal skrive dit postnummer, det skal præcist være 4 tal</p>
+        </div>
+        <div class="form-group required">
+            <label for="telefon">By</label>
+            <textarea type="number" class="form-control" name="by" id="by" rows="2">{{loggedInVirksomhed.by}}</textarea>
+            <p id="byError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+        </div>
+        <div>
+            <button type="button" class="btn btn-success" id="gem">Gem</button>
+        </div>
+
+    </form>
+</div>
+
+{{!-- <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8">
             <div id="loginBoxBackground">
@@ -144,4 +207,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
