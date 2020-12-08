@@ -117,31 +117,51 @@
 
 
     <script>
+        var backendIsProcessing = false;
         function submitCheck() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
-                    let responseObject = JSON.parse(this.responseText)
-                    console.log(responseObject)
- 
-                    document.getElementById('emailError').innerHTML = responseObject.EmailError;
-                    document.getElementById('passwordError').innerHTML = responseObject.PasswordError;
-                    document.getElementById('tlfnrError').innerHTML = responseObject.TlfnrError
-                    document.getElementById('byError').innerHTML = responseObject.ByError
-                    document.getElementById('cvrError').innerHTML = responseObject.CVRError
+            if(!backendIsProcessing){
+                backendIsProcessing = true;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
+                        let responseObject = JSON.parse(this.responseText)
+                        console.log(responseObject)
+                        document.getElementById('emailError').innerHTML = responseObject.EmailError;
+                        document.getElementById('passwordError').innerHTML = responseObject.PasswordError;
+                        document.getElementById('tlfnrError').innerHTML = responseObject.TlfnrError;
+                        document.getElementById('byError').innerHTML = responseObject.ByError;
+                        document.getElementById('cvrError').innerHTML = responseObject.CVRError;
+                        backendIsProcessing=false;
+                        //if there were no errors, then begin automatic login and redirect to profile
+                        if(responseObject.areThereErrors=="false"){
+                            //send login request baseret på values i input felter
+                            var xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    window.location.href = "../profil";
+                                }
+                            }
+                            xhttp.open("POST", "/login/authenticateVirksomhed", true);
+                            xhttp.setRequestHeader("Content-Type", "text/plain")
+                            xhttp.send(JSON.stringify ({
+                                email: document.getElementById('email').value,
+                                password: document.getElementById('adgangskode').value,
+                            }));
+                        }
+                    }
                 }
+                xhttp.open("POST", "/opret-bruger/createErrors", true);
+                xhttp.setRequestHeader("Content-Type", "text/plain")
+                xhttp.send(JSON.stringify ({
+                    email: document.getElementById('email').value,
+                    gentagEmail: document.getElementById('gentagEmail').value,
+                    password: document.getElementById('adgangskode').value,
+                    gentagPassword: document.getElementById('gentagAdgangskode').value,
+                    tflnr: document.getElementById('telefonnummer').value,
+                    by: document.getElementById('by').value,
+                    postnr: document.getElementById('postnummer').value,
+                    cvrnr: document.getElementById('cvr').value
+                }));
             }
-            xhttp.open("POST", "/opret-bruger/createErrors", true);
-            xhttp.setRequestHeader("Content-Type", "text/plain")
-            xhttp.send(JSON.stringify ({
-                email: document.getElementById('email').value,
-                gentagEmail: document.getElementById('gentagEmail').value,
-                password: document.getElementById('adgangskode').value,
-                gentagPassword: document.getElementById('gentagAdgangskode').value,
-                tflnr: document.getElementById('telefonnummer').value,
-                by: document.getElementById('by').value,
-                postnr: document.getElementById('postnummer').value,
-                cvrnr: document.getElementById('cvr').value
-            }));
         };
     </script>
