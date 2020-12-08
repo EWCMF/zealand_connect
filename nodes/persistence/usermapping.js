@@ -117,6 +117,9 @@ async function editStudent(email, fornavn, efternavn, telefon) {
     })
 }
 
+
+
+
 module.exports = {
     findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed,
     editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR, editStudent: editStudent
