@@ -208,7 +208,8 @@ router.post('/Preview', async function (req, res, next) {
     tidligere_uddannelse : req.body.tidligere_uddannelse,
     hjemmeside : req.body.hjemmeside,
     fritidsinteresser : req.body.fritidsinteresser,
-    offentligCheckbox : req.body.offentligCheckBox
+    offentligCheckbox : req.body.offentligCheckBox,
+    navDisabled: true
 })
 
 })

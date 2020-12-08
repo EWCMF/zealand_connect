@@ -520,10 +520,6 @@ input::placeholder {
   padding: 0;
 }
 
-#forsideText{
-  
-}
-
 #forsideLine{
   margin-top: 10px;
   background-color: #000000;
@@ -531,3 +527,11 @@ input::placeholder {
   margin-right: 10%;
 }
 
+#card-img-overlay{
+  transition: .5s ease;
+  background-color: yellow;
+}
+
+#container-cards:hover .card-img-overlay{
+  opacity: 1;
+}

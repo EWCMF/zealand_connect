@@ -21,7 +21,6 @@ var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
 
-
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
