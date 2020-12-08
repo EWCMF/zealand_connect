@@ -78,8 +78,10 @@
           <div class="col-12 col-md-6">
             <div class="form-group required">
               <label for="internshipEmail">Email adresse</label>
-              <input type="email" name="email" id="internshipEmail" class="form-control" placeholder="Email" pattern="{{{emailRegex}}}">
-              <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
+              <input type="email" name="email" id="internshipEmail" class="form-control" placeholder="Email"
+                pattern="{{{emailRegex}}}">
+              <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @
+              </p>
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -94,16 +96,17 @@
               <label for="cvr_number">CVR Nummer</label>
               <input type="text" pattern="{{{cvrRegex}}}" title="CVR må kun være 8 tal" name="cvr_number"
                 id="companyCVR" class="form-control" placeholder="CVR">
-              <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal præcist være 8 tal</p>
+              <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal præcist være 8
+                tal</p>
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="company_link">Link til Hjemmeside</label>
-              <input type="text" pattern="{{{linkRegex}}}"
-                title="Link er ugyldigt" name="company_link" id="companyURL" class="form-control"
-                placeholder="virksomhed.dk">
-              <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her f.eks http://www.zealandconnect.dk</p>
+              <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link" id="companyURL"
+                class="form-control" placeholder="virksomhed.dk">
+              <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her f.eks
+                http://www.zealandconnect.dk</p>
             </div>
           </div>
         </div>
@@ -115,6 +118,11 @@
                 placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
               <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en start dato
               </p>
+            </div>
+             <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="expire_checkbox">
+              <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
+                ansøgningsfristen?</label>
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -129,12 +137,14 @@
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
-            <label for="post_document">Vedhæft fil <span class="tooltiphelp" data-toggle="tooltip" data-placement="top" title="Et relevant dokument til praktikopslag. dokumentet kan kun være .pdf, .docx, .doc eller .txt filer">?</span></label>
+            <label for="post_document">Vedhæft fil <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                title="Et relevant dokument til praktikopslag. dokumentet kan kun være .pdf, .docx, .doc eller .txt filer">?</span></label>
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt" class="custom-file-input"
-                  id="CompanyDoc" onchange="updateInputLabel('docLabel', 'CompanyDoc')">
+                  id="companyDoc" onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
                 <label class="custom-file-label" id="docLabel" for="CompanyDoc">Vælg fil</label>
+                <p id="companyDocError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
               </div>
             </div>
           </div>
@@ -143,8 +153,9 @@
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input"
-                  id="CompanyLogo" onchange="updateInputLabel('logoLabel', 'CompanyLogo')">
-                <label class="custom-file-label" id="logoLabel" for="CompanyLogo">Vælg fil</label>
+                  id="companyLogo" onchange="validateAndUpdateInputLabel('logoLabel', 'companyLogo')">
+                <label class="custom-file-label" id="logoLabel" for="companyLogo">Vælg fil</label>
+                <p id="companyLogoError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
               </div>
             </div>
           </div>
@@ -167,60 +178,70 @@
 <script src="/javascript/validate_internship_post.js"></script>
 <script>
 
-var toolbarOptions = [
-  [{
-    'size': ['small', false, 'large', 'huge']
-  }],
-  ['bold', 'italic', 'underline', 'strike'],
-  [{
-    'align': []
-  }],
-  [{
-    'list': 'ordered'
-  }, {
-    'list': 'bullet'
-  }],
-  [{
-    'color': []
-  }, {
-    'background': []
-  }],
-  ['link', 'image', 'video'],
-  ['clean']
-];
-var editor = new Quill('#editor', {
-  modules: {
-    toolbar: toolbarOptions
-  },
-  theme: 'snow'
-});
+  var toolbarOptions = [
+    [{
+      'size': ['small', false, 'large', 'huge']
+    }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{
+      'align': []
+    }],
+    [{
+      'list': 'ordered'
+    }, {
+      'list': 'bullet'
+    }],
+    [{
+      'color': []
+    }, {
+      'background': []
+    }],
+    ['link', 'image', 'video'],
+    ['clean']
+  ];
+  var editor = new Quill('#editor', {
+    modules: {
+      toolbar: toolbarOptions
+    },
+    theme: 'snow'
+  });
 
-function copyQuillHtmlToHiddenInput() {
-  document.getElementById('plainText').value = editor.root.innerHTML;
-}
-
-var emailRegex = /{{{emailRegex}}}/;
-var dateRegex = /{{{dateRegex}}}/;
-var cvrRegex = /{{{cvrRegex}}}/;
-var linkRegex = /{{{linkRegex}}}/;
-
-//countryToggleFields() Toggler disse fælter: Region og CVR
-function countryToggleFields() {
-  if (document.getElementById('countrySelect').value == 1) {
-    document.getElementById('regionContainer').hidden = false;
-    document.getElementById('containerCVR').className = "form-group required";
-    document.getElementById('cityContainer').hidden = false;
-    document.getElementById('postCodeContainer').hidden = false;
-  } else {
-    document.getElementById('regionContainer').hidden = true;
-    document.getElementById('containerCVR').className = "form-group";
-    document.getElementById('cityContainer').hidden = true;
-    document.getElementById('postCodeContainer').hidden = true;
+  function copyQuillHtmlToHiddenInput() {
+    document.getElementById('plainText').value = editor.root.innerHTML;
   }
-}
 
-function updateInputLabel(labelId, inputId) {
-  document.getElementById(labelId).innerHTML = document.getElementById(inputId)
-    .value;
-}
+  var emailRegex = /{{{emailRegex}}}/;
+  var dateRegex = /{{{dateRegex}}}/;
+  var cvrRegex = /{{{cvrRegex}}}/;
+  var linkRegex = /{{{linkRegex}}}/;
+
+  //countryToggleFields() Toggler disse fælter: Region og CVR
+  function countryToggleFields() {
+    if (document.getElementById('countrySelect').value == 1) {
+      document.getElementById('regionContainer').hidden = false;
+      document.getElementById('containerCVR').className = "form-group required";
+      document.getElementById('cityContainer').hidden = false;
+      document.getElementById('postCodeContainer').hidden = false;
+    } else {
+      document.getElementById('regionContainer').hidden = true;
+      document.getElementById('containerCVR').className = "form-group";
+      document.getElementById('cityContainer').hidden = true;
+      document.getElementById('postCodeContainer').hidden = true;
+    }
+  }
+
+  function validateAndUpdateInputLabel(labelId, inputId) {
+    var file = document.getElementById(inputId).files[0];
+    console.log(file)
+    //Checker om der er tilføjet filer
+    //Henter den indexerede fil i og sætter dens str til kilobytes
+    var fsize = Math.round(file.size / 1000);
+
+    //Check fil størrelsen på hver fil
+    if (fsize >= 10240) {
+      alert("File selected is too big, maximum size is 10MB")
+    }
+
+    document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
+  }
 </script>

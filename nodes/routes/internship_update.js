@@ -122,6 +122,19 @@ router.post('/', function (req, res, next) {
     }
 
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
+
+    /*
+    async function dbExe() {
+      if (!inputError) {
+          const post = await db.InternshipPost.create(indhold).catch((error) => {
+            console.log(error);
+            return res.status(400).send(error);
+          });
+          res.redirect('../internship_view/'+post.id)
+          
+      }
+    }
+    */
     function dbExe() {
       if (!inputError) {
         console.log(indhold);
@@ -132,7 +145,7 @@ router.post('/', function (req, res, next) {
           /*dette skal være her for at felterne i databasen bliver opdateret*/ returning: true,
           plain: true
         });
-        generatePostCodeOptions()
+        res.redirect('../internship_view/'+id)
       } else {
         console.log("update fail")
         generatePostCodeOptions()
