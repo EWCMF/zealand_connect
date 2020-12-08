@@ -16,6 +16,15 @@ body {
   width: 100%;
 }
 
+.container-fluid #cardContainerProfile {
+  display: none;
+}
+
+
+#cardContainerProfile .profileDetailContainer{
+  margin-bottom: 30px;
+}
+
 h1,
 .sidebar {
   font-family: "Zealand Display", Arial, Helvetica, sans-serif;
@@ -114,10 +123,10 @@ input::placeholder {
   align-items: center;
 }
 #virksomhedslogodiv {
-  height: 16rem; 
+  height: 16rem;
   width: 16rem;
   object-fit: scale-down;
-  border-radius: 8px; 
+  border-radius: 8px;
   margin-left: 10rem;
 }
 #logodiv {
@@ -467,7 +476,7 @@ input::placeholder {
     margin-right: 24px;
     margin-left: 96px
   }
-  
+
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -496,3 +505,29 @@ input::placeholder {
 #companyLogo {
   margin-top: 8.5px;
 }
+
+
+.tooltiphelp{
+  background-color: #faee84;
+  border-radius: 100%;
+  display: inline-block;
+  text-align: center;
+  width: 1rem;
+  height: 1rem;
+}
+
+#forsideContainer{
+  padding: 0;
+}
+
+#forsideText{
+  
+}
+
+#forsideLine{
+  margin-top: 10px;
+  background-color: #000000;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+

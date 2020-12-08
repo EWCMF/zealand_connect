@@ -112,51 +112,13 @@
 
             </div>
             <div id=cards>
-                {{#each json}}
-                <div class="card mb-3">
-                    <div class="row">
-                        <div class="col-auto">
-                            <img class="center-cropped" src="\images\company-logo-template.jpg">
-                        </div>
-                        <div class="col">
-                            <div class="card-body">
-                                <h5 class="card-title">{{title}}</h5>
-                                <h6 class="card-title">{{email}}</h6>
-                                <p class="card-text autobreak">{{post_text}}</p>
-
-                            </div>
-                        </div>
-                    </div>
-                    {{!-- <a href='/search-praktik/{{id}}' class="stretched-link"></a> --}}
-                    <div class="card-footer">
-                        <p>Start: {{post_start_date}} Slut: {{post_end_date}}</p>
-                    </div>
-                    <a href='#' class="stretched-link"></a>
-                </div>
-                {{/each}}
+                {{> search-praktik-card}}
             </div>
         </div>
     </div>
 
     <div class="row d-flex justify-content-center" id="pagination">
-        {{#if withPages}}
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                {{#paginate pagination type="previous"}}
-                <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#"
-                        onclick="changePage({{n}})">Forrige</a></li>
-                {{/paginate}}
-                {{#paginate pagination type="middle" limit="3"}}
-                <li {{#if active}} class="page-item active" {{/if}} id="page-middle" class="page-item"><a
-                        class="page-link" href="#" onclick="changePage({{n}})">{{n}}</a></li>
-                {{/paginate}}
-                {{#paginate pagination type="next"}}
-                <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#"
-                        onclick="changePage({{n}})">Næste</a></li>
-                {{/paginate}}
-            </ul>
-        </nav>
-        {{/if}}
+        {{> search-pagination}}
     </div>
 </div>
 <script src="/javascript/search_praktik.js"></script>

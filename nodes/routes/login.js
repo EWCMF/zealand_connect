@@ -30,8 +30,10 @@ router.get('/profiles',function(req, res, next) {
 
 
 router.post('/authenticateVirksomhed', function (req, res, next) {
-    //console.log('HER ER REQUESTEN FRA POST!!!!!!!!!!!!!');
-    //console.log(req.body);
+    //fra opret-bruger kommer body som en string version af json object, så den skal lige laves om
+    if(typeof(req.body)==="string"){
+        req.body = JSON.parse(req.body);
+    }
     passport.authenticate('local', function(err, user, info) {
         //console.log('HER ER USER EFTER CALLBACK:');
         //console.log(user);

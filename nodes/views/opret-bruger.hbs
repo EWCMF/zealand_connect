@@ -1,106 +1,108 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 
-<div class="container-fluid">
+<div
+    class="container-fluid">
+    <!-- metode .submit tæller på samme måde som input submit og så kalde form's id  -->
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8">
             <div id="loginBoxBackground">
                 <div id="loginContent" class="text-center">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
                     <div class="loginBtnBox">
-                        <form class="text-left" method="post" action="opret-bruger/create" id="opretBrugerForm"
-                            name="opretBrugerForm" id="virksomhedOpret">
-                            <div style="color: red;" class="text-center">{{fejlBesked}}</div>
-                            <div style="color: green;" class="text-center">{{succesBesked}}</div><br>
+                        <form class="text-left" id="opretBrugerForm" name="opretBrugerForm" id="virksomhedOpret" onsubmit="return false">
+                            <div style="color: red;" class="text-center" id="fejlBesked">{{fejlBesked}}</div>
+                            <div style="color: green;" class="text-center" id="succesBesked">{{succesBesked}}</div><br>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{emailError}} </div>
+                                <div class="col-7 col-form-label formError" id="emailError">{{emailError}}
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="email" class="col-5 col-form-label">Email</label>
                                 <div class="col-7">
-                                    <input id="email" name="email" type="text" class="form-control" placeholder="Email" required>
+                                    <input id="email" name="email" type="text" class="form-control" placeholder="Email" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{gentagEmailError}} </div>
+                                <div class="col-7 col-form-label formError" id="ge">{{gentagEmailError}}
+                                </div>
                             </div>
                             <div class="form-group row">
-                                <label for="gentagEmail" class="col-5 col-form-label">Gentag email</label>
+                                <label for="gentagEmail" data-key="labelGentagEmail" class="col-5 col-form-label">Gentag email</label>
                                 <div class="col-7">
-                                    <input id="gentagEmail" name="gentagEmail" type="text" class="form-control"
-                                        placeholder="Gentag email" data-key="placeholderGentagEmail" required>
+                                    <input id="gentagEmail" name="gentagEmail" type="text" class="form-control" placeholder="Gentag email" data-key="placeholderGentagEmail" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{passwordError}} </div>
+                                <div class="col-7 col-form-label formError" id="passwordError">{{passwordError}}
+                                </div>
                             </div>
                             <div class="form-group row">
-                                <label for="adgangskode" class="col-5 col-form-label">Adgangskode</label>
+                                <label for="adgangskode" data-key="labeladgangskode" class="col-5 col-form-label">Adgangskode</label>
                                 <div class="col-7">
-                                    <input id="adgangskode" name="password" type="password" class="form-control"
-                                        placeholder="Adgangskode" data-key="placeholderadgangskode" required>
+                                    <input id="adgangskode" name="password" type="password" class="form-control" placeholder="Adgangskode" data-key="placeholderadgangskode" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{gentagPasswordError}} </div>
+                                <div class="col-7 col-form-label formError">{{gentagPasswordError}}
+                                </div>
                             </div>
                             <div class="form-group row">
-                                <label for="gentagAdgangskode" class="col-5 col-form-label">Gentag adgangskode</label>
+                                <label for="gentagAdgangskode" data-key="labelgentagAdgangskode" class="col-5 col-form-label">Gentag adgangskode</label>
                                 <div class="col-7">
-                                    <input id="gentagAdgangskode" name="gentagPassword" type="password"
-                                        class="form-control" placeholder="Gentag Adgangskode"
-                                        data-key="placeholdergentagAdgangskode" required>
+                                    <input id="gentagAdgangskode" name="gentagPassword" type="password" class="form-control" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{cvrError}} </div>
+                                <div class="col-7 col-form-label formError" id="cvrError">{{cvrError}}
+                                </div>
                             </div>
                             <div class="form-group row">
-                                <label for="cvr" class="col-5 col-form-label">CVR-Nummer</label>
+                                <label for="cvr" data-key="labelcvr" class="col-5 col-form-label">CVR-Nummer</label>
                                 <div class="col-7">
-                                    <input id="cvr" name="cvr" type="text" class="form-control" placeholder="CVR-Nummer"
-                                        data-key="placeholdercvr" required>
+                                    <input id="cvr" name="cvr" type="text" class="form-control" placeholder="CVR-Nummer" data-key="placeholdercvr" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{tlfnrError}} </div>
+                                <div class="col-7 col-form-label formError" id="tlfnrError">{{tlfnrError}}
+                                </div>
                             </div>
                             <div class="form-group row">
-                                <label for="telefonnummer" class="col-5 col-form-label">Telefonnummer</label>
+                                <label for="telefonnummer" data-key="labelTelefonnummer" class="col-5 col-form-label">Telefonnummer</label>
                                 <div class="col-7">
-                                    <input id="telefonnummer" name="telefonnummer" type="string" class="form-control"
-                                        placeholder="telefonnummer" data-key="placeholderTelefonnummer" required>
+                                    <input id="telefonnummer" name="telefonnummer" type="string" class="form-control" placeholder="telefonnummer" data-key="placeholderTelefonnummer" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{byError}} </div>
+                                <div class="col-7 col-form-label formError" id="byError">{{byError}}
+                                </div>
                             </div>
                             <div class="form-group row">
-                                <label for="by" class="col-5 col-form-label">By</label>
+                                <label for="by" data-key="labelBy" class="col-5 col-form-label">By</label>
                                 <div class="col-7">
-                                    <input id="by" name="by" type="string" class="form-control" placeholder="By"
-                                        data-key="placeholderBy" required>
+                                    <input id="by" name="by" type="string" class="form-control" placeholder="By" data-key="placeholderBy" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{postnrError}} </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="postnummer" class="col-5 col-form-label">Postnummer</label>
-                                <div class="col-7">
-                                    <input id="postnummer" name="postnummer" type="string" class="form-control"
-                                        placeholder="Postnummer" data-key="placeholderPostnummer" required>
+                                <div class="col-7 col-form-label formError" id="postnrError">{{postnrError}}
                                 </div>
                             </div>
-                    </div>
-                    <button class="gulKnap" data-key="opret"> Opret Bruger</button>
+                            <div class="form-group row">
+                                <label for="postnummer" data-key="labelPostnummer" class="col-5 col-form-label">Postnummer</label>
+                                <div class="col-7">
+                                    <input id="postnummer" name="postnummer" type="string" class="form-control" placeholder="Postnummer" data-key="placeholderPostnummer" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="gulKnap" data-key="opret" type="button" id="submitBtn" onclick="submitCheck()">Opret Bruger</button>
+                        <input id="submit_handle" type="submit" style="display: none">
                     </form>
                 </div>
             </div>
@@ -112,3 +114,61 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        var backendIsProcessing = false;
+        function submitCheck() {
+            $('#submit_handle').click();
+            //kun hvis alle felter er udfylte sender vi videre til backend validering
+            if(document.getElementById("email").validity.valid && document.getElementById("gentagEmail").validity.valid &&
+                document.getElementById("adgangskode").validity.valid && document.getElementById("gentagAdgangskode").validity.valid &&
+                document.getElementById("cvr").validity.valid && document.getElementById("telefonnummer").validity.valid &&
+                document.getElementById("by").validity.valid && document.getElementById("postnummer").validity.valid){
+                if(!backendIsProcessing){
+                    backendIsProcessing = true;
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
+                            let responseObject = JSON.parse(this.responseText)
+                            console.log(responseObject)
+                            document.getElementById('emailError').innerHTML = responseObject.EmailError;
+                            document.getElementById('passwordError').innerHTML = responseObject.PasswordError;
+                            document.getElementById('tlfnrError').innerHTML = responseObject.TlfnrError;
+                            document.getElementById('byError').innerHTML = responseObject.ByError;
+                            document.getElementById('cvrError').innerHTML = responseObject.CVRError;
+                            backendIsProcessing=false;
+                            //if there were no errors, then begin automatic login and redirect to profile
+                            if(responseObject.areThereErrors=="false"){
+                                //send login request baseret på values i input felter
+                                var xhttp = new XMLHttpRequest();
+                                xhttp.onreadystatechange = function () {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                        window.location.href = "../profil";
+                                    }
+                                }
+                                xhttp.open("POST", "/login/authenticateVirksomhed", true);
+                                xhttp.setRequestHeader("Content-Type", "text/plain")
+                                xhttp.send(JSON.stringify ({
+                                    email: document.getElementById('email').value,
+                                    password: document.getElementById('adgangskode').value,
+                                }));
+                            }
+                        }
+                    }
+                    xhttp.open("POST", "/opret-bruger/createErrors", true);
+                    xhttp.setRequestHeader("Content-Type", "text/plain")
+                    xhttp.send(JSON.stringify ({
+                        email: document.getElementById('email').value,
+                        gentagEmail: document.getElementById('gentagEmail').value,
+                        password: document.getElementById('adgangskode').value,
+                        gentagPassword: document.getElementById('gentagAdgangskode').value,
+                        tflnr: document.getElementById('telefonnummer').value,
+                        by: document.getElementById('by').value,
+                        postnr: document.getElementById('postnummer').value,
+                        cvrnr: document.getElementById('cvr').value
+                    }));
+                }
+            }
+        };
+    </script>

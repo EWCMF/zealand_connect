@@ -1,13 +1,13 @@
 <script src='/javascript/godkendelse-af-CV.js' defer></script>
 <div class="container-fluid">
     <!-- tekst med dit navn og start på form -->
-    <p class="text-center">{{profil}}</p>
+    <h3 class="text-center">{{profil}}</h3>
     <form method="POST" action="../mit-cv/submit" id="cvForm" name="cvForm" target="">
         <!-- Overskrift textarea -->
         <div class="form-group required">
             <label for="exampleFormControlInput1">Overskrift</label>
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
-                placeholder="Stilling eller Status" onkeyup="countChars(this)">{{overskrift}}</textarea>
+                placeholder="Hvad søger du f.eks job eller praktik." onkeyup="countChars(this)">{{overskrift}}</textarea>
                 <p id="charNum">255 tegn</p>
             <p id="OverskriftError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
         </div>

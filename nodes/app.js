@@ -18,12 +18,16 @@ var forsideRouter = require('./routes/forside')
 var profilRouter = require('./routes/profil')
 var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser')
+
 
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
 
 const hbs = require("express-handlebars");
+
+const findUserByEmail = require('./persistence/usermapping').findUserByEmail;
 
 var opretBrugerRouter = require('./routes/opret-bruger');
 var loginStudentRouter = require('./routes/login-student');
@@ -77,6 +81,25 @@ app.use(cookieSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(bodyParser.text({ type: "text/plain"}))
+// Middleware til at finde login status i alle routes.
+app.use(async function (req, res, next) {
+  if (req.user == null) {
+    next();
+  } else {
+    var userRole = await findUserByEmail(req.user);
+    
+    if (userRole.cvrnr == null) {
+      res.locals.isStudent = true;
+      
+    } else {
+      res.locals.isCompany = true;
+    }
+    res.locals.user = userRole;
+    next();
+  }
+});
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
