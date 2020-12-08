@@ -160,14 +160,14 @@ router.post('/query', function (req, res) {
             return fs.readFileAsync(filename, 'utf8');
         }
 
-        getFile('views\\search-cv-card.hbs').then((data) => {
+        getFile('views\\partials\\search-cv-card.hbs').then((data) => {
             let template = hbs.compile(data + '');
             let html = template({
                 json: rows
             });
             item.push(html);
 
-            getFile('views\\search-pagination-template.hbs').then((data) => {
+            getFile('views\\partials\\search-pagination.hbs').then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
 
