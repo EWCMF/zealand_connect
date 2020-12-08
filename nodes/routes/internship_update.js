@@ -131,7 +131,7 @@ router.post('/', function (req, res, next) {
             return res.status(400).send(error);
           });
           res.redirect('../internship_view/'+post.id)
-          
+
       }
     }
     */
@@ -203,34 +203,44 @@ router.post('/', function (req, res, next) {
     var newLogoName = datetime + randomNumber + "_" + logo.name;
 
     function renameDoc(docName, logoName) {
-      if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
-        unlinkOldFiles(docName)
-        mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
-          if (errorRename) {
-            console.log("Unable to move file.");
-          } else {
-            indhold.post_document = newDocName;
-          }
+      if (doc.size <= 10240000){
+        if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
+          unlinkOldFiles(docName)
+          mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
+            if (errorRename) {
+              console.log("Unable to move file.");
+            } else {
+              indhold.post_document = newDocName;
+            }
+            reNameLogo(logoName);
+          });
+        } else {
           reNameLogo(logoName);
-        });
-      } else {
-        reNameLogo(logoName);
+        }
+      }else{
+        console.log("invalid filesize");
+        reNameLogo();
       }
     }
 
     function reNameLogo(logoName) {
-      if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
-        unlinkOldFiles(logoName)
-        mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
-          if (errorRename) {
-            console.log("Unable to move file.");
-          } else {
-            indhold.company_logo = newLogoName;
-          }
-          generateAndValidateCityArray();
-        });
+      if(logo.size <= 10240000){
+        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
+          unlinkOldFiles(logoName)
+          mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
+            if (errorRename) {
+              console.log("Unable to move file.");
+            } else {
+              indhold.company_logo = newLogoName;
+            }
+            dbExe();
+          });
+        } else {
+          dbExe();
+        }
       } else {
-        generateAndValidateCityArray();
+        console.log("invalid filesize");
+        dbExe();
       }
     }
     //console.log(internshippost.findByPk)

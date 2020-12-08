@@ -108,7 +108,7 @@ function validate_internship_post(e) {
   }
 
   //Vedhæftet tekstfil
-  if (document.getElementById('companyDoc').files[0] != null && document.getElementById('companyDoc').files[0].size >= 10240000) {
+  if (document.getElementById('companyDoc').files[0] != null && document.getElementById('companyDoc').files[0].size > 10240000) {
 
       all_valid = false;
       document.getElementById('companyDocError').hidden = false;
@@ -118,8 +118,8 @@ function validate_internship_post(e) {
   }
 
   //Vedhæftet logo
-  if (document.getElementById('companyLogo').files[0] != null && document.getElementById('companyLogo').files[0].size >= 10240000) {
-    
+  if (document.getElementById('companyLogo').files[0] != null && document.getElementById('companyLogo').files[0].size > 10240000) {
+
       all_valid = false;
       document.getElementById('companyLogoError').hidden = false;
     }

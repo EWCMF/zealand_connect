@@ -40,3 +40,55 @@ describe('number only', function () {
         expect(regex.test('0123456789abcdefghijklmnopqwurstuvxyzæøå')).to.be.false;
     });
 });
+
+//Regex brugt til CVR validering på praktikopslag.
+describe('CVR test', function () {
+    it('kun tal', function () {
+        const regex = /^[0-9]{8}$/;
+        expect(regex.test('87654321')).to.be.true;
+    });
+    it('kun tal', function () {
+        const regex = /^[0-9]{8}$/;
+        expect(regex.test('0123456789abcdefghijklmnopqwurstuvxyzæøå')).to.be.false;
+    });
+});
+
+//Regex brugt til dato validering på praktikopslag.
+describe('Date test', function () {
+    it('gyldig dato', function () {
+        const regex = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
+        expect(regex.test('2020-10-10')).to.be.true;
+    });
+    it('ugyldig dato', function () {
+        const regex = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
+        expect(regex.test('2k20-10-10')).to.be.false;
+    });
+});
+
+//Regex brugt til link validering på praktikopslag.
+describe('URI test', function () {
+    it('gyldig link', function () {
+        const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+        expect(regex.test('https://www.connect.zealand.dk')).to.be.true;
+    });
+    it('gyldig link', function () {
+        const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+        expect(regex.test('https://connect.zealand.dk')).to.be.true;
+    });
+    it('gyldig link', function () {
+        const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+        expect(regex.test('www.connect.zealand.dk')).to.be.true;
+    });
+    it('gyldig link', function () {
+        const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+        expect(regex.test('connect.zealand.dk')).to.be.true;
+    });
+    it('gyldig link', function () {
+        const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+        expect(regex.test('https://www.connect.zealand.dk/login')).to.be.true;
+    });
+    it('ugyldig link', function () {
+        const regex = /^\d{4}[./-]\d{2}[./-]\d{2}$/;
+        expect(regex.test('zealand/connect')).to.be.false;
+    });
+});
