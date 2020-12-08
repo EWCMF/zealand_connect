@@ -25,6 +25,7 @@ router.post('/', function (req, res, next) {
       title, email, contact, education, country, region, post_start_date, post_end_date,
       post_text, city, postcode, cvr_number, company_link, company_logo, post_document, expired };
       
+      console.log(indhold)
     var inputError = false;
     var cityArray = [];
 

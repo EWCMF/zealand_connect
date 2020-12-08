@@ -123,7 +123,7 @@
               <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox" onchange="setExpired()" >
               <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
                 ansøgningsfristen?</label>
-                <input type="hidden" id="expire" value="false">
+                <input type="hidden" id="expired" value="0" name="expired">
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -250,9 +250,9 @@ document.getElementById('expire_checkbox').checked = false;
 
 function setExpired() {
   if(document.getElementById('expire_checkbox').checked){
-    document.getElementById('expire').value = true;
+    document.getElementById('expired').value = 1;
   }else {
-    document.getElementById('expire').value = false;
+    document.getElementById('expired').value = 0;
   }
 }
 </script>

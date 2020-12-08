@@ -36,6 +36,9 @@ router.get('/', async function (req, res, next) {
         order: [
             ['updatedAt', 'DESC']
         ]
+        ,where: {
+            expired: true
+        }
     });
 
     let pageCount = Math.ceil(count / limit);
