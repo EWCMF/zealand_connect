@@ -20,11 +20,11 @@ router.post('/', function (req, res, next) {
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
     const {title, email, contact, education, country, region, post_start_date, post_end_date, post_text,
-      city, postcode, cvr_number, company_link, company_logo, post_document } = fields;
+      city, postcode, cvr_number, company_link, company_logo, post_document, expired} = fields;
     var indhold = {
       title, email, contact, education, country, region, post_start_date, post_end_date,
-      post_text, city, postcode, cvr_number, company_link, company_logo, post_document };
-
+      post_text, city, postcode, cvr_number, company_link, company_logo, post_document, expired };
+      
     var inputError = false;
     var cityArray = [];
 
@@ -78,6 +78,7 @@ router.post('/', function (req, res, next) {
 
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
     async function dbExe() {
+      //checkbox_state();
       if (!inputError) {
           const post = await db.InternshipPost.create(indhold).catch((error) => {
             console.log(error);
@@ -87,6 +88,13 @@ router.post('/', function (req, res, next) {
           
       }
     }
+
+    /*function checkbox_state(){
+      if(expire_checkbox = 'on'){
+        expire_checkbox = true;
+      }
+      expire_checkbox = false;
+    }*/
 
     //Generere og validere om byen angivet i frontend er korrekt.
     function generateAndValidateCityArray() {
@@ -158,7 +166,8 @@ router.post('/', function (req, res, next) {
         console.log("invalid file");
         reNameLogo();
       }
-
+      
+      
       function reNameLogo() {
         if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
           mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
