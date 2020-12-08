@@ -20,7 +20,6 @@ var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
 
-
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
@@ -114,7 +113,7 @@ app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/', forsideRouter);
 app.use('/praktikforloebet', praktikforloebRouter);
-app.use ('/profil', profilRouter)
+app.use ('/profil', profilRouter);
 
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
