@@ -19,7 +19,7 @@ var profilRouter = require('./routes/profil')
 var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
-
+var uddannelsesRouter = require('./routes/uddannelser');
 
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -116,7 +116,8 @@ app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/', forsideRouter);
 app.use('/praktikforloebet', praktikforloebRouter);
-app.use ('/profil', profilRouter)
+app.use ('/profil', profilRouter);
+app.use('/uddannelser', uddannelsesRouter);
 
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
