@@ -37,7 +37,7 @@ router.get('/', async function (req, res, next) {
             ['updatedAt', 'DESC']
         ]
         ,where: {
-            expired: true
+            expired: 1 
         }
     });
 
