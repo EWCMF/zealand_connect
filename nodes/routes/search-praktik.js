@@ -153,12 +153,12 @@ router.post('/query', function (req, res) {
             return fs.readFileAsync(filename, 'utf8');
         }
 
-        getFile('views\\search-praktik-card.hbs').then((data) => {
+        getFile('views\\partials\\search-praktik-card.hbs').then((data) => {
             let template = hbs.compile(data + '');
             let html = template({json: rows});
             item.push(html);
 
-            getFile('views\\search-pagination-template.hbs').then((data) => {
+            getFile('views\\partials\\search-pagination.hbs').then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
                 
@@ -180,48 +180,6 @@ router.post('/query', function (req, res) {
         })
     });
 });
-
-// router.get('/:id', function (req, res) {
-//     let id = req.params.id
-
-//     db.CV.findOne({
-//         raw: true,
-//         nest: true,
-//         where: {
-//             id: parseInt(id)
-//         },
-//         include: {
-//             model: db.Student,
-//             as: 'student'
-//         }
-//     }).then((cv) => {
-//         console.log(cv);
-
-//         if (cv.hjemmeside.includes("://")) {
-//             console.log(cv.hjemmeside.indexOf("://") + 3)
-//             cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
-//             //console.log(cv.linkedIn);
-//         }
-
-//         if (cv.linkedIn.includes("://")) {
-//             console.log(cv.linkedIn.indexOf("://") + 3)
-//             cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
-//             //console.log(cv.linkedIn);
-//         }
-
-//         if (cv.yt_link.includes("://")) {
-//             console.log(cv.yt_link.indexOf("://")  + 3)
-//             cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://")  + 3);
-//             //console.log(cv.linkedIn);
-//         }
-
-//         res.render('cv', {
-//             json: cv
-//         });
-      
-//     });
-
-// });
 
 
 module.exports = router;
