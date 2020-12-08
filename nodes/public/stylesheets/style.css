@@ -516,6 +516,10 @@ input::placeholder {
   height: 1rem;
 }
 
+#forsideContainer{
+  padding: 0;
+}
+
 #forsideText{
   
 }
