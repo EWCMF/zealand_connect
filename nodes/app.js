@@ -83,7 +83,6 @@ app.use(passport.session());
 
 app.use(bodyParser.text({ type: "text/plain"}))
 // Middleware til at finde login status i alle routes.
-/*
 app.use(async function (req, res, next) {
   if (req.user == null) {
     next();
@@ -97,10 +96,9 @@ app.use(async function (req, res, next) {
       res.locals.isCompany = true;
     }
     res.locals.user = userRole;
+    next();
   }
-  next();
 });
-*/
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);

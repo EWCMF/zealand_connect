@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <h1>
-                    {{loggedInVirksomhed.navn}}
+                {{loggedInVirksomhed.navn}}
             </h1>
         </div>
     </div>
@@ -20,46 +20,58 @@
                 <div class="form-group required" style="display: none;">
                     <label for="email">Email</label>
                     <input class="form-control" name="email" id="email" rows="2" value="{{loggedInVirksomhed.email}}">
-                    <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
+                    <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge
+                        et @</p>
                 </div>
                 <div class="form-group required">
                     <label for="telefon">Telefon</label>
-                    <input type="number" class="form-control" name="telefon" id="telefon" rows="2" value="{{loggedInVirksomhed.tlfnr}}">
-                    <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer, det skal præcist være 8 tal og må ikke starte med 0</p>
+                    <input type="number" class="form-control" name="telefon" id="telefon" rows="2"
+                        value="{{loggedInVirksomhed.tlfnr}}">
+                    <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer, det skal præcist
+                        være 8 tal og må ikke starte med 0</p>
                 </div>
                 <div class="form-group required">
                     <label for="telefon">CVR Nummer</label>
-                    <input type="number" class="form-control" name="cvrnr" id="cvrnr" rows="2" value="{{loggedInVirksomhed.cvrnr}}">
-                    <p id="cvrnrError" class="CVErrorColor" hidden="true">Du skal skrive dit CVR nummer, det skal præcist være 8 tal og må ikke starte med 0</p>
+                    <input type="number" class="form-control" name="cvrnr" id="cvrnr" rows="2"
+                        value="{{loggedInVirksomhed.cvrnr}}">
+                    <p id="cvrnrError" class="CVErrorColor" hidden="true">Du skal skrive dit CVR nummer, det skal
+                        præcist være 8 tal og må ikke starte med 0</p>
                 </div>
                 <div class="form-group required">
                     <label for="telefon">Address</label>
-                    <input type="text" class="form-control" name="address" id="address" rows="2" value="{{loggedInVirksomhed.adresse}}">
+                    <input type="text" class="form-control" name="address" id="address" rows="2"
+                        value="{{loggedInVirksomhed.adresse}}">
                     <p id="addressError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
                     <label for="telefon">Hjemmeside</label>
-                    <input type="text" class="form-control" name="hjemmeside" id="hjemmeside" rows="2" value="{{loggedInVirksomhed.hjemmeside}}">
+                    <input type="text" class="form-control" name="hjemmeside" id="hjemmeside" rows="2"
+                        value="{{loggedInVirksomhed.hjemmeside}}">
                     <p id="hjemmesideError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
                     <label for="telefon">Direktør</label>
-                    <input type="text" class="form-control" name="direkoer" id="direkoer" rows="2" value="{{loggedInVirksomhed.direktoer}}">
+                    <input type="text" class="form-control" name="direkoer" id="direkoer" rows="2"
+                        value="{{loggedInVirksomhed.direktoer}}">
                     <p id="direkoerError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
                     <label for="telefon">Land</label>
-                    <input type="text" class="form-control" name="land" id="land" rows="2" value="{{loggedInVirksomhed.land}}">
+                    <input type="text" class="form-control" name="land" id="land" rows="2"
+                        value="{{loggedInVirksomhed.land}}">
                     <p id="landError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
                     <label for="telefon">Postnummer</label>
-                    <input type="number" class="form-control" name="postnr" id="postnr" rows="2" value="{{loggedInVirksomhed.postnr}}">
-                    <p id="postnrError" class="CVErrorColor" hidden="true">Du skal skrive dit postnummer, det skal præcist være 4 tal</p>
+                    <input type="number" class="form-control" name="postnr" id="postnr" rows="2"
+                        value="{{loggedInVirksomhed.postnr}}">
+                    <p id="postnrError" class="CVErrorColor" hidden="true">Du skal skrive dit postnummer, det skal
+                        præcist være 4 tal</p>
                 </div>
                 <div class="form-group required">
                     <label for="telefon">By</label>
-                    <input type="text" class="form-control" name="by" id="by" rows="2" value="{{loggedInVirksomhed.by}}">
+                    <input type="text" class="form-control" name="by" id="by" rows="2"
+                        value="{{loggedInVirksomhed.by}}">
                     <p id="byError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
                 </div>
                 <div>
@@ -67,7 +79,7 @@
                 </div>
 
             </form>
-       </div>
+        </div>
     </div>
 </div>
 
