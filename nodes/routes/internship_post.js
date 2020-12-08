@@ -242,8 +242,6 @@ router.get('/', function (req, res, next) {
     generatePostCodeOptions();
   }
   ).catch();
-  //generatePostCodeOptions();
-
 });
 
 module.exports = router;
