@@ -5,9 +5,13 @@ var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabe
 var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
 var fs = require("fs");//Bruges til grundlæggen file hændtering.
 var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
-const {emailRegex, dateRegex, cvrRegex, linkRegex} = require("../constants/regex.js");
+const { emailRegex, dateRegex, cvrRegex, linkRegex } = require("../constants/regex.js");
 const db = require('../models');
 
+var tempDate = dateRegex.source
+var tempCVR = cvrRegex.source
+var tempEmail = emailRegex.source
+var tempLink = linkRegex.source
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
@@ -15,45 +19,66 @@ router.post('/', function (req, res, next) {
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    const {
-      id,
-      title,
-      email,
-      contact,
-      education,
-      country,
-      region,
-      post_start_date,
-      post_end_date,
-      post_text,
-      city,
-      postcode,
-      cvr_number,
-      company_link,
-      company_logo,
-      post_document
-    } = fields;
+    const { id, title, email, contact, education, country, region, post_start_date, post_end_date, post_text,
+      city, postcode, cvr_number, company_link, company_logo, post_document } = fields;
     var indhold = {
-      id,
-      title,
-      email,
-      contact,
-      education,
-      country,
-      region,
-      post_start_date,
-      post_end_date,
-      post_text,
-      city,
-      postcode,
-      cvr_number,
-      company_link,
-      company_logo,
-      post_document
+      id, title, email, contact, education, country, region, post_start_date, post_end_date,
+      post_text, city, postcode, cvr_number, company_link, company_logo, post_document
     };
+
     var inputError = false;
     var cityArray = [];
 
+    var generatedCityOptions = "";
+    var generatedPostCodeOptions = "";
+
+    function generateCityOptions() {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var myObj = JSON.parse(this.responseText);
+          myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
+          myObj.forEach(element => {
+            generatedCityOptions += "<option value='" + element.primærtnavn + "'>" + element.primærtnavn + "</option>"
+          });
+          console.log(req.query.id)
+          //console.log(internshippost.findByPk)
+          db.InternshipPost.findByPk(req.query.id, {
+            attributes: ["title", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number", "company_link", "company_logo", "post_document"]
+          }).then(result => {
+            //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
+            res.render('internship_update', {
+              title: 'Express',rid: req.query.id, rtitle: result['title'],
+              remail: result['email'], rcontact: result['contact'], reducation: result['education'],
+              rcountry: result['country'], rregion: result['region'], rpoststart /*start date*/: result['post_start_date'],
+              rpostend: /*end date*/ result['post_end_date'], rtext /*post_text*/: result['post_text'],
+              rcity: result['city'], rpostcode: result['postcode'], rcvr: result['cvr_number'], rcompany: result['company_link'],
+              rlogo: result["company_logo"], rdoc: result["post_document"], generatedCityOptions: generatedCityOptions,
+              generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
+            });
+          }).catch();
+        }
+      };
+      xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
+      xmlhttp.setRequestHeader("Content-type", "application/json");
+      xmlhttp.send();
+    }
+
+    function generatePostCodeOptions() {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var myObj = JSON.parse(this.responseText);
+          myObj.forEach(element => {
+            generatedPostCodeOptions += "<option value='" + element.nr + "'>" + element.nr + "</option>"
+          });
+          generateCityOptions();
+        }
+      };
+      xmlhttp.open("GET", "https://dawa.aws.dk/postnumre", true);
+      xmlhttp.setRequestHeader("Content-type", "application/json");
+      xmlhttp.send();
+    }
     //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
     if (1 > title.length || title.length > 255) {
       console.log('Title lenght invalid');
@@ -97,6 +122,19 @@ router.post('/', function (req, res, next) {
     }
 
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
+
+    /*
+    async function dbExe() {
+      if (!inputError) {
+          const post = await db.InternshipPost.create(indhold).catch((error) => {
+            console.log(error);
+            return res.status(400).send(error);
+          });
+          res.redirect('../internship_view/'+post.id)
+          
+      }
+    }
+    */
     function dbExe() {
       if (!inputError) {
         console.log(indhold);
@@ -107,16 +145,12 @@ router.post('/', function (req, res, next) {
           /*dette skal være her for at felterne i databasen bliver opdateret*/ returning: true,
           plain: true
         });
-        res.render('internship_update', {
-          title: 'Express'
-        });
+        res.redirect('../internship_view/'+id)
       } else {
-        console.log("update fail");
-        res.render('internship_update', {
-          title: 'Express'
-        })
+        console.log("update fail")
+        generatePostCodeOptions()
       }
-    }
+    };
 
     function generateAndValidateCityArray() {
       if (country == 1) {
@@ -168,10 +202,10 @@ router.post('/', function (req, res, next) {
     var newDocName = datetime + randomNumber + "_" + doc.name;
     var newLogoName = datetime + randomNumber + "_" + logo.name;
 
-    function renameDoc(docName, logoName){
-      if(doc.type=="text/plain"||doc.type=="application/vnd.openxmlformats-officedocument.wordprocessingml.document"||doc.type=="application/pdf"||doc.type=="application/msword"){
+    function renameDoc(docName, logoName) {
+      if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
         unlinkOldFiles(docName)
-        mv(doc.path, publicUploadFolder + newDocName,(errorRename) => {
+        mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
           if (errorRename) {
             console.log("Unable to move file.");
           } else {
@@ -184,13 +218,13 @@ router.post('/', function (req, res, next) {
       }
     }
 
-    function reNameLogo(logoName){
-      if(logo.type == "image/jpeg"||logo.type=="image/png"||logo.type=="image/svg+xml"||logo.type=="image/bmp"){
+    function reNameLogo(logoName) {
+      if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
         unlinkOldFiles(logoName)
-        mv(logo.path,publicUploadFolder + newLogoName,(errorRename)=>{
-          if (errorRename){
+        mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
+          if (errorRename) {
             console.log("Unable to move file.");
-          }else{
+          } else {
             indhold.company_logo = newLogoName;
           }
           generateAndValidateCityArray();
@@ -249,7 +283,8 @@ router.get('/', function (req, res, next) {
             rlogo: result["company_logo"],
             rdoc: result["post_document"],
             generatedCityOptions: generatedCityOptions,
-            generatedPostCodeOptions: generatedPostCodeOptions
+            generatedPostCodeOptions: generatedPostCodeOptions,
+            linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
           });
         }).catch();
       }
@@ -287,7 +322,7 @@ router.get('/delete', function (req, res, next) {
     unlinkOldFiles(result["company_logo"])
     deleteFromDb()
   }).catch();
-  function deleteFromDb(){
+  function deleteFromDb() {
     db.InternshipPost.destroy({
       where: {
         id: req.query.id

@@ -120,11 +120,13 @@ function getLangdata() {
                 "beskrivelse": "Description",
                 "CVR": "CVR-Number",
                 "land": "Country",
-                "addresse": "Address",
+                "adresse": "Address",
                 "postnummerogby": "Zip code and city",
-                "virksomhedsemail": "Corporation email",
-                "virksomhedsnavn": "Corporation name",
-                "virksomhedsoplysninger": "Corporation informations"
+                "email": "Corporation email",
+                "navn": "Corporation name",
+                "oplysninger": "Corporation informations",
+                "telefon": "Cel phone number",
+                "direktoer": "Director"
 
 
             }

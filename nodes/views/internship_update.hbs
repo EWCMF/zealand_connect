@@ -49,6 +49,8 @@
                 <option value="4">Sjælland</option>
                 <option value="5">Syddanmark</option>
               </select>
+              <p id="regionError" class="CVErrorColor" hidden="true">Du skal angive en region
+              </p>
             </div>
           </div>
           <div class="col-12 col-md-6" id="cityContainer" hidden="true">
@@ -77,7 +79,7 @@
             <div class="form-group required">
               <label for="internshipEmail">Email adresse</label>
               <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
-                placeholder="Email" required>
+                placeholder="Email" required pattern="{{{emailRegex}}}">
               <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
             </div>
           </div>
@@ -92,7 +94,7 @@
           <div class="col-12 col-md-6">
             <div class="form-group" id="containerCVR">
               <label for="cvr_number">CVR Nummer</label>
-              <input type="text" pattern="^[0-9]{8}$" title="CVR må kun være 8 tal" name="cvr_number"
+              <input type="text" pattern="{{{cvrRegex}}}" title="CVR må kun være 8 tal" name="cvr_number"
                 id="companyCVR" class="form-control" placeholder="CVR" value="{{rcvr}}">
               <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal præcist være 8 tal</p>
             </div>
@@ -100,7 +102,7 @@
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="company_link">Link til Hjemmeside</label>
-              <input type="url" pattern="^(http://www.|https://www.|http://|https://)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.)?$"
+              <input type="text" pattern="{{{linkRegex}}}"
                 title="Link er ugyldigt" name="company_link" id="companyURL" class="form-control"
                 placeholder="virksomhed.dk" value="{{rcompany}}">
               <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her f.eks http://www.zealandconnect.dk</p>
@@ -112,14 +114,18 @@
             <div class="form-group">
               <label for="post_start_date">Ansøgningsfrist</label>
               <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
-                id="applicationDeadline" placeholder="dd / mm / åååå">
+                id="applicationDeadline" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
+                <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en start dato
+              </p>
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
-              <label for="post_end_date">Ansættelsestidspunkt</label>
+              <label for="post_end_date">Praktikstart</label>
               <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
-                id="internshipEmploymentDate" placeholder="dd / mm / åååå">
+                id="internshipEmploymentDate" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
+                <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive et ansættelsestidspunkt
+              </p>
             </div>
           </div>
         </div>
@@ -130,8 +136,9 @@
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt" class="custom-file-input"
-                  id="CompanyDoc" onchange="updateInputLabel('docLabel', 'CompanyDoc')">
-                <label class="custom-file-label" id="docLabel" for="CompanyDoc">Vælg fil</label>
+                  id="companyDoc" onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
+                <label class="custom-file-label" id="docLabel" for="companyDoc">Vælg fil</label>
+                <p id="companyDocError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
               </div>
             </div>
           </div>
@@ -141,17 +148,19 @@
             <div class="form-group">
               <div class="custom-file">
                 <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input"
-                  id="CompanyLogo" onchange="updateInputLabel('logoLabel', 'CompanyLogo')">
-                <label class="custom-file-label" id="logoLabel" for="CompanyLogo">Vælg fil</label>
+                  id="companyLogo" onchange="validateAndUpdateInputLabel('logoLabel', 'companyLogo')">
+                <label class="custom-file-label" id="logoLabel" for="companyLogo">Vælg fil</label>
+                <p id="companyLogoError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="form-group required">
+        <div class="form-group">
           <input type="hidden" name="post_text" id="plainText" />
-          <label for="editor">Fritekst</label>
+          <label for="editor">Opslagstekst</label>
           <div id="editor">{{{rtext}}}</div>
         </div>
+        <p id="posttextError" class="CVErrorColor" hidden="true">Du har angivet for mange tegn</p>
         <div class="form-group">
           <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
           <button type="button" class="btn btn-danger">Afbryd</button>
@@ -196,6 +205,11 @@ function copyQuillHtmlToHiddenInput() {
   document.getElementById('plainText').value = editor.root.innerHTML;
 }
 
+var emailRegex = /{{{emailRegex}}}/;
+var dateRegex = /{{{dateRegex}}}/;
+var cvrRegex = /{{{cvrRegex}}}/;
+var linkRegex = /{{{linkRegex}}}/;
+
 function setDefaultSelect() {
   var reducation = {{reducation}};
   var rcountry = {{rcountry}};
@@ -239,7 +253,18 @@ function countryToggleFields() {
 //countryToggleFields skal kalds for at håndtere felter der kun er synlig i nogle situationer.
 countryToggleFields();
 
-function updateInputLabel(labelId, inputId) {
+function validateAndUpdateInputLabel(labelId, inputId) {
+  var file = document.getElementById(inputId).files[0];
+    console.log(file)
+    //Checker om der er tilføjet filer
+    //Henter den indexerede fil i og sætter dens str til kilobytes
+    var fsize = Math.round(file.size / 1000);
+
+    //Check fil størrelsen på hver fil
+    if (fsize >= 10240) {
+      alert("File selected is too big, maximum size is 10MB")
+    }
+
   document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
 }
 
