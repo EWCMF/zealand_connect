@@ -193,6 +193,7 @@ router.post('/', function (req, res, next) {
 router.get('/', function (req, res, next) {
   var generatedCityOptions = "";
   var generatedPostCodeOptions = "";
+  var generatedEducationOptions = "";
   function generateCityOptions() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -205,7 +206,7 @@ router.get('/', function (req, res, next) {
 
         res.render('internship_post', {
           title: 'Opret Praktikopslag', generatedCityOptions: generatedCityOptions,
-          generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
+          generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR, generatedEducationOptions: generatedEducationOptions
         });
       }
     };
@@ -229,7 +230,20 @@ router.get('/', function (req, res, next) {
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send();
   }
-  generatePostCodeOptions();
+
+  db.Uddannelser.findAll({
+      order: [
+          ['name', 'ASC']
+      ]
+  }).then(result => {
+    result.forEach(element => {
+      generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
+    });
+    generatePostCodeOptions();
+  }
+  ).catch();
+  //generatePostCodeOptions();
+
 });
 
 module.exports = router;
