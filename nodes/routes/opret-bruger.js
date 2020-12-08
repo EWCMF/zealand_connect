@@ -27,6 +27,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/createErrors', (req, res) => {
+
+
      // Indlæs variable fra viewet
      console.log('before email req.body')
      let jsonBody = JSON.parse(req.body);
