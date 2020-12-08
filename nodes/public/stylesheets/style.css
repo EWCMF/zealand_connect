@@ -537,10 +537,9 @@ input::placeholder {
   box-sizing: border-box;
 }
 .dawa-autocomplete-suggestions {
-  margin: 0.3em 0 0 0;
+  margin: 0 1em;
   padding: 0;
   text-align: left;
-  border-radius: 0.3125em;
   background: #fcfcfc;
   box-shadow: 0 0.0625em 0.15625em rgba(0,0,0,.15);
   position: absolute;
@@ -554,7 +553,7 @@ input::placeholder {
   margin: 0;
   list-style: none;
   cursor: pointer;
-  padding: 0.4em 0.6em;
+  padding: 0.6em 0.8em;
   color: #333;
   border: 0.0625em solid #ddd;
   border-bottom-width: 0;
