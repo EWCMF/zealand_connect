@@ -30,10 +30,8 @@ router.post('/createErrors', (req, res) => {
      // Indlæs variable fra viewet
      console.log('before email req.body')
      let jsonBody = JSON.parse(req.body);
+     
      let email = jsonBody.email;
-
-     console.log(jsonBody)
-
      let gentagEmail = jsonBody.gentagEmail;
      let password = jsonBody.password;
      let gentagPassword = jsonBody.gentagPassword;
@@ -102,29 +100,8 @@ router.post('/createErrors', (req, res) => {
                 errors.CVRError = "CVR-nummer findes allerede i systemet";
                 atLeastOneErrorIsPresent = true;
             } 
-            res.send(errors);
-        })
-    })
-});
-    
-
-
-router.post('/create', function (req, res) {
-
-   
-    findUserByEmail(email).then((userFoundByEmail) => {
-        let aUserExistsWithThatEmail = false;
-        if (userFoundByEmail !== null) {
-            errors.EmailError = "Email findes allerede i systemet";
-            aUserExistsWithThatEmail = true;
-            atLeastOneErrorIsPresent = true;
-        }
-        findUserByCVR(cvrnr).then((userFoundByCVR) => {
-            if (userFoundByCVR !== null){
-                errors.CVRError = "CVR-nummer findes allerede i systemet";
-                atLeastOneErrorIsPresent = true;
-            } else if(!atLeastOneErrorIsPresent){
-                hashPassword(req.body.password).then((hashedPassword) => {
+            if(!atLeastOneErrorIsPresent) {
+                hashPassword(password).then((hashedPassword) => {
                     let virksomhedsBruger = {
                         email: email,
                         password: hashedPassword,
@@ -135,28 +112,13 @@ router.post('/create', function (req, res) {
                     }
                     createVirksomhed(virksomhedsBruger);
                 });
-            }
+             }
+            else {res.send(errors);}
         })
-    }).then(() => {
-        let succesBesked = '';
-        let fejlBesked = '';
-        if(atLeastOneErrorIsPresent){
-            fejlBesked='Fejl ved oprettelse af bruger';
-        } else {
-            succesBesked='Succesfuld brugeroprettelse';
-        }
-        
-        res.redirect(
-            '/opret-bruger?' +
-            'succesBesked=' + succesBesked +
-            '&fejlBesked=' + fejlBesked +
-            '&EmailError=' + errors.EmailError +
-            '&PasswordError=' + errors.PasswordError +
-            '&TlfnrError=' + errors.TlfnrError +
-            '&ByError=' + errors.ByError +
-            '&CVRError=' + errors.CVRError);
-    });
+    })
+
 });
+    
 
 router.post('/delete', function (req, res) {
     deleteVirksomhed("")
