@@ -86,10 +86,20 @@ router.post('/query', function (req, res) {
         };
         var region = {
             [Op.or]: []
-        }
+        };
         var postcode = {
             [Op.or]: []
-        }
+        };
+
+        var expired = {
+            [Op.or]: [
+                {'expired': {[Op.ne]: 1}},
+                {[ Op.and]:[
+                   {'expired': 1}, 
+                   { 'post_end_date': {[Op.gt]:year+"-"+month+"-"+day}}
+                ]}
+            ]
+        };
 
         for (var key in fields) {
             const element = key + "";
@@ -134,13 +144,7 @@ router.post('/query', function (req, res) {
             country,
             region,
             postcode,
-            [Op.or]:[
-                {'expired': {[Op.ne]: 1}},
-                {[ Op.and]:[
-                   {'expired': 1}, 
-                   { 'post_end_date': {[Op.gt]:year+"-"+month+"-"+day}}
-                ]}
-            ]
+            expired
         } 
         
 
