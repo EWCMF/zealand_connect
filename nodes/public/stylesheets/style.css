@@ -439,11 +439,16 @@ input::placeholder {
   margin: 0;
 }
 
+.form-column {
+  display: flex;
+  flex-direction: column;
+}
+
 #profilbillede {
   max-height: 250px;
   max-width: 250px;
+  padding: 0;
 }
-
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
