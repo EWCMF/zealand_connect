@@ -1,4 +1,5 @@
 <script src='/javascript/godkendelse-af-student.js' defer></script>
+<script src="/javascript/rediger-studentprofil.js"></script>
 
 <div class="container-fluid">
 
@@ -50,15 +51,18 @@
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
                           title="Kun billeder af filtyperne .jpg og .png samt maksimal filstørrelse på 10MB">?</span>
                 </div>
-                <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg"
-                     alt="PROFILBILLEDE">
-                <div class="custom-file">
-                    <input type="file" name="upload_picture" accept=".jpg, .png" class="custom-file-input"
-                           id="profilePic">
-                    <label id="picLabel" class="custom-file-label" for="profilePic">Vælg billede</label>
-                    <p id="profilePicError" class="CVErrorColor" hidden="true">Du kan kun uploade en fil på maksimum
-                        10MB</p>
+                <div class="profilePicHolder">
+                    <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg"
+                         alt="PROFILBILLEDE">
+                    <div class="custom-file">
+                        <input type="file" name="upload_picture" accept=".jpg, .png" class="custom-file-input"
+                               id="profilePic">
+                        <label id="picLabel" class="custom-file-label" for="profilePic">Vælg billede</label>
+                        <p id="profilePicError" class="CVErrorColor" hidden="true">Du kan kun uploade en fil på maksimum
+                            10MB</p>
+                    </div>
                 </div>
+
             </div>
 
         </div>
@@ -69,3 +73,4 @@
 
     </form>
 </div>
+

@@ -444,14 +444,15 @@ input::placeholder {
   flex-direction: column;
 }
 
-#profilbillede {
-  max-height: 250px;
-  max-width: 250px;
-  padding: 0;
+.profilePicHolder{
+  width: 250px;
 }
 
-#picLabel{
-  max-width: 250px;
+.profilePicHolder #profilbillede {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0;
 }
 
 /* Small devices (landscape phones, 576px and up) */
