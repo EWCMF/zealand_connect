@@ -44,8 +44,9 @@ router.get('/', async function (req, res, next) {
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
+
         element['post_start_date'] = element['post_start_date'].substring(0, 10);
-        element['post_end_date'] = element['post_end_date'].substring(0, 10);        
+        element['post_end_date'] = element['post_end_date'].substring(0, 10);
     }
 
     res.render('search_praktik', {
