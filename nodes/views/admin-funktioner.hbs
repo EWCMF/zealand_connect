@@ -38,17 +38,45 @@
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="sletBruger">Slet bruger</h2>
             </div>
-            <form method="POST" action="/admin-funktioner/slet-student" class="form-group text-left">
+            <form class="form-group text-left" onsubmit="return false">
                 <div class="row">
                     <label for="email" class="col-5 col-form-label">Email</label>
                 </div>
                 <div class="form-group row">
                     <div class="col-12">
-                        <input name="email" type="text" id="brugerSletInput" class="form-control" placeholder="example@edu.easj.dk" style="background-color: #f7f7f7;"></input>
-                    </div>
+                        <input name="email" type="text" id="brugerSletInput" class="form-control" placeholder="example@edu.easj.dk" style="background-color: #f7f7f7;" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
+                    </div> 
                 </div>
-                <input class="gulKnap rounded" type="submit" data-key="slet">Slet</input>
+                <input class="gulKnap rounded" onclick="submitCheck()" type="submit" data-key="slet">Slet</input>
+                <input id="submit_handle" type="submit" style="display: none">
             </form>
         </div>
     </div>
 </div>
+<script>
+        var backendIsProcessing = false;
+        function submitCheck() {
+            $('#submit_handle').click();
+            //kun hvis alle felter er udfylte sender vi videre til backend validering
+            if(document.getElementById("brugerSletInput").validity.valid){
+                if(!backendIsProcessing){
+                    backendIsProcessing = true;
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
+                            let responseObject = JSON.parse(this.responseText)
+                            console.log(responseObject)
+                            //document.getElementById('emailError').innerHTML = responseObject.EmailError;
+                            backendIsProcessing=false;
+                            //if there were no errors, then begin automatic login and redirect to profile
+                        }
+                    }
+                    xhttp.open("POST", "/admin-funktioner/slet-bruger", true);
+                    xhttp.setRequestHeader("Content-Type", "text/plain")
+                    xhttp.send(JSON.stringify ({
+                        email: document.getElementById('brugerSletInput').value
+                    }));
+                }
+            }
+        };
+    </script>

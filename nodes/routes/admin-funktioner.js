@@ -11,11 +11,11 @@ router.get('/', function (req, res, next) {
     res.render('admin-funktioner', {language: reqLang(req, res)})
 });
 
-router.post('/slet-student', function (req, res, next) {
-    let jsonBody = JSON.stringify(req.body);
-    console.log(jsonBody);
-    res.send (jsonBody);
-    deleteStudent(req.body.email)
+router.post('/slet-bruger', function (req, res, next) {
+    //let jsonBody = JSON.parse(req.body);
+    console.log(req.body);
+    res.send (req.body);
+    //deleteStudent(jsonBody.email)
 });
 
 

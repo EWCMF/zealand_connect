@@ -7,11 +7,12 @@ async function findUserByEmail(email) {
         console.log("---finding user by email: " + email + "---");
         models.Student.findOne({
             nest: true,
-            where: {email: email}, 
+            where: { email: email },
             include: {
                 model: models.CV,
                 as: 'cv'
-        }}).then((student) => {
+            }
+        }).then((student) => {
             if (student === null) {
                 console.log('en student med denne email findes ikke!');
             }
@@ -22,7 +23,7 @@ async function findUserByEmail(email) {
                 user = student
             }
         }).then(() => {
-            models.Virksomhed.findOne({where: {email: email}}).then((virksomhed) => {
+            models.Virksomhed.findOne({ where: { email: email } }).then((virksomhed) => {
                 if (virksomhed === null) {
                     console.log('en virksomhed med denne email findes ikke!');
                     //resolve(null);
@@ -39,7 +40,7 @@ async function findUserByEmail(email) {
     })
 }
 
-async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by){
+async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by) {
     //vi bruger email til at finde virksomheden.
     findUserByEmail(email).then(virksomhed => {
         virksomhed.update({
@@ -102,6 +103,7 @@ async function deleteVirksomhed(email) {
 }
 
 async function deleteStudent(email) {
+    var response = true;
     try {
         //find student, og den cv som han ejer (cv bliver null hvis han ikke har et)
         var student = await models.Student.findOne({
@@ -113,13 +115,18 @@ async function deleteStudent(email) {
                 email: email,
             }
         });
-        //slet studentens cv hvis det findes
-        if(student.cv!=null){
-            await student.cv.destroy();
+        if (student == null) {
+            response = false;
         }
-        //slet studenten
-        await student.destroy();
-        console.log("A student was deleted");
+        else {
+            //slet studentens cv hvis det findes
+            if (student.cv != null) {
+                await student.cv.destroy();
+            }
+            //slet studenten
+            await student.destroy();
+            console.log("A student was deleted");
+        }
     } catch (e) {
         console.log(e);
     }
@@ -129,7 +136,7 @@ async function findUserByCVR(CVR) {
     let user = null;
     return new Promise(resolve => {
         console.log("---finding user by CVR: " + CVR + "---");
-        models.Virksomhed.findOne({where: {cvrnr: CVR}}).then((virksomhed) => {
+        models.Virksomhed.findOne({ where: { cvrnr: CVR } }).then((virksomhed) => {
             if (virksomhed === null) {
                 console.log('en virksomhed med dette CVR findes ikke!');
                 //resolve(null);
