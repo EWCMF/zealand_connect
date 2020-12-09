@@ -258,7 +258,7 @@ router.post('/', function (req, res, next) {
 router.get('/', function (req, res, next) {
   var generatedCityOptions = "";
   var generatedPostCodeOptions = "";
-
+  var generatedEducationOptions = "";
   function generateCityOptions() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -294,7 +294,8 @@ router.get('/', function (req, res, next) {
             rdoc: result["post_document"],
             generatedCityOptions: generatedCityOptions,
             generatedPostCodeOptions: generatedPostCodeOptions,
-            linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
+            linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR,
+            generatedEducationOptions: generatedEducationOptions
           });
         }).catch();
       }
@@ -320,7 +321,17 @@ router.get('/', function (req, res, next) {
     xmlhttp.send();
   }
 
-  generatePostCodeOptions();
+  db.Uddannelser.findAll({
+      order: [
+          ['name', 'ASC']
+      ]
+  }).then(result => {
+    result.forEach(element => {
+      generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
+    });
+    generatePostCodeOptions();
+  }
+  ).catch();
 });
 
 router.get('/delete', function (req, res, next) {

@@ -4,6 +4,7 @@ var hbs = require('handlebars');
 var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
+const path = require('path');
 const limit = 5;
 const {
     Op
@@ -113,7 +114,9 @@ router.post('/query', function (req, res) {
 
         where = {
             uddannelse,
-            sprog
+            sprog,
+            offentlig: true,
+            gyldig: true
         }
 
         var page = parseInt(fields.page);
@@ -160,14 +163,21 @@ router.post('/query', function (req, res) {
             return fs.readFileAsync(filename, 'utf8');
         }
 
-        getFile('views\\partials\\search-cv-card.hbs').then((data) => {
+
+        // path.normalize gør path'en cross-platform.
+
+        // På windows.
+        // 'views\\partials\\search-cv-card.hbs'
+        // 'views\\partials\\search-pagination.hbs'
+
+        getFile(path.normalize('views/partials/search-cv-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({
                 json: rows
             });
             item.push(html);
 
-            getFile('views\\partials\\search-pagination.hbs').then((data) => {
+            getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
 
