@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.post('/createErrors', (req, res) => {
+router.post('/create', (req, res) => {
 
 
      // Indlæs variable fra viewet
