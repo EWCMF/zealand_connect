@@ -166,7 +166,7 @@ router.post('/redigerstudentpic-save', function (req, res) {
         }
     });
 
-    res.redirect('back');
+    res.redirect('/profile');
 });
 
 router.post('/rediger-save', function (req, res, next) {

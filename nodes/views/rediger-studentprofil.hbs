@@ -62,7 +62,7 @@
                          alt="PROFILBILLEDE">
                     <div class="custom-file">
                         <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" class="custom-file-input"
-                               id="profilePic">
+                               id="profilePic" onchange="validateAndUpdateInputLabel('picLabel', 'profilePic')">
                         <label id="picLabel" class="custom-file-label" for="profilePic">Vælg billede</label>
                         <p id="profilePicError" class="CVErrorColor" hidden="true">Du kan kun uploade en fil på maksimum
                             10MB</p>
@@ -77,3 +77,19 @@
     </div>
 </div>
 
+<script>
+    function validateAndUpdateInputLabel(labelId, inputId) {
+        let file = document.getElementById(inputId).files[0];
+        console.log(file)
+        //Checker om der er tilføjet filer
+        //Henter den indexerede fil i og sætter dens str til kilobytes
+        let fsize = Math.round(file.size / 1000);
+
+        //Check fil størrelsen på hver fil
+        if (fsize > 10240) {
+            alert("File selected is too big, maximum size is 10MB")
+        }
+
+        document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
+    }
+</script>
