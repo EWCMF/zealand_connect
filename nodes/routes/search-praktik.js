@@ -147,8 +147,7 @@ router.post('/query', function (req, res) {
             education,
             country,
             region,
-            postcode,
-            expired
+            postcode
         } 
         
 
