@@ -5,6 +5,7 @@ const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
 const models = require("../models");
 const validation = require("../validation/input-validation");
+const formidable = require("formidable");
 var {
     reqLang
 } = require('../public/javascript/request');
@@ -35,7 +36,7 @@ router.get('/', function (req, res, next) {
                 efternavn: user.efternavn,
                 tlfnr: user.tlfnr,
             }
-            res.render("studentprofil", { loggedInUser });
+            res.render("studentprofil", {loggedInUser});
         }
     });
 });
@@ -55,7 +56,7 @@ router.get('/rediger', function (req, res, next) {
                 tlfnr: user.tlfnr,
             }
 
-            res.render("rediger-studentprofil", { loggedInUser });
+            res.render("rediger-studentprofil", {loggedInUser});
 
         } else {
             let loggedInVirksomhed = {
@@ -117,54 +118,53 @@ router.post('/redigerstudent-save', function (req, res) {
 });
 
 router.post('/redigerstudentpic-save', function (req, res) {
+    let formData = new formidable.IncomingForm();
 
-    var logo = files.company_logo;
-    var publicUploadFolder = "/usr/src/app/public/uploads/";
-    var datetime = Date.now();
-    var randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
-    var newLogoName = datetime + randomNumber + "_" + logo.name;
+    formData.parse(req, function (error, fields, files) {
+        //laver et objekt med alle data
+        const {
+            profile_picture
+        } = fields;
+        let content = {
+            profile_picture
+        };
 
-    if (doc.size <= 10240000){
-        //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældigt navn.
-        //Nedenstående flytter og omdøber filer på sammetid
-        if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
-            mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
-                if (errorRename) {
-                    console.log("Unable to move file.");
+        let inputError = false;
+
+        if (files) {
+            /*fileUpload here*/
+            let pic = files.profile_picture;
+
+            //Stien til upload mappen skal være til stien i docker containeren.
+            let publicUploadFolder = "/usr/src/app/public/uploads/";
+
+            //Generere unik data til filnavn med Date.now() og tilfældig tal.
+            let datetime = Date.now();
+
+            let randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
+
+            //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
+            let newPicName = datetime + randomNumber + "_" + pic.name;
+
+            if (doc.size <= 10240000) {
+                //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
+                //Nedenstående flytter og omdøber filer på sammetid
+                if (pic.type == "image/jpeg" || pic.type == "image/png" || pic.type == "image/svg+xml" || pic.type == "image/bmp") {
+                    mv(pic.path, publicUploadFolder + newPicName, (errorRename) => {
+                        if (errorRename) {
+                            console.log("Unable to move file.");
+                        } else {
+                            content.post_document = newPicName;
+                        }
+                    });
                 } else {
-                    indhold.post_document = newDocName;
+                    console.log("invalid file");
                 }
-                reNameLogo();
-            });
-        } else {
-            console.log("invalid file");
-            reNameLogo();
-        }
-    }else{
-        console.log("invalid filesize");
-        reNameLogo();
-    }
-
-    function reNameLogo() {
-        if (logo.size <= 10240000){
-            if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
-                mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
-                    if (errorRename) {
-                        console.log("Unable to move file.");
-                    } else {
-                        indhold.company_logo = newLogoName;
-                    }
-                    generateAndValidateCityArray();
-                });
             } else {
-                console.log("invalid file");
-                generateAndValidateCityArray();
+                console.log("invalid filesize");
             }
-        }else{
-            console.log("invalid filesize");
-            generateAndValidateCityArray();
         }
-    }
+    });
 
     res.redirect('back');
 });
@@ -247,7 +247,6 @@ router.get('/getUser', function (req, res, next) {
         });
     }
 });
-
 
 
 router.get('/getUser', function (req, res, next) {
