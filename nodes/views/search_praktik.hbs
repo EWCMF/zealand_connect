@@ -71,8 +71,97 @@
 
 
                         </div>
+
+                        <div class="panel-heading">
+                            <h6 class="panel-title mb-2">
+                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse"
+                                    data-parent="#accordion" href="#collapse3" onclick='onDropdownLandClick()'>
+                                    Region
+                                </a>
+                                <button id="dropdownLand" class="btn btn-sm dropdown-toggle p-0 m-0">
+
+                                </button>
+                            </h6>
+                        </div>
+
+                        <div id="collapse3" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Hovedstaden
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="reg1"
+                                        onclick="addFilter('reg', '1')">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Midtjylland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="reg2"
+                                        onclick="addFilter('reg','2')">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Nordjylland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="reg3"
+                                        onclick="addFilter('reg','3')">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Sjælland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="reg4"
+                                        onclick="addFilter('reg','4')">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Syddanmark
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="reg5"
+                                        onclick="addFilter('reg','5')">
+                                </li>
+
+                            </ul>
+
+
+                        </div>
+
+                        <div class="panel-heading">
+                            <h6 class="panel-title mb-2">
+                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse"
+                                    data-parent="#accordion" href="#collapse4" onclick='onDropdownLandClick()'>
+                                    By
+                                </a>
+                                <button id="dropdownLand" class="btn btn-sm dropdown-toggle p-0 m-0">
+
+                                </button>
+                            </h6>
+                        </div>
+
+                        <div id="collapse4" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-column">
+                                    <label class="form-check-label flex-fill">
+                                        Indtast postnummer
+                                    </label>
+                                    <input id='inputPost' class="align-self-center" type="text" name="pos">
+                                    
+                                </li>
+                                <li>
+                                    <button class="btn btn-success" onclick="addFilter('pos', document.getElementById('inputPost').value)">Søg</button>
+                                    <button class="btn btn-success" onclick="document.getElementById('inputPost').value = ''">Ryd</button>
+                                </li>
+                                
+                            </ul>
+
+
+                        </div>
+                        
                     </div>
                 </div>
+
+
                 {{!-- <button class="btn btn-success mb-2 mt-4" type="submit">Filtrer</button> --}}
             </form>
         </div>
