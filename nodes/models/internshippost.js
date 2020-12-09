@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      InternshipPost.belongsTo(models.Virksomhed, {
+        as: 'virksomhed',
+        foreignKey: 'virksomhed_id'
+      });
     }
   };
   InternshipPost.init({
@@ -30,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     company_logo: DataTypes.STRING,
     post_document: DataTypes.STRING,
     dawa_json: DataTypes.TEXT,
-    dawa_uuid: DataTypes.STRING
+    dawa_uuid: DataTypes.STRING,
+    expired: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'InternshipPost',

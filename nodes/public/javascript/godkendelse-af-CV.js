@@ -1,5 +1,17 @@
 
 document.getElementById("gem").onclick = function () { submitButton() };
+document.getElementById("preview").onclick = function () { preview_cv() };
+
+function preview_cv() {
+var form_URL = '../mit-cv/Preview'
+document.getElementById("cvForm").action = form_URL;
+window.open('', 'form_target', 'width=1200 height=500');
+document.getElementById("cvForm").setAttribute("target","form_target")
+document.forms["cvForm"].submit()
+var form_URL = '../mit-cv/submit'
+document.getElementById("cvForm").action = form_URL;
+document.getElementById("cvForm").setAttribute("target","")
+}
 
 function submitButton() {
     // få alle inputfelter ind i variabler
@@ -106,11 +118,9 @@ function submitButton() {
         document.getElementById("fritidsinteresser").value = 'Intet angivet';;
     }
 
-    // if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
-    //     document.forms["cvForm"].submit();
-    // }
-
-    document.forms["cvForm"].submit();
+    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
+        document.forms["cvForm"].submit();
+    }
 }
 
 

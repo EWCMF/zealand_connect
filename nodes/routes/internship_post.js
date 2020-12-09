@@ -20,7 +20,7 @@ router.post('/', function (req, res, next) {
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
     const { title, email, contact, education, country, post_start_date, post_end_date, post_text,
-      city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid } = fields;
+      city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid, expired } = fields;
 
     var region = '';
 
@@ -38,7 +38,7 @@ router.post('/', function (req, res, next) {
 
     var indhold = {
       title, email, contact, education, country, region, post_start_date, post_end_date,
-      post_text, city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid
+      post_text, city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid, expired
     };
 
     var inputError = false;
@@ -57,6 +57,7 @@ router.post('/', function (req, res, next) {
 
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
     async function dbExe() {
+      //checkbox_state();
       if (!inputError) {
         const post = await db.InternshipPost.create(indhold).catch((error) => {
           console.log(error);
@@ -87,34 +88,45 @@ router.post('/', function (req, res, next) {
       var newDocName = datetime + randomNumber + "_" + doc.name;
       var newLogoName = datetime + randomNumber + "_" + logo.name;
 
-      //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
-      //Nedenstående flytter og omdøber filer på sammetid
-      if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
-        mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
-          if (errorRename) {
-            console.log("Unable to move file.");
-          } else {
-            indhold.post_document = newDocName;
-          }
+      if (doc.size <= 10240000){
+        //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
+        //Nedenstående flytter og omdøber filer på sammetid
+        if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
+          mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
+
+            if (errorRename) {
+              console.log("Unable to move file.");
+            } else {
+              indhold.post_document = newDocName;
+            }
+            reNameLogo();
+          });
+        } else {
+          console.log("invalid file");
           reNameLogo();
-        });
-      } else {
-        console.log("invalid file");
+        }
+      }else{
+        console.log("invalid filesize");
         reNameLogo();
       }
 
       function reNameLogo() {
-        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
-          mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
-            if (errorRename) {
-              console.log("Unable to move file.");
-            } else {
-              indhold.company_logo = newLogoName;
-            }
+        if (logo.size <= 10240000){
+          if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
+            mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
+              if (errorRename) {
+                console.log("Unable to move file.");
+              } else {
+                indhold.company_logo = newLogoName;
+              }
+              dbExe();
+            });
+          } else {
+            console.log("invalid file");
             dbExe();
-          });
-        } else {
-          console.log("invalid file");
+          }
+        }else{
+          console.log("invalid filesize");
           dbExe();
         }
       }

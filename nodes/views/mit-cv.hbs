@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <!-- tekst med dit navn og start på form -->
     <h3 class="text-center">{{profil}}</h3>
-    <form method="POST" action="../mit-cv/submit" id="cvForm" name="cvForm">
+    <form method="POST" action="../mit-cv/submit" id="cvForm" name="cvForm" target="">
         <!-- Overskrift textarea -->
         <div class="form-group required">
             <label for="exampleFormControlInput1">Overskrift</label>
@@ -131,6 +131,7 @@
                 <!-- Button der sender informationen videre -->
                 <div>
                     <button type="button" class="btn btn-success" id="gem">Gem</button>
+                    <button type="button" class="btn btn-success" id="preview">Preview CV</button>
                 </div>
             </div>
         </div>

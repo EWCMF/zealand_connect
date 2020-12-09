@@ -434,6 +434,16 @@ input::placeholder {
   color: red;
 }
 
+#memeForm .col-sm-12 .col-sm-4{
+  padding: 0;
+  margin: 0;
+}
+
+#profilbillede {
+  max-height: 250px;
+  max-width: 250px;
+}
+
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
@@ -516,8 +526,8 @@ input::placeholder {
   height: 1rem;
 }
 
-#forsideText{
-  
+#forsideContainer{
+  padding: 0;
 }
 
 #forsideLine{
@@ -570,4 +580,12 @@ input::placeholder {
 .dawa-autocomplete-suggestions .dawa-autocomplete-suggestion.dawa-selected,
 .dawa-autocomplete-suggestions .dawa-autocomplete-suggestion:hover {
   background: #f0f0f0;
+}
+#card-img-overlay{
+  transition: .5s ease;
+  background-color: yellow;
+}
+
+#container-cards:hover .card-img-overlay{
+  opacity: 1;
 }

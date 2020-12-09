@@ -6,6 +6,7 @@ const db = require('../models');
 var formidable = require("formidable");
 const limit = 5;
 const { Op } = require('sequelize');
+const path = require('path');
 
 router.get('/', async function (req, res, next) {
     
@@ -24,7 +25,10 @@ router.get('/', async function (req, res, next) {
             ['name', 'ASC']
         ]
     });
-
+    var date = new Date();
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getUTCFullYear();
     const {
         count,
         rows
@@ -36,15 +40,23 @@ router.get('/', async function (req, res, next) {
         order: [
             ['updatedAt', 'DESC']
         ]
-    });
 
+       ,where: { [Op.or]:[{'expired': {[Op.ne]: 1}},
+           {[ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.gt]:year+"-"+month+"-"+day}}]}
+       ]
+       }
+       
+    });
+    console.log(day+month+ year)
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1  ? true : false;
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
+
         element['post_start_date'] = element['post_start_date'].substring(0, 10);
-        element['post_end_date'] = element['post_end_date'].substring(0, 10);        
+        element['post_end_date'] = element['post_end_date'].substring(0, 10);
+
     }
 
     res.render('search_praktik', {
@@ -72,39 +84,58 @@ router.post('/query', function (req, res) {
         var country = {
             [Op.or]: []
         };
+        var region = {
+            [Op.or]: []
+        }
+        var postcode = {
+            [Op.or]: []
+        }
+
+        console.log(fields);
 
         for (var key in fields) {
             const element = key + "";
             if (element.includes("udd")) {
 
-                education[Op.or].push(element.substring(3));
+                // education[Op.or].push(element.substring(3));
             }
 
             if (element.includes('indland')) {
 
                 country[Op.or].push(
-                    'dansk'
+                    1
                 );
-                country[Op.or].push(
-                    'Dansk'
-                )
             }
             
             if (element.includes('udland')) {
                 
                 country[Op.or].push({
-                    [Op.not]: 'dansk'
-                })
+                    [Op.not]: 1
+                });
+            }
+            
+            if (element.includes('reg')) {
+                let reg = parseInt(element.substring(3, 4));
+                console.log(reg);
+                region[Op.or].push(
+                    reg
+                );
+            }
 
-                country[Op.or].push({
-                    [Op.not]: 'Dansk'
-                })
+            if (fields.pos != '') {
+                let code = parseInt(fields.pos); 
+                console.log(code);
+                postcode[Op.or].push(
+                    code
+                );
             }
         }
 
         where = {
             education,
-            country
+            country,
+            region,
+            postcode
         }
 
         var page = parseInt(fields.page);
@@ -153,17 +184,16 @@ router.post('/query', function (req, res) {
             return fs.readFileAsync(filename, 'utf8');
         }
 
-        getFile('views\\partials\\search-praktik-card.hbs').then((data) => {
+        getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({json: rows});
             item.push(html);
 
-            getFile('views\\partials\\search-pagination.hbs').then((data) => {
+            getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
                 
                 let pageCount = Math.ceil(count / limit);
-                
                 let withPages = pageCount > 1 ? true : false;
                 
                 let html = template({
@@ -181,5 +211,5 @@ router.post('/query', function (req, res) {
     });
 });
 
-
+// stared chanching stuff here
 module.exports = router;

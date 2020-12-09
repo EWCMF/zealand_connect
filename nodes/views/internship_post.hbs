@@ -14,13 +14,12 @@
         </div>
         <div class="form-group required">
           <label for="education">Uddannelse</label>
-          <select class="form-control" name="education" id="educationSelect">
+          <select class="form-control" name="education" id="educationSelect" onchange="toggleNote()">
             <option value="0">Vælg en uddannelse</option>
-            <option value="1">Handelsøkonom</option>
-            <option value="2">Datamatiker</option>
-            <option value="3">Bygningskonstruktør</option>
+            {{{generatedEducationOptions}}}
           </select>
           <p id="educationError" class="CVErrorColor" hidden="true">Du skal angive en uddannelse</p>
+          <p id="educationNote" class="CVErrorColor" hidden="true">Den valgte uddannelse har lønnet praktik</p>
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
@@ -51,7 +50,7 @@
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="form-group required">
-              <label for="internshipEmail">Email adresse</label>
+              <label for="internshipEmail">E-mail adresse</label>
               <input type="email" name="email" id="internshipEmail" class="form-control" placeholder="Email"
                 pattern="{{{emailRegex}}}">
               <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @
@@ -93,10 +92,11 @@
               <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en start dato
               </p>
             </div>
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="expire_checkbox">
+             <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox" onchange="setExpired()" >
               <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
                 ansøgningsfristen?</label>
+                <input type="hidden" id="expired" value="0" name="expired">
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -223,7 +223,7 @@
     var fsize = Math.round(file.size / 1000);
 
     //Check fil størrelsen på hver fil
-    if (fsize >= 10240) {
+    if (fsize > 10240) {
       alert("File selected is too big, maximum size is 10MB")
     }
 
@@ -231,5 +231,26 @@
   }
 
 
+document.getElementById('expire_checkbox').checked = false;
 
+function setExpired() {
+  if(document.getElementById('expire_checkbox').checked){
+    document.getElementById('expired').value = 1;
+  }else {
+    document.getElementById('expired').value = 0;
+  }
+}
+
+
+  function toggleNote(){
+    if (document.getElementById("educationSelect").options[document.getElementById("educationSelect").selectedIndex].text==="Handelsøkonom"){
+      document.getElementById("educationNote").hidden=false;
+    } else {
+      document.getElementById("educationNote").hidden=true;
+    }
+
+    if(document.getElementById("educationSelect").option != 0){
+      document.getElementById("educationError").hidden=true;
+    }
+  }
 </script>
