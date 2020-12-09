@@ -27,7 +27,7 @@ router.get('/', async function (req, res, next) {
     var date = new Date();
     let day = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
-
+    let year = date.getUTCFullYear();
     const {
         count,
         rows
@@ -40,11 +40,12 @@ router.get('/', async function (req, res, next) {
             ['updatedAt', 'DESC']
         ]
 
-       ,where: { [ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.lte]:date.getFullYear+"-"+month+"-"+day}}]
+       ,where: { [ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.lte]:year+"-"+month+"-"+day}}]
 
        }
+       
     });
-    
+    console.log(day+month+ year)
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1  ? true : false;
 
