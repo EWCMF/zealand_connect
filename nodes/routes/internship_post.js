@@ -19,50 +19,29 @@ router.post('/', function (req, res, next) {
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    const {title, email, contact, education, country, region, post_start_date, post_end_date, post_text,
-      city, postcode, cvr_number, company_link, company_logo, post_document } = fields;
+    const { title, email, contact, education, country, post_start_date, post_end_date, post_text,
+      city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid } = fields;
+
+    var region = '';
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var json = JSON.parse(this.responseText);
+        region = json[0].adgangsadresse.region.navn;
+        console.log("REGION: " + region)
+      }
+    };
+    xmlhttp.open("GET", "https://dawa.aws.dk/adresser?id=" + dawa_uuid, false);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send();
+
     var indhold = {
       title, email, contact, education, country, region, post_start_date, post_end_date,
-      post_text, city, postcode, cvr_number, company_link, company_logo, post_document };
+      post_text, city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid
+    };
 
     var inputError = false;
-    var cityArray = [];
-
-    var generatedCityOptions = "";
-    var generatedPostCodeOptions = "";
-    function generateCityOptions() {
-
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          var myObj = JSON.parse(this.responseText);
-          myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
-          myObj.forEach(element => {
-            generatedCityOptions += "<option value='" + element.primærtnavn + "'>" + element.primærtnavn + "</option>"
-          });
-          
-          }
-      };
-      xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
-      xmlhttp.setRequestHeader("Content-type", "application/json");
-      xmlhttp.send();
-    }
-
-    function generatePostCodeOptions() {
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          var myObj = JSON.parse(this.responseText);
-          myObj.forEach(element => {
-            generatedPostCodeOptions += "<option value='" + element.nr + "'>" + element.nr + "</option>"
-          });
-          generateCityOptions();
-        }
-      };
-      xmlhttp.open("GET", "https://dawa.aws.dk/postnumre", true);
-      xmlhttp.setRequestHeader("Content-type", "application/json");
-      xmlhttp.send();
-    }
 
     //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
     if (1 > title.length || title.length > 255) { console.log('Title lenght invalid'); inputError = true; }
@@ -79,53 +58,18 @@ router.post('/', function (req, res, next) {
     //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
     async function dbExe() {
       if (!inputError) {
-          const post = await db.InternshipPost.create(indhold).catch((error) => {
-            console.log(error);
-            return res.status(400).send(error);
-          });
-          res.redirect('../internship_view/'+post.id)
-          
-      }
-    }
-
-    //Generere og validere om byen angivet i frontend er korrekt.
-    function generateAndValidateCityArray() {
-      if (country == 1) {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            var myObj = JSON.parse(this.responseText);
-            myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
-            myObj.forEach(element => {
-              cityArray.push(element.primærtnavn);
-            });
-
-            isCityValid = false;
-
-            for (var i = 0; i < cityArray.length; i++) {
-              if (cityArray[i] === city) {
-                isCityValid = true;
-                console.log('Valid city found');
-              }
-            }
-
-            if (!isCityValid) {
-              inputError = true;
-              console.log('City was invalid');
-            }
-            dbExe();
-          }
-        };
-        xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
-        xmlhttp.setRequestHeader("Content-type", "application/json");
-        xmlhttp.send();
-      } else {
-        dbExe();
+        const post = await db.InternshipPost.create(indhold).catch((error) => {
+          console.log(error);
+          return res.status(400).send(error);
+        });
+        res.redirect('../internship_view/' + post.id)
       }
     }
 
     if (!files) {
-      generateAndValidateCityArray();
+      console.log(JSON.stringify(indhold))
+      // TODO: valider adresse-felt
+      dbExe();
     } else {
       /*fileUpload here*/
       var doc = files.post_document;
@@ -167,11 +111,11 @@ router.post('/', function (req, res, next) {
             } else {
               indhold.company_logo = newLogoName;
             }
-            generateAndValidateCityArray();
+            dbExe();
           });
         } else {
           console.log("invalid file");
-          generateAndValidateCityArray();
+          dbExe();
         }
       }
     }
@@ -180,45 +124,9 @@ router.post('/', function (req, res, next) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  var generatedCityOptions = "";
-  var generatedPostCodeOptions = "";
-  function generateCityOptions() {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        var myObj = JSON.parse(this.responseText);
-        myObj = sortJsonArray(myObj, 'primærtnavn', 'asc')
-        myObj.forEach(element => {
-          generatedCityOptions += "<option value='" + element.primærtnavn + "'>" + element.primærtnavn + "</option>"
-        });
-
-        res.render('internship_post', {
-          title: 'Opret Praktikopslag', generatedCityOptions: generatedCityOptions,
-          generatedPostCodeOptions: generatedPostCodeOptions, linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
-        });
-      }
-    };
-    xmlhttp.open("GET", "https://dawa.aws.dk/steder?hovedtype=Bebyggelse&undertype=by", true);
-    xmlhttp.setRequestHeader("Content-type", "application/json");
-    xmlhttp.send();
-  }
-
-  function generatePostCodeOptions() {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        var myObj = JSON.parse(this.responseText);
-        myObj.forEach(element => {
-          generatedPostCodeOptions += "<option value='" + element.nr + "'>" + element.nr + "</option>"
-        });
-        generateCityOptions();
-      }
-    };
-    xmlhttp.open("GET", "https://dawa.aws.dk/postnumre", true);
-    xmlhttp.setRequestHeader("Content-type", "application/json");
-    xmlhttp.send();
-  }
-  generatePostCodeOptions();
+  res.render('internship_post', {
+    title: 'Opret Praktikopslag', linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
+  });
 });
 
 module.exports = router;

@@ -39,7 +39,11 @@
           <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
             <div class="form-group required autocomplete-container">
               <label for="">Adresse</label>
-              <input type="search" class="form-control" name="" id="addressSearch" placeholder="Adresse">
+              <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
+              <input type="hidden" id="addressSearchJSON" name="dawa_json">
+              <input type="hidden" id="addressSearchCity" name="city">
+              <input type="hidden" id="addressSearchPostcode" name="postcode">
+              <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
               <small id="selectedAddress" class="form-text text-muted"></small>
             </div>
           </div>
@@ -203,6 +207,10 @@
   dawaAutocomplete.dawaAutocomplete(document.getElementById("addressSearch"), {
     select: function (selected) {
       document.getElementById("selectedAddress").innerHTML = selected.tekst;
+      document.getElementById("addressSearchJSON").value = JSON.stringify(selected.data);
+      document.getElementById("addressSearchCity").value = selected.data.postnrnavn;
+      document.getElementById("addressSearchPostcode").value = selected.data.postnr;
+      document.getElementById("addressSearchUUID").value = selected.data.id;
     },
     params: {per_side: '5'}
   });
