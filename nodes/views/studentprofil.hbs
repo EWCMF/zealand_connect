@@ -7,7 +7,7 @@
     </div>
     <div class="row mt-3 mb-4">
         <div class="col-2">
-            <img class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
+            <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
         </div>
         <div class="col-1">
             <div class="col">
@@ -187,7 +187,7 @@
         let profilePicture = "{{loggedInUser.profilbillede}}";
 
         if (profilePicture !== "" && profilePicture != null){
-            document.getElementById("companyLogo").src = '/uploads/' + profilePicture;
+            document.getElementById("profilbillede").src = '/uploads/' + profilePicture;
         }
     }
     updateElements();
