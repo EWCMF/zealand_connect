@@ -29,7 +29,6 @@ async function findUddannelseByName(name) {
     });
   });
 }
-/* mangler story
 async function sletUddannelse(name) {
   try {
     await models.Uddannelser.destroy({
@@ -41,10 +40,10 @@ async function sletUddannelse(name) {
   } catch (error) {
     console.log(error);
   }
-} */
+} 
 
 module.exports = {
   createUddanelse: createUddanelse,
   findUddannelseByName: findUddannelseByName,
-  //sletUddannelse: sletUddannelse,
+  sletUddannelse: sletUddannelse,
 };
