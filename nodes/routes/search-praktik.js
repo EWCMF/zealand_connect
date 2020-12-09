@@ -24,6 +24,9 @@ router.get('/', async function (req, res, next) {
             ['name', 'ASC']
         ]
     });
+    var date = new Date();
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
 
     const {
         count,
@@ -36,18 +39,24 @@ router.get('/', async function (req, res, next) {
         order: [
             ['updatedAt', 'DESC']
         ]
-        ,where: {
-            expired: 1 
-        }
-    });
 
+       ,where: { [ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.lte]:date.getFullYear+"-"+month+"-"+day}}]
+
+       }
+    });
+    
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1  ? true : false;
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
         element['post_start_date'] = element['post_start_date'].substring(0, 10);
-        element['post_end_date'] = element['post_end_date'].substring(0, 10);        
+        element['post_end_date'] = element['post_end_date'].substring(0, 10);
+           
+        /*if(element['expired'] == 1 && element['post_end_date']){
+         console.log("found " + index+"found start date" + element['expired']);
+
+        }*/     
     }
 
     res.render('search_praktik', {
