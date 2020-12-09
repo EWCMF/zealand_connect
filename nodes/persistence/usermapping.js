@@ -6,7 +6,7 @@ async function findUserByEmail(email) {
         console.log("---finding user by email: " + email + "---");
         models.Student.findOne({
             nest: true,
-            where: {email: email}, 
+            where: {email: email},
             include: {
                 model: models.CV,
                 as: 'cv'
@@ -118,14 +118,15 @@ async function findUserByCVR(CVR) {
     })
 }
 
-async function editStudent(email, fornavn, efternavn, telefon) {
+async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
     findUserByEmail(email).then(student => {
         student.update({
             fornavn: fornavn,
             efternavn: efternavn,
-            tlfnr: telefon
+            tlfnr: telefon,
+            profilbillede: profilbillede
         });
-        console.log(fornavn, efternavn, telefon);
+        console.log(fornavn, efternavn, telefon, profilbillede);
     })
 }
 

@@ -131,6 +131,18 @@ router.post('/redigerstudentpic-save', function (req, res) {
 
         let inputError = false;
 
+        //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
+        async function dbExe() {
+            if (!inputError) {
+                const post = await models.Student.create(indhold).catch((error) => {
+                    console.log(error);
+                    return res.status(400).send(error);
+                });
+                res.redirect('../internship_view/'+post.id)
+
+            }
+        }
+
         if (files) {
             /*fileUpload here*/
             let pic = files.profile_picture;
