@@ -91,15 +91,19 @@ router.post('/query', function (req, res) {
             [Op.or]: []
         };
 
+        // var expired = {
+        //     [Op.or]: [
+        //         {'expired': {[Op.ne]: 1}},
+        //         {[ Op.and]:[
+        //            {'expired': 1}, 
+        //            { 'post_end_date': {[Op.gt]:year+"-"+month+"-"+day}}
+        //         ]}
+        //     ]
+        // };
+
         var expired = {
-            [Op.or]: [
-                {'expired': {[Op.ne]: 1}},
-                {[ Op.and]:[
-                   {'expired': 1}, 
-                   { 'post_end_date': {[Op.gt]:year+"-"+month+"-"+day}}
-                ]}
-            ]
-        };
+            expired: {[Op.ne]: 1}
+        }
 
         for (var key in fields) {
             const element = key + "";
