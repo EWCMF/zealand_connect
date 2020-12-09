@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, STRING
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class InternshipPost extends Model {
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     contact: DataTypes.STRING,
     education: DataTypes.INTEGER,
     country: DataTypes.INTEGER,
-    region: DataTypes.INTEGER,
+    region: DataTypes.STRING,
     post_start_date: DataTypes.STRING,
     post_end_date: DataTypes.STRING,
     post_text: DataTypes.TEXT,
@@ -28,7 +28,9 @@ module.exports = (sequelize, DataTypes) => {
     cvr_number: DataTypes.INTEGER,
     company_link: DataTypes.TEXT,
     company_logo: DataTypes.STRING,
-    post_document: DataTypes.STRING
+    post_document: DataTypes.STRING,
+    dawa_json: DataTypes.TEXT,
+    dawa_uuid: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'InternshipPost',
