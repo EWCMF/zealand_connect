@@ -119,9 +119,10 @@
               </p>
             </div>
              <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="expire_checkbox">
+              <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox" onchange="setExpired()" >
               <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
                 ansøgningsfristen?</label>
+                <input type="hidden" id="expired" value="0" name="expired">
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -243,6 +244,18 @@
 
     document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
   }
+
+
+document.getElementById('expire_checkbox').checked = false;
+
+function setExpired() {
+  if(document.getElementById('expire_checkbox').checked){
+    document.getElementById('expired').value = 1;
+  }else {
+    document.getElementById('expired').value = 0;
+  }
+}
+
 
   function toggleNote(){
     if (document.getElementById("educationSelect").options[document.getElementById("educationSelect").selectedIndex].text==="Handelsøkonom"){
