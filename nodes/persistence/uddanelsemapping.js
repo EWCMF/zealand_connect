@@ -1,17 +1,13 @@
 const models = require("../models");
 
 async function createUddanelse(nameobj) {
-    if ( await findUddannelseByName(nameobj) === null) {
-    try {
-      await models.Uddannelser.create({
-        name: nameobj,
-      });
-      return "uddannelseOprettet";
-    } catch (e) {
-      console.log(e);
-    }
-  } else{
-      return "uddannelseFindesAllerede";
+  try {
+    await models.Uddannelser.create({
+      name: nameobj,
+    });
+    return "uddannelseOprettet";
+  } catch (e) {
+    console.log(e);
   }
 }
 
@@ -33,28 +29,22 @@ async function findUddannelseByName(name) {
     });
   });
 }
-
-/* til front-end når det bliver lavet
- function opret() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log('sending post for create')
-                let responseObj = JSON.parse(this.responseText)
-                console.log(responseObj)
-            }
-        }
-        xhttp.open('POST', '/uddannelser/create', true);
-        xhttp.setRequestHeader("Content-Type", "text/plain")
-        xhttp.send(JSON.stringify ({
-            name: document.getElementById('uddannelse').value
-        }));
-    }
-*/
-
-
+/* mangler story
+async function sletUddannelse(name) {
+  try {
+    await models.Uddannelser.destroy({
+      where: {
+        name: name,
+      },
+    });
+    return "Uddannelse blev slettet"
+  } catch (error) {
+    console.log(error);
+  }
+} */
 
 module.exports = {
   createUddanelse: createUddanelse,
   findUddannelseByName: findUddannelseByName,
+  //sletUddannelse: sletUddannelse,
 };

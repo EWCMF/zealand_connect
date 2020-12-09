@@ -30,7 +30,6 @@ router.post('/create', (req, res) => {
 
 
      // Indlæs variable fra viewet
-     console.log('before email req.body')
      let jsonBody = JSON.parse(req.body);
      let email = jsonBody.email;
      let gentagEmail = jsonBody.gentagEmail;
