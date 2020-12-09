@@ -130,9 +130,7 @@ router.post('/test', function(req, res){
 })
 
 router.post('/redigerstudentpic-save', function (req, res) {
-    console.log("?????????1")
     var formData = new formidable.IncomingForm();
-    console.log("?????????2")
 
     // formData.parse(req, function (err, fields, files){
     //     console.log("memes")
@@ -140,24 +138,21 @@ router.post('/redigerstudentpic-save', function (req, res) {
 
     formData.parse(req, function (error, fields, files) {
         //laver et objekt med alle data
-        console.log("?????????3")
         const {
             email2, profile_picture
         } = fields;
         let content = {
             email2, profile_picture
         };
-        console.log("?????????4")
 
         let inputError = false;
 
         if (files) {
-            console.log("?????????")
             /*fileUpload here*/
             let pic = files.profile_picture;
 
             //Stien til upload mappen skal være til stien i docker containeren.
-            let publicUploadFolder = "C:\\Users\\Ben\\Desktop\\temp";
+            let publicUploadFolder = "/usr/src/app/public/uploads/";
 
             //Generere unik data til filnavn med Date.now() og tilfældig tal.
             let datetime = Date.now();
