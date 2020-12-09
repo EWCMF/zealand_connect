@@ -88,7 +88,7 @@ router.post('/', function (req, res, next) {
       var newDocName = datetime + randomNumber + "_" + doc.name;
       var newLogoName = datetime + randomNumber + "_" + logo.name;
 
-      if (doc.size <= 10240000){
+      if (doc.size <= 10240000) {
         //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
         //Nedenstående flytter og omdøber filer på sammetid
         if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
@@ -105,13 +105,13 @@ router.post('/', function (req, res, next) {
           console.log("invalid file");
           reNameLogo();
         }
-      }else{
+      } else {
         console.log("invalid filesize");
         reNameLogo();
       }
 
       function reNameLogo() {
-        if (logo.size <= 10240000){
+        if (logo.size <= 10240000) {
           if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
             mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
               if (errorRename) {
@@ -125,7 +125,7 @@ router.post('/', function (req, res, next) {
             console.log("invalid file");
             dbExe();
           }
-        }else{
+        } else {
           console.log("invalid filesize");
           dbExe();
         }
@@ -136,9 +136,22 @@ router.post('/', function (req, res, next) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('internship_post', {
-    title: 'Opret Praktikopslag', linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR
-  });
+
+  var generatedEducationOptions = '';
+
+  db.Uddannelser.findAll({
+    order: [
+      ['name', 'ASC']
+    ]
+  }).then(result => {
+    result.forEach(element => {
+      generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
+    });
+    res.render('internship_post', {
+      title: 'Opret Praktikopslag', linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR, generatedEducationOptions: generatedEducationOptions
+    });
+  }
+  ).catch();
 });
 
 module.exports = router;

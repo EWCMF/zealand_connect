@@ -37,39 +37,15 @@
               <p id="countryError" class="CVErrorColor" hidden="true">Du skal angive et land</p>
             </div>
           </div>
-          <div class="col-12 col-md-6">
-            <div class="form-group required" id="regionContainer" hidden="true">
-              <label for="regionSelect">Region</label>
-              <select class="form-control" name="region" id="regionSelect">
-                <option value="0">Vælg en region</option>
-                <option value="1">Hovedstaden</option>
-                <option value="2">Midtjylland</option>
-                <option value="3">Nordjylland</option>
-                <option value="4">Sjælland</option>
-                <option value="5">Syddanmark</option>
-              </select>
-              <p id="regionError" class="CVErrorColor" hidden="true">Du skal angive en region
-              </p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6" id="cityContainer" hidden="true">
-            <div class="form-group required">
-              <label for="city">By</label>
-              <select class="form-control" name="city" id="citySelect">
-                <option value="0">Vælg en by</option>
-                {{{generatedCityOptions}}}
-              </select>
-              <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by</p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6" id="postCodeContainer" hidden="true">
-            <div class="form-group required">
-              <label for="postcode">Postnummer</label>
-              <select class="form-control" name="postcode" id="postalText">
-                <option value="0">Vælg et postnummer</option>
-                {{{generatedPostCodeOptions}}}
-              </select>
-              <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by</p>
+          <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
+            <div class="form-group required autocomplete-container">
+              <label for="">Adresse</label>
+              <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
+              <input type="hidden" id="addressSearchJSON" name="dawa_json">
+              <input type="hidden" id="addressSearchCity" name="city">
+              <input type="hidden" id="addressSearchPostcode" name="postcode">
+              <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
+              <small id="selectedAddress" class="form-text text-muted"></small>
             </div>
           </div>
         </div>
@@ -79,7 +55,8 @@
               <label for="internshipEmail">E-mail adresse</label>
               <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
                 placeholder="Email" required pattern="{{{emailRegex}}}">
-              <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @</p>
+              <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @
+              </p>
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -95,16 +72,17 @@
               <label for="cvr_number">CVR Nummer</label>
               <input type="text" pattern="{{{cvrRegex}}}" title="CVR må kun være 8 tal" name="cvr_number"
                 id="companyCVR" class="form-control" placeholder="CVR" value="{{rcvr}}">
-              <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal præcist være 8 tal</p>
+              <p id="cvrError" class="CVErrorColor" hidden="true">Du skal angive dit CVR nummer, det skal præcist være 8
+                tal</p>
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="company_link">Link til Hjemmeside</label>
-              <input type="text" pattern="{{{linkRegex}}}"
-                title="Link er ugyldigt" name="company_link" id="companyURL" class="form-control"
-                placeholder="virksomhed.dk" value="{{rcompany}}">
-              <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her f.eks http://www.zealandconnect.dk</p>
+              <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link" id="companyURL"
+                class="form-control" placeholder="virksomhed.dk" value="{{rcompany}}">
+              <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her f.eks
+                http://www.zealandconnect.dk</p>
             </div>
           </div>
         </div>
@@ -114,14 +92,15 @@
               <label for="post_start_date">Ansøgningsfrist</label>
               <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
                 id="applicationDeadline" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
-                <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en start dato
+              <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en start dato
               </p>
             </div>
             <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox" onchange="setExpired()" >
+              <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox"
+                onchange="setExpired()">
               <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
                 ansøgningsfristen?</label>
-                <input type="hidden" id="expired" value="0" name="expired">
+              <input type="hidden" id="expired" value="0" name="expired">
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -129,14 +108,14 @@
               <label for="post_end_date">Praktikstart</label>
               <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
                 id="internshipEmploymentDate" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
-                <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive et ansættelsestidspunkt
+              <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive et ansættelsestidspunkt
               </p>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
-            <label for="post_document">Vedhæft fil</label><br/>
+            <label for="post_document">Vedhæft fil</label><br />
             <a id="uploadedFile" href="" target="_blank" hidden="true">Nuværende vedhæftet fil</a>
             <div class="form-group">
               <div class="custom-file">
@@ -177,89 +156,103 @@
 </div>
 <script src="/js/quill.min.js"></script>
 <script src="/javascript/validate_internship_post.js"></script>
+<!-- AJAX and dawa autocomplete linked here -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+<script src='../dawa/js/dawa-autocomplete2.min.js'></script>
 <script>
-var toolbarOptions = [
-  [{
-    'size': ['small', false, 'large', 'huge']
-  }],
-  ['bold', 'italic', 'underline', 'strike'],
-  [{
-    'align': []
-  }],
-  [{
-    'list': 'ordered'
-  }, {
-    'list': 'bullet'
-  }],
-  [{
-    'color': []
-  }, {
-    'background': []
-  }],
-  ['link', 'image', 'video'],
-  ['clean']
-];
-var editor = new Quill('#editor', {
-  modules: {
-    toolbar: toolbarOptions
-  },
-  theme: 'snow'
-});
+  var toolbarOptions = [
+    [{
+      'size': ['small', false, 'large', 'huge']
+    }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{
+      'align': []
+    }],
+    [{
+      'list': 'ordered'
+    }, {
+      'list': 'bullet'
+    }],
+    [{
+      'color': []
+    }, {
+      'background': []
+    }],
+    ['link', 'image', 'video'],
+    ['clean']
+  ];
+  var editor = new Quill('#editor', {
+    modules: {
+      toolbar: toolbarOptions
+    },
+    theme: 'snow'
+  });
 
-function copyQuillHtmlToHiddenInput() {
-  document.getElementById('plainText').value = editor.root.innerHTML;
+  function copyQuillHtmlToHiddenInput() {
+    document.getElementById('plainText').value = editor.root.innerHTML;
+  }
+
+  var emailRegex = /{{{emailRegex}}}/;
+  var dateRegex = /{{{dateRegex}}}/;
+  var cvrRegex = /{{{cvrRegex}}}/;
+  var linkRegex = /{{{linkRegex}}}/;
+
+  function setDefaultSelect() {
+    var reducation = {{ reducation }};
+
+  var rcountry = {{ rcountry }};
+  document.getElementById('educationSelect').value = {{ reducation }};
+  document.getElementById('countrySelect').value = {{ rcountry }};
 }
+  setDefaultSelect();
 
-var emailRegex = /{{{emailRegex}}}/;
-var dateRegex = /{{{dateRegex}}}/;
-var cvrRegex = /{{{cvrRegex}}}/;
-var linkRegex = /{{{linkRegex}}}/;
-
-function setDefaultSelect() {
-  var reducation = {{reducation}};
-  var rcountry = {{rcountry}};
-  var rregion = {{rregion}};
-  document.getElementById('educationSelect').value = reducation;
-  document.getElementById('countrySelect').value = rcountry;
-  document.getElementById('regionSelect').value = rregion;
-}
-setDefaultSelect();
-
-function confirmYeet() {
-  if (confirm("Er du sikker?")) {
-    window.location = "/internship_update/delete?id=" + {{rid}}
+  function confirmYeet() {
+    if (confirm("Er du sikker?")) {
+      window.location = "/internship_update/delete?id=" + {{ rid }}
   }
 }
 
-//countryToggleFields() Toggler disse fælter: Region og CVR
-hasBeenSet=false;
-function countryToggleFields() {
-  if (document.getElementById('countrySelect').value == 1) {
-    document.getElementById('regionContainer').hidden = false;
-    document.getElementById('containerCVR').className = "form-group required";
-    document.getElementById('cityContainer').hidden = false;
-    document.getElementById('postCodeContainer').hidden = false;
-  } else {
-    document.getElementById('regionContainer').hidden = true;
-    document.getElementById('containerCVR').className = "form-group";
-    document.getElementById('cityContainer').hidden = true;
-    document.getElementById('postCodeContainer').hidden = true;
+  //countryToggleFields() Toggler disse fælter: Region og CVR
+  var hasBeenSet = false;
+  function countryToggleFields() {
+    if (document.getElementById('countrySelect').value == 1) {
+      document.getElementById('addressSearchContainer').hidden = false;
+      document.getElementById('containerCVR').className = "form-group required";
+    } else {
+      document.getElementById('addressSearchContainer').hidden = true;
+      document.getElementById('containerCVR').className = "form-group";
+    }
+
+    if (!hasBeenSet) {
+      var raddress = JSON.parse('{{{raddress}}}');
+      console.log("NU BLIVER DET SAT: " + raddress)
+      document.getElementById('addressSearch').value = raddress.tekst;
+      document.getElementById("selectedAddress").innerHTML = raddress.tekst;
+      document.getElementById("addressSearchJSON").value = JSON.stringify(raddress);
+      document.getElementById("addressSearchCity").value = raddress.data.postnrnavn;
+      document.getElementById("addressSearchPostcode").value = raddress.data.postnr;
+      document.getElementById("addressSearchUUID").value = raddress.data.id;
+      hasBeenSet = true;
+    };
   }
 
-  if(!hasBeenSet){
-    var rcity = "{{rcity}}";
-    var rpostcode = {{rpostcode}};
-    document.getElementById('citySelect').value = rcity;
-    document.getElementById('postalText').value = rpostcode;
-    hasBeenSet=true;
-  }
-}
+  dawaAutocomplete.dawaAutocomplete(document.getElementById("addressSearch"), {
+    select: function (selected) {
+      document.getElementById("selectedAddress").innerHTML = selected.tekst;
+      document.getElementById("addressSearchJSON").value = JSON.stringify(selected.data);
+      document.getElementById("addressSearchCity").value = selected.data.postnrnavn;
+      document.getElementById("addressSearchPostcode").value = selected.data.postnr;
+      document.getElementById("addressSearchUUID").value = selected.data.id;
+    },
+    params: { per_side: '5' }
+  });
 
-//countryToggleFields skal kalds for at håndtere felter der kun er synlig i nogle situationer.
-countryToggleFields();
+  //countryToggleFields skal kalds for at håndtere felter der kun er synlig i nogle situationer.
+  countryToggleFields();
 
-function validateAndUpdateInputLabel(labelId, inputId) {
-  var file = document.getElementById(inputId).files[0];
+  function validateAndUpdateInputLabel(labelId, inputId) {
+    var file = document.getElementById(inputId).files[0];
     console.log(file)
     //Checker om der er tilføjet filer
     //Henter den indexerede fil i og sætter dens str til kilobytes
@@ -270,61 +263,61 @@ function validateAndUpdateInputLabel(labelId, inputId) {
       alert("File selected is too big, maximum size is 10MB")
     }
 
-  document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
-}
-
-function toggleNote(){
-  if (document.getElementById("educationSelect").options[document.getElementById("educationSelect").selectedIndex].text==="Handelsøkonom"){
-    document.getElementById("educationNote").hidden=false;
-  } else {
-    document.getElementById("educationNote").hidden=true;
+    document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
   }
 
-  if(document.getElementById("educationSelect").option != 0){
-    document.getElementById("educationError").hidden=true;
+  function toggleNote() {
+    if (document.getElementById("educationSelect").options[document.getElementById("educationSelect").selectedIndex].text === "Handelsøkonom") {
+      document.getElementById("educationNote").hidden = false;
+    } else {
+      document.getElementById("educationNote").hidden = true;
+    }
+
+    if (document.getElementById("educationSelect").option != 0) {
+      document.getElementById("educationError").hidden = true;
+    }
   }
-}
 
-//Function til at sætte billed sti og dokument link hvis link findes.
-function showIfURLexist(){
-  var logoName="{{rlogo}}";
-  var docName ="{{rdoc}}";
+  //Function til at sætte billed sti og dokument link hvis link findes.
+  function showIfURLexist() {
+    var logoName = "{{rlogo}}";
+    var docName = "{{rdoc}}";
 
-  if(logoName.length!=0){
-    console.log("Logo");
-    document.getElementById("uploadedLogo").href="uploads/"+logoName;
-    document.getElementById("uploadedLogo").hidden=false;
-  }else{console.log("No logo");}
+    if (logoName.length != 0) {
+      console.log("Logo");
+      document.getElementById("uploadedLogo").href = "uploads/" + logoName;
+      document.getElementById("uploadedLogo").hidden = false;
+    } else { console.log("No logo"); }
 
-  if(docName.length!=0){
-    console.log("File");
-    document.getElementById("uploadedFile").href="uploads/"+docName;
-    document.getElementById("uploadedFile").hidden=false;
-  }else{console.log("No file");}
+    if (docName.length != 0) {
+      console.log("File");
+      document.getElementById("uploadedFile").href = "uploads/" + docName;
+      document.getElementById("uploadedFile").hidden = false;
+    } else { console.log("No file"); }
 
-  toggleNote();
-}
-
-showIfURLexist();
-
-document.getElementById('expire_checkbox').checked = false;
-
-function setExpired() {
-  if(document.getElementById('expire_checkbox').checked){
-    document.getElementById('expired').value = 1;
-  }else {
-    document.getElementById('expired').value = 0;
+    toggleNote();
   }
-}
-function setExpiredCheckbox() {
-  var expired = {{expired}};
-  if(expired == 1) {
-  document.getElementById('expire_checkbox').checked = true;
+
+  showIfURLexist();
+
+  document.getElementById('expire_checkbox').checked = false;
+
+  function setExpired() {
+    if (document.getElementById('expire_checkbox').checked) {
+      document.getElementById('expired').value = 1;
+    } else {
+      document.getElementById('expired').value = 0;
+    }
+  }
+  function setExpiredCheckbox() {
+    var expired = {{ expired }};
+  if (expired == 1) {
+    document.getElementById('expire_checkbox').checked = true;
   }
   else {
     document.getElementById('expire_checkbox').checked = false;
   }
   document.getElementById('expired').value = expired
 }
-setExpiredCheckbox();
+  setExpiredCheckbox();
 </script>
