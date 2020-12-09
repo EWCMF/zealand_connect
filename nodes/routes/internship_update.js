@@ -295,7 +295,7 @@ router.get('/', function (req, res, next) {
             generatedCityOptions: generatedCityOptions,
             generatedPostCodeOptions: generatedPostCodeOptions,
 
-            linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR,expired:result['expired']
+            linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR,expired:result['expired'],
             generatedEducationOptions: generatedEducationOptions
           });
         }).catch();
