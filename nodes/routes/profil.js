@@ -39,9 +39,7 @@ router.get('/', function (req, res, next) {
                 tlfnr: user.tlfnr,
                 profilbillede: user.profilbillede
             }
-            console.log(loggedInUser.profilbillede);
-            let profilbillede = user.profilbillede;
-            res.render("studentprofil", {loggedInUser, profilbillede});
+            res.render("studentprofil", {loggedInUser});
         }
     });
 });
@@ -59,6 +57,7 @@ router.get('/rediger', function (req, res, next) {
                 fornavn: user.fornavn,
                 efternavn: user.efternavn,
                 tlfnr: user.tlfnr,
+                profilbillede: user.profilbillede
             }
 
             res.render("rediger-studentprofil", {loggedInUser});

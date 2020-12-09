@@ -102,10 +102,10 @@
     }
 
     function updateElements() {
-        let profilePicture = "{{rpic}}";
+        let profilePicture = "{{loggedInUser.profilbillede}}";
 
-        if (profilePicture !== ""){
-            document.getElementById("companyLogo").src = '/uploads/' + profilePicture;
+        if (profilePicture !== "" && profilePicture != null){
+            document.getElementById("profilbillede").src = '/uploads/' + profilePicture;
         }
     }
     updateElements();
