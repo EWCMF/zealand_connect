@@ -40,8 +40,9 @@ router.get('/', async function (req, res, next) {
             ['updatedAt', 'DESC']
         ]
 
-       ,where: { [ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.lte]:year+"-"+month+"-"+day}}]
-
+       ,where: { [Op.or]:[{'expired': {[Op.ne]: 1}},
+           {[ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.gt]:year+"-"+month+"-"+day}}]}
+       ]
        }
        
     });
