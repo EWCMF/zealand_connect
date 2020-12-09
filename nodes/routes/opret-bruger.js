@@ -27,10 +27,11 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/createErrors', (req, res) => {
+
+
      // Indlæs variable fra viewet
      console.log('before email req.body')
      let jsonBody = JSON.parse(req.body);
-     
      let email = jsonBody.email;
      let gentagEmail = jsonBody.gentagEmail;
      let password = jsonBody.password;
@@ -43,6 +44,7 @@ router.post('/createErrors', (req, res) => {
      //reset errors
      let atLeastOneErrorIsPresent = false;
      let errors = {
+        areThereErrors: "true",
         EmailError: "",
         PasswordError: "",
         TlfnrError: "",
@@ -50,8 +52,6 @@ router.post('/createErrors', (req, res) => {
         CVRError: "",
         PostnrError: "",
     }
-    
-
     // valider 
     if (!validateEmail(email)) {
         errors.EmailError = "Email er ugyldig";
@@ -87,7 +87,6 @@ router.post('/createErrors', (req, res) => {
         atLeastOneErrorIsPresent = true;
     }
 
-    
     findUserByEmail(email).then((userFoundByEmail) => {
         let aUserExistsWithThatEmail = false;
         if (userFoundByEmail !== null) {
@@ -110,15 +109,21 @@ router.post('/createErrors', (req, res) => {
                         postnr: postnr,
                         cvrnr: cvrnr
                     }
-                    createVirksomhed(virksomhedsBruger);
+                    createVirksomhed(virksomhedsBruger).then(()=>{
+                        //vi sender errors tilbage selvom de er tomme, 
+                        //men så ved frontend at backend er færdig og den kan lave en getrequest til login.
+                        console.log("VIRKSOMHED ER SKABT");
+                        errors.areThereErrors="false";
+                        res.send(errors);
+                    });
                 });
              }
-            else {res.send(errors);}
+            else {
+                res.send(errors);
+            }
         })
     })
-
 });
-    
 
 router.post('/delete', function (req, res) {
     deleteVirksomhed("")

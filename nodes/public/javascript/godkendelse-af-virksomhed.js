@@ -68,7 +68,7 @@ function submitButton() {
         document.getElementById("byError").hidden = true;
     }
 
-    if (!navn == "" || numbersOnly || numbersOnly2 || !address == "" || !hjemmeside == "" || !direktoer == "" || !land == "" || numbersOnly3 || !by == "") {
+    if (!navn == "" && numbersOnly2 && !address == "" && !hjemmeside == "" && !direktoer == "" && !land == "" && numbersOnly3 && !by == "") {
         document.forms["redigerVirksomhedForm"].submit();
     }
 

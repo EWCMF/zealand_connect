@@ -7,7 +7,7 @@
                 <div id="loginContent">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
                     <div class="radioBtnBox">
-                        <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="checked"
+                        <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login" checked="{{checked}}"
                                onclick="showEASJButton()">
                         <label class="buttonText" data-key="studerende">Studerende</label>
                         <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login" onclick="showVirksomhedLogin()">
@@ -49,4 +49,16 @@
         
         </script>
     {{/if}}
+
+    {{#if startVirksomhed}} 
+    <script>  
+            document.getElementById("tab1").checked=false;
+            document.getElementById("tab2").checked=true;
+            document.getElementById('easjLoginKnap').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('opretBrugerKnapVedLogin').style.display = 'block';
+            document.getElementById('opretBrugerLabelVedLogin').style.display = 'block';
+    </script>
+    {{/if}}
 </div>
+

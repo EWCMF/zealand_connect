@@ -71,7 +71,7 @@ function getLangdata() {
                 "aProfil": "Profile",
                 "aMitCV": "My Resume",
                 "aMinePraktikOpslag": "My Internship posts",
-                "aOpretBruger": "Sign Up",
+                "opretBruger": "Sign Up",
                 "inputNulstilAdgangskode": "Reset Password",
                 "inputGemAendringer": "Save Changes",
                 "placeholderadgangskode": "Password",
@@ -92,7 +92,10 @@ function getLangdata() {
                 "placeholderGentagEmail": "Repeat Email",
                 "labelTelefonnummer": "Cell phone number",
                 "placeholderTelefonnummer": "Cell phone number",
-                "opret": "Create User",
+                "opretBruger": "Create User",
+                "sletBruger": "Delete User",
+                "opret": "Create",
+                "slet": "Delete",
                 "eller": "Or",
                 "uddannelser": "Educations",
                 "opretGoogle": "Sign up with Google",
@@ -126,7 +129,11 @@ function getLangdata() {
                 "navn": "Corporation name",
                 "oplysninger": "Corporation informations",
                 "telefon": "Cel phone number",
-                "direktoer": "Director"
+                "direktoer": "Director",
+                "adminFunktion": "Administrative functions",
+                "opretUddannelse": "Create education",
+                "sletUddannelse": "Delete education",
+                "uddannelse": "Education"
 
 
             }

@@ -187,4 +187,31 @@ router.get('/delete', function (req, res, next) {
     }
 });
 
+router.post('/Preview', async function (req, res, next) {
+    var student = await findUserByEmail(req.user);
+
+    res.render('cv_Preview', {
+    fornavn : student.fornavn,
+    efternavn : student.efternavn,
+    overskrift : req.body.overskrift,
+    uddannelse : req.body.uddannelse,
+    email : req.body.email,
+    sprog : req.body.sprog,
+    speciale : req.body.speciale,
+    telefon : req.body.telefon,
+    linkedIn : req.body.linkedIn,
+    yt_link : req.body.youtube_link,
+    om_mig : req.body.om,
+    it_kompetencer : req.body.iT_Kompetencer,
+    udenlandsophold_og_frivilligt_arbejde : req.body.UogFA,
+    erhvervserfaring : req.body.erhvervserfaring,
+    tidligere_uddannelse : req.body.tidligere_uddannelse,
+    hjemmeside : req.body.hjemmeside,
+    fritidsinteresser : req.body.fritidsinteresser,
+    offentligCheckbox : req.body.offentligCheckBox,
+    navDisabled: true
+})
+
+})
+
 module.exports = router;

@@ -8,7 +8,8 @@ var usersRouter = require('./routes/users');
 var profilRouter = require('./routes/profil');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
-var internshipPostViewRouter = require('./routes/internship_view')
+var internshipPostViewRouter = require('./routes/internship_view');
+var adminFunktionerRouter = require('./routes/admin-funktioner');
 var mit_CVRouter = require('./routes/mit-cv');
 var searchCVRouter = require('./routes/search-cv');
 var searchPraktikRouter = require('./routes/search-praktik');
@@ -19,7 +20,6 @@ var profilRouter = require('./routes/profil')
 var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
-
 
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -84,7 +84,6 @@ app.use(passport.session());
 
 app.use(bodyParser.text({ type: "text/plain"}))
 // Middleware til at finde login status i alle routes.
-/*
 app.use(async function (req, res, next) {
   if (req.user == null) {
     next();
@@ -98,10 +97,9 @@ app.use(async function (req, res, next) {
       res.locals.isCompany = true;
     }
     res.locals.user = userRole;
+    next();
   }
-  next();
 });
-*/
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
@@ -116,8 +114,8 @@ app.use('/login', loginRouter);
 app.use('*/language', languageRouter)
 app.use('/', forsideRouter);
 app.use('/praktikforloebet', praktikforloebRouter);
-app.use ('/profil', profilRouter)
-
+app.use ('/profil', profilRouter);
+app.use ('/admin-funktioner', adminFunktionerRouter);
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
 
