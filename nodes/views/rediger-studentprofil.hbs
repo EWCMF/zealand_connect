@@ -9,10 +9,11 @@
         </div>
     </div>
 
-    <form action="/profil/redigerstudent-save" method="POST" id="redigerStudentForm"
-          name="redigerStudentForm">
-        <div class="row">
-            <div class="form-column col-12 col-md-4">
+    <div class="row">
+        <div class="form-column col-12 col-md-4">
+            <form action="/profil/redigerstudent-save" method="POST" id="redigerStudentForm"
+                  name="redigerStudentForm">
+
                 <div class="form-group required">
                     <label for="fornavn">Fornavn</label>
                     <input class="form-control" name="fornavn" id="fornavn" rows="2"
@@ -42,10 +43,15 @@
                         tal og må ikke starte med 0</p>
                 </div>
 
+                <div>
+                    <button type="button" class="btn btn-success" id="gem">Gem</button>
+                </div>
+            </form>
+        </div>
 
-            </div>
+        <div class="form-column col-12 col-md-4">
+            <form action="/profil/redigerstudentpic-save" method="POST">
 
-            <div class="form-column col-12 col-md-4">
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel">Profilbillede</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
@@ -63,14 +69,11 @@
                     </div>
                 </div>
 
-            </div>
-
+                <div>
+                    <input type="submit" class="btn btn-success" value="Gem Billede">
+                </div>
+            </form>
         </div>
-
-        <div>
-            <button type="button" class="btn btn-success" id="gem">Gem</button>
-        </div>
-
-    </form>
+    </div>
 </div>
 

@@ -113,9 +113,11 @@ router.post('/redigerstudent-save', function (req, res) {
     editStudent(email, fornavn, efternavn, telefon);
     res.redirect('/profil')
 
-
-
     console.log(email + fornavn + efternavn + telefon);
+});
+
+router.post('/redigerstudentpic-save', function (req, res) {
+    res.redirect('back');
 });
 
 router.post('/rediger-save', function (req, res, next) {
