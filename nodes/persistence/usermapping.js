@@ -85,6 +85,18 @@ async function deleteVirksomhed(email) {
     }
 }
 
+async function deleteStudent(email) {
+    try {
+        await models.Student.destroy({
+            where: {
+                email: email
+            }
+        });
+        console.log("A student was deleted")
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 async function findUserByCVR(CVR) {
     let user = null;
@@ -117,7 +129,10 @@ async function editStudent(email, fornavn, efternavn, telefon) {
     })
 }
 
+
+
+
 module.exports = {
     findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed,
-    editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR, editStudent: editStudent
+    editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR, editStudent: editStudent, deleteStudent: deleteStudent
 }
