@@ -130,10 +130,17 @@ async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
     })
 }
 
-
-
+async function editProfilePic(email, profilbillede){
+    findUserByEmail(email).then(student => {
+        student.update({
+            profilbillede: profilbillede
+        });
+        console.log(profilbillede);
+    })
+}
 
 module.exports = {
     findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed,
-    editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR, editStudent: editStudent, deleteStudent: deleteStudent
+    editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR, editStudent: editStudent, deleteStudent: deleteStudent,
+    editProfilePic: editProfilePic
 }

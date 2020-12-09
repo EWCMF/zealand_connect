@@ -50,7 +50,15 @@
         </div>
 
         <div class="form-column col-12 col-md-4">
-            <form action="/profil/redigerstudentpic-save" method="POST">
+            <form action="/profil/redigerstudentpic-save" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group required" style="display: none;">
+                    <label for="email">Email</label>
+                    <input class="form-control" name="email2" id="email2" rows="2" value="{{loggedInUser.email}}">
+                    <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst
+                        bruge
+                        et @</p>
+                </div>
 
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel">Profilbillede</label>
@@ -92,4 +100,13 @@
 
         document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
     }
+
+    function updateElements() {
+        let profilePicture = "{{rpic}}";
+
+        if (profilePicture !== ""){
+            document.getElementById("companyLogo").src = '/uploads/' + profilePicture;
+        }
+    }
+    updateElements();
 </script>

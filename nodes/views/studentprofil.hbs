@@ -181,3 +181,14 @@
         </div>
     </div>
 </div> --}}
+
+<script>
+    function updateElements() {
+        let profilePicture = "{{loggedInUser.profilbillede}}";
+
+        if (profilePicture !== "" && profilePicture != null){
+            document.getElementById("companyLogo").src = '/uploads/' + profilePicture;
+        }
+    }
+    updateElements();
+</script>
