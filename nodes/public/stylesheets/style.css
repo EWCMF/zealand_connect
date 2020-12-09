@@ -445,9 +445,13 @@ input::placeholder {
 }
 
 #profilbillede {
-  max-height: 250px;
-  max-width: 250px;
+  max-height: 300px;
+  max-width: 300px;
   padding: 0;
+}
+
+#picLabel{
+  max-width: 300px;
 }
 
 /* Small devices (landscape phones, 576px and up) */
