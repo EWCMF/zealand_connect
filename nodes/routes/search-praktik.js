@@ -101,9 +101,9 @@ router.post('/query', function (req, res) {
         //     ]
         // };
 
-        var expired = {
-            expired: {[Op.ne]: 1}
-        }
+        // var expired = {
+        //     expired: {[Op.ne]: 1}
+        // }
 
         for (var key in fields) {
             const element = key + "";
