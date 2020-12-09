@@ -117,6 +117,55 @@ router.post('/redigerstudent-save', function (req, res) {
 });
 
 router.post('/redigerstudentpic-save', function (req, res) {
+
+    var logo = files.company_logo;
+    var publicUploadFolder = "/usr/src/app/public/uploads/";
+    var datetime = Date.now();
+    var randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
+    var newLogoName = datetime + randomNumber + "_" + logo.name;
+
+    if (doc.size <= 10240000){
+        //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældigt navn.
+        //Nedenstående flytter og omdøber filer på sammetid
+        if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
+            mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
+                if (errorRename) {
+                    console.log("Unable to move file.");
+                } else {
+                    indhold.post_document = newDocName;
+                }
+                reNameLogo();
+            });
+        } else {
+            console.log("invalid file");
+            reNameLogo();
+        }
+    }else{
+        console.log("invalid filesize");
+        reNameLogo();
+    }
+
+    function reNameLogo() {
+        if (logo.size <= 10240000){
+            if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
+                mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
+                    if (errorRename) {
+                        console.log("Unable to move file.");
+                    } else {
+                        indhold.company_logo = newLogoName;
+                    }
+                    generateAndValidateCityArray();
+                });
+            } else {
+                console.log("invalid file");
+                generateAndValidateCityArray();
+            }
+        }else{
+            console.log("invalid filesize");
+            generateAndValidateCityArray();
+        }
+    }
+
     res.redirect('back');
 });
 
