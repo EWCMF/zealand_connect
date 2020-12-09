@@ -2,7 +2,11 @@
 <div class="card mb-3">
     <div class="row">
         <div class="col-auto">
-            <img class="center-cropped" src="https://www.shopinimizaj.com/frontend/web/images/no_images.png">
+            {{#if company_logo}}
+            <img class="center-cropped" src="/uploads/{{company_logo}}">
+            {{else}}
+            <img class="center-cropped" src="images/no-logo.png">
+            {{/if}}
         </div>
         <div class="col">
             <div class="card-body">
@@ -15,7 +19,14 @@
     </div>
     {{!-- <a href='/search-praktik/{{id}}' class="stretched-link"></a> --}}
     <div class="card-footer">
-        <p>Start: {{post_start_date}} Slut: {{post_end_date}}</p>
+        <div class="d-flex">
+            <p class="font-weight-bold pr-1">By:</p><p>{{city}}</p>
+        </div>
+        <div class="d-flex">
+            <p class="font-weight-bold pr-1">Start:</p> <p class="pr-2">{{post_start_date}}</p> <p class="font-weight-bold pr-1">Slut:</p>  <p>{{post_end_date}}</p>
+        </div>
+        
+        
     </div>
     <a href='/internship_view/{{id}}' class="stretched-link"></a>
 </div>
