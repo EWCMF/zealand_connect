@@ -152,29 +152,6 @@ router.post('/', function (req, res, next) {
       var newDocName = datetime + randomNumber + "_" + doc.name;
       var newLogoName = datetime + randomNumber + "_" + logo.name;
 
-
-      //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
-      //Nedenstående flytter og omdøber filer på sammetid
-      if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
-        mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
-          if (errorRename) {
-            console.log("Unable to move file.");
-          } else {
-            indhold.post_document = newDocName;
-          }
-          reNameLogo();
-        });
-      } else {
-        console.log("invalid file");
-        reNameLogo();
-      }
-      
-      
-      function reNameLogo() {
-        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
-          mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
-
-
       if (doc.size <= 10240000){
         //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
         //Nedenstående flytter og omdøber filer på sammetid
