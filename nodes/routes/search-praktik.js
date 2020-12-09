@@ -91,8 +91,6 @@ router.post('/query', function (req, res) {
             [Op.or]: []
         }
 
-        console.log(fields);
-
         for (var key in fields) {
             const element = key + "";
             if (element.includes("udd")) {
@@ -135,8 +133,16 @@ router.post('/query', function (req, res) {
             education,
             country,
             region,
-            postcode
-        }
+            postcode,
+            [Op.or]:[
+                {'expired': {[Op.ne]: 1}},
+                {[ Op.and]:[
+                   {'expired': 1}, 
+                   { 'post_end_date': {[Op.gt]:year+"-"+month+"-"+day}}
+                ]}
+            ]
+        } 
+        
 
         var page = parseInt(fields.page);
         var offset;
