@@ -144,7 +144,7 @@ router.post('/redigerstudentpic-save', function (req, res) {
 
             //Stien til upload mappen skal være til stien i docker containeren.
             // VIRKER IKKE PÅ WINDOWS
-            let publicUploadFolder = "/usr/src/app/public/uploads/";
+            let publicUploadFolder = "C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\";
 
             //Generere unik data til filnavn med Date.now() og tilfældig tal.
             let datetime = Date.now();
