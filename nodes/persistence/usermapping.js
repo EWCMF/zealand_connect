@@ -11,7 +11,8 @@ async function findUserByEmail(email) {
             include: {
                 model: models.CV,
                 as: 'cv'
-        }}).then((student) => {
+            }
+        }).then((student) => {
             if (student === null) {
                 console.log('en student med denne email findes ikke!');
             }
@@ -22,7 +23,7 @@ async function findUserByEmail(email) {
                 user = student
             }
         }).then(() => {
-            models.Virksomhed.findOne({where: {email: email}}).then((virksomhed) => {
+            models.Virksomhed.findOne({ where: { email: email } }).then((virksomhed) => {
                 if (virksomhed === null) {
                     console.log('en virksomhed med denne email findes ikke!');
                     //resolve(null);
@@ -39,7 +40,7 @@ async function findUserByEmail(email) {
     })
 }
 
-async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by){
+async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by) {
     //vi bruger email til at finde virksomheden.
     findUserByEmail(email).then(virksomhed => {
         virksomhed.update({
@@ -75,6 +76,7 @@ async function createVirksomhed(virkObj) {
 
 
 async function deleteVirksomhed(email) {
+    let errorHappened = false;
     try {
         //find virksomhed
         var virksomhed = await models.Virksomhed.findOne({
@@ -82,6 +84,10 @@ async function deleteVirksomhed(email) {
                 email: email
             }
         });
+        if(virksomhed == null){
+            errorHappened = true;
+            return errorHappened;
+        }
         //find nu alle de internshipposts som har den foreign key virksomhed_id som passer til den id
         //denne kode kan optimeres hvis man laver en assosiation og så bare tilføjer det til include oven over
         var internshipPosts = await models.InternshipPost.findAll({
@@ -96,12 +102,14 @@ async function deleteVirksomhed(email) {
         //slet virksomheden
         await virksomhed.destroy();
         console.log("A virksomhed was deleted");
+        return errorHappened;
     } catch (e) {
         console.log(e);
     }
 }
 
 async function deleteStudent(email) {
+    var errorHappened = false;
     try {
         //find student, og den cv som han ejer (cv bliver null hvis han ikke har et)
         var student = await models.Student.findOne({
@@ -113,13 +121,20 @@ async function deleteStudent(email) {
                 email: email,
             }
         });
-        //slet studentens cv hvis det findes
-        if(student.cv!=null){
-            await student.cv.destroy();
+        if (student == null) {
+            errorHappened = true;
+            return errorHappened;
         }
-        //slet studenten
-        await student.destroy();
-        console.log("A student was deleted");
+        else {
+            //slet studentens cv hvis det findes
+            if (student.cv != null) {
+                await student.cv.destroy();
+            }
+            //slet studenten
+            await student.destroy();
+            console.log("A student was deleted");
+            return errorHappened;
+        }
     } catch (e) {
         console.log(e);
     }
@@ -129,7 +144,7 @@ async function findUserByCVR(CVR) {
     let user = null;
     return new Promise(resolve => {
         console.log("---finding user by CVR: " + CVR + "---");
-        models.Virksomhed.findOne({where: {cvrnr: CVR}}).then((virksomhed) => {
+        models.Virksomhed.findOne({ where: { cvrnr: CVR } }).then((virksomhed) => {
             if (virksomhed === null) {
                 console.log('en virksomhed med dette CVR findes ikke!');
                 //resolve(null);

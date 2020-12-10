@@ -26,8 +26,11 @@
                                     <label class="form-check-label flex-fill">
                                         {{name}}
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="udd{{id}}"
-                                        onclick="addFilter('udd', '{{id}}')">
+                                    <input {{checked}} class="align-self-center" type="checkbox" name="udd{{id}}"
+                                        onclick="addFilter('udd', '{{id}}')" onload="checkFilter()">
+                                    {{#if checked}}
+                                    <body onload="addFilter('udd', {{id}})"></body>
+                                    {{/if}}
                                 </li>
                                 {{/each}}
                             </ul>
