@@ -74,6 +74,21 @@ async function createVirksomhed(virkObj) {
     }
 }
 
+async function createStudent(studentObj) {
+    try {
+        await models.Student.create({
+            email: studentObj.email,
+            tlfnr: studentObj.tlfnr,
+            password: studentObj.password,
+            fornavn: studentObj.fornavn,
+            efternavn: studentObj.efternavn,
+            foedselsdato: studentObj.dato
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 async function deleteVirksomhed(email) {
     let errorHappened = false;
@@ -184,5 +199,5 @@ async function editProfilePic(email, profilbillede){
 module.exports = {
     findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed,
     editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR, editStudent: editStudent, deleteStudent: deleteStudent,
-    editProfilePic: editProfilePic
+    editProfilePic: editProfilePic, createStudent: createStudent
 }

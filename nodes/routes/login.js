@@ -65,6 +65,31 @@ router.post('/authenticateVirksomhed', function (req, res, next) {
     })(req, res, next);
 });
 
+router.post('/authenticateStudent', function (req, res, next) {
+    //fra opret-bruger kommer body som en string version af json object, så den skal lige laves om
+    if(typeof(req.body)==="string"){
+        req.body = JSON.parse(req.body);
+    }
+    passport.authenticate('local', function(err, user, info) {
+        //console.log('HER ER USER EFTER CALLBACK:');
+        //console.log(user);
+        //handle error
+        if (!user) {
+            return res.redirect('/login' + info.message);
+        }
+        if (!(user instanceof models.Student)) {
+            return res.redirect('/login?error=incorretemaillogincombination');
+        }
+        //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
+        req.logout();
+        //login skal være der for, at passport laver en cookie for brugeren
+        req.logIn(user, function (err) {
+            if (err) { return next(err); }
+            return res.redirect('/login' + info.message);
+        });
+    })(req, res, next);
+});
+
 //denne route bliver kaldt i layout.hbs, så den ved om man er logget ind eller ej
 router.get('/loggedIn', function (req, res, next) {
     if (req.user === undefined) {
