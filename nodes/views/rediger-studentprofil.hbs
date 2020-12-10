@@ -104,7 +104,7 @@
                 }
                 else {
                     document.getElementById("profilbillede").src = this.src;
-                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
+                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
                 }
             }
         }else {
