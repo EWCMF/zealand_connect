@@ -109,30 +109,18 @@ router.get('/rediger', function (req, res, next) {
 });
 
 router.post('/redigerstudent-save', function (req, res) {
-    console.log("her er post request fra redigering af student");
-    console.log(req.body);
-    let email = req.body.email;
-    let fornavn = req.body.fornavn;
-    let efternavn = req.body.efternavn;
-    let telefon = parseInt(req.body.telefon);
-
-    editStudent(email, fornavn, efternavn, telefon);
-    res.redirect('/profil')
-
-    console.log(email + fornavn + efternavn + telefon);
-});
-
-router.post('/redigerstudentpic-save', function (req, res) {
-    var formData = new formidable.IncomingForm();
+    let formData = new formidable.IncomingForm();
 
     formData.parse(req, async function (error, fields, files) {
         //laver et objekt med alle data
         const {
-            email2, profile_picture
+            email, fornavn, efternavn, telefon, profile_picture
         } = fields;
         let content = {
-            email2, profile_picture
+            email, fornavn, efternavn, telefon, profile_picture
         };
+
+        console.log(email, fornavn, efternavn, telefon)
 
         let inputError = false;
 
@@ -164,7 +152,7 @@ router.post('/redigerstudentpic-save', function (req, res) {
                                     console.log("Unable to move file.");
                                 } else {
                                     content.profile_picture = newPicName;
-                                    editProfilePic(email2, content.profile_picture);
+                                    editStudent(email, fornavn, efternavn, telefon, content.profile_picture);
                                     res.redirect('/profil/rediger');
                                 }
                             });
@@ -185,12 +173,19 @@ router.post('/redigerstudentpic-save', function (req, res) {
                 res.redirect('/profil/rediger');
             }
         }
+        console.log(email + fornavn + efternavn + telefon);
     });
+});
+
+router.post('/redigerstudentpic-save', function (req, res) {
+
+
+
 });
 
 router.post('/rediger-save', function (req, res, next) {
     console.log("her er post requesten");
-    console.log(req.body);
+    console.log(req.body + "fjdksjlkfsd");
     //validate
     // Indlæs variable fra viewet
     let email = req.body.email;

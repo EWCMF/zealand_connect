@@ -10,8 +10,11 @@
 
     <div class="row">
         <div class="form-column col-12 col-md-4">
-            <form action="/profil/redigerstudent-save" method="POST" id="redigerStudentForm"
-                  name="redigerStudentForm">
+            <form action="/profil/redigerstudent-save"
+                  method="POST"
+                  id="redigerStudentForm"
+                  name="redigerStudentForm"
+                  enctype="multipart/form-data">
 
                 <div class="form-group required">
                     <label for="fornavn">Fornavn</label>
@@ -42,23 +45,6 @@
                         tal og må ikke starte med 0</p>
                 </div>
 
-                <div>
-                    <button type="button" class="btn btn-success" id="gem">Gem</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="form-column col-12 col-md-4">
-            <form id="picForm" action="/profil/redigerstudentpic-save" method="POST" enctype="multipart/form-data">
-
-                <div class="form-group required" style="display: none;">
-                    <label for="email">Email</label>
-                    <input class="form-control" name="email2" id="email2" rows="2" value="{{loggedInUser.email}}">
-                    <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst
-                        bruge
-                        et @</p>
-                </div>
-
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel">Profilbillede</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
@@ -75,9 +61,8 @@
                             10MB</p>
                     </div>
                 </div>
-
                 <div>
-                    <input type="submit" class="btn btn-success" value="Gem Billede">
+                    <button type="button" class="btn btn-success" id="gem">Gem</button>
                 </div>
             </form>
         </div>
@@ -89,23 +74,22 @@
         let file = document.getElementById(inputId).files[0];
 
         // Get dimensions of the image
-        if(file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
+        if (file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
             let _URL = window.URL || window.webkitURL;
             let img = new Image();
             img.src = _URL.createObjectURL(file);
 
             // Check the aspect ratio and dimensions
             img.onload = function () {
-                if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000){
+                if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000) {
                     console.log("Invalid image");
                     document.getElementById(inputId).value = '';
-                }
-                else {
+                } else {
                     document.getElementById("profilbillede").src = this.src;
                     document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
                 }
             }
-        }else {
+        } else {
             console.log("Invalid file type")
         }
     }
@@ -113,7 +97,7 @@
     function updateElements() {
         let profilePicture = "{{loggedInUser.profilbillede}}";
 
-        if (profilePicture !== "" && profilePicture != null){
+        if (profilePicture !== "" && profilePicture != null) {
             document.getElementById("profilbillede").src = '/uploads/' + profilePicture;
         }
     }
