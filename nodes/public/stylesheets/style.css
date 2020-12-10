@@ -464,13 +464,13 @@ input::placeholder {
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-  .card-columns {
+   .card-columns {
     column-count: 1;
-  }
+  } 
 }
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
+@media (min-width: 300px) {
   .sidebar {
     display: flex;
   }
