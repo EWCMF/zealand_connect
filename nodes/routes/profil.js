@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
@@ -7,8 +7,9 @@ const models = require("../models");
 const validation = require("../validation/input-validation");
 const formidable = require("formidable");
 const imageSize = require('image-size');
-var mv = require('mv');
-var {
+const fs = require("fs");
+const mv = require('mv');
+const {
     reqLang
 } = require('../public/javascript/request');
 
@@ -148,6 +149,13 @@ router.post('/redigerstudent-save', function (req, res) {
                                 if (errorRename) {
                                     console.log("Unable to move file.");
                                 } else {
+                                    models.Student.findOne({
+                                        where: {
+                                            email: email
+                                        }
+                                    }).then(result => {
+                                        unlinkOldFiles(result["profilbillede"])
+                                    }).catch();
                                     content.profile_picture = newPicName;
                                     editStudent(email, fornavn, efternavn, telefon, content.profile_picture);
                                     res.redirect('/profil/rediger');
@@ -261,5 +269,12 @@ router.get('/getUser', function (req, res, next) {
         res.send(user);
     })
 });
+
+function unlinkOldFiles(filename) {
+    fs.unlink("C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\" + filename, (err) => {
+        if (err) throw err
+        console.log(filename + " was deleted")
+    });
+}
 
 module.exports = router;
