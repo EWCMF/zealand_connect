@@ -25,7 +25,10 @@ router.get('/', async function (req, res, next) {
             ['name', 'ASC']
         ]
     });
-
+    var date = new Date();
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getUTCFullYear();
     const {
         count,
         rows
@@ -37,15 +40,23 @@ router.get('/', async function (req, res, next) {
         order: [
             ['updatedAt', 'DESC']
         ]
-    });
 
+       ,where: { [Op.or]:[{'expired': {[Op.ne]: 1}},
+           {[ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.gt]:year+"-"+month+"-"+day}}]}
+       ]
+       }
+       
+    });
+    console.log(day+month+ year)
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1  ? true : false;
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
+
         element['post_start_date'] = element['post_start_date'].substring(0, 10);
-        element['post_end_date'] = element['post_end_date'].substring(0, 10);        
+        element['post_end_date'] = element['post_end_date'].substring(0, 10);
+
     }
 
     res.render('search_praktik', {
@@ -200,5 +211,5 @@ router.post('/query', function (req, res) {
     });
 });
 
-
+// stared chanching stuff here
 module.exports = router;

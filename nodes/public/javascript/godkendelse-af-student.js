@@ -31,7 +31,7 @@ function submitButton() {
         document.getElementById("telefonError").hidden = true;
     }
 
-    if (!fornavn == "" || !efternavn == "" || numbersOnly) {
+    if (!fornavn == "" && !efternavn == "" && numbersOnly) {
         document.forms["redigerStudentForm"].submit();
     }
 

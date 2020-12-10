@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "zealand12345",
-    "database": "test",
-    "host": "46.101.225.211",
+    "password": "changeMe ",
+    "database": "ZealandConnect",
+    "host": "127.0.0.1",
     "port": "3306",
     "dialect": "mariadb"
   },
