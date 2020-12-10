@@ -364,7 +364,7 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     var path;
     if (cv.student.profilbillede != null || cv.student.profilbillede != '') {
-        path = '/uploads/' + cv.student.profilbillede;
+        path = 'public/images/dummy-profile-pic.jpg';
     } else {
         path = 'public/images/dummy-profile-pic.jpg';
     }
