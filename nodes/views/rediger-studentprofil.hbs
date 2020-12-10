@@ -50,7 +50,7 @@
         </div>
 
         <div class="form-column col-12 col-md-4">
-            <form action="/profil/redigerstudentpic-save" method="POST" enctype="multipart/form-data">
+            <form id="picForm" action="/profil/redigerstudentpic-save" method="POST" enctype="multipart/form-data">
 
                 <div class="form-group required" style="display: none;">
                     <label for="email">Email</label>
@@ -63,7 +63,7 @@
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel">Profilbillede</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                          title="Kun billeder af filtyperne .jpg og .png samt maksimal filstørrelse på 10MB">?</span>
+                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 1MB. Billedet SKAL være kvadratisk.">?</span>
                 </div>
                 <div class="profilePicHolder">
                     <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg"
@@ -78,7 +78,7 @@
                 </div>
 
                 <div>
-                    <input type="submit" class="btn btn-success" value="Gem Billede">
+                    <button type="button" id="gemKnap" onclick="submitForm('picLabel', 'profilePic')" class="btn btn-success" value="Gem Billede">Gem Billede</button>
                 </div>
             </form>
         </div>
@@ -86,19 +86,30 @@
 </div>
 
 <script>
+
     function validateAndUpdateInputLabel(labelId, inputId) {
         let file = document.getElementById(inputId).files[0];
-        console.log(file)
-        //Checker om der er tilføjet filer
-        //Henter den indexerede fil i og sætter dens str til kilobytes
-        let fsize = Math.round(file.size / 1000);
 
-        //Check fil størrelsen på hver fil
-        if (fsize > 10240) {
-            alert("File selected is too big, maximum size is 10MB")
+        // Get dimensions of the image
+        if(file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
+            let _URL = window.URL || window.webkitURL;
+            let img = new Image();
+            img.src = _URL.createObjectURL(file);
+
+            // Check the aspect ratio and dimensions
+            img.onload = function () {
+                if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000){
+                    console.log("Invalid image");
+                    document.getElementById(inputId).value = '';
+                }
+                else {
+                    document.getElementById("profilbillede").src = this.src;
+                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
+                }
+            }
+        }else {
+            console.log("Invalid file type")
         }
-
-        document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
     }
 
     function updateElements() {
@@ -108,5 +119,29 @@
             document.getElementById("profilbillede").src = '/uploads/' + profilePicture;
         }
     }
+
+    function submitForm(labelId, inputId){
+        let file = document.getElementById(inputId).files[0];
+
+        // Get dimensions of the image
+        if(file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
+            let _URL = window.URL || window.webkitURL;
+            let img = new Image();
+            img.src = _URL.createObjectURL(file);
+
+            // Check the aspect ratio and dimensions
+            img.onload = function () {
+                if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000){
+                }
+                else {
+                    console.log("Form submitted");
+                    document.forms["picForm"].submit();
+                }
+            }
+        }else {
+            console.log("Form could not be submitted")
+        }
+    }
+
     updateElements();
 </script>
