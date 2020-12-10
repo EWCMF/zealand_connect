@@ -122,7 +122,12 @@ router.post('/redigerstudent-save', function (req, res) {
 
         let inputError = false;
 
-        let img = files.profile_picture;
+        let img;
+        try {
+            img = files.profile_picture;
+        } catch (e) {
+            console.log("No file")
+        }
 
         if (img) {
             /*fileUpload here*/
@@ -171,9 +176,9 @@ router.post('/redigerstudent-save', function (req, res) {
                 res.redirect('/profil/rediger');
             }
         } else {
+            console.log("!!!!!!!!!no file")
             editStudent(email, fornavn, efternavn, telefon);
             res.redirect('/profil/rediger');
-            console.log("!!!!!!!!!no file")
         }
     });
 });
