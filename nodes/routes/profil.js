@@ -124,10 +124,6 @@ router.post('/redigerstudent-save', function (req, res) {
 router.post('/redigerstudentpic-save', function (req, res) {
     var formData = new formidable.IncomingForm();
 
-    // formData.parse(req, function (err, fields, files){
-    //     console.log("memes")
-    // })
-
     formData.parse(req, function (error, fields, files) {
         //laver et objekt med alle data
         const {
