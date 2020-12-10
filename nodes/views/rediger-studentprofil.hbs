@@ -50,7 +50,7 @@
         </div>
 
         <div class="form-column col-12 col-md-4">
-            <form action="/profil/redigerstudentpic-save" method="POST" enctype="multipart/form-data">
+            <form id="picForm" action="/profil/redigerstudentpic-save" method="POST" enctype="multipart/form-data">
 
                 <div class="form-group required" style="display: none;">
                     <label for="email">Email</label>
@@ -78,7 +78,7 @@
                 </div>
 
                 <div>
-                    <input id="gemKnap" type="submit" class="btn btn-success" value="Gem Billede">
+                    <Button id="gemKnap" onclick="submitForm('picLabel', 'profilePic')" class="btn btn-success" value="Gem Billede">Gem Billede</Button>
                 </div>
             </form>
         </div>
@@ -99,24 +99,13 @@
             img.onload = function () {
                 if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000){
                     console.log("Invalid image")
-                    document.getElementById("gemKnap").disabled = true;
                 }
                 else {
                     document.getElementById("profilbillede").src = this.src;
-                    document.getElementById("gemKnap").disabled = false;
                 }
             }
         }else {
             console.log("Invalid file type")
-        }
-
-        //Checker om der er tilføjet filer
-        //Henter den indexerede fil i og sætter dens str til kilobytes
-        let fsize = Math.round(file.size / 1000);
-
-        //Check fil størrelsen på hver fil
-        if (fsize > 10240) {
-            alert("File selected is too big, maximum size is 10MB")
         }
 
         document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
@@ -129,5 +118,29 @@
             document.getElementById("profilbillede").src = '/uploads/' + profilePicture;
         }
     }
+
+    function submitForm(labelId, inputId){
+        let file = document.getElementById(inputId).files[0];
+
+        // Get dimensions of the image
+        if(file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
+            let _URL = window.URL || window.webkitURL;
+            let img = new Image();
+            img.src = _URL.createObjectURL(file);
+
+            // Check the aspect ratio and dimensions
+            img.onload = function () {
+                if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000){
+                }
+                else {
+                    document.forms["picForm"].submit();
+                    console.log("Form submitted")
+                }
+            }
+        }else {
+            console.log("Form could not be submitted")
+        }
+    }
+
     updateElements();
 </script>
