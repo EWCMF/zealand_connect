@@ -1,7 +1,11 @@
 <div class="container-fluid">
     <div class="row mt-4 mb-4">
         <div class="col-2">
-            <img class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
+            {{#if json.student.profilbillede}}
+            <img class="img-thumbnail border-0" src="/uploads/{{json.student.profilbillede}}" alt="PROFILBILLEDE">
+            {{else}}
+            <img class="img-thumbnail border-0" src="images/dummy-profile-pic.jpg" alt="PROFILBILLEDE">
+            {{/if}}
         </div>
         <div class="col-1">
             <div class="col">
