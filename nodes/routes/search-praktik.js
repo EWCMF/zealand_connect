@@ -29,14 +29,15 @@ router.get('/', async function (req, res, next) {
 
     const user = res.locals.user
 
-    if (user != '' && user.cv != null) {
-
-        for (let index = 0; index < udd.length; index++) {
-            const element = udd[index].name;
-            
-            if (element == user.cv.uddannelse) {
-
-                udd[index].checked = 'checked'
+    if (user !== undefined) {
+        if (user.cv != null) {
+            for (let index = 0; index < udd.length; index++) {
+                const element = udd[index].name;
+                
+                if (element == user.cv.uddannelse) {
+    
+                    udd[index].checked = 'checked'
+                }
             }
         }
     }
