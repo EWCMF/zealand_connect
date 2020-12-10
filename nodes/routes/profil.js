@@ -124,11 +124,7 @@ router.post('/redigerstudent-save', function (req, res) {
 router.post('/redigerstudentpic-save', function (req, res) {
     var formData = new formidable.IncomingForm();
 
-    // formData.parse(req, function (err, fields, files){
-    //     console.log("memes")
-    // })
-
-    formData.parse(req, function (error, fields, files) {
+    formData.parse(req, async function (error, fields, files) {
         //laver et objekt med alle data
         const {
             email2, profile_picture
@@ -148,7 +144,6 @@ router.post('/redigerstudentpic-save', function (req, res) {
 
             //Generere unik data til filnavn med Date.now() og tilfældig tal.
             let datetime = Date.now();
-
             let randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
 
             //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
@@ -158,26 +153,26 @@ router.post('/redigerstudentpic-save', function (req, res) {
                 //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
                 //Nedenstående flytter og omdøber filer på sammetid
                 if (pic.type == "image/jpeg" || pic.type == "image/png" || pic.type == "image/svg+xml" || pic.type == "image/bmp") {
-                    mv(pic.path, publicUploadFolder + newPicName, (errorRename) => {
+                    await mv(pic.path, publicUploadFolder + newPicName, (errorRename) => {
                         if (errorRename) {
                             console.log("Unable to move file.");
                         } else {
                             content.profile_picture = newPicName;
                             console.log(content.profile_picture);
                             editProfilePic(email2, content.profile_picture);
+                            res.redirect('/profil/rediger');
                         }
                     });
                 } else {
                     console.log("invalid file");
+                    res.redirect('/profil/rediger');
                 }
             } else {
                 console.log("invalid filesize");
+                res.redirect('/profil/rediger');
             }
         }
     });
-
-
-    res.redirect('/profil/rediger');
 });
 
 router.post('/rediger-save', function (req, res, next) {
