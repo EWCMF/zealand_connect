@@ -7,6 +7,7 @@ const editProfilePic = require('../persistence/usermapping').editProfilePic;
 const models = require("../models");
 const validation = require("../validation/input-validation");
 const formidable = require("formidable");
+const imageSize = require('image-size');
 var mv = require('mv');
 var {
     reqLang
@@ -138,6 +139,11 @@ router.post('/redigerstudentpic-save', function (req, res) {
         if (files) {
             /*fileUpload here*/
             let pic = files.profile_picture;
+
+            const imgData = imageSize(pic.path);
+
+            console.log(imgData.width + ' ' + imgData.height);
+            console.log(imgData.type);
 
             //Stien til upload mappen skal være til stien i docker containeren.
             let publicUploadFolder = "C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\";

@@ -78,7 +78,7 @@
                 </div>
 
                 <div>
-                    <Button id="gemKnap" onclick="submitForm('picLabel', 'profilePic')" class="btn btn-success" value="Gem Billede">Gem Billede</Button>
+                    <button type="button" id="gemKnap" onclick="submitForm('picLabel', 'profilePic')" class="btn btn-success" value="Gem Billede">Gem Billede</button>
                 </div>
             </form>
         </div>
@@ -86,6 +86,7 @@
 </div>
 
 <script>
+
     function validateAndUpdateInputLabel(labelId, inputId) {
         let file = document.getElementById(inputId).files[0];
 
@@ -98,17 +99,17 @@
             // Check the aspect ratio and dimensions
             img.onload = function () {
                 if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000){
-                    console.log("Invalid image")
+                    console.log("Invalid image");
+                    document.getElementById(inputId).value = '';
                 }
                 else {
                     document.getElementById("profilbillede").src = this.src;
+                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
                 }
             }
         }else {
             console.log("Invalid file type")
         }
-
-        document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
     }
 
     function updateElements() {
@@ -133,8 +134,8 @@
                 if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000){
                 }
                 else {
+                    console.log("Form submitted");
                     document.forms["picForm"].submit();
-                    console.log("Form submitted")
                 }
             }
         }else {
