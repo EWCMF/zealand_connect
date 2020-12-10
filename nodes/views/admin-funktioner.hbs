@@ -8,15 +8,18 @@
                 <h2 style="font-weight: bold;" data-key="opretUddannelse">Opret Uddanelse</h2>
             </div>
             <form action="" class="form-group text-left">
+                
                 <div class="row">
-                    <label for="opretUddannelse" class="col-5 col-form-label">Uddannelse</label>
+                    <label for="opretUddannelse" class="col-5 col-form-label" data-key="uddannelse">Uddannelse</label>
+                    <div class="col-7 col-form-label formError text-danger mb-1" id="findesError"></div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12">
                         <input type="text" id="uddannelseOpretInput" class="form-control" placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;">
                     </div>
                 </div>
-                <button class="gulKnap rounded" type="button" id="opretUddannelse-btn" data-key="opret">Opret</button>
+                <div class="col-form-label formError text-success text-center" id="oprettetMessage"></div>
+                <button class="gulKnap rounded" type="button" id="opretUddannelse-btn" data-key="opret" onclick="opret()">Opret</button>
                 
             </form>
             <div class="row p-3">
@@ -25,13 +28,15 @@
             <form action="" class="form-group text-left">
                 <div class="row">
                     <label for="opretUddannelse" class="col-5 col-form-label" data-key="uddannelse">Uddannelse</label>
+                    <div class="col-7 col-form-label formError text-danger mb-1" id="findesIkke"></div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12">
                         <input id="uddannelseSletInput" type="text" class="form-control" placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;">
                     </div>
-                </div>
-                    <button class="gulKnap rounded" type="button" id="sletUddannelse-btn" data-key="slet">Slet</button>
+                </div> 
+                    <div class="col-form-label formError text-success text-center" id="slettetMessage"></div>
+                    <button class="gulKnap rounded" type="button" id="sletUddannelse-btn" onclick="slet()" data-key="slet">Slet</button>
             </form>
         </div>
         <div class="col-6">
@@ -52,3 +57,49 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function opret() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log('sending post for create')
+                let responseObj = JSON.parse(this.responseText)
+                document.getElementById('findesError').innerHTML = responseObj.findesallerede
+                document.getElementById('oprettetMessage').innerHTML = responseObj.uddannelseOprettet
+            }
+        }
+        xhttp.open('POST', '/admin-funktioner/createUddannelse', true);
+        xhttp.setRequestHeader("Content-Type", "text/plain")
+        xhttp.send(JSON.stringify ({
+            name: document.getElementById('uddannelseOpretInput').value
+        }));
+    }
+
+    function slet() {
+        var text;
+        if(confirm('er du sikkert på du vil slette uddannelsen?')) {
+            text = "Slettet"
+        } else{text ="Afbrudt"}
+        
+        if(text=== 'Afbrudt') {
+            return;
+        }
+        
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log('sending post for create')
+                let responseObj = JSON.parse(this.responseText)
+                document.getElementById('findesIkke').innerHTML = responseObj.findesIkke
+                document.getElementById('slettetMessage').innerHTML = responseObj.uddannelseSlettet
+            }
+        }
+        xhttp.open('POST', '/admin-funktioner/sletUddannelse', true);
+        xhttp.setRequestHeader("Content-Type", "text/plain")
+        xhttp.send(JSON.stringify ({
+            name: document.getElementById('uddannelseSletInput').value
+        }));
+    }
+</script>
