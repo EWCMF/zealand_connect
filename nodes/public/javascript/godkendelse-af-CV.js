@@ -91,31 +91,31 @@ function submitButton() {
     }
 
     if (yt_link == "") {
-        document.getElementById("youtube_link").value = 'Intet angivet';;
+        document.getElementById("youtube_link").value = 'Intet angivet';
     }
 
     if (speciale == "") {
-        document.getElementById("speciale").value = 'Intet angivet';;
+        document.getElementById("speciale").value = 'Intet angivet';
     }
 
     if (om_mig == "") {
-        document.getElementById("om mig").value = 'Intet angivet';;
+        document.getElementById("om mig").value = 'Intet angivet';
     }
 
     if (UogFA == "") {
-        document.getElementById("UogFA").value = 'Intet angivet';;
+        document.getElementById("UogFA").value = 'Intet angivet';
     }
 
     if (erhvervserfaring == "") {
-        document.getElementById("erhvervserfaring").value = 'Intet angivet';;
+        document.getElementById("erhvervserfaring").value = 'Intet angivet';
     }
 
     if (hjemmeside == "") {
-        document.getElementById("hjemmeside").value = 'Intet angivet';;
+        document.getElementById("hjemmeside").value = 'Intet angivet';
     }
 
     if (fritidsinteresser == "") {
-        document.getElementById("fritidsinteresser").value = 'Intet angivet';;
+        document.getElementById("fritidsinteresser").value = 'Intet angivet';
     }
 
     if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
