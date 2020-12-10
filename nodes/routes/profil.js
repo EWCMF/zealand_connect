@@ -144,7 +144,7 @@ router.post('/redigerstudentpic-save', function (req, res) {
 
             //Stien til upload mappen skal være til stien i docker containeren.
             // VIRKER IKKE PÅ WINDOWS
-            let publicUploadFolder = "C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\";
+            let publicUploadFolder = "/usr/src/app/public/uploads/";
 
             //Generere unik data til filnavn med Date.now() og tilfældig tal.
             let datetime = Date.now();
@@ -158,7 +158,7 @@ router.post('/redigerstudentpic-save', function (req, res) {
                     if (img.size <= 1000000) {
                         //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
                         //Nedenstående flytter og omdøber filer på sammetid
-                        if (img.type == "image/jpeg" || img.type == "image/png" || img.type == "image/svg+xml" || img.type == "image/bmp") {
+                        if (img.type === "image/jpeg" || img.type === "image/png" || img.type === "image/svg+xml" || img.type === "image/bmp") {
                             await mv(img.path, publicUploadFolder + newPicName, (errorRename) => {
                                 if (errorRename) {
                                     console.log("Unable to move file.");
