@@ -21,10 +21,26 @@ router.get('/', async function (req, res, next) {
     }
 
     const udd = await db.Uddannelser.findAll({
+        raw: true,
         order: [
             ['name', 'ASC']
         ]
     });
+
+    const user = res.locals.user
+
+    if (user != '' && user.cv != null) {
+
+        for (let index = 0; index < udd.length; index++) {
+            const element = udd[index].name;
+            
+            if (element == user.cv.uddannelse) {
+
+                udd[index].checked = 'checked'
+            }
+        }
+    }
+
     var date = new Date();
     let day = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);

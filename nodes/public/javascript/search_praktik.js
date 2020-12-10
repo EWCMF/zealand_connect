@@ -24,6 +24,7 @@ function changeOrder(clicked, value) {
 }
 
 function addFilter(type, id) {
+
     var url = window.location.href;
     var param = type + '=' + id;
 
@@ -86,4 +87,8 @@ function animateArrow(element) {
     Array.from(children).forEach(child => {
         child.classList.toggle('arrow-rotate');
     })
+}
+
+function checkFilter() {
+    console.log('hek');
 }

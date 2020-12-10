@@ -7,6 +7,7 @@ const editProfilePic = require('../persistence/usermapping').editProfilePic;
 const models = require("../models");
 const validation = require("../validation/input-validation");
 const formidable = require("formidable");
+const imageSize = require('image-size');
 var mv = require('mv');
 var {
     reqLang
@@ -137,9 +138,12 @@ router.post('/redigerstudentpic-save', function (req, res) {
 
         if (files) {
             /*fileUpload here*/
-            let pic = files.profile_picture;
+            let img = files.profile_picture;
+
+            const imgData = imageSize(img.path);
 
             //Stien til upload mappen skal være til stien i docker containeren.
+            // VIRKER IKKE PÅ WINDOWS
             let publicUploadFolder = "/usr/src/app/public/uploads/";
 
             //Generere unik data til filnavn med Date.now() og tilfældig tal.
@@ -147,28 +151,37 @@ router.post('/redigerstudentpic-save', function (req, res) {
             let randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
 
             //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
-            let newPicName = datetime + randomNumber + "_" + pic.name;
+            let newPicName = datetime + randomNumber + "_" + img.name;
 
-            if (pic.size <= 10240000) {
-                //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
-                //Nedenstående flytter og omdøber filer på sammetid
-                if (pic.type == "image/jpeg" || pic.type == "image/png" || pic.type == "image/svg+xml" || pic.type == "image/bmp") {
-                    await mv(pic.path, publicUploadFolder + newPicName, (errorRename) => {
-                        if (errorRename) {
-                            console.log("Unable to move file.");
+            if (imgData.width === imgData.height) {
+                if (imgData.width >= 250 && imgData.height >= 250) {
+                    if (img.size <= 1000000) {
+                        //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
+                        //Nedenstående flytter og omdøber filer på sammetid
+                        if (img.type === "image/jpeg" || img.type === "image/png" || img.type === "image/svg+xml" || img.type === "image/bmp") {
+                            await mv(img.path, publicUploadFolder + newPicName, (errorRename) => {
+                                if (errorRename) {
+                                    console.log("Unable to move file.");
+                                } else {
+                                    content.profile_picture = newPicName;
+                                    editProfilePic(email2, content.profile_picture);
+                                    res.redirect('/profil/rediger');
+                                }
+                            });
                         } else {
-                            content.profile_picture = newPicName;
-                            console.log(content.profile_picture);
-                            editProfilePic(email2, content.profile_picture);
+                            console.log("invalid file");
                             res.redirect('/profil/rediger');
                         }
-                    });
+                    } else {
+                        console.log("invalid filesize");
+                        res.redirect('/profil/rediger');
+                    }
                 } else {
-                    console.log("invalid file");
+                    console.log("Invalid image dimensions")
                     res.redirect('/profil/rediger');
                 }
             } else {
-                console.log("invalid filesize");
+                console.log("Invalid aspect ratio")
                 res.redirect('/profil/rediger');
             }
         }
