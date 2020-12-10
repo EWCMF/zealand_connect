@@ -20,22 +20,29 @@ router.post('/', function (req, res, next) {
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    const { title, email, contact, education, country, post_start_date, post_end_date, post_text,
+    var { title, email, contact, education, country, post_start_date, post_end_date, post_text,
       city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid, expired } = fields;
 
     var region = '';
 
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        var json = JSON.parse(this.responseText);
-        region = json[0].adgangsadresse.region.navn;
-        console.log("REGION: " + region)
-      }
-    };
-    xmlhttp.open("GET", "https://dawa.aws.dk/adresser?id=" + dawa_uuid, false);
-    xmlhttp.setRequestHeader("Content-type", "application/json");
-    xmlhttp.send();
+    if (country == '1') {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var json = JSON.parse(this.responseText);
+          region = json[0].adgangsadresse.region.navn;
+        }
+      };
+      xmlhttp.open("GET", "https://dawa.aws.dk/adresser?id=" + dawa_uuid, false);
+      xmlhttp.setRequestHeader("Content-type", "application/json");
+      xmlhttp.send();
+    } else {
+      // sæt adresse feltets data til tomme strings hvis der er valgt et andet land end danmark
+      city = '';
+      postcode = 0;
+      dawa_json = '';
+      dawa_uuid = '';
+    }
 
     var indhold = {
       title, email, contact, education, country, region, post_start_date, post_end_date,
