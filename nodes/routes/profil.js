@@ -142,9 +142,6 @@ router.post('/redigerstudentpic-save', function (req, res) {
 
             const imgData = imageSize(pic.path);
 
-            console.log(imgData.width + ' ' + imgData.height);
-            console.log(imgData.type);
-
             //Stien til upload mappen skal være til stien i docker containeren.
             let publicUploadFolder = "C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\";
 
@@ -155,25 +152,35 @@ router.post('/redigerstudentpic-save', function (req, res) {
             //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
             let newPicName = datetime + randomNumber + "_" + pic.name;
 
-            if (pic.size <= 10240000) {
-                //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
-                //Nedenstående flytter og omdøber filer på sammetid
-                if (pic.type == "image/jpeg" || pic.type == "image/png" || pic.type == "image/svg+xml" || pic.type == "image/bmp") {
-                    await mv(pic.path, publicUploadFolder + newPicName, (errorRename) => {
-                        if (errorRename) {
-                            console.log("Unable to move file.");
+            if (imgData.width === imgData.height) {
+                if (imgData.width >= 250 && imgData.height >= 250) {
+                    if (pic.size <= 1000000) {
+                        //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
+                        //Nedenstående flytter og omdøber filer på sammetid
+                        if (pic.type == "image/jpeg" || pic.type == "image/png" || pic.type == "image/svg+xml" || pic.type == "image/bmp") {
+                            await mv(pic.path, publicUploadFolder + newPicName, (errorRename) => {
+                                if (errorRename) {
+                                    console.log("Unable to move file.");
+                                } else {
+                                    content.profile_picture = newPicName;
+                                    editProfilePic(email2, content.profile_picture);
+                                    res.redirect('/profil/rediger');
+                                }
+                            });
                         } else {
-                            content.profile_picture = newPicName;
-                            editProfilePic(email2, content.profile_picture);
+                            console.log("invalid file");
                             res.redirect('/profil/rediger');
                         }
-                    });
+                    } else {
+                        console.log("invalid filesize");
+                        res.redirect('/profil/rediger');
+                    }
                 } else {
-                    console.log("invalid file");
+                    console.log("Invalid image dimensions")
                     res.redirect('/profil/rediger');
                 }
             } else {
-                console.log("invalid filesize");
+                console.log("Invalid aspect ratio")
                 res.redirect('/profil/rediger');
             }
         }
