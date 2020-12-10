@@ -7,7 +7,9 @@ var fs = require("fs");//Bruges til grundlæggen file hændtering.
 var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
 const { emailRegex, dateRegex, cvrRegex, linkRegex } = require("../constants/regex.js");
 const db = require('../models');
-
+const { REPL_MODE_SLOPPY } = require('repl');
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+const models = require("../models");
 var tempDate = dateRegex.source
 var tempCVR = cvrRegex.source
 var tempEmail = emailRegex.source
@@ -16,6 +18,8 @@ var tempLink = linkRegex.source
 /* POST home page. */
 router.post('/', function (req, res, next) {
   if (req.user != null) {
+    var user = findUserByEmail(req.user);
+    if(user instanceof models.Virksomhed ){
   //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
@@ -140,6 +144,7 @@ router.post('/', function (req, res, next) {
       }
     }
   });
+}
 }
 });
 
