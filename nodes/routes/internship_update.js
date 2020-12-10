@@ -17,9 +17,6 @@ var tempLink = linkRegex.source
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
-  if (req.user !=null) {
-    var user = findUserByEmail(req.user);
-    if(user instanceof models.Virksomhed){
       //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
@@ -191,30 +188,12 @@ router.post('/', function (req, res, next) {
       renameDoc(result["post_document"], result["company_logo"])
     }).catch();
   });
-    }
-    else {
-      res.status(403);
-      res.send({
-        errorCode: "403 - forbidden"
-      });
-    }
-  }
-  else {
-    res.status(403);
-    res.send({
-      errorCode: "403 - forbidden"
-    });
-  }
 });
 
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  if (req.user !=null){
-    var user = findUserByEmail(req.user)
-    if (user instanceof models.Virksomhed){
-      var generatedEducationOptions = "";
-
+  var generatedEducationOptions = "";
   db.Uddannelser.findAll({
     order: [
       ['name', 'ASC']
@@ -267,20 +246,6 @@ router.get('/', function (req, res, next) {
       });
     }).catch();
   }).catch();
-    } 
-    else {
-      res.status(403);
-      res.send({
-        errorCode: "403 - forbidden"
-      });
-    }
-  }
-  else {
-    res.status(403);
-    res.send({
-      errorCode: "403 - forbidden"
-    });
-  }
 });
 
 router.get('/delete', function (req, res, next) {
