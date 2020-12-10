@@ -343,14 +343,13 @@ input::placeholder {
   animation-duration: 250ms;
 }
 
-#filtrerUddannelser {
-  color: black;
+.hand-hover:hover {
+  cursor: pointer;
 }
 
-#filtrerIndlandUdland {
-  color: black;
+.arrow-rotate {
+  transform: rotate(90deg);
 }
-
 
 
 #forside1 {
