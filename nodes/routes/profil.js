@@ -140,11 +140,10 @@ router.post('/redigerstudentpic-save', function (req, res) {
             let pic = files.profile_picture;
 
             //Stien til upload mappen skal være til stien i docker containeren.
-            let publicUploadFolder = "/usr/src/app/public/uploads/";
+            let publicUploadFolder = "C:\\Users\\benky\\Desktop\\temp\\";
 
             //Generere unik data til filnavn med Date.now() og tilfældig tal.
             let datetime = Date.now();
-
             let randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
 
             //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
