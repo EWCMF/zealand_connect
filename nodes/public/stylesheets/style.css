@@ -343,14 +343,13 @@ input::placeholder {
   animation-duration: 250ms;
 }
 
-#filtrerUddannelser {
-  color: black;
+.hand-hover:hover {
+  cursor: pointer;
 }
 
-#filtrerIndlandUdland {
-  color: black;
+.arrow-rotate {
+  transform: rotate(90deg);
 }
-
 
 
 #forside1 {
@@ -439,11 +438,21 @@ input::placeholder {
   margin: 0;
 }
 
-#profilbillede {
-  max-height: 250px;
-  max-width: 250px;
+.form-column {
+  display: flex;
+  flex-direction: column;
 }
 
+.profilePicHolder{
+  width: 250px;
+}
+
+.profilePicHolder #profilbillede {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
@@ -537,6 +546,50 @@ input::placeholder {
   margin-right: 10%;
 }
 
+.autocomplete-container {
+  /* relative position for at de absolut positionerede forslag får korrekt placering.*/
+  width: 100%;
+}
+.autocomplete-container input {
+  /* Både input og forslag får samme bredde som omkringliggende DIV */
+  width: 100%;
+  box-sizing: border-box;
+}
+.dawa-autocomplete-suggestions {
+  margin: 0 1em;
+  padding: 0;
+  text-align: left;
+  background: #fcfcfc;
+  box-shadow: 0 0.0625em 0.15625em rgba(0,0,0,.15);
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.dawa-autocomplete-suggestions .dawa-autocomplete-suggestion {
+  margin: 0;
+  list-style: none;
+  cursor: pointer;
+  padding: 0.6em 0.8em;
+  color: #333;
+  border: 0.0625em solid #ddd;
+  border-bottom-width: 0;
+}
+.dawa-autocomplete-suggestions .dawa-autocomplete-suggestion:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.dawa-autocomplete-suggestions .dawa-autocomplete-suggestion:last-child {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border-bottom-width: 0.0625em;
+}
+.dawa-autocomplete-suggestions .dawa-autocomplete-suggestion.dawa-selected,
+.dawa-autocomplete-suggestions .dawa-autocomplete-suggestion:hover {
+  background: #f0f0f0;
+}
 #card-img-overlay{
   transition: .5s ease;
   background-color: yellow;

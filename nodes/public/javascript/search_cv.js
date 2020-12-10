@@ -80,31 +80,10 @@ function submitForm(formElement) {
     return false;
 }
 
-function onDropdownUddannelserClick() {
-    let nonRotate = document.getElementById("dropdownUddannelser");
-    console.log(nonRotate);
-    let rotated = document.getElementById("dropdownUddannelserRotated");
-    console.log(rotated);
-    if (nonRotate == null) {
-        rotated.id = rotated.id.toString().replace("Rotated", "");
-    }
+function animateArrow(element) {
+    const children = element.children;
     
-    if (rotated == null) {
-        nonRotate.id += "Rotated";
-    }
-
-}
-
-function onDropdownLandClick() {
-    let nonRotate = document.getElementById("dropdownLand");
-    console.log(nonRotate);
-    let rotated = document.getElementById("dropdownLandRotated");
-    console.log(rotated);
-    if (nonRotate == null) {
-        rotated.id = rotated.id.toString().replace("Rotated", "");
-    }
-    
-    if (rotated == null) {
-        nonRotate.id += "Rotated";
-    }
+    Array.from(children).forEach(child => {
+        child.classList.toggle('arrow-rotate');
+    })
 }

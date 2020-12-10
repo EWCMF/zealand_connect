@@ -3,8 +3,11 @@ var router = express.Router();
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
+const editProfilePic = require('../persistence/usermapping').editProfilePic;
 const models = require("../models");
 const validation = require("../validation/input-validation");
+const formidable = require("formidable");
+var mv = require('mv');
 var {
     reqLang
 } = require('../public/javascript/request');
@@ -34,8 +37,9 @@ router.get('/', function (req, res, next) {
                 fornavn: user.fornavn,
                 efternavn: user.efternavn,
                 tlfnr: user.tlfnr,
+                profilbillede: user.profilbillede
             }
-            res.render("studentprofil", { loggedInUser });
+            res.render("studentprofil", {loggedInUser});
         }
     });
 });
@@ -53,9 +57,10 @@ router.get('/rediger', function (req, res, next) {
                 fornavn: user.fornavn,
                 efternavn: user.efternavn,
                 tlfnr: user.tlfnr,
+                profilbillede: user.profilbillede
             }
 
-            res.render("rediger-studentprofil", { loggedInUser });
+            res.render("rediger-studentprofil", {loggedInUser});
 
         } else {
             let loggedInVirksomhed = {
@@ -113,9 +118,66 @@ router.post('/redigerstudent-save', function (req, res) {
     editStudent(email, fornavn, efternavn, telefon);
     res.redirect('/profil')
 
-
-
     console.log(email + fornavn + efternavn + telefon);
+});
+
+router.post('/redigerstudentpic-save', function (req, res) {
+    var formData = new formidable.IncomingForm();
+
+    // formData.parse(req, function (err, fields, files){
+    //     console.log("memes")
+    // })
+
+    formData.parse(req, function (error, fields, files) {
+        //laver et objekt med alle data
+        const {
+            email2, profile_picture
+        } = fields;
+        let content = {
+            email2, profile_picture
+        };
+
+        let inputError = false;
+
+        if (files) {
+            /*fileUpload here*/
+            let pic = files.profile_picture;
+
+            //Stien til upload mappen skal være til stien i docker containeren.
+            let publicUploadFolder = "/usr/src/app/public/uploads/";
+
+            //Generere unik data til filnavn med Date.now() og tilfældig tal.
+            let datetime = Date.now();
+
+            let randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
+
+            //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
+            let newPicName = datetime + randomNumber + "_" + pic.name;
+
+            if (pic.size <= 10240000) {
+                //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
+                //Nedenstående flytter og omdøber filer på sammetid
+                if (pic.type == "image/jpeg" || pic.type == "image/png" || pic.type == "image/svg+xml" || pic.type == "image/bmp") {
+                    mv(pic.path, publicUploadFolder + newPicName, (errorRename) => {
+                        if (errorRename) {
+                            console.log("Unable to move file.");
+                        } else {
+                            content.profile_picture = newPicName;
+                            console.log(content.profile_picture);
+                            editProfilePic(email2, content.profile_picture);
+                        }
+                    });
+                } else {
+                    console.log("invalid file");
+                }
+            } else {
+                console.log("invalid filesize");
+            }
+        }
+    });
+
+
+    res.redirect('/profil/rediger');
 });
 
 router.post('/rediger-save', function (req, res, next) {
@@ -196,7 +258,6 @@ router.get('/getUser', function (req, res, next) {
         });
     }
 });
-
 
 
 router.get('/getUser', function (req, res, next) {

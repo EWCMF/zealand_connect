@@ -119,6 +119,8 @@ app.use ('/admin-funktioner', adminFunktionerRouter);
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
 
+// Create static path mapping to dawa autocomplete directory in node_modules
+app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
