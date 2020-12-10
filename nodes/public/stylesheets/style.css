@@ -438,11 +438,21 @@ input::placeholder {
   margin: 0;
 }
 
-#profilbillede {
-  max-height: 250px;
-  max-width: 250px;
+.form-column {
+  display: flex;
+  flex-direction: column;
 }
 
+.profilePicHolder{
+  width: 250px;
+}
+
+.profilePicHolder #profilbillede {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
