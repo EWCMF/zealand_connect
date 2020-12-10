@@ -225,14 +225,16 @@
     }
 
     if (!hasBeenSet) {
-      var raddress = JSON.parse('{{{raddress}}}');
-      console.log("NU BLIVER DET SAT: " + raddress)
-      document.getElementById('addressSearch').value = raddress.tekst;
-      document.getElementById("selectedAddress").innerHTML = raddress.tekst;
-      document.getElementById("addressSearchJSON").value = JSON.stringify(raddress);
-      document.getElementById("addressSearchCity").value = raddress.data.postnrnavn;
-      document.getElementById("addressSearchPostcode").value = raddress.data.postnr;
-      document.getElementById("addressSearchUUID").value = raddress.data.id;
+      var raddress = '{{{raddress}}}';
+      var json = '';
+      raddress != '';
+      json = JSON.parse(raddress);
+      document.getElementById('addressSearch').value = json.tekst;
+      document.getElementById("selectedAddress").innerHTML = json.tekst;
+      document.getElementById("addressSearchJSON").value = JSON.stringify(json);
+      document.getElementById("addressSearchCity").value = json.data.postnrnavn;
+      document.getElementById("addressSearchPostcode").value = json.data.postnr;
+      document.getElementById("addressSearchUUID").value = json.data.id;
       hasBeenSet = true;
     };
   }

@@ -156,7 +156,7 @@
                             }
                         }
                     }
-                    xhttp.open("POST", "/opret-bruger/createErrors", true);
+                    xhttp.open("POST", "/opret-bruger/create", true);
                     xhttp.setRequestHeader("Content-Type", "text/plain")
                     xhttp.send(JSON.stringify ({
                         email: document.getElementById('email').value,
