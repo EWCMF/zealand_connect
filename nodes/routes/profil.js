@@ -154,6 +154,7 @@ router.post('/redigerstudent-save', function (req, res) {
                                             email: email
                                         }
                                     }).then(result => {
+                                        //TODO: Tag højde for, hvis der ikke findes en gammel fil - ellers crasher serveren
                                         unlinkOldFiles(result["profilbillede"])
                                     }).catch();
                                     content.profile_picture = newPicName;
