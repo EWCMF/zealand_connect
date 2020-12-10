@@ -15,6 +15,7 @@ var tempLink = linkRegex.source
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
+  if (req.user != null) {
   //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
@@ -132,11 +133,14 @@ router.post('/', function (req, res, next) {
       }
     }
   });
+}
 });
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-
+  if (req.user == null) {
+    res.status(403).render('error403', {layout: false});
+}
   var generatedEducationOptions = '';
 
   db.Uddannelser.findAll({
