@@ -7,6 +7,8 @@ var fs = require("fs");//Bruges til grundlæggen file hændtering.
 var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
 const { emailRegex, dateRegex, cvrRegex, linkRegex } = require("../constants/regex.js");
 const db = require('../models');
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+const models = require("../models");
 
 var tempDate = dateRegex.source
 var tempCVR = cvrRegex.source
@@ -15,7 +17,10 @@ var tempLink = linkRegex.source
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
-  //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
+  if (req.user !=null) {
+    var user = findUserByEmail(req.user);
+    if(user instanceof models.Virksomhed){
+      //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
@@ -186,6 +191,20 @@ router.post('/', function (req, res, next) {
       renameDoc(result["post_document"], result["company_logo"])
     }).catch();
   });
+    }
+    else {
+      res.status(403);
+      res.send({
+        errorCode: "403 - forbidden"
+      });
+    }
+  }
+  else {
+    res.status(403);
+    res.send({
+      errorCode: "403 - forbidden"
+    });
+  }
 });
 
 
