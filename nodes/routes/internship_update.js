@@ -19,22 +19,29 @@ router.post('/', function (req, res, next) {
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    const { id, title, email, contact, education, country, post_start_date, post_end_date, post_text,
+    var { id, title, email, contact, education, country, post_start_date, post_end_date, post_text,
       city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid, expired } = fields;
 
     var region = '';
 
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        var json = JSON.parse(this.responseText);
-        region = json[0].adgangsadresse.region.navn;
-        console.log("REGION: " + region)
-      }
-    };
-    xmlhttp.open("GET", "https://dawa.aws.dk/adresser?id=" + dawa_uuid, false);
-    xmlhttp.setRequestHeader("Content-type", "application/json");
-    xmlhttp.send();
+    if (country == '1') {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var json = JSON.parse(this.responseText);
+          region = json[0].adgangsadresse.region.navn;
+        }
+      };
+      xmlhttp.open("GET", "https://dawa.aws.dk/adresser?id=" + dawa_uuid, false);
+      xmlhttp.setRequestHeader("Content-type", "application/json");
+      xmlhttp.send();
+    } else {
+      // sæt adresse feltets data til tomme strings hvis der er valgt et andet land end danmark
+      city = '';
+      postcode = 0;
+      dawa_json = '';
+      dawa_uuid = '';
+    }
 
     var indhold = {
       id, title, email, contact, education, country, region, post_start_date, post_end_date,
@@ -198,16 +205,19 @@ router.get('/', function (req, res, next) {
       attributes: ["title", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number", "company_link", "company_logo", "post_document", "dawa_json", "dawa_uuid", "expired"]
     }).then(result => {
       var address = '';
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          var json = JSON.parse(this.responseText);
-          address = JSON.stringify(json[0])
-        }
-      };
-      xmlhttp.open("GET", "https://dawa.aws.dk/autocomplete?id=" + result['dawa_uuid'] + "&type=adresse", false);
-      xmlhttp.setRequestHeader("Content-type", "application/json");
-      xmlhttp.send();
+
+      if (result['country'] == '1') {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var json = JSON.parse(this.responseText);
+            address = JSON.stringify(json[0])
+          }
+        };
+        xmlhttp.open("GET", "https://dawa.aws.dk/autocomplete?id=" + result['dawa_uuid'] + "&type=adresse", false);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send();
+      }
 
       //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
       res.render('internship_update', {
