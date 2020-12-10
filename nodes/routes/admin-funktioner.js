@@ -30,7 +30,6 @@ router.post('/createUddannelse', (req, res, next)=>{
 });
 
 router.post('/sletUddannelse', (req, res, next)=> {
-    console.log('sletUddannelse')
     let jsonBody = JSON.parse(req.body);
     let name = jsonBody.name;
     let messages = {
@@ -51,7 +50,7 @@ router.post('/sletUddannelse', (req, res, next)=> {
             res.send(messages)
         }
     })
-} )
+})
 
 
 module.exports = router;

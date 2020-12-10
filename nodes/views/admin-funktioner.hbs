@@ -78,6 +78,15 @@
     }
 
     function slet() {
+        var text;
+        if(confirm('er du sikkert på du vil slette uddannelsen?')) {
+            text = "Slettet"
+        } else{text ="Afbrudt"}
+        
+        if(text=== 'Afbrudt') {
+            return;
+        }
+        
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
