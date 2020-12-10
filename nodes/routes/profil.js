@@ -121,14 +121,6 @@ router.post('/redigerstudent-save', function (req, res) {
     console.log(email + fornavn + efternavn + telefon);
 });
 
-router.post('/test', function(req, res){
-    var formData = new formidable.IncomingForm();
-    console.log("test");
-    formData.parse(req, function(err, fields, files){
-        console.log("test2")
-    })
-})
-
 router.post('/redigerstudentpic-save', function (req, res) {
     var formData = new formidable.IncomingForm();
 
