@@ -1,9 +1,9 @@
 <div class="container-fluid">
     <div class="row mt-4 mb-4">
-        <div class="col-2">
+        <div class="col-12 col-sm-2" >
             <img class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
         </div>
-        <div class="col-1">
+        <div class="col-3 col-lg-1" id="cvDescriptionHeadlines">
             <div class="col">
                 <h2 class="mb-3">
                     Navn:
@@ -25,7 +25,7 @@
                 </h6>
             </div>
         </div>
-        <div class="col-7">
+        <div class="col-5 col-md-7" id="cvDescription">
             <div class="col">
                 <h2 class="mb-3">
                     {{json.student.fornavn}} {{json.student.efternavn}}
@@ -53,7 +53,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-2 d-flex flex-column">
+        <div class="col-4 col-sm-2 d-flex flex-column">
             <button type="button" class="btn btn-success " onclick="window.location.href='/search-cv/{{json.id}}/Create_pdf'">Download Pdf</button>
             {{#if ejer}}
             <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger CV</button>
