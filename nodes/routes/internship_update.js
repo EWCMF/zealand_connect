@@ -210,7 +210,10 @@ router.post('/', function (req, res, next) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  var generatedEducationOptions = "";
+  if (req.user !=null){
+    var user = findUserByEmail(req.user)
+    if (user instanceof models.Virksomhed){
+      var generatedEducationOptions = "";
 
   db.Uddannelser.findAll({
     order: [
@@ -264,6 +267,20 @@ router.get('/', function (req, res, next) {
       });
     }).catch();
   }).catch();
+    } 
+    else {
+      res.status(403);
+      res.send({
+        errorCode: "403 - forbidden"
+      });
+    }
+  }
+  else {
+    res.status(403);
+    res.send({
+      errorCode: "403 - forbidden"
+    });
+  }
 });
 
 router.get('/delete', function (req, res, next) {
