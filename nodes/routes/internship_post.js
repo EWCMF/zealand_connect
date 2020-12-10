@@ -230,7 +230,7 @@ router.post('/', function (req, res, next) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  if (req.user == null) {
+  if (req.user !== null) {
     var user = findUserByEmail(req.user);
     if (user instanceof models.Virksomhed) {
       var generatedEducationOptions = '';
