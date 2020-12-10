@@ -2,8 +2,11 @@
 <div class="card mb-3">
     <div class="row">
         <div class="col-auto">
-            <img class="center-cropped"
-                src="\images\dummy-profile-pic.jpg">
+            {{#if student.profilbillede}}
+            <img class="center-cropped" src="/uploads/{{student.profilbillede}}">
+            {{else}}
+            <img class="center-cropped" src="images/dummy-profile-pic.jpg">
+            {{/if}}
         </div>
         <div class="col">
             <div class="card-body">
