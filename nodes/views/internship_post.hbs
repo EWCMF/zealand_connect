@@ -35,41 +35,15 @@
               <p id="countryError" class="CVErrorColor" hidden="true">Du skal angive et land</p>
             </div>
           </div>
-          <div class="col-12 col-md-6">
-            <div class="form-group required" id="regionContainer" hidden="true">
-              <label for="regionSelect">Region</label>
-              <select class="form-control" name="region" id="regionSelect">
-                <option value="0">Vælg en region</option>
-                <option value="1">Hovedstaden</option>
-                <option value="2">Midtjylland</option>
-                <option value="3">Nordjylland</option>
-                <option value="4">Sjælland</option>
-                <option value="5">Syddanmark</option>
-              </select>
-              <p id="regionError" class="CVErrorColor" hidden="true">Du skal angive en region
-              </p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6" id="cityContainer" hidden="true">
-            <div class="form-group required">
-              <label for="city">By</label>
-              <select class="form-control" name="city" id="citySelect">
-                <option value="0">Vælg en by</option>
-                {{{generatedCityOptions}}}
-              </select>
-              <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by
-              </p>
-            </div>
-          </div>
-          <div class="col-12 col-md-6" id="postCodeContainer" hidden="true">
-            <div class="form-group required">
-              <label for="postcode">Postnummer</label>
-              <select class="form-control" name="postcode" id="postalText">
-                <option value="0">Vælg et postnummer</option>
-                {{{generatedPostCodeOptions}}}
-              </select>
-              <p id="cityError" class="CVErrorColor" hidden="true">Du skal angive en by
-              </p>
+          <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
+            <div class="form-group required autocomplete-container">
+              <label for="">Adresse</label>
+              <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
+              <input type="hidden" id="addressSearchJSON" name="dawa_json">
+              <input type="hidden" id="addressSearchCity" name="city">
+              <input type="hidden" id="addressSearchPostcode" name="postcode">
+              <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
+              <small id="selectedAddress" class="form-text text-muted"></small>
             </div>
           </div>
         </div>
@@ -119,9 +93,10 @@
               </p>
             </div>
              <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="expire_checkbox">
+              <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox" onchange="setExpired()" >
               <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
                 ansøgningsfristen?</label>
+                <input type="hidden" id="expired" value="0" name="expired">
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -175,6 +150,10 @@
 </div>
 <script src="/js/quill.min.js"></script>
 <script src="/javascript/validate_internship_post.js"></script>
+<!-- AJAX and dawa autocomplete linked here -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+<script src='../dawa/js/dawa-autocomplete2.min.js'></script>
 <script>
 
   var toolbarOptions = [
@@ -217,17 +196,24 @@
   //countryToggleFields() Toggler disse fælter: Region og CVR
   function countryToggleFields() {
     if (document.getElementById('countrySelect').value == 1) {
-      document.getElementById('regionContainer').hidden = false;
+      document.getElementById('addressSearchContainer').hidden = false;
       document.getElementById('containerCVR').className = "form-group required";
-      document.getElementById('cityContainer').hidden = false;
-      document.getElementById('postCodeContainer').hidden = false;
     } else {
-      document.getElementById('regionContainer').hidden = true;
+      document.getElementById('addressSearchContainer').hidden = true;
       document.getElementById('containerCVR').className = "form-group";
-      document.getElementById('cityContainer').hidden = true;
-      document.getElementById('postCodeContainer').hidden = true;
     }
   }
+
+  dawaAutocomplete.dawaAutocomplete(document.getElementById("addressSearch"), {
+    select: function (selected) {
+      document.getElementById("selectedAddress").innerHTML = selected.tekst;
+      document.getElementById("addressSearchJSON").value = JSON.stringify(selected.data);
+      document.getElementById("addressSearchCity").value = selected.data.postnrnavn;
+      document.getElementById("addressSearchPostcode").value = selected.data.postnr;
+      document.getElementById("addressSearchUUID").value = selected.data.id;
+    },
+    params: {per_side: '5'}
+  });
 
   function validateAndUpdateInputLabel(labelId, inputId) {
     var file = document.getElementById(inputId).files[0];
@@ -243,6 +229,18 @@
 
     document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
   }
+
+
+document.getElementById('expire_checkbox').checked = false;
+
+function setExpired() {
+  if(document.getElementById('expire_checkbox').checked){
+    document.getElementById('expired').value = 1;
+  }else {
+    document.getElementById('expired').value = 0;
+  }
+}
+
 
   function toggleNote(){
     if (document.getElementById("educationSelect").options[document.getElementById("educationSelect").selectedIndex].text==="Handelsøkonom"){

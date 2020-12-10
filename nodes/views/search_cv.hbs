@@ -12,18 +12,11 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2">
-                                <a id="filtrerUddannelser" class="text-decoration-none" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse1" onclick='onDropdownUddannelserClick()'>
+                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
                                     Uddannelser
-                                </a>
-                                <button id="dropdownUddannelser" class="btn btn-sm dropdown-toggle p-0 m-0">
-
-                                </button>
-
+                                <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
-
                         <div id="collapse1" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 {{#each udd}}
@@ -38,14 +31,9 @@
                             </ul>
                         </div>
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2">
-                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse2" onclick='onDropdownLandClick()'>
+                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)">
                                     Land
-                                </a>
-                                <button id="dropdownLand" class="btn btn-sm dropdown-toggle p-0 m-0">
-
-                                </button>
+                                <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
 
