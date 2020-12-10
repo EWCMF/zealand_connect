@@ -76,6 +76,7 @@ async function createVirksomhed(virkObj) {
 
 
 async function deleteVirksomhed(email) {
+    let errorHappened = false;
     try {
         //find virksomhed
         var virksomhed = await models.Virksomhed.findOne({
@@ -83,6 +84,10 @@ async function deleteVirksomhed(email) {
                 email: email
             }
         });
+        if(virksomhed == null){
+            errorHappened = true;
+            return errorHappened;
+        }
         //find nu alle de internshipposts som har den foreign key virksomhed_id som passer til den id
         //denne kode kan optimeres hvis man laver en assosiation og så bare tilføjer det til include oven over
         var internshipPosts = await models.InternshipPost.findAll({
@@ -97,13 +102,14 @@ async function deleteVirksomhed(email) {
         //slet virksomheden
         await virksomhed.destroy();
         console.log("A virksomhed was deleted");
+        return errorHappened;
     } catch (e) {
         console.log(e);
     }
 }
 
 async function deleteStudent(email) {
-    var response = true;
+    var errorHappened = false;
     try {
         //find student, og den cv som han ejer (cv bliver null hvis han ikke har et)
         var student = await models.Student.findOne({
@@ -116,7 +122,8 @@ async function deleteStudent(email) {
             }
         });
         if (student == null) {
-            response = false;
+            errorHappened = true;
+            return errorHappened;
         }
         else {
             //slet studentens cv hvis det findes
@@ -126,6 +133,7 @@ async function deleteStudent(email) {
             //slet studenten
             await student.destroy();
             console.log("A student was deleted");
+            return errorHappened;
         }
     } catch (e) {
         console.log(e);

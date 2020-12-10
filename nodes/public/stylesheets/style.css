@@ -434,6 +434,14 @@ input::placeholder {
   color: red;
 }
 
+.sletBrugerForm .formError {
+  color: red;
+}
+
+.sletBrugerForm .formSucess {
+  color: green;
+}
+
 #memeForm .col-sm-12 .col-sm-4{
   padding: 0;
   margin: 0;

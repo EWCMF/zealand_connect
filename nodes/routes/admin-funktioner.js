@@ -1,4 +1,6 @@
+const { response } = require('express');
 var express = require('express');
+const { deleteVirksomhed } = require('../persistence/usermapping');
 var { reqLang } = require('../public/javascript/request');
 const { route } = require('./opret-bruger');
 var router = express.Router();
@@ -12,10 +14,20 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/slet-bruger', function (req, res, next) {
-    //let jsonBody = JSON.parse(req.body);
+    let jsonBody = JSON.parse(req.body);
     console.log(req.body);
-    res.send (req.body);
-    //deleteStudent(jsonBody.email)
+    let errorHappened = false;
+    if (jsonBody.type == "virksomhed"){
+        deleteVirksomhed(jsonBody.email).then((result)=>{
+            errorHappened = result;
+            res.send('{"errorHappened":'+errorHappened+"}");
+        });
+    }else {
+        deleteStudent(jsonBody.email).then((result)=>{
+            errorHappened = result;
+            res.send('{"errorHappened":'+errorHappened+"}");
+        });
+    }
 });
 
 
