@@ -1,4 +1,5 @@
 const models = require("../models");
+const cv = require("../models/cv");
 
 async function findUserByEmail(email) {
     let user = null;
@@ -72,14 +73,29 @@ async function createVirksomhed(virkObj) {
     }
 }
 
+
 async function deleteVirksomhed(email) {
     try {
-        await models.Virksomhed.destroy({
+        //find virksomhed
+        var virksomhed = await models.Virksomhed.findOne({
             where: {
                 email: email
             }
         });
-        console.log("A virksomhed was deleted")
+        //find nu alle de internshipposts som har den foreign key virksomhed_id som passer til den id
+        //denne kode kan optimeres hvis man laver en assosiation og så bare tilføjer det til include oven over
+        var internshipPosts = await models.InternshipPost.findAll({
+            where: {
+                virksomhed_id: virksomhed.id
+            }
+        });
+        //iterate internship posts and delete
+        for (let i = 0; i < internshipPosts.length; i++) {
+            await internshipPosts[i].destroy();
+        }
+        //slet virksomheden
+        await virksomhed.destroy();
+        console.log("A virksomhed was deleted");
     } catch (e) {
         console.log(e);
     }
@@ -87,12 +103,23 @@ async function deleteVirksomhed(email) {
 
 async function deleteStudent(email) {
     try {
-        await models.Student.destroy({
+        //find student, og den cv som han ejer (cv bliver null hvis han ikke har et)
+        var student = await models.Student.findOne({
+            include: [{
+                model: models.CV,
+                as: 'cv',
+            }],
             where: {
-                email: email
+                email: email,
             }
         });
-        console.log("A student was deleted")
+        //slet studentens cv hvis det findes
+        if(student.cv!=null){
+            await student.cv.destroy();
+        }
+        //slet studenten
+        await student.destroy();
+        console.log("A student was deleted");
     } catch (e) {
         console.log(e);
     }

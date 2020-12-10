@@ -5,7 +5,6 @@ var nextPage;
 
 function changePage(page) {
     nextPage = page;
-    console.log(nextPage);
     var form = document.getElementById('filterForm');
     submitForm(form);
 }
@@ -13,20 +12,20 @@ function changePage(page) {
 function changeSort(clicked, value) {
     document.getElementById("dropdownButton").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton").value = value;
-    // var form = document.getElementById('filterForm');
-    // submitForm(form);
+    var form = document.getElementById('filterForm');
+    submitForm(form);
 }
 
 function changeOrder(clicked, value) {
     document.getElementById("dropdownButton2").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton2").value = value;
-    // var form = document.getElementById('filterForm');
-    // submitForm(form);
+    var form = document.getElementById('filterForm');
+    submitForm(form);
 }
 
 function addFilter(type, id) {
-    // var url = window.location.href;
-    // var param = type + '=' + id;
+    var url = window.location.href;
+    var param = type + '=' + id;
 
     // if (url.indexOf('?') > -1) {
     //     if (url.includes(param)) {
@@ -45,8 +44,8 @@ function addFilter(type, id) {
     // }
     // window.history.pushState({}, null, url);
 
-    // var form = document.getElementById('filterForm');
-    // submitForm(form);
+    var form = document.getElementById('filterForm');
+    submitForm(form);
 }
 
 function submitForm(formElement) {
@@ -81,31 +80,10 @@ function submitForm(formElement) {
     return false;
 }
 
-function onDropdownUddannelserClick() {
-    let nonRotate = document.getElementById("dropdownUddannelser");
-    console.log(nonRotate);
-    let rotated = document.getElementById("dropdownUddannelserRotated");
-    console.log(rotated);
-    if (nonRotate == null) {
-        rotated.id = rotated.id.toString().replace("Rotated", "");
-    }
+function animateArrow(element) {
+    const children = element.children;
     
-    if (rotated == null) {
-        nonRotate.id += "Rotated";
-    }
-
-}
-
-function onDropdownLandClick() {
-    let nonRotate = document.getElementById("dropdownLand");
-    console.log(nonRotate);
-    let rotated = document.getElementById("dropdownLandRotated");
-    console.log(rotated);
-    if (nonRotate == null) {
-        rotated.id = rotated.id.toString().replace("Rotated", "");
-    }
-    
-    if (rotated == null) {
-        nonRotate.id += "Rotated";
-    }
+    Array.from(children).forEach(child => {
+        child.classList.toggle('arrow-rotate');
+    })
 }

@@ -2,20 +2,44 @@
 <div class="card mb-3">
     <div class="row">
         <div class="col-auto">
-            <img class="center-cropped" src="https://www.shopinimizaj.com/frontend/web/images/no_images.png">
+            {{#if company_logo}}
+            <img class="center-cropped" src="/uploads/{{company_logo}}">
+            {{else}}
+            <img class="center-cropped" src="images/no-logo.png">
+            {{/if}}
         </div>
         <div class="col">
             <div class="card-body">
-                <h5 class="card-title">{{title}}</h5>
-                <h6 class="card-title">{{email}}</h6>
+                <h4 class="card-title">{{title}}</h5>
+                <h6 class="card-title">Mail: {{email}}</h6>
+                <h6 class="card-title pb-4">Kontaktperson: {{contact}}</h6>
                 <p class="card-text autobreak">{{post_text}}</p>
 
             </div>
         </div>
     </div>
-    {{!-- <a href='/search-praktik/{{id}}' class="stretched-link"></a> --}}
     <div class="card-footer">
-        <p>Start: {{post_start_date}} Slut: {{post_end_date}}</p>
+        <div class="container">
+            <div class="row">
+                <p class="font-weight-bold pr-1">Uddannelse:</p><p class="pr-2">{{education}}</p>
+            </div>
+            <div class="row">
+                <p class="font-weight-bold pr-1">By:</p><p class="pr-2">{{city}}</p>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-3">
+                    <div class="row">
+                        <p class="font-weight-bold pr-1">Region:</p><p class="pr-2">{{region}}</p> 
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row">
+                        <p class="font-weight-bold pr-1">Start:</p> <p class="pr-2">{{post_start_date}}</p>
+                        <p class="font-weight-bold pr-1">Slut:</p>  <p>{{post_end_date}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>      
     </div>
     <a href='/internship_view/{{id}}' class="stretched-link"></a>
 </div>
