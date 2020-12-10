@@ -7,7 +7,7 @@
     </div>
     <div class="row mt-3 mb-4">
         <div class="col-2">
-            <img class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
+            <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg" alt="PROFILBILLEDE">
         </div>
         <div class="col-1">
             <div class="col">
@@ -109,7 +109,7 @@
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
-                Udenlandsophold og frivilligt arbejde   
+                Udenlandsophold og frivilligt arbejde
             </h4>
             <p class="autobreak">
                 {{json.udenlandsophold_og_frivilligt_arbejde}}
@@ -129,7 +129,7 @@
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
-                It-kompetencer   
+                It-kompetencer
             </h4>
             <p class="autobreak">
                 {{json.it_kompetencer}}
@@ -139,7 +139,7 @@
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
-                Sprog   
+                Sprog
             </h4>
             <p class="autobreak">
                 {{json.sprog}}
@@ -168,7 +168,7 @@
 
                 <h5 class="card-title mt-2" data-key="studentTelefon">Telefon</h5>
                 <p id="studentTelefon" class="card-text">{{loggedInUser.tlfnr}}</p>
-                
+
             </div>
         </div>
 
@@ -176,8 +176,19 @@
             <div class="card bg-light" id="profildiv">
                     <img class="card-img align-self-center" id="profilbillede" style="max-width: 30%; padding-top:10px; padding-left:10px; padding-bottom:10px"
                         src="../images/fiskemobning.png" alt="Logo">
-            
+
             </div>
         </div>
     </div>
 </div> --}}
+
+<script>
+    function updateElements() {
+        let profilePicture = "{{loggedInUser.profilbillede}}";
+
+        if (profilePicture !== "" && profilePicture != null){
+            document.getElementById("profilbillede").src = '/uploads/' + profilePicture;
+        }
+    }
+    updateElements();
+</script>

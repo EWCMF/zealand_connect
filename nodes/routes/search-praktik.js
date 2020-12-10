@@ -54,8 +54,26 @@ router.get('/', async function (req, res, next) {
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
-        element['post_start_date'] = element['post_start_date'].substring(0, 10);
-        element['post_end_date'] = element['post_end_date'].substring(0, 10);
+        let eduName = await db.Uddannelser.findOne({
+            where: {
+                id: element['education']
+            }
+        });
+
+        let cropStart = element['post_start_date'].substring(0, 10);
+        let cropEnd = element['post_end_date'].substring(0, 10);
+
+        let startYear = cropStart.substring(0, cropStart.indexOf('-'));
+        let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
+        let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
+
+        let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
+        let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
+        let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
+
+        element['education'] = eduName.name;
+        element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+        element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
 
     }
 
@@ -86,18 +104,16 @@ router.post('/query', function (req, res) {
         };
         var region = {
             [Op.or]: []
-        }
+        };
         var postcode = {
             [Op.or]: []
-        }
-
-        console.log(fields);
+        };
 
         for (var key in fields) {
             const element = key + "";
             if (element.includes("udd")) {
-
-                // education[Op.or].push(element.substring(3));
+                let udd = parseInt(element.substring(3))
+                education[Op.or].push(udd);
             }
 
             if (element.includes('indland')) {
@@ -115,28 +131,39 @@ router.post('/query', function (req, res) {
             }
             
             if (element.includes('reg')) {
-                let reg = parseInt(element.substring(3, 4));
-                console.log(reg);
+                
                 region[Op.or].push(
-                    reg
+                    element.substring(3)
                 );
             }
 
             if (fields.pos != '') {
                 let code = parseInt(fields.pos); 
-                console.log(code);
+
                 postcode[Op.or].push(
                     code
                 );
             }
         }
 
+        var date = new Date();
+        let day = ("0" + date.getDate()).slice(-2);
+        let month = ("0" + (date.getMonth() + 1)).slice(-2);
+        let year = date.getUTCFullYear();
+
         where = {
             education,
             country,
             region,
-            postcode
-        }
+            postcode,
+            [Op.or]: [
+                {'expired': {[Op.ne]: 1}},
+                {[ Op.and]:[
+                   {'expired': 1}, 
+                   { 'post_end_date': {[Op.gt]:year+"-"+month+"-"+day}}
+                ]}
+            ]
+        } 
 
         var page = parseInt(fields.page);
         var offset;
@@ -165,8 +192,27 @@ router.post('/query', function (req, res) {
 
         for (let index = 0; index < rows.length; index++) {
             const element = rows[index];
-            element['post_start_date'] = element['post_start_date'].substring(0, 10);
-            element['post_end_date'] = element['post_end_date'].substring(0, 10);        
+            
+            let eduName = await db.Uddannelser.findOne({
+                where: {
+                    id: element['education']
+                }
+            });
+    
+            let cropStart = element['post_start_date'].substring(0, 10);
+            let cropEnd = element['post_end_date'].substring(0, 10);
+    
+            let startYear = cropStart.substring(0, cropStart.indexOf('-'));
+            let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
+            let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
+    
+            let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
+            let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
+            let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
+    
+            element['education'] = eduName.name;
+            element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+            element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear; 
         }
 
         fs.readFileAsync = function(filename) {

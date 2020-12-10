@@ -13,15 +13,9 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2">
-                                <a id="filtrerUddannelser" class="text-decoration-none" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse1" onclick='onDropdownUddannelserClick()'>
+                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
                                     Uddannelser
-                                </a>
-                                <button id="dropdownUddannelser" class="btn btn-sm dropdown-toggle p-0 m-0">
-
-                                </button>
-
+                                <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
 
@@ -32,21 +26,16 @@
                                     <label class="form-check-label flex-fill">
                                         {{name}}
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="udd{{name}}"
+                                    <input class="align-self-center" type="checkbox" name="udd{{id}}"
                                         onclick="addFilter('udd', '{{id}}')">
                                 </li>
                                 {{/each}}
                             </ul>
                         </div>
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2">
-                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse2" onclick='onDropdownLandClick()'>
+                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)">
                                     Land
-                                </a>
-                                <button id="dropdownLand" class="btn btn-sm dropdown-toggle p-0 m-0">
-
-                                </button>
+                                <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
 
@@ -73,14 +62,9 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2">
-                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse3" onclick='onDropdownLandClick()'>
+                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse3" onclick="animateArrow(this)">
                                     Region
-                                </a>
-                                <button id="dropdownLand" class="btn btn-sm dropdown-toggle p-0 m-0">
-
-                                </button>
+                                <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
 
@@ -90,35 +74,35 @@
                                     <label class="form-check-label flex-fill">
                                         Hovedstaden
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="reg1"
+                                    <input class="align-self-center" type="checkbox" name="regRegion Hovedstaden"
                                         onclick="addFilter('reg', '1')">
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Midtjylland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="reg2"
+                                    <input class="align-self-center" type="checkbox" name="regRegion Midtjylland"
                                         onclick="addFilter('reg','2')">
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Nordjylland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="reg3"
+                                    <input class="align-self-center" type="checkbox" name="regRegion Nordjylland"
                                         onclick="addFilter('reg','3')">
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Sjælland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="reg4"
+                                    <input class="align-self-center" type="checkbox" name="regRegion Sjælland"
                                         onclick="addFilter('reg','4')">
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Syddanmark
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="reg5"
+                                    <input class="align-self-center" type="checkbox" name="regRegion Syddanmark"
                                         onclick="addFilter('reg','5')">
                                 </li>
 
@@ -128,14 +112,9 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2">
-                                <a id="filtrerIndlandUdland" class="text-decoration-none" data-toggle="collapse"
-                                    data-parent="#accordion" href="#collapse4" onclick='onDropdownLandClick()'>
+                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse4" onclick="animateArrow(this)">
                                     By
-                                </a>
-                                <button id="dropdownLand" class="btn btn-sm dropdown-toggle p-0 m-0">
-
-                                </button>
+                                <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
 
@@ -145,7 +124,7 @@
                                     <label class="form-check-label flex-fill">
                                         Indtast postnummer
                                     </label>
-                                    <input id='inputPost' class="align-self-center" type="text" name="pos">
+                                    <input id='inputPost' class="align-self-center" type="number" name="pos">
                                     
                                 </li>
                                 <li>
