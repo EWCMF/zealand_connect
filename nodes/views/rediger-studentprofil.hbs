@@ -63,7 +63,7 @@
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel">Profilbillede</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                          title="Kun billeder af filtyperne .jpg og .png samt maksimal filstørrelse på 10MB">?</span>
+                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 1MB. Billedet SKAL være kvadratisk.">?</span>
                 </div>
                 <div class="profilePicHolder">
                     <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg"
@@ -78,7 +78,7 @@
                 </div>
 
                 <div>
-                    <input type="submit" class="btn btn-success" value="Gem Billede">
+                    <input id="gemKnap" type="submit" class="btn btn-success" value="Gem Billede">
                 </div>
             </form>
         </div>
@@ -88,7 +88,28 @@
 <script>
     function validateAndUpdateInputLabel(labelId, inputId) {
         let file = document.getElementById(inputId).files[0];
-        console.log(file)
+
+        // Get dimensions of the image
+        if(file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
+            let _URL = window.URL || window.webkitURL;
+            let img = new Image();
+            img.src = _URL.createObjectURL(file);
+
+            // Check the aspect ratio and dimensions
+            img.onload = function () {
+                if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000){
+                    console.log("Invalid image")
+                    document.getElementById("gemKnap").disabled = true;
+                }
+                else {
+                    document.getElementById("profilbillede").src = this.src;
+                    document.getElementById("gemKnap").disabled = false;
+                }
+            }
+        }else {
+            console.log("Invalid file type")
+        }
+
         //Checker om der er tilføjet filer
         //Henter den indexerede fil i og sætter dens str til kilobytes
         let fsize = Math.round(file.size / 1000);

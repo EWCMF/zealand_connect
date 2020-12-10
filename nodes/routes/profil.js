@@ -140,7 +140,7 @@ router.post('/redigerstudentpic-save', function (req, res) {
             let pic = files.profile_picture;
 
             //Stien til upload mappen skal være til stien i docker containeren.
-            let publicUploadFolder = "/usr/src/app/public/uploads/";
+            let publicUploadFolder = "C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\";
 
             //Generere unik data til filnavn med Date.now() og tilfældig tal.
             let datetime = Date.now();
@@ -158,7 +158,6 @@ router.post('/redigerstudentpic-save', function (req, res) {
                             console.log("Unable to move file.");
                         } else {
                             content.profile_picture = newPicName;
-                            console.log(content.profile_picture);
                             editProfilePic(email2, content.profile_picture);
                             res.redirect('/profil/rediger');
                         }
