@@ -3,7 +3,6 @@ var router = express.Router();
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
-const editProfilePic = require('../persistence/usermapping').editProfilePic;
 const models = require("../models");
 const validation = require("../validation/input-validation");
 const formidable = require("formidable");
@@ -122,15 +121,10 @@ router.post('/redigerstudent-save', function (req, res) {
 
         let inputError = false;
 
-        let img;
-        try {
-            img = files.profile_picture;
-        } catch (e) {
-            console.log("No file")
-        }
-
-        if (img) {
+        if (files.profile_picture.size > 0) {
             /*fileUpload here*/
+            let img = files.profile_picture;
+
             const imgData = imageSize(img.path);
 
             //Stien til upload mappen skal være til stien i docker containeren.
@@ -176,21 +170,15 @@ router.post('/redigerstudent-save', function (req, res) {
                 res.redirect('/profil/rediger');
             }
         } else {
-            console.log("!!!!!!!!!no file")
             editStudent(email, fornavn, efternavn, telefon);
             res.redirect('/profil/rediger');
         }
     });
 });
 
-router.post('/redigerstudentpic-save', function (req, res) {
-
-
-});
-
 router.post('/rediger-save', function (req, res, next) {
     console.log("her er post requesten");
-    console.log(req.body + "fjdksjlkfsd");
+    console.log(req.body);
     //validate
     // Indlæs variable fra viewet
     let email = req.body.email;
