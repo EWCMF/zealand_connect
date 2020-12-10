@@ -120,14 +120,12 @@ router.post('/redigerstudent-save', function (req, res) {
             email, fornavn, efternavn, telefon, profile_picture
         };
 
-        console.log(email, fornavn, efternavn, telefon)
-
         let inputError = false;
 
-        if (files) {
-            /*fileUpload here*/
-            let img = files.profile_picture;
+        let img = files.profile_picture;
 
+        if (img) {
+            /*fileUpload here*/
             const imgData = imageSize(img.path);
 
             //Stien til upload mappen skal være til stien i docker containeren.
@@ -172,13 +170,15 @@ router.post('/redigerstudent-save', function (req, res) {
                 console.log("Invalid aspect ratio")
                 res.redirect('/profil/rediger');
             }
+        } else {
+            editStudent(email, fornavn, efternavn, telefon);
+            res.redirect('/profil/rediger');
+            console.log("!!!!!!!!!no file")
         }
-        console.log(email + fornavn + efternavn + telefon);
     });
 });
 
 router.post('/redigerstudentpic-save', function (req, res) {
-
 
 
 });
