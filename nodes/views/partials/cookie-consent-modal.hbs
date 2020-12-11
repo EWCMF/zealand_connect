@@ -1,0 +1,57 @@
+<div class="modal rounded-0" tabindex="-1" role="dialog" id="cookieModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content rounded-0">
+            <div id="cookieModalHeader" class="modal-header rounded-0">
+                <h5 id="cookieModalTitle" class="modal-title text-white">Zealand</h5>
+            </div>
+            <div class="modal-body ml-3 mr-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="column">
+                            <h3 class="pt-4 pb-4">Cookie indstillinger</h3>
+                            <p>Vi bruger cookies for at give dig den bedste oplevelse af zealand.dk. Når du klikker
+                                ‘Bekræft’, accepterer du vores brug af cookies og <a
+                                    href="https://www.zealand.dk/persondatapolitik/">Zealand’s privatlivspolitik.</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form id="formCookieConsent" action="/cookie-confirm" method="POST">
+                <div class="modal-footer rounded-0">
+                    <div class="container">
+                        <div class="row align-self-center">
+                            <div class="col">
+                                <p>
+                                    Du kan vælge hvilke cookies der er tilladte.<br>Hold musen over for beskrivelse.
+                                </p>
+                                <div class="row ml-1">
+                                    <div class="form-group pr-2 m-0">
+                                        <input id="necessary" type="checkbox" checked disabled>
+                                        <label for="necessary" data-toggle="tooltip" data-placement="top" title="Nødvendige cookies er til f.eks at håndtere login. Siden kan ikke fungere uden disse.">
+                                            Nødvendige cookies
+                                            </label>
+                                    </div>
+                                    <div class="form-group m-0">
+                                        <input id="preference" type="checkbox" name="preference" checked>
+                                        <label for="preference" data-toggle="tooltip" data-placement="top" title="Præference cookies er dem der gemmer personlige præferencer. På denne side bruges det til sprog.">
+                                            Præference cookies
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col align-self-center">
+                                <div class="row justify-content-end">
+                                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="confirmConsent('formCookieConsent')">Bekræft</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
