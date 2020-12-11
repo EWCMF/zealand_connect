@@ -9,6 +9,7 @@ const uploadFolder = require("../constants/references").uploadFolder;
 const formidable = require("formidable");
 const imageSize = require('image-size');
 const fs = require("fs");
+const path = require('path');
 const mv = require('mv');
 const {
     reqLang
@@ -150,18 +151,27 @@ router.post('/redigerstudent-save', function (req, res) {
                                 if (errorRename) {
                                     console.log("Unable to move file.");
                                 } else {
-                                    let user = models.Student.findOne({
+                                    models.Student.findOne({
                                         where: {
                                             email: email
                                         }
                                     }).then(result => {
-                                        console.log(user.profilbillede);
-                                        if (uploadFolder + user.profilbillede
-                                            && user.profilbillede != null){
-                                            unlinkOldFiles(result["profilbillede"])
+                                        if (result.profilbillede !== null) {
+                                            // Search the directory for the old profile picture
+                                            fs.readdir(uploadFolder, function (err, list) {
+                                                if (err) throw err;
+                                                for (let i = 0; i < list.length; i++) {
+                                                    // If the old profile picture exists, delete it
+                                                    if (list[i] === result.profilbillede) {
+                                                        unlinkOldFiles(result["profilbillede"])
+                                                    }
+                                                }
+                                            });
                                         }
                                     }).catch();
                                     content.profile_picture = newPicName;
+
+                                    // Edit the students information
                                     editStudent(email, fornavn, efternavn, telefon, content.profile_picture);
                                     res.redirect('/profil/rediger');
                                 }
