@@ -516,9 +516,17 @@ input::placeholder {
   font-size: 0.55rem;
 }
 
+.cvnavn {
+  font-size: 20px;
+}
+
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+  .cvnavn {
+    font-size: 2rem;
+  }
+
   #gulBaggrund {
     background-color: #FFF387;
     height: 100vh;
