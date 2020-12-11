@@ -351,6 +351,19 @@ input::placeholder {
   transform: rotate(90deg);
 }
 
+#cookieModalHeader {
+  background-color: black;
+}
+
+#cookieModalTitle {
+  font-family: "Zealand Display", Arial, Helvetica, sans-serif;
+}
+
+.modal-backdrop
+{
+    opacity:0.9 !important;
+}
+
 
 #forside1 {
   /* Find løsning til mobil!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
@@ -362,27 +375,19 @@ input::placeholder {
 
 }
 
-#nv1 {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background-color: rgba(250, 238, 132, 0);
-  margin-left: 80px;
-  font-size: 21px;
-  display: none;
-}
-
-#navbarLine {
-  display: none;
+.navbar-toggler li a {
+  font-weight: 400;
+  color: #000000 !important;
 }
 
 .navbar-nav li a {
   font-weight: 400;
-  color: #000000;
+  color: #000000 !important;
 }
 
 .navbar-brand {
   font-size: 36px;
-  color: #000000;
+  color: #000000 !important;
 }
 
 #loginBoks {
@@ -397,8 +402,6 @@ input::placeholder {
 }
 
 #gulBaggrund {
-  background-color: #FFF387;
-  height: 100vh;
   display: none;
 }
 
@@ -470,23 +473,21 @@ input::placeholder {
   padding: 0;
 }
 
+.stretched-link:hover +.card-img +.card-img-overlay {
+  background-color: #faee84;
+  color: black;
+  transition: .5s ease;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
-  .card-columns {
+   .card-columns {
     column-count: 1;
   }
 }
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-  .sidebar {
-    display: flex;
-  }
-
-  .container-fluid {
-    width: calc(100% - 80px);
-    margin-left: 80px;
-  }
+@media (min-width: 300px) {
 
   .card-columns {
     column-count: 2;
@@ -504,6 +505,60 @@ input::placeholder {
     display: flex;
   }
 
+}
+
+
+#navbarLine {
+  display: flex;
+  background-color: black;
+  margin-top: 0px;
+  margin-right: 24px;
+  margin-left: 24px
+}
+#nv1 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 21px;
+}
+
+#zealand-tlf {
+  display: flex;
+  font-size: 28px;
+}
+
+.sorteringsContainer {
+  font-size: 0.55rem;
+}
+
+.cvnavn {
+  font-size: 20px;
+}
+
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .cvnavn {
+    font-size: 2rem;
+  }
+
+  #gulBaggrund {
+    background-color: #FFF387;
+    height: 100vh;
+  }
+
+  .sorteringsContainer {
+    font-size: 0.875rem;
+  }
+
+  .container-fluid {
+    width: calc(100% - 80px);
+    margin-left: 80px;
+  }
+
+  #zealand-tlf {
+    display: none;
+  }
+
   #navbarLine {
     display: flex;
     background-color: black;
@@ -512,13 +567,21 @@ input::placeholder {
     margin-left: 96px
   }
 
-}
+  #nv1 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: rgba(250, 238, 132, 0);
+    margin-left: 80px;
+    font-size: 21px;
+  }
 
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
   #loginContent {
     padding: 30px 200px 30px 200px;
     min-width: 339px;
+  }
+
+  .sidebar {
+    display: flex;
   }
 }
 
@@ -606,11 +669,4 @@ input::placeholder {
 .dawa-autocomplete-suggestions .dawa-autocomplete-suggestion:hover {
   background: #f0f0f0;
 }
-#card-img-overlay{
-  transition: .5s ease;
-  background-color: yellow;
-}
 
-#container-cards:hover .card-img-overlay{
-  opacity: 1;
-}

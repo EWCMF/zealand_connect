@@ -1,8 +1,11 @@
 const models = require("../models");
-const cv = require("../models/cv");
 
 async function findUserByEmail(email) {
     let user = null;
+    if(email == undefined){
+        return user;
+    }
+    //denne metode prøver først at se om en student matcher email, så bagefter virksomhed.
     return new Promise(resolve => {
         console.log("---finding user by email: " + email + "---");
         models.Student.findOne({
@@ -18,23 +21,28 @@ async function findUserByEmail(email) {
             }
             if (student instanceof models.Student) {
                 console.log("---fandt en Student med mailen:---");
-                //console.log(user instanceof models.User); // true
-                //console.log(user.username); // 'My Title'
                 user = student
             }
         }).then(() => {
             models.Virksomhed.findOne({ where: { email: email } }).then((virksomhed) => {
                 if (virksomhed === null) {
                     console.log('en virksomhed med denne email findes ikke!');
-                    //resolve(null);
                 }
                 if (virksomhed instanceof models.Virksomhed) {
                     console.log("---fandt en Virksomhed med mailen:---");
-                    //console.log(user instanceof models.User); // true
-                    //console.log(user.username); // 'My Title'
                     user = virksomhed;
                 }
-                resolve(user);
+            }).then(() => {
+                models.Admin.findOne({ where: { username: email}}).then((admin)=>{
+                    if (admin === null) {
+                        console.log('en admin med denne email findes ikke!');
+                    }
+                    if(admin instanceof models.Admin){
+                        console.log("---fandt en admin med mailen:---");
+                        user = admin;
+                    }
+                    resolve(user);
+                })
             });
         })
     })
@@ -168,7 +176,6 @@ async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
             tlfnr: telefon,
             profilbillede: profilbillede
         });
-        console.log(fornavn, efternavn, telefon, profilbillede);
     })
 }
 
@@ -177,7 +184,6 @@ async function editProfilePic(email, profilbillede){
         student.update({
             profilbillede: profilbillede
         });
-        console.log(profilbillede);
     })
 }
 
