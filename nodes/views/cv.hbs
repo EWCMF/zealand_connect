@@ -9,8 +9,8 @@
         </div>
         <div class="col-3 col-lg-1" id="cvDescriptionHeadlines">
             <div class="col">
-                <h2 class="mb-3">
-                    Navn:
+                <h2 class="mb-3 cvnavn">
+                    Navn:   
                 </h2>
                 <h6 class="mb-3">
                     Mail:
@@ -31,7 +31,7 @@
         </div>
         <div class="col-5 col-md-7" id="cvDescription">
             <div class="col">
-                <h2 class="mb-3">
+                <h2 class="mb-3 cvnavn">
                     {{json.student.fornavn}} {{json.student.efternavn}}
                 </h2>
                 <h6 class="mb-3">
@@ -57,7 +57,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-4 col-sm-2 d-flex flex-column">
+        <div class="col-12 col-sm-2 d-flex flex-column mt-2">
             <button type="button" class="btn btn-success " onclick="window.location.href='/search-cv/{{json.id}}/Create_pdf'">Download Pdf</button>
             {{#if ejer}}
             <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger CV</button>
