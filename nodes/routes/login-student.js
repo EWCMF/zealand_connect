@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
        //console.log("\n"+JSON.stringify(error)+"\n");
        let msg = error.error;
        //console.log("THIS ERROR "+msg);
+       //baseret på fejlbeskeden render vi forskellige ting. hvis 'none' så var der ikke fejl og vi går til forside
        switch(msg){
            case 'incorrectusername': res.render('login-student', { errormessage: 'Din account findes ikke i vores system gå til opret bruger for at oprette dig i systemet.'}); break;
            case 'incorrectpassword': res.render('login-student', { errormessage: 'Din account findes i vores system, men dit password er forkert.' }); break;
