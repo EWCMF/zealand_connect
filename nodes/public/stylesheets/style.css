@@ -353,7 +353,7 @@ input::placeholder {
 
 #cookieModalHeader {
   background-color: black;
-};
+}
 
 #cookieModalTitle {
   font-family: "Zealand Display", Arial, Helvetica, sans-serif;
@@ -465,16 +465,22 @@ input::placeholder {
   padding: 0;
 }
 
+.stretched-link:hover +.card-img +.card-img-overlay {
+  background-color: #faee84;
+  color: black;
+  transition: .5s ease;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
    .card-columns {
     column-count: 1;
-  } 
+  }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 300px) {
-  
+
   .card-columns {
     column-count: 2;
   }
@@ -503,7 +509,7 @@ input::placeholder {
 }
 #nv1 {
   padding-top: 15px;
-  padding-bottom: 15px; 
+  padding-bottom: 15px;
   font-size: 21px;
 }
 
@@ -655,11 +661,4 @@ input::placeholder {
 .dawa-autocomplete-suggestions .dawa-autocomplete-suggestion:hover {
   background: #f0f0f0;
 }
-#card-img-overlay{
-  transition: .5s ease;
-  background-color: yellow;
-}
 
-#container-cards:hover .card-img-overlay{
-  opacity: 1;
-}
