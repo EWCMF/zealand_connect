@@ -9,8 +9,7 @@ const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const { validateEmail, validateCVR, validatePhone, validateCity, validatePasswordLength, validateCvrLength,
     checkForIdenticals, 
-    validateNavn,
-    validateCprLength} = require('../validation/input-validation');
+    validateNavn} = require('../validation/input-validation');
 
 router.get('/', function (req, res, next) {
    // let errors = req.query;

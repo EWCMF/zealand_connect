@@ -9,7 +9,7 @@
                 <div id="loginContent" class="text-center">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
                     <div class="loginBtnBox">
-                        <form class="text-left" id="opretBrugerForm" name="opretBrugerForm" id="studentOpret" >
+                        <form class="text-left" id="opretBrugerForm" name="opretBrugerForm" id="studentOpret" onsubmit="return false">
                             <div style="color: red;" class="text-center" id="fejlBesked">{{fejlBesked}}</div>
                             <div style="color: green;" class="text-center" id="succesBesked">{{succesBesked}}</div><br>
                             <div class="row">
@@ -56,10 +56,20 @@
                                     <input id="gentagAdgangskode" name="gentagPassword" type="password" class="form-control" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-5"></div>
+                                <div class="col-7 col-form-label formError" id="forError">{{forError}}
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="fornavn" data-key="fornavn" class="col-5 col-form-label">Fornavn</label>
                                 <div class="col-7">
                                     <input id="fornavn" name="fornavn" type="string" class="form-control" placeholder="fornavn" data-key="placeholderFornavn" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5"></div>
+                                <div class="col-7 col-form-label formError" id="efterError">{{efterError}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -86,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="gulKnap" data-key="opretBruger" type="button" id="submitBtn" onclick="submitOpret()">Opret Bruger</button>
+                        <button class="gulKnap" data-key="opretBruger" type="submit" id="submitBtn" onclick="submitOpretStudent()">Opret Bruger</button>
                         <input id="submit_handle" type="submit" style="display: none">
                     </form>
                 </div>
@@ -102,12 +112,16 @@
 
 
     <script>
+        
         var backendIsProcessing = false;
-        function submitOpret() {
+        function submitOpretStudent() {
             console.log('submitCheck')
             $('#submit_handle').click();
             // kun hvis alle felter er udfylte sender vi videre til backend validering
-            if (document.getElementById("email").validity.valid && document.getElementById("gentagEmail").validity.valid && document.getElementById("adgangskode").validity.valid && document.getElementById("gentagAdgangskode").validity.valid && document.getElementById("telefonnummer").validity.valid && document.getElementById("fornavn").validity.valid && document.getElementById("efterNavn").validity.valid {
+            if (document.getElementById("email").validity.valid && document.getElementById("gentagEmail").validity.valid &&
+                document.getElementById("adgangskode").validity.valid && document.getElementById("gentagAdgangskode").validity.valid &&
+                document.getElementById("telefonnummer").validity.valid && document.getElementById("fornavn").validity.valid &&
+                document.getElementById("efternavn").validity.valid ){
                 console.log('efter validate')
                 if(! backendIsProcessing) {
                     backendIsProcessing = true;
@@ -149,5 +163,6 @@
                         dato: document.getElementById('date').value
                     }));
                 }
-            }};
+            }
+        };
         </script>
