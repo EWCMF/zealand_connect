@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="row m-1">
-        <div class="col-2 border rounded h-100">
+        <div class="col-12 col-lg-2 border rounded h-100">
             <h5 class="m-2">Filter</h5>
             <form class="mt-3 mb-3" id="filterForm" method="POST" action="search-praktik/query"
                 onsubmit="return submitForm(this);">
@@ -149,35 +149,35 @@
         </div>
         <div class="col">
             <div class="mb-2 d-flex flex-row">
-                <label id="results" class="mb-0 flex-fill align-self-center">
+                <label id="results" class="mb-0 flex-fill align-self-center sorteringsContainer">
                     {{resultater}} resultater
                 </label>
-                <label class="mb-0 mr-1 align-self-center">
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer">
                     Sortering:
                 </label>
                 <div class="btn-group">
-                    <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"
+                    <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" value="updatedAt">
                         Senest opdateret
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" id="senestOpdateret" onclick="changeSort(this, 'updatedAt')">Senest
+                        <a class="dropdown-item sorteringsContainer" id="senestOpdateret" onclick="changeSort(this, 'updatedAt')">Senest
                             opdateret</a>
-                        <a class="dropdown-item" id="overskrift" onclick="changeSort(this, 'overskrift')">Ny
+                        <a class="dropdown-item sorteringsContainer" id="overskrift" onclick="changeSort(this, 'overskrift')">Ny
                             sortering</a>
                     </div>
                 </div>
-                <label class="mb-0 mr-1 align-self-center">
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer">
                     Rækkefølge:
                 </label>
                 <div class="btn-group">
-                    <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle" data-toggle="dropdown"
+                    <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" value="DESC">
                         Faldende
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" id="ascending" onclick="changeOrder(this, 'ASC')">Stigende</a>
-                        <a class="dropdown-item" id="descending" onclick="changeOrder(this, 'DESC')">Faldende</a>
+                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')">Stigende</a>
+                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')">Faldende</a>
                     </div>
                 </div>
 

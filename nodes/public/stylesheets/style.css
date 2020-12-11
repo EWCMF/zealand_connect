@@ -353,7 +353,7 @@ input::placeholder {
 
 #cookieModalHeader {
   background-color: black;
-};
+}
 
 #cookieModalTitle {
   font-family: "Zealand Display", Arial, Helvetica, sans-serif;
@@ -402,8 +402,6 @@ input::placeholder {
 }
 
 #gulBaggrund {
-  background-color: #FFF387;
-  height: 100vh;
   display: none;
 }
 
@@ -442,6 +440,14 @@ input::placeholder {
   color: red;
 }
 
+.opretUddannelseForm.formError {
+  color: red;
+}
+
+.opretUddannelseForm.formSucess {
+  color: green;
+}
+
 .sletBrugerForm .formSucess {
   color: green;
 }
@@ -467,16 +473,22 @@ input::placeholder {
   padding: 0;
 }
 
+.stretched-link:hover +.card-img +.card-img-overlay {
+  background-color: #faee84;
+  color: black;
+  transition: .5s ease;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
    .card-columns {
     column-count: 1;
-  } 
+  }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 300px) {
-  
+
   .card-columns {
     column-count: 2;
   }
@@ -505,7 +517,7 @@ input::placeholder {
 }
 #nv1 {
   padding-top: 15px;
-  padding-bottom: 15px; 
+  padding-bottom: 15px;
   font-size: 21px;
 }
 
@@ -514,9 +526,30 @@ input::placeholder {
   font-size: 28px;
 }
 
+.sorteringsContainer {
+  font-size: 0.55rem;
+}
+
+.cvnavn {
+  font-size: 20px;
+}
+
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+  .cvnavn {
+    font-size: 2rem;
+  }
+
+  #gulBaggrund {
+    background-color: #FFF387;
+    height: 100vh;
+  }
+
+  .sorteringsContainer {
+    font-size: 0.875rem;
+  }
+
   .container-fluid {
     width: calc(100% - 80px);
     margin-left: 80px;
@@ -636,11 +669,4 @@ input::placeholder {
 .dawa-autocomplete-suggestions .dawa-autocomplete-suggestion:hover {
   background: #f0f0f0;
 }
-#card-img-overlay{
-  transition: .5s ease;
-  background-color: yellow;
-}
 
-#container-cards:hover .card-img-overlay{
-  opacity: 1;
-}
