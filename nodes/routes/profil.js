@@ -4,7 +4,6 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
 const models = require("../models");
-const validation = require("../validation/input-validation");
 const uploadFolder = require("../constants/references").uploadFolder;
 const formidable = require("formidable");
 const imageSize = require('image-size');
@@ -14,6 +13,7 @@ const mv = require('mv');
 const {
     reqLang
 } = require('../public/javascript/request');
+const { validatePhone, validateName } = require("../validation/input-validation");
 
 router.get('/', function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
@@ -123,8 +123,6 @@ router.post('/redigerstudent-save', function (req, res) {
         };
 
         console.log(email, fornavn, efternavn, telefon, profile_picture);
-
-        let inputError = false;
 
         if (files.profile_picture.size > 0) {
             /*fileUpload here*/
