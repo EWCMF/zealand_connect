@@ -5,6 +5,7 @@ const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
 const models = require("../models");
 const validation = require("../validation/input-validation");
+const uploadFolder = require("../constants/references").uploadFolder;
 const formidable = require("formidable");
 const imageSize = require('image-size');
 const fs = require("fs");
@@ -130,7 +131,7 @@ router.post('/redigerstudent-save', function (req, res) {
 
             //Stien til upload mappen skal være til stien i docker containeren.
             // VIRKER IKKE PÅ WINDOWS
-            let publicUploadFolder = "C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\";
+            let publicUploadFolder = uploadFolder;
 
             //Generere unik data til filnavn med Date.now() og tilfældig tal.
             let datetime = Date.now();
@@ -149,13 +150,16 @@ router.post('/redigerstudent-save', function (req, res) {
                                 if (errorRename) {
                                     console.log("Unable to move file.");
                                 } else {
-                                    models.Student.findOne({
+                                    let user = models.Student.findOne({
                                         where: {
                                             email: email
                                         }
                                     }).then(result => {
-                                        //TODO: Tag højde for, hvis der ikke findes en gammel fil - ellers crasher serveren
-                                        unlinkOldFiles(result["profilbillede"])
+                                        console.log(user.profilbillede);
+                                        if (uploadFolder + user.profilbillede
+                                            && user.profilbillede != null){
+                                            unlinkOldFiles(result["profilbillede"])
+                                        }
                                     }).catch();
                                     content.profile_picture = newPicName;
                                     editStudent(email, fornavn, efternavn, telefon, content.profile_picture);
@@ -179,6 +183,7 @@ router.post('/redigerstudent-save', function (req, res) {
                 res.redirect('/profil/rediger');
             }
         } else {
+            // Intet profilbillede, så nøjes med at opdatere de andre felter
             editStudent(email, fornavn, efternavn, telefon);
             res.redirect('/profil/rediger');
         }
@@ -272,7 +277,7 @@ router.get('/getUser', function (req, res, next) {
 });
 
 function unlinkOldFiles(filename) {
-    fs.unlink("C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\" + filename, (err) => {
+    fs.unlink(uploadFolder + filename, (err) => {
         if (err) throw err
         console.log(filename + " was deleted")
     });
