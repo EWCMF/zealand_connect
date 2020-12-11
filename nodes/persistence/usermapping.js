@@ -168,7 +168,6 @@ async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
             tlfnr: telefon,
             profilbillede: profilbillede
         });
-        console.log(fornavn, efternavn, telefon, profilbillede);
     })
 }
 
@@ -177,7 +176,6 @@ async function editProfilePic(email, profilbillede){
         student.update({
             profilbillede: profilbillede
         });
-        console.log(profilbillede);
     })
 }
 
