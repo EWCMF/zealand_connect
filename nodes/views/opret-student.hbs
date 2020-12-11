@@ -9,7 +9,7 @@
                 <div id="loginContent" class="text-center">
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
                     <div class="loginBtnBox">
-                        <form class="text-left" id="opretBrugerForm" name="opretBrugerForm" id="studentOpret" onsubmit="return false">
+                        <form class="text-left" id="opretBrugerForm" name="opretBrugerForm" id="studentOpret" >
                             <div style="color: red;" class="text-center" id="fejlBesked">{{fejlBesked}}</div>
                             <div style="color: green;" class="text-center" id="succesBesked">{{succesBesked}}</div><br>
                             <div class="row">
@@ -54,11 +54,6 @@
                                 <label for="gentagAdgangskode" data-key="labelgentagAdgangskode" class="col-5 col-form-label">Gentag adgangskode</label>
                                 <div class="col-7">
                                     <input id="gentagAdgangskode" name="gentagPassword" type="password" class="form-control" placeholder="Gentag Adgangskode" data-key="placeholdergentagAdgangskode" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="cprError">{{cprError}}
                                 </div>
                             </div>
                             <div class="form-group row">
