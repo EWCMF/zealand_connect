@@ -402,8 +402,6 @@ input::placeholder {
 }
 
 #gulBaggrund {
-  background-color: #FFF387;
-  height: 100vh;
   display: none;
 }
 
@@ -514,9 +512,22 @@ input::placeholder {
   font-size: 28px;
 }
 
+.sorteringsContainer {
+  font-size: 0.55rem;
+}
+
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+  #gulBaggrund {
+    background-color: #FFF387;
+    height: 100vh;
+  }
+
+  .sorteringsContainer {
+    font-size: 0.875rem;
+  }
+
   .container-fluid {
     width: calc(100% - 80px);
     margin-left: 80px;
