@@ -1,66 +1,80 @@
 <div class="container-fluid">
     <div class="row mt-4 mb-4">
-        <div class="col-12 col-sm-2">
+        <div class="col-12 col-lg-2">
             {{#if json.student.profilbillede}}
             <img class="img-thumbnail border-0" src="/uploads/{{json.student.profilbillede}}" alt="PROFILBILLEDE">
             {{else}}
             <img class="img-thumbnail border-0" src="images/dummy-profile-pic.jpg" alt="PROFILBILLEDE">
             {{/if}}
         </div>
-        <div class="col-3 col-lg-1" id="cvDescriptionHeadlines">
+        <div class="col-12 col-lg-8" id="cvDescriptionHeadlines">
             <div class="col">
-                <h2 class="mb-3 cvnavn">
-                    Navn:   
-                </h2>
-                <h6 class="mb-3">
-                    Mail:
-                </h6>
-                <h6 class="mb-3">
-                    Tlf:
-                </h6>
-                <h6 class="mb-3">
-                    Hjemmeside:
-                </h6>
-                <h6 class="mb-3">
-                    LinkedIn:
-                </h6>
-                <h6 class="mb-0">
-                    Youtube CV:
-                </h6>
+                <div class="row">
+                    <h2 class="row col-lg-3 cvnavn">
+                        Navn:
+                    </h2>
+                    <h2 class="row col-lg-7 mb-3 cvnavn">
+                        {{json.student.fornavn}} {{json.student.efternavn}}
+                    </h2>
+                </div>
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Mail:
+                    </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        <a href="mailto:{{json.email}}">{{json.email}}</a>
+                    </h6>
+                </div>
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Tlf:
+                    </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        {{json.telefon}}
+                    </h6>
+                </div>
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Hjemmeside:
+                    </h6>
+                    <a href="//{{json.hjemmeside}}">
+                        <h6 class="row col-lg-7 mb-3">
+                            {{json.hjemmeside}}
+                        </h6>
+                    </a>
+                </div>
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        LinkedIn:
+                    </h6>
+                    <a href="//{{json.linkedIn}}">
+                        <h6 class="row col-lg-7 mb-3">
+                            {{json.linkedIn}}
+                        </h6>
+                    </a>
+                </div>
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Youtube CV:
+                    </h6>
+                    <a href="//{{json.yt_link}}">
+                        <h6 class="row col-lg-7 mb-3">
+                            {{json.yt_link}}
+                        </h6>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="col-5 col-md-7" id="cvDescription">
+        {{!-- <div class="col-5 col-md-7" id="cvDescription">
             <div class="col">
-                <h2 class="mb-3 cvnavn">
-                    {{json.student.fornavn}} {{json.student.efternavn}}
-                </h2>
-                <h6 class="mb-3">
-                    <a href="mailto:{{json.email}}">{{json.email}}</a>
-                </h6>
-                <h6 class="mb-3">
-                    {{json.telefon}}
-                </h6>
-                <a href="//{{json.hjemmeside}}">
-                    <h6 class="mb-3">
-                        {{json.hjemmeside}}
-                    </h6>
-                </a>
-                <a href="//{{json.linkedIn}}">
-                    <h6 class="mb-3">
-                        {{json.linkedIn}}
-                    </h6>
-                </a>
-                <a href="//{{json.yt_link}}">
-                    <h6 class="mb-0">
-                        {{json.yt_link}}
-                    </h6>
-                </a>
             </div>
-        </div>
-        <div class="col-12 col-sm-2 d-flex flex-column mt-2">
-            <button type="button" class="btn btn-success " onclick="window.location.href='/search-cv/{{json.id}}/Create_pdf'">Download Pdf</button>
+        </div> --}}
+        <div class="col-12 col-lg-2 d-flex flex-column mt-2">
+            <button type="button" class="btn btn-success "
+                onclick="window.location.href='/search-cv/{{json.id}}/Create_pdf'">Download Pdf</button>
             {{#if ejer}}
-            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger CV</button>
+            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger
+                CV</button>
             {{/if}}
         </div>
     </div>
@@ -130,7 +144,7 @@
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
-                Udenlandsophold og frivilligt arbejde   
+                Udenlandsophold og frivilligt arbejde
             </h4>
             <p class="autobreak">
                 {{json.udenlandsophold_og_frivilligt_arbejde}}
@@ -150,7 +164,7 @@
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
-                It-kompetencer   
+                It-kompetencer
             </h4>
             <p class="autobreak">
                 {{json.it_kompetencer}}
@@ -160,7 +174,7 @@
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
-                Sprog   
+                Sprog
             </h4>
             <p class="autobreak">
                 {{json.sprog}}
