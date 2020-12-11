@@ -122,6 +122,8 @@ router.post('/redigerstudent-save', function (req, res) {
             email, fornavn, efternavn, telefon, profile_picture
         };
 
+        console.log(email, fornavn, efternavn, telefon, profile_picture);
+
         let inputError = false;
 
         if (files.profile_picture.size > 0) {
