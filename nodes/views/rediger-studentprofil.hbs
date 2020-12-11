@@ -8,13 +8,14 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="form-column col-12 col-md-4">
-            <form action="/profil/redigerstudent-save"
-                  method="POST"
-                  id="redigerStudentForm"
-                  name="redigerStudentForm"
-                  enctype="multipart/form-data">
+    <form action="/profil/redigerstudent-save"
+          method="POST"
+          id="redigerStudentForm"
+          name="redigerStudentForm"
+          enctype="multipart/form-data">
+
+        <div class="row">
+            <div class="form-column col-12 col-md-4">
 
                 <div class="form-group required">
                     <label for="fornavn">Fornavn</label>
@@ -44,7 +45,11 @@
                         være 8
                         tal og må ikke starte med 0</p>
                 </div>
-
+                <div>
+                    <button type="button" class="btn btn-success" id="gem">Gem</button>
+                </div>
+            </div>
+            <div class="form-column col-12 col-md-4">
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel">Profilbillede</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
@@ -61,12 +66,9 @@
                             10MB</p>
                     </div>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-success" id="gem">Gem</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <script>
