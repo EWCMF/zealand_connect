@@ -362,7 +362,14 @@ router.get('/:id/Create_pdf', function (req, res, next) {
     var new_page = 660;
     var page = 0;
 
-    myDoc.image('public/images/dummy-profile-pic.jpg', 40, 40, {width: 150, height: 150})
+    var path;
+    if (cv.student.profilbillede != null || cv.student.profilbillede != '') {
+        path = '/usr/src/app/public/uploads/' + cv.student.profilbillede;
+    } else {
+        path = 'public/images/dummy-profile-pic.jpg';
+    }
+
+    myDoc.image(path, 40, 40, {width: 150, height: 150})
   
     myDoc.font('Times-Roman')
         .fontSize(24)
