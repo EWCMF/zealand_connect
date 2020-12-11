@@ -437,6 +437,14 @@ input::placeholder {
   color: red;
 }
 
+.opretUddannelseForm.formError {
+  color: red;
+}
+
+.opretUddannelseForm.formSucess {
+  color: green;
+}
+
 .sletBrugerForm .formSucess {
   color: green;
 }
