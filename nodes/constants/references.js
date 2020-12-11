@@ -1,3 +1,3 @@
-const uploadFolder = "C:\\Users\\benky\\Node\\zealand_connect\\nodes\\public\\uploads\\";
+const uploadFolder = "/usr/src/app/public/uploads/";
 
 module.exports = { uploadFolder }
