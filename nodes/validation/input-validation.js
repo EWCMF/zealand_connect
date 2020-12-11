@@ -34,7 +34,19 @@ function checkForIdenticals(a, b){
     return a === b;
 }
 
+//CPR skal have en længde på 10
+function validateCprLength(cpr) {
+    return cpr.length === 10;
+}
+
+//regex til CPR
+
+//fornavn og efternavn
+function validateNavn(navn) {
+    return navn.length >=2;
+}
+
 module.exports = {
     validateEmail, validateCVR, validatePhone, validateCity, validatePasswordLength, validateCvrLength,
-    checkForIdenticals
+    checkForIdenticals, validateCprLength, validateNavn
 }
