@@ -27,11 +27,6 @@ router.get('/', function (req, res, next) {
         language: reqLang(req)
     });
 });
-
-router.get('/student', function(req, res, next) {
-    res.render('opret-student', {language: reqLang(req)})
-})
-
 router.post('/create', (req, res) => {
 
 
