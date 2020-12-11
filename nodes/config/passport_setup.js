@@ -6,13 +6,25 @@ const verifyPassword = require('../encryption/password').verifyPassword;
 //lav cookie fra user baseret på id
 passport.serializeUser((user, done)=>{
     console.log('User is being serialized so browser has a cookie so it can be identified!');
-    done(null, user.email);
+    //admin har ikke email, men username
+    if(user.email != null){
+        done(null, user.email);
+    }
+    if(user.username != null){
+        done(null, user.username);
+    }
 })
 
 //modtager en id fra cookie, så vi kan se om hvem der tilhører id'en
 passport.deserializeUser((cookieID, done)=>{
     findUserByEmail(cookieID).then((user)=>{
-        done(null, user.email);
+        //admin bruger ikke email, men username
+        if(user.email!=null){
+            done(null, user.email);
+        }
+        else {
+            done(null, user.username);
+        }
     })
 })
 
@@ -26,11 +38,10 @@ passport.use(new LocalStrategy({
             findUserByEmail(username).then(async(user)=>{
                 if(user==null){
                     //redirect user back to login page with faliure message
-                    console.log("ERROR: USER NOT FOUND---\nERROR: USER NOT FOUND---\nERROR: USER NOT FOUND---\n");
+                    console.log("ERROR: USER NOT FOUND -passport");
                     return done(null, false, { message: '?error=incorrectusername' });
                 } else {
-                    console.log("SUCCESS: USER FOUND---\nSUCCESS: USER FOUND---\nSUCCESS: USER FOUND---\n");
-                    //let crypt = await becrypt.hash(password, 10)
+                    console.log("SUCCESS: USER FOUND -passport");
                     //user exists in the database, now check if the password matches
                     verifyPassword(password, user.password).then((match)=>{
                         if(match){

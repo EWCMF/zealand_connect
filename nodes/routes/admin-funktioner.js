@@ -1,17 +1,56 @@
-const { response } = require('express');
 var express = require('express');
-const { deleteVirksomhed } = require('../persistence/usermapping');
+var router = express.Router();
+const { deleteVirksomhed, findUserByEmail } = require('../persistence/usermapping');
 var { reqLang } = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
-
-var router = express.Router();
-
-const editStudent = require('../persistence/usermapping').editStudent;
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
+const models = require('../models');
+var passport = require('passport');
+
 
 
 router.get('/', function (req, res, next) {
-    res.render('admin-funktioner', {language: reqLang(req, res)})
+    //check om logged in as admin
+    if(req.user != undefined){
+        findUserByEmail(req.user).then((user)=>{
+            if(user instanceof models.Admin){
+                res.render('admin-funktioner', {language: reqLang(req, res)})
+            }else {
+                res.redirect('/');
+            }
+        })
+    } else res.redirect('/');
+});
+
+router.get('/login', function (req, res, next) {
+    //check om logged in as admin
+    let error = req.query;
+       let msg = error.error;
+       //console.log("THIS ERROR "+msg);
+       switch(msg){
+           case 'incorrectusername': res.render('login-admin', { errormessage: 'Du har indtastet forkerte oplysninger'}); break;
+           case 'incorrectpassword': res.render('login-admin', { errormessage: 'Du har indtastet forkerte oplysninger' }); break;
+           case 'notloggedin': res.render('login-admin', { errormessage: 'Du skal logge ind før du kan se din profil.'}); break;
+           case 'none': res.redirect('/admin-funktioner'); break;
+           default: res.render('login-admin'); break;
+       }
+});
+
+router.post('/login/authenticate', function (req, res, next) {
+    //check om logged in as admin
+    passport.authenticate('local', function(err, user, info) {
+        //handle error
+        if(!user){
+            return res.redirect('/admin-funktioner/login'+info.message);
+        }
+        //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
+        req.logout();
+        //login skal være der for, at passport laver en cookie for brugeren
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.redirect('/admin-funktioner/login'+info.message);
+          });
+    })(req, res, next);
 });
 
 router.post('/slet-bruger', function (req, res, next) {

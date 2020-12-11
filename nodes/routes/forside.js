@@ -24,6 +24,12 @@ router.get('/', async function (req, res, next) {
       language: reqLang(req, res)
     });
   }
+
+  if (user instanceof models.Admin) {
+    res.render('forside-admin', {
+      language: reqLang(req, res)
+    });
+  }
   
 });
 module.exports = router;
