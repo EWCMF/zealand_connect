@@ -151,7 +151,7 @@
                             <br>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="emailError">{{emailError}}
+                                <div class="col-7 col-form-label formError" id="emailErrorStudent">{{emailError}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -165,7 +165,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="ge">{{gentagEmailError}}
+                                <div class="col-7 col-form-label formError" id="geStudent">{{gentagEmailError}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -181,7 +181,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="passwordError">{{passwordError}}
+                                <div class="col-7 col-form-label formError" id="passwordErrorStudent">{{passwordError}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -212,7 +212,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="forError">{{forError}}
+                                <div class="col-7 col-form-label formError" id="forErrorStudent">{{forError}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -226,7 +226,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="efterError">{{efterError}}
+                                <div class="col-7 col-form-label formError" id="efterErrorStudent">{{efterError}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -241,7 +241,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="tlfnrError">{{tlfnrError}}
+                                <div class="col-7 col-form-label formError" id="tlfnrErrorStudent">{{tlfnrError}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -357,11 +357,11 @@
                     if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                         let responseObject = JSON.parse(this.responseText)
                         console.log(responseObject)
-                        document.getElementById('emailError').innerHTML = responseObject.EmailError;
-                        document.getElementById('passwordError').innerHTML = responseObject.PasswordError;
-                        document.getElementById('tlfnrError').innerHTML = responseObject.TlfnrError;
-                        document.getElementById('forError').innerHTML = responseObject.forError;
-                        document.getElementById('efterError').innerHTML = responseObject.efterError;
+                        document.getElementById('emailErrorStudent').innerHTML = responseObject.EmailError;
+                        document.getElementById('passwordErrorStudent').innerHTML = responseObject.PasswordError;
+                        document.getElementById('tlfnrErrorStudent').innerHTML = responseObject.TlfnrError;
+                        document.getElementById('forErrorStudent').innerHTML = responseObject.forError;
+                        document.getElementById('efterErrorStudent').innerHTML = responseObject.efterError;
                         backendIsProcessingStudent = false;
                         // if there were no errors, then begin automatic login and redirect to profile
                         if (responseObject.areThereErrors == "false") { // send login request baseret på values i input felter
