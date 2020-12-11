@@ -351,6 +351,19 @@ input::placeholder {
   transform: rotate(90deg);
 }
 
+#cookieModalHeader {
+  background-color: black;
+};
+
+#cookieModalTitle {
+  font-family: "Zealand Display", Arial, Helvetica, sans-serif;
+}
+
+.modal-backdrop
+{
+    opacity:0.9 !important;
+}
+
 
 #forside1 {
   /* Find løsning til mobil!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
