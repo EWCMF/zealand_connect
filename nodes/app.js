@@ -14,9 +14,10 @@ var mit_CVRouter = require('./routes/mit-cv');
 var searchCVRouter = require('./routes/search-cv');
 var searchPraktikRouter = require('./routes/search-praktik');
 var loginRouter = require('./routes/login');
-var languageRouter = require('./routes/language')
-var forsideRouter = require('./routes/forside')
-var profilRouter = require('./routes/profil')
+var languageRouter = require('./routes/language');
+var cookieRouter = require('./routes/cookie-confirm');
+var forsideRouter = require('./routes/forside');
+var profilRouter = require('./routes/profil');
 var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
@@ -86,7 +87,7 @@ app.use(passport.session());
 app.use(bodyParser.text({ type: "text/plain"}))
 // Middleware til at finde login status i alle routes.
 app.use(async function (req, res, next) {
-  if (req.user == null) {
+  if (req.user == null || req.user === undefined) {
     next();
   } else {
     var userRole = await findUserByEmail(req.user);
@@ -114,7 +115,8 @@ app.use('/mit-cv', mit_CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/search-praktik', searchPraktikRouter);
 app.use('/login', loginRouter);
-app.use('*/language', languageRouter)
+app.use('*/language', languageRouter);
+app.use('*/cookie-confirm', cookieRouter);
 app.use('/', forsideRouter);
 app.use('/praktikforloebet', praktikforloebRouter);
 app.use ('/profil', profilRouter);
