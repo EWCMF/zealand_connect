@@ -56,7 +56,7 @@
                     <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
                 </tr>
                 {{#if rdoc}}
-                    <tr hidden="true" id="docContainer">
+                    <tr id="docContainer">
                         <td>Vedhæftet fil:</td>
                         <td id="docContainer2"><a href="/uploads/{{rdoc}}" target="_Blank">{{rdoc}}</a></td>
                     </tr>
@@ -76,23 +76,3 @@
         </div>
     </div>
 </div>
-<script>
-    function updateLabel() {
-        var educationId = {{ reducation }};
-        var countryId = {{ rcountry }};
-        var regionId = {{ rregion }};
-        var docName = "{{rdoc}}";
-        var logoname = "{{rlogo}}";
-
-        if ()
-
-            if (docName != "") {
-                document.getElementById("docContainer").hidden = false;
-            }
-        if (logoname != "") {
-            document.getElementById("companyLogo").src = '/uploads/' + logoname;
-        }
-    }
-
-    updateLabel();
-</script>
