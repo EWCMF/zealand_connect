@@ -1,4 +1,5 @@
 const models = require("../models");
+const unlinkOldFiles = require("../utils/file-handling").unlinkOldFiles;
 
 async function deleteInternshipPost(id) {
     let errorHappened = false;
@@ -15,14 +16,18 @@ async function deleteInternshipPost(id) {
         }
 
         if (internshipPost.post_document){
-
+            unlinkOldFiles(internshipPost.post_document)
         }
 
-        //slet virksomheden
+        //TODO: håndter virksomhedslogo
+
+        //slet praktikopslaget
         await internshipPost.destroy();
-        console.log("A internship post was deleted");
+        console.log("An internship post was deleted");
         return errorHappened;
     } catch (e) {
         console.log(e);
     }
 }
+
+module.exports = { deleteInternshipPost }
