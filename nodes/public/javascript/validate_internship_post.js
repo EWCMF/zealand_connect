@@ -1,4 +1,4 @@
-function validate_internship_post(e) {
+function validate_internship_post() {
   console.log("Yes")
   var all_valid = true;
 
@@ -126,6 +126,10 @@ function validate_internship_post(e) {
     else {
       document.getElementById('companyLogoError').hidden = true;
     }
-  console.log(all_valid);
-  return all_valid;
+  if (!all_valid){
+    return;
+  }
+  else {
+    document.forms["internshipForm"].submit();
+  }
 }

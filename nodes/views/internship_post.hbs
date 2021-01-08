@@ -6,7 +6,13 @@
   </div>
   <div class="row">
     <div class="col-12 col-md-8">
-      <form method="POST" onsubmit="return validate_internship_post(event)" enctype="multipart/form-data">
+      <form
+              method="POST"
+              action="/internship_post"
+              onsubmit="validate_internship_post()"
+              enctype="multipart/form-data"
+              id="internshipForm"
+      >
         <div class="form-group required">
           <label for="internshipTitle">Annonce overskrift</label>
           <input type="text" name="title" id="internshipTitle" class="form-control" placeholder="Titel">
