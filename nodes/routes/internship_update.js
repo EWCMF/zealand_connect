@@ -10,6 +10,7 @@ const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 const unlinkOldFiles = require('../utils/file-handling').unlinkOldFiles;
+const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 
 var tempDate = dateRegex.source
 var tempCVR = cvrRegex.source
@@ -249,25 +250,9 @@ router.get('/', function (req, res, next) {
   }).catch();
 });
 
-router.get('/delete', function (req, res, next) {
-  db.InternshipPost.findByPk(req.query.id, {
-    attributes: ["company_logo", "post_document"]
-  }).then(result => {
-    //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-    unlinkOldFiles(result["post_document"])
-    unlinkOldFiles(result["company_logo"])
-    deleteFromDb()
-  }).catch();
-  function deleteFromDb() {
-    db.InternshipPost.destroy({
-      where: {
-        id: req.query.id
-      }
-    })
-    res.render('internship_update', {
-      title: 'Express'
-    });
-  }
+router.get('/delete/:id', function (req, res, next) {
+  deleteInternshipPost(req.params.id)
+  res.redirect('/');
 });
 
 module.exports = router;
