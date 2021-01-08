@@ -2,37 +2,43 @@
 
     <div class="row mt-4 mb-4">
         <div class="col-2">
-            <img class="img-thumbnail border-0" id="companyLogo" src="https://www.shopinimizaj.com/frontend/web/images/no_images.png"
-                alt="rlogo">
+            {{#if rlogo}}
+                <img class="img-thumbnail border-0" src="/uploads/{{rlogo}}" alt="COMPANY LOGO">
+            {{else}}
+                <img class="img-thumbnail border-0" src="/images/no-logo.png" alt="COMPANY LOGO">
+            {{/if}}
         </div>
 
-        <div class="col-10" >
+        <div class="col-10">
             <table id="viewpostTable">
-                <tr  style=" padding: 5px">
+                <tr style=" padding: 5px">
                     <td colspan="2">
                         <h2>{{rtitle}}</h2>
                     </td>
                 </tr>
                 <tr>
-                    <td>Uddannelse: </td>
+                    <td>Uddannelse:</td>
                     <td id=educationContainer>{{reducation}}</td>
                 </tr>
                 <tr>
                     <td>Land:</td>
                     <td id=countryContainer>{{rcountry}}</td>
                 </tr>
-                <tr id="regionParent" hidden = "true">
-                    <td>Region:</td>
-                    <td id="regionContainer">{{rregion}}</td>
-                </tr>
-                <tr  id="cityParent" hidden = "true"> 
-                    <td>By:</label></td>
-                    <td>{{rcity}}</td>
-                </tr>
-                <tr id="postcodeParent" hidden = "true">
+
+                {{#if isDenmark}}
+                    <tr id="regionParent">
+                        <td>Region:</td>
+                        <td id="regionContainer">{{rregion}}</td>
+                    </tr>
+                    <tr id="cityParent">
+                        <td>By:</td>
+                        <td>{{rcity}}</td>
+                    </tr>
+                <tr id="postcodeParent">
                     <td>Postnummer:</td>
                     <td>{{rpostcode}}</td>
                 </tr>
+                {{/if}}
                 <tr>
                     <td>Email:</td>
                     <td id="emailContainer"><a href="mailto:{{remail}}">{{remail}}</a></td>
@@ -49,12 +55,14 @@
                     <td>Hjemmeside:</td>
                     <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
                 </tr>
-                <tr hidden="true" id="docContainer">
-                    <td>Vedhæftet fil:</td>
-                    <td id="docContainer2"><a href="/uploads/{{rdoc}}" target="_Blank">{{rdoc}}</a></td>
-                </tr>
+                {{#if rdoc}}
+                    <tr hidden="true" id="docContainer">
+                        <td>Vedhæftet fil:</td>
+                        <td id="docContainer2"><a href="/uploads/{{rdoc}}" target="_Blank">{{rdoc}}</a></td>
+                    </tr>
+                {{/if}}
             </table>
-            
+
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
@@ -75,64 +83,16 @@
         var regionId = {{ rregion }};
         var docName = "{{rdoc}}";
         var logoname = "{{rlogo}}";
-        /***** vi bruger switches fordi det er mere resource venligt *****/
-        switch (educationId) {
-        case 1:
-            document.getElementById('educationContainer').innerHTML = 'Handelsøkonom';
-            break;
-        case 2:
-            document.getElementById('educationContainer').innerHTML = 'Datamatiker';
-            break;
-        case 3:
-            document.getElementById('educationContainer').innerHTML = 'Bygningskonstruktør';
-            break;
-        }
 
-        switch(countryId){
-            case 1:
-                document.getElementById('countryContainer').innerHTML = 'Danmark';
-                document.getElementById('regionParent').hidden = false
-                document.getElementById('cityParent').hidden = false
-                document.getElementById('postcodeParent').hidden = false
-                /***** Her får vi regionerne ud hvis countryId = 1 *****/
-                switch(regionId){
-                case 1:
-                document.getElementById('regionContainer').innerHTML = 'Hovedstaden';
-                break;
-                case 2:
-                document.getElementById('regionContainer').innerHTML = 'Midtjylland';
-                break;
-                case 3:
-                document.getElementById('regionContainer').innerHTML = 'Nordjylland';
-                break;
-                case 4:
-                document.getElementById('regionContainer').innerHTML = 'Sjælland';
-                break;
-                case 5:
-                document.getElementById('regionContainer').innerHTML = 'Syddanmark';
-                /***** Her slutter Region Switch *****/
-                break;
+        if ()
 
-        }
-                break;
-            case 2:
-                document.getElementById('countryContainer').innerHTML = 'Tyskland';
-                break;
-            case 3:
-                document.getElementById('countryContainer').innerHTML = 'Sverige';
-                break;
-            case 4:
-                document.getElementById('countryContainer').innerHTML = 'Udlandet';
-                break;
-        }
-        
-
-        if (docName != ""){
-            document.getElementById("docContainer").hidden = false;
-        }
-        if (logoname != ""){
-            document.getElementById("companyLogo").src = '/uploads/'+logoname;
+            if (docName != "") {
+                document.getElementById("docContainer").hidden = false;
+            }
+        if (logoname != "") {
+            document.getElementById("companyLogo").src = '/uploads/' + logoname;
         }
     }
+
     updateLabel();
 </script>
