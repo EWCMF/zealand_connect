@@ -6,9 +6,13 @@
         <div class="col-6" style="border-right-style: solid; border-width: 1px;">
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="opretUddannelse">Opret Uddannelse</h2>
-            </div><br>
+            </div>
             <form action="" class="form-group text-left">
-                
+                <div>
+                    <div class="formError float-left text-success text-center" id="oprettetMessage"></div>
+                    <div class="formError float-left opretUddannelseForm" id="udd-error"></div>
+                    </div><br>
+            
                 <div class="row">
                     <label for="opretUddannelse" class="col-5 col-form-label" data-key="uddannelse">Uddannelse</label>
                     <div class="col-7 col-form-label formError text-danger mb-1" id="findesError"></div>
@@ -18,24 +22,26 @@
                         <input type="text" id="uddannelseOpretInput" class="form-control" placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;">
                     </div>
                 </div>
-                <div class="col-form-label formError text-success text-center" id="oprettetMessage"></div>
+            
                 <button class="gulKnap rounded" type="button" id="opretUddannelse-btn" data-key="opret" onclick="opret()">Opret</button>
                 
             </form>
             <div class="row p-3">
-                <h2 style="font-weight: bold;" data-key="sletUddannelse">Slet Uddanelse</h2>
+                <h2 style="font-weight: bold;" data-key="sletUddannelse">Slet Uddannelse</h2>
             </div>
             <form action="" class="form-group text-left">
+                 <div>
+                    <div class="float-left formError text-success text-center" id="slettetMessage"></div>
+                    <div class="float-left formError opretUddannelseForm" id="findesIkke"></div>
+                    </div><br>
                 <div class="row">
                     <label for="opretUddannelse" class="col-5 col-form-label" data-key="uddannelse">Uddannelse</label>
-                    <div class="col-7 col-form-label formError text-danger mb-1" id="findesIkke"></div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12">
                         <input id="uddannelseSletInput" type="text" class="form-control" placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;">
                     </div>
                 </div> 
-                    <div class="col-form-label formError text-success text-center" id="slettetMessage"></div>
                     <button class="gulKnap rounded" type="button" id="sletUddannelse-btn" onclick="slet()" data-key="slet">Slet</button>
             </form>
         </div>
@@ -92,6 +98,7 @@
                         if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                             let responseObject = JSON.parse(this.responseText)
                             console.log(responseObject);
+                            $('#student-error').show();
                             if(responseObject.errorHappened){
                                 document.getElementById('student-error').innerHTML = "Denne bruger findes ikke";
                                 document.getElementById("student-error").classList.add('formError');
@@ -101,6 +108,10 @@
                                 document.getElementById("student-error").classList.remove('formError');
                                 document.getElementById("student-error").classList.add('formSucess');
                             }
+                            setTimeout(function() {
+                                $('#student-error').fadeOut('fast')
+                            }, 2000);
+                            
                             backendIsProcessing=false;
                         }
                     }
@@ -125,6 +136,7 @@
                         if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                             let responseObject = JSON.parse(this.responseText)
                             console.log(responseObject);
+                            $('#virk-error').show();
                             if(responseObject.errorHappened){
                                 document.getElementById('virk-error').innerHTML = "Denne bruger findes ikke";
                                 document.getElementById("virk-error").classList.add('formError');
@@ -134,6 +146,9 @@
                                 document.getElementById("virk-error").classList.remove('formError');
                                 document.getElementById("virk-error").classList.add('formSucess');
                             }
+                            setTimeout(function() {
+                                $('#virk-error').fadeOut('fast')
+                            }, 2000);
                             backendIsProcessing=false;
                         }
                     }
@@ -150,10 +165,23 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log('sending post for create')
+                console.log('sending post for create');
+                $('#udd-error').show();
                 let responseObj = JSON.parse(this.responseText)
-                document.getElementById('findesError').innerHTML = responseObj.findesallerede
-                document.getElementById('oprettetMessage').innerHTML = responseObj.uddannelseOprettet
+                if (responseObj.findesallerede != '') {
+                    document.getElementById('udd-error').innerHTML = responseObj.findesallerede
+                    document.getElementById("udd-error").classList.add('formError');
+                    document.getElementById("udd-error").classList.remove('formSucess');
+                } else {
+                    document.getElementById('udd-error').innerHTML = responseObj.uddannelseOprettet;
+                    document.getElementById("udd-error").classList.remove('formError');
+                    document.getElementById("udd-error").classList.add('formSucess');
+                }
+                setTimeout(function() {
+                    $('#udd-error').fadeOut('fast')
+                }, 2000);
+                
+                
             }
         }
         xhttp.open('POST', '/admin-funktioner/createUddannelse', true);
@@ -177,9 +205,18 @@
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 console.log('sending post for create')
+                $('#findesIkke').show();
+                $('#slettetMessage').show();
                 let responseObj = JSON.parse(this.responseText)
                 document.getElementById('findesIkke').innerHTML = responseObj.findesIkke
                 document.getElementById('slettetMessage').innerHTML = responseObj.uddannelseSlettet
+                
+                setTimeout(function() {
+                    $('#findesIkke').fadeOut('fast')
+                }, 2000);
+                setTimeout(function() {
+                    $('#slettetMessage').fadeOut('fast')
+                }, 2000);
             }
         }
         xhttp.open('POST', '/admin-funktioner/sletUddannelse', true);

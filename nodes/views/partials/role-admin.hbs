@@ -1,5 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light container-fluid" id="nv1">
-    <a class="navbar-brand" id="zealand-tlf"href="/">Zealand</a>
+<nav class="navbar navbar navbar-expand-lg container-fluid" id="nv1">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -14,7 +13,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarOpslag">
                         <a class="dropdown-item" href="/search-cv" data-key="aAlleCVer">Alle CV'er</a>
-                        <a class="dropdown-item" href="/search-praktik" data-key="aAllePraktikopslag">Alle praktikopslag</a>
+                        <a class="dropdown-item" href="/search-praktik" data-key="aAllePraktikopslag">Alle Praktikopslag</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -23,7 +22,7 @@
                         Fakta om praktik
                     </a>
                 <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                    <a class="dropdown-item"href="/#Til_Virksomheder" data-key="aFaaEnPraktikant">Til virksomheder</a>
+                    <a class="dropdown-item"href="/#Til_Virksomheder" data-key="aFaaEnPraktikant">Til Virksomheder</a>
                     <a class="dropdown-item"href="/#Arbejdstid_og_læringsmål" data-key="aPraktikForloebet">Arbejdstid og læringsmål</a>
                     <a class="dropdown-item"href="/#Løn" data-key="aArbejdstidOgLæringsmål">Løn</a>
                     <a class="dropdown-item"href="/#Forsikring" data-key="aLoen">Forsikring</a>
@@ -36,22 +35,31 @@
                     <a class="dropdown-item"href="/" data-key="aEvtProblemer">Evt. problemer</a> --}}
                 </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin-funktioner">Administratorfunktioner</a>
+                </li>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" id="en" href="/language/en">English</a>
                     <a class="nav-link" id="da" href="/language/da">Dansk</a>
                 </li>
-                <li class="nav-item" id="ikkeLoggedeInd">
-                    <a class="nav-link" href="/opret-bruger" data-key="aOpretBruger">Opret bruger</a>
-                
+                <li class="nav-item dropdown" id="profileDropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdownName" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{user.fornavn}} {{user.efternavn}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarOpslag">
+                        <a class="dropdown-item" data-key="aProfil" href="/profil">Profil</a>
+                        <a id="cv" class="dropdown-item" data-key="aMitCV" href="/mit-cv">Mit CV</a>
+                    </div>
+
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="login" href="/login" data-key="aLogin">Log ind</a>
+                    <a class="nav-link" id="logud" href="/login/logout" data-key="aLogud">Log ud</a>
                 </li>
             </ul>
-            
         </div>
-        
     </nav>
     <hr id="navbarLine">

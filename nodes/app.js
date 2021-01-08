@@ -29,6 +29,7 @@ const passportSetup = require('./config/passport_setup');
 const hbs = require("express-handlebars");
 
 const findUserByEmail = require('./persistence/usermapping').findUserByEmail;
+const models = require('./models');
 
 var opretBrugerRouter = require('./routes/opret-bruger');
 var loginStudentRouter = require('./routes/login-student');
@@ -90,12 +91,14 @@ app.use(async function (req, res, next) {
     next();
   } else {
     var userRole = await findUserByEmail(req.user);
-    
-    if (userRole.cvrnr == null) {
+    if(userRole instanceof models.Student){
       res.locals.isStudent = true;
-      
-    } else {
+    }
+    if(userRole instanceof models.Virksomhed){
       res.locals.isCompany = true;
+    }
+    if(userRole instanceof models.Admin){
+      res.locals.isAdmin = true;
     }
     res.locals.user = userRole;
     next();

@@ -11,15 +11,15 @@ function submitButton() {
 
     // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
     const numbersRegex = /^[0-9]{8}$/;
-    var numbersOnly = numbersRegex.test(telefon);
+    let numbersOnly = numbersRegex.test(telefon);
 
-    if (fornavn == "") {
+    if (fornavn === "") {
         document.getElementById("fornavnError").hidden = false;
     } else {
         document.getElementById("fornavnError").hidden = true;
     }
 
-    if (efternavn == "") {
+    if (efternavn === "") {
         document.getElementById("efternavnError").hidden = false;
     } else {
         document.getElementById("efternavnError").hidden = true;
@@ -31,7 +31,7 @@ function submitButton() {
         document.getElementById("telefonError").hidden = true;
     }
 
-    if (!fornavn == "" && !efternavn == "" && numbersOnly) {
+    if (fornavn !== "" && efternavn !== "" && numbersOnly) {
         document.forms["redigerStudentForm"].submit();
     }
 
