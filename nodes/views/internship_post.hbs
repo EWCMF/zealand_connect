@@ -9,7 +9,6 @@
       <form
               method="POST"
               action="/internship_post"
-              onsubmit="validate_internship_post()"
               enctype="multipart/form-data"
               id="internshipForm"
       >
@@ -147,7 +146,7 @@
         </div>
         <p id="posttextError" class="CVErrorColor" hidden="true">Du har angivet for mange tegn</p>
         <div class="form-group">
-          <button type="submit" onclick="copyQuillHtmlToHiddenInput();" class="btn btn-success mr-2">Gem</button>
+          <button type="button" onclick="copyQuillHtmlToHiddenInput();" class="btn btn-success mr-2">Gem</button>
           <button type="button" class="btn btn-danger">Afbryd</button>
         </div>
       </form>
@@ -192,6 +191,7 @@
 
   function copyQuillHtmlToHiddenInput() {
     document.getElementById('plainText').value = editor.root.innerHTML;
+    validate_internship_post();
   }
 
   var emailRegex = /{{{emailRegex}}}/;

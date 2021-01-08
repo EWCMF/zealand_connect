@@ -90,23 +90,6 @@ function validate_internship_post() {
     document.getElementById('countryError').hidden = true;
   }
 
-  //Region
-  if (document.getElementById('countrySelect').value == 1 && document.getElementById('regionSelect').value == 0) {
-    all_valid = false;
-    document.getElementById('regionError').hidden = false;
-  }
-  else {
-    document.getElementById('regionError').hidden = true;
-  }
-
-  //By
-  if (document.getElementById('countrySelect').value == 1 && document.getElementById('citySelect').value == 0) {
-    all_valid = false;
-    document.getElementById('cityError').hidden = false;
-  } else {
-    document.getElementById('cityError').hidden = true;
-  }
-
   //Vedhæftet tekstfil
   if (document.getElementById('companyDoc').files[0] != null && document.getElementById('companyDoc').files[0].size > 10240000) {
 
@@ -127,6 +110,7 @@ function validate_internship_post() {
       document.getElementById('companyLogoError').hidden = true;
     }
   if (!all_valid){
+    console.log("Et input mangler")
     return;
   }
   else {
