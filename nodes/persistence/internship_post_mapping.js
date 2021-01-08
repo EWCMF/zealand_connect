@@ -5,7 +5,7 @@ async function deleteInternshipPost(id) {
     let errorHappened = false;
     try {
         //find internship post
-        var internshipPost = await models.InternshipPost.findOne({
+        let internshipPost = await models.InternshipPost.findOne({
             where: {
                 id: id
             }
@@ -22,8 +22,6 @@ async function deleteInternshipPost(id) {
             unlinkOldFiles(internshipPost.company_logo);
         }
 
-        //TODO: håndter virksomhedslogo
-
         //slet praktikopslaget
         await internshipPost.destroy();
         console.log("An internship post was deleted");
@@ -32,26 +30,5 @@ async function deleteInternshipPost(id) {
         console.log(e);
     }
 }
-
-// router.get('/delete', function (req, res, next) {
-//     db.InternshipPost.findByPk(req.query.id, {
-//         attributes: ["company_logo", "post_document"]
-//     }).then(result => {
-//         //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-//         unlinkOldFiles(result["post_document"])
-//         unlinkOldFiles(result["company_logo"])
-//         deleteFromDb()
-//     }).catch();
-//     function deleteFromDb() {
-//         db.InternshipPost.destroy({
-//             where: {
-//                 id: req.query.id
-//             }
-//         })
-//         res.render('internship_update', {
-//             title: 'Express'
-//         });
-//     }
-// });
 
 module.exports = { deleteInternshipPost }
