@@ -1,4 +1,5 @@
 const models = require("../models");
+const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 
 async function findUserByEmail(email) {
     let user = null;
@@ -120,7 +121,7 @@ async function deleteVirksomhed(email) {
         });
         //iterate internship posts and delete
         for (let i = 0; i < internshipPosts.length; i++) {
-            await internshipPosts[i].destroy();
+            deleteInternshipPost(internshipPosts[i].id);
         }
         //slet virksomheden
         await virksomhed.destroy();
