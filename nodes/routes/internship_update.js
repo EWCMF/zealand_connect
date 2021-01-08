@@ -9,6 +9,7 @@ const { emailRegex, dateRegex, cvrRegex, linkRegex } = require("../constants/reg
 const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
+const unlinkOldFiles = require('../utils/file-handling').unlinkOldFiles;
 
 var tempDate = dateRegex.source
 var tempCVR = cvrRegex.source
@@ -268,13 +269,5 @@ router.get('/delete', function (req, res, next) {
     });
   }
 });
-
-function unlinkOldFiles(filename) {
-  fs.unlink("/usr/src/app/public/uploads/" + filename, (err) => {
-    if (err) throw err
-    console.log(filename + " was deleted")
-  });
-}
-
 
 module.exports = router;
