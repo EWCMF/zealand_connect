@@ -1,7 +1,8 @@
-const fs = require('fs')
+const fs = require('fs');
+const uploadFolder = require('../constants/references').uploadFolder();
 
 function unlinkOldFiles(filename) {
-    fs.unlink("/usr/src/app/public/uploads/" + filename, (err) => {
+    fs.unlink(uploadFolder + filename, (err) => {
         if (err) throw err
         console.log(filename + " was deleted")
     });

@@ -5,6 +5,7 @@ var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabe
 var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
 var fs = require("fs"); //Bruges til grundlæggen file hændtering.
 var mv = require('mv'); //Skal bruges for kunne gemme uploads uden for container.
+var uploadFolder = require('../constants/references').uploadFolder()
 const {
   emailRegex,
   dateRegex,
@@ -157,7 +158,7 @@ router.post('/', function (req, res, next) {
           var logo = files.company_logo;
 
           //Stien til upload mappen skal være til stien i docker containeren.
-          var publicUploadFolder = "/usr/src/app/public/uploads/";
+          var publicUploadFolder = uploadFolder;
 
           //Generere unik data til filnavn med Date.now() og tilfældig tal.
           var datetime = Date.now();
@@ -216,7 +217,7 @@ router.post('/', function (req, res, next) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) { 
-     
+
       var generatedEducationOptions = '';
 
       db.Uddannelser.findAll({
