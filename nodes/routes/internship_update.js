@@ -11,6 +11,7 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 const unlinkOldFiles = require('../utils/file-handling').unlinkOldFiles;
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
+const uploadFolder = require('../constants/references').uploadFolder();
 
 var tempDate = dateRegex.source
 var tempCVR = cvrRegex.source
@@ -131,7 +132,7 @@ router.post('/', function (req, res, next) {
     var logo = files.company_logo;
 
     //Stien til upload mappen skal være til stien i docker containeren.
-    var publicUploadFolder = "/usr/src/app/public/uploads/";
+    var publicUploadFolder = uploadFolder;
 
     //Generere unik data til filnavn med Date.now() og tilfældig tal.
     var datetime = Date.now();

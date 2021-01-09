@@ -10,6 +10,7 @@ const {
     Op
 } = require('sequelize');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+const uploadFolder = require('../constants/references').uploadFolder();
 
 
 router.get('/', async function (req, res, next) {
@@ -364,7 +365,7 @@ router.get('/:id/Create_pdf', function (req, res, next) {
 
     var path;
     if (cv.student.profilbillede != null || cv.student.profilbillede != '') {
-        path = '/usr/src/app/public/uploads/' + cv.student.profilbillede;
+        path = uploadFolder + cv.student.profilbillede;
     } else {
         path = 'public/images/dummy-profile-pic.jpg';
     }
