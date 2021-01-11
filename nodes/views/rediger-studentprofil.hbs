@@ -1,5 +1,8 @@
 <script src='/javascript/godkendelse-af-student.js' defer></script>
 <script src="/javascript/rediger-studentprofil.js"></script>
+<script src="/js/cropper.js"></script>
+<link  href="/stylesheets/cropper.css" rel="stylesheet">
+
 
 <div class="container-fluid">
     <div class="row">
@@ -53,12 +56,13 @@
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel">Profilbillede</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 1MB. Billedet SKAL være kvadratisk.">?</span>
+                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 1MB. Billedet kan skæres til efter det er valgt.">?</span>
                 </div>
                 <div class="profilePicHolder">
                     <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg"
                          alt="PROFILBILLEDE">
                     <div class="custom-file">
+                        <input id="crop_base64" type="text" name="crop_base64" class="d-none">
                         <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" class="custom-file-input"
                                id="profilePic" onchange="validateAndUpdateInputLabel('picLabel', 'profilePic')">
                         <label id="picLabel" class="custom-file-label" for="profilePic">Vælg billede</label>
@@ -71,9 +75,11 @@
     </form>
 </div>
 
+{{> cropper-modal}}
+
 <script>
     function validateAndUpdateInputLabel(labelId, inputId) {
-        let file = document.getElementById(inputId).files[0];
+        let file = document.getElementById(inputId).files[0]; 
 
         // Get dimensions of the image
         if (file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
@@ -83,16 +89,65 @@
 
             // Check the aspect ratio and dimensions
             img.onload = function () {
-                if (this.width !== this.height || this.width < 250 || this.height < 250 || file.size > 1000000) {
+                if (this.width < 250 || this.height < 250 || file.size > 1000000) {
                     console.log("Invalid image");
                     document.getElementById(inputId).value = '';
                 } else {
-                    document.getElementById("profilbillede").src = this.src;
-                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
+                    $('#cropperModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                    });
+
+                    $("cropperModal").modal('show');
+
+                    let src = this.src;
+                    let cropper;
+
+                    $('#cropperModal').on('shown.bs.modal', function (event) {
+                        let cropFrame = document.getElementById('cropFrame');
+                        cropFrame.src = src
+                        cropper = new Cropper(cropFrame, {
+                            aspectRatio: 1 / 1,
+                            viewMode: 1,
+                            movable: false,
+                            zoomable: false,
+                            rotable: false,
+                            minCropBoxWidth: 250,
+                            minCropBoxHeight: 250,
+
+                            ready() {
+
+                                $('#confirm').click(function() {
+                                    let data = cropper.getData(true);
+                                    let imgData = cropper.getImageData();
+
+                                    let canvas = cropper.getCroppedCanvas();
+                                    let dataUrl = canvas.toDataURL('image/jpeg');
+
+                                    console.log(canvas);
+
+                                    document.getElementById('crop_base64').value = dataUrl.split(';base64,')[1];;
+                                    document.getElementById("profilbillede").src = dataUrl;
+                                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
+                                });
+                                
+                            }
+                        });
+                    })
+
+                    $('#cropperModal').on('hidden.bs.modal', function (event) {
+                        cropper.destroy();
+                        cropper = null;
+                        cropFrame.src = '';
+                        $('#cropperModal').off('shown.bs.modal');
+                        $('#cropperModal').off('hidden.bs.modal');
+                        $('#confirm').off('click');
+                    });
                 }
             }
+            
         } else {
-            console.log("Invalid file type")
+            console.log("Invalid file type");
         }
     }
 

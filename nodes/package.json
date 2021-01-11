@@ -12,6 +12,7 @@
     "chai-http": "^4.0.0",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
+    "cropperjs": "^1.5.9",
     "cross-env": "^7.0.3",
     "dawa-autocomplete2": "^1.0.2",
     "debug": "~4.2.0",
