@@ -8,6 +8,7 @@ const uploadFolder = require("../constants/references").uploadFolder();
 const formidable = require("formidable");
 const imageSize = require('image-size');
 const fs = require("fs");
+const os = require('os');
 const path = require('path');
 const mv = require('mv');
 const {
@@ -116,19 +117,24 @@ router.post('/redigerstudent-save', function (req, res) {
     formData.parse(req, async function (error, fields, files) {
         //laver et objekt med alle data
         const {
-            email, fornavn, efternavn, telefon, profile_picture
+            email, fornavn, efternavn, telefon, profile_picture, crop_base64
         } = fields;
         let content = {
-            email, fornavn, efternavn, telefon, profile_picture
+            email, fornavn, efternavn, telefon, profile_picture, crop_base64
         };
 
+        const imageBufferData = Buffer.from(crop_base64, 'base64');
+
+        // log ikke buffer dataen da den meget vel kan være en massiv streng.
         console.log(email, fornavn, efternavn, telefon, profile_picture);
 
-        if (files.profile_picture.size > 0) {
+        let size = Buffer.byteLength(imageBufferData);
+
+        if (size > 0) {
             /*fileUpload here*/
             let img = files.profile_picture;
 
-            const imgData = imageSize(img.path);
+            const imgData = imageSize(imageBufferData);
 
             //Stien til upload mappen skal være til stien i docker containeren.
             // VIRKER IKKE PÅ WINDOWS
@@ -141,13 +147,22 @@ router.post('/redigerstudent-save', function (req, res) {
             //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
             let newPicName = datetime + randomNumber + "_" + img.name;
 
-            if (imgData.width === imgData.height) {
                 if (imgData.width >= 250 && imgData.height >= 250) {
-                    if (img.size <= 1000000) {
+                    if (size <= 1000000) {
                         //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
                         //Nedenstående flytter og omdøber filer på sammetid
                         if (img.type === "image/jpeg" || img.type === "image/png" || img.type === "image/svg+xml" || img.type === "image/bmp") {
-                            await mv(img.path, publicUploadFolder + newPicName, (errorRename) => {
+                            let tempPath = path.join(os.tmpdir(), Date.now() + '');
+
+                            //Gemmer buffer til en midlertidig fil i temp mappen med tilfældigt navn.
+                            //Dette er nødvendigt da man ikke kan bruge mv med buffer dataen direkte.
+                            fs.writeFileSync(tempPath, imageBufferData, function (err) {
+                                if (err) {
+                                    return res.error(err);
+                                }
+                            });
+
+                            mv(tempPath, publicUploadFolder + newPicName, (errorRename) => {
                                 if (errorRename) {
                                     console.log("Unable to move file.");
                                 } else {
@@ -188,10 +203,6 @@ router.post('/redigerstudent-save', function (req, res) {
                     console.log("Invalid image dimensions")
                     res.redirect('/profil/rediger');
                 }
-            } else {
-                console.log("Invalid aspect ratio")
-                res.redirect('/profil/rediger');
-            }
         } else {
             // Intet profilbillede, så nøjes med at opdatere de andre felter
             editStudent(email, fornavn, efternavn, telefon);
