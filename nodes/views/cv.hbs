@@ -37,31 +37,49 @@
                     <h6 class="row col-lg-3">
                         Hjemmeside:
                     </h6>
+                    {{#if json.hjemmeside}}
                     <a href="//{{json.hjemmeside}}">
                         <h6 class="row col-lg-7 mb-3">
                             {{json.hjemmeside}}
                         </h6>
                     </a>
+                    {{else}}
+                    <h6 class="row col-lg-7 mb-3">
+                            Intet angivet
+                    </h6>
+                    {{/if}}
                 </div>
                 <div class="row">
                     <h6 class="row col-lg-3">
                         LinkedIn:
                     </h6>
+                    {{#if json.linkedIn}}
                     <a href="//{{json.linkedIn}}">
                         <h6 class="row col-lg-7 mb-3">
                             {{json.linkedIn}}
                         </h6>
                     </a>
+                    {{else}}
+                    <h6 class="row col-lg-7 mb-3">
+                            Intet angivet
+                    </h6>
+                    {{/if}}
                 </div>
                 <div class="row">
                     <h6 class="row col-lg-3">
                         Youtube CV:
                     </h6>
+                    {{#if json.yt_link}}
                     <a href="//{{json.yt_link}}">
                         <h6 class="row col-lg-7 mb-3">
                             {{json.yt_link}}
                         </h6>
                     </a>
+                    {{else}}
+                    <h6 class="row col-lg-7 mb-3">
+                            Intet angivet
+                    </h6>
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -106,9 +124,15 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Erfaring
             </h4>
+            {{#if json.erhvervserfaring}}
             <p class="autobreak">
                 {{json.erhvervserfaring}}
             </p>
+            {{else}}
+            <p class="autobreak">
+                Ikke angivet
+            </p>
+            {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
@@ -126,9 +150,15 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Speciale
             </h4>
+            {{#if json.speciale}}
             <p class="autobreak">
                 {{json.speciale}}
             </p>
+            {{else}}
+            <p class="autobreak">
+                Ikke angivet
+            </p>
+            {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
@@ -136,9 +166,15 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Tidligere uddannelse
             </h4>
+            {{#if json.tidligere_uddannelse}}
             <p class="autobreak">
                 {{json.tidligere_uddannelse}}
             </p>
+            {{else}}
+            <p class="autobreak">
+                Ikke angivet
+            </p>
+            {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
@@ -146,9 +182,15 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Udlandsophold og frivilligt arbejde   
             </h4>
+            {{#if json.udenlandsophold_og_frivilligt_arbejde}}
             <p class="autobreak">
                 {{json.udenlandsophold_og_frivilligt_arbejde}}
             </p>
+            {{else}}
+            <p class="autobreak">
+                Ikke angivet
+            </p>
+            {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
@@ -156,9 +198,15 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Fritidsinteresser
             </h4>
+            {{#if json.fritidsinteresser}}
             <p class="autobreak">
                 {{json.fritidsinteresser}}
             </p>
+            {{else}}
+            <p class="autobreak">
+                Ikke angivet
+            </p>
+            {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
