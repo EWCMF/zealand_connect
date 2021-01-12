@@ -86,37 +86,37 @@ function submitButton() {
         document.getElementById("Tidligere-uddannelseError").hidden = true;
     }
     
-    if (linkedIn == "") {
-        document.getElementById("linkedIn").value = 'Intet angivet';
-    }
+    // if (linkedIn == "") {
+    //     document.getElementById("linkedIn").value = 'Intet angivet';
+    // }
 
-    if (yt_link == "") {
-        document.getElementById("youtube_link").value = 'Intet angivet';
-    }
+    // if (yt_link == "") {
+    //     document.getElementById("youtube_link").value = 'Intet angivet';
+    // }
 
-    if (speciale == "") {
-        document.getElementById("speciale").value = 'Intet angivet';
-    }
+    // if (speciale == "") {
+    //     document.getElementById("speciale").value = 'Intet angivet';
+    // }
 
-    if (om_mig == "") {
-        document.getElementById("om mig").value = 'Intet angivet';
-    }
+    // if (om_mig == "") {
+    //     document.getElementById("om mig").value = 'Intet angivet';
+    // }
 
-    if (UogFA == "") {
-        document.getElementById("UogFA").value = 'Intet angivet';
-    }
+    // if (UogFA == "") {
+    //     document.getElementById("UogFA").value = 'Intet angivet';
+    // }
 
-    if (erhvervserfaring == "") {
-        document.getElementById("erhvervserfaring").value = 'Intet angivet';
-    }
+    // if (erhvervserfaring == "") {
+    //     document.getElementById("erhvervserfaring").value = 'Intet angivet';
+    // }
 
-    if (hjemmeside == "") {
-        document.getElementById("hjemmeside").value = 'Intet angivet';
-    }
+    // if (hjemmeside == "") {
+    //     document.getElementById("hjemmeside").value = 'Intet angivet';
+    // }
 
-    if (fritidsinteresser == "") {
-        document.getElementById("fritidsinteresser").value = 'Intet angivet';
-    }
+    // if (fritidsinteresser == "") {
+    //     document.getElementById("fritidsinteresser").value = 'Intet angivet';
+    // }
 
     if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
         document.forms["cvForm"].submit();
