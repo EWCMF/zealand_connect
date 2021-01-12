@@ -85,6 +85,15 @@ function submitButton() {
     } else {
         document.getElementById("Tidligere-uddannelseError").hidden = true;
     }
+
+    let radios = document.getElementsByClassName('tilgaengelighed');
+    let tilgaengelighed = '';
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            // get value, set checked flag or do whatever you need to
+            tilgaengelighed = radios[i].value;
+        }
+    }
     
     // if (linkedIn == "") {
     //     document.getElementById("linkedIn").value = 'Intet angivet';
@@ -118,7 +127,7 @@ function submitButton() {
     //     document.getElementById("fritidsinteresser").value = 'Intet angivet';
     // }
 
-    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "") {
+    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "" && tilgaengelighed != "") {
         document.forms["cvForm"].submit();
     }
 }
