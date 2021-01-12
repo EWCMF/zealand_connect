@@ -3,6 +3,8 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const verifyPassword = require('../encryption/password').verifyPassword;
 
 describe('Find student i database baseret på email', function(){
+    this.timeout(5000);
+
     //TC1
     it('Bør find en bruger med username som matcher det username vi indtaster, i student tabellene', function(done){
         let email = 'bob@gmail.com';

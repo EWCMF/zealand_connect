@@ -4,7 +4,7 @@
             {{#if json.student.profilbillede}}
             <img class="img-thumbnail border-0" src="/uploads/{{json.student.profilbillede}}" alt="PROFILBILLEDE">
             {{else}}
-            <img class="img-thumbnail border-0" src="images/dummy-profile-pic.jpg" alt="PROFILBILLEDE">
+            <img class="img-thumbnail border-0" src="/images/dummy-profile-pic.jpg" alt="PROFILBILLEDE">
             {{/if}}
         </div>
         <div class="col-12 col-lg-8" id="cvDescriptionHeadlines">
@@ -87,14 +87,16 @@
             <div class="col">
             </div>
         </div> --}}
+        {{#unless noButtons}}
         <div class="col-12 col-lg-2 d-flex flex-column mt-2">
             <button type="button" class="btn btn-success "
-                onclick="window.location.href='/search-cv/{{json.id}}/Create_pdf'">Download Pdf</button>
+                onclick="window.location.href='/search-cv/{{json.id}}/create_pdf'">Download Pdf</button>
             {{#if ejer}}
             <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger
                 CV</button>
             {{/if}}
         </div>
+        {{/unless}}
     </div>
     <hr class="mb-4">
 

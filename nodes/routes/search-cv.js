@@ -258,7 +258,7 @@ router.get('/:id', async function (req, res) {
 
 });
 
-router.get('/:id/Create_pdf', function (req, res, next) {
+router.get('/:id/create_pdf', function (req, res, next) {
     let id = req.params.id
 
   var pdf = require('pdfkit'); // bruger pdfkit til at lave gennerer vores pdf

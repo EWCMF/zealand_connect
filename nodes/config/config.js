@@ -14,7 +14,8 @@ module.exports = {
         "database": "test",
         "host": "46.101.225.211",
         "port": "3306",
-        "dialect": "mariadb"
+        "dialect": "mariadb",
+        "logging": false
     },
     "production": {
         "username": "root",
