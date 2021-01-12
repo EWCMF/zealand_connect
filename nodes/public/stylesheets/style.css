@@ -432,6 +432,10 @@ input::placeholder {
   word-break: break-all;
 }
 
+.cvContent .autobreak {
+  white-space: pre-line;
+}
+
 .loginBtnBox .formError {
   color: red;
 }

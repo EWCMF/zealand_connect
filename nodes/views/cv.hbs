@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid cvContent">
     <div class="row mt-4 mb-4">
         <div class="col-12 col-lg-2">
             {{#if json.student.profilbillede}}
@@ -98,7 +98,7 @@
     </div>
     <hr class="mb-4">
 
-    <div class="row border rounded ml-1 mr-1 mb-4">
+    <div class="row border rounded ml-1 mr-1 mb-4 ">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Overskrift
@@ -231,3 +231,9 @@
     </div>
 
 </div>
+<script>
+    let autobreak = document.getElementsByClassName('autobreak');
+    for (let i = 0; i < autobreak.length; i++) {
+        autobreak[i].innerHTML = autobreak[i].innerHTML.trim();
+    }
+</script>

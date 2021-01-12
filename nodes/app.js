@@ -57,6 +57,20 @@ app.engine(
             return 'checked';
         }
         return '';
+      },
+
+      checkedStateRadio: (state, id) => {
+        if (state === 'true' || state === true) {
+          if (id == 'tilgaengelighed1') {
+            return 'checked'
+          }
+        }
+        if (state === 'false' || state === false) {
+          if (id == 'tilgaengelighed2') {
+            return 'checked'
+          }
+        }
+        return '';
       }
     },
     partialsDir: ["views/partials"],

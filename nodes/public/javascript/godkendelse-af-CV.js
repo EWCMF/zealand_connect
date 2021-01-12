@@ -94,6 +94,12 @@ function submitButton() {
             tilgaengelighed = radios[i].value;
         }
     }
+
+    if (tilgaengelighed == '') {
+        document.getElementById("tilgaengelighedError").hidden = false;
+    } else {
+        document.getElementById("tilgaengelighedError").hidden = true;
+    }
     
     // if (linkedIn == "") {
     //     document.getElementById("linkedIn").value = 'Intet angivet';
