@@ -122,12 +122,19 @@
                 <label for="exampleFormControlTextarea1">Fritidsinteresser</label>
                 <textarea class="form-control" rows="3" id="fritidsinteresser" name="fritidsinteresser" placeholder="Valgfri">{{fritidsinteresser}}</textarea>
             </div>
-            <div class="text-center">
-                <!-- CheckBox til om en cv skal være offentlig -->
-                <div class="CV-OffentligCheckBox">
-                    <input {{checkedState offentlig}} type="checkbox" class="form-check-input" id="OffentligCheckBox" name="offentligCheckBox">
-                    <label class="form-check-label" for="OffentligCheckBox">Offentlig</label>
+            <!-- Radio til om en cv skal være offentlig -->
+            <div class="form-group required pb-3">
+                <label>Tilgængelighed</label>
+                <div class="form-radio ml-3 ">
+                    <input type="radio" id="tilgaengelighed1" name="tilgaengelighed" class="form-control-input tilgaengelighed" value=1>
+                    <label class="form-control-label" for="tilgaengelighed1">Offentlig</label>
+                    </div>
+                <div class="form-radio tilgaengelighed ml-3">
+                    <input type="radio" id="tilgaengelighed2" name="tilgaengelighed" class="form-control-input tilgaengelighed" value=0>
+                    <label class="form-control-label" for="tilgaengelighed2">Privat</label>
                 </div>
+            </div>
+            <div class="text-center">
                 <!-- Button der sender informationen videre -->
                 <div>
                     <button type="button" class="btn btn-success" id="gem">Gem</button>

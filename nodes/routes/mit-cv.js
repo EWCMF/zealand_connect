@@ -103,14 +103,7 @@ router.post('/submit', async function (req, res, next) {
     let tidligere_uddannelse = req.body.tidligere_uddannelse;
     let hjemmeside = req.body.hjemmeside;
     let fritidsinteresser = req.body.fritidsinteresser;
-    let offentligCheckbox = req.body.offentligCheckBox;
-
-    var offentlig;
-    if (offentligCheckbox == "on") {
-        offentlig = true;
-    } else {
-        offentlig = false;
-    }
+    let offentlig = req.body.tilgaengelighed;
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
     const numbersRegex = /^[0-9]{8}$/;
