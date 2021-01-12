@@ -126,12 +126,21 @@
             <div class="form-group required pb-3">
                 <label>Tilgængelighed</label>
                 <div class="form-radio ml-3 ">
+                    {{#if offentlig}}
+                    <input checked type="radio" id="tilgaengelighed1" name="tilgaengelighed" class="form-control-input tilgaengelighed" value=1>
+                    {{else}}
                     <input type="radio" id="tilgaengelighed1" name="tilgaengelighed" class="form-control-input tilgaengelighed" value=1>
+                    {{/if}}
                     <label class="form-control-label" for="tilgaengelighed1">Offentlig</label>
                     </div>
                 <div class="form-radio tilgaengelighed ml-3">
+                    {{#unless offentlig}}
+                    <input checked type="radio" id="tilgaengelighed2" name="tilgaengelighed" class="form-control-input tilgaengelighed" value=0>
+                    {{else}}
                     <input type="radio" id="tilgaengelighed2" name="tilgaengelighed" class="form-control-input tilgaengelighed" value=0>
+                    {{/unless}}
                     <label class="form-control-label" for="tilgaengelighed2">Privat</label>
+                    
                 </div>
             </div>
             <div class="text-center">
