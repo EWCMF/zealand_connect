@@ -292,13 +292,6 @@ router.get('/:id/create_pdf', function (req, res, next) {
             }
         }
     }
-    for (const key in cv) {
-        if (Object.hasOwnProperty.call(cv, key)) {
-            const element = cv[key];
-            
-            console.log(element);
-        }
-    }
 
     var height = 12;
     // om mig ekstra højde
