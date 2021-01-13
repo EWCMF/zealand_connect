@@ -28,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     direktoer: DataTypes.STRING,
     land: DataTypes.STRING,
     postnr: DataTypes.STRING,
-    by: DataTypes.STRING
+    by: DataTypes.STRING,
+    logo: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Virksomhed',

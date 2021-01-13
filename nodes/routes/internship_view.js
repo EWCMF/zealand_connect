@@ -10,9 +10,14 @@ router.get('/:id', async function (req, res) {
     let id = req.params.id
 
     let result = await models.InternshipPost.findByPk(id, {
+        nest: true,
         attributes: ["title", "email", "contact", "education",
             "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number",
-            "company_link", "company_logo", "post_document", "fk_company"]
+            "company_link", "post_document", "fk_company"],
+        include: {
+            model: models.Virksomhed,
+            as: 'virksomhed'
+        }
     });
 
     let educationId = result.education;
@@ -45,7 +50,7 @@ router.get('/:id', async function (req, res) {
     }
 
     //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-    res.render('view_post', {
+    res.render('internship_post_view', {
         title: result['title'],
         rid: id,
         rtitle: result['title'],
@@ -61,7 +66,7 @@ router.get('/:id', async function (req, res) {
         rpostcode: result['postcode'],
         rcvr: result['cvr_number'],
         rcompany: webLink,
-        rlogo: result["company_logo"],
+        rlogo: result.virksomhed.logo,
         rdoc: result["post_document"],
         isDenmark: isDenmark,
         ejer: ejer
