@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="col-12 col-md-6">
-            <div class="form-group">
+            <div class="form-group required">
               <label for="company_link">Link til Hjemmeside</label>
               <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link" id="companyURL"
                 class="form-control" placeholder="virksomhed.dk">
@@ -90,7 +90,7 @@
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
-            <div class="form-group">
+            <div class="form-group required">
               <label for="post_start_date">Ansøgningsfrist</label>
               <input type="date" class="form-control" name="post_start_date" id="applicationDeadline"
                 placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
@@ -105,7 +105,7 @@
             </div>
           </div>
           <div class="col-12 col-md-6">
-            <div class="form-group">
+            <div class="form-group required">
               <label for="post_end_date">Praktikstart</label>
               <input type="date" class="form-control" name="post_end_date" id="internshipEmploymentDate"
                 placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
@@ -124,17 +124,6 @@
                   id="companyDoc" onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
                 <label class="custom-file-label" id="docLabel" for="CompanyDoc">Vælg fil</label>
                 <p id="companyDocError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6">
-            <label for="company_logo">Virksomhedslogo</label>
-            <div class="form-group">
-              <div class="custom-file">
-                <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input"
-                  id="companyLogo" onchange="validateAndUpdateInputLabel('logoLabel', 'companyLogo')">
-                <label class="custom-file-label" id="logoLabel" for="companyLogo">Vælg fil</label>
-                <p id="companyLogoError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
               </div>
             </div>
           </div>

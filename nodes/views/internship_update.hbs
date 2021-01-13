@@ -126,18 +126,6 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
-            <label for="company_logo">Virksomhedslogo</label><br>
-            <a id="uploadedLogo" href="" target="_blank" hidden="true">Nuværende vedhæftet logo</a>
-            <div class="form-group">
-              <div class="custom-file">
-                <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input"
-                  id="companyLogo" onchange="validateAndUpdateInputLabel('logoLabel', 'companyLogo')">
-                <label class="custom-file-label" id="logoLabel" for="companyLogo">Vælg fil</label>
-                <p id="companyLogoError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="form-group">
           <input type="hidden" name="post_text" id="plainText" />
@@ -283,14 +271,7 @@
 
   //Function til at sætte billed sti og dokument link hvis link findes.
   function showIfURLexist() {
-    var logoName = "{{rlogo}}";
     var docName = "{{rdoc}}";
-
-    if (logoName.length != 0) {
-      console.log("Logo");
-      document.getElementById("uploadedLogo").href = "uploads/" + logoName;
-      document.getElementById("uploadedLogo").hidden = false;
-    } else { console.log("No logo"); }
 
     if (docName.length != 0) {
       console.log("File");

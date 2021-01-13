@@ -42,7 +42,6 @@ router.post('/', function (req, res, next) {
           postcode,
           cvr_number,
           company_link,
-          company_logo,
           post_document,
           dawa_json,
           dawa_uuid,
@@ -85,7 +84,6 @@ router.post('/', function (req, res, next) {
           postcode,
           cvr_number,
           company_link,
-          company_logo,
           post_document,
           dawa_json,
           dawa_uuid,
@@ -153,14 +151,13 @@ router.post('/', function (req, res, next) {
           }
         }
 
-        if (files.post_document.size === 0 && files.company_logo.size === 0) {
+        if (files.post_document.size === 0) {
           console.log(JSON.stringify(indhold))
           // TODO: valider adresse-felt
           dbExe();
         } else {
           /*fileUpload here*/
           var doc = files.post_document;
-          var logo = files.company_logo;
 
           //Stien til upload mappen skal være til stien i docker containeren.
           var publicUploadFolder = uploadFolder;
@@ -172,7 +169,6 @@ router.post('/', function (req, res, next) {
 
           //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
           var newDocName = datetime + randomNumber + "_" + doc.name;
-          var newLogoName = datetime + randomNumber + "_" + logo.name;
 
           if (doc.size <= 10240000) {
             //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
@@ -185,36 +181,15 @@ router.post('/', function (req, res, next) {
                 } else {
                   indhold.post_document = newDocName;
                 }
-                reNameLogo();
+                dbExe();
               });
             } else {
               console.log("invalid file");
-              reNameLogo();
+              dbExe();
             }
           } else {
             console.log("invalid filesize");
-            reNameLogo();
-          }
-
-          function reNameLogo() {
-            if (logo.size <= 10240000) {
-              if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
-                mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
-                  if (errorRename) {
-                    console.log("Unable to move file.");
-                  } else {
-                    indhold.company_logo = newLogoName;
-                  }
-                  dbExe();
-                });
-              } else {
-                console.log("invalid file");
-                dbExe();
-              }
-            } else {
-              console.log("invalid filesize");
-              dbExe();
-            }
+            dbExe();
           }
         }
       });

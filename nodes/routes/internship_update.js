@@ -20,12 +20,14 @@ var tempLink = linkRegex.source
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
+  //TODO fikse at opslag kan redigeres. Vi tror det har noget med postcode at gøre
+
       //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
     var { id, title, email, contact, education, country, post_start_date, post_end_date, post_text,
-      city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid, expired } = fields;
+      city, postcode, cvr_number, company_link, post_document, dawa_json, dawa_uuid, expired } = fields;
 
     var region = '';
 
@@ -50,7 +52,7 @@ router.post('/', function (req, res, next) {
 
     var indhold = {
       id, title, email, contact, education, country, region, post_start_date, post_end_date,
-      post_text, city, postcode, cvr_number, company_link, company_logo, post_document, dawa_json, dawa_uuid, expired
+      post_text, city, postcode, cvr_number, company_link, post_document, dawa_json, dawa_uuid, expired
     };
     var inputError = false;
 
@@ -129,7 +131,6 @@ router.post('/', function (req, res, next) {
 
     /*fileUpload here*/
     var doc = files.post_document;
-    var logo = files.company_logo;
 
     //Stien til upload mappen skal være til stien i docker containeren.
     var publicUploadFolder = uploadFolder;
@@ -140,9 +141,8 @@ router.post('/', function (req, res, next) {
 
     //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
     var newDocName = datetime + randomNumber + "_" + doc.name;
-    var newLogoName = datetime + randomNumber + "_" + logo.name;
 
-    function renameDoc(docName, logoName) {
+    function renameDoc(docName) {
       if (doc.size <= 10240000) {
         if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
           unlinkOldFiles(docName)
@@ -152,43 +152,23 @@ router.post('/', function (req, res, next) {
             } else {
               indhold.post_document = newDocName;
             }
-            reNameLogo(logoName);
+            dbExe()
           });
         } else {
-          reNameLogo(logoName);
+          dbExe()
         }
       } else {
         console.log("invalid filesize");
-        reNameLogo();
+        dbExe()
       }
     }
 
-    function reNameLogo(logoName) {
-      if (logo.size <= 10240000) {
-        if (logo.type == "image/jpeg" || logo.type == "image/png" || logo.type == "image/svg+xml" || logo.type == "image/bmp") {
-          unlinkOldFiles(logoName)
-          mv(logo.path, publicUploadFolder + newLogoName, (errorRename) => {
-            if (errorRename) {
-              console.log("Unable to move file.");
-            } else {
-              indhold.company_logo = newLogoName;
-            }
-            dbExe();
-          });
-        } else {
-          dbExe();
-        }
-      } else {
-        console.log("invalid filesize");
-        dbExe();
-      }
-    }
     //console.log(internshippost.findByPk)
     db.InternshipPost.findByPk(req.query.id, {
-      attributes: ["company_logo", "post_document"]
+      attributes: ["post_document"]
     }).then(result => {
       //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-      renameDoc(result["post_document"], result["company_logo"])
+      renameDoc(result["post_document"])
     }).catch();
   });
 });
@@ -206,7 +186,7 @@ router.get('/', function (req, res, next) {
       generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
     });
     db.InternshipPost.findByPk(req.query.id, {
-      attributes: ["title", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number", "company_link", "company_logo", "post_document", "dawa_json", "dawa_uuid", "expired"]
+      attributes: ["title", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired"]
     }).then(result => {
       var address = '';
 
@@ -240,7 +220,6 @@ router.get('/', function (req, res, next) {
         rpostcode: result['postcode'],
         rcvr: result['cvr_number'],
         rcompany: result['company_link'],
-        rlogo: result["company_logo"],
         rdoc: result["post_document"],
         raddress: address,
 

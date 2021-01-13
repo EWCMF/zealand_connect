@@ -35,6 +35,7 @@ function validate_internship_post() {
   if (!document.getElementById('internshipEmploymentDate').value == '') {
     if (!dateRegex.test(document.getElementById('internshipEmploymentDate').value)) {
       all_valid = false;
+      console.log("hej")
       document.getElementById('postenddateError').hidden = false;
     }
     else { document.getElementById('postenddateError').hidden = true; }
@@ -99,15 +100,6 @@ function validate_internship_post() {
     document.getElementById('companyDocError').hidden = true;
   }
 
-  //Vedhæftet logo
-  if (document.getElementById('companyLogo').files[0] != null && document.getElementById('companyLogo').files[0].size > 10240000) {
-
-      all_valid = false;
-      document.getElementById('companyLogoError').hidden = false;
-    }
-    else {
-      document.getElementById('companyLogoError').hidden = true;
-    }
   if (!all_valid){
     console.log("Et input mangler")
     return;
