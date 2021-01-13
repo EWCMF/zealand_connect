@@ -145,7 +145,9 @@ router.post('/', function (req, res, next) {
     function renameDoc(docName) {
       if (doc.size <= 10240000) {
         if (doc.type == "text/plain" || doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || doc.type == "application/pdf" || doc.type == "application/msword") {
-          unlinkOldFiles(docName)
+          if (docName != null) {
+            unlinkOldFiles(docName);
+          }
           mv(doc.path, publicUploadFolder + newDocName, (errorRename) => {
             if (errorRename) {
               console.log("Unable to move file.");

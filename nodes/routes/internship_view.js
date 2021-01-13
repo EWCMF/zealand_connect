@@ -41,13 +41,21 @@ router.get('/:id', async function (req, res) {
         default: country = "Ikke angivet";
     }
 
-    var ejer = false;
+    let ejer = false;
     if (req.user != null) {
         var found = res.locals.user;
         if (found instanceof models.Virksomhed && found.id == result.fk_company) {
             ejer = true;
         }
     }
+
+    let rdocName
+    if (result.post_document != null) {
+
+        rdocName = result.post_document.replace(/^.*_/, "");
+        console.log(rdocName);
+    }
+    
 
     //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
     res.render('internship_post_view', {
@@ -68,6 +76,7 @@ router.get('/:id', async function (req, res) {
         rcompany: webLink,
         rlogo: result.virksomhed.logo,
         rdoc: result["post_document"],
+        rdocName: rdocName,
         isDenmark: isDenmark,
         ejer: ejer
     });
