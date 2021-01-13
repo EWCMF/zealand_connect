@@ -16,7 +16,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return Promise.all([queryInterface.addColumn('Students', 'profilbillede')])
+    await queryInterface.removeColumn('Students', 'profilbillede', {});
     /**
      * Add reverting commands here.
      *
