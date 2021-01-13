@@ -271,7 +271,6 @@ router.get('/:id/create_pdf', function (req, res, next) {
   var cvOutside;
   var pdfStream = fs.createWriteStream('public/PDF/temp.pdf')
   myDoc.pipe(pdfStream);
-  console.log(id);
   db.CV.findOne({
     raw: true,
     nest: true,
@@ -284,6 +283,15 @@ router.get('/:id/create_pdf', function (req, res, next) {
     }
 }).then((cv) => {
     cvOutside = cv;
+    for (const key in cv) {
+        if (Object.hasOwnProperty.call(cv, key)) {
+            const element = cv[key];
+            
+            if (typeof element === 'string') {
+                cv[key] = element.replace(/(\r\n|\n|\r)/gm, "\n")
+            }
+        }
+    }
 
     var height = 12;
     // om mig ekstra højde
@@ -363,7 +371,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
     var page = 0;
 
     var path;
-    if (cv.student.profilbillede != null || cv.student.profilbillede != '') {
+    if (cv.student.profilbillede != null) {
         path = uploadFolder + cv.student.profilbillede;
     } else {
         path = 'public/images/dummy-profile-pic.jpg';
@@ -386,22 +394,32 @@ router.get('/:id/create_pdf', function (req, res, next) {
         .text('Telefon:',220,120)
         .text(cv.telefon,300,120)
 
+    let hjemmeside = cv.hjemmeside != null && cv.hjemmeside != '' ? cv.hjemmeside : "Ikke angivet";
     myDoc.font('Times-Roman')
         .fontSize(10.72)
         .text('Hjemmeside:',220,150)
-        .text(cv.hjemmeside,300,150)
+        .text(hjemmeside,300,150)
 
+    let linkedIn = cv.linkedIn != null && cv.linkedIn != '' ? cv.linkedIn : "Ikke angivet";
     myDoc.font('Times-Roman')
         .fontSize(10.72)
         .text('LinkedIn:',220,180)
-        .text(cv.linkedIn,300,180)
+        .text(linkedIn,300,180)
         
-    myDoc.font('Times-Roman')
+    if (cv.yt_link != null && cv.yt_link != '') {
+        myDoc.font('Times-Roman')
         .fontSize(10.72)
         .text('youtube CV:',220,210)
         .fillColor('blue')
         .link(300,210,15,20,cv.yt_link)
         .text('link',300,210);
+    } else {
+        myDoc.font('Times-Roman')
+        .fontSize(10.72)
+        .text('youtube CV:',220,210)
+        .text('Ikke angivet',300,210);
+    }    
+    
 
     myDoc.font('Times-Roman')
         .fillColor('black')
@@ -458,9 +476,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
         myDoc.addPage().switchToPage(page)
     };
 
+    let erhvervserfaring = cv.erhvervserfaring != null && cv.erhvervserfaring != '' ? cv.erhvervserfaring : "Ikke angivet"
     myDoc.font('Times-Roman')
         .fontSize(10.72)
-        .text(cv.erhvervserfaring,50,height)
+        .text(erhvervserfaring,50,height)
 
     height = height + 60 + ekstra_height_erhvervserfaring;
     if (height + ekstra_height_uddannelse> new_page) {
@@ -502,9 +521,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
         myDoc.addPage().switchToPage(page)
     };
 
+    let speciale = cv.speciale != null && cv.speciale != '' ? cv.speciale : "Ikke angivet"
     myDoc.font('Times-Roman')
         .fontSize(10.72)
-        .text(cv.speciale,50,height)
+        .text(speciale,50,height)
 
     height = height + 60 + ekstra_height_speciale;
     if (height + ekstra_height_tidligere_uddannelse> new_page) {
@@ -546,9 +566,11 @@ router.get('/:id/create_pdf', function (req, res, next) {
         myDoc.addPage().switchToPage(page)
     };
 
+    let udenlandsophold_og_frivilligt_arbejde = cv.udenlandsophold_og_frivilligt_arbejde != null
+     && cv.udenlandsophold_og_frivilligt_arbejde != '' ? cv.udenlandsophold_og_frivilligt_arbejde : "Ikke angivet"
     myDoc.font('Times-Roman')
         .fontSize(10.72)
-        .text(cv.udenlandsophold_og_frivilligt_arbejde,50 , height)
+        .text(udenlandsophold_og_frivilligt_arbejde,50 , height)
 
     height = height + 60 + ekstra_height_udenlandsophold_og_frivilligt_arbejde;
     if (height + ekstra_height_fritidsinteresser> new_page) {
@@ -568,9 +590,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
         myDoc.addPage().switchToPage(page)
     };
 
+    let fritidsinteresser = cv.fritidsinteresser != null && cv.fritidsinteresser != '' ? cv.fritidsinteresser : "Ikke angivet"
     myDoc.font('Times-Roman')
         .fontSize(10.72)
-        .text(cv.fritidsinteresser,50 ,height)
+        .text(fritidsinteresser,50 ,height)
 
     height = height + 60 + ekstra_height_fritidsinteresser;
     if (height + ekstra_height_it_Kompetencer> new_page) {
