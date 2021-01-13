@@ -29,7 +29,8 @@ router.get('/', function (req, res, next) {
                 direktoer: user.direktoer,
                 land: user.land,
                 postnr: user.postnr,
-                by: user.by
+                by: user.by,
+                logo: user.logo
             }
             res.render('visprofil', {
                 language: reqLang(req, res),

@@ -2,15 +2,15 @@
 <div class="card mb-3">
     <div class="row">
         <div class="col-auto">
-            {{#if company_logo}}
-            <img class="center-cropped" src="/uploads/{{company_logo}}">
+            {{#if virksomhed.logo}}
+                <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
             {{else}}
-            <img class="center-cropped" src="images/no-logo.png">
+                <img class="center-cropped" src="images/no-logo.png">
             {{/if}}
         </div>
         <div class="col">
             <div class="card-body">
-                <h3 class="card-title pb-1">{{title}}</h5>
+                <h5 class="card-title pb-1">{{title}}</h5>
                 <h5 class="card-text autobreak mb-1">{{virksomhed.navn}}</h5>
                 <h5 class="card-text autobreak small text-secondary m-0">{{postcode}} {{city}}, {{region}}</h5>
             </div>
