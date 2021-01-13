@@ -49,7 +49,7 @@ async function findUserByEmail(email) {
     })
 }
 
-async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by) {
+async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by, logo) {
     //vi bruger email til at finde virksomheden.
     findUserByEmail(email).then(virksomhed => {
         virksomhed.update({
@@ -61,7 +61,8 @@ async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, di
             direktoer: direktoer,
             land: land,
             postnr: postnr,
-            by: by
+            by: by,
+            logo: logo
         })
     })
 }

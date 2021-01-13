@@ -162,14 +162,12 @@
                                     console.log(canvas);
 
                                     document.getElementById('crop_base64').value = dataUrl.split(';base64,')[1];
-                                    console.log(document.getElementById('crop_base64').value)
                                     document.getElementById("profilbillede").src = dataUrl;
                                     document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
                                 });
 
                             }
                         });
-                        console.log(cropper);
                     })
 
                     $('#cropperModal').on('hidden.bs.modal', function (event) {

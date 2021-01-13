@@ -216,8 +216,6 @@ router.post('/redigerstudent-save', function (req, res) {
 router.post('/rediger-save', function (req, res, next) {
     let formData = new formidable.IncomingForm();
 
-    console.log("1")
-
     formData.parse(req, async function (error, fields, files) {
         //laver et objekt med alle data
         const {
@@ -228,8 +226,6 @@ router.post('/rediger-save', function (req, res, next) {
         };
 
 
-        console.log("2")
-
         const imageBufferData = Buffer.from(crop_base64, 'base64');
 
         // log ikke buffer dataen da den meget vel kan være en massiv streng.
@@ -237,10 +233,7 @@ router.post('/rediger-save', function (req, res, next) {
 
         let size = Buffer.byteLength(imageBufferData);
 
-        console.log("3")
-
         if (size > 0) {
-            console.log("4")
             /*fileUpload here*/
             let img = files.profile_picture;
 
@@ -297,7 +290,7 @@ router.post('/rediger-save', function (req, res, next) {
                                 content.profile_picture = newPicName;
 
                                 // Edit the students information
-                                editVirksomhed(email, cvrnr, navn, address, telefon, hjemmeside, direkoer, land, postnr, by);
+                                editVirksomhed(email, cvrnr, navn, address, telefon, hjemmeside, direkoer, land, postnr, by, content.profile_picture);
                                 //TODO opdater editVirksomhed
                                 res.redirect('/profil/rediger');
                             }
