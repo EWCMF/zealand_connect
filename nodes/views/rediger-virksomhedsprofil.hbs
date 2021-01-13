@@ -10,7 +10,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-8">
+        <div class="form-column col-12 col-md-4">
             <form action="/profil/rediger-save" method="POST" id="redigerVirksomhedForm" name="redigerVirksomhedForm">
                 <div class="form-group required">
                     <label for="navn">Virksomheds Navn</label>
@@ -80,151 +80,110 @@
 
             </form>
         </div>
-    </div>
-</div>
-
-{{!-- <div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-8">
-            <div id="loginBoxBackground">
-                <div id="redigerVirksomhedContent" class="text-center">
-                    <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
-                    <form class="text-left" action="/profil/rediger-save" method="post">
-                        <div style="color: red;" class="text-center">{{fejlBesked}}</div>
-                        <div style="color: green;" class="text-center">{{succesBesked}}</div><br>
-                        <p class="text-center" data-key="labelPaakraevet">Påkrævet</p><br>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{EmailError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="virksomhedEmail" class="col-4 col-form-label">Email</label> 
-                            <div class="col-8">
-                            <input id="virksomhedEmail" readonly name="virksomhedEmail" type="email" class="form-control" value="{{email}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{TlfnrError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="telefonnummer" data-key="labelTelefonnummer" class="col-4 col-form-label">Telefonnummer</label> 
-                            <div class="col-8">
-                            <input id="telefonnummer" name="telefonnummer" type="text" class="form-control" value="{{tlfnr}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{ByError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="by" data-key="labelBy" class="col-4 col-form-label">By</label> 
-                            <div class="col-8">
-                            <input id="by" name="by" type="text" class="form-control" value="{{by}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{PostnrError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="postnummer" data-key="labelPostnummer" class="col-4 col-form-label">Postnummer</label> 
-                            <div class="col-8">
-                            <input id="postnummer" name="postnummer" type="text" class="form-control" value="{{postnummer}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{CVRError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="cvr" data-key="labelcvr" class="col-4 col-form-label">CVR-Nummer</label> 
-                            <div class="col-8">
-                            <input id="cvr" name="cvr" type="text" class="form-control" value="{{cvr}}">
-                            </div>
-                        </div>
-                        <div class="col-12 col-form-label row"></div>
-                        <div class="form-group row">
-                            <label for="adgangskode" data-key="labeladgangskode" class="col-4 col-form-label">Adgangskode</label> 
-                            <div class="col-8">
-                            <input id="adgangskode" name="adgangskode" type="button" class="form-control" value="Nulstil adgangskode" data-key="inputNulstilAdgangskode">
-                            </div>
-                        </div>
-                        <div class="col-12 col-form-label row"></div>
-                        <p class="text-center" data-key="labelValgfri">Valgfri</p><br>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{NavnError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="navn" data-key="labelFirmanavn" class="col-4 col-form-label">Firmanavn</label> 
-                            <div class="col-8">
-                            <input id="navn" name="navn" type="text" class="form-control" value="{{firmanavn}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{AdresseError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="adresse" data-key="labelAdresse" class="col-4 col-form-label">Adresse</label> 
-                            <div class="col-8">
-                            <input id="adresse" name="adresse" type="text" class="form-control" value="{{adresse}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{HjemmesideError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="hjemmeside" data-key="labelHjemmeside" class="col-4 col-form-label">Hjemmeside</label> 
-                            <div class="col-8">
-                            <input id="hjemmeside" name="hjemmeside" type="text" class="form-control" value="{{hjemmeside}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{DirektoerError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="direktoer" data-key="labelDirektoer" class="col-4 col-form-label">Direktør</label> 
-                            <div class="col-8">
-                            <input id="direktoer" name="direktoer" type="text" class="form-control" value="{{direktoer}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{LandError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="land" data-key="labelLand" class="col-4 col-form-label">Land</label> 
-                            <div class="col-8">
-                                <input id="land" name="land" type="text" class="form-control" value="{{land}}">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4"></div>
-                            <div class="col-8 col-form-label" style="color: red;">{{LogoError}}</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="land" data-key="labelLogo" class="col-4 col-form-label">Virksomhedslogo</label>
-                            <div class="col-8">
-                                <div class="custom-file">
-                                    <input type="file" name="company_logo" accept=".png, .jpeg, .jpg, .svg, .bmp" class="custom-file-input" id="CompanyLogo"> <!--onchange="updateInputLabel('logoLabel', 'CompanyLogo')"-->
-                                    <label class="custom-file-label" id="logoLabel" for="CompanyLogo" data-key="labelVaelgFil">Vælg fil</label>
-                                </div>
-                            </div>
-                        </div>
-                        <input type="submit" name="sumit" id="submit" class="gulKnap" value="Gem Ændringer" data-key="inputGemAendringer">
-                    </form>
-                    <div id="cookieBox">
-                        <div id="cookieText" >
-                            <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
-                            <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
-                        </div>
-                    </div>
+        <div class="form-column col-12 col-md-4">
+            <div style="display: flex; flex-direction: row;">
+                <label style="margin-right: 5px" id="profilbilledeLabel">Virksomhedslogo</label>
+                <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                      title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 1MB. Billedet kan skæres til efter det er valgt.">?</span>
+            </div>
+            <div class="profilePicHolder">
+                <img id="profilbillede" class="img-thumbnail border-0" src="\images\no-logo.png"
+                     alt="PROFILBILLEDE">
+                <div class="custom-file">
+                    <input id="crop_base64" type="text" name="crop_base64" class="d-none">
+                    <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" class="custom-file-input"
+                           id="profilePic" onchange="validateAndUpdateInputLabel('picLabel', 'profilePic')">
+                    <label id="picLabel" class="custom-file-label" for="profilePic">Vælg billede</label>
+                    <p id="profilePicError" class="CVErrorColor" hidden="true">Du kan kun uploade en fil på maksimum
+                        1MB</p>
                 </div>
             </div>
         </div>
     </div>
-</div> --}}
+</div>
+
+{{> cropper-modal}}
+
+<script>
+    function validateAndUpdateInputLabel(labelId, inputId) {
+        let file = document.getElementById(inputId).files[0];
+
+        // Get dimensions of the image
+        if (file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
+            let _URL = window.URL || window.webkitURL;
+            let img = new Image();
+            img.src = _URL.createObjectURL(file);
+
+            // Check the aspect ratio and dimensions
+            img.onload = function () {
+                if (this.width < 250 || this.height < 250 || file.size > 1000000) {
+                    console.log("Invalid image");
+                    document.getElementById(inputId).value = '';
+                } else {
+                    $('#cropperModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                    $("cropperModal").modal('show');
+
+                    let src = this.src;
+                    let cropper;
+
+                    $('#cropperModal').on('shown.bs.modal', function (event) {
+                        let cropFrame = document.getElementById('cropFrame');
+                        cropFrame.src = src
+                        cropper = new Cropper(cropFrame, {
+                            aspectRatio: 1 / 1,
+                            viewMode: 1,
+                            movable: false,
+                            zoomable: false,
+                            rotable: false,
+                            minCropBoxWidth: 250,
+                            minCropBoxHeight: 250,
+
+                            ready() {
+
+                                $('#confirm').click(function() {
+                                    let data = cropper.getData(true);
+                                    let imgData = cropper.getImageData();
+
+                                    let canvas = cropper.getCroppedCanvas();
+                                    let dataUrl = canvas.toDataURL('image/jpeg');
+
+                                    console.log(canvas);
+
+                                    document.getElementById('crop_base64').value = dataUrl.split(';base64,')[1];;
+                                    document.getElementById("profilbillede").src = dataUrl;
+                                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
+                                });
+
+                            }
+                        });
+                    })
+
+                    $('#cropperModal').on('hidden.bs.modal', function (event) {
+                        cropper.destroy();
+                        cropper = null;
+                        cropFrame.src = '';
+                        $('#cropperModal').off('shown.bs.modal');
+                        $('#cropperModal').off('hidden.bs.modal');
+                        $('#confirm').off('click');
+                    });
+                }
+            }
+
+        } else {
+            console.log("Invalid file type");
+        }
+    }
+
+    function updateElements() {
+        let profilePicture = "{{loggedInUser.profilbillede}}";
+
+        if (profilePicture !== "" && profilePicture != null) {
+            document.getElementById("profilbillede").src = '/uploads/' + profilePicture;
+        }
+    }
+    updateElements();
+</script>
