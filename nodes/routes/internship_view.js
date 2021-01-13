@@ -12,7 +12,7 @@ router.get('/:id', async function (req, res) {
     let result = await models.InternshipPost.findByPk(id, {
         attributes: ["title", "email", "contact", "education",
             "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number",
-            "company_link", "company_logo", "post_document"]
+            "company_link", "company_logo", "post_document", "fk_company"]
     });
 
     let educationId = result.education;
@@ -36,10 +36,18 @@ router.get('/:id', async function (req, res) {
         default: country = "Ikke angivet";
     }
 
+    var ejer = false;
+    if (req.user != null) {
+        var found = res.locals.user;
+        if (found instanceof models.Virksomhed && found.id == result.fk_company) {
+            ejer = true;
+        }
+    }
+
     //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
     res.render('view_post', {
         title: result['title'],
-        rid: req.query.id,
+        rid: id,
         rtitle: result['title'],
         remail: result['email'],
         rcontact: result['contact'],
@@ -55,7 +63,8 @@ router.get('/:id', async function (req, res) {
         rcompany: webLink,
         rlogo: result["company_logo"],
         rdoc: result["post_document"],
-        isDenmark: isDenmark
+        isDenmark: isDenmark,
+        ejer: ejer
     });
 
     //TODO: Fiks dette rod

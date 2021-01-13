@@ -64,14 +64,23 @@
             </table>
 
         </div>
+        
     </div>
+    {{#unless noButtons}}
+        <div class="col-12 col-lg-2 d-flex flex-column mt-2">
+            {{#if ejer}}
+            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../internship_update?id={{rid}}'">Rediger
+                opslag</button>
+            {{/if}}
+        </div>
+    {{/unless}}
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
                 Annoncetekst:
             </h4>
             <p>
-                {{{rtext}}}
+                {{rtext}}
             </p>
         </div>
     </div>

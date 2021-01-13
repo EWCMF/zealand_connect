@@ -9,7 +9,6 @@ const limit = 5;
 const {
     Op
 } = require('sequelize');
-const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const uploadFolder = require('../constants/references').uploadFolder();
 
 
@@ -235,8 +234,8 @@ router.get('/:id', async function (req, res) {
 
     var ejer = false;
     if (req.user != null) {
-        var found = await findUserByEmail(req.user);
-        if (found instanceof db.Student && found.cv.id == cv.id) {
+        var found = res.locals.user;
+        if (found instanceof db.Student && found.id == cv.student_id) {
             ejer = true;
         }
     }

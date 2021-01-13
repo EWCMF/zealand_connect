@@ -1,5 +1,4 @@
 function validate_internship_post() {
-  console.log("Yes")
   var all_valid = true;
 
   //e.preventDefault();

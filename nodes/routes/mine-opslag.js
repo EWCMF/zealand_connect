@@ -20,27 +20,7 @@ router.get('/', async function (req, res, next) {
         offset = page * limit;
     }
 
-    const udd = await db.Uddannelser.findAll({
-        raw: true,
-        order: [
-            ['name', 'ASC']
-        ]
-    });
-
     const user = res.locals.user
-
-    if (user !== undefined) {
-        if (user.cv != null) {
-            for (let index = 0; index < udd.length; index++) {
-                const element = udd[index].name;
-                
-                if (element == user.cv.uddannelse) {
-    
-                    udd[index].checked = 'checked'
-                }
-            }
-        }
-    }
 
     var date = new Date();
     let day = ("0" + date.getDate()).slice(-2);
@@ -61,10 +41,9 @@ router.get('/', async function (req, res, next) {
             model: db.Virksomhed,
             as: 'virksomhed'
         },
-        where: { [Op.or]:[{'expired': {[Op.ne]: 1}},
-            {[ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.gt]:year+"-"+month+"-"+day}}]}
-        ]
-       }
+        where: {
+            fk_company: user.id
+        }
        
     });
     console.log(day+month+ year)
@@ -97,10 +76,8 @@ router.get('/', async function (req, res, next) {
 
     }
 
-    res.render('search_praktik', {
+    res.render('mine-opslag', {
         json: rows,
-        resultater: count,
-        udd: udd,
         pagination: {
             page: page,
             pageCount: pageCount

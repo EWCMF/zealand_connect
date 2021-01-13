@@ -190,7 +190,8 @@
   });
 
   function copyQuillHtmlToHiddenInput() {
-    document.getElementById('plainText').value = editor.root.innerHTML;
+    //document.getElementById('plainText').value = editor.root.innerHTML;
+    document.getElementById('plainText').value = editor.getText();
   }
 
   var emailRegex = /{{{emailRegex}}}/;
@@ -209,7 +210,7 @@
 
   function confirmYeet() {
     if (confirm("Er du sikker?")) {
-      window.location = "/internship_update/delete?id=" + {{ rid }}
+      window.location = "/internship_update/delete/" + {{ rid }}
   }
 }
 

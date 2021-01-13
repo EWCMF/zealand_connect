@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       InternshipPost.belongsTo(models.Virksomhed, {
         as: 'virksomhed',
-        foreignKey: 'virksomhed_id'
+        foreignKey: 'fk_company'
       });
     }
   };
