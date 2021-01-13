@@ -9,7 +9,7 @@ router.get('/', async function (req, res, next) {
         res.status(403).render('error403', {layout: false});
     }
 
-    var student = await findUserByEmail(req.user);
+    var student = res.locals.user;
 
     if (student.cv == null) {
         const udd = await db.Uddannelser.findAll({
@@ -46,7 +46,7 @@ router.get('/edit', async function (req, res, next) {
         res.status(403).render('error403', {layout: false});
     }
 
-    var student = await findUserByEmail(req.user);
+    var student = res.locals.user;
 
     const udd = await db.Uddannelser.findAll({
         order: [
@@ -86,7 +86,7 @@ router.post('/submit', async function (req, res, next) {
         res.status(403).render('error403', {layout: false});
     }
 
-    var student = await findUserByEmail(req.user)
+    var student = res.locals.user;
 
     let overskrift = req.body.overskrift;
     let uddannelse = req.body.uddannelse;

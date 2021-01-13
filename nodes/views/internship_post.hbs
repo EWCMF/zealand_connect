@@ -190,7 +190,8 @@
   });
 
   function copyQuillHtmlToHiddenInput() {
-    document.getElementById('plainText').value = editor.root.innerHTML;
+    //document.getElementById('plainText').value = editor.root.innerHTML;
+    document.getElementById('plainText').value = editor.getText();
     validate_internship_post();
   }
 

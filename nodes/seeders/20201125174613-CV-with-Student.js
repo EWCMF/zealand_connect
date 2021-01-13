@@ -45,7 +45,6 @@ module.exports = {
       foedselsdato: new Date(1999, 1, 18),
       createdAt: new Date(),
       updatedAt: new Date(),
-      cv_id: cvId
     }], {returning: ['id']});
 
     await queryInterface.bulkUpdate('CVs', {
@@ -61,7 +60,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-    await queryInterface.bulkDelete('CVs', null, {});
     await queryInterface.bulkDelete('Students', {fornavn: 'Hans'}, {});
   }
 };

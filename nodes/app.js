@@ -13,11 +13,11 @@ var adminFunktionerRouter = require('./routes/admin-funktioner');
 var mit_CVRouter = require('./routes/mit-cv');
 var searchCVRouter = require('./routes/search-cv');
 var searchPraktikRouter = require('./routes/search-praktik');
+var mineOpslagRouter = require('./routes/mine-opslag');
 var loginRouter = require('./routes/login');
 var languageRouter = require('./routes/language');
 var cookieRouter = require('./routes/cookie-confirm');
 var forsideRouter = require('./routes/forside');
-var profilRouter = require('./routes/profil');
 var praktikforloebRouter = require('./routes/praktikforloebet');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
@@ -121,13 +121,13 @@ app.use(async function (req, res, next) {
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
-app.use('/profil', profilRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/internship_view', internshipPostViewRouter);
 app.use('/mit-cv', mit_CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/search-praktik', searchPraktikRouter);
+app.use('/mine-opslag', mineOpslagRouter);
 app.use('/login', loginRouter);
 app.use('*/language', languageRouter);
 app.use('*/cookie-confirm', cookieRouter);

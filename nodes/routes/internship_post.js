@@ -140,6 +140,11 @@ router.post('/', function (req, res, next) {
         async function dbExe() {
           //checkbox_state();
           if (!inputError) {
+            let user = res.locals.user;
+            let company_id = user.id;
+
+            indhold.fk_company = company_id;
+
             const post = await db.InternshipPost.create(indhold).catch((error) => {
               console.log(error);
               return res.status(400).send(error);
