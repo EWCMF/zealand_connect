@@ -209,7 +209,7 @@ router.get('/', function (req, res, next) {
           generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
         });
         res.render('internship_post', {
-          title: 'Opret Praktikopslag',
+          title: 'Opret opslag',
           linkRegex: tempLink,
           dateRegex: tempDate,
           emailRegex: tempEmail,
