@@ -21,27 +21,43 @@
       >
       {{/if}}
         <input type="hidden" value="{{rid}}" name="id">
-        <div class="form-group required">
+        <div class="form-group required mb-5">
           <label for="internshipTitle">Annonce overskrift</label>
           <input type="text" value="{{rtitle}}" name="title" id="internshipTitle" class="form-control"
-            placeholder="Titel" required>
+            placeholder="Titel">
           <p id="titleError" class="CVErrorColor" hidden="true">Du skal angive en annonce overskrift</p>
         </div>
-        <div class="form-group required">
-          <label for="education">Uddannelse</label>
-          <select class="form-control" name="education" id="educationSelect" onchange="toggleNote()">
-            <option value="0">Vælg en uddannelse</option>
-            {{{generatedEducationOptions}}}
-          </select>
-          <p id="educationError" class="CVErrorColor" hidden="true">Du skal angive en uddannelse</p>
-          <p id="educationNote" class="CVErrorColor" hidden="true">Den valgte uddannelse har lønnet praktik</p>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group required">
+              <label for="postTypeSelect">Opslagstype</label>
+              <select class="form-control" name="post_type" id="postTypeSelect" onchange="postTypeToggleFields()">
+                <option selected disabled hidden value="0">Vælg en opslagstype</option>
+                <option value="1">Praktik</option>
+                <option value="2">Studiejob</option>
+                <option value="3">Trainee</option>
+              </select>
+              <p id="postTypeError" class="CVErrorColor" hidden="true">Du skal angive en opslagstype</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group required">
+              <label for="education">Uddannelse</label>
+              <select class="form-control" name="education" id="educationSelect" onchange="toggleNote()">
+                <option selected disabled hidden value="0">Vælg en uddannelse</option>
+                {{{generatedEducationOptions}}}
+              </select>
+              <p id="educationError" class="CVErrorColor" hidden="true">Du skal angive en uddannelse</p>
+              <p id="educationNote" hidden="true">Den valgte uddannelse har lønnet praktik</p>
+            </div>
+          </div>
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="form-group required">
               <label for="countrySelect">Land</label>
               <select class="form-control" name="country" id="countrySelect" onchange="countryToggleFields()">
-                <option value="0">Vælg et land</option>
+                <option selected disabled hidden value="0">Vælg et land</option>
                 <option value="1">Danmark</option>
                 <option value="2">Tyskland</option>
                 <option value="3">Sverige</option>
@@ -67,7 +83,7 @@
             <div class="form-group required">
               <label for="internshipEmail">E-mail adresse</label>
               <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
-                placeholder="Email" required pattern="{{{emailRegex}}}">
+                placeholder="Email" pattern="{{{emailRegex}}}">
               <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @
               </p>
             </div>
@@ -76,7 +92,7 @@
             <div class="form-group required">
               <label for="contactName">Navn på kontaktperson</label>
               <input type="text" value="{{rcontact}}" name="contact" id="contactName" class="form-control"
-                placeholder="Navn" required>
+                placeholder="Navn">
               <p id="contactError" class="CVErrorColor" hidden="true">Du skal angive en kontaktperson</p>
             </div>
           </div>
@@ -92,11 +108,13 @@
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
-            <div class="form-group">
+            <div class="form-group required">
               <label for="post_start_date">Ansøgningsfrist</label>
               <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
                 id="applicationDeadline" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
-              <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en start dato
+              <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en ansøgningsfrist
+              </p>
+              <p id="poststartdateErrorPast" class="CVErrorColor" hidden="true">Den valgte dato er i fortiden
               </p>
             </div>
             <div class="form-group form-check">
@@ -107,12 +125,14 @@
               <input type="hidden" id="expired" value="0" name="expired">
             </div>
           </div>
-          <div class="col-12 col-md-6">
-            <div class="form-group">
+          <div class="col-12 col-md-6" id="internshipContainer" hidden="true">
+            <div class="form-group required">
               <label for="post_end_date">Praktikstart</label>
               <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
                 id="internshipEmploymentDate" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
-              <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive et ansættelsestidspunkt
+              <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive en praktikstart dato
+              </p>
+              <p id="postenddateErrorPast" class="CVErrorColor" hidden="true">Den valgte dato er i fortiden
               </p>
             </div>
           </div>
@@ -139,7 +159,6 @@
         <p id="posttextError" class="CVErrorColor" hidden="true">Du har angivet for mange tegn</p>
         <div class="form-group">
           <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
-          <button type="button" class="btn btn-danger">Afbryd</button>
           {{#if update}}
           <button type="button" class="btn btn-danger" onclick="confirmYeet()">Slet dette opslag</button>
           {{/if}}
@@ -186,6 +205,7 @@
   function copyQuillHtmlToHiddenInput() {
     document.getElementById('plainText').value = editor.root.innerHTML;
     //document.getElementById('plainText').value = editor.getText();
+    validate_internship_post();
   }
 
   var emailRegex = /{{{emailRegex}}}/;
@@ -197,8 +217,10 @@
     if (update != '') {
       var reducation = '{{reducation}}';
       var rcountry = '{{rcountry}}';
+      var rposttype = '{{rposttype}}'
       document.getElementById('educationSelect').value = reducation;
       document.getElementById('countrySelect').value = rcountry;
+      document.getElementById('postTypeSelect').value = rposttype;
     }
   }
   setDefaultSelect();
@@ -232,6 +254,14 @@
         hasBeenSet = true;
       };   
     };
+  };
+
+  function postTypeToggleFields() {
+    if (document.getElementById('postTypeSelect').value == 1) {
+      document.getElementById('internshipContainer').hidden = false;
+    } else {
+      document.getElementById('internshipContainer').hidden = true;
+    }
   }
 
   dawaAutocomplete.dawaAutocomplete(document.getElementById("addressSearch"), {
@@ -247,6 +277,7 @@
 
   //countryToggleFields skal kalds for at håndtere felter der kun er synlig i nogle situationer.
   countryToggleFields();
+  postTypeToggleFields();
 
   function validateAndUpdateInputLabel(labelId, inputId) {
     var file = document.getElementById(inputId).files[0];
