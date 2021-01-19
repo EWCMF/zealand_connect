@@ -12,7 +12,7 @@ router.get('/:id', async function (req, res) {
     let result = await models.InternshipPost.findByPk(id, {
         nest: true,
         attributes: ["title", "email", "contact", "education",
-            "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number",
+            "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode",
             "company_link", "post_document", "fk_company"],
         include: {
             model: models.Virksomhed,
@@ -72,7 +72,7 @@ router.get('/:id', async function (req, res) {
         rtext/*post_text*/: result['post_text'],
         rcity: result['city'],
         rpostcode: result['postcode'],
-        rcvr: result['cvr_number'],
+        rcvr: result.virksomhed.cvrnr,
         rcompany: webLink,
         rlogo: result.virksomhed.logo,
         rdoc: result["post_document"],

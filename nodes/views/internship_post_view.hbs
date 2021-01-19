@@ -9,7 +9,7 @@
             {{/if}}
         </div>
 
-        <div class="col-10">
+        <div class="col-8">
             <table id="viewpostTable">
                 <tr style=" padding: 5px">
                     <td colspan="2">
@@ -47,10 +47,12 @@
                     <td>Kontaktperson:</td>
                     <td id="contactContainer">{{rcontact}}</td>
                 </tr>
+                {{#if rcvr}}
                 <tr>
                     <td>CVR Nummer:</td>
                     <td id="cvrContainer">{{rcvr}}</td>
                 </tr>
+                {{/if}}
                 <tr>
                     <td>Hjemmeside:</td>
                     <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
@@ -64,16 +66,16 @@
             </table>
 
         </div>
-        
-    </div>
-    {{#unless noButtons}}
-        <div class="col-12 col-lg-2 d-flex flex-column mt-2">
-            {{#if ejer}}
-            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../internship_update?id={{rid}}'">Rediger
-                opslag</button>
-            {{/if}}
+        <div class="col-12 col-lg-2 d-flex flex-column">
+            {{#unless noButtons}}
+                {{#if ejer}}
+                <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../internship_update?id={{rid}}'">Rediger
+                    opslag</button>
+                {{/if}}
+            {{/unless}}
         </div>
-    {{/unless}}
+    </div>
+    
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
