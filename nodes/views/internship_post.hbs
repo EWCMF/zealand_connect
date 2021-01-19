@@ -75,6 +75,7 @@
               <input type="hidden" id="addressSearchPostcode" name="postcode">
               <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
               <small id="selectedAddress" class="form-text text-muted"></small>
+              <p id="addressError" class="CVErrorColor" hidden="true">Du skal angive en adresse</p>
             </div>
           </div>
         </div>
@@ -252,6 +253,7 @@
         document.getElementById("addressSearchPostcode").value = json.data.postnr;
         document.getElementById("addressSearchUUID").value = json.data.id;
         hasBeenSet = true;
+        document.getElementById('addressError').hidden = true;
       };   
     };
   };
@@ -291,7 +293,7 @@
       alert("File selected is too big, maximum size is 10MB")
     }
 
-    document.getElementById(labelId).innerHTML = document.getElementById(inputId).value;
+    document.getElementById(labelId).innerHTML = file.name;
   }
 
   function toggleNote() {
