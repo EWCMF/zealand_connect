@@ -50,18 +50,6 @@ function validate_internship_post() {
     document.getElementById('posttextError').hidden = true;
   }
 
-  //CVR
-  if (document.getElementById('countrySelect').value == 1) {
-    if (!cvrRegex.test(document.getElementById('companyCVR').value)) {
-      all_valid = false;
-      document.getElementById('cvrError').hidden = false;
-    } else {
-      document.getElementById('cvrError').hidden = true;
-    }
-  } else {
-    document.getElementById('cvrError').hidden = true;
-  }
-
   //Virksomheds Link
   if (!document.getElementById('companyURL').value == '') {
     if (!linkRegex.test(document.getElementById('companyURL').value)) {
@@ -101,8 +89,7 @@ function validate_internship_post() {
   }
 
   if (!all_valid){
-    console.log("Et input mangler")
-    return;
+    return false;
   }
   else {
     document.forms["internshipForm"].submit();
