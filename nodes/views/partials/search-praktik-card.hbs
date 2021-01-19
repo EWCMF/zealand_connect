@@ -1,5 +1,10 @@
 {{#each json}}
 <div class="card mb-3">
+    <div class="card-header p-0">
+        <h6 class="m-2">
+            {{post_type}}
+        </h6>
+    </div>
     <div class="row">
         <div class="col-auto">
             {{#if virksomhed.logo}}
@@ -24,7 +29,9 @@
                     </div>
                     <div class="row mr-2">
                         <p class="font-weight-bold pr-1">Ansøgningsfrist:</p> <p class="pr-2">{{post_start_date}}</p>
+                        {{#if post_end_date}}
                         <p class="font-weight-bold pr-1">Praktikstart:</p>  <p>{{post_end_date}}</p>
+                        {{/if}}
                     </div>
                 </div>
         </div>      

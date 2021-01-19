@@ -59,21 +59,35 @@ router.get('/', async function (req, res, next) {
             }
         });
 
+        element['education'] = eduName.name;
+
         let cropStart = element['post_start_date'].substring(0, 10);
-        let cropEnd = element['post_end_date'].substring(0, 10);
 
         let startYear = cropStart.substring(0, cropStart.indexOf('-'));
         let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
         let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
 
-        let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
-        let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
-        let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
-
-        element['education'] = eduName.name;
         element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
-        element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
 
+        if (element['post_end_date'] != null) {
+            let cropEnd = element['post_end_date'].substring(0, 10);
+
+            let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
+            let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
+            let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
+            element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
+        }
+
+        switch (element['post_type']) {
+            case 1:
+                element['post_type'] = 'Praktik';
+                break;
+            case 2:
+                element['post_type'] = 'Studiejob';
+                break;
+            case 3:
+                element['post_type'] = 'Trainee';     
+        }
     }
 
     res.render('mine-opslag', {

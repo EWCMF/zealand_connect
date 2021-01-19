@@ -13,6 +13,41 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
+                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse5" onclick="animateArrow(this)">
+                                    Opslagstype
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+
+                        <div id="collapse5" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Praktik
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="typ1"
+                                        onclick="addFilter('typ', '1')">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Studiejob
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="typ2"
+                                        onclick="addFilter('typ','2')">
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill">
+                                        Trainee
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="typ3"
+                                        onclick="addFilter('typ','3')">
+                                </li>
+
+                            </ul>
+
+
+                        </div>
+                        <div class="panel-heading">
                             <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
                                     Uddannelser
                                 <img src="images/chevron-right.svg" width="12" height="12">
