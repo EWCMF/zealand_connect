@@ -26,8 +26,10 @@ router.get('/:id', async function (req, res) {
 
     //Tilføjer https:// bag på links hvis det mangler på weblink i databasen.
     let webLink = result['company_link'];
-    if (!webLink.includes("https://") && !webLink.includes("http://")) {
+    if (webLink != null) {
+        if (!webLink.includes("https://") && !webLink.includes("http://")) {
         webLink = "https://" + webLink
+        }
     }
 
     let countryId = result.country;

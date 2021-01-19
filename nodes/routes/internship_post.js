@@ -29,6 +29,7 @@ router.post('/', function (req, res, next) {
         //laver et objekt med alle data
         var {
           title,
+          post_type,
           email,
           contact,
           education,
@@ -47,7 +48,7 @@ router.post('/', function (req, res, next) {
 
         var region = '';
 
-        if (country == '1') {
+        if (country == 1) {
           postcode = Number(postcode);
           var xmlhttp = new XMLHttpRequest();
           xmlhttp.onreadystatechange = function () {
@@ -69,6 +70,7 @@ router.post('/', function (req, res, next) {
 
         var indhold = {
           title,
+          post_type,
           email,
           contact,
           education,
@@ -93,34 +95,81 @@ router.post('/', function (req, res, next) {
           console.log('Title lenght invalid');
           inputError = true;
         }
+
+        if (post_type == 0) {
+          console.log('Missing type');
+          inputError = true;
+        }
+
+        if (country == 0) {
+          console.log('Missing country');
+          inputError = true;
+        }
+
+        if (country == 1 && dawa_uuid == '') {
+          console.log('Missing address');
+          inputError = true;
+        }
+
         if (email.length > 255) {
           console.log('Email to long');
           inputError = true;
         }
+
         if (!emailRegex.test(email)) {
           console.log('Invalid email');
           inputError = true;
         }
+
         if (1 > contact.length || contact.length > 255) {
           console.log('Contact length invalid');
           inputError = true;
         }
+
         if (!dateRegex.test(post_start_date)) {
           console.log('Invalid date');
           inputError = true;
+        } else {
+          let currDate = new Date();
+          let inputDate = new Date(post_start_date);
+    
+          if (currDate > inputDate) {
+            console.log('Invalid date');
+            inputError = true;
+          }
         }
-        if (!dateRegex.test(post_end_date)) {
-          console.log('Invalid date');
-          inputError = true;
+    
+        if (post_type == 1) {
+          if (!dateRegex.test(post_end_date)) {
+            console.log('Invalid date');
+            inputError = true;
+          } else {
+            let currDate = new Date();
+            let inputDate = new Date(post_end_date);
+      
+            if (currDate > inputDate) {
+              console.log('Invalid date');
+              inputError = true;
+            }
+          }
+        } else {
+          indhold.post_end_date = null;
         }
+
         if (post_text.length > 65536) {
           console.log('Plain text is to long');
           inputError = true;
         }
-        if (!linkRegex.test(company_link)) {
-          console.log("Link Invalid");
-          inputError = true;
+
+        if (company_link != '') {
+          if (!linkRegex.test(company_link)) {
+            console.log("Link Invalid");
+            inputError = true;
+          }
+        } else {
+          indhold.company_link = null;
         }
+
         if (education == 0) {
           console.log('Invalid choice');
           inputError = true;

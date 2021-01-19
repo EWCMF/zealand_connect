@@ -53,10 +53,12 @@
                     <td id="cvrContainer">{{rcvr}}</td>
                 </tr>
                 {{/if}}
+                {{#if rcompany}}
                 <tr>
                     <td>Hjemmeside:</td>
                     <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
                 </tr>
+                {{/if}}
                 {{#if rdoc}}
                     <tr id="docContainer">
                         <td>Vedhæftet fil:</td>

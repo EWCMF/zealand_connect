@@ -60,22 +60,27 @@ router.post('/', function (req, res, next) {
       console.log('Title length invalid');
       inputError = true;
     }
+
     if (post_type == 0) {
       console.log('Missing type');
       inputError = true;
     }
+
     if (email.length > 255) {
       console.log('Email too long');
       inputError = true;
     }
+
     if (!emailRegex.test(email)) {
       console.log('Invalid email');
       inputError = true;
     }
+
     if (1 > contact.length || contact.length > 255) {
       console.log('Contact length invalid');
       inputError = true;
     }
+
     if (!dateRegex.test(post_start_date)) {
       console.log('Invalid date');
       inputError = true;
@@ -88,7 +93,6 @@ router.post('/', function (req, res, next) {
         inputError = true;
       }
     }
-    
 
     if (post_type == 1) {
       if (!dateRegex.test(post_end_date)) {
@@ -103,18 +107,24 @@ router.post('/', function (req, res, next) {
           inputError = true;
         }
       }
-      
     } else {
       indhold.post_end_date = null;
     }
+
     if (post_text.length > 65536) {
       console.log('Plain text is to long');
       inputError = true;
     }
-    if (!linkRegex.test(company_link)) {
-      console.log("Link Invalid");
-      inputError = true;
+
+    if (company_link != '') {
+      if (!linkRegex.test(company_link)) {
+        console.log("Link Invalid");
+        inputError = true;
+      }
+    } else {
+      indhold.company_link = null;
     }
+
     if (education == 0) {
       console.log('Invalid choice');
       inputError = true;
