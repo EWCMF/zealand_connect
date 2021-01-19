@@ -9,7 +9,6 @@ var uploadFolder = require('../constants/references').uploadFolder()
 const {
   emailRegex,
   dateRegex,
-  cvrRegex,
   linkRegex
 } = require("../constants/regex.js");
 const db = require('../models');
@@ -18,10 +17,9 @@ const {
 } = require('repl');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
-var tempDate = dateRegex.source
-var tempCVR = cvrRegex.source
-var tempEmail = emailRegex.source
-var tempLink = linkRegex.source
+var tempDate = dateRegex.source;
+var tempEmail = emailRegex.source;
+var tempLink = linkRegex.source;
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
@@ -40,7 +38,6 @@ router.post('/', function (req, res, next) {
           post_text,
           city,
           postcode,
-          cvr_number,
           company_link,
           post_document,
           dawa_json,
@@ -82,7 +79,6 @@ router.post('/', function (req, res, next) {
           post_text,
           city,
           postcode,
-          cvr_number,
           company_link,
           post_document,
           dawa_json,
@@ -119,10 +115,6 @@ router.post('/', function (req, res, next) {
         }
         if (post_text.length > 65536) {
           console.log('Plain text is to long');
-          inputError = true;
-        }
-        if (!cvrRegex.test(cvr_number)) {
-          console.log("CVR number invalid");
           inputError = true;
         }
         if (!linkRegex.test(company_link)) {
@@ -213,7 +205,6 @@ router.get('/', function (req, res, next) {
           linkRegex: tempLink,
           dateRegex: tempDate,
           emailRegex: tempEmail,
-          cvrRegex: tempCVR,
           generatedEducationOptions: generatedEducationOptions
         });
       }).catch();

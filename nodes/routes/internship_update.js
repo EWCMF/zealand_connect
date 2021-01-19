@@ -5,7 +5,7 @@ var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabe
 var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
 var fs = require("fs");//Bruges til grundlæggen file hændtering.
 var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
-const { emailRegex, dateRegex, cvrRegex, linkRegex } = require("../constants/regex.js");
+const { emailRegex, dateRegex, linkRegex } = require("../constants/regex.js");
 const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
@@ -13,10 +13,9 @@ const unlinkOldFiles = require('../utils/file-handling').unlinkOldFiles;
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const uploadFolder = require('../constants/references').uploadFolder();
 
-var tempDate = dateRegex.source
-var tempCVR = cvrRegex.source
-var tempEmail = emailRegex.source
-var tempLink = linkRegex.source
+var tempDate = dateRegex.source;
+var tempEmail = emailRegex.source;
+var tempLink = linkRegex.source;
 
 /* POST home page. */
 router.post('/', function (req, res, next) {
@@ -27,7 +26,7 @@ router.post('/', function (req, res, next) {
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
     var { id, title, email, contact, education, country, post_start_date, post_end_date, post_text,
-      city, postcode, cvr_number, company_link, post_document, dawa_json, dawa_uuid, expired } = fields;
+      city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired } = fields;
 
     var region = '';
 
@@ -52,7 +51,7 @@ router.post('/', function (req, res, next) {
 
     var indhold = {
       id, title, email, contact, education, country, region, post_start_date, post_end_date,
-      post_text, city, postcode, cvr_number, company_link, post_document, dawa_json, dawa_uuid, expired
+      post_text, city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired
     };
     var inputError = false;
 
@@ -83,10 +82,6 @@ router.post('/', function (req, res, next) {
     }
     if (post_text.length > 65536) {
       console.log('Plain text is to long');
-      inputError = true;
-    }
-    if (!cvrRegex.test(cvr_number)) {
-      console.log("CVR number invalid");
       inputError = true;
     }
     if (!linkRegex.test(company_link)) {
@@ -188,7 +183,7 @@ router.get('/', function (req, res, next) {
       generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
     });
     db.InternshipPost.findByPk(req.query.id, {
-      attributes: ["title", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "cvr_number", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired"]
+      attributes: ["title", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired"]
     }).then(result => {
       var address = '';
 
@@ -206,8 +201,8 @@ router.get('/', function (req, res, next) {
       }
 
       //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-      res.render('internship_update', {
-        title: 'Express',
+      res.render('internship_post', {
+        title: 'Rediger opslag',
         rid: req.query.id,
         rtitle: result['title'],
         remail: result['email'],
@@ -220,13 +215,13 @@ router.get('/', function (req, res, next) {
         rtext /*post_text*/: result['post_text'],
         rcity: result['city'],
         rpostcode: result['postcode'],
-        rcvr: result['cvr_number'],
         rcompany: result['company_link'],
         rdoc: result["post_document"],
         raddress: address,
 
-        linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, cvrRegex: tempCVR, expired: result['expired'],
-        generatedEducationOptions: generatedEducationOptions
+        linkRegex: tempLink, dateRegex: tempDate, emailRegex: tempEmail, expired: result['expired'],
+        generatedEducationOptions: generatedEducationOptions,
+        update: true
       });
     }).catch();
   }).catch();
