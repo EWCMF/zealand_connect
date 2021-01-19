@@ -1,3 +1,5 @@
+
+
 function validate_internship_post() {
   var all_valid = true;
 
@@ -22,25 +24,45 @@ function validate_internship_post() {
   else { document.getElementById('contactError').hidden = true; }
 
   //Ansøgningsfrist
-  if (!document.getElementById('applicationDeadline').value == '') {
-    if (!dateRegex.test(document.getElementById('applicationDeadline').value)) {
-      all_valid = false;
-      document.getElementById('poststartdateError').hidden = false;
-    }
-    else { document.getElementById('poststartdateError').hidden = true; }
+  let applicationDeadline = document.getElementById('applicationDeadline').value;
+  if (!dateRegex.test(applicationDeadline)) {
+    all_valid = false;
+    document.getElementById('poststartdateError').hidden = false;
   }
-  else { document.getElementById('poststartdateError').hidden = true; }
+  else { 
+    document.getElementById('poststartdateError').hidden = true;
+    let inputDate = new Date(applicationDeadline);
+    let currDate = new Date();
+
+    if (currDate > inputDate) {
+      all_valid = false;
+      document.getElementById('poststartdateErrorPast').hidden = false;
+    } else {
+      document.getElementById('poststartdateErrorPast').hidden = true;
+    }
+  }
 
   //Ansættelsestidspunkt
-  if (!document.getElementById('internshipEmploymentDate').value == '') {
-    if (!dateRegex.test(document.getElementById('internshipEmploymentDate').value)) {
+  if (document.getElementById('postTypeSelect').value == 1) {
+    let internshipEmploymentDate = document.getElementById('internshipEmploymentDate').value;
+    if (!dateRegex.test(internshipEmploymentDate)) {
       all_valid = false;
-      console.log("hej")
       document.getElementById('postenddateError').hidden = false;
     }
-    else { document.getElementById('postenddateError').hidden = true; }
+    else { 
+      document.getElementById('postenddateError').hidden = true;
+      let inputDate = new Date(internshipEmploymentDate);
+      let currDate = new Date();
+
+      if (currDate > inputDate) {
+        all_valid = false;
+        document.getElementById('postenddateErrorPast').hidden = false;
+      } else {
+        document.getElementById('postenddateErrorPast').hidden = true;
+      }
+
+    }
   }
-  else { document.getElementById('postenddateError').hidden = true; }
 
   //Opslagstekst
   if (document.getElementById('plainText').value.length > 65536) {

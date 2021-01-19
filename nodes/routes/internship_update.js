@@ -25,7 +25,7 @@ router.post('/', function (req, res, next) {
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    var { id, title, email, contact, education, country, post_start_date, post_end_date, post_text,
+    var { id, title, post_type, email, contact, education, country, post_start_date, post_end_date, post_text,
       city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired } = fields;
 
     var region = '';
@@ -50,18 +50,22 @@ router.post('/', function (req, res, next) {
     }
 
     var indhold = {
-      id, title, email, contact, education, country, region, post_start_date, post_end_date,
+      id, title, post_type, email, contact, education, country, region, post_start_date, post_end_date,
       post_text, city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired
     };
     var inputError = false;
 
     //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
     if (1 > title.length || title.length > 255) {
-      console.log('Title lenght invalid');
+      console.log('Title length invalid');
+      inputError = true;
+    }
+    if (post_type == 0) {
+      console.log('Missing type');
       inputError = true;
     }
     if (email.length > 255) {
-      console.log('Email to long');
+      console.log('Email too long');
       inputError = true;
     }
     if (!emailRegex.test(email)) {
@@ -75,10 +79,33 @@ router.post('/', function (req, res, next) {
     if (!dateRegex.test(post_start_date)) {
       console.log('Invalid date');
       inputError = true;
+    } else {
+      let currDate = new Date();
+      let inputDate = new Date(post_start_date);
+
+      if (currDate > inputDate) {
+        console.log('Invalid date');
+        inputError = true;
+      }
     }
-    if (!dateRegex.test(post_end_date)) {
-      console.log('Invalid date');
-      inputError = true;
+    
+
+    if (post_type == 1) {
+      if (!dateRegex.test(post_end_date)) {
+        console.log('Invalid date');
+        inputError = true;
+      } else {
+        let currDate = new Date();
+        let inputDate = new Date(post_end_date);
+  
+        if (currDate > inputDate) {
+          console.log('Invalid date');
+          inputError = true;
+        }
+      }
+      
+    } else {
+      indhold.post_end_date = null;
     }
     if (post_text.length > 65536) {
       console.log('Plain text is to long');
@@ -109,7 +136,6 @@ router.post('/', function (req, res, next) {
     */
     function dbExe() {
       if (!inputError) {
-        console.log(indhold);
         db.InternshipPost.update(indhold, {
           where: {
             id: id
@@ -183,7 +209,7 @@ router.get('/', function (req, res, next) {
       generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
     });
     db.InternshipPost.findByPk(req.query.id, {
-      attributes: ["title", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired"]
+      attributes: ["title", "post_type", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired"]
     }).then(result => {
       var address = '';
 
@@ -205,6 +231,7 @@ router.get('/', function (req, res, next) {
         title: 'Rediger opslag',
         rid: req.query.id,
         rtitle: result['title'],
+        rposttype: result['post_type'],
         remail: result['email'],
         rcontact: result['contact'],
         reducation: result['education'],
