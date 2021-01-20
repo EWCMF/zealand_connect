@@ -55,7 +55,6 @@ router.get('/:id', async function (req, res) {
     if (result.post_document != null) {
 
         rdocName = result.post_document.replace(/^.*_/, "");
-        console.log(rdocName);
     }
     
 

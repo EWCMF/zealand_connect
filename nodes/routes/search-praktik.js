@@ -62,7 +62,7 @@ router.get('/', async function (req, res, next) {
             as: 'virksomhed'
         },
         where: { [Op.or]:[{'expired': {[Op.ne]: 1}},
-            {[ Op.and]:[{'expired': 1}, { 'post_end_date':{[Op.gt]:year+"-"+month+"-"+day}}]}
+            {[ Op.and]:[{'expired': 1}, { 'post_start_date':{[Op.gt]:year+"-"+month+"-"+day}}]}
         ]
        }
        
@@ -205,7 +205,7 @@ router.post('/query', function (req, res) {
                 {'expired': {[Op.ne]: 1}},
                 {[ Op.and]:[
                    {'expired': 1}, 
-                   { 'post_end_date': {[Op.gt]:year+"-"+month+"-"+day}}
+                   { 'post_start_date': {[Op.gt]:year+"-"+month+"-"+day}}
                 ]}
             ]
         } 
