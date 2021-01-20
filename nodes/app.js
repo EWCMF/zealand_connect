@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var profilRouter = require('./routes/profil');
@@ -19,7 +20,8 @@ var languageRouter = require('./routes/language');
 var cookieRouter = require('./routes/cookie-confirm');
 var forsideRouter = require('./routes/forside');
 var praktikforloebRouter = require('./routes/praktikforloebet');
-var cookieParser = require('cookie-parser');
+var kontaktRouter = require('./routes/kontakt');
+
 var bodyParser = require('body-parser')
 
 const cookieSession = require('cookie-session');
@@ -137,6 +139,7 @@ app.use ('/profil', profilRouter);
 app.use ('/admin-funktioner', adminFunktionerRouter);
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
+app.use('/kontakt', kontaktRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));

@@ -215,19 +215,16 @@ router.get('/:id', async function (req, res) {
     });
 
     if (cv.hjemmeside.includes("://")) {
-        console.log(cv.hjemmeside.indexOf("://") + 3)
         cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
         //console.log(cv.linkedIn);
     }
 
     if (cv.linkedIn.includes("://")) {
-        console.log(cv.linkedIn.indexOf("://") + 3)
         cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
         //console.log(cv.linkedIn);
     }
 
     if (cv.yt_link.includes("://")) {
-        console.log(cv.yt_link.indexOf("://") + 3)
         cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://") + 3);
         //console.log(cv.linkedIn);
     }

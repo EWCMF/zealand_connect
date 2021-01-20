@@ -92,7 +92,7 @@ router.post('/', function (req, res, next) {
 
         //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
         if (1 > title.length || title.length > 255) {
-          console.log('Title lenght invalid');
+          console.log('Title length invalid');
           inputError = true;
         }
 
@@ -193,8 +193,6 @@ router.post('/', function (req, res, next) {
         }
 
         if (files.post_document.size === 0) {
-          console.log(JSON.stringify(indhold))
-          // TODO: valider adresse-felt
           dbExe();
         } else {
           /*fileUpload here*/
