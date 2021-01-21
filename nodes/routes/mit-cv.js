@@ -20,6 +20,8 @@ router.get('/', async function (req, res, next) {
 
         res.render('mit-cv', {
             profil: student.fornavn + " " + student.efternavn,
+            telefon: student.tlfnr,
+            email: student.email,
             uddannelser: udd
         })
     }
