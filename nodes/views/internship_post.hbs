@@ -1,172 +1,178 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-      {{#if update}}
-      <h1>Rediger opslag</h1>
-      {{else}}
-      <h1>Indryk opslag</h1>
-      {{/if}}
+    <div class="row">
+        <div class="col-12">
+            {{#if update}}
+                <h1>Rediger opslag</h1>
+            {{else}}
+                <h1>Indryk opslag</h1>
+            {{/if}}
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-md-8">
-      {{#if update}}
-      <form method="POST" onsubmit="return validate_internship_post(event)" enctype="multipart/form-data">
-      {{else}}
-      <form
-              method="POST"
-              action="/internship_post"
-              enctype="multipart/form-data"
-              id="internshipForm"
-      >
-      {{/if}}
-        <input type="hidden" value="{{rid}}" name="id">
-        <div class="form-group required mb-5">
-          <label for="internshipTitle">Annonce overskrift</label>
-          <input type="text" value="{{rtitle}}" name="title" id="internshipTitle" class="form-control"
-            placeholder="Titel">
-          <p id="titleError" class="CVErrorColor" hidden="true">Du skal angive en annonce overskrift</p>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <div class="form-group required">
-              <label for="postTypeSelect">Opslagstype</label>
-              <select class="form-control" name="post_type" id="postTypeSelect" onchange="postTypeToggleFields()">
-                <option selected disabled hidden value="0">Vælg en opslagstype</option>
-                <option value="1">Praktik</option>
-                <option value="2">Studiejob</option>
-                <option value="3">Trainee</option>
-              </select>
-              <p id="postTypeError" class="CVErrorColor" hidden="true">Du skal angive en opslagstype</p>
+    <div class="row">
+        <div class="col-12 col-md-8">
+            {{#if update}}
+            <form method="POST" onsubmit="return validate_internship_post(event)" enctype="multipart/form-data">
+            {{else}}
+            <form
+                    method="POST"
+                    action="/internship_post"
+                    enctype="multipart/form-data"
+                    id="internshipForm"
+            >
+            {{/if}}
+            <input type="hidden" value="{{rid}}" name="id">
+            <div class="form-group required mb-5">
+                <label for="internshipTitle">Annonce overskrift</label>
+                <input type="text" value="{{rtitle}}" name="title" id="internshipTitle" class="form-control"
+                       placeholder="Titel">
+                <p id="titleError" class="CVErrorColor" hidden="true">Du skal angive en annonce overskrift</p>
             </div>
-          </div>
-          <div class="col-12 col-md-6">
-            <div class="form-group required">
-              <label for="education">Uddannelse</label>
-              <select class="form-control" name="education" id="educationSelect" onchange="toggleNote()">
-                <option selected disabled hidden value="0">Vælg en uddannelse</option>
-                {{{generatedEducationOptions}}}
-              </select>
-              <p id="educationError" class="CVErrorColor" hidden="true">Du skal angive en uddannelse</p>
-              <p id="educationNote" hidden="true">Den valgte uddannelse har lønnet praktik</p>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group required">
+                        <label for="postTypeSelect">Opslagstype</label>
+                        <select class="form-control" name="post_type" id="postTypeSelect"
+                                onchange="postTypeToggleFields()">
+                            <option selected disabled hidden value="0">Vælg en opslagstype</option>
+                            <option value="1">Praktik</option>
+                            <option value="2">Studiejob</option>
+                            <option value="3">Trainee</option>
+                        </select>
+                        <p id="postTypeError" class="CVErrorColor" hidden="true">Du skal angive en opslagstype</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group required">
+                        <label for="education">Uddannelse</label>
+                        <select class="form-control" name="education" id="educationSelect" onchange="toggleNote()">
+                            <option selected disabled hidden value="0">Vælg en uddannelse</option>
+                            {{{generatedEducationOptions}}}
+                        </select>
+                        <p id="educationError" class="CVErrorColor" hidden="true">Du skal angive en uddannelse</p>
+                        <p id="educationNote" hidden="true">Den valgte uddannelse har lønnet praktik</p>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <div class="form-group required">
-              <label for="countrySelect">Land</label>
-              <select class="form-control" name="country" id="countrySelect" onchange="countryToggleFields()">
-                <option selected disabled hidden value="0">Vælg et land</option>
-                <option value="1">Danmark</option>
-                <option value="2">Tyskland</option>
-                <option value="3">Sverige</option>
-                <option value="4">Udlandet</option>
-              </select>
-              <p id="countryError" class="CVErrorColor" hidden="true">Du skal angive et land</p>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group required">
+                        <label for="countrySelect">Land</label>
+                        <select class="form-control" name="country" id="countrySelect" onchange="countryToggleFields()">
+                            <option selected disabled hidden value="0">Vælg et land</option>
+                            <option value="1">Danmark</option>
+                            <option value="2">Tyskland</option>
+                            <option value="3">Sverige</option>
+                            <option value="4">Udlandet</option>
+                        </select>
+                        <p id="countryError" class="CVErrorColor" hidden="true">Du skal angive et land</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
+                    <div class="form-group required autocomplete-container">
+                        <label for="">Adresse</label>
+                        <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
+                        <input type="hidden" id="addressSearchJSON" name="dawa_json">
+                        <input type="hidden" id="addressSearchCity" name="city">
+                        <input type="hidden" id="addressSearchPostcode" name="postcode">
+                        <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
+                        <small id="selectedAddress" class="form-text text-muted"></small>
+                        <p id="addressError" class="CVErrorColor" hidden="true">Du skal angive en adresse</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
-            <div class="form-group required autocomplete-container">
-              <label for="">Adresse</label>
-              <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
-              <input type="hidden" id="addressSearchJSON" name="dawa_json">
-              <input type="hidden" id="addressSearchCity" name="city">
-              <input type="hidden" id="addressSearchPostcode" name="postcode">
-              <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
-              <small id="selectedAddress" class="form-text text-muted"></small>
-              <p id="addressError" class="CVErrorColor" hidden="true">Du skal angive en adresse</p>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group required">
+                        <label for="internshipEmail">E-mail adresse</label>
+                        <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
+                               placeholder="Email" pattern="{{{emailRegex}}}">
+                        <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst
+                            bruge et @
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group required">
+                        <label for="contactName">Navn på kontaktperson</label>
+                        <input type="text" value="{{rcontact}}" name="contact" id="contactName" class="form-control"
+                               placeholder="Navn">
+                        <p id="contactError" class="CVErrorColor" hidden="true">Du skal angive en kontaktperson</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label for="company_link">Link til Hjemmeside</label>
+                        <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link"
+                               id="companyURL"
+                               class="form-control" placeholder="virksomhed.dk" value="{{rhomepage}}">
+                        <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her
+                            f.eks
+                            http://www.zealandconnect.dk</p>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <div class="form-group required">
-              <label for="internshipEmail">E-mail adresse</label>
-              <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
-                placeholder="Email" pattern="{{{emailRegex}}}">
-              <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge et @
-              </p>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group required">
+                        <label for="post_start_date">Ansøgningsfrist</label>
+                        <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
+                               id="applicationDeadline" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
+                        <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en ansøgningsfrist
+                        </p>
+                        <p id="poststartdateErrorPast" class="CVErrorColor" hidden="true">Den valgte dato er i fortiden
+                        </p>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox"
+                               onchange="setExpired()">
+                        <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
+                            ansøgningsfristen?</label>
+                        <input type="hidden" id="expired" value="0" name="expired">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6" id="internshipContainer" hidden="true">
+                    <div class="form-group required">
+                        <label for="post_end_date">Praktikstart</label>
+                        <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
+                               id="internshipEmploymentDate" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
+                        <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive en praktikstart dato
+                        </p>
+                        <p id="postenddateErrorPast" class="CVErrorColor" hidden="true">Den valgte dato er i fortiden
+                        </p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-12 col-md-6">
-            <div class="form-group required">
-              <label for="contactName">Navn på kontaktperson</label>
-              <input type="text" value="{{rcontact}}" name="contact" id="contactName" class="form-control"
-                placeholder="Navn">
-              <p id="contactError" class="CVErrorColor" hidden="true">Du skal angive en kontaktperson</p>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <label for="post_document">Vedhæft fil</label><br/>
+                    <a id="uploadedFile" href="" target="_blank" hidden="true">Nuværende vedhæftet fil</a>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt"
+                                   class="custom-file-input"
+                                   id="companyDoc" onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
+                            <label class="custom-file-label" id="docLabel" for="companyDoc">Vælg fil</label>
+                            <p id="companyDocError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på
+                                maximum 10MB</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-12 col-md-6">
             <div class="form-group">
-              <label for="company_link">Link til Hjemmeside</label>
-              <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link" id="companyURL"
-                class="form-control" placeholder="virksomhed.dk" value="{{rcompany}}">
-              <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her f.eks
-                http://www.zealandconnect.dk</p>
+                <input type="hidden" name="post_text" id="plainText"/>
+                <label for="editor">Opslagstekst</label>
+                <div id="editor">{{{rtext}}}</div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <div class="form-group required">
-              <label for="post_start_date">Ansøgningsfrist</label>
-              <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
-                id="applicationDeadline" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
-              <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en ansøgningsfrist
-              </p>
-              <p id="poststartdateErrorPast" class="CVErrorColor" hidden="true">Den valgte dato er i fortiden
-              </p>
-            </div>
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox"
-                onchange="setExpired()">
-              <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
-                ansøgningsfristen?</label>
-              <input type="hidden" id="expired" value="0" name="expired">
-            </div>
-          </div>
-          <div class="col-12 col-md-6" id="internshipContainer" hidden="true">
-            <div class="form-group required">
-              <label for="post_end_date">Praktikstart</label>
-              <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
-                id="internshipEmploymentDate" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
-              <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive en praktikstart dato
-              </p>
-              <p id="postenddateErrorPast" class="CVErrorColor" hidden="true">Den valgte dato er i fortiden
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-6">
-            <label for="post_document">Vedhæft fil</label><br />
-            <a id="uploadedFile" href="" target="_blank" hidden="true">Nuværende vedhæftet fil</a>
+            <p id="posttextError" class="CVErrorColor" hidden="true">Du har angivet for mange tegn</p>
             <div class="form-group">
-              <div class="custom-file">
-                <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt" class="custom-file-input"
-                  id="companyDoc" onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
-                <label class="custom-file-label" id="docLabel" for="companyDoc">Vælg fil</label>
-                <p id="companyDocError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på maximum 10MB</p>
-              </div>
+                <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
+                {{#if update}}
+                    <button type="button" class="btn btn-danger" onclick="confirmYeet()">Slet dette opslag</button>
+                {{/if}}
             </div>
-          </div>
+        </form>
         </div>
-        <div class="form-group">
-          <input type="hidden" name="post_text" id="plainText" />
-          <label for="editor">Opslagstekst</label>
-          <div id="editor">{{{rtext}}}</div>
-        </div>
-        <p id="posttextError" class="CVErrorColor" hidden="true">Du har angivet for mange tegn</p>
-        <div class="form-group">
-          <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
-          {{#if update}}
-          <button type="button" class="btn btn-danger" onclick="confirmYeet()">Slet dette opslag</button>
-          {{/if}}
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 <script src="/js/quill.min.js"></script>
 <script src="/javascript/validate_internship_post.js"></script>
@@ -175,174 +181,180 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
 <script src='../dawa/js/dawa-autocomplete2.min.js'></script>
 <script>
-  var toolbarOptions = [
-    [{
-      'size': ['small', false, 'large', 'huge']
-    }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{
-      'align': []
-    }],
-    [{
-      'list': 'ordered'
-    }, {
-      'list': 'bullet'
-    }],
-    [{
-      'color': []
-    }, {
-      'background': []
-    }],
-    ['link', 'image', 'video'],
-    ['clean']
-  ];
-  var editor = new Quill('#editor', {
-    modules: {
-      toolbar: toolbarOptions
-    },
-    theme: 'snow'
-  });
+    var toolbarOptions = [
+        [{
+            'size': ['small', false, 'large', 'huge']
+        }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{
+            'align': []
+        }],
+        [{
+            'list': 'ordered'
+        }, {
+            'list': 'bullet'
+        }],
+        [{
+            'color': []
+        }, {
+            'background': []
+        }],
+        ['link', 'image', 'video'],
+        ['clean']
+    ];
+    var editor = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow'
+    });
 
-  function copyQuillHtmlToHiddenInput() {
-    document.getElementById('plainText').value = editor.root.innerHTML;
-    //document.getElementById('plainText').value = editor.getText();
-    validate_internship_post();
-  }
-
-  var emailRegex = /{{{emailRegex}}}/;
-  var dateRegex = /{{{dateRegex}}}/;
-  var linkRegex = /{{{linkRegex}}}/;
-
-  function setDefaultSelect() {
-    var update = '{{ update }}';
-    if (update != '') {
-      var reducation = '{{reducation}}';
-      var rcountry = '{{rcountry}}';
-      var rposttype = '{{rposttype}}'
-      document.getElementById('educationSelect').value = reducation;
-      document.getElementById('countrySelect').value = rcountry;
-      document.getElementById('postTypeSelect').value = rposttype;
-    }
-  }
-  setDefaultSelect();
-
-  function confirmYeet() {
-    if (confirm("Er du sikker?")) {
-      window.location = "/internship_update/delete/" + '{{rid}}'
-  }
-}
-
-  //countryToggleFields() Toggler disse fælter: Region og CVR
-  var hasBeenSet = false;
-  function countryToggleFields() {
-    if (document.getElementById('countrySelect').value == 1) {
-      document.getElementById('addressSearchContainer').hidden = false;
-    } else {
-      document.getElementById('addressSearchContainer').hidden = true;
+    function copyQuillHtmlToHiddenInput() {
+        document.getElementById('plainText').value = editor.root.innerHTML;
+        //document.getElementById('plainText').value = editor.getText();
+        validate_internship_post();
     }
 
-    if (!hasBeenSet) {
-      var raddress = '{{{raddress}}}';
-      var json = '';
-      if (raddress != '') {
-        json = JSON.parse(raddress);
-        document.getElementById('addressSearch').value = json.tekst;
-        document.getElementById("selectedAddress").innerHTML = json.tekst;
-        document.getElementById("addressSearchJSON").value = JSON.stringify(json);
-        document.getElementById("addressSearchCity").value = json.data.postnrnavn;
-        document.getElementById("addressSearchPostcode").value = json.data.postnr;
-        document.getElementById("addressSearchUUID").value = json.data.id;
-        hasBeenSet = true;
-        document.getElementById('addressError').hidden = true;
-      };   
+    var emailRegex = /{{{emailRegex}}}/;
+    var dateRegex = /{{{dateRegex}}}/;
+    var linkRegex = /{{{linkRegex}}}/;
+
+            function setDefaultSelect() {
+                var update = '{{ update }}';
+                if (update != '') {
+                    var reducation = '{{reducation}}';
+                    var rcountry = '{{rcountry}}';
+                    var rposttype = '{{rposttype}}'
+                    document.getElementById('educationSelect').value = reducation;
+                    document.getElementById('countrySelect').value = rcountry;
+                    document.getElementById('postTypeSelect').value = rposttype;
+                }
+            }
+    setDefaultSelect();
+
+    function confirmYeet() {
+        if (confirm("Er du sikker?")) {
+            window.location = "/internship_update/delete/" + '{{rid}}'
+        }
+    }
+
+    //countryToggleFields() Toggler disse fælter: Region og CVR
+    var hasBeenSet = false;
+
+    function countryToggleFields() {
+        if (document.getElementById('countrySelect').value == 1) {
+            document.getElementById('addressSearchContainer').hidden = false;
+        } else {
+            document.getElementById('addressSearchContainer').hidden = true;
+        }
+
+        if (!hasBeenSet) {
+            var raddress = '{{{raddress}}}';
+            var json = '';
+            if (raddress != '') {
+                json = JSON.parse(raddress);
+                document.getElementById('addressSearch').value = json.tekst;
+                document.getElementById("selectedAddress").innerHTML = json.tekst;
+                document.getElementById("addressSearchJSON").value = JSON.stringify(json);
+                document.getElementById("addressSearchCity").value = json.data.postnrnavn;
+                document.getElementById("addressSearchPostcode").value = json.data.postnr;
+                document.getElementById("addressSearchUUID").value = json.data.id;
+                hasBeenSet = true;
+                document.getElementById('addressError').hidden = true;
+            }
+            ;
+        }
+        ;
     };
-  };
 
-  function postTypeToggleFields() {
-    if (document.getElementById('postTypeSelect').value == 1) {
-      document.getElementById('internshipContainer').hidden = false;
-    } else {
-      document.getElementById('internshipContainer').hidden = true;
-    }
-  }
-
-  dawaAutocomplete.dawaAutocomplete(document.getElementById("addressSearch"), {
-    select: function (selected) {
-      document.getElementById("selectedAddress").innerHTML = selected.tekst;
-      document.getElementById("addressSearchJSON").value = JSON.stringify(selected.data);
-      document.getElementById("addressSearchCity").value = selected.data.postnrnavn;
-      document.getElementById("addressSearchPostcode").value = selected.data.postnr;
-      document.getElementById("addressSearchUUID").value = selected.data.id;
-    },
-    params: { per_side: '5' }
-  });
-
-  //countryToggleFields skal kalds for at håndtere felter der kun er synlig i nogle situationer.
-  countryToggleFields();
-  postTypeToggleFields();
-
-  function validateAndUpdateInputLabel(labelId, inputId) {
-    var file = document.getElementById(inputId).files[0];
-    console.log(file)
-    //Checker om der er tilføjet filer
-    //Henter den indexerede fil i og sætter dens str til kilobytes
-    var fsize = Math.round(file.size / 1000);
-
-    //Check fil størrelsen på hver fil
-    if (fsize > 10240) {
-      alert("File selected is too big, maximum size is 10MB")
+    function postTypeToggleFields() {
+        if (document.getElementById('postTypeSelect').value == 1) {
+            document.getElementById('internshipContainer').hidden = false;
+        } else {
+            document.getElementById('internshipContainer').hidden = true;
+        }
     }
 
-    document.getElementById(labelId).innerHTML = file.name;
-  }
+    dawaAutocomplete.dawaAutocomplete(document.getElementById("addressSearch"), {
+        select: function (selected) {
+            document.getElementById("selectedAddress").innerHTML = selected.tekst;
+            document.getElementById("addressSearchJSON").value = JSON.stringify(selected.data);
+            document.getElementById("addressSearchCity").value = selected.data.postnrnavn;
+            document.getElementById("addressSearchPostcode").value = selected.data.postnr;
+            document.getElementById("addressSearchUUID").value = selected.data.id;
+        },
+        params: {per_side: '5'}
+    });
 
-  function toggleNote() {
-    if (document.getElementById("educationSelect").options[document.getElementById("educationSelect").selectedIndex].text === "Handelsøkonom") {
-      document.getElementById("educationNote").hidden = false;
-    } else {
-      document.getElementById("educationNote").hidden = true;
+    //countryToggleFields skal kalds for at håndtere felter der kun er synlig i nogle situationer.
+    countryToggleFields();
+    postTypeToggleFields();
+
+    function validateAndUpdateInputLabel(labelId, inputId) {
+        var file = document.getElementById(inputId).files[0];
+        console.log(file)
+        //Checker om der er tilføjet filer
+        //Henter den indexerede fil i og sætter dens str til kilobytes
+        var fsize = Math.round(file.size / 1000);
+
+        //Check fil størrelsen på hver fil
+        if (fsize > 10240) {
+            alert("File selected is too big, maximum size is 10MB")
+        }
+
+        document.getElementById(labelId).innerHTML = file.name;
     }
 
-    if (document.getElementById("educationSelect").option != 0) {
-      document.getElementById("educationError").hidden = true;
+    function toggleNote() {
+        if (document.getElementById("educationSelect").options[document.getElementById("educationSelect").selectedIndex].text === "Handelsøkonom") {
+            document.getElementById("educationNote").hidden = false;
+        } else {
+            document.getElementById("educationNote").hidden = true;
+        }
+
+        if (document.getElementById("educationSelect").option != 0) {
+            document.getElementById("educationError").hidden = true;
+        }
     }
-  }
 
-  //Function til at sætte billed sti og dokument link hvis link findes.
-  function showIfURLexist() {
-    var docName = "{{rdoc}}";
+    //Function til at sætte billed sti og dokument link hvis link findes.
+    function showIfURLexist() {
+        var docName = "{{rdoc}}";
 
-    if (docName.length != 0) {
-      console.log("File");
-      document.getElementById("uploadedFile").href = "uploads/" + docName;
-      document.getElementById("uploadedFile").hidden = false;
-    } else { console.log("No file"); }
+        if (docName.length != 0) {
+            console.log("File");
+            document.getElementById("uploadedFile").href = "uploads/" + docName;
+            document.getElementById("uploadedFile").hidden = false;
+        } else {
+            console.log("No file");
+        }
 
-    toggleNote();
-  }
-
-  showIfURLexist();
-
-  document.getElementById('expire_checkbox').checked = false;
-
-  function setExpired() {
-    if (document.getElementById('expire_checkbox').checked) {
-      document.getElementById('expired').value = 1;
-    } else {
-      document.getElementById('expired').value = 0;
+        toggleNote();
     }
-  }
-  function setExpiredCheckbox() {
-    var expired = '{{ expired }}';
-  if (expired == '1') {
-    document.getElementById('expire_checkbox').checked = true;
-    expired = 1;
-  }
-  else {
+
+    showIfURLexist();
+
     document.getElementById('expire_checkbox').checked = false;
-    expired = 0;
-  }
-  document.getElementById('expired').value = expired
-}
-  setExpiredCheckbox();
+
+    function setExpired() {
+        if (document.getElementById('expire_checkbox').checked) {
+            document.getElementById('expired').value = 1;
+        } else {
+            document.getElementById('expired').value = 0;
+        }
+    }
+
+    function setExpiredCheckbox() {
+        var expired = '{{ expired }}';
+        if (expired == '1') {
+            document.getElementById('expire_checkbox').checked = true;
+            expired = 1;
+        } else {
+            document.getElementById('expire_checkbox').checked = false;
+            expired = 0;
+        }
+        document.getElementById('expired').value = expired
+    }
+
+    setExpiredCheckbox();
 </script>

@@ -252,7 +252,7 @@ router.get('/', function (req, res, next) {
         rtext /*post_text*/: result['post_text'],
         rcity: result['city'],
         rpostcode: result['postcode'],
-        rcompany: result['company_link'],
+        rhomepage: result['company_link'],
         rdoc: result["post_document"],
         raddress: address,
 
