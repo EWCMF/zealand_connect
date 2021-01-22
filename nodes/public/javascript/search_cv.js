@@ -6,7 +6,7 @@ function changeSort(clicked, value) {
     document.getElementById("dropdownButton").value = value;
     let form = document.getElementById('filterForm');
     submitForm(form);
-}
+};
 
 function changeOrder(clicked, value) {
     document.getElementById("dropdownButton2").innerHTML = clicked.innerHTML;
@@ -18,7 +18,7 @@ function changeOrder(clicked, value) {
     window.history.replaceState(null, null, url);
 
     submitForm(form);
-}
+};
 
 function changePage(page) { 
     document.getElementById('currentPage').value = page
@@ -28,13 +28,13 @@ function changePage(page) {
     window.history.replaceState(null, null, url);
     var form = document.getElementById('filterForm');
     submitForm(form);
-}
+};
 
 function addFilter(type, id) {
     handleParameters(type, id);
     var form = document.getElementById('filterForm');
     submitForm(form);
-}
+};
 
 function handleParameters(key, value) {
     // Tilføj query parameter uden refresh.
@@ -57,7 +57,7 @@ function handleParameters(key, value) {
         url.searchParams.append(key, value);
     }
     window.history.replaceState(null, null, url);
-}
+};
 
 function submitForm(formElement) {
 
@@ -76,25 +76,8 @@ function submitForm(formElement) {
     }
     formData.append("page", page);
 
-    let udd = [];
-    document.getElementsByName('udd').forEach(element => {
-        if (element.checked) {
-            udd.push(element.value);
-        }
-    });
-    if (udd.length > 0) {
-        formData.set("udd", udd);
-    };
-
-    let lnd = [];
-    document.getElementsByName('lnd').forEach(element => {
-        if (element.checked) {
-            lnd.push(element.value);
-        }
-    });
-    if (lnd.length > 0) {
-        formData.set("lnd", lnd);
-    };
+    handleInputArrayAndSetToForm(formData, 'udd');
+    handleInputArrayAndSetToForm(formData, 'lnd');
 
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -106,7 +89,19 @@ function submitForm(formElement) {
     xhr.open(formElement.method, formElement.getAttribute("action"));
     xhr.send(formData);
     return false;
-}
+};
+
+function handleInputArrayAndSetToForm(formData, key) {
+    let array = [];
+    document.getElementsByName(key).forEach(element => {
+        if (element.checked) {
+            array.push(element.value);
+        }
+    });
+    if (array.length > 0) {
+        formData.set(key, array);
+    };
+};
 
 function animateArrow(element) {
     const children = element.children;

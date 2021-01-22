@@ -16,22 +16,7 @@ const makeArray = function(body, param) {
         body[param] = array;
     }
 };
-
-
-router.get('/', async function (req, res, next) {
-
-    let page;
-    let offset;
-    if (req.query.page == null) {
-        page = 1
-        offset = 0;
-    } else {
-        page = req.query.page
-        offset = (page - 1) * limit;
-    }
-
-    //Handle where
-    let where = {}
+const handleWhere = function(paramContainer) {
     let fk_education = {
         [Op.or]: []
     };
@@ -39,10 +24,9 @@ router.get('/', async function (req, res, next) {
         [Op.or]: []
     };
 
-    console.log(req.query);
-    for (let key in req.query) {
+    for (let key in paramContainer) {
         if (key.includes("udd")) {
-            let values = req.query[key];
+            let values = paramContainer[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     fk_education[Op.or].push(+element);
@@ -53,7 +37,7 @@ router.get('/', async function (req, res, next) {
         }
 
         if (key.includes("lnd")) {
-            let values = req.query[key];
+            let values = paramContainer[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     if (element.includes('ind')) {
@@ -98,12 +82,28 @@ router.get('/', async function (req, res, next) {
         }
     }
 
-    where = {
+    return where = {
         fk_education,
         sprog,
         offentlig: true,
         gyldig: true
     }
+}
+
+
+router.get('/', async function (req, res, next) {
+
+    let page;
+    let offset;
+    if (req.query.page == null) {
+        page = 1
+        offset = 0;
+    } else {
+        page = req.query.page
+        offset = (page - 1) * limit;
+    }
+
+    let where = handleWhere(req.query);
 
     const udd = await db.Uddannelse.findAll({
         order: [
@@ -152,86 +152,10 @@ router.post('/query', function (req, res) {
 
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
-        var where = {
-            offentlig: true,
-            gyldig: true
-        }
-        var fk_education = {
-            [Op.or]: []
-        };
-        var sprog = {
-            [Op.or]: []
-        };
-
         makeArray(fields, 'udd');
         makeArray(fields, 'lnd');
 
-        for (let key in fields) {
-            if (key.includes("udd")) {
-                let values = fields[key];
-                if (Array.isArray(values)) {
-                    values.forEach(element => {
-                        fk_education[Op.or].push(+element);
-                    });
-                } else {
-                    fk_education[Op.or].push(+values);
-                }
-            }
-    
-            if (key.includes("lnd")) {
-                let values = fields[key];
-                if (Array.isArray(values)) {
-                    values.forEach(element => {
-                        if (element.includes('ind')) {
-                            sprog[Op.or].push(
-                                'dansk'
-                            );
-                            sprog[Op.or].push(
-                                'Dansk'
-                            );
-                        }
-                        if (element.includes('ud')) {
-    
-                            sprog[Op.or].push({
-                                [Op.not]: 'dansk'
-                            });
-    
-                            sprog[Op.or].push({
-                                [Op.not]: 'Dansk'
-                            });
-                        }
-                    });
-                } else {
-                    if (values.includes('ind')) {
-                        sprog[Op.or].push(
-                            'dansk'
-                        );
-                        sprog[Op.or].push(
-                            'Dansk'
-                        );
-                    }
-                    if (values.includes('ud')) {
-    
-                        sprog[Op.or].push({
-                            [Op.not]: 'dansk'
-                        });
-    
-                        sprog[Op.or].push({
-                            [Op.not]: 'Dansk'
-                        });
-                    }
-                }
-            }
-        }
-
-        
-        where = {
-            fk_education,
-            sprog,
-            offentlig: true,
-            gyldig: true
-        }
-        console.log(where);
+        let where = handleWhere(fields);
 
         var page = parseInt(fields.page);
         var offset;

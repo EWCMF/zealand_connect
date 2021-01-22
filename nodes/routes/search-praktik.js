@@ -7,6 +7,157 @@ var formidable = require("formidable");
 const limit = 5;
 const { Op } = require('sequelize');
 const path = require('path');
+const makeArray = function(body, param) {
+    if (body.hasOwnProperty(param)) {
+        let array = body[param].split(",");
+        body[param] = array;
+    }
+};
+const handleWhere = function(paramContainer) {
+    var fk_education = {
+        [Op.or]: []
+    };
+    var country = {
+        [Op.or]: []
+    };
+    var region = {
+        [Op.or]: []
+    };
+    var postcode = {
+        [Op.or]: []
+    };
+    var post_type = {
+        [Op.or]: []
+    };
+
+    for (let key in paramContainer) {
+        if (key.includes("typ")) {
+            let values = paramContainer[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    post_type[Op.or].push(+element);
+                });
+            } else {
+                post_type[Op.or].push(+values);
+            }
+        }
+
+        if (key.includes("udd")) {
+            let values = paramContainer[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    fk_education[Op.or].push(+element);
+                });
+            } else {
+                fk_education[Op.or].push(+values);
+            }
+        }
+
+        if (key.includes("lnd")) {
+            let values = paramContainer[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    if (element.includes('ind')) {
+                        country[Op.or].push(
+                            1
+                        );
+                    }
+                    if (element.includes('ud')) {
+                        country[Op.or].push({
+                            [Op.not]: 1
+                        });
+                    }
+                });
+            } else {
+                if (values.includes('ind')) {
+                    country[Op.or].push(
+                        1
+                    );
+                }
+                if (values.includes('ud')) {
+                    country[Op.or].push({
+                        [Op.not]: 1
+                    });
+                }
+            }
+        }
+
+        if (key.includes('reg')) {
+            let values = paramContainer[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    let realName = '';
+                    switch (element) {
+                        case '1':
+                            realName = 'Region Hovedstaden';
+                            break;
+                        case '2':
+                            realName = 'Region Midtjylland';
+                            break;
+                        case '3':
+                            realName = 'Region Nordjylland';
+                            break;
+                        case '4':
+                            realName = 'Region Sjælland';
+                            break;
+                        case '5':
+                            realName = 'Region Syddanmark';                   
+                    };
+                    region[Op.or].push(realName);
+                });
+            } else {
+                let realName = '';
+                switch (values) {
+                    case '1':
+                        realName = 'Region Hovedstaden';
+                        break;
+                    case '2':
+                        realName = 'Region Midtjylland';
+                        break;
+                    case '3':
+                        realName = 'Region Nordjylland';
+                        break;
+                    case '4':
+                        realName = 'Region Sjælland';
+                        break;
+                    case '5':
+                        realName = 'Region Syddanmark';                   
+                };
+                region[Op.or].push(realName);
+            }
+        };
+
+        if (key.includes('pos')) {
+            let values = paramContainer[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    postcode[Op.or].push(+element);
+                });
+            } else {
+                postcode[Op.or].push(+values);
+            }
+        }
+    }
+
+    let date = new Date();
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getUTCFullYear();
+    return where = {
+        fk_education,
+        country,
+        region,
+        postcode,
+        post_type,
+        [Op.or]: [
+            {'expired': {[Op.ne]: 1}},
+            {[ Op.and]:[
+               {'expired': 1}, 
+               { 'post_start_date': {[Op.gt]:year+"-"+month+"-"+day}}
+            ]}
+        ]
+    }
+}
 
 router.get('/', async function (req, res, next) {
     
@@ -17,8 +168,10 @@ router.get('/', async function (req, res, next) {
         offset = 0;
     } else {
         page = req.query.page
-        offset = page * limit;
+        offset = (page - 1) * limit;
     }
+
+    let where = handleWhere(req.query);
 
     const udd = await db.Uddannelse.findAll({
         raw: true,
@@ -42,10 +195,6 @@ router.get('/', async function (req, res, next) {
         }
     }
 
-    var date = new Date();
-    let day = ("0" + date.getDate()).slice(-2);
-    let month = ("0" + (date.getMonth() + 1)).slice(-2);
-    let year = date.getUTCFullYear();
     const {
         count,
         rows
@@ -61,16 +210,12 @@ router.get('/', async function (req, res, next) {
             model: db.Virksomhed,
             as: 'virksomhed'
         },
-        where: { [Op.or]:[{'expired': {[Op.ne]: 1}},
-            {[ Op.and]:[{'expired': 1}, { 'post_start_date':{[Op.gt]:year+"-"+month+"-"+day}}]}
-        ]
-       }
-       
-    });
+        where
+        }   
+    );
 
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1  ? true : false;
-    console.log(rows)
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
@@ -112,6 +257,8 @@ router.get('/', async function (req, res, next) {
 
     }
 
+    let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
     res.render('search_praktik', {
         json: rows,
         resultater: count,
@@ -120,7 +267,8 @@ router.get('/', async function (req, res, next) {
             page: page,
             pageCount: pageCount
         },
-        withPages
+        withPages,
+        url: fullUrl
     });
 
 });
@@ -129,86 +277,14 @@ router.post('/query', function (req, res) {
 
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
-    
-        var where = {}
-        var education = {
-            [Op.or]: []
-        };
-        var country = {
-            [Op.or]: []
-        };
-        var region = {
-            [Op.or]: []
-        };
-        var postcode = {
-            [Op.or]: []
-        };
-        var post_type = {
-            [Op.or]: []
-        };
 
-        for (var key in fields) {
-            const element = key + "";
-            if (element.includes("udd")) {
-                let udd = parseInt(element.substring(3))
-                education[Op.or].push(udd);
-            }
+        makeArray(fields, 'typ');
+        makeArray(fields, 'udd');
+        makeArray(fields, 'lnd');
+        makeArray(fields, 'reg');
+        makeArray(fields, 'pos');
 
-            if (element.includes('indland')) {
-
-                country[Op.or].push(
-                    1
-                );
-            }
-            
-            if (element.includes('udland')) {
-                
-                country[Op.or].push({
-                    [Op.not]: 1
-                });
-            }
-            
-            if (element.includes('reg')) {
-                
-                region[Op.or].push(
-                    element.substring(3)
-                );
-            }
-
-            if (element.includes('typ')) {
-                post_type[Op.or].push(
-                    +element.substring(3)
-                )
-            }
-
-            if (fields.pos != '') {
-                let code = parseInt(fields.pos); 
-
-                postcode[Op.or].push(
-                    code
-                );
-            }
-        }
-
-        var date = new Date();
-        let day = ("0" + date.getDate()).slice(-2);
-        let month = ("0" + (date.getMonth() + 1)).slice(-2);
-        let year = date.getUTCFullYear();
-
-        where = {
-            education,
-            country,
-            region,
-            postcode,
-            post_type,
-            [Op.or]: [
-                {'expired': {[Op.ne]: 1}},
-                {[ Op.and]:[
-                   {'expired': 1}, 
-                   { 'post_start_date': {[Op.gt]:year+"-"+month+"-"+day}}
-                ]}
-            ]
-        } 
+        let where = handleWhere(fields);
 
         var page = parseInt(fields.page);
         var offset;
@@ -321,5 +397,4 @@ router.post('/query', function (req, res) {
     });
 });
 
-// stared chanching stuff here
 module.exports = router;
