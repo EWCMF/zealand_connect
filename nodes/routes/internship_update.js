@@ -210,7 +210,7 @@ router.post('/', function (req, res, next) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
   var generatedEducationOptions = "";
-  db.Uddannelser.findAll({
+  db.Uddannelse.findAll({
     order: [
       ['name', 'ASC']
     ]

@@ -53,7 +53,7 @@ router.get('/', async function (req, res, next) {
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
-        let eduName = await db.Uddannelser.findOne({
+        let eduName = await db.Uddannelse.findOne({
             where: {
                 id: element['education']
             }
@@ -208,7 +208,7 @@ router.post('/query', function (req, res) {
         for (let index = 0; index < rows.length; index++) {
             const element = rows[index];
             
-            let eduName = await db.Uddannelser.findOne({
+            let eduName = await db.Uddannelse.findOne({
                 where: {
                     id: element['education']
                 }

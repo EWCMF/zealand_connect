@@ -22,7 +22,7 @@ router.get('/:id', async function (req, res) {
 
     let educationId = result.education;
 
-    let education = await models.Uddannelser.findByPk(educationId);
+    let education = await models.Uddannelse.findByPk(educationId);
 
     //Tilføjer https:// bag på links hvis det mangler på weblink i databasen.
     let webLink = result['company_link'];

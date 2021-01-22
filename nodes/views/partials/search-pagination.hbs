@@ -1,5 +1,6 @@
 {{#if withPages}}
-        <nav aria-label="Page navigation example">
+        <input id="currentPage" type="hidden">
+        <nav aria-label="Page navigation">
             <ul class="pagination">
                 {{#paginate pagination type="previous"}}
                 <li {{#if disabled}} class="page-item disabled" {{/if}} class="page-item"><a class="page-link" href="#" onclick="changePage({{n}})">Forrige</a></li>

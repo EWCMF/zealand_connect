@@ -73,6 +73,13 @@ app.engine(
           }
         }
         return '';
+      },
+
+      checkedStateURL: (url, key, value) => {
+        if (url.includes(key + '=' + value)) {
+          return 'checked'
+        }
+        return '';
       }
     },
     partialsDir: ["views/partials"],
@@ -100,7 +107,7 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.text({ type: "text/plain"}))
+app.use(bodyParser.text({ type: "text/plain"}));
 // Middleware til at finde login status i alle routes.
 app.use(async function (req, res, next) {
   if (req.user == null || req.user === undefined) {

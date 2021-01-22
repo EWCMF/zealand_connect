@@ -1,18 +1,10 @@
-document.getElementById("dropdownUddannelser").disabled = !0;
-document.getElementById("dropdownLand").disabled = !0;
-
-var nextPage;
-
-function changePage(page) {
-    nextPage = page;
-    var form = document.getElementById('filterForm');
-    submitForm(form);
-}
+// document.getElementById("dropdownUddannelser").disabled = !0;
+// document.getElementById("dropdownLand").disabled = !0;
 
 function changeSort(clicked, value) {
     document.getElementById("dropdownButton").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton").value = value;
-    var form = document.getElementById('filterForm');
+    let form = document.getElementById('filterForm');
     submitForm(form);
 }
 
@@ -20,53 +12,89 @@ function changeOrder(clicked, value) {
     document.getElementById("dropdownButton2").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton2").value = value;
     var form = document.getElementById('filterForm');
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('order', value);
+    window.history.replaceState(null, null, url);
+
     submitForm(form);
 }
 
-function addFilter(type, id) {
-    var url = window.location.href;
-    var param = type + '=' + id;
+function changePage(page) { 
+    document.getElementById('currentPage').value = page
 
-    if (url.indexOf('?') > -1) {
-        if (url.includes(param)) {
-            url = url.replace(param, "");
-            if (url.substring(url.length - 1).includes('&')) {
-                url = url.substring(0, url.length - 1);
-            }
-            if (url.substring(url.length - 1).includes('?')) {
-                url = url.substring(0, url.length - 1);
-            }
-        } else {
-            url += '&' + param
-        }
-    } else {
-        url += '?' + param;
-    }
-    window.history.pushState({}, null, url);
-
+    const url = new URL(window.location.href);
+    url.searchParams.set('page', page);
+    window.history.replaceState(null, null, url);
     var form = document.getElementById('filterForm');
     submitForm(form);
 }
 
+function addFilter(type, id) {
+    handleParameters(type, id);
+    var form = document.getElementById('filterForm');
+    submitForm(form);
+}
+
+function handleParameters(key, value) {
+    // Tilføj query parameter uden refresh.
+    const url = new URL(window.location.href);
+    let remove = false;
+    if (url.searchParams.has(key)) {
+        let values = url.searchParams.getAll(key);
+        if (values.includes(value)) {
+            remove = true;
+        }
+    }
+    if (remove) {
+        let values = url.searchParams.getAll(key);
+        let modified = values.filter(e => e !== value);
+        url.searchParams.delete(key);
+        modified.forEach(element => {
+            url.searchParams.append(key, element);
+        });
+    } else {
+        url.searchParams.append(key, value);
+    }
+    window.history.replaceState(null, null, url);
+}
+
 function submitForm(formElement) {
 
-    var formData = new FormData(formElement);
+    let formData = new FormData(formElement);
 
-    var sort = document.getElementById("dropdownButton").value;
+    let sort = document.getElementById("dropdownButton").value;
     formData.append("sort", sort);
 
-    var order = document.getElementById("dropdownButton2").value;
+    let order = document.getElementById("dropdownButton2").value;
     formData.append("order", order);
 
-    
-    var page;
-    if (nextPage != null) {
-        page = nextPage
-    } else {
+
+    let page = document.getElementById('currentPage') ? document.getElementById('currentPage').value : null;
+    if (page === null || page === '') {
         page = '1'
     }
-
     formData.append("page", page);
+
+    let udd = [];
+    document.getElementsByName('udd').forEach(element => {
+        if (element.checked) {
+            udd.push(element.value);
+        }
+    });
+    if (udd.length > 0) {
+        formData.set("udd", udd);
+    };
+
+    let lnd = [];
+    document.getElementsByName('lnd').forEach(element => {
+        if (element.checked) {
+            lnd.push(element.value);
+        }
+    });
+    if (lnd.length > 0) {
+        formData.set("lnd", lnd);
+    };
 
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -87,3 +115,15 @@ function animateArrow(element) {
         child.classList.toggle('arrow-rotate');
     })
 }
+
+function checkCollapse(key, collapse, collapseHeader) {
+    document.getElementsByName(key).forEach(element => {
+        if (element.checked) {
+            document.getElementById(collapse).classList.add('show');
+            animateArrow(document.getElementById(collapseHeader));
+            return;
+        }
+    });
+}
+checkCollapse('udd', 'collapse1', 'collapse1Header');
+checkCollapse('lnd', 'collapse2', 'collapse2Header');

@@ -20,7 +20,7 @@ router.get('/', async function (req, res, next) {
         offset = page * limit;
     }
 
-    const udd = await db.Uddannelser.findAll({
+    const udd = await db.Uddannelse.findAll({
         raw: true,
         order: [
             ['name', 'ASC']
@@ -67,14 +67,14 @@ router.get('/', async function (req, res, next) {
        }
        
     });
-    console.log(day+month+ year)
+
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1  ? true : false;
     console.log(rows)
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
-        let eduName = await db.Uddannelser.findOne({
+        let eduName = await db.Uddannelse.findOne({
             where: {
                 id: element['education']
             }
@@ -242,7 +242,7 @@ router.post('/query', function (req, res) {
         for (let index = 0; index < rows.length; index++) {
             const element = rows[index];
             
-            let eduName = await db.Uddannelser.findOne({
+            let eduName = await db.Uddannelse.findOne({
                 where: {
                     id: element['education']
                 }

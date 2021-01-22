@@ -10,12 +10,18 @@ const {
     Op
 } = require('sequelize');
 const uploadFolder = require('../constants/references').uploadFolder();
+const makeArray = function(body, param) {
+    if (body.hasOwnProperty(param)) {
+        let array = body[param].split(",");
+        body[param] = array;
+    }
+};
 
 
 router.get('/', async function (req, res, next) {
 
-    var page;
-    var offset;
+    let page;
+    let offset;
     if (req.query.page == null) {
         page = 1
         offset = 0;
@@ -24,7 +30,82 @@ router.get('/', async function (req, res, next) {
         offset = (page - 1) * limit;
     }
 
-    const udd = await db.Uddannelser.findAll({
+    //Handle where
+    let where = {}
+    let fk_education = {
+        [Op.or]: []
+    };
+    let sprog = {
+        [Op.or]: []
+    };
+
+    console.log(req.query);
+    for (let key in req.query) {
+        if (key.includes("udd")) {
+            let values = req.query[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    fk_education[Op.or].push(+element);
+                });
+            } else {
+                fk_education[Op.or].push(+values);
+            }
+        }
+
+        if (key.includes("lnd")) {
+            let values = req.query[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    if (element.includes('ind')) {
+                        sprog[Op.or].push(
+                            'dansk'
+                        );
+                        sprog[Op.or].push(
+                            'Dansk'
+                        );
+                    }
+                    if (element.includes('ud')) {
+
+                        sprog[Op.or].push({
+                            [Op.not]: 'dansk'
+                        });
+
+                        sprog[Op.or].push({
+                            [Op.not]: 'Dansk'
+                        });
+                    }
+                });
+            } else {
+                if (values.includes('ind')) {
+                    sprog[Op.or].push(
+                        'dansk'
+                    );
+                    sprog[Op.or].push(
+                        'Dansk'
+                    );
+                }
+                if (values.includes('ud')) {
+
+                    sprog[Op.or].push({
+                        [Op.not]: 'dansk'
+                    });
+
+                    sprog[Op.or].push({
+                        [Op.not]: 'Dansk'
+                    });
+                }
+            }
+        }
+    }
+
+    where = {
+        fk_education,
+        sprog,
+        offentlig: true,
+        gyldig: true
+    }
+
+    const udd = await db.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]
@@ -45,14 +126,13 @@ router.get('/', async function (req, res, next) {
             model: db.Student,
             as: 'student'
         },
-        where: {
-            offentlig: true,
-            gyldig: true
-        }
+        where
     });
 
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1 ? true : false;
+
+    let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
     res.render('search_cv', {
         json: rows,
@@ -62,7 +142,8 @@ router.get('/', async function (req, res, next) {
             page: page,
             pageCount: pageCount
         },
-        withPages
+        withPages,
+        url: fullUrl
     });
 
 });
@@ -71,53 +152,86 @@ router.post('/query', function (req, res) {
 
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
-
         var where = {
             offentlig: true,
             gyldig: true
         }
-        var uddannelse = {
+        var fk_education = {
             [Op.or]: []
         };
         var sprog = {
             [Op.or]: []
         };
 
-        for (var key in fields) {
-            const element = key + "";
-            if (element.includes("udd")) {
+        makeArray(fields, 'udd');
+        makeArray(fields, 'lnd');
 
-                uddannelse[Op.or].push(element.substring(3));
+        for (let key in fields) {
+            if (key.includes("udd")) {
+                let values = fields[key];
+                if (Array.isArray(values)) {
+                    values.forEach(element => {
+                        fk_education[Op.or].push(+element);
+                    });
+                } else {
+                    fk_education[Op.or].push(+values);
+                }
             }
-
-            if (element.includes('indland')) {
-
-                sprog[Op.or].push(
-                    'dansk'
-                );
-                sprog[Op.or].push(
-                    'Dansk'
-                )
-            }
-
-            if (element.includes('udland')) {
-
-                sprog[Op.or].push({
-                    [Op.not]: 'dansk'
-                })
-
-                sprog[Op.or].push({
-                    [Op.not]: 'Dansk'
-                })
+    
+            if (key.includes("lnd")) {
+                let values = fields[key];
+                if (Array.isArray(values)) {
+                    values.forEach(element => {
+                        if (element.includes('ind')) {
+                            sprog[Op.or].push(
+                                'dansk'
+                            );
+                            sprog[Op.or].push(
+                                'Dansk'
+                            );
+                        }
+                        if (element.includes('ud')) {
+    
+                            sprog[Op.or].push({
+                                [Op.not]: 'dansk'
+                            });
+    
+                            sprog[Op.or].push({
+                                [Op.not]: 'Dansk'
+                            });
+                        }
+                    });
+                } else {
+                    if (values.includes('ind')) {
+                        sprog[Op.or].push(
+                            'dansk'
+                        );
+                        sprog[Op.or].push(
+                            'Dansk'
+                        );
+                    }
+                    if (values.includes('ud')) {
+    
+                        sprog[Op.or].push({
+                            [Op.not]: 'dansk'
+                        });
+    
+                        sprog[Op.or].push({
+                            [Op.not]: 'Dansk'
+                        });
+                    }
+                }
             }
         }
 
+        
         where = {
-            uddannelse,
+            fk_education,
             sprog,
             offentlig: true,
             gyldig: true
         }
+        console.log(where);
 
         var page = parseInt(fields.page);
         var offset;
