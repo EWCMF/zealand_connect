@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Uddannelser extends Model {
+  class Uddannelse extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,14 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Uddannelse.hasMany(models.CV, {
+        as: 'CVs',
+        foreignKey: 'fk_education'
+      });
+
+      Uddannelse.hasMany(models.InternshipPost, {
+        as: 'internship_posts',
+        foreignKey: 'fk_education'
+      })
     }
   };
-  Uddannelser.init({
+  Uddannelse.init({
     name: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Uddannelser',
+    modelName: 'Uddannelse',
+    tableName: 'Uddannelser',
     freezeTableName: true
   });
-  return Uddannelser;
+  return Uddannelse;
 };

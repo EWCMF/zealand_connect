@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'virksomhed',
         foreignKey: 'fk_company'
       });
+
+      InternshipPost.belongsTo(models.Uddannelse, {
+        as: 'uddannelse',
+        foreignKey: 'fk_education'
+      })
     }
   };
   InternshipPost.init({

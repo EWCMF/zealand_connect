@@ -13,7 +13,7 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse5" onclick="animateArrow(this)">
+                            <h6 id="collapse5Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse5" onclick="animateArrow(this)">
                                     Opslagstype
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -25,22 +25,22 @@
                                     <label class="form-check-label flex-fill">
                                         Praktik
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="typ1"
-                                        onclick="addFilter('typ', '1')">
+                                    <input class="align-self-center" type="checkbox" name="typ" value="1"
+                                        onclick="addFilter('typ', '1')" {{checkedStateURL url 'typ' '1'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Studiejob
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="typ2"
-                                        onclick="addFilter('typ','2')">
+                                    <input class="align-self-center" type="checkbox" name="typ" value="2"
+                                        onclick="addFilter('typ','2')" {{checkedStateURL url 'typ' '2'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Trainee
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="typ3"
-                                        onclick="addFilter('typ','3')">
+                                    <input class="align-self-center" type="checkbox" name="typ" value="3"
+                                        onclick="addFilter('typ','3')" {{checkedStateURL url 'typ' '3'}}>
                                 </li>
 
                             </ul>
@@ -48,7 +48,7 @@
 
                         </div>
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
+                            <h6 id="collapse1Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
                                     Uddannelser
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -61,8 +61,8 @@
                                     <label class="form-check-label flex-fill">
                                         {{name}}
                                     </label>
-                                    <input {{checked}} class="align-self-center" type="checkbox" name="udd{{id}}"
-                                        onclick="addFilter('udd', '{{id}}')" onload="checkFilter()">
+                                    <input {{checked}}{{#unless checked}}{{checkedStateURL ../url 'udd' id}}{{/unless}} class="align-self-center" type="checkbox" name="udd" value="{{id}}"
+                                        onclick="addFilter('udd', '{{id}}')">
                                     {{#if checked}}
                                     <body onload="addFilter('udd', {{id}})"></body>
                                     {{/if}}
@@ -71,7 +71,7 @@
                             </ul>
                         </div>
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)">
+                            <h6 id="collapse2Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)">
                                     Land
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -83,15 +83,15 @@
                                     <label class="form-check-label flex-fill">
                                         Indland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="indland"
-                                        onclick="addFilter('lnd', 'Indland')">
+                                    <input class="align-self-center" type="checkbox" name="lnd" value="ind"
+                                        onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Udland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="udland"
-                                        onclick="addFilter('lnd','Udland')">
+                                    <input class="align-self-center" type="checkbox" name="lnd" value="ud"
+                                        onclick="addFilter('lnd','ud')" {{checkedStateURL url 'lnd' 'ud'}}>
                                 </li>
 
                             </ul>
@@ -100,7 +100,7 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse3" onclick="animateArrow(this)">
+                            <h6 id="collapse3Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse3" onclick="animateArrow(this)">
                                     Region
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -112,36 +112,36 @@
                                     <label class="form-check-label flex-fill">
                                         Hovedstaden
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="regRegion Hovedstaden"
-                                        onclick="addFilter('reg', '1')">
+                                    <input class="align-self-center" type="checkbox" name="reg" value="1"
+                                        onclick="addFilter('reg', '1')" {{checkedStateURL url 'reg' '1'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Midtjylland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="regRegion Midtjylland"
-                                        onclick="addFilter('reg','2')">
+                                    <input class="align-self-center" type="checkbox" name="reg" value="2"
+                                        onclick="addFilter('reg','2')" {{checkedStateURL url 'reg' '2'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Nordjylland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="regRegion Nordjylland"
-                                        onclick="addFilter('reg','3')">
+                                    <input class="align-self-center" type="checkbox" name="reg" value="3"
+                                        onclick="addFilter('reg','3')" {{checkedStateURL url 'reg' '3'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Sjælland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="regRegion Sjælland"
-                                        onclick="addFilter('reg','4')">
+                                    <input class="align-self-center" type="checkbox" name="reg" value="4"
+                                        onclick="addFilter('reg','4')" {{checkedStateURL url 'reg' '4'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Syddanmark
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="regRegion Syddanmark"
-                                        onclick="addFilter('reg','5')">
+                                    <input class="align-self-center" type="checkbox" name="reg" value="5"
+                                        onclick="addFilter('reg','5')" {{checkedStateURL url 'reg' '5'}}>
                                 </li>
 
                             </ul>
@@ -150,7 +150,7 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse4" onclick="animateArrow(this)">
+                            <h6 id="collapse4Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse4" onclick="animateArrow(this)">
                                     By
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -166,8 +166,8 @@
                                     
                                 </li>
                                 <li>
-                                    <button class="btn btn-success" onclick="addFilter('pos', document.getElementById('inputPost').value)">Søg</button>
-                                    <button class="btn btn-success" onclick="document.getElementById('inputPost').value = ''">Ryd</button>
+                                    <button type="button" class="btn btn-success" onclick="addFilterSearch('pos', document.getElementById('inputPost').value)">Søg</button>
+                                    <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputPost', 'pos')">Ryd</button>
                                 </li>
                                 
                             </ul>

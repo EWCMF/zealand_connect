@@ -12,7 +12,7 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
+                            <h6 id="collapse1Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
                                     Uddannelser
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -24,14 +24,14 @@
                                     <label class="form-check-label flex-fill">
                                         {{name}}
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="udd{{name}}"
-                                        onclick="addFilter('udd', '{{id}}')">
+                                    <input class="align-self-center" type="checkbox" name="udd" value='{{id}}'
+                                        onclick="addFilter('udd', '{{id}}')" {{checkedStateURL ../url 'udd' id}}>
                                 </li>
                                 {{/each}}
                             </ul>
                         </div>
                         <div class="panel-heading">
-                            <h6 class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)">
+                            <h6 id="collapse2Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)">
                                     Land
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -43,15 +43,15 @@
                                     <label class="form-check-label flex-fill">
                                         Indland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="indland"
-                                        onclick="addFilter('lnd', 'Indland')">
+                                    <input class="align-self-center" type="checkbox" name="lnd" value="ind"
+                                        onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Udland
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="udland"
-                                        onclick="addFilter('lnd','Udland')">
+                                    <input class="align-self-center" type="checkbox" name="lnd" value="ud"
+                                        onclick="addFilter('lnd','ud')" {{checkedStateURL url 'lnd' 'ud'}}>
                                 </li>
 
                             </ul>
@@ -77,10 +77,13 @@
                         Senest opdateret
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
+                        <!--
                         <a class="dropdown-item sorteringsContainer" id="senestOpdateret" onclick="changeSort(this, 'updatedAt')">Senest
                             opdateret</a>
+                            
                         <a class="dropdown-item sorteringsContainer" id="overskrift"
                             onclick="changeSort(this, 'overskrift')">Stilling/status</a>
+                            -->
                     </div>
                 </div>
                 <label class="mb-0 mr-1 align-self-center sorteringsContainer">

@@ -12,7 +12,7 @@ router.get('/', async function (req, res, next) {
     var student = res.locals.user;
 
     if (student.cv == null) {
-        const udd = await db.Uddannelser.findAll({
+        const udd = await db.Uddannelse.findAll({
             order: [
                 ['name', 'ASC']
             ]
@@ -50,7 +50,7 @@ router.get('/edit', async function (req, res, next) {
 
     var student = res.locals.user;
 
-    const udd = await db.Uddannelser.findAll({
+    const udd = await db.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]

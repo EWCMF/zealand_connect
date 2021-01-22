@@ -257,7 +257,7 @@ router.get('/', async function (req, res, next) {
 
     var generatedEducationOptions = '';
 
-    db.Uddannelser.findAll({
+    db.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]
