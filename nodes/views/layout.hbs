@@ -30,10 +30,16 @@
     {{/unless}}
 
     <!-- TODO: navigation -->
+    
     <div class="sidebar">
+        {{#if disableSidebarButton}}
+        <a class="navbar-brand">Zealand</a>
+        {{else}}
         <a class="navbar-brand" href="/">Zealand</a>
+        {{/if}}
         <span>Connect</span>
     </div>
+    
     {{{body}}}
 
     {{> cookie-consent-modal}}
