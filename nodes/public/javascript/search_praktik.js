@@ -2,6 +2,8 @@
 function changeSort(clicked, value) {
     document.getElementById("dropdownButton").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton").value = value;
+    
+    removePageParam();
     let form = document.getElementById('filterForm');
     submitForm(form);
 };
@@ -9,12 +11,13 @@ function changeSort(clicked, value) {
 function changeOrder(clicked, value) {
     document.getElementById("dropdownButton2").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton2").value = value;
-    var form = document.getElementById('filterForm');
 
     const url = new URL(window.location.href);
     url.searchParams.set('order', value);
     window.history.replaceState(null, null, url);
 
+    removePageParam();
+    let form = document.getElementById('filterForm');
     submitForm(form);
 };
 
@@ -24,13 +27,22 @@ function changePage(page) {
     const url = new URL(window.location.href);
     url.searchParams.set('page', page);
     window.history.replaceState(null, null, url);
-    var form = document.getElementById('filterForm');
+    let form = document.getElementById('filterForm');
     submitForm(form);
 };
 
+function removePageParam() {
+    const url = new URL(window.location.href);
+    if (url.searchParams.has('page')) {
+        url.searchParams.delete('page');
+        window.history.replaceState(null, null, url);
+    }
+}
+
 function addFilter(type, id) {
     handleParameters(type, id);
-    var form = document.getElementById('filterForm');
+    removePageParam();
+    let form = document.getElementById('filterForm');
     submitForm(form);
 };
 
@@ -42,7 +54,8 @@ function addFilterSearch(type, value) {
     const url = new URL(window.location.href);
     url.searchParams.set(type, value);
     window.history.replaceState(null, null, url);
-    var form = document.getElementById('filterForm');
+    removePageParam();
+    let form = document.getElementById('filterForm');
     submitForm(form);
 }
 
@@ -55,7 +68,8 @@ function removeFilterSearch(element, type) {
         return;
     }
     window.history.replaceState(null, null, url);
-    var form = document.getElementById('filterForm');
+    removePageParam();
+    let form = document.getElementById('filterForm');
     submitForm(form);
 }
 
