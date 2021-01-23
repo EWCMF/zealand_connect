@@ -203,13 +203,21 @@ router.get('/delete', function (req, res, next) {
 router.post('/preview', async function (req, res, next) {
     let student = await findUserByEmail(req.user);
 
-    const udd = await db.Uddannelse.findByPk(req.body.uddannelse, {
+    let udd = await db.Uddannelse.findByPk(req.body.uddannelse, {
         attributes: ["name"]
     });
+    if (udd == null) {
+        udd = {
+            name: ''
+        }
+    };
 
     let json = {
-        fornavn : student.fornavn,
-        efternavn : student.efternavn,
+        student: {
+            profilbillede: student.profilbillede,
+            fornavn : student.fornavn,
+            efternavn : student.efternavn
+        },
         overskrift : req.body.overskrift,
         education: {
             name: udd.name
@@ -232,8 +240,9 @@ router.post('/preview', async function (req, res, next) {
     res.render('cv', {
         json: json,
         navDisabled: true,
-        noButtons: true
-})
+        noButtons: true,
+        disableSidebarButton: true
+    });
 
 })
 

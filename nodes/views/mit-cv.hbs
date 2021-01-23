@@ -18,7 +18,7 @@
                     <div class="form-group required">
                         <label for="exampleFormControlSelect1">Uddannelse</label>
                         <select class="form-control" id="uddannelse" name="uddannelse">
-                            <option value="">Vælg din uddannelse</option>
+                            <option selected disabled hidden value="">Vælg din uddannelse</option>
                             {{#each uddannelser}}
                             <option {{selectState name ../uddannelse }} value={{id}}>{{name}}</option>
                             {{/each}}
