@@ -31,7 +31,7 @@ router.post('/', function (req, res, next) {
             post_type,
             email,
             contact,
-            education,
+            fk_education,
             country,
             post_start_date,
             post_end_date,
@@ -72,7 +72,7 @@ router.post('/', function (req, res, next) {
             post_type,
             email,
             contact,
-            education,
+            fk_education,
             country,
             region,
             post_start_date,
@@ -169,7 +169,7 @@ router.post('/', function (req, res, next) {
             indhold.company_link = null;
         }
 
-        if (education == 0) {
+        if (fk_education == 0) {
             console.log('Invalid choice');
             inputError = true;
         }

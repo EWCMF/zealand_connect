@@ -14,7 +14,11 @@ async function findUserByEmail(email) {
             where: {email: email},
             include: {
                 model: models.CV,
-                as: 'cv'
+                as: 'cv',
+                include: {
+                    model: models.Uddannelse,
+                    as: 'education',
+                }
             }
         }).then((student) => {
             if (student === null) {

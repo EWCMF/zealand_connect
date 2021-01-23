@@ -1,5 +1,3 @@
-// document.getElementById("dropdownUddannelser").disabled = !0;
-// document.getElementById("dropdownLand").disabled = !0;
 
 function changeSort(clicked, value) {
     document.getElementById("dropdownButton").innerHTML = clicked.innerHTML;

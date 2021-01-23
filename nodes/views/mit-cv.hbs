@@ -20,7 +20,7 @@
                         <select class="form-control" id="uddannelse" name="uddannelse">
                             <option value="">Vælg din uddannelse</option>
                             {{#each uddannelser}}
-                            <option {{selectState name ../uddannelse }} value="{{name}}">{{name}}</option>
+                            <option {{selectState name ../uddannelse }} value={{id}}>{{name}}</option>
                             {{/each}}
                         </select>
                      <p id="UddannelsesError" class="CVErrorColor" hidden="false">Du skal vælge en Uddannelse</p>

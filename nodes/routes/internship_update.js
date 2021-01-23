@@ -25,7 +25,7 @@ router.post('/', function (req, res, next) {
   var formData = new formidable.IncomingForm();
   formData.parse(req, function (error, fields, files) {
     //laver et objekt med alle data
-    var { id, title, post_type, email, contact, education, country, post_start_date, post_end_date, post_text,
+    var { id, title, post_type, email, contact, fk_education, country, post_start_date, post_end_date, post_text,
       city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired } = fields;
 
     var region = '';
@@ -50,7 +50,7 @@ router.post('/', function (req, res, next) {
     }
 
     var indhold = {
-      id, title, post_type, email, contact, education, country, region, post_start_date, post_end_date,
+      id, title, post_type, email, contact, fk_education, country, region, post_start_date, post_end_date,
       post_text, city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired
     };
     var inputError = false;
@@ -125,7 +125,7 @@ router.post('/', function (req, res, next) {
       indhold.company_link = null;
     }
 
-    if (education == 0) {
+    if (fk_education == 0) {
       console.log('Invalid choice');
       inputError = true;
     }
@@ -219,7 +219,7 @@ router.get('/', function (req, res, next) {
       generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
     });
     db.InternshipPost.findByPk(req.query.id, {
-      attributes: ["title", "post_type", "email", "contact", "education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired"]
+      attributes: ["title", "post_type", "email", "contact", "fk_education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired"]
     }).then(result => {
       var address = '';
 
@@ -244,7 +244,7 @@ router.get('/', function (req, res, next) {
         rposttype: result['post_type'],
         remail: result['email'],
         rcontact: result['contact'],
-        reducation: result['education'],
+        reducation: result['fk_education'],
         rcountry: result['country'],
         rregion: result['region'],
         rpoststart /*start date*/: result['post_start_date'],

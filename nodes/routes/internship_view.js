@@ -11,7 +11,7 @@ router.get('/:id', async function (req, res) {
 
     let result = await models.InternshipPost.findByPk(id, {
         nest: true,
-        attributes: ["title", "email", "contact", "education",
+        attributes: ["title", "email", "contact", "fk_education",
             "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode",
             "company_link", "post_document", "fk_company"],
         include: {
@@ -20,7 +20,7 @@ router.get('/:id', async function (req, res) {
         }
     });
 
-    let educationId = result.education;
+    let educationId = result.fk_education;
 
     let education = await models.Uddannelse.findByPk(educationId);
 
