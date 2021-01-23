@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       InternshipPost.belongsTo(models.Uddannelse, {
-        as: 'uddannelse',
+        as: 'education',
         foreignKey: 'fk_education'
       })
     }
@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
     post_type: DataTypes.INTEGER,
     email: DataTypes.STRING,
     contact: DataTypes.STRING,
-    education: DataTypes.INTEGER,
     country: DataTypes.INTEGER,
     region: DataTypes.STRING,
     post_start_date: DataTypes.STRING,

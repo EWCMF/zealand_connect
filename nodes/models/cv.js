@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
   };
   CV.init({
     overskrift: DataTypes.STRING,
-    uddannelse: DataTypes.STRING,
     email: DataTypes.STRING,
     sprog: DataTypes.STRING,
     speciale: DataTypes.STRING,

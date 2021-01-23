@@ -32,10 +32,14 @@ router.get('/', async function (req, res, next) {
         where: {
             id: parseInt(student.cv.id)
         },
-        include: {
+        include: [{
             model: db.Student,
             as: 'student'
-        }
+        },
+        {
+            model: db.Uddannelse,
+            as: 'education'
+        }]
     }).then((cv) => {
 
         res.redirect('/search-cv/' + cv.id);
@@ -62,7 +66,7 @@ router.get('/edit', async function (req, res, next) {
 
     res.render('mit-cv', {
         uddannelser: udd,
-        uddannelse: student.cv.uddannelse,
+        uddannelse: student.cv.education.name,
         profil: student.fornavn + " " + student.efternavn,
         overskrift: student.cv.overskrift,
         email: student.cv.email,
@@ -91,7 +95,7 @@ router.post('/submit', async function (req, res, next) {
     var student = res.locals.user;
 
     let overskrift = req.body.overskrift;
-    let uddannelse = req.body.uddannelse;
+    let fk_education = req.body.uddannelse;
     let email = req.body.email;
     let sprog = req.body.sprog;
     let speciale = req.body.speciale;
@@ -114,7 +118,7 @@ router.post('/submit', async function (req, res, next) {
     var numbersOnly = numbersRegex.test(telefon);
     var medOverskrift = !overskrift == "";
     var medSprog = !sprog == "";
-    var medUddannelse = !uddannelse == "";
+    var medUddannelse = !fk_education == 0;
     var medTidligere_uddannelse = !tidligere_uddannelse == "";
     var medIt_kompetencer = !it_kompetencer == ""
 
@@ -125,7 +129,7 @@ router.post('/submit', async function (req, res, next) {
     var gyldig;
     var besked;
 
-    if (overskrift == '' || uddannelse == '' ||
+    if (overskrift == '' || fk_education == 0 ||
         email == '' || sprog == '' || telefon == '' ||
         it_kompetencer == '' || tidligere_uddannelse == '') {
         gyldig = false;
@@ -139,7 +143,7 @@ router.post('/submit', async function (req, res, next) {
 
     var json = {
         overskrift,
-        uddannelse,
+        fk_education,
         email,
         sprog,
         speciale,
@@ -199,11 +203,17 @@ router.get('/delete', function (req, res, next) {
 router.post('/preview', async function (req, res, next) {
     let student = await findUserByEmail(req.user);
 
+    const udd = await db.Uddannelse.findByPk(req.body.uddannelse, {
+        attributes: ["name"]
+    });
+
     let json = {
         fornavn : student.fornavn,
         efternavn : student.efternavn,
         overskrift : req.body.overskrift,
-        uddannelse : req.body.uddannelse,
+        education: {
+            name: udd.name
+        },
         email : req.body.email,
         sprog : req.body.sprog,
         speciale : req.body.speciale,

@@ -187,7 +187,7 @@ router.get('/', async function (req, res, next) {
             for (let index = 0; index < udd.length; index++) {
                 const element = udd[index].name;
                 
-                if (element == user.cv.uddannelse) {
+                if (element == user.cv.education.name) {
     
                     udd[index].checked = 'checked'
                 }
@@ -206,10 +206,14 @@ router.get('/', async function (req, res, next) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: {
+        include: [{
             model: db.Virksomhed,
             as: 'virksomhed'
         },
+        {
+            model: db.Uddannelse,
+            as: 'education'
+        }],
         where
         }   
     );
@@ -221,11 +225,11 @@ router.get('/', async function (req, res, next) {
 
         let eduName = await db.Uddannelse.findOne({
             where: {
-                id: element['education']
+                id: element['fk_education']
             }
         });
 
-        element['education'] = eduName.name;
+        element['fk_education'] = eduName.name;
 
         let cropStart = element['post_start_date'].substring(0, 10);
 
@@ -306,10 +310,14 @@ router.post('/query', function (req, res) {
             order: [
                 [fields.sort, fields.order]
             ],
-            include: {
+            include: [{
                 model: db.Virksomhed,
                 as: 'virksomhed'
             },
+            {
+                model: db.Uddannelse,
+                as: 'education'
+            }],
             where
         });
 
@@ -320,11 +328,11 @@ router.post('/query', function (req, res) {
             
             let eduName = await db.Uddannelse.findOne({
                 where: {
-                    id: element['education']
+                    id: element['fk_education']
                 }
             });
     
-            element['education'] = eduName.name;
+            element['fk_education'] = eduName.name;
 
             let cropStart = element['post_start_date'].substring(0, 10);
 

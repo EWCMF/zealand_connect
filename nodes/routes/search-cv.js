@@ -122,10 +122,14 @@ router.get('/', async function (req, res, next) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: {
+        include: [{
             model: db.Student,
             as: 'student'
         },
+        {
+            model: db.Uddannelse,
+            as: 'education'
+        }],
         where
     });
 
@@ -178,10 +182,14 @@ router.post('/query', function (req, res) {
                 [fields.sort, fields.order]
             ],
             where,
-            include: {
+            include: [{
                 model: db.Student,
                 as: 'student'
-            }
+            },
+            {
+                model: db.Uddannelse,
+                as: 'education'
+            }]
         });
 
         var item = [count];
@@ -246,10 +254,14 @@ router.get('/:id', async function (req, res) {
         where: {
             id: parseInt(id)
         },
-        include: {
+        include: [{
             model: db.Student,
             as: 'student'
-        }
+        },
+        {
+            model: db.Uddannelse,
+            as: 'education'
+        }]
     });
 
     if (cv.hjemmeside.includes("://")) {
@@ -312,10 +324,14 @@ router.get('/:id/create_pdf', function (req, res, next) {
         where: {
             id: parseInt(id)
         },
-        include: {
+        include: [{
             model: db.Student,
             as: 'student'
-        }
+        },
+        {
+            model: db.Uddannelse,
+            as: 'education'
+        }],
     }).then((cv) => {
         cvOutside = cv;
         for (const key in cv) {
@@ -354,7 +370,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
         }
 
         // uddannelse ekstra højde mest til testing af responsiv
-        var uddannelse_characters = cv.uddannelse.length;
+        var uddannelse_characters = cv.education.name.length;
         var ekstra_height_uddannelse = 0;
         while (uddannelse_characters > 100) {
             ekstra_height_uddannelse = ekstra_height_uddannelse + height;
@@ -542,7 +558,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
         myDoc.font('Times-Roman')
             .fontSize(10.72)
-            .text(cv.uddannelse, 50, height)
+            .text(cv.education.name, 50, height)
 
         height = height + 60 + ekstra_height_uddannelse
         if (height + ekstra_height_speciale > new_page) {

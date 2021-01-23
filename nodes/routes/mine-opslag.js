@@ -17,15 +17,10 @@ router.get('/', async function (req, res, next) {
         offset = 0;
     } else {
         page = req.query.page
-        offset = page * limit;
+        offset = (page - 1) * limit;
     }
 
     const user = res.locals.user
-
-    var date = new Date();
-    let day = ("0" + date.getDate()).slice(-2);
-    let month = ("0" + (date.getMonth() + 1)).slice(-2);
-    let year = date.getUTCFullYear();
     const {
         count,
         rows
@@ -37,29 +32,32 @@ router.get('/', async function (req, res, next) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: {
+        include: [{
             model: db.Virksomhed,
             as: 'virksomhed'
         },
+        {
+            model: db.Uddannelse,
+            as: 'education'
+        }],
         where: {
             fk_company: user.id
         }
        
     });
-    console.log(day+month+ year)
+
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1  ? true : false;
-    console.log(rows)
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
         let eduName = await db.Uddannelse.findOne({
             where: {
-                id: element['education']
+                id: element['fk_education']
             }
         });
 
-        element['education'] = eduName.name;
+        element['fk_education'] = eduName.name;
 
         let cropStart = element['post_start_date'].substring(0, 10);
 
@@ -104,77 +102,7 @@ router.get('/', async function (req, res, next) {
 router.post('/query', function (req, res) {
 
     var formData = new formidable.IncomingForm();
-    formData.parse(req, async function (error, fields, files) {
-    
-        var where = {}
-        var education = {
-            [Op.or]: []
-        };
-        var country = {
-            [Op.or]: []
-        };
-        var region = {
-            [Op.or]: []
-        };
-        var postcode = {
-            [Op.or]: []
-        };
-
-        for (var key in fields) {
-            const element = key + "";
-            if (element.includes("udd")) {
-                let udd = parseInt(element.substring(3))
-                education[Op.or].push(udd);
-            }
-
-            if (element.includes('indland')) {
-
-                country[Op.or].push(
-                    1
-                );
-            }
-            
-            if (element.includes('udland')) {
-                
-                country[Op.or].push({
-                    [Op.not]: 1
-                });
-            }
-            
-            if (element.includes('reg')) {
-                
-                region[Op.or].push(
-                    element.substring(3)
-                );
-            }
-
-            if (fields.pos != '') {
-                let code = parseInt(fields.pos); 
-
-                postcode[Op.or].push(
-                    code
-                );
-            }
-        }
-
-        var date = new Date();
-        let day = ("0" + date.getDate()).slice(-2);
-        let month = ("0" + (date.getMonth() + 1)).slice(-2);
-        let year = date.getUTCFullYear();
-
-        where = {
-            education,
-            country,
-            region,
-            postcode,
-            [Op.or]: [
-                {'expired': {[Op.ne]: 1}},
-                {[ Op.and]:[
-                   {'expired': 1}, 
-                   { 'post_end_date': {[Op.gt]:year+"-"+month+"-"+day}}
-                ]}
-            ]
-        } 
+    formData.parse(req, async function (error, fields, files) { 
 
         var page = parseInt(fields.page);
         var offset;
@@ -196,10 +124,14 @@ router.post('/query', function (req, res) {
             order: [
                 [fields.sort, fields.order]
             ],
-            include: {
+            include: [{
                 model: db.Virksomhed,
                 as: 'virksomhed'
             },
+            {
+                model: db.Uddannelse,
+                as: 'education'
+            }],
             where
         });
 
@@ -210,7 +142,7 @@ router.post('/query', function (req, res) {
             
             let eduName = await db.Uddannelse.findOne({
                 where: {
-                    id: element['education']
+                    id: element['fk_education']
                 }
             });
     
@@ -225,7 +157,7 @@ router.post('/query', function (req, res) {
             let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
             let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
     
-            element['education'] = eduName.name;
+            element['fk_education'] = eduName.name;
             element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
             element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear; 
         }
@@ -272,5 +204,4 @@ router.post('/query', function (req, res) {
     });
 });
 
-// stared chanching stuff here
 module.exports = router;
