@@ -203,11 +203,17 @@ router.get('/delete', function (req, res, next) {
 router.post('/preview', async function (req, res, next) {
     let student = await findUserByEmail(req.user);
 
+    const udd = await db.Uddannelse.findByPk(req.body.uddannelse, {
+        attributes: ["name"]
+    });
+
     let json = {
         fornavn : student.fornavn,
         efternavn : student.efternavn,
         overskrift : req.body.overskrift,
-        fk_education : req.body.uddannelse,
+        education: {
+            name: udd.name
+        },
         email : req.body.email,
         sprog : req.body.sprog,
         speciale : req.body.speciale,

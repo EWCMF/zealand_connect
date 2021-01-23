@@ -252,9 +252,6 @@ router.get('/', async function (req, res, next) {
         }
     });
 
-
-    console.log(loggedInVirksomhed);
-
     var generatedEducationOptions = '';
 
     db.Uddannelse.findAll({

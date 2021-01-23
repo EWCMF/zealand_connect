@@ -14,10 +14,14 @@ router.get('/:id', async function (req, res) {
         attributes: ["title", "email", "contact", "fk_education",
             "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode",
             "company_link", "post_document", "fk_company"],
-        include: {
+        include: [{
             model: models.Virksomhed,
             as: 'virksomhed'
-        }
+        },
+        {
+            model: models.Uddannelse,
+            as: 'education'
+        }]
     });
 
     let educationId = result.fk_education;
