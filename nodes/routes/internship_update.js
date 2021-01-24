@@ -264,9 +264,22 @@ router.get('/', function (req, res, next) {
   }).catch();
 });
 
-router.get('/delete/:id', function (req, res, next) {
-  deleteInternshipPost(req.params.id)
-  res.redirect('/');
+router.get('/delete/:id', async function (req, res, next) {
+  if (req.user == null) {
+    res.status(403).render('error403', {layout: false});
+  }
+  else {
+    let internshipPost = await models.InternshipPost.findByPk(req.params.id);
+    let company = await findUserByEmail(req.user);
+
+    if (company.id === internshipPost.fk_company){
+      deleteInternshipPost(req.params.id)
+      res.redirect('/');
+    }
+    else {
+      res.status(403).render('error403', {layout: false});
+    }
+  }
 });
 
 module.exports = router;
