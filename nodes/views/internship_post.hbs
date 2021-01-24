@@ -167,7 +167,7 @@
             <div class="form-group">
                 <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
                 {{#if update}}
-                    <button type="button" class="btn btn-danger" onclick="confirmYeet()">Slet dette opslag</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDeletePost()">Slet dette opslag</button>
                 {{/if}}
             </div>
         </form>
@@ -232,7 +232,7 @@
             }
     setDefaultSelect();
 
-    function confirmYeet() {
+    function confirmDeletePost() {
         if (confirm("Er du sikker?")) {
             window.location = "/internship_update/delete/" + '{{rid}}'
         }
