@@ -38,6 +38,7 @@
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0",
     "sort-json-array": "^0.1.7",
+    "sqlite3": "^5.0.1",
     "supertest": "^6.0.1",
     "uninstall": "0.0.0",
     "xmlhttprequest": "^1.8.0"

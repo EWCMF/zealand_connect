@@ -11,12 +11,8 @@ module.exports = {
         "logging": false
     },
     "test": {
-        "username": "root",
-        "password": "zealand12345",
-        "database": "test",
-        "host": "46.101.225.211",
-        "port": "3306",
-        "dialect": "mariadb",
+        "storage": ":memory:",
+        "dialect": "sqlite",
         "logging": false
     },
     "production": {
