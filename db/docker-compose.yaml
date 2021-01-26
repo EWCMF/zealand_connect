@@ -1,16 +1,16 @@
-version: '3'
-
 services:
   db:
-    container_name: db
-    hostname: db
+    container_name: database
+    hostname: database
     image: mariadb
     ports:
       - 3306:3306
     networks:
       - cluster
     environment:
-      MYSQL_ROOT_PASSWORD: changeMe
+      MYSQL_ROOT_PASSWORD: {DB_PW}
+      MYSQL_DATABASE: ZealandConnect
 
 networks:
   cluster:
+    external: true

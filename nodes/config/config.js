@@ -16,11 +16,11 @@ module.exports = {
         "logging": false
     },
     "production": {
-        "username": "root",
-        "password": "zealand12345",
-        "database": "ZealandConnect",
-        "host": "172.18.0.3",
-        "port": "3306",
+        "username": process.env.DB_PROD_USER,
+        "password": process.env.DB_PROD_PASS,
+        "database": process.env.DB_PROD_DATABASE,
+        "host": process.env.DB_PROD_HOST,
+        "port": process.env.DB_PROD_PORT,
         "dialect": "mariadb"
     }
 }
