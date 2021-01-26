@@ -1,5 +1,5 @@
 services:
-  db:
+  database:
     container_name: database
     hostname: database
     image: mariadb
@@ -8,9 +8,10 @@ services:
     networks:
       - cluster
     environment:
-      MYSQL_ROOT_PASSWORD: {DB_PW}
+      MYSQL_ROOT_PASSWORD: ${DB_PW}
       MYSQL_DATABASE: ZealandConnect
 
 networks:
   cluster:
-    external: true
+    external:
+      name: cluster
