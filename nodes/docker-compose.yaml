@@ -16,4 +16,5 @@ services:
 
 networks:
   cluster:
-    external: true
+    external:
+      name: cluster
