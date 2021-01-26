@@ -34,10 +34,10 @@
                         <td>By:</td>
                         <td>{{rcity}}</td>
                     </tr>
-                <tr id="postcodeParent">
-                    <td>Postnummer:</td>
-                    <td>{{rpostcode}}</td>
-                </tr>
+                    <tr id="postcodeParent">
+                        <td>Postnummer:</td>
+                        <td>{{rpostcode}}</td>
+                    </tr>
                 {{/if}}
                 <tr>
                     <td>Email:</td>
@@ -48,16 +48,16 @@
                     <td id="contactContainer">{{rcontact}}</td>
                 </tr>
                 {{#if rcvr}}
-                <tr>
-                    <td>CVR Nummer:</td>
-                    <td id="cvrContainer">{{rcvr}}</td>
-                </tr>
+                    <tr>
+                        <td>CVR Nummer:</td>
+                        <td id="cvrContainer">{{rcvr}}</td>
+                    </tr>
                 {{/if}}
                 {{#if rcompany}}
-                <tr>
-                    <td>Hjemmeside:</td>
-                    <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
-                </tr>
+                    <tr>
+                        <td>Hjemmeside:</td>
+                        <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
+                    </tr>
                 {{/if}}
                 {{#if rdoc}}
                     <tr id="docContainer">
@@ -71,13 +71,13 @@
         <div class="col-12 col-lg-2 d-flex flex-column">
             {{#unless noButtons}}
                 {{#if ejer}}
-                <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../internship_update?id={{rid}}'">Rediger
-                    opslag</button>
+                    <button type="button" class="btn btn-success mt-3"
+                            onclick="window.location.href='../internship_update?id={{rid}}'">Rediger opslag</button>
                 {{/if}}
             {{/unless}}
         </div>
     </div>
-    
+
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center">
