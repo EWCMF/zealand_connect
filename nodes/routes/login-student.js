@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var { reqLang } = require('../public/javascript/request');
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
@@ -18,7 +19,7 @@ router.get('/', function (req, res, next) {
            case 'incorrectpassword': res.render('login-student', { errormessage: 'Din account findes i vores system, men dit password er forkert.' }); break;
            case 'notloggedin': res.render('login-student', { errormessage: 'Du skal logge ind før du kan se din profil.'}); break;
            case 'none': res.redirect('/'); break;
-           default: res.render('login-student'); break;
+           default: res.render('login-student', { language: reqLang(req, res)}); break;
        }
 });
 

@@ -7,16 +7,16 @@
             <div class="col-12 col-lg-4"id="loginBoks">
                 <h1>LOGIN</h1>
                 <br>
-                <p>Log på med din organizationskonto</p>
+                <p data-key="Log_paa_med_din_organizationskonto">Log på med din organizationskonto</p>
                 <form action="/login-student/authenticate" method="post"  class="form-group" id="studentLoginForm">
                     <p style="color: red;">{{errormessage}}</p>
                     <input type="email" id="inputFeltEmailStudent" class="form-control" name="email" placeholder="nogen@example.com"> <br>
                     <input type="password" id="inputFeltPasswordStudent" class="form-control" name="password" placeholder="Adgangskode"><br>
-                    <input class="btn btn-dark" type="submit" id="logPaa" value="Log på">
+                    <button class="btn btn-dark" type="submit" id="logPaa" data-key="Log_paa">Log på</button>
                 </form>
-                    <p>Benyt din EASJ email til at logge ind med.</p>
+                    <p data-key="login_help">Benyt din EASJ email til at logge ind med.</p>
                     <br>
-                    <p>Glemt kodeord? Send en SMS med teksten "kodeord" til 50 76 27 10.</p>
+                    <p data-key="forgot_password">Glemt kodeord? Send en SMS med teksten "kodeord" til 50 76 27 10.</p>
                     <div id="linksHelp">
                     <a href="https://zealand.dk" class="bottomLink">Zealand.dk</a> <a href="https://helpdesk.zealand.dk" class="bottomLink">Helpdesk</a>
                     </div>

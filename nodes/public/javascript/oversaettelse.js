@@ -146,6 +146,10 @@ function getLangdata() {
                 "student_quick_access_btn": "Find your next job or internship. You can also create and publish a resume.",
                 "company_quick_access_headline" : "For companies",
                 "company_quick_access_btn": "Create and publish internship or job postings. You can also search the list of public student resumes.",
+                "Log_paa_med_din_organizationskonto": "Log in to your account",
+                "Log_paa": "Log in",
+                "login_help": "Use your EASJ email to log in",
+                "forgot_password": 'Forgot your password? Send a text message with the word "kodeord" to 50 76 27 10.'
 
 
 
