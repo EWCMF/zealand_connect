@@ -38,6 +38,7 @@ function getLangdata() {
     var temp = {"languages":{
         "en": {
             "strings": {
+                // Mixed elements
                 "studerende": "Students",
                 "virksomhed": "Business",
                 "labelPaakraevet": "Required",
@@ -114,10 +115,10 @@ function getLangdata() {
                 "sletUddannelse": "Delete education",
                 "uddannelse": "Education",
 
-                // Forside
+                // Frontpage
                 "Arbejdstid_og_laeringsmaal": "Work hours and learning objectives",
                 "Loen": "Payment",
-                "Forsikring": "Ensurance",
+                "Forsikring": "Insurance",
                 "Praktikaftale": "Internship agreement",
                 "Praktikperiode": "Internship",
                 "For_virksomheden": "For the company",
@@ -133,10 +134,14 @@ function getLangdata() {
                 "company_quick_access_btn": "Create and publish internship or job postings. You can also search the list of public student CV's.",
                 "company_quick_access_CV_headline": "Browse CV list",
                 "company_quick_access_CV_btn": "Find a suitable intern for your company.",
+
+                // Log ind som studerende
                 "Log_paa_med_din_organizationskonto": "Log in to your account",
                 "Log_paa": "Log in",
                 "login_help": "Use your EASJ email to log in",
                 "forgot_password": 'Forgot your password? Send a text message with the word "kodeord" to 50 76 27 10.',
+                "email_placeholder": "someone@example.com",
+                "password_placeholder": "Password",
 
                 // Navbar
                 "aKontakt": "Contact",
@@ -161,7 +166,21 @@ function getLangdata() {
                 "aProfil": "Profile",
                 "aMitCV": "My Resume",
                 "aMinePraktikOpslag": "My Internship posts",
-                "aOpretBruger": "Create user"
+                "aOpretBruger": "Create user",
+
+                // search-cv
+                "CV'er": "CV's",
+                "Uddannelser": "Education",
+                "Land": "Country",
+                "Indland": "Domestic",
+                "Udland": "Abroad",
+                "resultater": "results",
+                "Sortering": "Sort by",
+                "Senest_opdateret": "Recently updated",
+                "Raekkefoelge": "Order",
+                "Faldende": "Descending",
+                "Stigende": "Ascending",
+
 
             }
         }

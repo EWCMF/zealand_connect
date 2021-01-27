@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <h1 id="cvOverskrift">CV'er</h1>
+            <h1 id="cvOverskrift" data-key="CV'er">CV'er</h1>
             <hr>
         </div>
     </div>
@@ -12,7 +12,14 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h6 id="collapse1Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
+                            <h6 id="collapse1Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse1"
+                                data-key="Uddannelser"
+                                onclick="animateArrow(this)"
+                            >
                                     Uddannelser
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -31,7 +38,14 @@
                             </ul>
                         </div>
                         <div class="panel-heading">
-                            <h6 id="collapse2Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)">
+                            <h6 id="collapse2Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse2"
+                                onclick="animateArrow(this)"
+                                data-key="Land"
+                            >
                                     Land
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -40,14 +54,14 @@
                         <div id="collapse2" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Indland">
                                         Indland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="lnd" value="ind"
                                         onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Udland">
                                         Udland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="lnd" value="ud"
@@ -65,15 +79,18 @@
         </div>
         <div class="col">
             <div class="mb-2 d-flex flex-row" >
-                <label id="results" class="mb-0 flex-fill align-self-center sorteringsContainer" >
-                    {{resultater}} resultater
+                <label id="results" class="mb-0 flex align-self-center sorteringsContainer">
+                    {{resultater}}&nbsp;
                 </label>
-                <label class="mb-0 mr-1 align-self-center sorteringsContainer">
+                <label class="mb-0 flex-fill align-self-center sorteringsContainer" data-key="resultater">
+                    resultater
+                </label>
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer" data-key="Sortering">
                     Sortering:
                 </label>
                 <div class="btn-group">
                     <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" value="updatedAt">
+                        aria-haspopup="true" aria-expanded="false" value="updatedAt" data-key="Senest_opdateret">
                         Senest opdateret
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -86,17 +103,17 @@
                             -->
                     </div>
                 </div>
-                <label class="mb-0 mr-1 align-self-center sorteringsContainer">
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer" data-key="Raekkefoelge">
                     Rækkefølge:
                 </label>
                 <div class="btn-group">
                     <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" value="DESC">
+                        aria-haspopup="true" aria-expanded="false" value="DESC" data-key="Faldende">
                         Faldende
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')">Stigende</a>
-                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')">Faldende</a>
+                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')" data-key="Stigende">Stigende</a>
+                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')" data-key="Faldende">Faldende</a>
                     </div>
                 </div>
 

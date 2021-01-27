@@ -4,6 +4,7 @@ var hbs = require('handlebars');
 var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
+var { reqLang } = require('../public/javascript/request');
 const path = require('path');
 const limit = 5;
 const {
@@ -139,6 +140,7 @@ router.get('/', async function (req, res, next) {
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
     res.render('search_cv', {
+        language: reqLang(req, res),
         json: rows,
         resultater: count,
         udd: udd,
