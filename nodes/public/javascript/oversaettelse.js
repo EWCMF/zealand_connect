@@ -133,7 +133,20 @@ function getLangdata() {
                 "adminFunktion": "Administrative functions",
                 "opretUddannelse": "Create education",
                 "sletUddannelse": "Delete education",
-                "uddannelse": "Education"
+                "uddannelse": "Education",
+                "For_virksomheden": "For the company",
+                "Arbejdstid_og_laeringsmaal": "Work hours and learning objectives",
+                "loaen": "Payment",
+                "Forsikring": "Ensurance",
+                "Praktikaftale": "Internship agreement",
+                "Praktikperiode": "Internship",
+                "For_studerende": "For students",
+                "forside_slogan": "ZealandConnect - create your future",
+                "student_quick_access_headline" : "For students",
+                "student_quick_access_btn": "Find your next job or internship. You can also create and publish a resume.",
+                "company_quick_access_headline" : "For companies",
+                "company_quick_access_btn": "Create and publish internship or job postings. You can also search the list of public student resumes.",
+
 
 
             }

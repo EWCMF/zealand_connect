@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const { reqLang } = require('../public/javascript/request');
-const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 
 router.get('/', async function (req, res, next) {
