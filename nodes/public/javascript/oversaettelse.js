@@ -18,19 +18,21 @@ function brugStrings(lang) {
         let key = element.getAttribute('data-key');
 
         if(key.includes('placeholder')) { // beregnet til input, så placeholder kan vises på dansk og engelsk
-            element.placeholder = langdata.languages[lang].strings[key]
+            element.placeholder = langdata.languages[lang].strings[key];
+            return;
         }
 
-        if(!key.includes('placeholder')) {
-            //let temp = element.textContent;
-            console.log(lang);
-            element.textContent = langdata.languages[lang].strings[key];
-            // if(!key.includes("+hbs")) { // hvis der er +hbs, så appender det ikke
-            // element.textContent += temp}
-        }
         if(key.includes('input')) { // beregnet til input, så placeholder kan vises på dansk og engelsk
-            element.value = langdata.languages[lang].strings[key]
+            element.value = langdata.languages[lang].strings[key];
+            return;
         }
+
+        if(key.includes('html')) {
+            element.innerHTML = langdata.languages[lang].strings[key];
+            return;
+        }
+
+        element.textContent = langdata.languages[lang].strings[key];
     });
 }
 
@@ -170,8 +172,8 @@ function getLangdata() {
 
                 // search-cv
                 "CV'er": "CV's",
-                "Uddannelser": "Education",
-                "Land": "Country",
+                "Uddannelser_html": 'Education <img src="images/chevron-right.svg" width="12" height="12">',
+                "Land_html": 'Country <img src="images/chevron-right.svg" width="12" height="12">',
                 "Indland": "Domestic",
                 "Udland": "Abroad",
                 "resultater": "results",
