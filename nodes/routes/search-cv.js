@@ -42,21 +42,20 @@ const handleWhere = function(paramContainer) {
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     if (element.includes('ind')) {
-                        sprog[Op.or].push(
-                            'dansk'
-                        );
-                        sprog[Op.or].push(
-                            'Dansk'
-                        );
+                        sprog[Op.or].push({
+                            [Op.like]: '%dansk%'
+                        });
+                        sprog[Op.or].push({
+                            [Op.like]: '%Dansk%'
+                        });
                     }
                     if (element.includes('ud')) {
-
                         sprog[Op.or].push({
-                            [Op.not]: 'dansk'
+                            [Op.notLike]: '%dansk%'
                         });
-
+    
                         sprog[Op.or].push({
-                            [Op.not]: 'Dansk'
+                            [Op.notLike]: '%Dansk%'
                         });
                     }
                 });
@@ -70,7 +69,6 @@ const handleWhere = function(paramContainer) {
                     });
                 }
                 if (values.includes('ud')) {
-
                     sprog[Op.or].push({
                         [Op.notLike]: '%dansk%'
                     });
