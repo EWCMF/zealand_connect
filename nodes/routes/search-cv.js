@@ -62,21 +62,21 @@ const handleWhere = function(paramContainer) {
                 });
             } else {
                 if (values.includes('ind')) {
-                    sprog[Op.or].push(
-                        'dansk'
-                    );
-                    sprog[Op.or].push(
-                        'Dansk'
-                    );
+                    sprog[Op.or].push({
+                        [Op.like]: '%dansk%'
+                    });
+                    sprog[Op.or].push({
+                        [Op.like]: '%Dansk%'
+                    });
                 }
                 if (values.includes('ud')) {
 
                     sprog[Op.or].push({
-                        [Op.not]: 'dansk'
+                        [Op.notLike]: '%dansk%'
                     });
 
                     sprog[Op.or].push({
-                        [Op.not]: 'Dansk'
+                        [Op.notLike]: '%Dansk%'
                     });
                 }
             }
