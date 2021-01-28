@@ -429,7 +429,7 @@ input::placeholder {
 }
 
 .autobreak {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .newLineContent .autobreak {
