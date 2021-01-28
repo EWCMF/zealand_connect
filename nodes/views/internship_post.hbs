@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-12">
             {{#if update}}
-                <h1>Rediger opslag</h1>
+                <h1 data-key="Rediger_opslag">Rediger opslag</h1>
             {{else}}
-                <h1>Indryk opslag</h1>
+                <h1 data-key="Indryk_opslag">Indryk opslag</h1>
             {{/if}}
         </div>
     </div>
@@ -22,90 +22,90 @@
             {{/if}}
             <input type="hidden" value="{{rid}}" name="id">
             <div class="form-group required mb-5">
-                <label for="internshipTitle">Annonce overskrift</label>
+                <label for="internshipTitle" data-key="Annonce_overskrift">Annonce overskrift</label>
                 <input type="text" value="{{rtitle}}" name="title" id="internshipTitle" class="form-control"
                        placeholder="Titel">
-                <p id="titleError" class="CVErrorColor" hidden="true">Du skal angive en annonce overskrift</p>
+                <p id="titleError" class="CVErrorColor" hidden="true" data-key="Annonce_overskrift_error">Du skal angive en annonce overskrift</p>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="form-group required">
-                        <label for="postTypeSelect">Opslagstype</label>
+                        <label for="postTypeSelect" data-key="Opslagstype">Opslagstype</label>
                         <select class="form-control" name="post_type" id="postTypeSelect"
                                 onchange="postTypeToggleFields()">
-                            <option selected disabled hidden value="0">Vælg en opslagstype</option>
-                            <option value="1">Praktik</option>
-                            <option value="2">Studiejob</option>
+                            <option selected disabled hidden value="0" data-key="Vaelg_en_opslagstype">Vælg en opslagstype</option>
+                            <option value="1" data-key="Praktik">Praktik</option>
+                            <option value="2" data-key="Studiejob">Studiejob</option>
                             <option value="3">Trainee</option>
                         </select>
-                        <p id="postTypeError" class="CVErrorColor" hidden="true">Du skal angive en opslagstype</p>
+                        <p id="postTypeError" class="CVErrorColor" hidden="true" data-key="Opslagstype_error">Du skal angive en opslagstype</p>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="form-group required">
-                        <label for="education">Uddannelse</label>
+                        <label for="education" data-key="Uddannelse">Uddannelse</label>
                         <select class="form-control" name="fk_education" id="educationSelect" onchange="toggleNote()">
-                            <option selected disabled hidden value="0">Vælg en uddannelse</option>
+                            <option selected disabled hidden value="0" data-key="Vaelg_en_uddannelse">Vælg en uddannelse</option>
                             {{{generatedEducationOptions}}}
                         </select>
-                        <p id="educationError" class="CVErrorColor" hidden="true">Du skal angive en uddannelse</p>
-                        <p id="educationNote" hidden="true">Den valgte uddannelse har lønnet praktik</p>
+                        <p id="educationError" class="CVErrorColor" hidden="true" data-key="Vaelg_en_uddannelse_error">Du skal angive en uddannelse</p>
+                        <p id="educationNote" hidden="true" data-key="Vaelg_en_uddannelse_note">Den valgte uddannelse har lønnet praktik</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="form-group required">
-                        <label for="countrySelect">Land</label>
+                        <label for="countrySelect" data-key="Land">Land</label>
                         <select class="form-control" name="country" id="countrySelect" onchange="countryToggleFields()">
-                            <option selected disabled hidden value="0">Vælg et land</option>
-                            <option value="1">Danmark</option>
-                            <option value="2">Tyskland</option>
-                            <option value="3">Sverige</option>
-                            <option value="4">Udlandet</option>
+                            <option selected disabled hidden value="0" data-key="Vaelg_et_land">Vælg et land</option>
+                            <option value="1" data-key="Danmark">Danmark</option>
+                            <option value="2" data-key="Tyskland">Tyskland</option>
+                            <option value="3" data-key="Sverige">Sverige</option>
+                            <option value="4" data-key="Udlandet">Udlandet</option>
                         </select>
-                        <p id="countryError" class="CVErrorColor" hidden="true">Du skal angive et land</p>
+                        <p id="countryError" class="CVErrorColor" hidden="true" data-key="Vaelg_et_land_error">Du skal angive et land</p>
                     </div>
                 </div>
                 <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
                     <div class="form-group required autocomplete-container">
-                        <label for="">Adresse</label>
+                        <label for="" data-key="Adresse">Adresse</label>
                         <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
                         <input type="hidden" id="addressSearchJSON" name="dawa_json">
                         <input type="hidden" id="addressSearchCity" name="city">
                         <input type="hidden" id="addressSearchPostcode" name="postcode">
                         <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
                         <small id="selectedAddress" class="form-text text-muted"></small>
-                        <p id="addressError" class="CVErrorColor" hidden="true">Du skal angive en adresse</p>
+                        <p id="addressError" class="CVErrorColor" hidden="true" data-key="Adresse_error">Du skal angive en adresse</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="form-group required">
-                        <label for="internshipEmail">E-mail adresse</label>
+                        <label for="internshipEmail" data-key="Email_adresse">E-mail adresse</label>
                         <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
                                placeholder="Email" pattern="{{{emailRegex}}}">
-                        <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst
+                        <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal skrive din email her og mindst
                             bruge et @
                         </p>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="form-group required">
-                        <label for="contactName">Navn på kontaktperson</label>
+                        <label for="contactName" data-key="Navn_paa_kontaktperson">Navn på kontaktperson</label>
                         <input type="text" value="{{rcontact}}" name="contact" id="contactName" class="form-control"
                                placeholder="Navn">
-                        <p id="contactError" class="CVErrorColor" hidden="true">Du skal angive en kontaktperson</p>
+                        <p id="contactError" class="CVErrorColor" hidden="true" data-key="Navn_paa_kontaktperson_error">Du skal angive en kontaktperson</p>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="form-group">
-                        <label for="company_link">Link til Hjemmeside</label>
+                        <label for="company_link" data-key="Link_til_hjemmeside">Link til hjemmeside</label>
                         <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link"
                                id="companyURL"
                                class="form-control" placeholder="virksomhed.dk" value="{{rhomepage}}">
-                        <p id="companylinkError" class="CVErrorColor" hidden="true">Du skal angive et gyldigt link her
+                        <p id="companylinkError" class="CVErrorColor" hidden="true" data-key="Link_til_hjemmeside_error">Du skal angive et gyldigt link her
                             f.eks
                             http://www.zealandconnect.dk</p>
                     </div>
@@ -114,45 +114,45 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="form-group required">
-                        <label for="post_start_date">Ansøgningsfrist</label>
+                        <label for="post_start_date" data-key="Ansoegningsfrist">Ansøgningsfrist</label>
                         <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
                                id="applicationDeadline" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
-                        <p id="poststartdateError" class="CVErrorColor" hidden="true">Du skal angive en ansøgningsfrist
+                        <p id="poststartdateError" class="CVErrorColor" hidden="true" data-key="Ansoegningsfrist_error">Du skal angive en ansøgningsfrist
                         </p>
-                        <p id="poststartdateErrorPast" class="CVErrorColor" hidden="true">Den valgte dato er i fortiden
+                        <p id="poststartdateErrorPast" class="CVErrorColor" hidden="true" data-key="Dato_error">Den valgte dato er i fortiden
                         </p>
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox"
                                onchange="setExpired()">
-                        <label class="form-check-label" for="expire_checkbox">Skal opslaget skjules efter
+                        <label class="form-check-label" for="expire_checkbox" data-key="Ansoegningsfrist_note">Skal opslaget skjules efter
                             ansøgningsfristen?</label>
                         <input type="hidden" id="expired" value="0" name="expired">
                     </div>
                 </div>
                 <div class="col-12 col-md-6" id="internshipContainer" hidden="true">
                     <div class="form-group required">
-                        <label for="post_end_date">Praktikstart</label>
+                        <label for="post_end_date" data-key="Praktikstart">Praktikstart</label>
                         <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
                                id="internshipEmploymentDate" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
-                        <p id="postenddateError" class="CVErrorColor" hidden="true">Du skal angive en praktikstart dato
+                        <p id="postenddateError" class="CVErrorColor" hidden="true" data-key="Praktikstart_error">Du skal angive en praktikstart dato
                         </p>
-                        <p id="postenddateErrorPast" class="CVErrorColor" hidden="true">Den valgte dato er i fortiden
+                        <p id="postenddateErrorPast" class="CVErrorColor" hidden="true" data-key="Dato_error">Den valgte dato er i fortiden
                         </p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <label for="post_document">Vedhæft fil</label><br/>
-                    <a id="uploadedFile" href="" target="_blank" hidden="true">Nuværende vedhæftet fil</a>
+                    <label for="post_document" data-key="Vedhaeft_fil">Vedhæft fil</label><br/>
+                    <a id="uploadedFile" href="" target="_blank" hidden="true" data-key="Nuvaerende_Vedhaeftet_fil">Nuværende vedhæftet fil</a>
                     <div class="form-group">
                         <div class="custom-file">
                             <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt"
                                    class="custom-file-input"
                                    id="companyDoc" onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
-                            <label class="custom-file-label" id="docLabel" for="companyDoc">Vælg fil</label>
-                            <p id="companyDocError" class="CVErrorColor" hidden="true">Du kan kun angive en fil på
+                            <label class="custom-file-label" id="docLabel" for="companyDoc" data-key="Vaelg_fil">Vælg fil</label>
+                            <p id="companyDocError" class="CVErrorColor" hidden="true" data-key="Vaelg_fil_error">Du kan kun angive en fil på
                                 maximum 10MB</p>
                         </div>
                     </div>
@@ -160,14 +160,14 @@
             </div>
             <div class="form-group">
                 <input type="hidden" name="post_text" id="plainText"/>
-                <label for="editor">Opslagstekst</label>
+                <label for="editor" data-key="Opslagstekst">Opslagstekst</label>
                 <div id="editor">{{{rtext}}}</div>
             </div>
-            <p id="posttextError" class="CVErrorColor" hidden="true">Du har angivet for mange tegn</p>
+            <p id="posttextError" class="CVErrorColor" hidden="true" data-key="Du_har_angivet_for_mange_tegn">Du har angivet for mange tegn</p>
             <div class="form-group">
-                <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2">Gem</button>
+                <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
                 {{#if update}}
-                    <button type="button" class="btn btn-danger" onclick="confirmDeletePost()">Slet dette opslag</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDeletePost()" data-key="Slet_dette_opslag">Slet dette opslag</button>
                 {{/if}}
             </div>
         </form>

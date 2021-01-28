@@ -248,6 +248,76 @@ function getLangdata() {
                 "Sprog": "Language",
 
                 //internship_post
+                "Rediger_opslag": "Edit post",
+                "Indryk_opslag": "Create post",
+                "Annonce_overskrift": "Post headline",
+                "Annonce_overskrift_error": "You must specify a post headline",
+                "Opslagstype": "Post type",
+                "Vaelg_en_opslagstype": "Choose a post type",
+                //Praktik
+                //Studiejob
+                "Opslagstype_error": "You must specify a post type",
+                //Uddannelse
+                "Vaelg_en_uddannelse": "Select an education",
+                "Vaelg_en_uddannelse_error": "You must specify an education",
+                "Vaelg_en_uddannelse_note": "The selected education has paid internship",
+                "Land": "Country",
+                "Vaelg_et_land": "Select a country",
+                "Danmark": "Denmark",
+                "Tyskland": "Germany",
+                "Sverige": "Sweden",
+                "Udlandet": "Other",
+                "Adresse": "Address",
+                "Adresse_error": "You must specify an address",
+                "Email_adresse": "E-mail address",
+                "Email_adresse_error": "An email must have one @ character",
+                "Navn_paa_kontaktperson": "Name of contact person",
+                "Navn_paa_kontaktperson_error": "You must specify a contact person",
+                "Link_til_hjemmeside": "Link to website",
+                "Link_til_hjemmeside_error": "A valid link must be specified, e.g. http://www.zealandconnect.dk",
+                "Ansoegningsfrist": "Application deadline",
+                "Ansoegningsfrist_error": "You must specify an application deadline",
+                "Dato_error": "The selected date has already passed",
+                "Ansoegningsfrist_note": "Hide post after application deadline?",
+                "Praktikstart": "Internship start",
+                "Praktikstart_error": "You must specify a date for internship start",
+                //Dato_error
+                "Vedhaeft_fil": "Attach file",
+                "Nuvaerende_Vedhaeftet_fil": "Currently attached file",
+                "Vaelg_fil": "Choose file",
+                "Vaelg_fil_error": "The chosen file must have a size less than 10MB",
+                "Opslagstekst": "Post text",
+                "Du_har_angivet_for_mange_tegn": "You have used too many characters",
+                "Gem": "Save",
+                "Slet_dette_opslag": "Delete this post",
+
+                //mit-cv
+                //Overskrift
+                "Skal_udfyldes": "Required field",
+                //Vaelg_en_uddannelse
+                //Vaelg_en_uddannelse_error
+                //Email_adresse
+                //Email_adresse_error
+                //Sprog
+                "Sprog_error": "You must specify language here",
+                //Speciale
+                "Telefon": "Telephone",
+                "Telefon_error": "You must specify a telephone number with 8 digits, not beginning with 0",
+                "hjemmeside_error": "You must specify a proper website link",
+                "Link_til_CV_paa_Youtube": "Link to CV on Youtube",
+                //Om_mig
+                //It_kompetencer
+                //Udlandsophold_og_frivilligt_arbejde
+                "Erhvervserfaring": "Work experience",
+                //Tidligere_uddannelse
+                //Skal_udfyldes
+                "Hjemmeside": "Website",
+                //Fritidsinteresser
+                "Tilgængelighed": "Accessibility",
+                "Offentlig": "Public",
+                "Privat": "Private",
+                "Tilgængelighed_error": "You must specify if your resume is public or private"
+                //Gem
             }
         }
     }

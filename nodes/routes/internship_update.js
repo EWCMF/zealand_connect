@@ -12,6 +12,7 @@ const models = require("../models");
 const unlinkOldFiles = require('../utils/file-handling').unlinkOldFiles;
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const uploadFolder = require('../constants/references').uploadFolder();
+var { reqLang } = require('../public/javascript/request');
 
 var tempDate = dateRegex.source;
 var tempEmail = emailRegex.source;
@@ -238,6 +239,7 @@ router.get('/', function (req, res, next) {
 
       //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
       res.render('internship_post', {
+        language: reqLang(req, res),
         title: 'Rediger opslag',
         rid: req.query.id,
         rtitle: result['title'],

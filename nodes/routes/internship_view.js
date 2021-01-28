@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+var { reqLang } = require('../public/javascript/request');
 
 router.get('/', function (req, res, next) {
     res.render('view_post')
@@ -64,6 +65,7 @@ router.get('/:id', async function (req, res) {
 
     //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
     res.render('internship_post_view', {
+        language: reqLang(req, res),
         title: result['title'],
         rid: id,
         rtitle: result['title'],
