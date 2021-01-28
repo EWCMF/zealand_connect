@@ -6,6 +6,7 @@ const db = require('../models');
 var formidable = require("formidable");
 var { reqLang } = require('../public/javascript/request');
 const limit = 5;
+const edu = require('../constants/education');
 const { Op } = require('sequelize');
 const path = require('path');
 const makeArray = function(body, param) {
@@ -162,8 +163,8 @@ const handleWhere = function(paramContainer) {
 
 router.get('/', async function (req, res, next) {
     
-    var page;
-    var offset;
+    let page;
+    let offset;
     if (req.query.page == null) {
         page = 1
         offset = 0;
@@ -174,12 +175,7 @@ router.get('/', async function (req, res, next) {
 
     let where = handleWhere(req.query);
 
-    const udd = await db.Uddannelse.findAll({
-        raw: true,
-        order: [
-            ['name', 'ASC']
-        ]
-    });
+    const udd = await edu.getAllEducation(req);
 
     const user = res.locals.user
 
@@ -196,6 +192,8 @@ router.get('/', async function (req, res, next) {
         }
     }
 
+    let uddInclude = edu.includeEducation(req);
+
     const {
         count,
         rows
@@ -211,10 +209,8 @@ router.get('/', async function (req, res, next) {
             model: db.Virksomhed,
             as: 'virksomhed'
         },
-        {
-            model: db.Uddannelse,
-            as: 'education'
-        }],
+        uddInclude
+        ],
         where
         }   
     );
@@ -223,14 +219,6 @@ router.get('/', async function (req, res, next) {
     let withPages = pageCount > 1  ? true : false;
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
-
-        let eduName = await db.Uddannelse.findOne({
-            where: {
-                id: element['fk_education']
-            }
-        });
-
-        element['fk_education'] = eduName.name;
 
         let cropStart = element['post_start_date'].substring(0, 10);
 
@@ -305,14 +293,16 @@ router.post('/query', function (req, res) {
 
         let where = handleWhere(fields);
 
-        var page = parseInt(fields.page);
-        var offset;
+        let page = parseInt(fields.page);
+        let offset;
         
         if (page == 1) {
             offset = 0
         } else {
             offset = (page - 1) * limit;
         }
+
+        let uddInclude = edu.includeEducation(req); 
 
         const {
             count,
@@ -329,10 +319,8 @@ router.post('/query', function (req, res) {
                 model: db.Virksomhed,
                 as: 'virksomhed'
             },
-            {
-                model: db.Uddannelse,
-                as: 'education'
-            }],
+            uddInclude
+            ],
             where
         });
 
@@ -340,14 +328,6 @@ router.post('/query', function (req, res) {
 
         for (let index = 0; index < rows.length; index++) {
             const element = rows[index];
-            
-            let eduName = await db.Uddannelse.findOne({
-                where: {
-                    id: element['fk_education']
-                }
-            });
-    
-            element['fk_education'] = eduName.name;
 
             let cropStart = element['post_start_date'].substring(0, 10);
 

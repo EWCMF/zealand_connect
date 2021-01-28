@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 function uploadFolder() {
     if (process.env.LOCAL_UPLOAD) {
         return "public/uploads/"
