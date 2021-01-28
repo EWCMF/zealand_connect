@@ -7,6 +7,7 @@ var formidable = require("formidable");
 var { reqLang } = require('../public/javascript/request');
 const path = require('path');
 const limit = 5;
+const edu = require('../constants/education');
 const {
     Op
 } = require('sequelize');
@@ -92,6 +93,7 @@ const handleWhere = function(paramContainer) {
 
 router.get('/', async function (req, res, next) {
 
+    let engLang = req.cookies.lang == 'en';
     let page;
     let offset;
     if (req.query.page == null) {
@@ -104,11 +106,9 @@ router.get('/', async function (req, res, next) {
 
     let where = handleWhere(req.query);
 
-    const udd = await db.Uddannelse.findAll({
-        order: [
-            ['name', 'ASC']
-        ]
-    });
+    let udd = await edu.getAllEducation(req);
+
+    let uddInclude = edu.includeEducation(req);
 
     const {
         count,
@@ -125,10 +125,8 @@ router.get('/', async function (req, res, next) {
             model: db.Student,
             as: 'student'
         },
-        {
-            model: db.Uddannelse,
-            as: 'education'
-        }],
+        uddInclude
+        ],
         where
     });
 
@@ -168,7 +166,9 @@ router.post('/query', function (req, res) {
             offset = 0
         } else {
             offset = (page - 1) * limit;
-        }
+        };
+
+        let uddInclude = edu.includeEducation(req);
 
         const {
             count,
@@ -186,10 +186,8 @@ router.post('/query', function (req, res) {
                 model: db.Student,
                 as: 'student'
             },
-            {
-                model: db.Uddannelse,
-                as: 'education'
-            }]
+            uddInclude
+            ]
         });
 
         var item = [count];

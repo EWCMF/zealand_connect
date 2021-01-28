@@ -14,12 +14,6 @@ chai.use(chaiHttp);
     });
 });*/
 
-describe('GET /users', function () {
-    it('respond with status code OK 200', function (done) {
-        request(app).get('/users').expect(200, done);
-    })
-});
-
 // describe('GET /mit-CV', function () {
 //     it('respond with status code Access denied 403', function(done) {
 //         request(app).get('/mit-cv').expect(403, done);
