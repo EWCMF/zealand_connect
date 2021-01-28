@@ -75,12 +75,10 @@
 
             var formData = new FormData(form);
 
-            console.log(form);
-
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
             xhr.open(form.method, form.getAttribute("action"));
-            xhr.send(formData)
+            xhr.send(formData);
         }
 
     </script>

@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <h1 id="cvOverskrift">Opslag</h1>
+            <h1 id="cvOverskrift" data-key="Opslag">Opslag</h1>
             <hr>
         </div>
     </div>
@@ -13,7 +13,13 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h6 id="collapse5Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse5" onclick="animateArrow(this)">
+                            <h6 id="collapse5Header" 
+                                class="panel-title mb-2 hand-hover" 
+                                data-toggle="collapse" 
+                                data-parent="#accordion" 
+                                href="#collapse5" 
+                                onclick="animateArrow(this)"
+                                data-key="Opslagstype_html">
                                     Opslagstype
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -22,14 +28,14 @@
                         <div id="collapse5" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Praktik">
                                         Praktik
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="typ" value="1"
                                         onclick="addFilter('typ', '1')" {{checkedStateURL url 'typ' '1'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Studiejob">
                                         Studiejob
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="typ" value="2"
@@ -48,7 +54,13 @@
 
                         </div>
                         <div class="panel-heading">
-                            <h6 id="collapse1Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)">
+                            <h6 id="collapse1Header" 
+                                class="panel-title mb-2 hand-hover" 
+                                data-toggle="collapse" 
+                                data-parent="#accordion" 
+                                href="#collapse1" 
+                                onclick="animateArrow(this)"
+                                data-key="Uddannelser_html">
                                     Uddannelser
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -71,7 +83,13 @@
                             </ul>
                         </div>
                         <div class="panel-heading">
-                            <h6 id="collapse2Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)">
+                            <h6 id="collapse2Header" 
+                                class="panel-title mb-2 hand-hover" 
+                                data-toggle="collapse" 
+                                data-parent="#accordion" 
+                                href="#collapse2" 
+                                onclick="animateArrow(this)"
+                                data-key="Land">
                                     Land
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -80,14 +98,14 @@
                         <div id="collapse2" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Indland">
                                         Indland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="lnd" value="ind"
                                         onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind'}}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Udland">
                                         Udland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="lnd" value="ud"
@@ -100,7 +118,12 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse3Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse3" onclick="animateArrow(this)">
+                            <h6 id="collapse3Header" 
+                                class="panel-title mb-2 hand-hover" 
+                                data-toggle="collapse" 
+                                data-parent="#accordion" 
+                                href="#collapse3" 
+                                onclick="animateArrow(this)">
                                     Region
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -150,7 +173,13 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse4Header" class="panel-title mb-2 hand-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse4" onclick="animateArrow(this)">
+                            <h6 id="collapse4Header" 
+                                class="panel-title mb-2 hand-hover" 
+                                data-toggle="collapse" 
+                                data-parent="#accordion" 
+                                href="#collapse4" 
+                                onclick="animateArrow(this)"
+                                data-key="By_html">
                                     By
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -159,15 +188,15 @@
                         <div id="collapse4" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-column">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Indtast_postnummer">
                                         Indtast postnummer
                                     </label>
                                     <input id='inputPost' class="align-self-center" type="number" name="pos">
                                     
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-success" onclick="addFilterSearch('pos', document.getElementById('inputPost').value)">Søg</button>
-                                    <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputPost', 'pos')">Ryd</button>
+                                    <button type="button" class="btn btn-success" onclick="addFilterSearch('pos', document.getElementById('inputPost').value)" data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputPost', 'pos')" data-key="Ryd">Ryd</button>
                                 </li>
                                 
                             </ul>
@@ -184,49 +213,60 @@
         </div>
         <div class="col">
             <div class="mb-2 d-flex flex-row">
-                <label id="results" class="mb-0 flex-fill align-self-center sorteringsContainer">
-                    {{resultater}} resultater
+                <label id="results" class="mb-0 align-self-center sorteringsContainer">
+                    {{resultater}}&nbsp;
                 </label>
-                <label class="mb-0 mr-1 align-self-center sorteringsContainer">
+                <label class="mb-0 flex-fill align-self-center sorteringsContainer" data-key="resultater">
+                    resultater
+                </label>
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer" data-key="Sortering">
                     Sortering:
                 </label>
                 <div class="btn-group">
                     <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" value="updatedAt">
+                        aria-haspopup="true" aria-expanded="false" value="updatedAt" data-key="Senest_opdateret">
                         Senest opdateret
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
+                        <!--
                         <a class="dropdown-item sorteringsContainer" id="senestOpdateret" onclick="changeSort(this, 'updatedAt')">Senest
                             opdateret</a>
-                        <!--
                         <a class="dropdown-item sorteringsContainer" id="overskrift" onclick="changeSort(this, 'overskrift')">Ny
                             sortering</a>
                         -->
                     </div>
                 </div>
-                <label class="mb-0 mr-1 align-self-center sorteringsContainer">
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer" data-key="Raekkefoelge">
                     Rækkefølge:
                 </label>
                 <div class="btn-group">
                     <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" value="DESC">
+                        aria-haspopup="true" aria-expanded="false" value="DESC" data-key="Faldende">
                         Faldende
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')">Stigende</a>
-                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')">Faldende</a>
+                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')" data-key="Stigende">Stigende</a>
+                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')" data-key="Faldende">Faldende</a>
                     </div>
                 </div>
 
             </div>
             <div id=cards>
+                {{#if (isDanish language)}}
                 {{> search-praktik-card}}
+                {{else}}
+                {{> search-praktik-card-en}}
+                {{/if}}
             </div>
         </div>
     </div>
 
     <div class="row d-flex justify-content-center" id="pagination">
+        {{#if (isDanish language)}}
         {{> search-pagination}}
+        {{else}}
+        {{> search-pagination-en}}
+        {{/if}}
     </div>
 </div>
 <script src="/javascript/search_praktik.js"></script>

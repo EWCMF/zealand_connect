@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var profilRouter = require('./routes/profil');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
@@ -80,6 +79,14 @@ app.engine(
           return 'checked'
         }
         return '';
+      },
+
+      isDanish: (language) => {
+        if (language === 'da') {
+          return true
+        } else {
+          return null;
+        }
       }
     },
     partialsDir: ["views/partials"],
@@ -129,7 +136,6 @@ app.use(async function (req, res, next) {
 });
 
 app.use('/index', indexRouter);
-app.use('/users', usersRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/internship_view', internshipPostViewRouter);

@@ -99,8 +99,10 @@ function getLangdata() {
                 "VVSInstallatør": "Plumbing installer",
                 "dokumenter": "Documents",
                 "stilling": "Position",
-                "efternavn": "Last Name",
-                "navn": "First name",
+                "Efternavn": "Last Name",
+                "placeholderEfternavn": "Last name",
+                "Fornavn": "First name",
+                "placeholderFornavn": "First name",
                 "kontaktperson": "Contact person",
                 "beskrivelse": "Description",
                 "CVR": "CVR-Number",
@@ -183,7 +185,27 @@ function getLangdata() {
                 "Faldende": "Descending",
                 "Stigende": "Ascending",
 
+                // search-praktik
+                "Opslag": "Posts",
+                "Opslagstype_html": 'Post type <img src="images/chevron-right.svg" width="12" height="12">',
+                "Praktik": "Internship",
+                "Studiejob": "Student job",
+                //Uddannelser_html,
+                //Land_html,
+                //Indland,
+                //Udland,
+                "By_html": 'City <img src="images/chevron-right.svg" width="12" height="12">',
+                "Indtast_postnummer": "Enter postcode",
+                "Soeg": "Search",
+                "Ryd": "Clear",
+                //resultater,
+                //Sortering,
+                //Senest_opdateret,
+                //Raekkefoelge
+                //Faldende,
+                //Stigende
 
+                
             }
         }
     }

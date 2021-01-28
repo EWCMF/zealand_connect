@@ -125,7 +125,11 @@
     </div>
     
     <div class="row d-flex justify-content-center" id="pagination">
+        {{#if (isDanish language)}}
         {{> search-pagination}}
+        {{else}}
+        {{> search-pagination-en}}
+        {{/if}}
     </div>
 </div>
 <script src="/javascript/search_cv.js"></script>

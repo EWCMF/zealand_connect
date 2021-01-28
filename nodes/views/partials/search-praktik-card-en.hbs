@@ -1,0 +1,41 @@
+{{#each json}}
+<div class="card mb-3">
+    <div class="card-header p-0">
+        <h6 class="m-2">
+            {{post_type}}
+        </h6>
+    </div>
+    <div class="row">
+        <div class="col-auto">
+            {{#if virksomhed.logo}}
+                <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
+            {{else}}
+                <img class="center-cropped" src="images/no-logo.png">
+            {{/if}}
+        </div>
+        <div class="col">
+            <div class="card-body">
+                <h4 class="card-title pb-1">{{title}}</h5>
+                <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h5>
+                <h6 class="card-text autobreak small text-secondary m-0">{{postcode}} {{city}}, {{region}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="container ml-2">
+                <div class="row d-flex">
+                    <div class="row flex-grow-1">
+                        <p class="font-weight-bold pr-1">Education:</p><p class="pr-2">{{fk_education}}</p> 
+                    </div>
+                    <div class="row mr-2">
+                        <p class="font-weight-bold pr-1">Application deadline:</p> <p class="pr-2">{{post_start_date}}</p>
+                        {{#if post_end_date}}
+                        <p class="font-weight-bold pr-1">Internship start:</p>  <p>{{post_end_date}}</p>
+                        {{/if}}
+                    </div>
+                </div>
+        </div>      
+    </div>
+    <a href='/internship_view/{{id}}' class="stretched-link"></a>
+</div>
+{{/each}}
