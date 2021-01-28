@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+var { reqLang } = require('../public/javascript/request');
 
 router.get('/', async function (req, res, next) {
     if (req.user == null) {
@@ -19,6 +20,7 @@ router.get('/', async function (req, res, next) {
         });
 
         res.render('mit-cv', {
+            language: reqLang(req, res),
             profil: student.fornavn + " " + student.efternavn,
             telefon: student.tlfnr,
             email: student.email,
@@ -65,6 +67,7 @@ router.get('/edit', async function (req, res, next) {
     }
 
     res.render('mit-cv', {
+        language: reqLang(req, res),
         uddannelser: udd,
         uddannelse: student.cv.education.name,
         profil: student.fornavn + " " + student.efternavn,
@@ -238,6 +241,7 @@ router.post('/preview', async function (req, res, next) {
     };
 
     res.render('cv', {
+        language: reqLang(req, res),
         json: json,
         navDisabled: true,
         noButtons: true,

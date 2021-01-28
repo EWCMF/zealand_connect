@@ -17,6 +17,7 @@ const {
 } = require('repl');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
+var { reqLang } = require('../public/javascript/request');
 var tempDate = dateRegex.source;
 var tempEmail = emailRegex.source;
 var tempLink = linkRegex.source;
@@ -263,6 +264,7 @@ router.get('/', async function (req, res, next) {
             generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
         });
         res.render('internship_post', {
+            language: reqLang(req, res),
             title: 'Opret opslag',
             linkRegex: tempLink,
             dateRegex: tempDate,
