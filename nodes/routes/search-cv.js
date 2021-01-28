@@ -302,9 +302,13 @@ router.get('/:id', async function (req, res) {
         }
     }
 
+    let noDataLabel = req.cookies.lang == 'en' ? 'Not specified' : "Ikke angivet";
+
     res.render('cv', {
+        language: reqLang(req, res),
         json: cv,
-        ejer: ejer
+        ejer: ejer,
+        noData: noDataLabel
     });
 
 });

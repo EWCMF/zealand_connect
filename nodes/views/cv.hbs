@@ -10,7 +10,7 @@
         <div class="col-12 col-lg-8" id="cvDescriptionHeadlines">
             <div class="col">
                 <div class="row">
-                    <h2 class="row col-lg-3 cvnavn">
+                    <h2 class="row col-lg-3 cvnavn" data-key="Navn_kolon">
                         Navn:
                     </h2>
                     <h2 class="row col-lg-7 mb-3 cvnavn">
@@ -26,7 +26,7 @@
                     </h6>
                 </div>
                 <div class="row">
-                    <h6 class="row col-lg-3">
+                    <h6 class="row col-lg-3" data-key="Tlf_kolon">
                         Tlf:
                     </h6>
                     <h6 class="row col-lg-7 mb-3">
@@ -34,7 +34,7 @@
                     </h6>
                 </div>
                 <div class="row">
-                    <h6 class="row col-lg-3">
+                    <h6 class="row col-lg-3" data-key="Hjemmeside_kolon">
                         Hjemmeside:
                     </h6>
                     {{#if json.hjemmeside}}
@@ -45,7 +45,7 @@
                     </a>
                     {{else}}
                     <h6 class="row col-lg-7 mb-3">
-                            Intet angivet
+                            {{noData}}
                     </h6>
                     {{/if}}
                 </div>
@@ -61,7 +61,7 @@
                     </a>
                     {{else}}
                     <h6 class="row col-lg-7 mb-3">
-                            Intet angivet
+                            {{noData}}
                     </h6>
                     {{/if}}
                 </div>
@@ -77,7 +77,7 @@
                     </a>
                     {{else}}
                     <h6 class="row col-lg-7 mb-3">
-                            Intet angivet
+                            {{noData}}
                     </h6>
                     {{/if}}
                 </div>
@@ -92,7 +92,7 @@
             <button type="button" class="btn btn-success "
                 onclick="window.location.href='/search-cv/{{json.id}}/create_pdf'">Download Pdf</button>
             {{#if ejer}}
-            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger
+            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'" data-key="Rediger_CV">Rediger
                 CV</button>
             {{/if}}
         </div>
@@ -102,7 +102,7 @@
 
     <div class="row border rounded ml-1 mr-1 mb-4 ">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Overskrift">
                 Overskrift
             </h4>
             <p class="autobreak">
@@ -113,7 +113,7 @@
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Om_mig">
                 Om mig
             </h4>
             <p class="autobreak">
@@ -123,7 +123,7 @@
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Erfaring">
                 Erfaring
             </h4>
             {{#if json.erhvervserfaring}}
@@ -132,14 +132,14 @@
             </p>
             {{else}}
             <p class="autobreak">
-                Ikke angivet
+                {{noData}}
             </p>
             {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Uddannelse">
                 Uddannelse
             </h4>
             <p class="autobreak">
@@ -149,7 +149,7 @@
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Speciale">
                 Speciale
             </h4>
             {{#if json.speciale}}
@@ -158,14 +158,14 @@
             </p>
             {{else}}
             <p class="autobreak">
-                Ikke angivet
+                {{noData}}
             </p>
             {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Tidligere_uddannelse">
                 Tidligere uddannelse
             </h4>
             {{#if json.tidligere_uddannelse}}
@@ -174,14 +174,14 @@
             </p>
             {{else}}
             <p class="autobreak">
-                Ikke angivet
+                {{noData}}
             </p>
             {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Udlandsophold_og_frivilligt_arbejde">
                 Udlandsophold og frivilligt arbejde   
             </h4>
             {{#if json.udenlandsophold_og_frivilligt_arbejde}}
@@ -190,14 +190,14 @@
             </p>
             {{else}}
             <p class="autobreak">
-                Ikke angivet
+                {{noData}}
             </p>
             {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Fritidsinteresser">
                 Fritidsinteresser
             </h4>
             {{#if json.fritidsinteresser}}
@@ -206,14 +206,14 @@
             </p>
             {{else}}
             <p class="autobreak">
-                Ikke angivet
+                {{noData}}
             </p>
             {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="It_kompetencer">
                 It-kompetencer
             </h4>
             <p class="autobreak">
@@ -223,7 +223,7 @@
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Sprog">
                 Sprog
             </h4>
             <p class="autobreak">
