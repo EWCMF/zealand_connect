@@ -4,6 +4,7 @@ var hbs = require('handlebars');
 var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
+var { reqLang } = require('../public/javascript/request');
 const limit = 5;
 const { Op } = require('sequelize');
 const path = require('path');
@@ -248,15 +249,28 @@ router.get('/', async function (req, res, next) {
             element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
         }
 
-        switch (element['post_type']) {
-            case 1:
-                element['post_type'] = 'Praktik';
-                break;
-            case 2:
-                element['post_type'] = 'Studiejob';
-                break;
-            case 3:
-                element['post_type'] = 'Trainee';     
+        if (req.cookies.lang == 'en') {
+            switch (element['post_type']) {
+                case 1:
+                    element['post_type'] = 'Internship';
+                    break;
+                case 2:
+                    element['post_type'] = 'Student job';
+                    break;
+                case 3:
+                    element['post_type'] = 'Trainee';     
+            }
+        } else {
+            switch (element['post_type']) {
+                case 1:
+                    element['post_type'] = 'Praktik';
+                    break;
+                case 2:
+                    element['post_type'] = 'Studiejob';
+                    break;
+                case 3:
+                    element['post_type'] = 'Trainee';     
+            }
         }
 
     }
@@ -264,6 +278,7 @@ router.get('/', async function (req, res, next) {
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
     res.render('search_praktik', {
+        language: reqLang(req, res),
         json: rows,
         resultater: count,
         udd: udd,
@@ -351,16 +366,30 @@ router.post('/query', function (req, res) {
                 element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
             }
 
-            switch (element['post_type']) {
-                case 1:
-                    element['post_type'] = 'Praktik';
-                    break;
-                case 2:
-                    element['post_type'] = 'Studiejob';
-                    break;
-                case 3:
-                    element['post_type'] = 'Trainee';     
+            if (req.cookies.lang == 'en') {
+                switch (element['post_type']) {
+                    case 1:
+                        element['post_type'] = 'Internship';
+                        break;
+                    case 2:
+                        element['post_type'] = 'Student job';
+                        break;
+                    case 3:
+                        element['post_type'] = 'Trainee';     
+                }
+            } else {
+                switch (element['post_type']) {
+                    case 1:
+                        element['post_type'] = 'Praktik';
+                        break;
+                    case 2:
+                        element['post_type'] = 'Studiejob';
+                        break;
+                    case 3:
+                        element['post_type'] = 'Trainee';     
+                }
             }
+            
         }
 
         fs.readFileAsync = function(filename) {
@@ -378,12 +407,23 @@ router.post('/query', function (req, res) {
             return fs.readFileAsync(filename, 'utf8');
         }
 
-        getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
+        let card;
+        let pagination;
+
+        if (req.cookies.lang == 'en') {
+            card = 'views/partials/search-praktik-card-en.hbs';
+            pagination = 'views/partials/search-pagination-en.hbs';
+        } else {
+            card = 'views/partials/search-praktik-card.hbs';
+            pagination = 'views/partials/search-pagination.hbs';
+        }
+
+        getFile(path.normalize(card)).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({json: rows});
             item.push(html);
 
-            getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
+            getFile(path.normalize(pagination)).then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
                 

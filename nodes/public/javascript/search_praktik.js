@@ -130,7 +130,7 @@ function submitForm(formElement) {
     let xhr = new XMLHttpRequest();
     xhr.onload = function () {
         var res = JSON.parse(xhr.responseText);
-        document.getElementById('results').innerHTML = res[0] + " resultater";
+        document.getElementById('results').innerHTML = res[0] + "&nbsp;";
         document.getElementById('cards').innerHTML = res[1];
         document.getElementById('pagination').innerHTML = res[2];
     }

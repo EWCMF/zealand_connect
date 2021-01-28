@@ -216,6 +216,13 @@ router.post('/query', function (req, res) {
         // 'views\\partials\\search-cv-card.hbs'
         // 'views\\partials\\search-pagination.hbs'
 
+        let pagination;
+        if (req.cookies.lang == 'en') {
+            pagination = 'views/partials/search-pagination-en.hbs';
+        } else {
+            pagination = 'views/partials/search-pagination.hbs';
+        }
+
         getFile(path.normalize('views/partials/search-cv-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({
@@ -223,7 +230,7 @@ router.post('/query', function (req, res) {
             });
             item.push(html);
 
-            getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
+            getFile(path.normalize(pagination)).then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
 
