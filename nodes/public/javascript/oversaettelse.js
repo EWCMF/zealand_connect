@@ -205,7 +205,21 @@ function getLangdata() {
                 //Faldende,
                 //Stigende
 
-                
+                //cv
+                "Navn_kolon": "Name:",
+                "Tlf_kolon": "Phone:",
+                "Hjemmeside_kolon": "Website:",
+                "Rediger_CV": "Edit CV",
+                "Overskrift": "Heading",
+                "Om_mig": "About me",
+                "Erfaring": "Experience",
+                "Uddannelse": "Education",
+                "Speciale": "Speciality",
+                "Tidligere_uddannelse": "Past education",
+                "Udlandsophold_og_frivilligt_arbejde": "Study abroad and volunteer work",
+                "Fritidsinteresser": "Hobbies",
+                "It_kompetencer": "IT skills",
+                "Sprog": "Language"
             }
         }
     }
