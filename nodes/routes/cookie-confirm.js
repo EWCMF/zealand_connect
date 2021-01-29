@@ -7,13 +7,19 @@ router.post('/', async function (req, res, next) {
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
 
+        let noLang = false;
         if (fields.preference === undefined) {
             res.cookie('cookie_consent', 'nolang');
+            noLang = true;
         } else {
             res.cookie('cookie_consent', 'all');
         }
 
-        res.status(200).end();
+        if (!noLang && fields.lang === 'en') {
+            res.redirect('/language/en');
+        } else {
+            res.status(200).end();
+        }
     });
 });
 
