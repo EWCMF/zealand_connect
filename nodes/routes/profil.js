@@ -68,7 +68,10 @@ router.get('/rediger', function (req, res, next) {
                 profilbillede: user.profilbillede
             }
 
-            res.render("rediger-studentprofil", {loggedInUser});
+            res.render("rediger-studentprofil", {
+                language: reqLang(req, res),
+                loggedInUser
+            });
 
         } else {
             let loggedInVirksomhed = {
@@ -86,6 +89,7 @@ router.get('/rediger', function (req, res, next) {
             }
             //render with potential errors and information about the profile
             res.render("rediger-virksomhedsprofil", {
+                language: reqLang(req, res),
                 succesBesked: req.query.succesBesked,
                 fejlBesked: req.query.fejlBesked,
                 EmailError: errors.EmailError,
