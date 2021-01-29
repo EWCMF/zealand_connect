@@ -3,7 +3,9 @@ var router = express.Router();
 
 
 router.get('/', function(req, res, next) {
-    res.render('kontakt');
+    res.render('kontakt', {
+        language: reqLang(req, res)
+    });
 });
 
 module.exports=router;
