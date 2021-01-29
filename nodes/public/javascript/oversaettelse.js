@@ -36,9 +36,11 @@ function brugStrings(lang) {
             return;
         }
 
-        if (key.includes('title')) {
+        if (key.includes('tooltip')) {
+            $(element).tooltip('dispose');
             element.textContent = langdata.languages[lang].strings[key][0];
             element.title = langdata.languages[lang].strings[key][1];
+            $(element).tooltip();
             return;
         }
 
@@ -399,7 +401,7 @@ function getLangdata() {
                 //Telefon_error
                 //Gem
                 "Profilbillede": "Profile picture",
-                "Profilbillede_title": ["?", "Filtypes: .jpg, .jpeg, .png. Min. width: 250px. Min. height: 250px. Max. file size: 1MB. The picture can be cropped when selected."],
+                "Profilbillede_tooltip": ["?", "Filtypes: .jpg, .jpeg, .png. Min. width: 250px. Min. height: 250px. Max. file size: 1MB. The picture can be cropped when selected."],
                 "Vaelg_billede": "Choose picture",
                 "Vaelg_billede_error": "You can only upload a file of maximun 1MB size",
 
