@@ -37,10 +37,8 @@ function brugStrings(lang) {
         }
 
         if (key.includes('tooltip')) {
-            $(element).tooltip('dispose');
             element.textContent = langdata.languages[lang].strings[key][0];
             element.title = langdata.languages[lang].strings[key][1];
-            $(element).tooltip();
             return;
         }
 
@@ -189,7 +187,7 @@ function getLangdata() {
                 "aKontakt": "Contact",
                 "aAlleCVer": "All resumes",
                 "aAllePraktikopslag": "All company posts",
-                "aLavPraktikopslag": "Create Internship post",
+                "aLavPraktikOpslag": "Create post",
                 "aVirksomheder": "Companies",
                 "aOpslag": "Posts",
                 "aFaktaOmPraktik": "About internship",
@@ -207,7 +205,7 @@ function getLangdata() {
                 "aLogud": "Log out",
                 "aProfil": "Profile",
                 "aMitCV": "My resume",
-                "aMinePraktikOpslag": "My internship posts",
+                "aMinePraktikOpslag": "My company posts",
                 "aOpretBruger": "Create user",
 
                 // search-cv
@@ -299,6 +297,7 @@ function getLangdata() {
                 "Vaelg_en_uddannelse_note": "The selected education has paid internship",
                 "Land": "Country",
                 "Vaelg_et_land": "Select a country",
+                "Vaelg_et_land_error": "You must specify a country",
                 "Danmark": "Denmark",
                 "Tyskland": "Germany",
                 "Sverige": "Sweden",

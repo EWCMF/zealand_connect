@@ -134,7 +134,7 @@ router.post('/', function (req, res, next) {
             let inputDate = new Date(post_start_date);
 
             if (currDate > inputDate) {
-                console.log('Invalid date');
+                console.log('Past date');
                 inputError = true;
             }
         }
@@ -148,7 +148,7 @@ router.post('/', function (req, res, next) {
                 let inputDate = new Date(post_end_date);
 
                 if (currDate > inputDate) {
-                    console.log('Invalid date');
+                    console.log('Past date');
                     inputError = true;
                 }
             }
