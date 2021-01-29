@@ -17,69 +17,69 @@
             <div class="form-column col-12 col-md-4">
 
                 <div class="form-group required">
-                    <label for="navn">Virksomheds Navn</label>
+                    <label for="navn" data-Key="Virksomheds_navn">Virksomheds navn</label>
                     <input class="form-control" name="navn" id="navn" rows="2" value="{{loggedInVirksomhed.navn}}">
-                    <p id="navnError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+                    <p id="navnError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div class="form-group required" style="display: none;">
                     <label for="email">Email</label>
                     <input class="form-control" name="email" id="email" rows="2" value="{{loggedInVirksomhed.email}}">
-                    <p id="emailError" class="CVErrorColor" hidden="true">Du skal skrive din email her og mindst bruge
+                    <p id="emailError" class="CVErrorColor" hidden="true" data-Key="Email_adresse_error">Du skal skrive din email her og mindst bruge
                         et @</p>
                 </div>
                 <div class="form-group required">
-                    <label for="telefon">Telefon</label>
+                    <label for="telefon" data-Key="Telefon">Telefon</label>
                     <input type="number" class="form-control" name="telefon" id="telefon" rows="2"
                            value="{{loggedInVirksomhed.tlfnr}}">
-                    <p id="telefonError" class="CVErrorColor" hidden="true">Du skal skrive dit nummer, det skal præcist
+                    <p id="telefonError" class="CVErrorColor" hidden="true" data-Key="Telefon_error">Du skal skrive dit nummer, det skal præcist
                         være 8 tal og må ikke starte med 0</p>
                 </div>
                 <div class="form-group required">
-                    <label for="telefon">CVR Nummer</label>
+                    <label for="cvrnr" data-Key="CVR_nummer">CVR nummer</label>
                     <input type="number" class="form-control" name="cvrnr" id="cvrnr" rows="2"
                            value="{{loggedInVirksomhed.cvrnr}}">
-                    <p id="cvrnrError" class="CVErrorColor" hidden="true">Du skal skrive dit CVR nummer, det skal
+                    <p id="cvrnrError" class="CVErrorColor" hidden="true" data-Key="CVR_nummer_error">Du skal skrive dit CVR nummer, det skal
                         præcist være 8 tal og må ikke starte med 0</p>
                 </div>
                 <div class="form-group required">
-                    <label for="telefon">Address</label>
+                    <label for="address">Address</label>
                     <input type="text" class="form-control" name="address" id="address" rows="2"
                            value="{{loggedInVirksomhed.adresse}}">
-                    <p id="addressError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+                    <p id="addressError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
-                    <label for="telefon">Hjemmeside</label>
+                    <label for="hjemmeside" data-Key="Hjemmeside">Hjemmeside</label>
                     <input type="text" class="form-control" name="hjemmeside" id="hjemmeside" rows="2"
                            value="{{loggedInVirksomhed.hjemmeside}}">
-                    <p id="hjemmesideError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+                    <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
-                    <label for="telefon">Direktør</label>
-                    <input type="text" class="form-control" name="direkoer" id="direkoer" rows="2"
+                    <label for="direktoer">Direktør</label>
+                    <input type="text" class="form-control" name="direktoer" id="direktoer" rows="2"
                            value="{{loggedInVirksomhed.direktoer}}">
-                    <p id="direkoerError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+                    <p id="direktoerError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
-                    <label for="telefon">Land</label>
+                    <label for="land" data-Key="Land">Land</label>
                     <input type="text" class="form-control" name="land" id="land" rows="2"
                            value="{{loggedInVirksomhed.land}}">
-                    <p id="landError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+                    <p id="landError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
-                    <label for="telefon">Postnummer</label>
+                    <label for="postnr" data-Key="Postnummer">Postnummer</label>
                     <input type="number" class="form-control" name="postnr" id="postnr" rows="2"
                            value="{{loggedInVirksomhed.postnr}}">
-                    <p id="postnrError" class="CVErrorColor" hidden="true">Du skal skrive dit postnummer, det skal
+                    <p id="postnrError" class="CVErrorColor" hidden="true" data-Key="Postnummer_error">Du skal skrive dit postnummer, det skal
                         præcist være 4 tal</p>
                 </div>
                 <div class="form-group required">
-                    <label for="telefon">By</label>
+                    <label for="by" data-Key="By">By</label>
                     <input type="text" class="form-control" name="by" id="by" rows="2"
                            value="{{loggedInVirksomhed.by}}">
-                    <p id="byError" class="CVErrorColor" hidden="true">Skal udfyldes</p>
+                    <p id="byError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-success" id="gem">Gem</button>
+                    <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
                 </div>
 
 
@@ -87,9 +87,9 @@
 
             <div class="form-column col-12 col-md-4">
                 <div style="display: flex; flex-direction: row;">
-                    <label style="margin-right: 5px" id="profilbilledeLabel">Virksomhedslogo</label>
+                    <label style="margin-right: 5px" id="profilbilledeLabel" data-Key="Virksomhedslogo">Virksomhedslogo</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 1MB. Billedet kan skæres til efter det er valgt.">?</span>
+                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 1MB. Billedet kan skæres til efter det er valgt." data-Key="Profilbillede_title">?</span>
                 </div>
                 <div class="profilePicHolder">
                     <img id="profilbillede" class="img-thumbnail border-0" src="\images\no-logo.png"
@@ -98,8 +98,8 @@
                         <input id="crop_base64" type="text" name="crop_base64" class="d-none">
                         <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" class="custom-file-input"
                                id="profilePic" onchange="validateAndUpdateInputLabel('picLabel', 'profilePic')">
-                        <label id="picLabel" class="custom-file-label" for="profilePic">Vælg billede</label>
-                        <p id="profilePicError" class="CVErrorColor" hidden="true">Du kan kun uploade en fil på maksimum
+                        <label id="picLabel" class="custom-file-label" for="profilePic" data-Key="Vaelg_billede">Vælg billede</label>
+                        <p id="profilePicError" class="CVErrorColor" hidden="true" data-Key="Vaelg_billede_error">Du kan kun uploade en fil på maksimum
                             1MB</p>
                     </div>
                 </div>

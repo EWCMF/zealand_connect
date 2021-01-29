@@ -384,11 +384,51 @@ function getLangdata() {
                 //Tlf_kolon
                 "Adresse_kolon": "Address:",
                 //Hjemmeside_kolon
-                "Direktoer_kolon": "President:"
+                "Direktoer_kolon": "President:",
                 //Land_kolon
                 //Postnummer_kolon
                 //By_kolon
                 //Rediger_profil
+
+                //rediger-studentprofil
+                //Fornavn
+                //Skal_udfyldes
+                //Efternavn
+                //Skal_udfyldes
+                //Telefon
+                //Telefon_error
+                //Gem
+                "Profilbillede": "Profile picture",
+                "Profilbillede_title": ["?", "Filtypes: .jpg, .jpeg, .png. Min. width: 250px. Min. height: 250px. Max. file size: 1MB. The picture can be cropped when selected."],
+                "Vaelg_billede": "Choose picture",
+                "Vaelg_billede_error": "You can only upload a file of maximun 1MB size",
+
+                //rediger-virksomhedsprofil
+                "Virksomheds_navn": "Company name",
+                //Skal_udfyldes
+                //Email_adresse_error
+                //Telefon
+                //Telefon_error
+                "CVR_nummer": "CVR Number",
+                "CVR_nummer_error": "You must specify a CVR number with 8 digits, not beginning with 0",
+                //Skal_udfyldes
+                //Hjemmeside
+                //Skal_udfyldes
+                //Land
+                //Skal_udfyldes
+                "Postnummer": "Postcode",
+                "Postnummer_error": "You must specify a postcode of exactly 4 characters",
+                "By": "City",
+                //Skal_udfyldes
+                //Gem
+                "Virksomhedslogo": "Company logo"
+                //Profilbillede_title
+                //Vaelg_billede
+                //Vaelg_billede_error
+                
+
+                
+
             }
         }
     }
