@@ -7,15 +7,20 @@
 
 });
 function brugStrings(lang) {
-    var langdata = getLangdata()
+    var langdata = getLangdata();
     //køre igennem alt i dokumentet, leder efter data-key keys i html
     document.querySelectorAll('html [data-key]').forEach(element => {
         if(lang.includes('da')) {
             //console.log('stopper her')
              return;
         }
+
         //for hvert data-key værdi, leder den efter det i json navngivet langdata
         let key = element.getAttribute('data-key');
+
+        if (!langdata.languages[lang].strings.hasOwnProperty(key)) {
+            return;
+        }
 
         if(key.includes('placeholder')) { // beregnet til input, så placeholder kan vises på dansk og engelsk
             element.placeholder = langdata.languages[lang].strings[key];
@@ -194,8 +199,8 @@ function getLangdata() {
                 "aLogin": "Login",
                 "aLogud": "Log out",
                 "aProfil": "Profile",
-                "aMitCV": "My Resume",
-                "aMinePraktikOpslag": "My Internship posts",
+                "aMitCV": "My resume",
+                "aMinePraktikOpslag": "My internship posts",
                 "aOpretBruger": "Create user",
 
                 // search-cv
@@ -210,6 +215,20 @@ function getLangdata() {
                 "Raekkefoelge": "Order",
                 "Faldende": "Descending",
                 "Stigende": "Ascending",
+
+                //Pagination
+                "Forrige": "Previous",
+                "Naeste": "Next",
+
+                //Uddannelser
+                "Datamatiker": "Computer Scientist",
+                "Handelsøkonom": "Commerce Management",
+                "Finansøkonom": "Financial Management",
+                "International Handel og Markedsføring": "International Sales and Marketing",
+                //Innovation og Entrepreneurship
+                "Bygningskontruktør": "Constructing Architect",
+                "Byggetekniker": "Building Technician",
+                "Installatør, stærkstrøm": "Electrician",
 
                 // search-praktik
                 "Opslag": "Posts",
@@ -231,6 +250,15 @@ function getLangdata() {
                 //Faldende,
                 //Stigende
 
+                //search-praktik-card
+                "Uddannelse_kolon": "Education:",
+                "Ansoegningsfrist_kolon": "Application deadline:",
+                "Praktikstart_kolon": "Internship start:", 
+
+                //Opslagstyper
+                "Praktik": "Internship",
+                "Studiejob": "Student job",
+
                 //cv
                 "Navn_kolon": "Name:",
                 "Tlf_kolon": "Phone:",
@@ -246,6 +274,7 @@ function getLangdata() {
                 "Fritidsinteresser": "Hobbies",
                 "It_kompetencer": "IT skills",
                 "Sprog": "Language",
+                "Ikke_angivet": "Not specified",
 
                 //internship_post
                 "Rediger_opslag": "Edit post",
@@ -291,8 +320,21 @@ function getLangdata() {
                 "Gem": "Save",
                 "Slet_dette_opslag": "Delete this post",
 
+                //intership_post_view
+                //Uddannelse_kolon
+                "Land_kolon": "Country:",
+                "By_kolon": "City:",
+                "Postnummer_kolon": "Postcode:",
+                "Kontaktperson_kolon": "Contact person:",
+                "CVR_nummer_kolon": "CVR number:",
+                //Hjemmeside_kolon
+                "Vedhaeftet_fil_kolon": "Attached file:",
+                "Rediger_oplag": "Edit post",
+                "Annoncetekst_kolon": "Post text:",
+
                 //mit-cv
                 //Overskrift
+                "Overskrift_placeholder": "What you're looking for e.g. job or internship",
                 "Skal_udfyldes": "Required field",
                 //Vaelg_en_uddannelse
                 //Vaelg_en_uddannelse_error
@@ -306,10 +348,14 @@ function getLangdata() {
                 "hjemmeside_error": "You must specify a proper website link",
                 "Link_til_CV_paa_Youtube": "Link to CV on Youtube",
                 //Om_mig
+                "Om_mig_placeholder": "This text is shown when companies search resumes",
                 //It_kompetencer
+                "Valgfri_placeholder": "Optional",
                 //Udlandsophold_og_frivilligt_arbejde
                 "Erhvervserfaring": "Work experience",
-                //Tidligere_uddannelse
+                "Erhvervserfaring_placeholder": "Previous or current work experience",
+                "Tidligere_udannelse": "Previous education",
+                "Tidligere_udannelse_placeholder": "Describe previous or current education",
                 //Skal_udfyldes
                 "Hjemmeside": "Website",
                 //Fritidsinteresser

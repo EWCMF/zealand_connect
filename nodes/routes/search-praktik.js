@@ -6,7 +6,6 @@ const db = require('../models');
 var formidable = require("formidable");
 var { reqLang } = require('../public/javascript/request');
 const limit = 5;
-const edu = require('../constants/education');
 const { Op } = require('sequelize');
 const path = require('path');
 const makeArray = function(body, param) {
@@ -175,7 +174,12 @@ router.get('/', async function (req, res, next) {
 
     let where = handleWhere(req.query);
 
-    const udd = await edu.getAllEducation(req);
+    const udd = await db.Uddannelse.findAll({
+        attributes: ['id', 'name'],
+        order: [
+            ['name', 'ASC']
+        ]
+    });
 
     const user = res.locals.user
 
@@ -192,8 +196,6 @@ router.get('/', async function (req, res, next) {
         }
     }
 
-    let uddInclude = edu.includeEducation(req);
-
     const {
         count,
         rows
@@ -209,8 +211,11 @@ router.get('/', async function (req, res, next) {
             model: db.Virksomhed,
             as: 'virksomhed'
         },
-        uddInclude
-        ],
+        {
+            model: db.Uddannelse,
+            as: 'education',
+            attributes: ['name']
+        }],
         where
         }   
     );
@@ -237,28 +242,15 @@ router.get('/', async function (req, res, next) {
             element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
         }
 
-        if (req.cookies.lang == 'en') {
-            switch (element['post_type']) {
-                case 1:
-                    element['post_type'] = 'Internship';
-                    break;
-                case 2:
-                    element['post_type'] = 'Student job';
-                    break;
-                case 3:
-                    element['post_type'] = 'Trainee';     
-            }
-        } else {
-            switch (element['post_type']) {
-                case 1:
-                    element['post_type'] = 'Praktik';
-                    break;
-                case 2:
-                    element['post_type'] = 'Studiejob';
-                    break;
-                case 3:
-                    element['post_type'] = 'Trainee';     
-            }
+        switch (element['post_type']) {
+            case 1:
+                element['post_type'] = 'Praktik';
+                break;
+            case 2:
+                element['post_type'] = 'Studiejob';
+                break;
+            case 3:
+                element['post_type'] = 'Trainee';     
         }
 
     }
@@ -302,8 +294,6 @@ router.post('/query', function (req, res) {
             offset = (page - 1) * limit;
         }
 
-        let uddInclude = edu.includeEducation(req); 
-
         const {
             count,
             rows
@@ -319,8 +309,11 @@ router.post('/query', function (req, res) {
                 model: db.Virksomhed,
                 as: 'virksomhed'
             },
-            uddInclude
-            ],
+            {
+                model: db.Uddannelse,
+                as: 'education',
+                attributes: ['name']
+            }],
             where
         });
 
@@ -346,28 +339,15 @@ router.post('/query', function (req, res) {
                 element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
             }
 
-            if (req.cookies.lang == 'en') {
-                switch (element['post_type']) {
-                    case 1:
-                        element['post_type'] = 'Internship';
-                        break;
-                    case 2:
-                        element['post_type'] = 'Student job';
-                        break;
-                    case 3:
-                        element['post_type'] = 'Trainee';     
-                }
-            } else {
-                switch (element['post_type']) {
-                    case 1:
-                        element['post_type'] = 'Praktik';
-                        break;
-                    case 2:
-                        element['post_type'] = 'Studiejob';
-                        break;
-                    case 3:
-                        element['post_type'] = 'Trainee';     
-                }
+            switch (element['post_type']) {
+                case 1:
+                    element['post_type'] = 'Praktik';
+                    break;
+                case 2:
+                    element['post_type'] = 'Studiejob';
+                    break;
+                case 3:
+                    element['post_type'] = 'Trainee';     
             }
             
         }
@@ -387,23 +367,12 @@ router.post('/query', function (req, res) {
             return fs.readFileAsync(filename, 'utf8');
         }
 
-        let card;
-        let pagination;
-
-        if (req.cookies.lang == 'en') {
-            card = 'views/partials/search-praktik-card-en.hbs';
-            pagination = 'views/partials/search-pagination-en.hbs';
-        } else {
-            card = 'views/partials/search-praktik-card.hbs';
-            pagination = 'views/partials/search-pagination.hbs';
-        }
-
-        getFile(path.normalize(card)).then((data) => {
+        getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({json: rows});
             item.push(html);
 
-            getFile(path.normalize(pagination)).then((data) => {
+            getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
                 
