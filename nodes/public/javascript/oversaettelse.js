@@ -2,9 +2,8 @@
 
  //primære methode som kalder de andre
  document.addEventListener('DOMContentLoaded', () => { 
-    let lang =document.documentElement.lang; // skaffer lang
+    let lang = document.documentElement.lang; // skaffer lang
     brugStrings(lang);
-
 });
 function brugStrings(lang) {
     var langdata = getLangdata();
@@ -34,6 +33,12 @@ function brugStrings(lang) {
 
         if(key.includes('html')) {
             element.innerHTML = langdata.languages[lang].strings[key];
+            return;
+        }
+
+        if (key.includes('title')) {
+            element.textContent = langdata.languages[lang].strings[key][0];
+            element.title = langdata.languages[lang].strings[key][1];
             return;
         }
 
@@ -362,8 +367,17 @@ function getLangdata() {
                 "Tilgængelighed": "Accessibility",
                 "Offentlig": "Public",
                 "Privat": "Private",
-                "Tilgængelighed_error": "You must specify if your resume is public or private"
+                "Tilgængelighed_error": "You must specify if your resume is public or private",
                 //Gem
+
+                //Cookie consent
+                "Cookie_indstillinger": "Cookie settings",
+                "Cookie_indstillinger_body_html": "We use cookies to give you the best experience using connect.zealand.dk. When you click 'confirm', you accept our use of cookies and " +
+                "<a href='https://www.zealand.dk/persondatapolitik/'>the private policy of Zealand.</a>",
+                "Du_kan_vaelge_html": "You can choose which type of cookies are allowed.<br>Hover the mouse over for descriptions.",
+                "Noedvendige_cookies_title": ["Required cookies", "Required cookies are used e.g. to handle login. The site cannot function without these."],
+                "Praeference_cookies_title": ["Preference cookies", "Preference cookies are those that save personal preferences. It's used for language options on this site."],
+                "Bekraeft": "Confirm"
             }
         }
     }

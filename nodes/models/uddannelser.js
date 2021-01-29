@@ -23,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Uddannelse.init({
-    name: DataTypes.STRING,
-    english_name: DataTypes.STRING
+    name: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Uddannelse',
