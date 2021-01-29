@@ -252,21 +252,13 @@
 
             </div>
             <div id=cards>
-                {{#if (isDanish language)}}
                 {{> search-praktik-card}}
-                {{else}}
-                {{> search-praktik-card-en}}
-                {{/if}}
             </div>
         </div>
     </div>
 
     <div class="row d-flex justify-content-center" id="pagination">
-        {{#if (isDanish language)}}
         {{> search-pagination}}
-        {{else}}
-        {{> search-pagination-en}}
-        {{/if}}
     </div>
 </div>
 <script src="/javascript/search_praktik.js"></script>

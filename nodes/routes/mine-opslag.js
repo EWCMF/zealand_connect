@@ -7,6 +7,7 @@ var formidable = require("formidable");
 const limit = 5;
 const { Op } = require('sequelize');
 const path = require('path');
+const { reqLang } = require('../public/javascript/request');
 
 router.get('/', async function (req, res, next) {
     
@@ -51,14 +52,6 @@ router.get('/', async function (req, res, next) {
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
-        let eduName = await db.Uddannelse.findOne({
-            where: {
-                id: element['fk_education']
-            }
-        });
-
-        element['fk_education'] = eduName.name;
-
         let cropStart = element['post_start_date'].substring(0, 10);
 
         let startYear = cropStart.substring(0, cropStart.indexOf('-'));
@@ -89,6 +82,7 @@ router.get('/', async function (req, res, next) {
     }
 
     res.render('mine-opslag', {
+        language: reqLang(req, res),
         json: rows,
         pagination: {
             page: page,

@@ -17,12 +17,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Uddannelse:</td>
-                    <td id=educationContainer>{{reducation}}</td>
+                    <td data-key="Uddannelse_kolon">Uddannelse:</td>
+                    <td id="educationContainer" data-key="{{reducation}}">{{reducation}}</td>
                 </tr>
                 <tr>
-                    <td>Land:</td>
-                    <td id=countryContainer>{{rcountry}}</td>
+                    <td data-key="Land_kolon">Land:</td>
+                    <td id="countryContainer">{{rcountry}}</td>
                 </tr>
 
                 {{#if isDenmark}}
@@ -31,11 +31,11 @@
                         <td id="regionContainer">{{rregion}}</td>
                     </tr>
                     <tr id="cityParent">
-                        <td>By:</td>
+                        <td data-key="By_kolon">By:</td>
                         <td>{{rcity}}</td>
                     </tr>
                     <tr id="postcodeParent">
-                        <td>Postnummer:</td>
+                        <td data-key="Postnummer_kolon">Postnummer:</td>
                         <td>{{rpostcode}}</td>
                     </tr>
                 {{/if}}
@@ -44,24 +44,24 @@
                     <td id="emailContainer"><a href="mailto:{{remail}}">{{remail}}</a></td>
                 </tr>
                 <tr>
-                    <td>Kontaktperson:</td>
+                    <td data-key="Kontaktperson_kolon">Kontaktperson:</td>
                     <td id="contactContainer">{{rcontact}}</td>
                 </tr>
                 {{#if rcvr}}
                     <tr>
-                        <td>CVR Nummer:</td>
+                        <td data-key="CVR_nummer_kolon">CVR nummer:</td>
                         <td id="cvrContainer">{{rcvr}}</td>
                     </tr>
                 {{/if}}
                 {{#if rcompany}}
                     <tr>
-                        <td>Hjemmeside:</td>
+                        <td data-key="Hjemmeside_kolon">Hjemmeside:</td>
                         <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
                     </tr>
                 {{/if}}
                 {{#if rdoc}}
                     <tr id="docContainer">
-                        <td>Vedhæftet fil:</td>
+                        <td data-key="Vedhaeftet_fil_kolon">Vedhæftet fil:</td>
                         <td id="docContainer2"><a href="/uploads/{{rdoc}}" target="_Blank">{{rdocName}}</a></td>
                     </tr>
                 {{/if}}
@@ -72,7 +72,7 @@
             {{#unless noButtons}}
                 {{#if ejer}}
                     <button type="button" class="btn btn-success mt-3"
-                            onclick="window.location.href='../internship_update?id={{rid}}'">Rediger opslag</button>
+                            onclick="window.location.href='../internship_update?id={{rid}}'" data-key="Rediger_oplag">Rediger opslag</button>
                 {{/if}}
             {{/unless}}
         </div>
@@ -80,7 +80,7 @@
 
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
-            <h4 class="mb-3 mt-2 d-flex align-self-center">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Annoncetekst_kolon">
                 Annoncetekst:
             </h4>
             {{{rtext}}}

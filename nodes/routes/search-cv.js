@@ -7,7 +7,6 @@ var formidable = require("formidable");
 var { reqLang } = require('../public/javascript/request');
 const path = require('path');
 const limit = 5;
-const edu = require('../constants/education');
 const {
     Op
 } = require('sequelize');
@@ -106,9 +105,12 @@ router.get('/', async function (req, res, next) {
 
     let where = handleWhere(req.query);
 
-    let udd = await edu.getAllEducation(req);
-
-    let uddInclude = edu.includeEducation(req);
+    let udd = await db.Uddannelse.findAll({
+        attributes: ['id', 'name'],
+        order: [
+            ['name', 'ASC']
+        ]
+    });  
 
     const {
         count,
@@ -125,8 +127,11 @@ router.get('/', async function (req, res, next) {
             model: db.Student,
             as: 'student'
         },
-        uddInclude
-        ],
+        {
+            model: db.Uddannelse,
+            as: 'education',
+            attributes: ['name']
+        }],
         where
     });
 
@@ -168,8 +173,6 @@ router.post('/query', function (req, res) {
             offset = (page - 1) * limit;
         };
 
-        let uddInclude = edu.includeEducation(req);
-
         const {
             count,
             rows
@@ -186,8 +189,11 @@ router.post('/query', function (req, res) {
                 model: db.Student,
                 as: 'student'
             },
-            uddInclude
-            ]
+            {
+                model: db.Uddannelse,
+                as: 'education',
+                attributes: ['name']
+            }]
         });
 
         var item = [count];
@@ -214,13 +220,6 @@ router.post('/query', function (req, res) {
         // 'views\\partials\\search-cv-card.hbs'
         // 'views\\partials\\search-pagination.hbs'
 
-        let pagination;
-        if (req.cookies.lang == 'en') {
-            pagination = 'views/partials/search-pagination-en.hbs';
-        } else {
-            pagination = 'views/partials/search-pagination.hbs';
-        }
-
         getFile(path.normalize('views/partials/search-cv-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({
@@ -228,7 +227,7 @@ router.post('/query', function (req, res) {
             });
             item.push(html);
 
-            getFile(path.normalize(pagination)).then((data) => {
+            getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
 
@@ -302,13 +301,10 @@ router.get('/:id', async function (req, res) {
         }
     }
 
-    let noDataLabel = req.cookies.lang == 'en' ? 'Not specified' : "Ikke angivet";
-
     res.render('cv', {
         language: reqLang(req, res),
         json: cv,
-        ejer: ejer,
-        noData: noDataLabel
+        ejer: ejer
     });
 
 });

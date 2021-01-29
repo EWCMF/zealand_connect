@@ -129,10 +129,28 @@ function submitForm(formElement) {
 
     let xhr = new XMLHttpRequest();
     xhr.onload = function () {
-        var res = JSON.parse(xhr.responseText);
+        let res = JSON.parse(xhr.responseText);
+
         document.getElementById('results').innerHTML = res[0] + "&nbsp;";
-        document.getElementById('cards').innerHTML = res[1];
-        document.getElementById('pagination').innerHTML = res[2];
+
+        let cardFragment = document.createRange().createContextualFragment(res[1]);
+        let paginationFragment = document.createRange().createContextualFragment(res[2]);
+
+        let cards = document.getElementById('cards');
+        let pagination = document.getElementById('pagination');
+
+        let newCards = cards.cloneNode();
+        newCards.innerHTML = "";
+        newCards.appendChild(cardFragment);
+        cards.parentNode.replaceChild(newCards, cards);
+
+        let newPagination = pagination.cloneNode();
+        newPagination.innerHTML = "";
+        newPagination.appendChild(paginationFragment);
+        pagination.parentNode.replaceChild(newPagination, pagination);
+
+        let lang = document.documentElement.lang;
+        brugStrings(lang);
     }
     xhr.open(formElement.method, formElement.getAttribute("action"));
     xhr.send(formData);

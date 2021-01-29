@@ -1,7 +1,7 @@
 {{#each json}}
 <div class="card mb-3">
     <div class="card-header p-0">
-        <h6 class="m-2">
+        <h6 class="m-2" data-key="{{post_type}}">
             {{post_type}}
         </h6>
     </div>
@@ -25,12 +25,12 @@
         <div class="container ml-2">
                 <div class="row d-flex">
                     <div class="row flex-grow-1">
-                        <p class="font-weight-bold pr-1">Uddannelse:</p><p class="pr-2">{{education.name}}</p> 
+                        <p class="font-weight-bold pr-1" data-key="Uddannelse_kolon">Uddannelse:</p><p class="pr-2">{{education.name}}</p> 
                     </div>
                     <div class="row mr-2">
-                        <p class="font-weight-bold pr-1">Ansøgningsfrist:</p> <p class="pr-2">{{post_start_date}}</p>
+                        <p class="font-weight-bold pr-1" data-key="Ansoegningsfrist_kolon">Ansøgningsfrist:</p> <p class="pr-2">{{post_start_date}}</p>
                         {{#if post_end_date}}
-                        <p class="font-weight-bold pr-1">Praktikstart:</p>  <p>{{post_end_date}}</p>
+                        <p class="font-weight-bold pr-1" data-key="Praktikstart_kolon">Praktikstart:</p>  <p>{{post_end_date}}</p>
                         {{/if}}
                     </div>
                 </div>

@@ -261,7 +261,7 @@ router.get('/', async function (req, res, next) {
         ]
     }).then(result => {
         result.forEach(element => {
-            generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
+            generatedEducationOptions += "<option value='" + element.dataValues.id + "' data-key='" + element.dataValues.name + "'>" + element.dataValues.name + "</option>";
         });
         res.render('internship_post', {
             language: reqLang(req, res),
