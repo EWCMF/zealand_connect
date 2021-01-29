@@ -223,17 +223,17 @@ router.post('/rediger-save', function (req, res, next) {
     formData.parse(req, async function (error, fields, files) {
         //laver et objekt med alle data
         const {
-            email, telefon, by, postnr, cvrnr, navn, address, hjemmeside, direkoer, land, profile_picture, crop_base64
+            email, telefon, by, postnr, cvrnr, navn, address, hjemmeside, direktoer, land, profile_picture, crop_base64
         } = fields;
         let content = {
-            email, telefon, by, postnr, cvrnr, navn, address, hjemmeside, direkoer, land, profile_picture, crop_base64
+            email, telefon, by, postnr, cvrnr, navn, address, hjemmeside, direktoer, land, profile_picture, crop_base64
         };
 
 
         const imageBufferData = Buffer.from(crop_base64, 'base64');
 
         // log ikke buffer dataen da den meget vel kan være en massiv streng.
-        console.log(email, telefon, by, postnr, cvrnr, address, hjemmeside, direkoer, land, profile_picture);
+        console.log(email, telefon, by, postnr, cvrnr, address, hjemmeside, direktoer, land, profile_picture);
 
         let size = Buffer.byteLength(imageBufferData);
 
@@ -294,7 +294,7 @@ router.post('/rediger-save', function (req, res, next) {
                                 content.profile_picture = newPicName;
 
                                 // Edit the students information
-                                editVirksomhed(email, cvrnr, navn, address, telefon, hjemmeside, direkoer, land, postnr, by, content.profile_picture);
+                                editVirksomhed(email, cvrnr, navn, address, telefon, hjemmeside, direktoer, land, postnr, by, content.profile_picture);
                                 //TODO opdater editVirksomhed
                                 res.redirect('/profil/rediger');
                             }
@@ -313,7 +313,7 @@ router.post('/rediger-save', function (req, res, next) {
             }
         } else {
             // Intet logo, så nøjes med at opdatere de andre felter
-            editVirksomhed(email, cvrnr, navn, address, telefon, hjemmeside, direkoer, land, postnr, by);
+            editVirksomhed(email, cvrnr, navn, address, telefon, hjemmeside, direktoer, land, postnr, by);
             res.redirect('/profil/rediger');
         }
     });
@@ -326,7 +326,7 @@ router.post('/rediger-save', function (req, res, next) {
     // let firmanavn = req.body.navn;
     // let adresse = req.body.address;
     // let hjemmeside = req.body.hjemmeside;
-    // let direktoer = req.body.direkoer;
+    // let direktoer = req.body.direktoer;
     // let land = req.body.land;
     // editVirksomhed(email, cvrnr, firmanavn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by);
     // console.log(email, cvrnr, firmanavn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by);
