@@ -370,14 +370,25 @@ function getLangdata() {
                 "Tilgængelighed_error": "You must specify if your resume is public or private",
                 //Gem
 
-                //Cookie consent
-                "Cookie_indstillinger": "Cookie settings",
-                "Cookie_indstillinger_body_html": "We use cookies to give you the best experience using connect.zealand.dk. When you click 'confirm', you accept our use of cookies and " +
-                "<a href='https://www.zealand.dk/persondatapolitik/'>the private policy of Zealand.</a>",
-                "Du_kan_vaelge_html": "You can choose which type of cookies are allowed.<br>Hover the mouse over for descriptions.",
-                "Noedvendige_cookies_title": ["Required cookies", "Required cookies are used e.g. to handle login. The site cannot function without these."],
-                "Praeference_cookies_title": ["Preference cookies", "Preference cookies are those that save personal preferences. It's used for language options on this site."],
-                "Bekraeft": "Confirm"
+                //studentprofil
+                "Profil": "Profile",
+                //Navn_kolon
+                "Mail_kolon": "Mail:",
+                //Tlf_kolon
+                "Rediger_profil": "Edit profile",
+
+                //virksomhedprofil
+                "Virksomhed": "Company",
+                //Navn_kolon
+                //Mail_kolon
+                //Tlf_kolon
+                "Adresse_kolon": "Address:",
+                //Hjemmeside_kolon
+                "Direktoer_kolon": "President:"
+                //Land_kolon
+                //Postnummer_kolon
+                //By_kolon
+                //Rediger_profil
             }
         }
     }

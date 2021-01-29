@@ -44,7 +44,10 @@ router.get('/', function (req, res, next) {
                 tlfnr: user.tlfnr,
                 profilbillede: user.profilbillede
             }
-            res.render("studentprofil", {loggedInUser});
+            res.render("studentprofil", {
+                language: reqLang(req, res),
+                loggedInUser
+            });
         }
     });
 });

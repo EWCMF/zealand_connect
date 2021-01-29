@@ -9,7 +9,7 @@ router.get('/en', function(req, res) {
         res.cookie('lang', 'en');
     }
     
-    res.redirect('back')
+    res.redirect('back');
 })
 
 router.get('/da', function(req, res) {
@@ -20,7 +20,7 @@ router.get('/da', function(req, res) {
         res.cookie('lang', 'da');
     }
     
-    res.redirect('back')
+    res.redirect('back');
 })
 
 module.exports = router;
