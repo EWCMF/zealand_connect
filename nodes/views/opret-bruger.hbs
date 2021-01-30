@@ -12,10 +12,10 @@
                         <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login"
                                checked="{{checked}}"
                                onclick="showStudentOpret()">
-                        <label class="buttonText" data-key="studerende">Studerende</label>
+                        <label class="buttonText" data-key="Studerende">Studerende</label>
                         <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
                                onclick="showVirksomhedOpret()">
-                        <label class="buttonText" data-key="virksomhed">Virksomhed</label>
+                        <label class="buttonText" data-key="Virksomhed">Virksomhed</label>
                     </div>
                     <div class="loginBtnBox" id="virksomhed">
 
@@ -58,10 +58,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="adgangskode" data-key="labeladgangskode" class="col-5 col-form-label">Adgangskode</label>
+                                <label for="adgangskode" data-key="labelAdgangskode" class="col-5 col-form-label">Adgangskode</label>
                                 <div class="col-7">
                                     <input id="adgangskode" name="password" type="password" class="form-control"
-                                           placeholder="Adgangskode" data-key="placeholderadgangskode" required
+                                           placeholder="Adgangskode" data-key="placeholderAdgangskode" required
                                            oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
@@ -72,12 +72,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="gentagAdgangskode" data-key="labelgentagAdgangskode"
+                                <label for="gentagAdgangskode" data-key="labelGentagAdgangskode"
                                        class="col-5 col-form-label">Gentag adgangskode</label>
                                 <div class="col-7">
                                     <input id="gentagAdgangskode" name="gentagPassword" type="password"
                                            class="form-control" placeholder="Gentag Adgangskode"
-                                           data-key="placeholdergentagAdgangskode" required
+                                           data-key="placeholderGentagAdgangskode" required
                                            oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
@@ -88,10 +88,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="cvr" data-key="labelcvr" class="col-5 col-form-label">CVR-Nummer</label>
+                                <label for="cvr" data-key="labelCvr" class="col-5 col-form-label">CVR-Nummer</label>
                                 <div class="col-7">
                                     <input id="cvr" name="cvr" type="text" class="form-control" placeholder="CVR-Nummer"
-                                           data-key="placeholdercvr" required
+                                           data-key="placeholderCvr" required
                                            oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
@@ -105,7 +105,7 @@
                                 <label for="telefonnummer" data-key="labelTelefonnummer" class="col-5 col-form-label">Telefonnummer</label>
                                 <div class="col-7">
                                     <input id="telefonnummer" name="telefonnummer" type="string" class="form-control"
-                                           placeholder="telefonnummer" data-key="placeholderTelefonnummer" required
+                                           placeholder="Telefonnummer" data-key="placeholderTelefonnummer" required
                                            oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
@@ -185,11 +185,11 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="adgangskode" data-key="labeladgangskode" class="col-5 col-form-label">Adgangskode</label>
+                                <label for="adgangskode" data-key="labelAdgangskode" class="col-5 col-form-label">Adgangskode</label>
                                 <div class="col-7">
                                     <input id="adgangskodeStudent" name="passwordStudent" type="password"
                                            class="form-control" placeholder="Adgangskode"
-                                           data-key="placeholderadgangskode" required
+                                           data-key="placeholderAdgangskode" required
                                            oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
@@ -200,12 +200,12 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="gentagAdgangskode" data-key="labelgentagAdgangskode"
+                                <label for="gentagAdgangskode" data-key="labelGentagAdgangskode"
                                        class="col-5 col-form-label">Gentag adgangskode</label>
                                 <div class="col-7">
                                     <input id="gentagAdgangskodeStudent" name="gentagPasswordStudent" type="password"
                                            class="form-control" placeholder="Gentag Adgangskode"
-                                           data-key="placeholdergentagAdgangskode" required
+                                           data-key="placeholderGentagAdgangskode" required
                                            oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
@@ -219,7 +219,7 @@
                                 <label for="fornavn" data-key="Fornavn" class="col-5 col-form-label">Fornavn</label>
                                 <div class="col-7">
                                     <input id="fornavnStudent" name="fornavnStudent" type="string" class="form-control"
-                                           placeholder="fornavn" data-key="placeholderFornavn" required
+                                           placeholder="Fornavn" data-key="placeholderFornavn" required
                                            oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
@@ -234,7 +234,7 @@
                                        class="col-5 col-form-label">Efternavn</label>
                                 <div class="col-7">
                                     <input id="efternavnStudent" name="efternavnStudent" type="string"
-                                           class="form-control" placeholder="efternavn" data-key="placeholderEfternavn"
+                                           class="form-control" placeholder="Efternavn" data-key="placeholderEfternavn"
                                            required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
@@ -248,20 +248,20 @@
                                 <label for="telefonnummer" data-key="labelTelefonnummer" class="col-5 col-form-label">Telefonnummer</label>
                                 <div class="col-7">
                                     <input id="telefonnummerStudent" name="telefonnummerStudent" type="string"
-                                           class="form-control" placeholder="telefonnummer"
+                                           class="form-control" placeholder="Telefonnummer"
                                            data-key="placeholderTelefonnummer" required
                                            oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                            oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="date" data-key="fødselsdato"
+                                <label for="date" data-key="Foedselsdato"
                                        class="col-5 col-form-label">Fødselsdato</label>
                                 <div class="col-7">
-                                    <input id="date" name="date" type="date" class="form-control" placeholder="Dato"
-                                           data-key="placeholderDato" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
+                                    <input id="date" name="date" type="date" class="form-control"
+                                        required
+                                        oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
+                                        oninput="this.setCustomValidity('')">
                                 </div>
                             </div>
 

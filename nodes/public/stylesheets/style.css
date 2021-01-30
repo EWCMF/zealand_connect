@@ -220,6 +220,10 @@ input::placeholder {
   width: 339px;
 }
 
+#studentOpret .form-control {
+  width: 339px;
+}
+
 #uddanelse-dropdown {
   width: 100%;
 }
