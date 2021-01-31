@@ -203,9 +203,10 @@ async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
 }
 
 async function editPassword(email, password) {
+    let hashedPassword = await hashPassword(password);
     findUserByEmail(email).then(user => {
         user.update({
-            password: hashPassword(password)
+            password: hashedPassword
         });
     })
 }
