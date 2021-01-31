@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
 var profilRouter = require('./routes/profil');
 var internshipPostRouter = require('./routes/internship_post');
 var internshipUpdateRouter = require('./routes/internship_update');
@@ -18,7 +17,6 @@ var loginRouter = require('./routes/login');
 var languageRouter = require('./routes/language');
 var cookieRouter = require('./routes/cookie-confirm');
 var forsideRouter = require('./routes/forside');
-var praktikforloebRouter = require('./routes/praktikforloebet');
 var kontaktRouter = require('./routes/kontakt');
 
 var bodyParser = require('body-parser')
@@ -79,14 +77,6 @@ app.engine(
           return 'checked'
         }
         return '';
-      },
-
-      isDanish: (language) => {
-        if (language === 'da') {
-          return true
-        } else {
-          return null;
-        }
       }
     },
     partialsDir: ["views/partials"],
@@ -135,7 +125,6 @@ app.use(async function (req, res, next) {
   }
 });
 
-app.use('/index', indexRouter);
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/internship_view', internshipPostViewRouter);
@@ -147,7 +136,6 @@ app.use('/login', loginRouter);
 app.use('*/language', languageRouter);
 app.use('*/cookie-confirm', cookieRouter);
 app.use('/', forsideRouter);
-app.use('/praktikforloebet', praktikforloebRouter);
 app.use ('/profil', profilRouter);
 app.use ('/admin-funktioner', adminFunktionerRouter);
 app.use('/opret-bruger', opretBrugerRouter);

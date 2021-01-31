@@ -80,7 +80,8 @@ async function createVirksomhed(virkObj) {
                 password: virkObj.password,
                 cvrnr: virkObj.cvrnr,
                 by: virkObj.by,
-                postnr: virkObj.postnr
+                postnr: virkObj.postnr,
+                navn: virkObj.navn
             }
         );
     } catch (e) {

@@ -12,34 +12,38 @@ const { validateEmail, validateCVR, validatePhone, validateCity, validatePasswor
     validateNavn} = require('../validation/input-validation');
 
 router.get('/', function (req, res, next) {
-   // let errors = req.query;
-   // console.log("ERRORS!");
-   // console.log(errors);
     res.render('opret-bruger', {
-       // succesBesked: errors.succesBesked,
-       // fejlBesked: errors.fejlBesked,
-       // emailError: errors.EmailError,
-       // passwordError: errors.PasswordError,
-       // tlfnrError: errors.TlfnrError,
-       // cvrError: errors.CVRError,
-       // byError: errors.ByError,
-       // postnrError: errors.PostnrError,
         language: reqLang(req)
     });
 });
+
+router.post('/check-email', async (req, res) => {
+    let email = req.body;
+
+    let exists = await findUserByEmail(email);
+
+    if (exists == null) {
+        return res.json({"email": "valid"});
+    }
+
+    res.json({"email": "invalid"});
+});
+
 router.post('/create', (req, res) => {
-
-
      // Indlæs variable fra viewet
      let jsonBody = JSON.parse(req.body);
      let email = jsonBody.email;
      let gentagEmail = jsonBody.gentagEmail;
      let password = jsonBody.password;
      let gentagPassword = jsonBody.gentagPassword;
+     let virksomhedNavn = jsonBody.virksomhedNavn;
      let tlfnr = jsonBody.tflnr;
      let by = jsonBody.by;
      let postnr = jsonBody.postnr;
      let cvrnr = jsonBody.cvrnr;
+
+     console.log(req.body);
+     console.log(jsonBody);
 
      //reset errors
      let atLeastOneErrorIsPresent = false;
@@ -66,6 +70,10 @@ router.post('/create', (req, res) => {
         atLeastOneErrorIsPresent = true;
     } else if (!checkForIdenticals(password, gentagPassword)) {
         errors.PasswordError = "Passwords er ikke ens";
+        atLeastOneErrorIsPresent = true;
+    }
+
+    if (!validateNavn(virksomhedNavn)) {
         atLeastOneErrorIsPresent = true;
     }
 
@@ -107,7 +115,8 @@ router.post('/create', (req, res) => {
                         tlfnr: tlfnr,
                         by: by,
                         postnr: postnr,
-                        cvrnr: cvrnr
+                        cvrnr: cvrnr,
+                        navn: virksomhedNavn
                     }
                     createVirksomhed(virksomhedsBruger).then(()=>{
                         //vi sender errors tilbage selvom de er tomme, 
