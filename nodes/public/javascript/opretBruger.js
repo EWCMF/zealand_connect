@@ -69,7 +69,7 @@ async function checkEmail(input, error) {
             error.classList.add('formError');
         }
         error.style.visibility = 'visible'
-        error.textContent = 'Den angivet mail er ikke gyldig'
+        error.textContent = translateErrorMessage("mailUgyldig");
         return false;
     }
 
@@ -81,14 +81,14 @@ async function checkEmail(input, error) {
         if (!error.classList.contains('formError')) {
             error.classList.add('formError');
         }
-        error.textContent = 'Den angivet mail er allerede i brug';
+        error.textContent = translateErrorMessage("mailIBrug");
         return false;
     }
 
     if (error.classList.contains('formError')) {
         error.classList.remove('formError');
     }
-    error.textContent = 'Den angivet mail er gyldig';
+    error.textContent = translateErrorMessage("mailLedig");
 
     return true;
 };
@@ -113,7 +113,7 @@ function checkGentagEmail(input, error, compare) {
 
     if (input != compare) {
         error.style.visibility = 'visible'
-        error.textContent = 'Den angivet mail er ikke den samme'
+        error.textContent = translateErrorMessage("mailIkkeEns");
         return false;
     }
 
@@ -128,7 +128,7 @@ function checkAdgangskode(input, error) {
 
     if (!regex.test(input)) {
         error.style.visibility = 'visible'
-        error.textContent = "Adgangskoden er ikke gyldigt"
+        error.textContent = translateErrorMessage("passwordUgyldig")
         return false;
     }
 
@@ -142,7 +142,7 @@ function checkGentagAdgangskode(input, error, compare) {
 
     if (input != compare) {
         error.style.visibility = 'visible'
-        error.textContent = "Adgangskoderne er ikke ens"
+        error.textContent = translateErrorMessage("passwordIkkeEns");
         return false;
     }
 
@@ -156,7 +156,7 @@ function checkFeltIkkeTomt(input, error) {
 
     if (input.length == 0) {
         error.style.visibility = 'visible'
-        error.textContent = "Feltet må ikke være tomt"
+        error.textContent = translateErrorMessage("feltIkkeTomt");
         return false;
     }
 
@@ -173,7 +173,7 @@ function checkCvrNummer() {
 
     if (!regex.test(input)) {
         error.style.visibility = 'visible'
-        error.textContent = "Et CVR nummer skal angives med nøjagtig 8 cifre"
+        error.textContent = translateErrorMessage("CvrFejl");
         return false;
     }
 
@@ -188,7 +188,7 @@ function checkTelefon(input, error) {
 
     if (!regex.test(input)) {
         error.style.visibility = 'visible'
-        error.textContent = "Et telefon nummer skal angives med nøjagtig 8 cifre"
+        error.textContent = translateErrorMessage("telefonFejl");
         return false;
     }
 
@@ -205,7 +205,7 @@ function checkDato() {
 
     if (input > today) {
         error.style.visibility = 'visible'
-        error.textContent = "En fremtidig dato er valgt"
+        error.textContent = translateErrorMessage("datoFejl");
         return false;
     }
 
@@ -394,4 +394,45 @@ async function submitOpretStudent() {
         efternavn: inputsStudent.efternavn.value,
         dato: inputsStudent.dato.value
     }));
+}
+
+function translateErrorMessage(key) {
+    let texts = {
+        "da": {
+            "mailUgyldig": "Den angivet mail er ikke gyldig",
+            "mailIBrug": "Den angivet mail er allerede i brug",
+            "mailLedig": "Den angivet mail er ledig",
+            "mailIkkeEns": "De angivet mails er ikke ens",
+            "passwordUgyldig": "Adgangskoden er ikke gyldig. Se hjælpen til venstre",
+            "passwordIkkeEns": "De angivet adgangskoder er ikke ens",
+            "feltIkkeTomt": "Feltet må ikke være tomt",
+            "CvrFejl": "Et CVR nummer skal angives med nøjagtig 8 cifre",
+            "telefonFejl": "Et telefon nummer skal angives med nøjagtig 8 cifre",
+            "datoFejl": "En fremtidig dato er valgt"
+        },
+
+        "en": {
+            "mailUgyldig": "The specified mail is not valid",
+            "mailIBrug": "The specified mail is already in use",
+            "mailLedig": "The specified mail is available",
+            "mailIkkeEns": "The specified mails are not the same",
+            "passwordUgyldig": "The password is invalid. See info on the left",
+            "passwordIkkeEns": "The specified passwords are not the same",
+            "feltIkkeTomt": "This field cannot be empty",
+            "CvrFejl": "A CVR number must be specified with exactly 8 digits",
+            "telefonFejl": "A phone number must be specified with exactly 8 digits",
+            "datoFejl": "A future date has been chosen"
+        }
+    }
+
+    let useEnglish = document.cookie.includes('lang=en');
+
+    let table;
+    if (useEnglish) {
+        table = "en";
+    } else {
+        table = "da";
+    }
+
+    return texts[table][key];
 }

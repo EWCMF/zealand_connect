@@ -63,9 +63,10 @@ function getLangdata() {
                 // Opret bruger
                 "Studerende": "Students",
                 "Virksomhed": "Company",
+                "Alle_felter": "All fields must be filled",
                 "labelGentagEmail": "Repeat email",
                 "placeholderGentagEmail": "Repeat email",
-                "labelAdgangskode": "Password",
+                "labelAdgangskode_html": 'Password <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"title="The password must be between 8 and 20 characters">?</span>',
                 "placeholderAdgangskode": "Password",
                 "labelGentagAdgangskode": "Repeat password",
                 "placeholderGentagAdgangskode": "Repeat password",

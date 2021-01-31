@@ -541,9 +541,57 @@ input::placeholder {
   }
 }
 
+#loginBoxBackground {
+  margin-top: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#cookieBox {
+  margin-top: 10px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loginContent {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 30px 20px 30px 20px;
+  background-color: #f7f7f7;
+}
+
+.radioBtnBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.loginBtnBox {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 339px;
+}
+
+#loginContent {
+  padding: 30px 200px 30px 200px;
+  min-width: 339px;
+}
+
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-  
+  #loginContent {
+    padding: 30px 300px 30px 300px;
+    min-width: 339px;
+  }
 }
 
 /* styling for viewpost table in hbs */

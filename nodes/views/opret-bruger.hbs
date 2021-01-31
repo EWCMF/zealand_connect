@@ -3,9 +3,9 @@
     <!-- metode .submit tæller på samme måde som input submit og så kalde form's id  -->
     <div class="row justify-content-center">
         <div class="col-auto">
-            <div id="loginContent" class="text-center">
+            <div class="text-center">
                 <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
-                <div class="radioBtnBox">
+                <div>
                     <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login"
                         checked="{{checked}}" onclick="showStudentOpret()">
                     <label class="buttonText" data-key="Studerende">Studerende</label>
@@ -14,9 +14,9 @@
                     <label class="buttonText" data-key="Virksomhed">Virksomhed</label>
                 </div>
                 <div>
-                    <p>Alle felter skal udfyldes</p>
+                    <p data-key="Alle_felter" class="mt-2">Alle felter skal udfyldes</p>
                 </div>
-                <div class="loginBtnBox" id="virksomhed">
+                <div id="virksomhed">
 
                     <form name="virksomhedOpret" class="text-left" id="virksomhedOpret" onsubmit="return false"
                         style="display: none;">
@@ -41,8 +41,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="adgangskode" data-key="labelAdgangskode"
-                                class="col-4 col-form-label">Adgangskode</label>
+                            <label for="adgangskode" data-key="labelAdgangskode_html"
+                                class="col-4 col-form-label">Adgangskode
+                            <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
+                            </label>
+                            
                             <div class="col-8">
                                 <input id="adgangskode" name="password" type="password" class="form-control"
                                     placeholder="Adgangskode" data-key="placeholderAdgangskode">
@@ -132,8 +136,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="adgangskodeStudent" data-key="labelAdgangskode"
-                                class="col-4 col-form-label">Adgangskode</label>
+                            <label for="adgangskodeStudent" data-key="labelAdgangskode_html"
+                                class="col-4 col-form-label">Adgangskode
+                            <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
+                            </label>
                             <div class="col-8">
                                 <input id="adgangskodeStudent" name="passwordStudent" type="password"
                                     class="form-control" placeholder="Adgangskode" data-key="placeholderAdgangskode">
