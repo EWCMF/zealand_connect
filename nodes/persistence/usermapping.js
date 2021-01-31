@@ -1,5 +1,6 @@
 const models = require("../models");
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
+const hashPassword = require('../encryption/password').hashPassword;
 
 async function findUserByEmail(email) {
     let user = null;
@@ -201,6 +202,15 @@ async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
     })
 }
 
+async function editPassword(email, password) {
+    let hashedPassword = await hashPassword(password);
+    findUserByEmail(email).then(user => {
+        user.update({
+            password: hashedPassword
+        });
+    })
+}
+
 async function editProfilePic(email, profilbillede){
     findUserByEmail(email).then(student => {
         student.update({
@@ -210,7 +220,6 @@ async function editProfilePic(email, profilbillede){
 }
 
 module.exports = {
-    findUserByEmail: findUserByEmail, createVirksomhed: createVirksomhed, deleteVirksomhed: deleteVirksomhed,
-    editVirksomhed: editVirksomhed, findUserByCVR: findUserByCVR, editStudent: editStudent, deleteStudent: deleteStudent,
-    editProfilePic: editProfilePic, createStudent: createStudent
+    findUserByEmail, createVirksomhed, deleteVirksomhed, editVirksomhed, findUserByCVR, editStudent, deleteStudent,
+    editProfilePic, createStudent, editPassword
 }

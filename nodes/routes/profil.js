@@ -3,6 +3,7 @@ const router = express.Router();
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
+const editPassword = require('../persistence/usermapping').editPassword;
 const models = require("../models");
 const uploadFolder = require("../constants/references").uploadFolder();
 const formidable = require("formidable");
@@ -15,6 +16,8 @@ const {
     reqLang
 } = require('../public/javascript/request');
 const { validatePhone, validateName } = require("../validation/input-validation");
+const checkForIdenticals = require('../validation/input-validation').checkForIdenticals;
+const validatePasswordLength = require('../validation/input-validation').validatePasswordLength;
 
 router.get('/', function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
@@ -127,10 +130,10 @@ router.post('/redigerstudent-save', function (req, res) {
     formData.parse(req, async function (error, fields, files) {
         //laver et objekt med alle data
         const {
-            email, fornavn, efternavn, telefon, profile_picture, crop_base64
+            email, fornavn, efternavn, telefon, profile_picture, crop_base64, password, gentagPassword
         } = fields;
         let content = {
-            email, fornavn, efternavn, telefon, profile_picture, crop_base64
+            email, fornavn, efternavn, telefon, profile_picture, crop_base64, password, gentagPassword
         };
 
         const imageBufferData = Buffer.from(crop_base64, 'base64');
@@ -197,6 +200,10 @@ router.post('/redigerstudent-save', function (req, res) {
                                     content.profile_picture = newPicName;
 
                                     // Edit the students information
+                                    if (password && password === gentagPassword && validatePasswordLength(password) && checkForIdenticals(password, gentagPassword)) {
+                                        editPassword(email, password);
+                                        //TODO: Error handling here and change password for companies
+                                    }
                                     editStudent(email, fornavn, efternavn, telefon, content.profile_picture);
                                     res.redirect('/profil/rediger');
                                 }
@@ -215,6 +222,9 @@ router.post('/redigerstudent-save', function (req, res) {
                 }
         } else {
             // Intet profilbillede, så nøjes med at opdatere de andre felter
+            if (password && password === gentagPassword) {
+                editPassword(email, password);
+            }
             editStudent(email, fornavn, efternavn, telefon);
             res.redirect('/profil/rediger');
         }
