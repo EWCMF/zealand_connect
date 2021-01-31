@@ -1,16 +1,18 @@
 // Autorisérer brugeren når man skal give adgang til funktioner, der kun er for specifikke roller
-function authorizeUser(req, res, userRole) {
-    if (req.user == null) {
-        return false;
-    } else if (userRole === 'student' && res.locals.isStudent) {
-        return true;
-    } else if (userRole === 'company' && res.locals.isCompany) {
-        return true;
-    } else if (userRole === ' admin' && res.locals.isAdmin){
-        return true;
-    } else {
-        return false;
-    }
+function authorizeUser (userRole) {
+    return (req, res, next) => {
+        if (req.user == null) {
+            return res.status(403).render('error403', {layout: false});
+        } else if (userRole === 'student' && res.locals.isStudent) {
+            next();
+        } else if (userRole === 'company' && res.locals.isCompany) {
+            next();
+        } else if (userRole === ' admin' && res.locals.isAdmin){
+            next();
+        } else {
+            return res.status(403).render('error403', {layout: false});
+        }
+    };
 }
 
 module.exports = {
