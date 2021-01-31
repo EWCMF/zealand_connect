@@ -198,6 +198,7 @@ router.post('/redigerstudent-save', function (req, res) {
                                     content.profile_picture = newPicName;
 
                                     // Edit the students information
+                                    if (password && password === gentagPassword) editPassword(email, password);
                                     editStudent(email, fornavn, efternavn, telefon, content.profile_picture);
                                     res.redirect('/profil/rediger');
                                 }
@@ -216,6 +217,7 @@ router.post('/redigerstudent-save', function (req, res) {
                 }
         } else {
             // Intet profilbillede, så nøjes med at opdatere de andre felter
+            if (password && password === gentagPassword) editPassword(email, password);
             editStudent(email, fornavn, efternavn, telefon);
             res.redirect('/profil/rediger');
         }

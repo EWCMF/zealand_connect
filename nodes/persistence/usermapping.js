@@ -1,5 +1,6 @@
 const models = require("../models");
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
+const hashPassword = require('../encryption/password').hashPassword;
 
 async function findUserByEmail(email) {
     let user = null;
@@ -204,7 +205,7 @@ async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
 async function editPassword(email, password) {
     findUserByEmail(email).then(user => {
         user.update({
-            password: password
+            password: hashPassword(password)
         });
     })
 }
