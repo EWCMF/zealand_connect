@@ -13,7 +13,7 @@ const unlinkOldFiles = require('../utils/file-handling').unlinkOldFiles;
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const uploadFolder = require('../constants/references').uploadFolder();
 var {reqLang} = require('../public/javascript/request');
-const authorizeUser = require('../validation/user-validation').authorizeUser;
+const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
 var tempDate = dateRegex.source;
 var tempEmail = emailRegex.source;
