@@ -16,6 +16,8 @@ const {
     reqLang
 } = require('../public/javascript/request');
 const { validatePhone, validateName } = require("../validation/input-validation");
+const checkForIdenticals = require('../validation/input-validation').checkForIdenticals;
+const validatePasswordLength = require('../validation/input-validation').validatePasswordLength;
 
 router.get('/', function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
@@ -198,9 +200,9 @@ router.post('/redigerstudent-save', function (req, res) {
                                     content.profile_picture = newPicName;
 
                                     // Edit the students information
-                                    if (password && password === gentagPassword) {
-                                        console.log("Det passer")
+                                    if (password && password === gentagPassword && validatePasswordLength(password) && checkForIdenticals(password, gentagPassword)) {
                                         editPassword(email, password);
+                                        //TODO: Error handling here and change password for companies
                                     }
                                     editStudent(email, fornavn, efternavn, telefon, content.profile_picture);
                                     res.redirect('/profil/rediger');
@@ -221,8 +223,6 @@ router.post('/redigerstudent-save', function (req, res) {
         } else {
             // Intet profilbillede, så nøjes med at opdatere de andre felter
             if (password && password === gentagPassword) {
-                console.log("Det passer 2")
-                console.log(password)
                 editPassword(email, password);
             }
             editStudent(email, fornavn, efternavn, telefon);
