@@ -13,13 +13,17 @@ function submitButton() {
     const numbersRegex = /^[0-9]{8}$/;
     let numbersOnly = numbersRegex.test(telefon);
 
-    if (fornavn === "") {
+    const nameRegex = /^[A-Z]\w+$/;
+    let testFornavn = nameRegex.test(fornavn);
+    let testEfternavn =nameRegex.test(efternavn);
+
+    if (!testFornavn) {
         document.getElementById("fornavnError").hidden = false;
     } else {
         document.getElementById("fornavnError").hidden = true;
     }
 
-    if (efternavn === "") {
+    if (!testEfternavn) {
         document.getElementById("efternavnError").hidden = false;
     } else {
         document.getElementById("efternavnError").hidden = true;

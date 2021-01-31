@@ -1,395 +1,204 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-<script src="/javascript/opretBruger.js" defer></script>
-<div
-        class="container-fluid">
+<div class="container-fluid">
     <!-- metode .submit tæller på samme måde som input submit og så kalde form's id  -->
     <div class="row justify-content-center">
-        <div class="col-12 col-sm-8">
-            <div id="loginBoxBackground">
-                <div id="loginContent" class="text-center">
-                    <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
-                    <div class="radioBtnBox">
-                        <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login"
-                               checked="{{checked}}"
-                               onclick="showStudentOpret()">
-                        <label class="buttonText" data-key="studerende">Studerende</label>
-                        <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
-                               onclick="showVirksomhedOpret()">
-                        <label class="buttonText" data-key="virksomhed">Virksomhed</label>
-                    </div>
-                    <div class="loginBtnBox" id="virksomhed">
-
-                        <form class="text-left" name="virksomhedOpret" id="virksomhedOpret" onsubmit="return false"
-                              style="display: none;">
-                            <div style="color: red;" class="text-center" id="fejlBesked">{{fejlBesked}}</div>
-                            <div style="color: green;" class="text-center" id="succesBesked">{{succesBesked}}</div>
-                            <br>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="emailError">{{emailError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="email" class="col-5 col-form-label">Email</label>
-                                <div class="col-7">
-                                    <input id="email" name="email" type="text" class="form-control" placeholder="Email"
-                                           required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="ge">{{gentagEmailError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="gentagEmail" data-key="labelGentagEmail" class="col-5 col-form-label">Gentag
-                                    email</label>
-                                <div class="col-7">
-                                    <input id="gentagEmail" name="gentagEmail" type="text" class="form-control"
-                                           placeholder="Gentag email" data-key="placeholderGentagEmail" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="passwordError">{{passwordError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="adgangskode" data-key="labeladgangskode" class="col-5 col-form-label">Adgangskode</label>
-                                <div class="col-7">
-                                    <input id="adgangskode" name="password" type="password" class="form-control"
-                                           placeholder="Adgangskode" data-key="placeholderadgangskode" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{gentagPasswordError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="gentagAdgangskode" data-key="labelgentagAdgangskode"
-                                       class="col-5 col-form-label">Gentag adgangskode</label>
-                                <div class="col-7">
-                                    <input id="gentagAdgangskode" name="gentagPassword" type="password"
-                                           class="form-control" placeholder="Gentag Adgangskode"
-                                           data-key="placeholdergentagAdgangskode" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="cvrError">{{cvrError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="cvr" data-key="labelcvr" class="col-5 col-form-label">CVR-Nummer</label>
-                                <div class="col-7">
-                                    <input id="cvr" name="cvr" type="text" class="form-control" placeholder="CVR-Nummer"
-                                           data-key="placeholdercvr" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="tlfnrError">{{tlfnrError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="telefonnummer" data-key="labelTelefonnummer" class="col-5 col-form-label">Telefonnummer</label>
-                                <div class="col-7">
-                                    <input id="telefonnummer" name="telefonnummer" type="string" class="form-control"
-                                           placeholder="telefonnummer" data-key="placeholderTelefonnummer" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="byError">{{byError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="by" data-key="labelBy" class="col-5 col-form-label">By</label>
-                                <div class="col-7">
-                                    <input id="by" name="by" type="string" class="form-control" placeholder="By"
-                                           data-key="placeholderBy" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="postnrError">{{postnrError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="postnummer" data-key="labelPostnummer" class="col-5 col-form-label">Postnummer</label>
-                                <div class="col-7">
-                                    <input id="postnummer" name="postnummer" type="string" class="form-control"
-                                           placeholder="Postnummer" data-key="placeholderPostnummer" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-
-                            <button class="gulKnap" data-key="opretBruger" type="button" id="submitBtn"
-                                    onclick="submitCheck()">Opret Bruger
-                            </button>
-                            <input id="submit_handle" type="submit" style="display: none">
-                        </form>
-
-                        <form class="text-left" name="studentOpret" id="studentOpret" onsubmit="return false">
-                            <div style="color: red;" class="text-center" id="fejlBesked">{{fejlBesked}}</div>
-                            <div style="color: green;" class="text-center" id="succesBesked">{{succesBesked}}</div>
-                            <br>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="emailErrorStudent">{{emailError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="email" class="col-5 col-form-label">Email</label>
-                                <div class="col-7">
-                                    <input id="emailStudent" name="emailStudent" type="text" class="form-control"
-                                           placeholder="Email" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="geStudent">{{gentagEmailError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="gentagEmail" data-key="labelGentagEmail" class="col-5 col-form-label">Gentag
-                                    email</label>
-                                <div class="col-7">
-                                    <input id="gentagEmailStudent" name="gentagEmailStudent" type="text"
-                                           class="form-control" placeholder="Gentag email"
-                                           data-key="placeholderGentagEmail" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="passwordErrorStudent">{{passwordError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="adgangskode" data-key="labeladgangskode" class="col-5 col-form-label">Adgangskode</label>
-                                <div class="col-7">
-                                    <input id="adgangskodeStudent" name="passwordStudent" type="password"
-                                           class="form-control" placeholder="Adgangskode"
-                                           data-key="placeholderadgangskode" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError">{{gentagPasswordError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="gentagAdgangskode" data-key="labelgentagAdgangskode"
-                                       class="col-5 col-form-label">Gentag adgangskode</label>
-                                <div class="col-7">
-                                    <input id="gentagAdgangskodeStudent" name="gentagPasswordStudent" type="password"
-                                           class="form-control" placeholder="Gentag Adgangskode"
-                                           data-key="placeholdergentagAdgangskode" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="forErrorStudent">{{forError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="fornavn" data-key="Fornavn" class="col-5 col-form-label">Fornavn</label>
-                                <div class="col-7">
-                                    <input id="fornavnStudent" name="fornavnStudent" type="string" class="form-control"
-                                           placeholder="fornavn" data-key="placeholderFornavn" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="efterErrorStudent">{{efterError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="efternavn" data-key="Efternavn"
-                                       class="col-5 col-form-label">Efternavn</label>
-                                <div class="col-7">
-                                    <input id="efternavnStudent" name="efternavnStudent" type="string"
-                                           class="form-control" placeholder="efternavn" data-key="placeholderEfternavn"
-                                           required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-5"></div>
-                                <div class="col-7 col-form-label formError" id="tlfnrErrorStudent">{{tlfnrError}}
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="telefonnummer" data-key="labelTelefonnummer" class="col-5 col-form-label">Telefonnummer</label>
-                                <div class="col-7">
-                                    <input id="telefonnummerStudent" name="telefonnummerStudent" type="string"
-                                           class="form-control" placeholder="telefonnummer"
-                                           data-key="placeholderTelefonnummer" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="date" data-key="fødselsdato"
-                                       class="col-5 col-form-label">Fødselsdato</label>
-                                <div class="col-7">
-                                    <input id="date" name="date" type="date" class="form-control" placeholder="Dato"
-                                           data-key="placeholderDato" required
-                                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
-                                           oninput="this.setCustomValidity('')">
-                                </div>
-                            </div>
-
-                            <button class="gulKnap" data-key="opretBruger" type="submit" id="submitBtn_Student"
-                                    onclick="submitOpretStudent()">Opret Bruger
-                            </button>
-                            <input id="submit_handle_Student" type="submit" style="display: none">
-                        </form>
-                    </div>
+        <div class="col-auto">
+            <div id="loginContent" class="text-center">
+                <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
+                <div class="radioBtnBox">
+                    <input type="radio" class="radioButton" name="tabset" id="tab1" aria-controls="login"
+                        checked="{{checked}}" onclick="showStudentOpret()">
+                    <label class="buttonText" data-key="Studerende">Studerende</label>
+                    <input type="radio" class="radioButton" name="tabset" id="tab2" aria-controls="login"
+                        onclick="showVirksomhedOpret()">
+                    <label class="buttonText" data-key="Virksomhed">Virksomhed</label>
                 </div>
-                <div id="cookieBox">
-                    <div id="cookieText">
-                        <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
-                        <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
-                    </div>
+                <div>
+                    <p>Alle felter skal udfyldes</p>
+                </div>
+                <div class="loginBtnBox" id="virksomhed">
+
+                    <form name="virksomhedOpret" class="text-left" id="virksomhedOpret" onsubmit="return false"
+                        style="display: none;">
+                        <div style="color: red;" class="text-center" id="fejlBesked"></div>
+                        <div style="color: green;" class="text-center" id="succesBesked"></div>
+                        <br>
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label" for="email">Email</label>
+                            <div class="col-8">
+                                <input id="email" name="email" type="text" class="form-control" placeholder="Email">
+                                <div class="col-form-label formError pb-0" id="emailError">Error</div>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="gentagEmail" data-key="labelGentagEmail" class="col-4 col-form-label">Gentag
+                                email</label>
+                            <div class="col-8">
+                                <input id="gentagEmail" name="gentagEmail" type="text" class="form-control"
+                                    placeholder="Gentag email" data-key="placeholderGentagEmail">
+                                <div class="col-form-label form-label formError pb-0" id="gentagEmailError">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="adgangskode" data-key="labelAdgangskode"
+                                class="col-4 col-form-label">Adgangskode</label>
+                            <div class="col-8">
+                                <input id="adgangskode" name="password" type="password" class="form-control"
+                                    placeholder="Adgangskode" data-key="placeholderAdgangskode">
+                                <div class="col-form-label formError pb-0" id="adgangskodeError">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gentagAdgangskode" data-key="labelGentagAdgangskode"
+                                class="col-4 col-form-label">Gentag adgangskode</label>
+                            <div class="col-8">
+                                <input id="gentagAdgangskode" name="gentagPassword" type="password" class="form-control"
+                                    placeholder="Gentag Adgangskode" data-key="placeholderGentagAdgangskode">
+                                <div class="col-form-label formError pb-0" id="gentagAdgangskodeError">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="virksomhedNavn" data-key="labelVirksomhedNavn"
+                                class="col-4 col-form-label">Virksomhedens navn</label>
+                            <div class="col-8">
+                                <input id="virksomhedNavn" name="virksomhedNavn" type="text" class="form-control"
+                                    placeholder="Virksomhed navn" data-key="placeholderVirksomhedNavn">
+                                <div class="col-form-label formError pb-0" id="virksomhedNavnError">Error</div>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label for="cvr" data-key="labelCvr" class="col-4 col-form-label">CVR-Nummer</label>
+                            <div class="col-8">
+                                <input id="cvr" name="cvr" type="text" class="form-control" placeholder="CVR-Nummer"
+                                    data-key="placeholderCvr">
+                                <div class="col-form-label formError pb-0" id="cvrError">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="telefonnummer" data-key="labelTelefonnummer"
+                                class="col-4 col-form-label">Telefonnummer</label>
+                            <div class="col-8">
+                                <input id="telefonnummer" name="telefonnummer" type="string" class="form-control"
+                                    placeholder="Telefonnummer" data-key="placeholderTelefonnummer">
+                                <div class="col-form-label formError pb-0" id="telefonnummerError">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="by" data-key="labelBy" class="col-4 col-form-label">By</label>
+                            <div class="col-8">
+                                <input id="by" name="by" type="string" class="form-control" placeholder="By"
+                                    data-key="placeholderBy">
+                                <div class="col-form-label formError pb-0" id="byError">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="postnummer" data-key="labelPostnummer"
+                                class="col-4 col-form-label">Postnummer</label>
+                            <div class="col-8">
+                                <input id="postnummer" name="postnummer" type="string" class="form-control"
+                                    placeholder="Postnummer" data-key="placeholderPostnummer">
+                                <div class="col-form-label formError pb-0" id="postnummerError">Error</div>
+                            </div>
+                        </div>
+
+                        <button class="gulKnap" data-key="opretBruger" type="button" id="submitBtn"
+                            onclick="submitOpretVirksomhed()">Opret Bruger
+                        </button>
+                        <input id="submit_handle" type="submit" style="display: none">
+                    </form>
+
+                    <form class="text-left" name="studentOpret" id="studentOpret" onsubmit="return false">
+                        <div style="color: red;" class="text-center" id="fejlBesked">{{fejlBesked}}</div>
+                        <div style="color: green;" class="text-center" id="succesBesked">{{succesBesked}}</div>
+                        <br>
+                        <div class="form-group row">
+                            <label for="emailStudent" class="col-4 col-form-label">Email</label>
+                            <div class="col-8">
+                                <input id="emailStudent" name="emailStudent" type="text" class="form-control"
+                                    placeholder="Email">
+                                <div class="col-form-label formError pb-0" id="emailErrorStudent">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gentagEmailStudent" data-key="labelGentagEmail"
+                                class="col-4 col-form-label">Gentag
+                                email</label>
+                            <div class="col-8">
+                                <input id="gentagEmailStudent" name="gentagEmailStudent" type="text"
+                                    class="form-control" placeholder="Gentag email" data-key="placeholderGentagEmail">
+                                <div class="col-form-label formError pb-0" id="gentagEmailErrorStudent">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="adgangskodeStudent" data-key="labelAdgangskode"
+                                class="col-4 col-form-label">Adgangskode</label>
+                            <div class="col-8">
+                                <input id="adgangskodeStudent" name="passwordStudent" type="password"
+                                    class="form-control" placeholder="Adgangskode" data-key="placeholderAdgangskode">
+                                <div class="col-form-label formError pb-0" id="adgangskodeErrorStudent">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gentagAdgangskodeStudent" data-key="labelGentagAdgangskode"
+                                class="col-4 col-form-label">Gentag adgangskode</label>
+                            <div class="col-8">
+                                <input id="gentagAdgangskodeStudent" name="gentagPasswordStudent" type="password"
+                                    class="form-control" placeholder="Gentag Adgangskode"
+                                    data-key="placeholderGentagAdgangskode">
+                                <div class="col-form-label formError pb-0" id="gentagAdgangskodeErrorStudent">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="fornavnStudent" data-key="Fornavn" class="col-4 col-form-label">Fornavn</label>
+                            <div class="col-8">
+                                <input id="fornavnStudent" name="fornavnStudent" type="string" class="form-control"
+                                    placeholder="Fornavn" data-key="placeholderFornavn">
+                                <div class="col-form-label formError pb-0" id="fornavnErrorStudent">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="efternavnStudent" data-key="Efternavn"
+                                class="col-4 col-form-label">Efternavn</label>
+                            <div class="col-8">
+                                <input id="efternavnStudent" name="efternavnStudent" type="string" class="form-control"
+                                    placeholder="Efternavn" data-key="placeholderEfternavn">
+                                <div class="col-form-label formError pb-0" id="efternavnErrorStudent">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="telefonnummerStudent" data-key="labelTelefonnummer"
+                                class="col-4 col-form-label">Telefonnummer</label>
+                            <div class="col-8">
+                                <input id="telefonnummerStudent" name="telefonnummerStudent" type="string"
+                                    class="form-control" placeholder="Telefonnummer"
+                                    data-key="placeholderTelefonnummer">
+                                <div class="col-form-label formError pb-0" id="telefonnummerErrorStudent">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="date" data-key="Foedselsdato" class="col-4 col-form-label">Fødselsdato</label>
+                            <div class="col-8">
+                                <input id="date" name="date" type="date" class="form-control">
+                                <div class="col-form-label formError pb-0" id="dateErrorStudent">Error</div>
+                            </div>
+                        </div>
+                        <button class="gulKnap" data-key="opretBruger" type="submit" id="submitBtn_Student"
+                            onclick="submitOpretStudent()">Opret Bruger
+                        </button>
+                        <input id="submit_handle_Student" type="submit" style="display: none">
+                    </form>
                 </div>
             </div>
+            <div id="cookieBox" class="mt-3 mb-5">
+                <div id="cookieText" class="text-center">
+                    <p data-key="cookie" style="display: inline;">Cookies skal være aktiveret i din browser</p>
+                    <button id="questionMarkButton"><img src="/images/blue-question-mark.png" alt="?"></button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
-
-<script>
-
-    var backendIsProcessing = false;
-    function submitCheck() {
-        $('#submit_handle').click();
-        //kun hvis alle felter er udfylte sender vi videre til backend validering
-        if(document.getElementById("email").validity.valid && document.getElementById("gentagEmail").validity.valid &&
-                document.getElementById("adgangskode").validity.valid && document.getElementById("gentagAdgangskode").validity.valid &&
-                document.getElementById("cvr").validity.valid && document.getElementById("telefonnummer").validity.valid &&
-                document.getElementById("by").validity.valid && document.getElementById("postnummer").validity.valid){
-            if(!backendIsProcessing){
-                backendIsProcessing = true;
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
-                        let responseObject = JSON.parse(this.responseText)
-                        console.log(responseObject)
-                        document.getElementById('emailError').innerHTML = responseObject.EmailError;
-                        document.getElementById('passwordError').innerHTML = responseObject.PasswordError;
-                        document.getElementById('tlfnrError').innerHTML = responseObject.TlfnrError;
-                        document.getElementById('byError').innerHTML = responseObject.ByError;
-                        document.getElementById('cvrError').innerHTML = responseObject.CVRError;
-                        backendIsProcessing=false;
-                        //if there were no errors, then begin automatic login and redirect to profile
-                        if(responseObject.areThereErrors=="false"){
-                            //send login request baseret på values i input felter
-                            var xhttp = new XMLHttpRequest();
-                            xhttp.onreadystatechange = function () {
-                                if (this.readyState == 4 && this.status == 200) {
-                                    window.location.href = "../profil";
-                                }
-                            }
-                            xhttp.open("POST", "/login/authenticateVirksomhed", true);
-                            xhttp.setRequestHeader("Content-Type", "text/plain")
-                            xhttp.send(JSON.stringify ({
-                                email: document.getElementById('email').value,
-                                password: document.getElementById('adgangskode').value,
-                            }));
-                        }
-                    }
-                }
-                xhttp.open("POST", "/opret-bruger/create", true);
-                xhttp.setRequestHeader("Content-Type", "text/plain")
-                xhttp.send(JSON.stringify ({
-                    email: document.getElementById('email').value,
-                    gentagEmail: document.getElementById('gentagEmail').value,
-                    password: document.getElementById('adgangskode').value,
-                    gentagPassword: document.getElementById('gentagAdgangskode').value,
-                    tflnr: document.getElementById('telefonnummer').value,
-                    by: document.getElementById('by').value,
-                    postnr: document.getElementById('postnummer').value,
-                    cvrnr: document.getElementById('cvr').value
-                }));
-            }
-        }
-    };
-</script>
-<script>
-    var backendIsProcessingStudent = false;
-    function submitOpretStudent() {
-        console.log('submitCheck')
-        $('#submit_handle_Student').click();
-        // kun hvis alle felter er udfylte sender vi videre til backend validering
-        if (document.getElementById("emailStudent").validity.valid && document.getElementById("gentagEmailStudent").validity.valid &&
-                document.getElementById("adgangskodeStudent").validity.valid && document.getElementById("gentagAdgangskodeStudent").validity.valid &&
-                document.getElementById("telefonnummerStudent").validity.valid && document.getElementById("fornavnStudent").validity.valid &&
-                document.getElementById("efternavnStudent").validity.valid ){
-            if(! backendIsProcessingStudent) {
-                backendIsProcessingStudent = true;
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
-                        let responseObject = JSON.parse(this.responseText)
-                        console.log(responseObject)
-                        document.getElementById('emailErrorStudent').innerHTML = responseObject.EmailError;
-                        document.getElementById('passwordErrorStudent').innerHTML = responseObject.PasswordError;
-                        document.getElementById('tlfnrErrorStudent').innerHTML = responseObject.TlfnrError;
-                        document.getElementById('forErrorStudent').innerHTML = responseObject.forError;
-                        document.getElementById('efterErrorStudent').innerHTML = responseObject.efterError;
-                        backendIsProcessingStudent = false;
-                        // if there were no errors, then begin automatic login and redirect to profile
-                        if (responseObject.areThereErrors == "false") { // send login request baseret på values i input felter
-                            var xhttp = new XMLHttpRequest();
-                            xhttp.onreadystatechange = function () {
-                                if (this.readyState == 4 && this.status == 200) {
-                                    window.location.href = "../profil";
-                                }
-                            }
-                            xhttp.open("POST", "/login/authenticateStudent", true); // ret her
-                            xhttp.setRequestHeader("Content-Type", "text/plain")
-                            xhttp.send(JSON.stringify({email: document.getElementById('emailStudent').value, password: document.getElementById('adgangskodeStudent').value}));
-                        }
-                    }
-                }
-                xhttp.open("POST", "/opret-bruger/studentCreate", true); // ret her
-                xhttp.setRequestHeader("Content-Type", "text/plain")
-                xhttp.send(JSON.stringify({
-                    email: document.getElementById('emailStudent').value,
-                    gentagEmail: document.getElementById('gentagEmailStudent').value,
-                    password: document.getElementById('adgangskodeStudent').value,
-                    gentagPassword: document.getElementById('gentagAdgangskodeStudent').value,
-                    tflnr: document.getElementById('telefonnummerStudent').value,
-                    fornavn: document.getElementById('fornavnStudent').value,
-                    efternavn: document.getElementById('efternavnStudent').value,
-                    dato: document.getElementById('date').value
-                }));
-            }
-        }
-    };
-</script>
+<script src="/javascript/opretBruger.js"></script>

@@ -18,10 +18,7 @@ async function deleteInternshipPost(id) {
         if (internshipPost.post_document){
             unlinkOldFiles(internshipPost.post_document)
         }
-        if (internshipPost.company_logo){
-            unlinkOldFiles(internshipPost.company_logo);
-        }
-
+        
         //slet praktikopslaget
         await internshipPost.destroy();
         console.log("An internship post was deleted");
