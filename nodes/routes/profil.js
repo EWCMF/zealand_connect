@@ -3,6 +3,7 @@ const router = express.Router();
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
+const editPassword = require('../persistence/usermapping').editPassword;
 const models = require("../models");
 const uploadFolder = require("../constants/references").uploadFolder();
 const formidable = require("formidable");
@@ -127,10 +128,10 @@ router.post('/redigerstudent-save', function (req, res) {
     formData.parse(req, async function (error, fields, files) {
         //laver et objekt med alle data
         const {
-            email, fornavn, efternavn, telefon, profile_picture, crop_base64
+            email, fornavn, efternavn, telefon, profile_picture, crop_base64, password, gentagPassword
         } = fields;
         let content = {
-            email, fornavn, efternavn, telefon, profile_picture, crop_base64
+            email, fornavn, efternavn, telefon, profile_picture, crop_base64, password, gentagPassword
         };
 
         const imageBufferData = Buffer.from(crop_base64, 'base64');
