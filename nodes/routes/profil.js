@@ -33,7 +33,8 @@ router.get('/', function (req, res, next) {
                 land: user.land,
                 postnr: user.postnr,
                 by: user.by,
-                logo: user.logo
+                logo: user.logo,
+                ejer: true
             }
             res.render('visprofil', {
                 language: reqLang(req, res),
@@ -52,6 +53,33 @@ router.get('/', function (req, res, next) {
                 loggedInUser
             });
         }
+    });
+});
+
+router.get('/virksomhed/:id', async function (req, res) {
+    let id = req.params.id;
+    
+    let json = await models.Virksomhed.findByPk(id, {
+        raw: true
+    });
+
+    let loggedInVirksomhed = {
+        email: json.email,
+        cvrnr: json.cvrnr,
+        navn: json.navn,
+        adresse: json.adresse,
+        tlfnr: json.tlfnr,
+        hjemmeside: json.hjemmeside,
+        direktoer: json.direktoer,
+        land: json.land,
+        postnr: json.postnr,
+        by: json.by,
+        logo: json.logo
+    };
+
+    res.render('visprofil', {
+        language: reqLang(req, res),
+        loggedInVirksomhed
     });
 });
 

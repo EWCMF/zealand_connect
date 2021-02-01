@@ -1,0 +1,81 @@
+<div class="modal fade" id="searchVirksomhederModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Søg virksomheder</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body container">
+        <div class="col">
+          <div class="row">
+            <p>Find virksomheder ved navn</p>
+          </div>
+          <div class="input-group row">
+            <input class="form-control" type="text" id="searchText">
+            <button class="btn btn-outline-secondary" onclick="search()">Søg</button>
+          </div>
+          <br>
+          <div class="row">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Navn</th>
+                  <th scope="col">Email</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <!-- dynamisk indhold her -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      </div>
+      <input type="hidden" id="selected">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="finish()" data-dismiss="modal">Vælg</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function search() {
+    let searchText = document.getElementById('searchText').value;
+
+    let xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        let data = JSON.parse(xhr.responseText);
+        let tableBody = document.getElementById('tableBody');
+        tableBody.innerHTML = '';
+
+        data.forEach((element, i) => {
+          let row = '<tr id="' + 'row' + i + '" onclick="select(\'' + element.email + '\', ' + i + ')">' +
+            '<td>' + element.navn + '</td>' +
+            '<td>' + element.email + '</td>' +
+          '</tr>'
+
+          tableBody.innerHTML += row;
+        });
+    }
+    xhr.open("POST", '/admin-funktioner/search-virksomhed');
+    xhr.send(JSON.stringify({"name": searchText}));
+  }
+
+  function select(selected, index) {
+    document.querySelectorAll('tr.search-selected').forEach(element => {
+      element.classList.remove('search-selected');
+    });
+
+    document.getElementById('row' + index).classList.add('search-selected');
+    document.getElementById('selected').value = selected;
+  }
+
+  function finish() {
+    document.getElementById('virksomhedSletEmailInput').value = document.getElementById('selected').value
+
+  }
+</script>
