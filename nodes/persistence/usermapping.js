@@ -120,11 +120,11 @@ async function deleteVirksomhed(email) {
             errorHappened = true;
             return errorHappened;
         }
-        //find nu alle de internshipposts som har den foreign key virksomhed_id som passer til den id
+        //find nu alle de internshipposts som har den foreign key fk_company som passer til den id
         //denne kode kan optimeres hvis man laver en assosiation og så bare tilføjer det til include oven over
         var internshipPosts = await models.InternshipPost.findAll({
             where: {
-                virksomhed_id: virksomhed.id
+                fk_company: virksomhed.id
             }
         });
         //iterate internship posts and delete
