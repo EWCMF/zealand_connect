@@ -82,7 +82,8 @@ async function createVirksomhed(virkObj) {
                 cvrnr: virkObj.cvrnr,
                 by: virkObj.by,
                 postnr: virkObj.postnr,
-                navn: virkObj.navn
+                navn: virkObj.navn,
+                visible: true
             }
         );
     } catch (e) {

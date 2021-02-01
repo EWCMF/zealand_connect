@@ -11,7 +11,9 @@ router.get('/', async function(req, res, next){
         rows 
     } = await Virksomhed.findAndCountAll({
         raw: true,
-        limit: 10
+        where: {
+            visible: true
+        }
     });
 
     res.render('search-virksomheder', {
