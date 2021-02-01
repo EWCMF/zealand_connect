@@ -399,15 +399,15 @@ async function submitOpretStudent() {
 function translateErrorMessage(key) {
     let texts = {
         "da": {
-            "mailUgyldig": "Den angivet mail er ikke gyldig",
-            "mailIBrug": "Den angivet mail er allerede i brug",
-            "mailLedig": "Den angivet mail er ledig",
-            "mailIkkeEns": "De angivet mails er ikke ens",
+            "mailUgyldig": "Den angivne mail er ikke gyldig",
+            "mailIBrug": "Den angivne mail er allerede i brug",
+            "mailLedig": "Den angivne mail er ledig",
+            "mailIkkeEns": "De angivne mails er ikke ens",
             "passwordUgyldig": "Adgangskoden er ikke gyldig. Se hjælpen til venstre",
-            "passwordIkkeEns": "De angivet adgangskoder er ikke ens",
+            "passwordIkkeEns": "De angivne adgangskoder er ikke ens",
             "feltIkkeTomt": "Feltet må ikke være tomt",
-            "CvrFejl": "Et CVR nummer skal angives med nøjagtig 8 cifre",
-            "telefonFejl": "Et telefon nummer skal angives med nøjagtig 8 cifre",
+            "CvrFejl": "Et CVR-nummer skal angives med nøjagtig 8 cifre",
+            "telefonFejl": "Et telefonnummer skal angives med nøjagtig 8 cifre",
             "datoFejl": "En fremtidig dato er valgt"
         },
 

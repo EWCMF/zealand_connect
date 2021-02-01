@@ -4,5 +4,7 @@ const phoneRegex = /^\+?(?:\h*\d){8}(?:(?:\h*\d){2})?$/
 const cityRegex = /^[a-zA-Z æøåÆØÅ]*$/
 const dateRegex = /^\d{4}[.\/-]\d{2}[.\/-]\d{2}$/
 const linkRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/
+const nameRegex = /^[A-Z]\w+$/;
+const numbersRegex = /^[0-9]{8}$/;
 
-module.exports = { emailRegex, cvrRegex, phoneRegex, cityRegex, dateRegex, linkRegex}
+module.exports = { emailRegex, cvrRegex, phoneRegex, cityRegex, dateRegex, linkRegex, nameRegex, numbersRegex}
