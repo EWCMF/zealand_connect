@@ -23,13 +23,15 @@
                     <label for="fornavn" data-key="Fornavn">Fornavn</label>
                     <input class="form-control" name="fornavn" id="fornavn" rows="2"
                            value="{{loggedInUser.fornavn}}">
-                    <p id="fornavnError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
+                    <p id="fornavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
+                    <p id="fornavnInvalidError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Ugyldigt fornavn</p>
                 </div>
                 <div class="form-group required">
                     <label for="efternavn" data-key="Efternavn">Efternavn</label>
                     <input class="form-control" name="efternavn" id="efternavn" rows="2"
                            value="{{loggedInUser.efternavn}}">
-                    <p id="efternavnError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
+                    <p id="efternavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
+                    <p id="efternavnInvalidError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Ugyldigt efternavn</p>
                 </div>
                 <div class="form-group required" style="display: none;">
                     <label for="email">Email</label>
@@ -52,8 +54,11 @@
                 <div class="form-group">
                     <label for="password" data-key="Password">Password</label>
                     <input type="text" class="form-control" name="password" id="password" rows="2">
-                    <p id="passwordError" class="CVErrorColor" hidden="true" data-key="Password_error">
+                    <p id="passwordLengthError" class="CVErrorColor" hidden="true" data-key="Password_error">
                         Ugyldigt password
+                    </p>
+                    <p id="passwordMismatchError" class="CVErrorColor" hidden="true" data-key="Password_error">
+                        Password matcher ikke
                     </p>
                 </div>
                 <div class="form-group">
