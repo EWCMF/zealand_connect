@@ -21,6 +21,7 @@ module.exports = {
         "database": process.env.DB_PROD_DATABASE,
         "host": process.env.DB_PROD_HOST,
         "port": process.env.DB_PROD_PORT,
-        "dialect": "mariadb"
+        "dialect": "mariadb",
+        "logging": false
     }
 }
