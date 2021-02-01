@@ -219,7 +219,21 @@ async function editProfilePic(email, profilbillede){
     })
 }
 
+function searchVirksomhederByName(name) {
+    const { Op } = require('sequelize');
+
+    return models.Virksomhed.findAll({
+        raw: true,
+        limit: 10,
+        where: {
+            navn: {
+                [Op.like]: "%" + name + "%"
+            }
+        },
+    });
+}
+
 module.exports = {
     findUserByEmail, createVirksomhed, deleteVirksomhed, editVirksomhed, findUserByCVR, editStudent, deleteStudent,
-    editProfilePic, createStudent, editPassword
+    editProfilePic, createStudent, editPassword, searchVirksomhederByName
 }

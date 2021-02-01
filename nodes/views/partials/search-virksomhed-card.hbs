@@ -1,0 +1,20 @@
+{{#each json}}
+<div class="card">
+    <div class="row">
+        <div class="col-auto">
+            {{#if logo}}
+            <img class="center-cropped logo-img" src="/uploads/{{virksomhed.logo}}">
+            {{else}}
+            <img class="center-cropped logo-img" src="images/no-logo.png">
+            {{/if}}
+        </div>
+        <div class="col">
+            <div class="card-body newLineContent">
+                <h5 class="card-title">{{navn}}</h5>
+                <h6 class="card-title">{{land}}</h6>
+            </div>
+        </div>
+    </div>
+    <a href='/profil/virksomhed/{{id}}' class="stretched-link"></a>
+</div>
+{{/each}}

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { deleteVirksomhed, findUserByEmail } = require('../persistence/usermapping');
+const { deleteVirksomhed, findUserByEmail, searchVirksomhederByName } = require('../persistence/usermapping');
 var { reqLang } = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
@@ -113,7 +113,16 @@ router.post('/sletUddannelse', (req, res, next)=> {
             res.send(messages)
         }
     })
-})
+});
+
+router.post('/search-virksomhed', async (req, res) => {
+    let jsonBody = JSON.parse(req.body);
+    let name = jsonBody.name;
+
+    let data = await searchVirksomhederByName(name);
+
+    res.send(data);
+});
 
 
 module.exports = router;

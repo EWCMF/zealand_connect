@@ -413,6 +413,15 @@ input::placeholder {
   color: green;
 }
 
+.search-selected {
+  background-color: #0079d3;
+}
+
+.logo-img {
+  width: auto;
+  height: 128px;
+}
+
 #memeForm .col-sm-12 .col-sm-4{
   padding: 0;
   margin: 0;

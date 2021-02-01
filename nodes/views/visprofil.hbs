@@ -11,7 +11,7 @@
             {{#if loggedInVirksomhed.logo}}
                 <img class="img-thumbnail border-0" src="/uploads/{{loggedInVirksomhed.logo}}">
             {{else}}
-                <img class="img-thumbnail border-0" src="images/no-logo.png">
+                <img class="img-thumbnail border-0" src="/images/no-logo.png">
             {{/if}}
 
         </div>
@@ -94,11 +94,9 @@
             </div>
         </div>
         <div class="col-4 col-sm-2 d-flex flex-column">
+            {{#if ejer}}
             <button type="button" class="btn btn-success " onclick="window.location.href='/profil/rediger'" data-key="Rediger_profil">Rediger profil</button>
-
-            {{!-- {{#if ejer}}
-            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'">Rediger CV</button>
-            {{/if}} --}}
+            {{/if}}
         </div>
     </div>
 </div>
