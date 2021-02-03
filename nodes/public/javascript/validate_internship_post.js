@@ -58,12 +58,7 @@ function validate_internship_post() {
   //Ansættelsestidspunkt
   if (document.getElementById('postTypeSelect').value == 1) {
     let internshipEmploymentDate = document.getElementById('internshipEmploymentDate').value;
-    if (!dateRegex.test(internshipEmploymentDate)) {
-      all_valid = false;
-      document.getElementById('postenddateError').hidden = false;
-    }
-    else { 
-      document.getElementById('postenddateError').hidden = true;
+    if (internshipEmploymentDate.length > 0) {
       let inputDate = new Date(internshipEmploymentDate);
       let currDate = new Date();
 
@@ -73,7 +68,8 @@ function validate_internship_post() {
       } else {
         document.getElementById('postenddateErrorPast').hidden = true;
       }
-
+    } else {
+      document.getElementById('postenddateErrorPast').hidden = true;
     }
   }
 

@@ -93,7 +93,7 @@
                     <div class="form-group">
                         <label for="phoneNumber" data-key="Telefonnummer">Telefonnummer</label>
                         <input type="text" value="{{rphone}}" name="phone_number" id="phoneNumber" class="form-control"
-                               placeholder="Telefonnummer">
+                               placeholder="Telefonnummer" data-key="Telefonnummer_placeholder">
                         <p id="PhoneNumberError" class="CVErrorColor" hidden="true" data-key="PhoneNumberError">Du skal angive et nummer med 8 tal</p>
                     </div>
                 </div>
@@ -156,8 +156,12 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6" id="internshipContainer" hidden="true">
-                    <div class="form-group required">
-                        <label for="post_end_date" data-key="Praktikstart">Praktikstart</label>
+                    <div class="form-group">
+                        <div>
+                            <label for="post_end_date" data-key="Praktikstart">Praktikstart</label>
+                        <a class="ml-2 hand-hover" data-Key="Ryd" onclick="rydPraktik()">Ryd</a>
+                        </div>
+                        
                         <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
                                id="internshipEmploymentDate" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
                         <p id="postenddateError" class="CVErrorColor" hidden="true" data-key="Praktikstart_error">Du skal angive en praktikstart dato
@@ -252,6 +256,10 @@
 
     function rydFrist() {
         document.getElementById('applicationDeadline').value = '';
+    }
+
+    function rydPraktik() {
+        document.getElementById('internshipEmploymentDate').value = '';
     }
 
     var emailRegex = /{{{emailRegex}}}/;

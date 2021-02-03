@@ -272,6 +272,8 @@ function getLangdata() {
                 "Adresse_error": "You must specify an address",
                 "Email_adresse": "E-mail address",
                 "Email_adresse_error": "An email must have one @ character",
+                "Telefonnummer": "Phone number",
+                "Telefonnummer_placeholder": "Phone number",
                 "Navn_paa_kontaktperson": "Name of contact person",
                 "Navn_paa_kontaktperson_error": "You must specify a contact person",
                 "Link_til_hjemmeside": "Link to website",

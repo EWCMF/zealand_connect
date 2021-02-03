@@ -114,22 +114,19 @@ router.post('/', function (req, res, next) {
         }
 
         if (post_type == 1) {
-            if (!dateRegex.test(post_end_date)) {
-                console.log('Invalid date');
-                inputError = true;
-            } else {
+            if (post_end_date.length > 0) {
                 let currDate = new Date();
                 let inputDate = new Date(post_end_date);
 
                 if (currDate > inputDate) {
-                    console.log('Invalid date');
+                    console.log('Past date');
                     inputError = true;
                 }
             }
         } else {
             indhold.post_end_date = null;
         }
-
+        
         if (post_text.length > 65536) {
             console.log('Plain text is to long');
             inputError = true;
