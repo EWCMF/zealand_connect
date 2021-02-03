@@ -20,9 +20,11 @@
                 <h2 class="mb-3" data-key="Navn_kolon">
                     Navn:
                 </h2>
+                {{#if loggedInVirksomhed.visible_mail}}
                 <h6 class="mb-3" data-key="Mail_kolon">
                     Mail:
                 </h6>
+                {{/if}}
                 <h6 class="mb-3" data-key="Tlf_kolon">
                     Tlf:
                 </h6>
@@ -61,10 +63,12 @@
                     {{loggedInVirksomhed.navn}}
                     <br>
                 </h2>
+                {{#if loggedInVirksomhed.visible_mail}}
                 <h6 class="mb-3">
                     <a href="mailto:{{loggedInVirksomhed.email}}">{{loggedInVirksomhed.email}}</a>
                     <br>
                 </h6>
+                {{/if}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.tlfnr}}
                     <br>

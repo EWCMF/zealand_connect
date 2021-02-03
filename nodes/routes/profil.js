@@ -38,6 +38,7 @@ router.get('/', function (req, res, next) {
                 postnr: user.postnr,
                 by: user.by,
                 logo: user.logo,
+                visible_mail: user.visible_mail,
                 ejer: true
             }
             console.log(loggedInVirksomhed)
@@ -79,7 +80,8 @@ router.get('/virksomhed/:id', async function (req, res) {
         land: json.land,
         postnr: json.postnr,
         by: json.by,
-        logo: json.logo
+        logo: json.logo,
+        visible_mail: json.visible_mail
     };
 
     res.render('visprofil', {
@@ -121,7 +123,8 @@ router.get('/rediger', function (req, res, next) {
                 land: user.land,
                 postnr: user.postnr,
                 by: user.by,
-                logo: user.logo
+                logo: user.logo,
+                visible_mail: user.visible_mail
             }
             //render with potential errors and information about the profile
             res.render("rediger-virksomhedsprofil", {
@@ -295,7 +298,8 @@ router.post('/rediger-save', function (req, res, next) {
             direktoer,
             land,
             profile_picture,
-            crop_base64
+            crop_base64,
+            visibleMail
         } = fields;
         let content = {
             email,
@@ -309,14 +313,15 @@ router.post('/rediger-save', function (req, res, next) {
             direktoer,
             land,
             profile_picture,
-            crop_base64
+            crop_base64,
+            visibleMail
         };
 
 
         const imageBufferData = Buffer.from(crop_base64, 'base64');
 
         // log ikke buffer dataen da den meget vel kan være en massiv streng.
-        console.log(email, telefon, by, postnr, cvrnr, address, hjemmeside, direktoer, land, profile_picture);
+        console.log(email, telefon, by, postnr, cvrnr, address, hjemmeside, direktoer, land, profile_picture, visibleMail);
 
         let size = Buffer.byteLength(imageBufferData);
 
@@ -377,7 +382,7 @@ router.post('/rediger-save', function (req, res, next) {
                                 content.profile_picture = newPicName;
 
                                 // Edit the students information
-                                editVirksomhed(email, cvrnr, navn, address, telefon, hjemmeside, direktoer, land, postnr, by, content.profile_picture);
+                                editVirksomhed(content);
                                 //TODO opdater editVirksomhed
                                 res.redirect('/profil/rediger');
                             }
@@ -396,7 +401,7 @@ router.post('/rediger-save', function (req, res, next) {
             }
         } else {
             // Intet logo, så nøjes med at opdatere de andre felter
-            editVirksomhed(email, cvrnr, navn, address, telefon, hjemmeside, direktoer, land, postnr, by);
+            editVirksomhed(content);
             res.redirect('/profil/rediger');
         }
     });

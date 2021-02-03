@@ -409,10 +409,8 @@ function getLangdata() {
                 "Nyt_passwordError": "The password is invalid",
                 //Gentag_password
                 "Gentag_passwordError": "The two passwords aren't the same",
-                "Bekraeft": "Confirm"
-
-
-
+                "Bekraeft": "Confirm",
+                "Goer_mail_synlig": "Make mail visible on public profile"
 
             }
         }
