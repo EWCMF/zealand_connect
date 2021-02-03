@@ -225,13 +225,15 @@ router.get('/', async function (req, res, next) {
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
-        let cropStart = element['post_start_date'].substring(0, 10);
+        if (element['post_start_date'].length > 0) {
+            let cropStart = element['post_start_date'].substring(0, 10);
 
-        let startYear = cropStart.substring(0, cropStart.indexOf('-'));
-        let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
-        let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
+            let startYear = cropStart.substring(0, cropStart.indexOf('-'));
+            let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
+            let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
 
-        element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+            element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+        }
 
         if (element['post_end_date'] != null) {
             let cropEnd = element['post_end_date'].substring(0, 10);
@@ -322,13 +324,15 @@ router.post('/query', function (req, res) {
         for (let index = 0; index < rows.length; index++) {
             const element = rows[index];
 
-            let cropStart = element['post_start_date'].substring(0, 10);
-
-            let startYear = cropStart.substring(0, cropStart.indexOf('-'));
-            let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
-            let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
-
-            element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+            if (element['post_start_date'].length > 0) {
+                let cropStart = element['post_start_date'].substring(0, 10);
+    
+                let startYear = cropStart.substring(0, cropStart.indexOf('-'));
+                let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
+                let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
+    
+                element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+            }
 
             if (element['post_end_date'] != null) {
                 let cropEnd = element['post_end_date'].substring(0, 10);

@@ -45,25 +45,25 @@
                         præcist være 8 tal og må ikke starte med 0</p>
                 </div>
                 <div class="form-group required">
-                    <label for="address">Address</label>
+                    <label for="address" data-Key="Adresse">Adresse</label>
                     <input type="text" class="form-control" name="address" id="address" rows="2"
                         value="{{loggedInVirksomhed.adresse}}">
                     <p id="addressError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
-                <div class="form-group required">
+                <div class="form-group">
                     <label for="hjemmeside" data-Key="Hjemmeside">Hjemmeside</label>
                     <input type="text" class="form-control" name="hjemmeside" id="hjemmeside" rows="2"
                         value="{{loggedInVirksomhed.hjemmeside}}">
                     <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes
                     </p>
                 </div>
-                <div class="form-group required">
+                <div class="form-group">
                     <label for="direktoer">Direktør</label>
                     <input type="text" class="form-control" name="direktoer" id="direktoer" rows="2"
                         value="{{loggedInVirksomhed.direktoer}}">
                     <p id="direktoerError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
-                <div class="form-group required">
+                <div class="form-group">
                     <label for="land" data-Key="Land">Land</label>
                     <input type="text" class="form-control" name="land" id="land" rows="2"
                         value="{{loggedInVirksomhed.land}}">
@@ -85,8 +85,8 @@
                 </div>
                 <div>
                     <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
-                    <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" data-Key="Aendre_password"
-                        onclick="openPasswordModal()">Ændrer password</button>
+                    <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
+                        data-Key="Aendrer_password">Ændrer password</button>
                 </div>
 
 

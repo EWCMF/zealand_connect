@@ -5,12 +5,16 @@ var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
 const limit = 5;
-const { Op } = require('sequelize');
+const {
+    Op
+} = require('sequelize');
 const path = require('path');
-const { reqLang } = require('../public/javascript/request');
+const {
+    reqLang
+} = require('../public/javascript/request');
 
 router.get('/', async function (req, res, next) {
-    
+
     var page;
     var offset;
     if (req.query.page == null) {
@@ -34,31 +38,34 @@ router.get('/', async function (req, res, next) {
             ['updatedAt', 'DESC']
         ],
         include: [{
-            model: db.Virksomhed,
-            as: 'virksomhed'
-        },
-        {
-            model: db.Uddannelse,
-            as: 'education'
-        }],
+                model: db.Virksomhed,
+                as: 'virksomhed'
+            },
+            {
+                model: db.Uddannelse,
+                as: 'education'
+            }
+        ],
         where: {
             fk_company: user.id
         }
-       
+
     });
 
     let pageCount = Math.ceil(count / limit);
-    let withPages = pageCount > 1  ? true : false;
+    let withPages = pageCount > 1 ? true : false;
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
-        let cropStart = element['post_start_date'].substring(0, 10);
+        if (element['post_start_date'].length > 0) {
+            let cropStart = element['post_start_date'].substring(0, 10);
 
-        let startYear = cropStart.substring(0, cropStart.indexOf('-'));
-        let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
-        let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
+            let startYear = cropStart.substring(0, cropStart.indexOf('-'));
+            let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
+            let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
 
-        element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+            element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+        }
 
         if (element['post_end_date'] != null) {
             let cropEnd = element['post_end_date'].substring(0, 10);
@@ -77,8 +84,9 @@ router.get('/', async function (req, res, next) {
                 element['post_type'] = 'Studiejob';
                 break;
             case 3:
-                element['post_type'] = 'Trainee';     
+                element['post_type'] = 'Trainee';
         }
+
     }
 
     res.render('mine-opslag', {
@@ -96,11 +104,11 @@ router.get('/', async function (req, res, next) {
 router.post('/query', function (req, res) {
 
     var formData = new formidable.IncomingForm();
-    formData.parse(req, async function (error, fields, files) { 
+    formData.parse(req, async function (error, fields, files) {
 
         var page = parseInt(fields.page);
         var offset;
-        
+
         if (page == 1) {
             offset = 0
         } else {
@@ -119,13 +127,14 @@ router.post('/query', function (req, res) {
                 [fields.sort, fields.order]
             ],
             include: [{
-                model: db.Virksomhed,
-                as: 'virksomhed'
-            },
-            {
-                model: db.Uddannelse,
-                as: 'education'
-            }],
+                    model: db.Virksomhed,
+                    as: 'virksomhed'
+                },
+                {
+                    model: db.Uddannelse,
+                    as: 'education'
+                }
+            ],
             where
         });
 
@@ -133,34 +142,34 @@ router.post('/query', function (req, res) {
 
         for (let index = 0; index < rows.length; index++) {
             const element = rows[index];
-            
+
             let eduName = await db.Uddannelse.findOne({
                 where: {
                     id: element['fk_education']
                 }
             });
-    
+
             let cropStart = element['post_start_date'].substring(0, 10);
             let cropEnd = element['post_end_date'].substring(0, 10);
-    
+
             let startYear = cropStart.substring(0, cropStart.indexOf('-'));
             let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
             let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
-    
+
             let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
             let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
             let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
-    
+
             element['fk_education'] = eduName.name;
             element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
-            element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear; 
+            element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
         }
 
-        fs.readFileAsync = function(filename) {
-            return new Promise(function(resolve, reject) {
-                fs.readFile(filename, function(err, data){
-                    if (err) 
-                        reject(err); 
+        fs.readFileAsync = function (filename) {
+            return new Promise(function (resolve, reject) {
+                fs.readFile(filename, function (err, data) {
+                    if (err)
+                        reject(err);
                     else
                         resolve(data);
                 });
@@ -173,16 +182,18 @@ router.post('/query', function (req, res) {
 
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
-            let html = template({json: rows});
+            let html = template({
+                json: rows
+            });
             item.push(html);
 
             getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
-                
+
                 let pageCount = Math.ceil(count / limit);
                 let withPages = pageCount > 1 ? true : false;
-                
+
                 let html = template({
                     pagination: {
                         page: page,
@@ -190,7 +201,7 @@ router.post('/query', function (req, res) {
                     },
                     withPages
                 });
-            
+
                 item.push(html);
                 res.send(item);
             });

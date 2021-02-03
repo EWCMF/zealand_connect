@@ -9,7 +9,8 @@ var uploadFolder = require('../constants/references').uploadFolder()
 const {
     emailRegex,
     dateRegex,
-    linkRegex
+    linkRegex,
+    numbersRegex
 } = require("../constants/regex.js");
 const db = require('../models');
 const {
@@ -43,7 +44,8 @@ router.post('/', function (req, res, next) {
             post_document,
             dawa_json,
             dawa_uuid,
-            expired
+            expired,
+            phone_number
         } = fields;
 
         var region = '';
@@ -85,7 +87,8 @@ router.post('/', function (req, res, next) {
             post_document,
             dawa_json,
             dawa_uuid,
-            expired
+            expired,
+            phone_number
         };
 
         var inputError = false;
@@ -111,14 +114,28 @@ router.post('/', function (req, res, next) {
             inputError = true;
         }
 
-        if (email.length > 255) {
-            console.log('Email to long');
-            inputError = true;
+        if (email.length > 0) {
+            if (email.length > 255) {
+                console.log('Email too long');
+                inputError = true;
+            }
+    
+            if (!emailRegex.test(email)) {
+                console.log('Invalid email');
+                inputError = true;
+            }
         }
 
-        if (!emailRegex.test(email)) {
-            console.log('Invalid email');
-            inputError = true;
+        if (phone_number.length > 0) {
+            if (phone_number.length > 255) {
+                console.log('Phone number too long');
+                inputError = true;
+            }
+
+            if (!numbersRegex.test(phone_number)) {
+                console.log('Invalid phone number');
+                inputError = true;
+            }
         }
 
         if (1 > contact.length || contact.length > 255) {
@@ -126,10 +143,7 @@ router.post('/', function (req, res, next) {
             inputError = true;
         }
 
-        if (!dateRegex.test(post_start_date)) {
-            console.log('Invalid date');
-            inputError = true;
-        } else {
+        if (post_start_date.length > 0) {
             let currDate = new Date();
             let inputDate = new Date(post_start_date);
 
@@ -137,6 +151,8 @@ router.post('/', function (req, res, next) {
                 console.log('Past date');
                 inputError = true;
             }
+        } else {
+            indhold.expired = false;
         }
 
         if (post_type == 1) {
@@ -161,7 +177,7 @@ router.post('/', function (req, res, next) {
             inputError = true;
         }
 
-        if (company_link != '') {
+        if (company_link.length > 0) {
             if (!linkRegex.test(company_link)) {
                 console.log("Link Invalid");
                 inputError = true;
@@ -270,13 +286,8 @@ router.get('/', async function (req, res, next) {
             dateRegex: tempDate,
             emailRegex: tempEmail,
             generatedEducationOptions: generatedEducationOptions,
-            remail: loggedInVirksomhed.email,
-            raddress: loggedInVirksomhed.adresse,
-            rhomepage: loggedInVirksomhed.hjemmeside,
-            rpostcode: loggedInVirksomhed.postnr,
-            rcity: loggedInVirksomhed.by,
-            rcountry: loggedInVirksomhed.land,
-            rlogo: loggedInVirksomhed.logo
+            profMail: loggedInVirksomhed.email,
+            profWeb: loggedInVirksomhed.hjemmeside,
         });
     }).catch();
 })
