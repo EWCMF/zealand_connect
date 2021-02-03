@@ -44,11 +44,11 @@ function submitButton() {
         document.getElementById("postnrError").hidden = true;
     }
 
-    if (address == "") {
-        document.getElementById("addressError").hidden = false;
-    } else {
-        document.getElementById("addressError").hidden = true;
-    }
+    // if (address == "") {
+    //     document.getElementById("addressError").hidden = false;
+    // } else {
+    //     document.getElementById("addressError").hidden = true;
+    // }
 
     // if (hjemmeside == "") {
     //     document.getElementById("hjemmesideError").hidden = false;
@@ -74,7 +74,7 @@ function submitButton() {
         document.getElementById("byError").hidden = true;
     }
 
-    if (!navn == "" && numbersOnly2 && !address == "" && numbersOnly3 && !by == "") {
+    if (!navn == "" && numbersOnly2 && numbersOnly3 && !by == "") {
         document.forms["redigerVirksomhedForm"].submit();
     }
 
