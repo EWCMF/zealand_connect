@@ -32,6 +32,7 @@ function submitButton() {
     } else {
         document.getElementById("telefonError").hidden = true;
     }
+
     if (!numbersOnly2) {
         document.getElementById("cvrnrError").hidden = false;
     } else {
@@ -42,33 +43,38 @@ function submitButton() {
     } else {
         document.getElementById("postnrError").hidden = true;
     }
+
     if (address == "") {
         document.getElementById("addressError").hidden = false;
     } else {
         document.getElementById("addressError").hidden = true;
     }
-    if (hjemmeside == "") {
-        document.getElementById("hjemmesideError").hidden = false;
-    } else {
-        document.getElementById("hjemmesideError").hidden = true;
-    }
-    if (direktoer == "") {
-        document.getElementById("direktoerError").hidden = false;
-    } else {
-        document.getElementById("direktoerError").hidden = true;
-    }
-    if (land == "") {
-        document.getElementById("landError").hidden = false;
-    } else {
-        document.getElementById("landError").hidden = true;
-    }
+
+    // if (hjemmeside == "") {
+    //     document.getElementById("hjemmesideError").hidden = false;
+    // } else {
+    //     document.getElementById("hjemmesideError").hidden = true;
+    // }
+
+    // if (direktoer == "") {
+    //     document.getElementById("direktoerError").hidden = false;
+    // } else {
+    //     document.getElementById("direktoerError").hidden = true;
+    // }
+    
+    // if (land == "") {
+    //     document.getElementById("landError").hidden = false;
+    // } else {
+    //     document.getElementById("landError").hidden = true;
+    // }
+
     if (by == "") {
         document.getElementById("byError").hidden = false;
     } else {
         document.getElementById("byError").hidden = true;
     }
 
-    if (!navn == "" && numbersOnly2 && !address == "" && !hjemmeside == "" && !direktoer == "" && !land == "" && numbersOnly3 && !by == "") {
+    if (!navn == "" && numbersOnly2 && !address == "" && numbersOnly3 && !by == "") {
         document.forms["redigerVirksomhedForm"].submit();
     }
 

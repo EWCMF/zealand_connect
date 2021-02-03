@@ -1,5 +1,4 @@
 
-
 function validate_internship_post() {
   var all_valid = true;
 
@@ -11,11 +10,28 @@ function validate_internship_post() {
   }
   else { document.getElementById('titleError').hidden = true; }
   //Email
-  if (document.getElementById('internshipEmail').value == '' || document.getElementById('internshipEmail').value.length > 255 || !emailRegex.test(document.getElementById('internshipEmail').value)) {
-    all_valid = false;
-    document.getElementById('emailError').hidden = false;
+  if (document.getElementById('internshipEmail').value.length > 0) {
+    if (document.getElementById('internshipEmail').value.length > 255 || !emailRegex.test(document.getElementById('internshipEmail').value)) {
+      all_valid = false;
+      document.getElementById('emailError').hidden = false;
+    }
+    else { document.getElementById('emailError').hidden = true; }
+  } else { document.getElementById('emailError').hidden = true; }
+  
+
+  //Telefon
+  if (document.getElementById('phoneNumber').value.length > 0) {
+    let numberRegex = /^[0-9]{8}$/;
+    if (!numberRegex.test(document.getElementById('phoneNumber').value)) {
+      all_valid = false;
+      document.getElementById('phoneNumberError').hidden = false;
+    } else {
+      document.getElementById('phoneNumberError').hidden = true;
+    }
+  } else {
+    document.getElementById('phoneNumberError').hidden = true;
   }
-  else { document.getElementById('emailError').hidden = true; }
+
   //Kontakt person
   if (document.getElementById('contactName').value.length == '' || document.getElementById('contactName').value.length > 255) {
     all_valid = false;
@@ -25,12 +41,7 @@ function validate_internship_post() {
 
   //Ansøgningsfrist
   let applicationDeadline = document.getElementById('applicationDeadline').value;
-  if (!dateRegex.test(applicationDeadline)) {
-    all_valid = false;
-    document.getElementById('poststartdateError').hidden = false;
-  }
-  else { 
-    document.getElementById('poststartdateError').hidden = true;
+  if (applicationDeadline.length > 0) {
     let inputDate = new Date(applicationDeadline);
     let currDate = new Date();
 
@@ -40,6 +51,8 @@ function validate_internship_post() {
     } else {
       document.getElementById('poststartdateErrorPast').hidden = true;
     }
+  } else {
+    document.getElementById('poststartdateErrorPast').hidden = true;
   }
 
   //Ansættelsestidspunkt

@@ -32,15 +32,21 @@
                 <h6 class="mb-3" data-key="Adresse_kolon">
                     Adresse:
                 </h6>
+                {{#if loggedInVirksomhed.hjemmeside}}
                 <h6 class="mb-3" data-key="Hjemmeside_kolon">
                     Hjemmeside:
                 </h6>
+                {{/if}}
+                {{#if loggedInVirksomhed.direktoer}}
                 <h6 class="mb-3" data-key="Direktoer_kolon">
                     Direktør:
                 </h6>
+                {{/if}}
+                {{#if loggedInVirksomhed.land}}
                 <h6 class="mb-3" data-key="Land_kolon">
                     Land:
                 </h6>
+                {{/if}}
                 <h6 class="mb-3" data-key="Postnummer_kolon">
                     Postnummer:
                 </h6>
@@ -71,18 +77,24 @@
                     {{loggedInVirksomhed.adresse}}
                     <br>
                 </h6>
+                {{#if loggedInVirksomhed.hjemmeside}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.hjemmeside}}
                     <br>
                 </h6>
+                {{/if}}
+                {{#if loggedInVirksomhed.direktoer}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.direktoer}}
                     <br>
                 </h6>
+                {{/if}}
+                {{#if loggedInVirksomhed.land}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.land}}
                     <br>
                 </h6>
+                {{/if}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.postnr}}
                     <br>

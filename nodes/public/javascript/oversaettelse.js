@@ -391,10 +391,18 @@ function getLangdata() {
                 "By": "City",
                 //Skal_udfyldes
                 //Gem
-                "Virksomhedslogo": "Company logo"
+                "Virksomhedslogo": "Company logo",
                 //Profilbillede_title
                 //Vaelg_billede
                 //Vaelg_billede_error
+                "Aendrer_password": "Change password",
+                "Gamle_password": "Old password",
+                "Gamle_passwordError": "The password isn't correct",
+                "Nyt_password_html": 'New password<span class="tooltiphelp" data-toggle="tooltip" data-placement="top" title="The password must be between 8 and 20 characters">?</span>',
+                "Nyt_passwordError": "The password is invalid",
+                //Gentag_password
+                "Gentag_passwordError": "The two passwords aren't the same",
+                "Bekraeft": "Confirm"
 
 
 

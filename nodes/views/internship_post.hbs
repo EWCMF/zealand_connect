@@ -83,16 +83,6 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="form-group required">
-                        <label for="internshipEmail" data-key="Email_adresse">E-mail adresse</label>
-                        <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
-                               placeholder="Email" pattern="{{{emailRegex}}}">
-                        <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal skrive din email her og mindst
-                            bruge et @
-                        </p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group required">
                         <label for="contactName" data-key="Navn_paa_kontaktperson">Navn på kontaktperson</label>
                         <input type="text" value="{{rcontact}}" name="contact" id="contactName" class="form-control"
                                placeholder="Navn">
@@ -101,20 +91,55 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="form-group">
-                        <label for="company_link" data-key="Link_til_hjemmeside">Link til hjemmeside</label>
+                        <label for="phoneNumber" data-key="Telefonnummer">Telefonnummer</label>
+                        <input type="text" value="{{rphone}}" name="phone_number" id="phoneNumber" class="form-control"
+                               placeholder="Telefonnummer">
+                        <p id="PhoneNumberError" class="CVErrorColor" hidden="true" data-key="PhoneNumberError">Du skal angive et nummer med 8 tal</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <div>
+                            <label for="company_link" data-key="Link_til_hjemmeside">Link til hjemmeside</label>
+                            {{#if profWeb}}
+                            <a class="ml-2 hand-hover" data-Key="Brug_profil_hjemmeside" onclick="useProfileWebsite('{{profWeb}}')">Brug info fra profil</a>
+                            {{/if}}
+                        </div>
                         <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link"
                                id="companyURL"
                                class="form-control" placeholder="virksomhed.dk" value="{{rhomepage}}">
-                        <p id="companylinkError" class="CVErrorColor" hidden="true" data-key="Link_til_hjemmeside_error">Du skal angive et gyldigt link her
-                            f.eks
-                            http://www.zealandconnect.dk</p>
+                        <p id="companylinkError" class="CVErrorColor" hidden="true" data-key="Link_til_hjemmeside_error">Du skal angive et gyldigt link her i 
+                            enten formen: 'http(s)://www.hjemmeside.dk' eller 'www.hjemmeside.dk'</p>
                     </div>
                 </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <div>
+                            <label for="internshipEmail" data-key="Email_adresse">E-mail adresse</label>
+                            {{#if profMail}}
+                            <a class="ml-2 hand-hover" data-Key="Brug_profil_mail" onclick="useProfileMail('{{profMail}}')">Brug login mail</a>
+                            {{/if}}
+                        </div>
+                        
+                        <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
+                               placeholder="Email" pattern="{{{emailRegex}}}">
+                        <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal skrive din email her og mindst
+                            bruge et @
+                        </p>
+                    </div>
+                </div>
+                
             </div>
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <div class="form-group required">
-                        <label for="post_start_date" data-key="Ansoegningsfrist">Ansøgningsfrist</label>
+                    <div class="form-group">
+                        <div>
+                            <label for="post_start_date" data-key="Ansoegningsfrist">Ansøgningsfrist <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                            title="Hvis der ikke er en ansøgningsfrist, kan opslaget kun fjernes manuelt"
+                            data-Key="">?</span></label>
+                            <a class="ml-2 hand-hover" data-Key="Ryd" onclick="rydFrist()">Ryd</a>
+                        </div>
+                        
                         <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
                                id="applicationDeadline" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
                         <p id="poststartdateError" class="CVErrorColor" hidden="true" data-key="Ansoegningsfrist_error">Du skal angive en ansøgningsfrist
@@ -144,7 +169,9 @@
             </div>
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <label for="post_document" data-key="Vedhaeft_fil">Vedhæft fil</label><br/>
+                    <label for="post_document" data-key="Vedhaeft_fil">Vedhæft fil <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                        title="Filtyper: .pdf, .docx, .doc, .txt. Max. filstørrelse: 10MB."
+                        data-Key="">?</span></label><br/>
                     <a id="uploadedFile" href="" target="_blank" hidden="true" data-key="Nuvaerende_Vedhaeftet_fil">Nuværende vedhæftet fil</a>
                     <div class="form-group">
                         <div class="custom-file">
@@ -213,6 +240,18 @@
         document.getElementById('plainText').value = editor.root.innerHTML;
         //document.getElementById('plainText').value = editor.getText();
         validate_internship_post();
+    }
+
+    function useProfileMail(mail) {
+        document.getElementById('internshipEmail').value = mail;
+    };
+
+    function useProfileWebsite(website) {
+        document.getElementById('companyURL').value = website;
+    };
+
+    function rydFrist() {
+        document.getElementById('applicationDeadline').value = '';
     }
 
     var emailRegex = /{{{emailRegex}}}/;

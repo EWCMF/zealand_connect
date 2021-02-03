@@ -5,7 +5,7 @@ var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabe
 var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
 var fs = require("fs");//Bruges til grundlæggen file hændtering.
 var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
-const {emailRegex, dateRegex, linkRegex} = require("../constants/regex.js");
+const {emailRegex, dateRegex, linkRegex, numbersRegex} = require("../constants/regex.js");
 const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
@@ -29,7 +29,7 @@ router.post('/', function (req, res, next) {
         //laver et objekt med alle data
         var {
             id, title, post_type, email, contact, fk_education, country, post_start_date, post_end_date, post_text,
-            city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired
+            city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired, phone_number
         } = fields;
 
         var region = '';
@@ -55,9 +55,11 @@ router.post('/', function (req, res, next) {
 
         var indhold = {
             id, title, post_type, email, contact, fk_education, country, region, post_start_date, post_end_date,
-            post_text, city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired
+            post_text, city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired, phone_number
         };
         var inputError = false;
+
+
 
         //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
         if (1 > title.length || title.length > 255) {
@@ -70,14 +72,28 @@ router.post('/', function (req, res, next) {
             inputError = true;
         }
 
-        if (email.length > 255) {
-            console.log('Email too long');
-            inputError = true;
+        if (email.length > 0) {
+            if (email.length > 255) {
+                console.log('Email too long');
+                inputError = true;
+            }
+    
+            if (!emailRegex.test(email)) {
+                console.log('Invalid email');
+                inputError = true;
+            }
         }
 
-        if (!emailRegex.test(email)) {
-            console.log('Invalid email');
-            inputError = true;
+        if (phone_number.length > 0) {
+            if (phone_number.length > 255) {
+                console.log('Phone number too long');
+                inputError = true;
+            }
+
+            if (!numbersRegex.test(phone_number)) {
+                console.log('Invalid phone number');
+                inputError = true;
+            }
         }
 
         if (1 > contact.length || contact.length > 255) {
@@ -85,17 +101,16 @@ router.post('/', function (req, res, next) {
             inputError = true;
         }
 
-        if (!dateRegex.test(post_start_date)) {
-            console.log('Invalid date');
-            inputError = true;
-        } else {
+        if (post_start_date.length > 0) {
             let currDate = new Date();
             let inputDate = new Date(post_start_date);
 
             if (currDate > inputDate) {
-                console.log('Invalid date');
+                console.log('Past date');
                 inputError = true;
             }
+        } else {
+            indhold.expired = false;
         }
 
         if (post_type == 1) {
@@ -120,7 +135,7 @@ router.post('/', function (req, res, next) {
             inputError = true;
         }
 
-        if (company_link != '') {
+        if (company_link.length > 0) {
             if (!linkRegex.test(company_link)) {
                 console.log("Link Invalid");
                 inputError = true;
@@ -134,28 +149,15 @@ router.post('/', function (req, res, next) {
             inputError = true;
         }
 
-        //Database kode må først køre efter flyttelses og omdøb af uploadet filer er fuldført.
-
-        /*
-        async function dbExe() {
-          if (!inputError) {
-              const post = await db.InternshipPost.create(indhold).catch((error) => {
-                console.log(error);
-                return res.status(400).send(error);
-              });
-              res.redirect('../internship_view/'+post.id)
-
-          }
-        }
-        */
         function dbExe() {
             if (!inputError) {
+                console.log(indhold);
                 db.InternshipPost.update(indhold, {
                     where: {
                         id: id
                     },
-                    /*dette skal være her for at felterne i databasen bliver opdateret*/ returning: true,
-                    plain: true
+                    /*dette skal være her for at felterne i databasen bliver opdateret returning: true,
+                    plain: true*/
                 });
                 res.redirect('../internship_view/' + id)
             } else {
@@ -223,7 +225,7 @@ router.get('/', function (req, res, next) {
             generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
         });
         db.InternshipPost.findByPk(req.query.id, {
-            attributes: ["title", "post_type", "email", "contact", "fk_education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired"]
+            attributes: ["title", "post_type", "email", "contact", "fk_education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired", "phone_number"]
         }).then(result => {
             var address = '';
 
@@ -248,6 +250,7 @@ router.get('/', function (req, res, next) {
                 rtitle: result['title'],
                 rposttype: result['post_type'],
                 remail: result['email'],
+                rphone: result['phone_number'],
                 rcontact: result['contact'],
                 reducation: result['fk_education'],
                 rcountry: result['country'],
