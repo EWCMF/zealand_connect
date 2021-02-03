@@ -410,7 +410,10 @@ function getLangdata() {
                 //Gentag_password
                 "Gentag_passwordError": "The two passwords aren't the same",
                 "Bekraeft": "Confirm",
-                "Goer_mail_synlig": "Make mail visible on public profile"
+                "Goer_mail_synlig": "Make mail visible on public profile",
+
+                //search-virksomheder
+                "virksomheder_registreret": "companies registeret"
 
             }
         }

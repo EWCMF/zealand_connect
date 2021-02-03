@@ -1,10 +1,12 @@
 <div class="container-fluid">
-    <div id=cards>
+    <div id="cards">
     {{> search-praktik-card}}
     </div>
     <div class="row d-flex justify-content-center" id="pagination">
         {{> search-pagination}}
     </div>
 </div>
+<form id="filterForm" method="POST" action="mine-opslag/query"></form>
+<script src="/javascript/mine-opslag.js"></script>
 
 
