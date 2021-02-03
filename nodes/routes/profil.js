@@ -317,7 +317,6 @@ router.post('/rediger-save', function (req, res, next) {
             visibleMail
         };
 
-
         const imageBufferData = Buffer.from(crop_base64, 'base64');
 
         let size = Buffer.byteLength(imageBufferData);
