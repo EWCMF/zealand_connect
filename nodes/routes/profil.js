@@ -320,9 +320,6 @@ router.post('/rediger-save', function (req, res, next) {
 
         const imageBufferData = Buffer.from(crop_base64, 'base64');
 
-        // log ikke buffer dataen da den meget vel kan være en massiv streng.
-        console.log(email, telefon, by, postnr, cvrnr, address, hjemmeside, direktoer, land, profile_picture, visibleMail);
-
         let size = Buffer.byteLength(imageBufferData);
 
         if (size > 0) {
@@ -405,20 +402,6 @@ router.post('/rediger-save', function (req, res, next) {
             res.redirect('/profil/rediger');
         }
     });
-
-    // let email = req.body.email;
-    // let tlfnr = req.body.telefon;
-    // let by = req.body.by;
-    // let postnr = req.body.postnr;
-    // let cvrnr = req.body.cvrnr;
-    // let firmanavn = req.body.navn;
-    // let adresse = req.body.address;
-    // let hjemmeside = req.body.hjemmeside;
-    // let direktoer = req.body.direktoer;
-    // let land = req.body.land;
-    // editVirksomhed(email, cvrnr, firmanavn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by);
-    // console.log(email, cvrnr, firmanavn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by);
-    // res.redirect('/profil')
 });
 
 router.get('/getUser', function (req, res, next) {
