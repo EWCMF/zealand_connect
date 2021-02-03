@@ -3,15 +3,20 @@
         <div class="col">
             <h1 id="cvOverskrift" data-key="Virksomheder">Virksomheder</h1>
             <hr>
-            <label id="results" class="mb-3 mt-5 ml-2">
-                    {{resultater}} virksomheder registreret
+            <label id="results" class="mb-3 mt-5 ml-2 mr-0">
+                    {{resultater}} 
+            </label>
+            <label class="ml-0" data-key="virksomheder_registreret">
+                    virksomheder registreret
             </label>
         </div>
     </div>
-    <div id=cards>
+    <div id="cards">
     {{> search-virksomhed-card }}
     </div>
     <div class="row d-flex justify-content-center" id="pagination">
         {{> search-pagination}}
     </div>
+    <form id="filterForm" method="POST" action="search-virksomheder/query"></form>
 </div>
+<script src="/javascript/search-virksomhed.js"></script>

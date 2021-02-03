@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var hbs = require('handlebars');
-var fs = require('fs');
+const hbs = require('handlebars');
+const fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
 const limit = 5;
@@ -102,6 +102,7 @@ router.get('/', async function (req, res, next) {
 });
 
 router.post('/query', function (req, res) {
+    const user = res.locals.user
 
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
@@ -124,7 +125,7 @@ router.post('/query', function (req, res) {
             nest: true,
             offset: offset,
             order: [
-                [fields.sort, fields.order]
+                ['updatedAt', 'DESC']
             ],
             include: [{
                     model: db.Virksomhed,
@@ -135,7 +136,9 @@ router.post('/query', function (req, res) {
                     as: 'education'
                 }
             ],
-            where
+            where: {
+                fk_company: user.id
+            }
         });
 
         var item = [count];
@@ -143,26 +146,35 @@ router.post('/query', function (req, res) {
         for (let index = 0; index < rows.length; index++) {
             const element = rows[index];
 
-            let eduName = await db.Uddannelse.findOne({
-                where: {
-                    id: element['fk_education']
-                }
-            });
-
-            let cropStart = element['post_start_date'].substring(0, 10);
-            let cropEnd = element['post_end_date'].substring(0, 10);
-
-            let startYear = cropStart.substring(0, cropStart.indexOf('-'));
-            let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
-            let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
-
-            let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
-            let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
-            let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
-
-            element['fk_education'] = eduName.name;
-            element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
-            element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
+            if (element['post_start_date'].length > 0) {
+                let cropStart = element['post_start_date'].substring(0, 10);
+    
+                let startYear = cropStart.substring(0, cropStart.indexOf('-'));
+                let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
+                let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
+    
+                element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+            }
+    
+            if (element['post_end_date'] != null && element['post_end_date'].length > 0) {
+                let cropEnd = element['post_end_date'].substring(0, 10);
+    
+                let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
+                let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
+                let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
+                element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
+            }
+    
+            switch (element['post_type']) {
+                case 1:
+                    element['post_type'] = 'Praktik';
+                    break;
+                case 2:
+                    element['post_type'] = 'Studiejob';
+                    break;
+                case 3:
+                    element['post_type'] = 'Trainee';
+            }
         }
 
         fs.readFileAsync = function (filename) {
@@ -205,7 +217,7 @@ router.post('/query', function (req, res) {
                 item.push(html);
                 res.send(item);
             });
-        })
+        });
     });
 });
 

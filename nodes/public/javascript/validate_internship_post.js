@@ -1,6 +1,6 @@
 
 function validate_internship_post() {
-  var all_valid = true;
+  let all_valid = true;
 
   //e.preventDefault();
   //Title
@@ -9,6 +9,15 @@ function validate_internship_post() {
     document.getElementById('titleError').hidden = false;
   }
   else { document.getElementById('titleError').hidden = true; }
+
+  //Opslagstype
+  if (document.getElementById('postTypeSelect').value == 0) {
+    all_valid = false;
+    document.getElementById('postTypeError').hidden = false;
+  } else {
+    document.getElementById('postTypeError').hidden = false;
+  }
+
   //Email
   if (document.getElementById('internshipEmail').value.length > 0) {
     if (document.getElementById('internshipEmail').value.length > 255 || !emailRegex.test(document.getElementById('internshipEmail').value)) {
