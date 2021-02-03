@@ -224,6 +224,7 @@ function getLangdata() {
                 "Uddannelse_kolon": "Education:",
                 "Ansoegningsfrist_kolon": "Application deadline:",
                 "Praktikstart_kolon": "Internship start:",
+                "Ingen": "None",
 
                 //Opslagstyper
                 "Praktik": "Internship",
@@ -275,14 +276,14 @@ function getLangdata() {
                 "Navn_paa_kontaktperson_error": "You must specify a contact person",
                 "Link_til_hjemmeside": "Link to website",
                 "Link_til_hjemmeside_error": "A valid link must be specified, e.g. http://www.zealandconnect.dk",
-                "Ansoegningsfrist": "Application deadline",
+                "Ansoegningsfrist_html": 'Application deadline <span class="tooltiphelp" data-toggle="tooltip" data-placement="top" title="If there\'s no application deadline, the post can only be removed manually" data-Key="">?</span>',
                 "Ansoegningsfrist_error": "You must specify an application deadline",
                 "Dato_error": "The selected date has already passed",
                 "Ansoegningsfrist_note": "Hide post after application deadline?",
                 "Praktikstart": "Internship start",
                 "Praktikstart_error": "You must specify a date for internship start",
                 //Dato_error
-                "Vedhaeft_fil": "Attach file",
+                "Vedhaeft_fil_html": 'Attach file <span class="tooltiphelp" data-toggle="tooltip" data-placement="top" title="File types: .pdf, .docx, .doc, .txt. Max. file size: 10MB.">?</span>',
                 "Nuvaerende_Vedhaeftet_fil": "Currently attached file",
                 "Vaelg_fil": "Choose file",
                 "Vaelg_fil_error": "The chosen file must have a size less than 10MB",
@@ -290,6 +291,9 @@ function getLangdata() {
                 "Du_har_angivet_for_mange_tegn": "You have used too many characters",
                 "Gem": "Save",
                 "Slet_dette_opslag": "Delete this post",
+                "Ryd": "Clear",
+                "Brug_info": "Use info from profile",
+                "Brug_profil_mail": "Use login mail",
 
                 //intership_post_view
                 //Uddannelse_kolon

@@ -102,7 +102,7 @@
                         <div>
                             <label for="company_link" data-key="Link_til_hjemmeside">Link til hjemmeside</label>
                             {{#if profWeb}}
-                            <a class="ml-2 hand-hover" data-Key="Brug_profil_hjemmeside" onclick="useProfileWebsite('{{profWeb}}')">Brug info fra profil</a>
+                            <a class="ml-2 hand-hover" data-Key="Brug_info" onclick="useProfileWebsite('{{profWeb}}')">Brug info fra profil</a>
                             {{/if}}
                         </div>
                         <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link"
@@ -134,7 +134,7 @@
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <div>
-                            <label for="post_start_date" data-key="Ansoegningsfrist">Ansøgningsfrist <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                            <label for="post_start_date" data-key="Ansoegningsfrist_html">Ansøgningsfrist <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
                             title="Hvis der ikke er en ansøgningsfrist, kan opslaget kun fjernes manuelt"
                             data-Key="">?</span></label>
                             <a class="ml-2 hand-hover" data-Key="Ryd" onclick="rydFrist()">Ryd</a>
@@ -169,7 +169,7 @@
             </div>
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <label for="post_document" data-key="Vedhaeft_fil">Vedhæft fil <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                    <label for="post_document" data-key="Vedhaeft_fil_html">Vedhæft fil <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
                         title="Filtyper: .pdf, .docx, .doc, .txt. Max. filstørrelse: 10MB."
                         data-Key="">?</span></label><br/>
                     <a id="uploadedFile" href="" target="_blank" hidden="true" data-key="Nuvaerende_Vedhaeftet_fil">Nuværende vedhæftet fil</a>
