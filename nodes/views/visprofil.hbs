@@ -31,9 +31,11 @@
                 <h6 class="mb-3">
                     CVR:
                 </h6>
+                {{#if loggedInVirksomhed.adresse}}
                 <h6 class="mb-3" data-key="Adresse_kolon">
                     Adresse:
                 </h6>
+                {{/if}}
                 {{#if loggedInVirksomhed.hjemmeside}}
                 <h6 class="mb-3" data-key="Hjemmeside_kolon">
                     Hjemmeside:
@@ -77,10 +79,12 @@
                     {{loggedInVirksomhed.cvrnr}}
                     <br>
                 </h6>
+                {{#if loggedInVirksomhed.adresse}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.adresse}}
                     <br>
                 </h6>
+                {{/if}}
                 {{#if loggedInVirksomhed.hjemmeside}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.hjemmeside}}
