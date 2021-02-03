@@ -16,7 +16,7 @@ function submitButton() {
     const numbersRegex = /^[0-9]{8}$/;
     let numbersOnly = numbersRegex.test(telefon);
 
-    const nameRegex = /^[A-Z]\w+$/;
+    const nameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
     let testFornavn = nameRegex.test(fornavn);
     let testEfternavn =nameRegex.test(efternavn);
 
