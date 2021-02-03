@@ -67,7 +67,7 @@ router.get('/', async function (req, res, next) {
             element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
         }
 
-        if (element['post_end_date'] != null) {
+        if (element['post_end_date'] != null && element['post_end_date'].length > 0) {
             let cropEnd = element['post_end_date'].substring(0, 10);
 
             let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));

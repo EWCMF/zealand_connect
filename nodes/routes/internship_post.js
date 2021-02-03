@@ -156,10 +156,7 @@ router.post('/', function (req, res, next) {
         }
 
         if (post_type == 1) {
-            if (!dateRegex.test(post_end_date)) {
-                console.log('Invalid date');
-                inputError = true;
-            } else {
+            if (post_end_date.length > 0) {
                 let currDate = new Date();
                 let inputDate = new Date(post_end_date);
 
