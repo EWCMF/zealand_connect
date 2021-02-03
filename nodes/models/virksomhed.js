@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     postnr: DataTypes.STRING,
     by: DataTypes.STRING,
     logo: DataTypes.STRING,
-    visible: DataTypes.BOOLEAN
+    visible: DataTypes.BOOLEAN,
+    visible_mail: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Virksomhed',

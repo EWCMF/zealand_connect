@@ -54,21 +54,23 @@ async function findUserByEmail(email) {
     })
 }
 
-async function editVirksomhed(email, cvrnr, navn, adresse, tlfnr, hjemmeside, direktoer, land, postnr, by, logo, visibleMail) {
+async function editVirksomhed(json) {
+    json.visibleMail == 'on' ? json.visibleMail = true : json.visibleMail = false;
+    
     //vi bruger email til at finde virksomheden.
-    findUserByEmail(email).then(virksomhed => {
+    findUserByEmail(json.email).then(virksomhed => {
         virksomhed.update({
-            cvrnr: cvrnr,
-            navn: navn,
-            adresse: adresse,
-            tlfnr: tlfnr,
-            hjemmeside: hjemmeside,
-            direktoer: direktoer,
-            land: land,
-            postnr: postnr,
-            by: by,
-            logo: logo,
-            visible_mail: visibleMail
+            cvrnr: json.cvrnr,
+            navn: json.navn,
+            adresse: json.adresse,
+            tlfnr: json.tlfnr,
+            hjemmeside: json.hjemmeside,
+            direktoer: json.direktoer,
+            land: json.land,
+            postnr: json.postnr,
+            by: json.by,
+            logo: json.logo,
+            visible_mail: json.visibleMail
         })
     })
 }
