@@ -205,7 +205,7 @@ router.post('/', function (req, res, next) {
             }
         }
 
-        if (files.post_document.size === 0) {
+        if (files.post_document === null || files.post_document === undefined || files.post_document.size === 0) {
             dbExe();
         } else {
             /*fileUpload here*/
