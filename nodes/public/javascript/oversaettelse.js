@@ -376,9 +376,9 @@ function getLangdata() {
                 //Telefon_error
                 //Gem
                 "Profilbillede": "Profile picture",
-                "Profilbillede_tooltip": ["?", "Filtypes: .jpg, .jpeg, .png. Min. width: 250px. Min. height: 250px. Max. file size: 1MB. The picture can be cropped when selected."],
+                "Profilbillede_tooltip": ["?", "Filtypes: .jpg, .jpeg, .png. Min. width: 250px. Min. height: 250px. Max. file size: 10MB. The picture can be cropped when selected."],
                 "Vaelg_billede": "Choose picture",
-                "Vaelg_billede_error": "You can only upload a file of maximun 1MB size",
+                "Vaelg_billede_error": "You can only upload a file of maximun 10MB size",
 
                 //rediger-virksomhedsprofil
                 "Virksomheds_navn": "Company name",

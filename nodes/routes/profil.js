@@ -211,7 +211,7 @@ router.post('/redigerstudent-save', function (req, res) {
             let newPicName = datetime + randomNumber + "_" + img.name;
 
             if (imgData.width >= 250 && imgData.height >= 250) {
-                if (size <= 1000000) {
+                if (size <= 10000000) {
                     //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
                     //Nedenstående flytter og omdøber filer på sammetid
                     if (img.type === "image/jpeg" || img.type === "image/png" || img.type === "image/svg+xml" || img.type === "image/bmp") {
@@ -339,7 +339,7 @@ router.post('/rediger-save', function (req, res, next) {
             let newPicName = datetime + randomNumber + "_" + img.name;
 
             if (imgData.width >= 250 && imgData.height >= 250) {
-                if (size <= 1000000) {
+                if (size <= 10000000) {
                     //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
                     //Nedenstående flytter og omdøber filer på sammetid
                     if (img.type === "image/jpeg" || img.type === "image/png" || img.type === "image/svg+xml" || img.type === "image/bmp") {
