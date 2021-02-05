@@ -1,5 +1,5 @@
 function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimensionsError, imageSizeError, cropperModal,
-                                cropFrame, imageElement, crop64base) {
+                                cropFrameId, imageElement, crop64base) {
     document.getElementById(imageTypeError).hidden = true;
     document.getElementById(imageDimensionsError).hidden = true;
     document.getElementById(imageSizeError).hidden = true;
@@ -23,18 +23,19 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                 document.getElementById(inputId).value = '';
                 document.getElementById(imageSizeError).hidden = false;
             } else {
-                $('#cropperModal').modal({
+                $('#' + cropperModal).modal({
                     backdrop: 'static',
                     keyboard: false
                 });
 
-                $(cropperModal).modal('show');
+
+                $('#' + cropperModal).modal('show');
 
                 let src = this.src;
                 let cropper;
 
-                $('#cropperModal').on('shown.bs.modal', function (event) {
-                    let cropFrame = document.getElementById(cropFrame);
+                $('#' + cropperModal).on('shown.bs.modal', function (event) {
+                    let cropFrame = document.getElementById(cropFrameId);
                     cropFrame.src = src
                     cropper = new Cropper(cropFrame, {
                         aspectRatio: 1 / 1,
@@ -63,12 +64,12 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                     });
                 })
 
-                $('#cropperModal').on('hidden.bs.modal', function (event) {
+                $('#' + cropperModal).on('hidden.bs.modal', function (event) {
                     cropper.destroy();
                     cropper = null;
                     cropFrame.src = '';
-                    $('#cropperModal').off('shown.bs.modal');
-                    $('#cropperModal').off('hidden.bs.modal');
+                    $('#' + cropperModal).off('shown.bs.modal');
+                    $('#' + cropperModal).off('hidden.bs.modal');
                     $('#confirm').off('click');
                 });
             }
