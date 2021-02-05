@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
            case 'incorrectpassword': res.render('login-student', { errormessage: 'Din account findes i vores system, men dit password er forkert.' }); break;
            case 'notloggedin': res.render('login-student', { errormessage: 'Du skal logge ind før du kan se din profil.'}); break;
            case 'none': res.redirect('/'); break;
-           default: res.render('login-student', { language: reqLang(req, res)}); break;
+           default: res.render('login-student', { language: reqLang(req, res), hideFooter: true}); break;
        }
 });
 
