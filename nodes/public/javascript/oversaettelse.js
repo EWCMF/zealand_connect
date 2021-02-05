@@ -123,10 +123,10 @@ function getLangdata() {
                 "For_studerende": "For students",
                 "For_studerende_body": "As a student at Zealand, an internship is a mandatory part of your study programme. The duration of the internship period depends on the study programme the student is following (see the schedule under Internship period).",
 
-                "ZealandConnect_body": "Create an advertisement on ZealandConnect and find your next intern. In this advertisement, you describe what you can offer the student during the internship. If you want to search for an intern on your own, you can also screen the students’ resumes (CVs) and contact them if their skills meet your needs.",
+                "ZealandConnect_body": "Create an advertisement on Zealand Connect and find your next intern. In this advertisement, you describe what you can offer the student during the internship. If you want to search for an intern on your own, you can also screen the students’ resumes (CVs) and contact them if their skills meet your needs.",
 
-                "forside_slogan": "ZealandConnect - create your future",
-                "forside_slogan_body": "With ZealandConnect you can easily find your future internship or workplace as you will find all vacancies here.",
+                "forside_slogan": "Zealand Connect - create your future",
+                "forside_slogan_body": "With Zealand Connect you can easily find your future internship or workplace as you will find all vacancies here.",
 
                 "student_quick_access_headline" : "For students",
                 "student_quick_access_btn": "Find your next job or internship here. You can also increase your chances by creating a resume (CV).",
