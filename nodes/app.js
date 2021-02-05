@@ -19,6 +19,9 @@ var languageRouter = require('./routes/language');
 var cookieRouter = require('./routes/cookie-confirm');
 var forsideRouter = require('./routes/forside');
 var kontaktRouter = require('./routes/kontakt');
+const omRouter = require('./routes/om');
+var opretBrugerRouter = require('./routes/opret-bruger');
+var loginStudentRouter = require('./routes/login-student');
 
 var bodyParser = require('body-parser')
 
@@ -30,10 +33,6 @@ const hbs = require("express-handlebars");
 
 const findUserByEmail = require('./persistence/usermapping').findUserByEmail;
 const models = require('./models');
-
-var opretBrugerRouter = require('./routes/opret-bruger');
-var loginStudentRouter = require('./routes/login-student');
-
 
 var app = express();
 
@@ -143,6 +142,7 @@ app.use ('/admin-funktioner', adminFunktionerRouter);
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
 app.use('/kontakt', kontaktRouter);
+app.use('/om', omRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));
