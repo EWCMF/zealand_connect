@@ -393,7 +393,7 @@ input::placeholder {
   white-space: pre-line;
 }
 
-.passwordCol .formError {
+.formError {
   color: red;
 }
 
