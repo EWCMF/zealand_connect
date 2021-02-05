@@ -6,6 +6,7 @@ const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../pers
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const models = require('../models');
 var passport = require('passport');
+const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
 
 
@@ -92,7 +93,7 @@ router.post('/createUddannelse', (req, res, next)=>{
    })
 });
 
-router.post('/sletUddannelse', (req, res, next)=> {
+router.post('/sletUddannelse', authorizeUser('admin'), (req, res, next)=> {
     let jsonBody = JSON.parse(req.body);
     let name = jsonBody.name;
     let messages = {

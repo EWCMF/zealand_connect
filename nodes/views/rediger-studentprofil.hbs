@@ -137,8 +137,10 @@
                             movable: false,
                             zoomable: false,
                             rotable: false,
-                            minCropBoxWidth: 250,
-                            minCropBoxHeight: 250,
+
+                            // Af en eller anden grund bliver tallene halveret. 500 betyder 250 pixels.
+                            minCropBoxWidth: 500,
+                            minCropBoxHeight: 500,
 
                             ready() {
 
