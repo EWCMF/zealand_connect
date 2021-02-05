@@ -6,7 +6,7 @@ const db = require('../models');
 var formidable = require("formidable");
 var { reqLang } = require('../public/javascript/request');
 const path = require('path');
-const limit = 5;
+const limit = 10;
 const {
     Op
 } = require('sequelize');

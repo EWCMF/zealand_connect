@@ -1,4 +1,5 @@
 <script src='/javascript/godkendelse-af-student.js' defer></script>
+<script src='/javascript/godkendelse-af-billede.js' defer></script>
 <script src="/js/cropper.js"></script>
 <link href="/stylesheets/cropper.css" rel="stylesheet">
 
@@ -23,15 +24,19 @@
                     <label for="fornavn" data-key="Fornavn">Fornavn</label>
                     <input class="form-control" name="fornavn" id="fornavn" rows="2"
                            value="{{loggedInUser.fornavn}}">
-                    <p id="fornavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
-                    <p id="fornavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_fornavn">Ugyldigt fornavn</p>
+                    <p id="fornavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                        udfyldes</p>
+                    <p id="fornavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_fornavn">Ugyldigt
+                        fornavn</p>
                 </div>
                 <div class="form-group required">
                     <label for="efternavn" data-key="Efternavn">Efternavn</label>
                     <input class="form-control" name="efternavn" id="efternavn" rows="2"
                            value="{{loggedInUser.efternavn}}">
-                    <p id="efternavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
-                    <p id="efternavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_efternavn">Ugyldigt efternavn</p>
+                    <p id="efternavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                        udfyldes</p>
+                    <p id="efternavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_efternavn">
+                        Ugyldigt efternavn</p>
                 </div>
                 <div class="form-group required" style="display: none;">
                     <label for="email">Email</label>
@@ -78,7 +83,7 @@
                     <label style="margin-right: 5px" id="profilbilledeLabel"
                            data-key="Profilbillede">Profilbillede</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 1MB. Billedet kan skæres til efter det er valgt."
+                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 10MB. Billedet kan skæres til efter det er valgt."
                           data-key="Profilbillede_tooltip">?</span>
                 </div>
                 <div class="profilePicHolder">
@@ -87,12 +92,22 @@
                     <div class="custom-file">
                         <input id="crop_base64" type="text" name="crop_base64" class="d-none">
                         <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" class="custom-file-input"
-                               id="profilePic" onchange="validateAndUpdateInputLabel('picLabel', 'profilePic')">
+                               id="profilePic" onchange="validateAndUpdateImage('picLabel', 'profilePic',
+                               'imageTypeError', 'imageDimensionsError', 'imageSizeError', 'cropperModal', 'cropFrame',
+                               'profilbillede', 'crop_base64')">
                         <label id="picLabel" class="custom-file-label" for="profilePic" data-key="Vaelg_billede">Vælg
                             billede</label>
-                        <p id="profilePicError" class="CVErrorColor" hidden="true" data-key="Vaelg_billede_error">Du kan
+                        <p id="imageTypeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">
+                            Du kan kun uploade billeder med filtyperne .jpg eller .png
+                        </p>
+                        <p id="imageSizeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">Du
+                            kan
                             kun uploade en fil på maksimum
-                            1MB</p>
+                            10MB</p>
+                        <p id="imageDimensionsError" class="CVErrorColor mt-3" hidden="true"
+                           data-key="Vaelg_billede_error">
+                            Billedet skal være mindst 250 pixels i højde og bredde
+                        </p>
                     </div>
                 </div>
             </div>
@@ -103,77 +118,6 @@
 {{> cropper-modal}}
 
 <script>
-    function validateAndUpdateInputLabel(labelId, inputId) {
-        let file = document.getElementById(inputId).files[0];
-
-        // Get dimensions of the image
-        if (file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
-            let _URL = window.URL || window.webkitURL;
-            let img = new Image();
-            img.src = _URL.createObjectURL(file);
-
-            // Check the aspect ratio and dimensions
-            img.onload = function () {
-                if (this.width < 250 || this.height < 250 || file.size > 1000000) {
-                    console.log("Invalid image");
-                    document.getElementById(inputId).value = '';
-                } else {
-                    $('#cropperModal').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-
-                    $("cropperModal").modal('show');
-
-                    let src = this.src;
-                    let cropper;
-
-                    $('#cropperModal').on('shown.bs.modal', function (event) {
-                        let cropFrame = document.getElementById('cropFrame');
-                        cropFrame.src = src
-                        cropper = new Cropper(cropFrame, {
-                            aspectRatio: 1 / 1,
-                            viewMode: 1,
-                            movable: false,
-                            zoomable: false,
-                            rotable: false,
-                            minCropBoxWidth: 250,
-                            minCropBoxHeight: 250,
-
-                            ready() {
-
-                                $('#confirm').click(function () {
-                                    let data = cropper.getData(true);
-                                    let imgData = cropper.getImageData();
-
-                                    let canvas = cropper.getCroppedCanvas();
-                                    let dataUrl = canvas.toDataURL('image/jpeg');
-
-                                    document.getElementById('crop_base64').value = dataUrl.split(';base64,')[1];
-                                    ;
-                                    document.getElementById("profilbillede").src = dataUrl;
-                                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
-                                });
-
-                            }
-                        });
-                    })
-
-                    $('#cropperModal').on('hidden.bs.modal', function (event) {
-                        cropper.destroy();
-                        cropper = null;
-                        cropFrame.src = '';
-                        $('#cropperModal').off('shown.bs.modal');
-                        $('#cropperModal').off('hidden.bs.modal');
-                        $('#confirm').off('click');
-                    });
-                }
-            }
-
-        } else {
-            console.log("Invalid file type");
-        }
-    }
 
     function updateElements() {
         let profilePicture = "{{loggedInUser.profilbillede}}";
