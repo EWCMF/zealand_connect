@@ -413,7 +413,8 @@ function getLangdata() {
                 "Goer_mail_synlig": "Make mail visible on public profile",
 
                 //search-virksomheder
-                "virksomheder_registreret": "companies registeret"
+                "virksomheder_registreret": "companies registered",
+                "Virksomheder": "Companies"
 
             }
         }
