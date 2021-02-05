@@ -15,10 +15,9 @@
 </head>
 
 <body>
-    <!--
-        Bruges til footer men drøft først med Benjamin
+
     <div class="page-content">
-        -->
+
     
     {{#unless navDisabled}}
 
@@ -47,29 +46,8 @@
     
     {{{body}}}
 
-    <!--
+
     </div>
-    -->
-
-    <!--
-        Skal bruge CSS regler:
-
-        html, body {
-        height: 100%;
-        }
-
-        body {
-        display: flex;
-        flex-direction: column;
-        }
-
-        .page-content {
-        flex: 1 0 auto;
-        }
-
-        .footer {
-        flex-shrink: 0;
-        }
 
     {{#unless showFooter}}
     <footer class="footer">
@@ -78,7 +56,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-key="aLogin">Cookie settings</a>
+                        <a class="nav-link hand-hover" onclick="openCookieConsent()" data-key="aLogin">Cookie settings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/om" data-key="aLogin">Om ZealandConnect</a>
@@ -88,7 +66,7 @@
         </nav>
     </footer>
     {{/unless}}
-    -->
+
 
     {{> cookie-consent-modal}}
     <!-- JQuery and Bootstrap linked here -->
@@ -102,21 +80,30 @@
             $('[data-toggle="tooltip"]').tooltip()
         })</script>
     <script>
-        $(document).ready(function(){
-            let cookies = document.cookie;
+        function openCookieConsent(){
+            $(document).ready(function(){
+                let cookies = document.cookie;
 
-            let hasCookie = cookies.includes('cookie_consent=');
-   
-            if (!hasCookie) {
-                $('#cookieModal').modal({
-    		    backdrop: 'static',
-    		    keyboard: false
-		        });
+                let hasCookie = cookies.includes('cookie_consent=');
 
-                $("#cookieModal").modal('show');
-            } 
-            
-        });
+                if (!hasCookie) {
+                    $('#cookieModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                    $("#cookieModal").modal('show');
+                } else {
+                    $('#cookieModal').modal({
+                    });
+
+                    $("#cookieModal").modal('show');
+                }
+
+            });
+        }
+
+        openCookieConsent();
 
         function confirmConsent(formId) {
             let form = document.getElementById(formId);
