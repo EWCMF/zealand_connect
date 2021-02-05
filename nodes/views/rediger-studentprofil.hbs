@@ -90,9 +90,15 @@
                                id="profilePic" onchange="validateAndUpdateInputLabel('picLabel', 'profilePic')">
                         <label id="picLabel" class="custom-file-label" for="profilePic" data-key="Vaelg_billede">Vælg
                             billede</label>
-                        <p id="profilePicError" class="CVErrorColor" hidden="true" data-key="Vaelg_billede_error">Du kan
+                        <p id="imageTypeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">
+                            Du kan kun uploade billeder med filtyperne .jpg eller .png
+                        </p>
+                        <p id="imageSizeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">Du kan
                             kun uploade en fil på maksimum
                             10MB</p>
+                        <p id="imageDimensionsError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">
+                            Billedet skal være mindst 250 pixels i højde og bredde
+                        </p>
                     </div>
                 </div>
             </div>
@@ -104,6 +110,10 @@
 
 <script>
     function validateAndUpdateInputLabel(labelId, inputId) {
+        document.getElementById("imageTypeError").hidden = true;
+        document.getElementById("imageSizeError").hidden = true;
+        document.getElementById("imageDimensionsError").hidden = true;
+
         let file = document.getElementById(inputId).files[0];
 
         // Get dimensions of the image
@@ -114,9 +124,14 @@
 
             // Check the aspect ratio and dimensions
             img.onload = function () {
-                if (this.width < 250 || this.height < 250 || file.size > 1000000) {
+                if (this.width < 250 ||this.height < 250){
+                    document.getElementById("imageDimensionsError").hidden = false;
+                    return;
+                }
+                if (file.size > 1000000) {
                     console.log("Invalid image");
                     document.getElementById(inputId).value = '';
+                    document.getElementById("imageSizeError").hidden = false;
                 } else {
                     $('#cropperModal').modal({
                         backdrop: 'static',
@@ -174,6 +189,7 @@
 
         } else {
             console.log("Invalid file type");
+            document.getElementById("imageTypeError").hidden = false;
         }
     }
 
