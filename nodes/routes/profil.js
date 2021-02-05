@@ -297,7 +297,7 @@ router.post('/rediger-save', function (req, res, next) {
             hjemmeside,
             direktoer,
             land,
-            profile_picture,
+            logo,
             crop_base64,
             visibleMail
         } = fields;
@@ -312,7 +312,7 @@ router.post('/rediger-save', function (req, res, next) {
             hjemmeside,
             direktoer,
             land,
-            profile_picture,
+            logo,
             crop_base64,
             visibleMail
         };
@@ -323,7 +323,7 @@ router.post('/rediger-save', function (req, res, next) {
 
         if (size > 0) {
             /*fileUpload here*/
-            let img = files.profile_picture;
+            let img = files.logo;
 
             const imgData = imageSize(imageBufferData);
 
@@ -375,7 +375,7 @@ router.post('/rediger-save', function (req, res, next) {
                                         });
                                     }
                                 }).catch();
-                                content.profile_picture = newPicName;
+                                content.logo = newPicName;
 
                                 // Edit the students information
                                 editVirksomhed(content);

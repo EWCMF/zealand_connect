@@ -1,4 +1,5 @@
 <script src='/javascript/godkendelse-af-virksomhed.js' defer></script>
+<script src='/javascript/godkendelse-af-billede.js' defer></script>
 <script src="/js/cropper.js"></script>
 <link href="/stylesheets/cropper.css" rel="stylesheet">
 
@@ -12,7 +13,7 @@
     </div>
 
     <form action="/profil/rediger-save" method="POST" id="redigerVirksomhedForm" name="redigerVirksomhedForm"
-        enctype="multipart/form-data">
+          enctype="multipart/form-data">
         <div class="row mb-5">
             <div class="form-column col-12 col-md-4">
 
@@ -31,7 +32,7 @@
                 <div class="form-group required">
                     <label for="telefon" data-Key="Telefon">Telefon</label>
                     <input type="number" class="form-control" name="telefon" id="telefon" rows="2"
-                        value="{{loggedInVirksomhed.tlfnr}}">
+                           value="{{loggedInVirksomhed.tlfnr}}">
                     <p id="telefonError" class="CVErrorColor" hidden="true" data-Key="Telefon_error">Du skal skrive dit
                         nummer, det skal præcist
                         være 8 tal og må ikke starte med 0</p>
@@ -39,7 +40,7 @@
                 <div class="form-group required">
                     <label for="cvrnr" data-Key="CVR_nummer">CVR nummer</label>
                     <input type="number" class="form-control" name="cvrnr" id="cvrnr" rows="2"
-                        value="{{loggedInVirksomhed.cvrnr}}">
+                           value="{{loggedInVirksomhed.cvrnr}}">
                     <p id="cvrnrError" class="CVErrorColor" hidden="true" data-Key="CVR_nummer_error">Du skal skrive dit
                         CVR nummer, det skal
                         præcist være 8 tal og må ikke starte med 0</p>
@@ -47,32 +48,32 @@
                 <div class="form-group">
                     <label for="address" data-Key="Adresse">Adresse</label>
                     <input type="text" class="form-control" name="adresse" id="address" rows="2"
-                        value="{{loggedInVirksomhed.adresse}}">
+                           value="{{loggedInVirksomhed.adresse}}">
                     <p id="addressError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div class="form-group">
                     <label for="hjemmeside" data-Key="Hjemmeside">Hjemmeside</label>
                     <input type="text" class="form-control" name="hjemmeside" id="hjemmeside" rows="2"
-                        value="{{loggedInVirksomhed.hjemmeside}}">
+                           value="{{loggedInVirksomhed.hjemmeside}}">
                     <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes
                     </p>
                 </div>
                 <div class="form-group">
                     <label for="direktoer">Direktør</label>
                     <input type="text" class="form-control" name="direktoer" id="direktoer" rows="2"
-                        value="{{loggedInVirksomhed.direktoer}}">
+                           value="{{loggedInVirksomhed.direktoer}}">
                     <p id="direktoerError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div class="form-group">
                     <label for="land" data-Key="Land">Land</label>
                     <input type="text" class="form-control" name="land" id="land" rows="2"
-                        value="{{loggedInVirksomhed.land}}">
+                           value="{{loggedInVirksomhed.land}}">
                     <p id="landError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div class="form-group required">
                     <label for="postnr" data-Key="Postnummer">Postnummer</label>
                     <input type="number" class="form-control" name="postnr" id="postnr" rows="2"
-                        value="{{loggedInVirksomhed.postnr}}">
+                           value="{{loggedInVirksomhed.postnr}}">
                     <p id="postnrError" class="CVErrorColor" hidden="true" data-Key="Postnummer_error">Du skal skrive
                         dit postnummer, det skal
                         præcist være 4 tal</p>
@@ -80,13 +81,14 @@
                 <div class="form-group required">
                     <label for="by" data-Key="By">By</label>
                     <input type="text" class="form-control" name="by" id="by" rows="2"
-                        value="{{loggedInVirksomhed.by}}">
+                           value="{{loggedInVirksomhed.by}}">
                     <p id="byError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
                 <div>
                     <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
                     <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
-                        data-Key="Aendrer_password">Ændrer password</button>
+                            data-Key="Aendrer_password">Ændrer password
+                    </button>
                 </div>
 
 
@@ -95,37 +97,43 @@
             <div class="form-column col-12 col-md-4">
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel"
-                        data-Key="Virksomhedslogo">Virksomhedslogo</label>
+                           data-Key="Virksomhedslogo">Virksomhedslogo</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                        title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 10MB. Billedet kan skæres til efter det er valgt."
-                        data-Key="Profilbillede_tooltip">?</span>
+                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 10MB. Billedet kan skæres til efter det er valgt."
+                          data-Key="Profilbillede_tooltip">?</span>
                 </div>
                 <div class="profilePicHolder">
                     <img id="profilbillede" class="img-thumbnail border-0" src="\images\no-logo.png"
-                        alt="PROFILBILLEDE">
+                         alt="PROFILBILLEDE">
                     <div class="custom-file">
                         <input id="crop_base64" type="text" name="crop_base64" class="d-none">
-                        <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" class="custom-file-input"
-                            id="profilePic" onchange="validateAndUpdateInputLabel('picLabel', 'profilePic')">
+                        <input type="file" name="logo" accept=".jpg, .jpeg, .png" class="custom-file-input"
+                               id="profilePic" onchange="validateAndUpdateImage('picLabel', 'profilePic',
+                               'imageTypeError', 'imageDimensionsError', 'imageSizeError', 'cropperModal', 'cropFrame',
+                               'profilbillede', 'crop_base64')">
                         <label id="picLabel" class="custom-file-label" for="profilePic" data-Key="Vaelg_billede">Vælg
                             billede</label>
                         <p id="imageTypeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">
                             Du kan kun uploade billeder med filtyperne .jpg eller .png
                         </p>
-                        <p id="imageSizeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">Du kan
+                        <p id="imageSizeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">Du
+                            kan
                             kun uploade en fil på maksimum
                             10MB</p>
-                        <p id="imageDimensionsError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">
+                        <p id="imageDimensionsError" class="CVErrorColor mt-3" hidden="true"
+                           data-key="Vaelg_billede_error">
                             Billedet skal være mindst 250 pixels i højde og bredde
                         </p>
                     </div>
                 </div>
                 <div class="mt-4 form-group">
                     <div class="form-check form-check-inline">
-                        <input {{checkedState loggedInVirksomhed.visible_mail}} class="form-check-input" type="checkbox" id="visibleMail" name="visibleMail">
-                        <label class="form-check-label" for="visibleMail" data-key="Goer_mail_synlig">Gør mail synlig på offentlig profil</label>
+                        <input {{checkedState loggedInVirksomhed.visible_mail}} class="form-check-input" type="checkbox"
+                                                                                id="visibleMail" name="visibleMail">
+                        <label class="form-check-label" for="visibleMail" data-key="Goer_mail_synlig">Gør mail synlig på
+                            offentlig profil</label>
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -138,87 +146,6 @@
 {{> change-password-modal }}
 
 <script>
-    function validateAndUpdateInputLabel(labelId, inputId) {
-        document.getElementById("imageTypeError").hidden = true;
-        document.getElementById("imageSizeError").hidden = true;
-        document.getElementById("imageDimensionsError").hidden = true;
-
-        let file = document.getElementById(inputId).files[0];
-
-        // Get dimensions of the image
-        if (file.type === "image/jpeg" || file.type === "image/jpg" || file.type === "image/png") {
-            let _URL = window.URL || window.webkitURL;
-            let img = new Image();
-            img.src = _URL.createObjectURL(file);
-
-            // Check the aspect ratio and dimensions
-            img.onload = function () {
-                if (this.width < 250 || this.height < 250){
-                    document.getElementById("imageDimensionsError").hidden = false;
-                    return;
-                }
-                if (file.size > 10000000) {
-                    console.log("Invalid image");
-                    document.getElementById(inputId).value = '';
-                    document.getElementById("imageSizeError").hidden = false;
-                } else {
-                    $('#cropperModal').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-
-                    $("cropperModal").modal('show');
-
-                    let src = this.src;
-                    let cropper;
-
-                    $('#cropperModal').on('shown.bs.modal', function (event) {
-                        let cropFrame = document.getElementById('cropFrame');
-                        cropFrame.src = src
-                        cropper = new Cropper(cropFrame, {
-                            aspectRatio: 1 / 1,
-                            viewMode: 1,
-                            movable: false,
-                            zoomable: false,
-                            rotable: false,
-                            minCropBoxWidth: 500,
-                            minCropBoxHeight: 500,
-
-                            ready() {
-
-                                $('#confirm').click(function () {
-                                    let data = cropper.getData(true);
-                                    let imgData = cropper.getImageData();
-
-                                    let canvas = cropper.getCroppedCanvas();
-                                    let dataUrl = canvas.toDataURL('image/jpeg');
-
-                                    document.getElementById('crop_base64').value = dataUrl.split(';base64,')[1];
-                                    document.getElementById("profilbillede").src = dataUrl;
-                                    document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
-                                });
-
-                            }
-                        });
-                    })
-
-                    $('#cropperModal').on('hidden.bs.modal', function (event) {
-                        cropper.destroy();
-                        cropper = null;
-                        cropFrame.src = '';
-                        $('#cropperModal').off('shown.bs.modal');
-                        $('#cropperModal').off('hidden.bs.modal');
-                        $('#confirm').off('click');
-                    });
-                }
-            }
-
-        } else {
-            console.log("Invalid file type");
-            document.getElementById("imageTypeError").hidden = false;
-        }
-    }
-
     function updateElements() {
         let profilePicture = "{{loggedInVirksomhed.logo}}";
 
