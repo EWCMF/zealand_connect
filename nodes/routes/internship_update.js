@@ -20,7 +20,7 @@ var tempEmail = emailRegex.source;
 var tempLink = linkRegex.source;
 
 /* POST home page. */
-router.post('/', function (req, res, next) {
+router.post('/', authorizeUser('company'), function (req, res, next) {
     //TODO fikse at opslag kan redigeres. Vi tror det har noget med postcode at gøre
 
     //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
@@ -211,7 +211,7 @@ router.post('/', function (req, res, next) {
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', authorizeUser('company'), function (req, res, next) {
     var generatedEducationOptions = "";
     db.Uddannelse.findAll({
         order: [
