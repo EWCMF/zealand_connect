@@ -22,8 +22,9 @@ var { reqLang } = require('../public/javascript/request');
 var tempDate = dateRegex.source;
 var tempEmail = emailRegex.source;
 var tempLink = linkRegex.source;
+const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
-router.post('/', function (req, res, next) {
+router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
     //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
     var formData = new formidable.IncomingForm();
     formData.parse(req, function (error, fields, files) {
@@ -247,7 +248,7 @@ router.post('/', function (req, res, next) {
     });
 });
 
-router.get('/', async function (req, res, next) {
+router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
     let loggedInVirksomhed;
 
     await findUserByEmail(req.user).then((user) => {
