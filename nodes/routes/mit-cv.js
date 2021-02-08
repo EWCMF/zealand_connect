@@ -1,11 +1,11 @@
-
 var express = require('express');
 var router = express.Router();
 const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 var { reqLang } = require('../public/javascript/request');
+const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
-router.get('/', async function (req, res, next) {
+router.get('/', authorizeUser('student'), async function (req, res, next) {
     if (req.user == null) {
         res.status(403).render('error403', {layout: false});
     }
@@ -49,7 +49,7 @@ router.get('/', async function (req, res, next) {
     });
 });
 
-router.get('/edit', async function (req, res, next) {
+router.get('/edit', authorizeUser('student'), async function (req, res, next) {
     if (req.user == null) {
         res.status(403).render('error403', {layout: false});
     }
@@ -89,7 +89,7 @@ router.get('/edit', async function (req, res, next) {
     })
 });
 
-router.post('/submit', async function (req, res, next) {
+router.post('/submit', authorizeUser('student'), async function (req, res, next) {
 
     if (req.user == null) {
         res.status(403).render('error403', {layout: false});
@@ -190,7 +190,7 @@ router.post('/submit', async function (req, res, next) {
     res.render('mit-cv-success', {layout: false, status: 'Succes', message: besked, id: cv.id});
 });
 
-router.get('/delete', function (req, res, next) {
+router.get('/delete', authorizeUser('student', 'admin'), function (req, res, next) {
     if (req.query.id == null) {
         res.send("Use id");
     } else {
@@ -203,7 +203,7 @@ router.get('/delete', function (req, res, next) {
     }
 });
 
-router.post('/preview', async function (req, res, next) {
+router.post('/preview', authorizeUser('student'), async function (req, res, next) {
     let student = await findUserByEmail(req.user);
 
     let udd = await db.Uddannelse.findByPk(req.body.uddannelse, {

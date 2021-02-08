@@ -12,8 +12,9 @@ const path = require('path');
 const {
     reqLang
 } = require('../public/javascript/request');
+const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
-router.get('/', async function (req, res, next) {
+router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
 
     var page;
     var offset;
@@ -101,7 +102,7 @@ router.get('/', async function (req, res, next) {
 
 });
 
-router.post('/query', function (req, res) {
+router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
     const user = res.locals.user
 
     var formData = new formidable.IncomingForm();
