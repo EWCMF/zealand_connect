@@ -1,99 +1,99 @@
 var express = require('express');
 var router = express.Router();
-const { deleteVirksomhed, findUserByEmail, searchVirksomhederByName } = require('../persistence/usermapping');
-var { reqLang } = require('../public/javascript/request');
+const {deleteVirksomhed, searchVirksomhederByName} = require('../persistence/usermapping');
+var {reqLang} = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
-const models = require('../models');
 var passport = require('passport');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
-
-
-router.get('/', function (req, res, next) {
-    //check om logged in as admin
-    if(req.user != undefined){
-        findUserByEmail(req.user).then((user)=>{
-            if(user instanceof models.Admin){
-                res.render('admin-funktioner', {language: reqLang(req, res)})
-            }else {
-                res.redirect('/');
-            }
-        })
-    } else res.redirect('/');
+router.get('/', authorizeUser('admin'), function (req, res, next) {
+    // Hele authorization håndteres nu af en middleware function
+    res.render('admin-funktioner', {language: reqLang(req, res)})
 });
 
 router.get('/login', function (req, res, next) {
     //check om logged in as admin
     let error = req.query;
-       let msg = error.error;
-       //console.log("THIS ERROR "+msg);
-       switch(msg){
-           case 'incorrectusername': res.render('login-admin', { errormessage: 'Du har indtastet forkerte oplysninger'}); break;
-           case 'incorrectpassword': res.render('login-admin', { errormessage: 'Du har indtastet forkerte oplysninger' }); break;
-           case 'notloggedin': res.render('login-admin', { errormessage: 'Du skal logge ind før du kan se din profil.'}); break;
-           case 'none': res.redirect('/admin-funktioner'); break;
-           default: res.render('login-admin'); break;
-       }
+    let msg = error.error;
+    //console.log("THIS ERROR "+msg);
+    switch (msg) {
+        case 'incorrectusername':
+            res.render('login-admin', {errormessage: 'Du har indtastet forkerte oplysninger'});
+            break;
+        case 'incorrectpassword':
+            res.render('login-admin', {errormessage: 'Du har indtastet forkerte oplysninger'});
+            break;
+        case 'notloggedin':
+            res.render('login-admin', {errormessage: 'Du skal logge ind før du kan se din profil.'});
+            break;
+        case 'none':
+            res.redirect('/admin-funktioner');
+            break;
+        default:
+            res.render('login-admin');
+            break;
+    }
 });
 
 router.post('/login/authenticate', function (req, res, next) {
     //check om logged in as admin
-    passport.authenticate('local', function(err, user, info) {
+    passport.authenticate('local', function (err, user, info) {
         //handle error
-        if(!user){
-            return res.redirect('/admin-funktioner/login'+info.message);
+        if (!user) {
+            return res.redirect('/admin-funktioner/login' + info.message);
         }
         //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
         req.logout();
         //login skal være der for, at passport laver en cookie for brugeren
-        req.logIn(user, function(err) {
-            if (err) { return next(err); }
-            return res.redirect('/admin-funktioner/login'+info.message);
-          });
+        req.logIn(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            return res.redirect('/admin-funktioner/login' + info.message);
+        });
     })(req, res, next);
 });
 
-router.post('/slet-bruger', function (req, res, next) {
+router.post('/slet-bruger', authorizeUser('admin'), function (req, res, next) {
     let jsonBody = JSON.parse(req.body);
     console.log(req.body);
     let errorHappened = false;
-    if (jsonBody.type == "virksomhed"){
-        deleteVirksomhed(jsonBody.email).then((result)=>{
+    if (jsonBody.type == "virksomhed") {
+        deleteVirksomhed(jsonBody.email).then((result) => {
             errorHappened = result;
-            res.send('{"errorHappened":'+errorHappened+"}");
+            res.send('{"errorHappened":' + errorHappened + "}");
         });
-    }else {
-        deleteStudent(jsonBody.email).then((result)=>{
+    } else {
+        deleteStudent(jsonBody.email).then((result) => {
             errorHappened = result;
-            res.send('{"errorHappened":'+errorHappened+"}");
+            res.send('{"errorHappened":' + errorHappened + "}");
         });
     }
 });
 
 
-router.post('/createUddannelse', (req, res, next)=>{
+router.post('/createUddannelse', authorizeUser('admin'), (req, res, next) => {
     let jsonBody = JSON.parse(req.body);
     let name = jsonBody.name
-    let messages= {
+    let messages = {
         findesallerede: "",
         uddannelseOprettet: ""
     }
-   
-   findUddannelseByName(name).then((uddannelseFundetMedNavn) =>{
-       if(uddannelseFundetMedNavn !== null) { //hvis uddannelsen er i databasen
-           messages.findesallerede = "Uddannelsen findes allerede"
-           res.send(messages)
-       }
-       else { // hvis uddannelsen ikke er i databasen
+
+    findUddannelseByName(name).then((uddannelseFundetMedNavn) => {
+        if (uddannelseFundetMedNavn !== null) { //hvis uddannelsen er i databasen
+            messages.findesallerede = "Uddannelsen findes allerede"
+            res.send(messages)
+        } else { // hvis uddannelsen ikke er i databasen
             createUddanelse(name);
-            messages.uddannelseOprettet= "Uddannelsen oprettet"
+            messages.uddannelseOprettet = "Uddannelsen oprettet"
             res.send(messages)
         }
-   })
+    })
 });
 
-router.post('/sletUddannelse', authorizeUser('admin'), (req, res, next)=> {
+router.post('/sletUddannelse', authorizeUser('admin'), (req, res, next) => {
     let jsonBody = JSON.parse(req.body);
     let name = jsonBody.name;
     let messages = {
@@ -101,13 +101,12 @@ router.post('/sletUddannelse', authorizeUser('admin'), (req, res, next)=> {
         uddannelseSlettet: ""
     }
 
-    findUddannelseByName(name).then((uddannelseFundetMedNavn)=>{
-        if(uddannelseFundetMedNavn === null) {
+    findUddannelseByName(name).then((uddannelseFundetMedNavn) => {
+        if (uddannelseFundetMedNavn === null) {
             console.log('sletter ikke noget der ikke findes')
-            messages.findesIkke= "Uddannelsen findes ikke"
+            messages.findesIkke = "Uddannelsen findes ikke"
             res.send(messages);
-        }
-        else {
+        } else {
             console.log('sletter uddannelse')
             sletUddannelse(name)
             messages.uddannelseSlettet = "Uddannelsen slettet"
@@ -116,7 +115,7 @@ router.post('/sletUddannelse', authorizeUser('admin'), (req, res, next)=> {
     })
 });
 
-router.post('/search-virksomhed', async (req, res) => {
+router.post('/search-virksomhed', authorizeUser('admin'), async (req, res) => {
     let jsonBody = JSON.parse(req.body);
     let name = jsonBody.name;
 
