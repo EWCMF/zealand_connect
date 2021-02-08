@@ -15,15 +15,11 @@ const mv = require('mv');
 const {
     reqLang
 } = require('../public/javascript/request');
-const {
-    validatePhone,
-    validateName
-} = require("../validation/input-validation");
 const checkForIdenticals = require('../validation/input-validation').checkForIdenticals;
 const validatePasswordLength = require('../validation/input-validation').validatePasswordLength;
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
-router.get('/', function (req, res, next) {
+router.get('/',  authorizeUser('student', 'company', 'admin'),function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
         if (user instanceof models.Virksomhed) {
             let loggedInVirksomhed = {
@@ -90,7 +86,7 @@ router.get('/virksomhed/:id', async function (req, res) {
     });
 });
 
-router.get('/rediger', function (req, res, next) {
+router.get('/rediger',  authorizeUser('student', 'company', 'admin'), function (req, res, next) {
     let errors = req.query;
     console.log("ERRORS");
     console.log(errors);
@@ -160,7 +156,7 @@ router.get('/rediger', function (req, res, next) {
     });
 });
 
-router.post('/redigerstudent-save', function (req, res) {
+router.post('/redigerstudent-save',  authorizeUser('student', 'admin'), function (req, res) {
     let formData = new formidable.IncomingForm();
 
     formData.parse(req, async function (error, fields, files) {
@@ -281,7 +277,7 @@ router.post('/redigerstudent-save', function (req, res) {
     });
 });
 
-router.post('/rediger-save', function (req, res, next) {
+router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, res, next) {
     let formData = new formidable.IncomingForm();
 
     formData.parse(req, async function (error, fields, files) {
@@ -403,26 +399,13 @@ router.post('/rediger-save', function (req, res, next) {
     });
 });
 
-router.get('/getUser', function (req, res, next) {
-    if (req.user != null) {
-        findUserByEmail(req.user).then((user) => {
-            res.send(user);
-        });
-    } else {
-        res.send({
-            email: ""
-        });
-    }
-});
-
-
-router.get('/getUser', function (req, res, next) {
+router.get('/getUser',  authorizeUser('student', 'company', 'admin'), function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
         res.send(user);
     })
 });
 
-router.post('/change-password-company', authorizeUser('company'), async function (req, res, next) {
+router.post('/change-password-company', authorizeUser('company', 'admin'), async function (req, res, next) {
     const {
         hashPassword,
         verifyPassword
