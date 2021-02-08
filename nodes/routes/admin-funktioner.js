@@ -16,7 +16,6 @@ router.get('/login', function (req, res, next) {
     //check om logged in as admin
     let error = req.query;
     let msg = error.error;
-    //console.log("THIS ERROR "+msg);
     switch (msg) {
         case 'incorrectusername':
             res.render('login-admin', {errormessage: 'Du har indtastet forkerte oplysninger'});
@@ -57,7 +56,6 @@ router.post('/login/authenticate', function (req, res, next) {
 
 router.post('/slet-bruger', authorizeUser('admin'), function (req, res, next) {
     let jsonBody = JSON.parse(req.body);
-    console.log(req.body);
     let errorHappened = false;
     if (jsonBody.type == "virksomhed") {
         deleteVirksomhed(jsonBody.email).then((result) => {
