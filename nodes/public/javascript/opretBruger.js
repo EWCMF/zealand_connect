@@ -120,8 +120,8 @@ async function checkCvrNummer() {
     }
     error.textContent = translateErrorMessage("cvrLedig");
 
-    // error.style.visibility = 'hidden';
-    // error.textContent = 'Error';
+    error.style.visibility = 'hidden';
+    error.textContent = 'Error';
 
     return true;
 };
