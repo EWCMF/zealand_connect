@@ -22,7 +22,7 @@ function validateCity(city){
 
 // Password skal være mellem 8 og 16 karakterer
 function validatePasswordLength(password){
-    return password.length > 7 && password.length < 17;
+    return password.length > 7 && password.length < 21;
 }
 
 // CVR skal have en længde på 8
