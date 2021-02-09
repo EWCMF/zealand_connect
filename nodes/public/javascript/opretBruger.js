@@ -93,6 +93,39 @@ async function checkEmail(input, error) {
     return true;
 };
 
+async function checkCvrNummer() {
+    let regex = /^[0-9]{8}$/;
+    let error = errors.cvrNummer;
+    let input = inputs.cvrNummer.value;
+
+    if (!regex.test(input)) {
+        error.style.visibility = 'visible'
+        error.textContent = translateErrorMessage("CvrFejl");
+        return false;
+    }
+
+    let valid = await checkCvrExists(input)
+
+    error.style.visibility = 'visible';
+
+    if (!valid) {
+        if (!error.classList.contains('formError')) {
+            error.classList.add('formError');
+        }
+        error.textContent = translateErrorMessage("cvrIBrug");
+        return false;
+    }
+    if (error.classList.contains('formError')) {
+        error.classList.remove('formError');
+    }
+    error.textContent = translateErrorMessage("cvrLedig");
+
+    // error.style.visibility = 'hidden';
+    // error.textContent = 'Error';
+
+    return true;
+};
+
 function checkEmailExists(input) {
     return new Promise((resolve) => {
         let xhr = new XMLHttpRequest();
@@ -105,6 +138,22 @@ function checkEmailExists(input) {
             resolve(true);
         }
         xhr.open('POST', '/opret-bruger/check-email');
+        xhr.send(input);
+    });
+}
+
+function checkCvrExists(input) {
+    return new Promise((resolve) => {
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            let response = JSON.parse(this.responseText);
+            if (response.cvr == 'invalid') {
+                return resolve(false);
+            }
+
+            resolve(true);
+        }
+        xhr.open('POST', '/opret-bruger/check-cvr');
         xhr.send(input);
     });
 }
@@ -157,23 +206,6 @@ function checkFeltIkkeTomt(input, error) {
     if (input.length == 0) {
         error.style.visibility = 'visible'
         error.textContent = translateErrorMessage("feltIkkeTomt");
-        return false;
-    }
-
-    error.style.visibility = 'hidden';
-    error.textContent = 'Error';
-
-    return true;
-};
-
-function checkCvrNummer() {
-    let regex = /^[0-9]{8}$/;
-    let error = errors.cvrNummer;
-    let input = inputs.cvrNummer.value;
-
-    if (!regex.test(input)) {
-        error.style.visibility = 'visible'
-        error.textContent = translateErrorMessage("CvrFejl");
         return false;
     }
 
@@ -265,6 +297,7 @@ async function submitOpretVirksomhed() {
     });
 
     check = await checkEmail(inputs.email.value, errors.email);
+    check = await checkCvrNummer();
 
     if (!check) {
         document.getElementById('submitBtn').onclick = submitOpretVirksomhed;
@@ -407,6 +440,8 @@ function translateErrorMessage(key) {
             "passwordIkkeEns": "De angivne adgangskoder er ikke ens",
             "feltIkkeTomt": "Feltet må ikke være tomt",
             "CvrFejl": "Et CVR-nummer skal angives med nøjagtig 8 cifre",
+            "cvrIBrug": "Det angivne CVR-nummer er allerede i brug",
+            "cvrLedig": "Det angivne CVR-nummer er ledigt",
             "telefonFejl": "Et telefonnummer skal angives med nøjagtig 8 cifre",
             "datoFejl": "En fremtidig dato er valgt"
         },
@@ -420,6 +455,8 @@ function translateErrorMessage(key) {
             "passwordIkkeEns": "The specified passwords are not the same",
             "feltIkkeTomt": "This field cannot be empty",
             "CvrFejl": "A CVR number must be specified with exactly 8 digits",
+            "cvrIBrug": "This CVR number is already in use",
+            "cvrLedig": "The specified mail is available",
             "telefonFejl": "A phone number must be specified with exactly 8 digits",
             "datoFejl": "A future date has been chosen"
         }

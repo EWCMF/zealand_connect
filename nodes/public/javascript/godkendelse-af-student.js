@@ -56,7 +56,7 @@ function submitButton() {
     }
 
     if (password !== ""){
-        if (password.length < 8 || password.length > 16) {
+        if (password.length < 8 || password.length > 20) {
             errors.push('passwordLengthError')
             document.getElementById("passwordLengthError").hidden = false;
             document.getElementById("passwordMismatchError").hidden = true;

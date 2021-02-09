@@ -7,6 +7,7 @@ const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
 const createStudent = require('../persistence/usermapping').createStudent;
 const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+const findVirksomhedByCvr = require('../persistence/usermapping').findVirksomhedByCvr;
 const { validateEmail, validateCVR, validatePhone, validateCity, validatePasswordLength, validateCvrLength,
     checkForIdenticals, 
     validateNavn} = require('../validation/input-validation');
@@ -43,6 +44,18 @@ router.post('/check-email', async (req, res) => {
     res.json({"email": "invalid"});
 });
 
+router.post('/check-cvr', async (req, res) => {
+    let cvr = req.body;
+
+    let exists = await findVirksomhedByCvr(cvr);
+
+    if (exists == null) {
+        return res.json({"cvr": "valid"});
+    }
+
+    res.json({"cvr": "invalid"});
+});
+
 router.post('/create', (req, res) => {
      // Indlæs variable fra viewet
      let jsonBody = JSON.parse(req.body);
@@ -74,29 +87,36 @@ router.post('/create', (req, res) => {
     if (!validateEmail(email)) {
         errors.EmailError = "Email er ugyldig";
         atLeastOneErrorIsPresent = true;
+        console.log("email issue 1")
     } else if (!checkForIdenticals(email, gentagEmail)) {
         errors.EmailError = "Email er ikke ens";
         atLeastOneErrorIsPresent = true;
+        console.log("email issue 2")
     }
 
     if (!validatePasswordLength(password)) {
-        errors.PasswordError = "Adgangskode skal være mellem 8 og 16 tegn";
+        errors.PasswordError = "Adgangskode skal være mellem 8 og 20 tegn";
         atLeastOneErrorIsPresent = true;
+        console.log("password issue 1")
     } else if (!checkForIdenticals(password, gentagPassword)) {
+        console.log("password issue 2")
         errors.PasswordError = "Passwords er ikke ens";
         atLeastOneErrorIsPresent = true;
     }
 
     if (!validateNavn(virksomhedNavn)) {
         atLeastOneErrorIsPresent = true;
+        console.log("navn issue")
     }
 
     if (!validateCVR(cvrnr)) {
         errors.CVRError = "CVR-nummer er ugyldigt";
         atLeastOneErrorIsPresent = true;
+        console.log("cvr issue 1")
     } else if (!validateCvrLength(cvrnr)) {
         errors.CVRError = "CVR-nummer skal være 8 cifre";
         atLeastOneErrorIsPresent = true;
+        console.log("cvr issue 2")
     }
 
     if (!validatePhone(tlfnr)) {
@@ -120,8 +140,10 @@ router.post('/create', (req, res) => {
             if (userFoundByCVR !== null){
                 errors.CVRError = "CVR-nummer findes allerede i systemet";
                 atLeastOneErrorIsPresent = true;
+                console.log("errors")
             } 
             if(!atLeastOneErrorIsPresent) {
+                console.log("ingen errors")
                 hashPassword(password).then((hashedPassword) => {
                     let virksomhedsBruger = {
                         email: email,
