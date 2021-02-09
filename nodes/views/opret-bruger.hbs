@@ -9,10 +9,10 @@
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="tabset" id="tab1" aria-controls="login"
-                        checked="{{checked}}" onclick="showStudentOpret()">
+                        {{studentChecked}} onclick="showStudentOpret()">
                     <label class="form-check-label mr-3" data-key="Studerende" for="tab1">Studerende</label>
                     <input class="form-check-input" type="radio" name="tabset" id="tab2" aria-controls="login"
-                        onclick="showVirksomhedOpret()">
+                        {{companyChecked}} onclick="showVirksomhedOpret()">
                     <label class="form-check-label" data-key="Virksomhed" for="tab2">Virksomhed</label>
                 </div>
 
@@ -220,3 +220,9 @@
     </div>
 </div>
 <script src="/javascript/opretBruger.js"></script>
+<script>
+    let companyChecked = '{{companyChecked}}';
+    if (companyChecked == 'checked') {
+        showVirksomhedOpret();
+    }   
+</script>

@@ -15,6 +15,7 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
         // Check the aspect ratio and dimensions
         img.onload = function () {
             if (this.width < 250 || this.height < 250){
+                document.getElementById(inputId).value = '';
                 document.getElementById(imageDimensionsError).hidden = false;
                 return;
             }
@@ -43,16 +44,16 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                         movable: false,
                         zoomable: false,
                         rotable: false,
-                        minCropBoxWidth: 500,
-                        minCropBoxHeight: 500,
 
                         ready() {
 
                             $('#confirm').click(function () {
-                                let data = cropper.getData(true);
-                                let imgData = cropper.getImageData();
 
-                                let canvas = cropper.getCroppedCanvas();
+                                let canvas = cropper.getCroppedCanvas({
+                                    minWidth: 250,
+                                    minHeight: 250
+                                });
+                                
                                 let dataUrl = canvas.toDataURL('image/jpeg');
 
                                 document.getElementById(crop64base).value = dataUrl.split(';base64,')[1];
@@ -71,6 +72,7 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                     $('#' + cropperModal).off('shown.bs.modal');
                     $('#' + cropperModal).off('hidden.bs.modal');
                     $('#confirm').off('click');
+                    document.getElementById(inputId).value = '';
                 });
             }
         }

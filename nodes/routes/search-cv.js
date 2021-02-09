@@ -4,20 +4,22 @@ var hbs = require('handlebars');
 var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
-var { reqLang } = require('../public/javascript/request');
+var {
+    reqLang
+} = require('../public/javascript/request');
 const path = require('path');
 const limit = 10;
 const {
     Op
 } = require('sequelize');
 const uploadFolder = require('../constants/references').uploadFolder();
-const makeArray = function(body, param) {
+const makeArray = function (body, param) {
     if (body.hasOwnProperty(param)) {
         let array = body[param].split(",");
         body[param] = array;
     }
 };
-const handleWhere = function(paramContainer) {
+const handleWhere = function (paramContainer) {
     let fk_education = {
         [Op.or]: []
     };
@@ -53,7 +55,7 @@ const handleWhere = function(paramContainer) {
                         sprog[Op.or].push({
                             [Op.notLike]: '%dansk%'
                         });
-    
+
                         sprog[Op.or].push({
                             [Op.notLike]: '%Dansk%'
                         });
@@ -110,7 +112,7 @@ router.get('/', async function (req, res, next) {
         order: [
             ['name', 'ASC']
         ]
-    });  
+    });
 
     const {
         count,
@@ -124,14 +126,15 @@ router.get('/', async function (req, res, next) {
             ['updatedAt', 'DESC']
         ],
         include: [{
-            model: db.Student,
-            as: 'student'
-        },
-        {
-            model: db.Uddannelse,
-            as: 'education',
-            attributes: ['name']
-        }],
+                model: db.Student,
+                as: 'student'
+            },
+            {
+                model: db.Uddannelse,
+                as: 'education',
+                attributes: ['name']
+            }
+        ],
         where
     });
 
@@ -186,14 +189,15 @@ router.post('/query', function (req, res) {
             ],
             where,
             include: [{
-                model: db.Student,
-                as: 'student'
-            },
-            {
-                model: db.Uddannelse,
-                as: 'education',
-                attributes: ['name']
-            }]
+                    model: db.Student,
+                    as: 'student'
+                },
+                {
+                    model: db.Uddannelse,
+                    as: 'education',
+                    attributes: ['name']
+                }
+            ]
         });
 
         var item = [count];
@@ -259,13 +263,14 @@ router.get('/:id', async function (req, res) {
             id: parseInt(id)
         },
         include: [{
-            model: db.Student,
-            as: 'student'
-        },
-        {
-            model: db.Uddannelse,
-            as: 'education'
-        }]
+                model: db.Student,
+                as: 'student'
+            },
+            {
+                model: db.Uddannelse,
+                as: 'education'
+            }
+        ]
     });
 
     if (cv.hjemmeside.includes("://")) {
@@ -293,11 +298,15 @@ router.get('/:id', async function (req, res) {
 
     if (!cv.gyldig) {
         if (!ejer) {
-            res.status(403).render('error403', {layout: false});
+            res.status(403).render('error403', {
+                layout: false
+            });
         }
     } else if (!cv.offentlig) {
         if (req.user == null) {
-            res.status(403).render('error403', {layout: false});
+            res.status(403).render('error403', {
+                layout: false
+            });
         }
     }
 
@@ -318,10 +327,13 @@ router.get('/:id/create_pdf', function (req, res, next) {
     var today = new Date();
     var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
     var myDoc = new pdf({
-        bufferPages: true
+        bufferPages: true,
+        size: 'A4'
     });
     var cvOutside;
-    var pdfStream = fs.createWriteStream('public/PDF/temp.pdf')
+    var pdfStream = fs.createWriteStream('public/pdf/temp.pdf', {
+        encoding: 'utf8'
+    });
     myDoc.pipe(pdfStream);
     db.CV.findOne({
         raw: true,
@@ -330,13 +342,14 @@ router.get('/:id/create_pdf', function (req, res, next) {
             id: parseInt(id)
         },
         include: [{
-            model: db.Student,
-            as: 'student'
-        },
-        {
-            model: db.Uddannelse,
-            as: 'education'
-        }],
+                model: db.Student,
+                as: 'student'
+            },
+            {
+                model: db.Uddannelse,
+                as: 'education'
+            }
+        ],
     }).then((cv) => {
         cvOutside = cv;
         for (const key in cv) {
@@ -344,394 +357,251 @@ router.get('/:id/create_pdf', function (req, res, next) {
                 const element = cv[key];
 
                 if (typeof element === 'string') {
-                    cv[key] = element.replace(/(\r\n|\n|\r)/gm, "\n")
+                    cv[key] = element.replace(/(\r\n|\n|\r)/gm, "\n");
                 }
             }
         }
 
-        var height = 12;
-        // om mig ekstra højde
-        var om_mig_characters = cv.om_mig.length;
-        var ekstra_height_om_mig = 0;
-        while (om_mig_characters > 100) {
-            ekstra_height_om_mig = ekstra_height_om_mig + height;
-            om_mig_characters = om_mig_characters - 100
-        }
-
-        // overskrift ekstra højde
-        var overskrift_characters = cv.overskrift.length;
-        var ekstra_height_overskrift = 0;
-        while (overskrift_characters > 100) {
-            ekstra_height_overskrift = ekstra_height_overskrift + height;
-            overskrift_characters = overskrift_characters - 100;
-        }
-
-        // erhvervserfaring ekstra højde
-        var erhvervserfaring_characters = cv.erhvervserfaring.length;
-        var ekstra_height_erhvervserfaring = 0;
-        while (erhvervserfaring_characters > 100) {
-            ekstra_height_erhvervserfaring = ekstra_height_erhvervserfaring + height;
-            erhvervserfaring_characters = erhvervserfaring_characters - 100;
-        }
-
-        // uddannelse ekstra højde mest til testing af responsiv
-        var uddannelse_characters = cv.education.name.length;
-        var ekstra_height_uddannelse = 0;
-        while (uddannelse_characters > 100) {
-            ekstra_height_uddannelse = ekstra_height_uddannelse + height;
-            uddannelse_characters = uddannelse_characters - 100;
-        }
-
-        //Speciale ekstra højde
-        var speciale_characters = cv.speciale.length;
-        var ekstra_height_speciale = 0;
-        while (speciale_characters > 100) {
-            ekstra_height_speciale = ekstra_height_speciale + height;
-            speciale_characters = speciale_characters - 100;
-        }
-
-        //Tidligere_uddannelse ekstra højde
-        var tidligere_uddannelse_characters = cv.tidligere_uddannelse.length;
-        var ekstra_height_tidligere_uddannelse = 0;
-        while (tidligere_uddannelse_characters > 100) {
-            ekstra_height_tidligere_uddannelse = ekstra_height_tidligere_uddannelse + height;
-            tidligere_uddannelse_characters = tidligere_uddannelse_characters - 100;
-        }
-
-        //Udenlandsophold og frivilligt arbejde ekstra højde
-        var udenlandsophold_og_frivilligt_arbejde_characters = cv.udenlandsophold_og_frivilligt_arbejde.length;
-        var ekstra_height_udenlandsophold_og_frivilligt_arbejde = 0;
-        while (udenlandsophold_og_frivilligt_arbejde_characters > 100) {
-            ekstra_height_udenlandsophold_og_frivilligt_arbejde = ekstra_height_udenlandsophold_og_frivilligt_arbejde + height;
-            udenlandsophold_og_frivilligt_arbejde_characters = udenlandsophold_og_frivilligt_arbejde_characters - 100;
-        }
-
-        //fritidsinteresser ekstra højde
-        var fritidsinteresser_characters = cv.fritidsinteresser.length;
-        var ekstra_height_fritidsinteresser = 0;
-        while (fritidsinteresser_characters > 100) {
-            ekstra_height_fritidsinteresser = ekstra_height_fritidsinteresser + height;
-            fritidsinteresser_characters = fritidsinteresser_characters - 100;
-        }
-
-        //It-Kompetencer ekstra højde
-        var it_Kompetencer_characters = cv.it_kompetencer.length;
-        var ekstra_height_it_Kompetencer = 0;
-        while (it_Kompetencer_characters > 100) {
-            ekstra_height_it_Kompetencer = ekstra_height_it_Kompetencer + height;
-            it_Kompetencer_characters = it_Kompetencer_characters - 100;
-        }
-
-        var height = 330;
-        var new_page = 660;
-        var page = 0;
-
-        var path;
+        let picPath;
         if (cv.student.profilbillede != null) {
-            path = uploadFolder + cv.student.profilbillede;
+            picPath = uploadFolder + cv.student.profilbillede;
         } else {
-            path = 'public/images/dummy-profile-pic.jpg';
+            picPath = 'public/images/dummy-profile-pic.jpg';
         }
 
-        myDoc.image(path, 40, 40, {width: 150, height: 150})
 
-        myDoc.font('Times-Roman')
-            .fontSize(24)
-            .lineGap(2)
-            .text(cv.student.fornavn + " " + cv.student.efternavn, 220, 50)
+        // Håndtere oversættelse
+        let lang = reqLang(req, res);
+        let texts;
+        if (lang == 'en') {
+            texts = {
+                dato_downloadet: "Date downloaded: ",
+                telefon: "Phone:",
+                hjemmeside: "Website:",
+                overskrift: "Headline",
+                om_mig: "About me",
+                erhvervserfaring: "Work experience",
+                uddannelse: "Education",
+                speciale: "Speciality",
+                tidligere_uddannelse: "Past education",
+                udlandsophold_og_frivilligt_arbejde: "Study abroad and volunteer work",
+                fritidsinteresser: "Hobbies",
+                it_kompetencer: "IT skills",
+                sprog: "Language",
+                ikke_angivet: "Not specified",
+                side: "Page ",
+                af: " of "
+            }
+        } else {
+            texts = {
+                dato_downloadet: "Dato downloadet: ",
+                telefon: "Telefon:",
+                hjemmeside: "Hjemmeside:",
+                overskrift: "Overskrift",
+                om_mig: "Om mig",
+                erhvervserfaring: "Erhvervserfaring",
+                uddannelse: "Uddannelse",
+                speciale: "Speciale",
+                tidligere_uddannelse: "Tidligere uddannelse",
+                udlandsophold_og_frivilligt_arbejde: "Udlandsophold og frivilligt arbejde",
+                fritidsinteresser: "Fritidsinteresser",
+                it_kompetencer: "It-kompetencer",
+                sprog: "Sprog",
+                ikke_angivet: "Ikke angivet",
+                side: "Side ",
+                af: " af "
+            }
+        }
 
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text('Email:', 220, 90)
-            .text(cv.email, 300, 90)
+        // Før linie
+        myDoc.font(path.normalize('fonts/arial.ttf'));
 
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text('Telefon:', 220, 120)
-            .text(cv.telefon, 300, 120)
+        myDoc.fillColor('black')
+            .fontSize(10)
+            .text(texts.dato_downloadet + date, 12, 12);
 
-        let hjemmeside = cv.hjemmeside != null && cv.hjemmeside != '' ? cv.hjemmeside : "Ikke angivet";
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text('Hjemmeside:', 220, 150)
-            .text(hjemmeside, 300, 150)
+        myDoc.image(picPath, 40, 40, {
+            width: 150,
+            height: 150
+        });
 
-        let linkedIn = cv.linkedIn != null && cv.linkedIn != '' ? cv.linkedIn : "Ikke angivet";
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text('LinkedIn:', 220, 180)
-            .text(linkedIn, 300, 180)
+        myDoc.fontSize(24)
+            .lineGap(16)
+            .text(cv.student.fornavn + " " + cv.student.efternavn, 220, 40);
+
+        myDoc.fontSize(11)
+            .lineGap(16.5)
+            .text('Email:')
+            .moveUp()
+            .text(cv.email, 300);
+
+        myDoc.text(texts.telefon, 220)
+            .moveUp()
+            .text(cv.telefon, 300);
+
+        let hjemmeside = cv.hjemmeside != null && cv.hjemmeside != '' ? cv.hjemmeside : texts.ikke_angivet;
+        myDoc.text(texts.hjemmeside, 220)
+            .moveUp()
+            .text(hjemmeside, 300);
+
+        let linkedIn = cv.linkedIn != null && cv.linkedIn != '' ? cv.linkedIn : texts.ikke_angivet;
+        myDoc.text('LinkedIn:', 220)
+            .moveUp()
+            .text(linkedIn, 300);
 
         if (cv.yt_link != null && cv.yt_link != '') {
-            myDoc.font('Times-Roman')
-                .fontSize(10.72)
-                .text('youtube CV:', 220, 210)
+            myDoc.text('Youtube CV:', 220)
+                .moveUp()
                 .fillColor('blue')
-                .link(300, 210, 15, 20, cv.yt_link)
-                .text('link', 300, 210);
+                .lineGap(32)
+                .text('link', 300, null, {
+                    link: cv.yt_link
+                });
         } else {
-            myDoc.font('Times-Roman')
-                .fontSize(10.72)
-                .text('youtube CV:', 220, 210)
-                .text('Ikke angivet', 300, 210);
+            myDoc.text('Youtube CV:', 220)
+                .lineGap(32)
+                .moveUp()
+                .text('Ikke angivet', 300);
         }
 
+        myDoc.fillColor('black')
+        myDoc.moveTo(8, myDoc.y);
 
-        myDoc.font('Times-Roman')
-            .fillColor('black')
-            .fontSize(10.72)
-            .text('Downloadet:', 10, 210)
-            .text(date, 70, 210)
-
-        myDoc.moveTo(0, 240)
-            .lineTo(612, 240)
+        let a4Width = 595.28;
+        myDoc.lineTo(a4Width - 8, myDoc.y)
             .stroke()
 
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Om mig', 50, 260)
+        // Efter linie
 
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(cv.om_mig, 50, 290)
+        myDoc.lineGap(8)
+        myDoc.moveDown();
 
-        height = height + ekstra_height_om_mig;
-        if (height + ekstra_height_overskrift > new_page) {
-            page = page + 1
-            height = height + ekstra_height_overskrift - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Hvad jeg søger', 50, height)
+        // Overskrift
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.overskrift, 50);
 
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(cv.overskrift, 50, height)
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.overskrift);
 
-        height = height + 60 + ekstra_height_overskrift;
-        if (height + ekstra_height_erhvervserfaring > new_page) {
-            page = page + 1
-            height = height + ekstra_height_erhvervserfaring - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Erfaring', 50, height)
+        myDoc.moveDown(2);
 
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
 
-        let erhvervserfaring = cv.erhvervserfaring != null && cv.erhvervserfaring != '' ? cv.erhvervserfaring : "Ikke angivet"
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(erhvervserfaring, 50, height)
+        // Om mig
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.om_mig, 50);
 
-        height = height + 60 + ekstra_height_erhvervserfaring;
-        if (height + ekstra_height_uddannelse > new_page) {
-            page = page + 1
-            height = height + ekstra_height_uddannelse - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.om_mig);
 
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Uddannelse', 50, height)
+        myDoc.moveDown(2);
 
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        // Erhvervserfaring
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.erhvervserfaring);
 
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(cv.education.name, 50, height)
+        let erhvervserfaring = cv.erhvervserfaring != null && cv.erhvervserfaring != '' ? cv.erhvervserfaring : texts.ikke_angivet
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(erhvervserfaring);
 
-        height = height + 60 + ekstra_height_uddannelse
-        if (height + ekstra_height_speciale > new_page) {
-            page = page + 1
-            height = height + ekstra_height_speciale - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        myDoc.moveDown(2);
 
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Speciale', 50, height)
+        // Uddannelse
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.uddannelse);
 
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.education.name);
 
-        let speciale = cv.speciale != null && cv.speciale != '' ? cv.speciale : "Ikke angivet"
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(speciale, 50, height)
+        myDoc.moveDown(2);
 
-        height = height + 60 + ekstra_height_speciale;
-        if (height + ekstra_height_tidligere_uddannelse > new_page) {
-            page = page + 1
-            height = height + ekstra_height_tidligere_uddannelse - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        // Speciale
+        let speciale = cv.speciale != null && cv.speciale != '' ? cv.speciale : texts.ikke_angivet
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.speciale);
 
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Tidligere uddannelse', 50, height)
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(speciale);
 
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        myDoc.moveDown(2);
 
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(cv.tidligere_uddannelse, 50, height)
-
-        height = height + 60 + ekstra_height_tidligere_uddannelse;
-        if (height + ekstra_height_udenlandsophold_og_frivilligt_arbejde > new_page) {
-            page = page + 1
-            height = height + ekstra_height_udenlandsophold_og_frivilligt_arbejde - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
-
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Udenlandsophold og frivilligt arbejde', 50, height)
-
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
-
+        // Udlandsophold og frivillig arbejde
         let udenlandsophold_og_frivilligt_arbejde = cv.udenlandsophold_og_frivilligt_arbejde != null
-        && cv.udenlandsophold_og_frivilligt_arbejde != '' ? cv.udenlandsophold_og_frivilligt_arbejde : "Ikke angivet"
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(udenlandsophold_og_frivilligt_arbejde, 50, height)
+            && cv.udenlandsophold_og_frivilligt_arbejde != '' ? cv.udenlandsophold_og_frivilligt_arbejde : texts.ikke_angivet
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.udlandsophold_og_frivilligt_arbejde);
 
-        height = height + 60 + ekstra_height_udenlandsophold_og_frivilligt_arbejde;
-        if (height + ekstra_height_fritidsinteresser > new_page) {
-            page = page + 1
-            height = height + ekstra_height_fritidsinteresser - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(udenlandsophold_og_frivilligt_arbejde);
 
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Fritidsinteresser', 50, height)
+        myDoc.moveDown(2);
 
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
 
-        let fritidsinteresser = cv.fritidsinteresser != null && cv.fritidsinteresser != '' ? cv.fritidsinteresser : "Ikke angivet"
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(fritidsinteresser, 50, height)
+        // Fritidsinteresser
+        let fritidsinteresser = cv.fritidsinteresser != null && cv.fritidsinteresser != '' ? cv.fritidsinteresser : texts.ikke_angivet
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.fritidsinteresser);
 
-        height = height + 60 + ekstra_height_fritidsinteresser;
-        if (height + ekstra_height_it_Kompetencer > new_page) {
-            page = page + 1
-            height = height + ekstra_height_it_Kompetencer - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(fritidsinteresser);
 
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('It-Kompetencer', 50, height)
+        myDoc.moveDown(2);
 
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
 
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(cv.it_kompetencer, 50, height)
+        // It-kompetencer
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.it_kompetencer);
 
-        height = height + 60 + ekstra_height_it_Kompetencer;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.it_kompetencer);
 
-        myDoc.font('Times-Roman')
-            .fontSize(16)
-            .text('Sprog', 50, height)
+        myDoc.moveDown(2);        
 
-        height = height + 30;
-        if (height > new_page) {
-            page = page + 1
-            height = height - new_page
-            myDoc.addPage().switchToPage(page)
-        }
-        ;
 
-        myDoc.font('Times-Roman')
-            .fontSize(10.72)
-            .text(cv.sprog, 50, height)
+        // Sprog
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.sprog);
 
-        // see the range of buffered pages
-        const range = myDoc.bufferedPageRange(); // => { start: 0, count: 2 }
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.sprog);
 
+    
+        let a4Height = 841.89;
+        const range = myDoc.bufferedPageRange();
         for (i = range.start, end = range.start + range.count, range.start <= end; i < end; i++) {
             myDoc.switchToPage(i);
-            myDoc.text(`Side ${i + 1} af ${range.count}`, 545, 755);
+            myDoc.text(texts.side + `${i + 1}` + texts.af + `${range.count}`, a4Width - 64, a4Height - 32);
         }
-        myDoc.end()
+
+        myDoc.end();
     });
     pdfStream.addListener('finish', function () {
         res.setHeader('content-type', 'application/pdf'),
-            res.download('public/PDF/temp.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
+            res.download('public/pdf/temp.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
     });
 
     async function deleteFile() {
         try {
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => resolve(
-                    fs.unlinkSync('public/PDF/temp.pdf', (err) => {
+                    fs.unlinkSync('public/pdf/temp.pdf', (err) => {
                         if (err) {
                             console.error(err)
                             return
