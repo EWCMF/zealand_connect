@@ -15,6 +15,7 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
         // Check the aspect ratio and dimensions
         img.onload = function () {
             if (this.width < 250 || this.height < 250){
+                document.getElementById(inputId).value = '';
                 document.getElementById(imageDimensionsError).hidden = false;
                 return;
             }
@@ -71,6 +72,7 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                     $('#' + cropperModal).off('shown.bs.modal');
                     $('#' + cropperModal).off('hidden.bs.modal');
                     $('#confirm').off('click');
+                    document.getElementById(inputId).value = '';
                 });
             }
         }
