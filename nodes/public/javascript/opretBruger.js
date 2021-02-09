@@ -394,7 +394,7 @@ async function submitOpretStudent() {
         efternavn: inputsStudent.efternavn.value,
         dato: inputsStudent.dato.value
     }));
-}
+};
 
 function translateErrorMessage(key) {
     let texts = {
@@ -435,4 +435,4 @@ function translateErrorMessage(key) {
     }
 
     return texts[table][key];
-}
+};

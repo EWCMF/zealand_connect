@@ -12,7 +12,21 @@ const { validateEmail, validateCVR, validatePhone, validateCity, validatePasswor
     validateNavn} = require('../validation/input-validation');
 
 router.get('/', function (req, res, next) {
+
+    let studentChecked;
+    let companyChecked;
+
+    if (req.query.virk != null) {
+        studentChecked = '';
+        companyChecked = 'checked';
+    } else {
+        studentChecked = 'checked';
+        companyChecked = '';
+    }
+
     res.render('opret-bruger', {
+        studentChecked,
+        companyChecked,
         language: reqLang(req)
     });
 });
