@@ -369,12 +369,56 @@ router.get('/:id/create_pdf', function (req, res, next) {
             picPath = 'public/images/dummy-profile-pic.jpg';
         }
 
+
+        // Håndtere oversættelse
+        let lang = reqLang(req, res);
+        let texts;
+        if (lang == 'en') {
+            texts = {
+                dato_downloadet: "Date downloaded: ",
+                telefon: "Phone:",
+                hjemmeside: "Website:",
+                overskrift: "Headline",
+                om_mig: "About me",
+                erhvervserfaring: "Work experience",
+                uddannelse: "Education",
+                speciale: "Speciality",
+                tidligere_uddannelse: "Past education",
+                udlandsophold_og_frivilligt_arbejde: "Study abroad and volunteer work",
+                fritidsinteresser: "Hobbies",
+                it_kompetencer: "IT skills",
+                sprog: "Language",
+                ikke_angivet: "Not specified",
+                side: "Page ",
+                af: " of "
+            }
+        } else {
+            texts = {
+                dato_downloadet: "Dato downloadet: ",
+                telefon: "Telefon:",
+                hjemmeside: "Hjemmeside:",
+                overskrift: "Overskrift",
+                om_mig: "Om mig",
+                erhvervserfaring: "Erhvervserfaring",
+                uddannelse: "Uddannelse",
+                speciale: "Speciale",
+                tidligere_uddannelse: "Tidligere uddannelse",
+                udlandsophold_og_frivilligt_arbejde: "Udlandsophold og frivilligt arbejde",
+                fritidsinteresser: "Fritidsinteresser",
+                it_kompetencer: "It-kompetencer",
+                sprog: "Sprog",
+                ikke_angivet: "Ikke angivet",
+                side: "Side ",
+                af: " af "
+            }
+        }
+
         // Før linie
         myDoc.font(path.normalize('fonts/arial.ttf'));
 
         myDoc.fillColor('black')
             .fontSize(10)
-            .text('Download: ' + date, 12, 12);
+            .text(texts.dato_downloadet + date, 12, 12);
 
         myDoc.image(picPath, 40, 40, {
             width: 150,
@@ -387,20 +431,20 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
         myDoc.fontSize(11)
             .lineGap(16.5)
-            .text('Email: ')
+            .text('Email:')
             .moveUp()
             .text(cv.email, 300);
 
-        myDoc.text('Telefon:', 220)
+        myDoc.text(texts.telefon, 220)
             .moveUp()
             .text(cv.telefon, 300);
 
-        let hjemmeside = cv.hjemmeside != null && cv.hjemmeside != '' ? cv.hjemmeside : "Ikke angivet";
-        myDoc.text('Hjemmeside:', 220)
+        let hjemmeside = cv.hjemmeside != null && cv.hjemmeside != '' ? cv.hjemmeside : texts.ikke_angivet;
+        myDoc.text(texts.hjemmeside, 220)
             .moveUp()
             .text(hjemmeside, 300);
 
-        let linkedIn = cv.linkedIn != null && cv.linkedIn != '' ? cv.linkedIn : "Ikke angivet";
+        let linkedIn = cv.linkedIn != null && cv.linkedIn != '' ? cv.linkedIn : texts.ikke_angivet;
         myDoc.text('LinkedIn:', 220)
             .moveUp()
             .text(linkedIn, 300);
@@ -429,12 +473,25 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
         // Efter linie
 
+        myDoc.lineGap(8)
         myDoc.moveDown();
+
+        // Overskrift
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.overskrift, 50);
+
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.overskrift);
+
+        myDoc.moveDown(2);
+
 
         // Om mig
         myDoc.fontSize(16)
             .lineGap(16)
-            .text('Om mig', 50);
+            .text(texts.om_mig, 50);
 
         myDoc.fontSize(10)
             .lineGap(2)
@@ -445,9 +502,9 @@ router.get('/:id/create_pdf', function (req, res, next) {
         // Erhvervserfaring
         myDoc.fontSize(16)
             .lineGap(16)
-            .text('Erhvervserfaring');
+            .text(texts.erhvervserfaring);
 
-        let erhvervserfaring = cv.erhvervserfaring != null && cv.erhvervserfaring != '' ? cv.erhvervserfaring : "Ikke angivet"
+        let erhvervserfaring = cv.erhvervserfaring != null && cv.erhvervserfaring != '' ? cv.erhvervserfaring : texts.ikke_angivet
         myDoc.fontSize(10)
             .lineGap(2)
             .text(erhvervserfaring);
@@ -457,7 +514,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
         // Uddannelse
         myDoc.fontSize(16)
             .lineGap(16)
-            .text('Uddannelse');
+            .text(texts.uddannelse);
 
         myDoc.fontSize(10)
             .lineGap(2)
@@ -466,10 +523,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
         myDoc.moveDown(2);
 
         // Speciale
-        let speciale = cv.speciale != null && cv.speciale != '' ? cv.speciale : "Ikke angivet"
+        let speciale = cv.speciale != null && cv.speciale != '' ? cv.speciale : texts.ikke_angivet
         myDoc.fontSize(16)
             .lineGap(16)
-            .text('Speciale');
+            .text(texts.speciale);
 
         myDoc.fontSize(10)
             .lineGap(2)
@@ -479,10 +536,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
         // Udlandsophold og frivillig arbejde
         let udenlandsophold_og_frivilligt_arbejde = cv.udenlandsophold_og_frivilligt_arbejde != null
-            && cv.udenlandsophold_og_frivilligt_arbejde != '' ? cv.udenlandsophold_og_frivilligt_arbejde : "Ikke angivet"
+            && cv.udenlandsophold_og_frivilligt_arbejde != '' ? cv.udenlandsophold_og_frivilligt_arbejde : texts.ikke_angivet
         myDoc.fontSize(16)
             .lineGap(16)
-            .text('Udlandsophold og frivillig arbejde');
+            .text(texts.udlandsophold_og_frivilligt_arbejde);
 
         myDoc.fontSize(10)
             .lineGap(2)
@@ -492,10 +549,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
 
         // Fritidsinteresser
-        let fritidsinteresser = cv.fritidsinteresser != null && cv.fritidsinteresser != '' ? cv.fritidsinteresser : "Ikke angivet"
+        let fritidsinteresser = cv.fritidsinteresser != null && cv.fritidsinteresser != '' ? cv.fritidsinteresser : texts.ikke_angivet
         myDoc.fontSize(16)
             .lineGap(16)
-            .text('Fritidsinteresser');
+            .text(texts.fritidsinteresser);
 
         myDoc.fontSize(10)
             .lineGap(2)
@@ -507,7 +564,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
         // It-kompetencer
         myDoc.fontSize(16)
             .lineGap(16)
-            .text('It-kompetencer');
+            .text(texts.it_kompetencer);
 
         myDoc.fontSize(10)
             .lineGap(2)
@@ -519,7 +576,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
         // Sprog
         myDoc.fontSize(16)
             .lineGap(16)
-            .text('Sprog');
+            .text(texts.sprog);
 
         myDoc.fontSize(10)
             .lineGap(2)
@@ -530,7 +587,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
         const range = myDoc.bufferedPageRange();
         for (i = range.start, end = range.start + range.count, range.start <= end; i < end; i++) {
             myDoc.switchToPage(i);
-            myDoc.text(`Side ${i + 1} af ${range.count}`, a4Width - 64, a4Height - 32);
+            myDoc.text(texts.side + `${i + 1}` + texts.af + `${range.count}`, a4Width - 64, a4Height - 32);
         }
 
         myDoc.end();
