@@ -54,6 +54,16 @@ async function findUserByEmail(email) {
     })
 }
 
+async function findVirksomhedByCvr(cvr){
+    let user = await models.Virksomhed.findOne({
+        where: {
+            cvrnr: cvr
+        }
+    })
+
+    return user;
+}
+
 async function editVirksomhed(json) {
     json.visibleMail == 'on' ? json.visibleMail = true : json.visibleMail = false;
     
@@ -239,5 +249,5 @@ function searchVirksomhederByName(name) {
 
 module.exports = {
     findUserByEmail, createVirksomhed, deleteVirksomhed, editVirksomhed, findUserByCVR, editStudent, deleteStudent,
-    editProfilePic, createStudent, editPassword, searchVirksomhederByName
+    editProfilePic, createStudent, editPassword, searchVirksomhederByName, findVirksomhedByCvr
 }
