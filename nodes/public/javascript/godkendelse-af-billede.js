@@ -43,16 +43,16 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                         movable: false,
                         zoomable: false,
                         rotable: false,
-                        minCropBoxWidth: 500,
-                        minCropBoxHeight: 500,
 
                         ready() {
 
                             $('#confirm').click(function () {
-                                let data = cropper.getData(true);
-                                let imgData = cropper.getImageData();
 
-                                let canvas = cropper.getCroppedCanvas();
+                                let canvas = cropper.getCroppedCanvas({
+                                    minWidth: 250,
+                                    minHeight: 250
+                                });
+                                
                                 let dataUrl = canvas.toDataURL('image/jpeg');
 
                                 document.getElementById(crop64base).value = dataUrl.split(';base64,')[1];
