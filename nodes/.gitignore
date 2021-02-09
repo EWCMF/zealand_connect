@@ -67,4 +67,4 @@ public/uploads/
 config/config.json
 
 # excludes pdf filer
-PDF/*.pdf
+pdf/*.pdf
