@@ -9,7 +9,6 @@ async function findUserByEmail(email) {
     }
     //denne metode prøver først at se om en student matcher email, så bagefter virksomhed.
     return new Promise(resolve => {
-        console.log("---finding user by email: " + email + "---");
         models.Student.findOne({
             nest: true,
             where: {email: email},
@@ -23,28 +22,25 @@ async function findUserByEmail(email) {
             }
         }).then((student) => {
             if (student === null) {
-                console.log('en student med denne email findes ikke!');
+                return;
             }
             if (student instanceof models.Student) {
-                console.log("---fandt en Student med mailen:---");
                 user = student
             }
         }).then(() => {
             models.Virksomhed.findOne({ where: { email: email } }).then((virksomhed) => {
                 if (virksomhed === null) {
-                    console.log('en virksomhed med denne email findes ikke!');
+                    return;
                 }
                 if (virksomhed instanceof models.Virksomhed) {
-                    console.log("---fandt en Virksomhed med mailen:---");
                     user = virksomhed;
                 }
             }).then(() => {
                 models.Admin.findOne({ where: { username: email}}).then((admin)=>{
                     if (admin === null) {
-                        console.log('en admin med denne email findes ikke!');
+                        return;
                     }
                     if(admin instanceof models.Admin){
-                        console.log("---fandt en admin med mailen:---");
                         user = admin;
                     }
                     resolve(user);
