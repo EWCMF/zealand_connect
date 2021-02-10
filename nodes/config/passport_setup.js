@@ -33,7 +33,7 @@ passport.use(new LocalStrategy({
         passwordField: 'password'
     },
         function(username, password, done) {
-            console.log('Youve reached the local strat callback!');
+            console.log('You\'ve reached the local strat callback!');
             //når vi prøver at logge ind, skal vi checke om brugeren findes i db
             findUserByEmail(username).then(async(user)=>{
                 if(user==null){

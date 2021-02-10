@@ -38,7 +38,7 @@ async function findUserByEmail(email) {
             }).then(() => {
                 models.Admin.findOne({ where: { username: email}}).then((admin)=>{
                     if (admin === null) {
-                        return;
+                        resolve(user);
                     }
                     if(admin instanceof models.Admin){
                         user = admin;
