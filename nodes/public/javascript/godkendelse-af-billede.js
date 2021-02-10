@@ -61,6 +61,10 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                                 document.getElementById(labelId).innerHTML = document.getElementById(inputId).files[0].name;
                             });
 
+                            $('#close').click(function () {
+                                document.getElementById(inputId).value = '';
+                            })
+
                         }
                     });
                 })
@@ -72,7 +76,7 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                     $('#' + cropperModal).off('shown.bs.modal');
                     $('#' + cropperModal).off('hidden.bs.modal');
                     $('#confirm').off('click');
-                    document.getElementById(inputId).value = '';
+                    $('#close').off('click');
                 });
             }
         }
