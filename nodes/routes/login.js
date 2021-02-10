@@ -9,7 +9,6 @@ router.get('/', function (req, res, next) {
     let error = req.query;
     let check;
     let virksomhed;
-    console.log(req.query.login);
     if (req.query.login == "virksomhed") {
         check = "checked";
         virksomhed = true;

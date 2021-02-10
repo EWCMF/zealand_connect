@@ -255,15 +255,15 @@ router.post('/redigerstudent-save',  authorizeUser('student', 'admin'), function
                             }
                         });
                     } else {
-                        console.log("invalid file");
+                        console.log("invalid file - user: " + content.email);
                         res.redirect('/profil/rediger');
                     }
                 } else {
-                    console.log("invalid filesize");
+                    console.log("invalid filesize - user: " + content.email);
                     res.redirect('/profil/rediger');
                 }
             } else {
-                console.log("Invalid image dimensions")
+                console.log("Invalid image dimensions - user: " + content.email)
                 res.redirect('/profil/rediger');
             }
         } else {
@@ -380,15 +380,15 @@ router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, r
                             }
                         });
                     } else {
-                        console.log("invalid file");
+                        console.log("invalid file - user: " + content.email);
                         res.redirect('/profil/rediger');
                     }
                 } else {
-                    console.log("invalid filesize");
+                    console.log("invalid filesize - user: " + content.email);
                     res.redirect('/profil/rediger');
                 }
             } else {
-                console.log("Invalid image dimensions")
+                console.log("Invalid image dimensions - user: " + content.email)
                 res.redirect('/profil/rediger');
             }
         } else {
