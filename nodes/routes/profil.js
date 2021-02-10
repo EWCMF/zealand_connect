@@ -184,9 +184,6 @@ router.post('/redigerstudent-save',  authorizeUser('student', 'admin'), function
 
         const imageBufferData = Buffer.from(crop_base64, 'base64');
 
-        // log ikke buffer dataen da den meget vel kan være en massiv streng.
-        console.log(email, fornavn, efternavn, telefon, profile_picture);
-
         let size = Buffer.byteLength(imageBufferData);
 
         if (size > 0) {
@@ -255,15 +252,15 @@ router.post('/redigerstudent-save',  authorizeUser('student', 'admin'), function
                             }
                         });
                     } else {
-                        console.log("invalid file - user: " + content.email);
+                        console.log("invalid file");
                         res.redirect('/profil/rediger');
                     }
                 } else {
-                    console.log("invalid filesize - user: " + content.email);
+                    console.log("invalid filesize");
                     res.redirect('/profil/rediger');
                 }
             } else {
-                console.log("Invalid image dimensions - user: " + content.email)
+                console.log("Invalid image dimensions");
                 res.redirect('/profil/rediger');
             }
         } else {
@@ -380,15 +377,15 @@ router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, r
                             }
                         });
                     } else {
-                        console.log("invalid file - user: " + content.email);
+                        console.log("invalid file");
                         res.redirect('/profil/rediger');
                     }
                 } else {
-                    console.log("invalid filesize - user: " + content.email);
+                    console.log("invalid filesize");
                     res.redirect('/profil/rediger');
                 }
             } else {
-                console.log("Invalid image dimensions - user: " + content.email)
+                console.log("Invalid image dimensions")
                 res.redirect('/profil/rediger');
             }
         } else {
