@@ -15,7 +15,7 @@ function validate_internship_post() {
     all_valid = false;
     document.getElementById('postTypeError').hidden = false;
   } else {
-    document.getElementById('postTypeError').hidden = false;
+    document.getElementById('postTypeError').hidden = true;
   }
 
   //Email

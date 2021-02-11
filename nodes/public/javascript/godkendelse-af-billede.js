@@ -51,7 +51,9 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
 
                                 let canvas = cropper.getCroppedCanvas({
                                     minWidth: 250,
-                                    minHeight: 250
+                                    minHeight: 250,
+                                    maxWidth: 2048,
+                                    maxHeight: 2048
                                 });
                                 
                                 let dataUrl = canvas.toDataURL('image/jpeg');
