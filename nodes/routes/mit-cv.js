@@ -4,6 +4,7 @@ const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 var { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
+const { emailRegex, phoneRegex } = require('../constants/regex');
 
 router.get('/', authorizeUser('student'), async function (req, res, next) {
     if (req.user == null) {
@@ -114,32 +115,30 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let fritidsinteresser = req.body.fritidsinteresser;
     let offentlig = req.body.tilgaengelighed;
 
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
-    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
-
-    var emailWrittenCorrectly = emailRegex.test(email);
-    var phoneCheck = phoneRegex.test(telefon);
-    var medOverskrift = !overskrift == "";
-    var medSprog = !sprog == "";
-    var medUddannelse = !fk_education == 0;
-    var medTidligere_uddannelse = !tidligere_uddannelse == "";
-    var medIt_kompetencer = !it_kompetencer == ""
+    let emailWrittenCorrectly = emailRegex.test(email);
+    let phoneCheck = phoneRegex.test(telefon);
+    let medOverskrift = !overskrift == "";
+    let medSprog = !sprog == "";
+    let medUddannelse = !fk_education == 0;
+    let medTidligere_uddannelse = !tidligere_uddannelse == "";
+    let medIt_kompetencer = !it_kompetencer == ""
 
     if (!emailWrittenCorrectly || !phoneCheck || !medOverskrift || !medSprog || !medUddannelse || !medTidligere_uddannelse || !medIt_kompetencer) {
         res.send('One or more values in the form are missing');
     }
 
-    var gyldig;
-    var besked;
+    let gyldig;
+    let besked;
+    let lang = reqLang(req, res);
 
     if (overskrift == '' || fk_education == 0 ||
         email == '' || sprog == '' || telefon == '' ||
         it_kompetencer == '' || tidligere_uddannelse == '') {
         gyldig = false;
-        besked = "CV'et er gemt men er utilgængeligt for andre indtil alle nødvendige felter er udfyldte."
+        besked = lang != 'en' ? "CV'et er gemt men er utilgængeligt for andre indtil alle nødvendige felter er udfyldte." : "The CV is saved but is inaccessible for others until all required fields are filled."
     } else {
         gyldig = true;
-        besked = "CV'et er gemt."
+        besked = lang != 'en' ? "CV'et er gemt." : "The CV is saved."
     }
 
     var student_id = student.id
@@ -180,14 +179,16 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         })
 
         if (gyldig) {
-            besked = 'Ændringer er gemt.'
+            besked = lang != 'en' ? 'Ændringer er gemt.' : "The changes are saved"
         } else {
-            besked = "Ændringer er gemt men CV'et er ikke gyldigt mere og vil derfor ikke vises på søgelisten."
+            besked = lang != 'en' ? "Ændringer er gemt men CV'et er ikke gyldigt mere og vil derfor ikke vises på søgelisten." : "The changes are saved but the CV isn't valid anymore and will not be shown in the search list."
         }
         
     }
 
-    res.render('mit-cv-success', {layout: false, status: 'Succes', message: besked, id: cv.id});
+    let status = lang != 'en' ? 'Succes' : 'Success';
+
+    res.render('mit-cv-success', {layout: false, status: status, message: besked, id: cv.id});
 });
 
 router.get('/delete', authorizeUser('student', 'admin'), function (req, res, next) {
@@ -245,7 +246,8 @@ router.post('/preview', authorizeUser('student'), async function (req, res, next
         json: json,
         navDisabled: true,
         noButtons: true,
-        disableSidebarButton: true
+        disableSidebarButton: true,
+        hideFooter: true
     });
 
 })

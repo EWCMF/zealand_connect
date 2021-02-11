@@ -105,7 +105,7 @@
                             <a class="ml-2 hand-hover" data-Key="Brug_info" onclick="useProfileWebsite('{{profWeb}}')">Brug info fra profil</a>
                             {{/if}}
                         </div>
-                        <input type="text" pattern="{{{linkRegex}}}" title="Link er ugyldigt" name="company_link"
+                        <input type="text" title="Link er ugyldigt" name="company_link"
                                id="companyURL"
                                class="form-control" placeholder="virksomhed.dk" value="{{rhomepage}}">
                         <p id="companylinkError" class="CVErrorColor" hidden="true" data-key="Link_til_hjemmeside_error">Du skal angive et gyldigt link her i 
@@ -122,7 +122,7 @@
                         </div>
                         
                         <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
-                               placeholder="Email" pattern="{{{emailRegex}}}">
+                               placeholder="Email" >
                         <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal skrive din email her og mindst
                             bruge et @
                         </p>
@@ -141,7 +141,7 @@
                         </div>
                         
                         <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
-                               id="applicationDeadline" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
+                               id="applicationDeadline" placeholder="dd / mm / åååå">
                         <p id="poststartdateError" class="CVErrorColor" hidden="true" data-key="Ansoegningsfrist_error">Du skal angive en ansøgningsfrist
                         </p>
                         <p id="poststartdateErrorPast" class="CVErrorColor" hidden="true" data-key="Dato_error">Den valgte dato er i fortiden
@@ -163,7 +163,7 @@
                         </div>
                         
                         <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
-                               id="internshipEmploymentDate" placeholder="dd / mm / åååå" pattern="{{{dateRegex}}}">
+                               id="internshipEmploymentDate" placeholder="dd / mm / åååå">
                         <p id="postenddateError" class="CVErrorColor" hidden="true" data-key="Praktikstart_error">Du skal angive en praktikstart dato
                         </p>
                         <p id="postenddateErrorPast" class="CVErrorColor" hidden="true" data-key="Dato_error">Den valgte dato er i fortiden

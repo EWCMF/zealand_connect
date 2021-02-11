@@ -12,15 +12,10 @@ function submitButton() {
     let postnr = document.getElementById("postnr").value;
     let by = document.getElementById("by").value;
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
-    // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
     // var emailWrittenCorrectly = emailRegex.test(email);
 
-    // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
-    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
-    const cvrRegex = /^[0-9]{8}$/;
-    const postcodeRegex = /^[0-9]{4}$/;
     var numbersOnly = phoneRegex.test(telefon);
-    var numbersOnly2 = cvrRegex.test(cvrnr);
+    var numbersOnly2 = numbersRegex.test(cvrnr);
     var numbersOnly3 = postcodeRegex.test(postnr);
 
     if (navn == "") {

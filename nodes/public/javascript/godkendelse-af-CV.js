@@ -32,17 +32,14 @@ function submitButton() {
     let fritidsinteresser = document.getElementById("fritidsinteresser").value;
 
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
     var emailWrittenCorrectly = emailRegex.test(email);
 
     // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
-    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
     var phoneCheck = phoneRegex.test(telefon);
 
-    const linkedInRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
-    var Min_linkedIn = linkedInRegex.test(linkedIn);
+    var Min_linkedIn = linkRegex.test(linkedIn);
 
-    var Mit_yt_link = linkedInRegex.test(yt_link);
+    var Mit_yt_link = linkRegex.test(yt_link);
 
     if (overskrift == "") {
         document.getElementById("OverskriftError").hidden = false;
@@ -100,38 +97,6 @@ function submitButton() {
     } else {
         document.getElementById("tilgaengelighedError").hidden = true;
     }
-    
-    // if (linkedIn == "") {
-    //     document.getElementById("linkedIn").value = 'Intet angivet';
-    // }
-
-    // if (yt_link == "") {
-    //     document.getElementById("youtube_link").value = 'Intet angivet';
-    // }
-
-    // if (speciale == "") {
-    //     document.getElementById("speciale").value = 'Intet angivet';
-    // }
-
-    // if (om_mig == "") {
-    //     document.getElementById("om mig").value = 'Intet angivet';
-    // }
-
-    // if (UogFA == "") {
-    //     document.getElementById("UogFA").value = 'Intet angivet';
-    // }
-
-    // if (erhvervserfaring == "") {
-    //     document.getElementById("erhvervserfaring").value = 'Intet angivet';
-    // }
-
-    // if (hjemmeside == "") {
-    //     document.getElementById("hjemmeside").value = 'Intet angivet';
-    // }
-
-    // if (fritidsinteresser == "") {
-    //     document.getElementById("fritidsinteresser").value = 'Intet angivet';
-    // }
 
     if (emailWrittenCorrectly && phoneCheck && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "" && tilgaengelighed != "") {
         document.forms["cvForm"].submit();

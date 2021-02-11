@@ -7,16 +7,12 @@ function submitButton() {
     let password = document.getElementById("password").value;
     let gentagPassword = document.getElementById("gentagPassword").value;
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
-    // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/
     // var emailWrittenCorrectly = emailRegex.test(email);
 
     let errors = [];
 
-    // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
-    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
     let phoneCheck = phoneRegex.test(telefon);
 
-    const nameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
     let testFornavn = nameRegex.test(fornavn);
     let testEfternavn =nameRegex.test(efternavn);
 
