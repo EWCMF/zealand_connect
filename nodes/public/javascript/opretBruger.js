@@ -442,7 +442,7 @@ function translateErrorMessage(key) {
             "CvrFejl": "Et CVR-nummer skal angives med nøjagtig 8 cifre",
             "cvrIBrug": "Det angivne CVR-nummer er allerede i brug",
             "cvrLedig": "Det angivne CVR-nummer er ledigt",
-            "telefonFejl": "Et telefonnummer skal angives med nøjagtig 8 cifre",
+            "telefonFejl": "Telefonnummeret er ugyldigt",
             "datoFejl": "En fremtidig dato er valgt"
         },
 
@@ -457,7 +457,7 @@ function translateErrorMessage(key) {
             "CvrFejl": "A CVR number must be specified with exactly 8 digits",
             "cvrIBrug": "This CVR number is already in use",
             "cvrLedig": "The specified mail is available",
-            "telefonFejl": "A phone number must be specified with exactly 8 digits",
+            "telefonFejl": "The phone number is invalid",
             "datoFejl": "A future date has been chosen"
         }
     }
