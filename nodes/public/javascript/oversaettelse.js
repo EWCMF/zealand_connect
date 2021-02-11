@@ -188,8 +188,10 @@ function getLangdata() {
                 "Stigende": "Ascending",
 
                 //Pagination
+                "Foerste": "First",
                 "Forrige": "Previous",
                 "Naeste": "Next",
+                "Sidste": "Last",
 
                 //Uddannelser
                 "Datamatiker": "Computer Scientist",
