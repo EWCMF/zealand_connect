@@ -5,7 +5,7 @@ var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabe
 var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
 var fs = require("fs");//Bruges til grundlæggen file hændtering.
 var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
-const {emailRegex, dateRegex, linkRegex, numbersRegex} = require("../constants/regex.js");
+const {emailRegex, dateRegex, linkRegex, phoneRegex} = require("../constants/regex.js");
 const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
@@ -90,7 +90,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                 inputError = true;
             }
 
-            if (!numbersRegex.test(phone_number)) {
+            if (!phoneRegex.test(phone_number)) {
                 console.log('Invalid phone number');
                 inputError = true;
             }

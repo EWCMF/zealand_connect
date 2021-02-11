@@ -216,7 +216,7 @@ function checkFeltIkkeTomt(input, error) {
 };
 
 function checkTelefon(input, error) {
-    let regex = /^[0-9]{8}$/;
+    let regex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
 
     if (!regex.test(input)) {
         error.style.visibility = 'visible'

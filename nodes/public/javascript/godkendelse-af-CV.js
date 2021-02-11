@@ -36,8 +36,8 @@ function submitButton() {
     var emailWrittenCorrectly = emailRegex.test(email);
 
     // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
-    const numbersRegex = /^[0-9]{8}$/;
-    var numbersOnly = numbersRegex.test(telefon);
+    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+    var phoneCheck = phoneRegex.test(telefon);
 
     const linkedInRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
     var Min_linkedIn = linkedInRegex.test(linkedIn);
@@ -62,7 +62,7 @@ function submitButton() {
         document.getElementById("emailError").hidden = true;
     }
 
-    if (!numbersOnly) {
+    if (!phoneCheck) {
         document.getElementById("telefonError").hidden = false;
     } else {
         document.getElementById("telefonError").hidden = true;
@@ -133,7 +133,7 @@ function submitButton() {
     //     document.getElementById("fritidsinteresser").value = 'Intet angivet';
     // }
 
-    if (emailWrittenCorrectly && numbersOnly && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "" && tilgaengelighed != "") {
+    if (emailWrittenCorrectly && phoneCheck && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "" && tilgaengelighed != "") {
         document.forms["cvForm"].submit();
     }
 }

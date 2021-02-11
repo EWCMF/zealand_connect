@@ -13,8 +13,8 @@ function submitButton() {
     let errors = [];
 
     // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
-    const numbersRegex = /^[0-9]{8}$/;
-    let numbersOnly = numbersRegex.test(telefon);
+    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
+    let phoneCheck = phoneRegex.test(telefon);
 
     const nameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
     let testFornavn = nameRegex.test(fornavn);
@@ -48,7 +48,7 @@ function submitButton() {
         document.getElementById("efternavnInvalidError").hidden = true;
     }
 
-    if (!numbersOnly) {
+    if (!phoneCheck) {
         errors.push('telefonError');
         document.getElementById("telefonError").hidden = false;
     } else {

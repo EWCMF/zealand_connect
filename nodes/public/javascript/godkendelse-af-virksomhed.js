@@ -16,11 +16,12 @@ function submitButton() {
     // var emailWrittenCorrectly = emailRegex.test(email);
 
     // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
-    const numbersRegex = /^[0-9]{8}$/;
-    const numbersRegex2 = /^[0-9]{4}$/;
-    var numbersOnly = numbersRegex.test(telefon);
-    var numbersOnly2 = numbersRegex.test(cvrnr);
-    var numbersOnly3 = numbersRegex2.test(postnr);
+    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
+    const cvrRegex = /^[0-9]{8}$/;
+    const postcodeRegex = /^[0-9]{4}$/;
+    var numbersOnly = phoneRegex.test(telefon);
+    var numbersOnly2 = cvrRegex.test(cvrnr);
+    var numbersOnly3 = postcodeRegex.test(postnr);
 
     if (navn == "") {
         document.getElementById("navnError").hidden = false;
