@@ -33,15 +33,15 @@ passport.use(new LocalStrategy({
         passwordField: 'password'
     },
         function(username, password, done) {
-            console.log('You\'ve reached the local strat callback!');
+            // console.log('You\'ve reached the local strat callback!');
             //når vi prøver at logge ind, skal vi checke om brugeren findes i db
             findUserByEmail(username).then(async(user)=>{
                 if(user==null){
                     //redirect user back to login page with faliure message
-                    console.log("ERROR: USER NOT FOUND -passport");
+                    // console.log("ERROR: USER NOT FOUND -passport");
                     return done(null, false, { message: '?error=incorrectusername' });
                 } else {
-                    console.log("SUCCESS: USER FOUND -passport");
+                    // console.log("SUCCESS: USER FOUND -passport");
                     //user exists in the database, now check if the password matches
                     verifyPassword(password, user.password).then((match)=>{
                         if(match){
