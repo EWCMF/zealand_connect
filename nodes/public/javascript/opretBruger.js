@@ -62,7 +62,7 @@ const errorsStudent = Object.freeze({
 
 
 async function checkEmail(input, error) {
-    let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
+    let regex = emailRegex
 
     if (!regex.test(input)) {
         if (!error.classList.contains('formError')) {
@@ -94,7 +94,7 @@ async function checkEmail(input, error) {
 };
 
 async function checkCvrNummer() {
-    let regex = /^[0-9]{8}$/;
+    let regex = numbersRegex
     let error = errors.cvrNummer;
     let input = inputs.cvrNummer.value;
 
@@ -216,7 +216,7 @@ function checkFeltIkkeTomt(input, error) {
 };
 
 function checkTelefon(input, error) {
-    let regex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+    let regex = phoneRegex;
 
     if (!regex.test(input)) {
         error.style.visibility = 'visible'

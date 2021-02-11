@@ -30,8 +30,7 @@ function validate_internship_post() {
 
   //Telefon
   if (document.getElementById('phoneNumber').value.length > 0) {
-    let numberRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
-    if (!numberRegex.test(document.getElementById('phoneNumber').value)) {
+    if (!phoneRegex.test(document.getElementById('phoneNumber').value)) {
       all_valid = false;
       document.getElementById('phoneNumberError').hidden = false;
     } else {
