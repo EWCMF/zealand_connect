@@ -19,7 +19,7 @@ router.get('/', authorizeUser('student'), async function (req, res, next) {
             ]
         });
 
-        res.render('mit-cv', {
+        return res.render('mit-cv', {
             language: reqLang(req, res),
             profil: student.fornavn + " " + student.efternavn,
             telefon: student.tlfnr,
