@@ -4,7 +4,7 @@ const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 var { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
-const { emailRegex, phoneRegex } = require('../constants/regex');
+const { emailRegex, phoneRegex, linkRegex } = require('../constants/regex');
 
 router.get('/', authorizeUser('student'), async function (req, res, next) {
     if (req.user == null) {
@@ -122,9 +122,14 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let medUddannelse = !fk_education == 0;
     let medTidligere_uddannelse = !tidligere_uddannelse == "";
     let medIt_kompetencer = !it_kompetencer == ""
+    let hjemmesideKorrekt = hjemmeside.length != 0 ? linkRegex.test(hjemmeside) : true;
+    let youtubeKorrekt = yt_link.length != 0 ? linkRegex.test(yt_link) : true;
+    let linkedInKorrekt = linkedIn.length != 0 ? linkRegex.test(linkedIn) : true; 
 
-    if (!emailWrittenCorrectly || !phoneCheck || !medOverskrift || !medSprog || !medUddannelse || !medTidligere_uddannelse || !medIt_kompetencer) {
-        res.send('One or more values in the form are missing');
+    if (!emailWrittenCorrectly || !phoneCheck || !medOverskrift || !medSprog || 
+        !medUddannelse || !medTidligere_uddannelse || !medIt_kompetencer ||
+        !hjemmesideKorrekt || !youtubeKorrekt || !linkedInKorrekt) {
+        return res.send('One or more values in the form are missing');
     }
 
     let gyldig;
