@@ -325,7 +325,9 @@ function getLangdata() {
                 //Speciale
                 "Telefon": "Telephone",
                 "Telefon_error": "You must specify a telephone number with 8 digits, not beginning with 0",
-                "hjemmeside_error": "You must specify a proper website link",
+                "linkedIn_error": "You must specify a working link to a LinkedIn profile or clear the field", 
+                "youtube_error": "You must specify a working link to a Youtube video or clear the field",
+                "hjemmeside_error": "You must specify a working link to your website or clear the field",
                 "Link_til_CV_paa_Youtube": "Link to CV on Youtube",
                 //Om_mig
                 "Om_mig_placeholder": "This text is shown when companies search resumes",

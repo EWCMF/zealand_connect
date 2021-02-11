@@ -3,12 +3,12 @@ document.getElementById("gem").onclick = function () { submitButton() };
 document.getElementById("preview").onclick = function () { preview_cv() };
 
 function preview_cv() {
-    var form_URL = '../mit-cv/preview';
+    let form_URL = '../mit-cv/preview';
     document.getElementById("cvForm").action = form_URL;
     window.open('', 'form_target', 'width=1200 height=500');
     document.getElementById("cvForm").setAttribute("target","form_target");
     document.forms["cvForm"].submit();
-    var form_URL = '../mit-cv/submit';
+    form_URL = '../mit-cv/submit';
     document.getElementById("cvForm").action = form_URL;
     document.getElementById("cvForm").setAttribute("target","");
 }
@@ -31,53 +31,77 @@ function submitButton() {
     let hjemmeside = document.getElementById("hjemmeside").value;
     let fritidsinteresser = document.getElementById("fritidsinteresser").value;
 
+    let all_valid = true;
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
-    var emailWrittenCorrectly = emailRegex.test(email);
+    let emailWrittenCorrectly = emailRegex.test(email);
 
     // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
-    var phoneCheck = phoneRegex.test(telefon);
+    let phoneCheck = phoneRegex.test(telefon);
 
-    var Min_linkedIn = linkRegex.test(linkedIn);
+    let Min_linkedIn = linkRegex.test(linkedIn);
 
-    var Mit_yt_link = linkRegex.test(yt_link);
+    let Mit_yt_link = linkRegex.test(yt_link);
+
+    let hjemmesideKorrekt = linkRegex.test(hjemmeside);
 
     if (overskrift == "") {
+        all_valid = false;
         document.getElementById("OverskriftError").hidden = false;
     } else {
         document.getElementById("OverskriftError").hidden = true;
     }
 
     if (sprog == "") {
+        all_valid = false;
         document.getElementById("sprogError").hidden = false;
     } else {
         document.getElementById("sprogError").hidden = true;
     }
 
     if (!emailWrittenCorrectly) {
+        all_valid = false;
         document.getElementById("emailError").hidden = false;
     } else {
         document.getElementById("emailError").hidden = true;
     }
 
     if (!phoneCheck) {
+        all_valid = false;
         document.getElementById("telefonError").hidden = false;
     } else {
         document.getElementById("telefonError").hidden = true;
     }
 
-    if (!Min_linkedIn && !linkedIn == "") {
+    if (!Min_linkedIn && linkedIn.length != 0) {
+        all_valid = false;
         document.getElementById("linkedInError").hidden = false;
     } else {
         document.getElementById("linkedInError").hidden = true;
     }
 
+    if (!Mit_yt_link && yt_link.length != 0) {
+        all_valid = false;
+        document.getElementById('youtubeError').hidden = false;
+    } else {
+        document.getElementById('youtubeError').hidden = true;
+    }
+
+    if (!hjemmesideKorrekt && hjemmeside.length != 0) {
+        all_valid = false;
+        document.getElementById('hjemmesideError').hidden = false;
+    } else {
+        document.getElementById('hjemmesideError').hidden = true;
+    }
+
     if (uddannelse == "") {
+        all_valid = false;
         document.getElementById("UddannelsesError").hidden = false;
     } else {
         document.getElementById("UddannelsesError").hidden = true;
     }
 
     if (tidligere_uddannelse == "") {
+        all_valid = false;
         document.getElementById("Tidligere-uddannelseError").hidden = false;
     } else {
         document.getElementById("Tidligere-uddannelseError").hidden = true;
@@ -93,12 +117,13 @@ function submitButton() {
     }
 
     if (tilgaengelighed == '') {
+        all_valid = false;
         document.getElementById("tilgaengelighedError").hidden = false;
     } else {
         document.getElementById("tilgaengelighedError").hidden = true;
     }
 
-    if (emailWrittenCorrectly && phoneCheck && !overskrift == "" && !sprog == "" && !uddannelse == "" && !tidligere_uddannelse == "" && !iT_Kompetencer == "" && tilgaengelighed != "") {
+    if (all_valid) {
         document.forms["cvForm"].submit();
     }
 }
