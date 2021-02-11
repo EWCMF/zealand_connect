@@ -27,6 +27,9 @@ router.get('/', async function(req, res, next) {
         limit: limit,
         raw: true,
         offset: offset,
+        order: [
+            ['createdAt', 'DESC']
+        ],
         where: {
             visible: true
         }
