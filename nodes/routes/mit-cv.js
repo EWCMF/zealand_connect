@@ -129,15 +129,16 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
 
     let gyldig;
     let besked;
+    let lang = reqLang(req, res);
 
     if (overskrift == '' || fk_education == 0 ||
         email == '' || sprog == '' || telefon == '' ||
         it_kompetencer == '' || tidligere_uddannelse == '') {
         gyldig = false;
-        besked = "CV'et er gemt men er utilgængeligt for andre indtil alle nødvendige felter er udfyldte."
+        besked = lang != 'en' ? "CV'et er gemt men er utilgængeligt for andre indtil alle nødvendige felter er udfyldte." : "The CV is saved but is inaccessible for others until all required fields are filled."
     } else {
         gyldig = true;
-        besked = "CV'et er gemt."
+        besked = lang != 'en' ? "CV'et er gemt." : "The CV is saved."
     }
 
     var student_id = student.id
@@ -178,14 +179,16 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         })
 
         if (gyldig) {
-            besked = 'Ændringer er gemt.'
+            besked = lang != 'en' ? 'Ændringer er gemt.' : "The changes are saved"
         } else {
-            besked = "Ændringer er gemt men CV'et er ikke gyldigt mere og vil derfor ikke vises på søgelisten."
+            besked = lang != 'en' ? "Ændringer er gemt men CV'et er ikke gyldigt mere og vil derfor ikke vises på søgelisten." : "The changes are saved but the CV isn't valid anymore and will not be shown in the search list."
         }
         
     }
 
-    res.render('mit-cv-success', {layout: false, status: 'Succes', message: besked, id: cv.id});
+    let status = lang != 'en' ? 'Succes' : 'Success';
+
+    res.render('mit-cv-success', {layout: false, status: status, message: besked, id: cv.id});
 });
 
 router.get('/delete', authorizeUser('student', 'admin'), function (req, res, next) {
@@ -243,7 +246,8 @@ router.post('/preview', authorizeUser('student'), async function (req, res, next
         json: json,
         navDisabled: true,
         noButtons: true,
-        disableSidebarButton: true
+        disableSidebarButton: true,
+        hideFooter: true
     });
 
 })
