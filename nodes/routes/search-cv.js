@@ -459,9 +459,9 @@ router.get('/:id/create_pdf', function (req, res, next) {
                 });
         } else {
             myDoc.text('Youtube CV:', 220)
-                .lineGap(32)
                 .moveUp()
-                .text('Ikke angivet', 300);
+                .lineGap(32)
+                .text(texts.ikke_angivet, 300);
         }
 
         myDoc.fillColor('black')
