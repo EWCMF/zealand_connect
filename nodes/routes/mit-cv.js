@@ -115,17 +115,17 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let offentlig = req.body.tilgaengelighed;
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$/;
-    const numbersRegex = /^[0-9]{8}$/;
+    const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
 
     var emailWrittenCorrectly = emailRegex.test(email);
-    var numbersOnly = numbersRegex.test(telefon);
+    var phoneCheck = phoneRegex.test(telefon);
     var medOverskrift = !overskrift == "";
     var medSprog = !sprog == "";
     var medUddannelse = !fk_education == 0;
     var medTidligere_uddannelse = !tidligere_uddannelse == "";
     var medIt_kompetencer = !it_kompetencer == ""
 
-    if (!emailWrittenCorrectly || !numbersOnly || !medOverskrift || !medSprog || !medUddannelse || !medTidligere_uddannelse || !medIt_kompetencer) {
+    if (!emailWrittenCorrectly || !phoneCheck || !medOverskrift || !medSprog || !medUddannelse || !medTidligere_uddannelse || !medIt_kompetencer) {
         res.send('One or more values in the form are missing');
     }
 

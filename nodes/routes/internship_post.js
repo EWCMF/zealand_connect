@@ -10,7 +10,7 @@ const {
     emailRegex,
     dateRegex,
     linkRegex,
-    numbersRegex
+    phoneRegex
 } = require("../constants/regex.js");
 const db = require('../models');
 const {
@@ -133,7 +133,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                 inputError = true;
             }
 
-            if (!numbersRegex.test(phone_number)) {
+            if (!phoneRegex.test(phone_number)) {
                 console.log('Invalid phone number');
                 inputError = true;
             }
