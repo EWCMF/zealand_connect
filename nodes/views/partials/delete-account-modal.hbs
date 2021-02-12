@@ -1,0 +1,85 @@
+<div class="modal fade" id="sletBrugerModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle" data-key="Slet_brugerkonto">Slet brugerkonto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form class="form-column" id="deleteUserForm">
+                <div class="modal-body container">
+                    <div class="col passwordCol">
+                        <div class="form-group">
+                            <label for="password" data-key="password">Password</label>
+                            <input class="form-control" type="password" name="password" id="password">
+                            <label class="col-form-label formError" id="passwordError" data-key="passwordError">Adgangskoden
+                                er ikke gyldig</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="gentagPassword" data-key="Gentag_password">Gentag password</label>
+                            <input class="form-control" type="password" name="gentagPassword" id="gentagPassword">
+                            <label class="col-form-label formError" id="gentagPasswordError"
+                                   data-key="Gentag_passwordError">De to Adgangskoder er ikke
+                                ens</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <label id="success" data-key="password_succes">Brugeren er blevet slettet. Vinduet lukker
+                    automatisk</label>
+                <button type="button" class="btn btn-success" onclick="validate()" data-key="Bekraeft">Bekræft</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('label.formError').forEach(element => {
+        element.hidden = true;
+    });
+    document.getElementById('success').hidden = true;
+
+    function validate() {
+
+        let formData = new FormData(document.getElementById('deleteUserForm'));
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.onload = function () {
+
+            if (this.status == 200) {
+                document.getElementById('success').hidden = false;
+
+                setTimeout(() => {
+                    document.getElementById('password').value = '';
+                    document.getElementById('passwordError').hidden = true;
+                    document.getElementById('gentagPassword').value = '';
+                    document.getElementById('gentagPasswordError').hidden = true;
+
+                    document.getElementById('success').hidden = true;
+                    $('#sletBrugerModal').modal('hide');
+                    window.location.href = '/';
+                }, 5000);
+            } else {
+                let errors = JSON.parse(this.responseText);
+
+                errors.forEach(error => {
+                    switch (error) {
+                        case 1:
+                            document.getElementById('passwordError').hidden = false;
+                            break;
+                        case 2:
+                            document.getElementById('gentagPasswordError').hidden = false;
+                    }
+                });
+            }
+
+        };
+
+        xhr.open('POST', '/profil/delete-account');
+        xhr.send(formData);
+    }
+</script>

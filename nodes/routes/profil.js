@@ -4,6 +4,7 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
 const editPassword = require('../persistence/usermapping').editPassword;
+const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const models = require("../models");
 const uploadFolder = require("../constants/references").uploadFolder();
 const formidable = require("formidable");
@@ -450,6 +451,39 @@ router.post('/change-password-company', authorizeUser('company', 'admin'), async
             }
         });
 
+        res.status(200).send('ok');
+    });
+
+});
+
+router.post('/delete-account', authorizeUser('student'), async function (req, res, next) {
+    const {
+        verifyPassword
+    } = require('../encryption/password');
+
+    let formData = new formidable.IncomingForm();
+    formData.parse(req, async function (error, fields, files) {
+        let errors = [];
+        let password = fields.password;
+        let id = res.locals.user.id;
+
+        let user = await models.Student.findByPk(id, {
+            raw: true,
+            attributes: ["password", "email"]
+        });
+        let passwordFromDb = user.password;
+
+        if (!await verifyPassword(password, passwordFromDb)) {
+            errors.push(1);
+        }
+
+        if (errors.length > 0) {
+            return res.status(400).send(JSON.stringify(errors));
+        }
+
+        await deleteStudent(user.email);
+
+        req.logout();
         res.status(200).send('ok');
     });
 
