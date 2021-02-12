@@ -1,6 +1,7 @@
 const models = require("../models");
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const hashPassword = require('../encryption/password').hashPassword;
+const unlinkOldFiles = require("../utils/file-handling").unlinkOldFiles;
 
 async function findUserByEmail(email) {
     let user = null;
@@ -140,6 +141,11 @@ async function deleteVirksomhed(email) {
         for (let i = 0; i < internshipPosts.length; i++) {
             deleteInternshipPost(internshipPosts[i].id);
         }
+
+        if (virksomhed.logo){
+            unlinkOldFiles(virksomhed.logo)
+        }
+
         //slet virksomheden
         await virksomhed.destroy();
         console.log("A virksomhed was deleted");
@@ -171,6 +177,11 @@ async function deleteStudent(email) {
             if (student.cv != null) {
                 await student.cv.destroy();
             }
+
+            if (student.profilbillede){
+                unlinkOldFiles(student.profilbillede)
+            }
+
             //slet studenten
             await student.destroy();
             console.log("A student was deleted");
