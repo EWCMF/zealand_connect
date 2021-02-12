@@ -350,6 +350,7 @@ function getLangdata() {
                 "Mail_kolon": "Mail:",
                 //Tlf_kolon
                 "Rediger_profil": "Edit profile",
+                "Slet_brugerkonto": "Delete user account",
                 "Gentag_password": "Repeat password",
                 "Ugyldigt_fornavn": "Invalid first name",
                 "Ugyldigt_efternavn": "Invalid last name",
