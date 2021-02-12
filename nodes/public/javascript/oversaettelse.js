@@ -55,9 +55,6 @@ function getLangdata() {
                 "sletBruger": "Delete User",
                 "opret": "Create",
                 "slet": "Delete",
-                "adminFunktion": "Administrative functions",
-                "opretUddannelse": "Create education",
-                "sletUddannelse": "Delete education",
                 "Uddannelse": "Education",
 
                 // Opret bruger
@@ -418,7 +415,14 @@ function getLangdata() {
 
                 //search-virksomheder
                 "virksomheder_registreret": "companies registered",
-                "Virksomheder": "Companies"
+                "Virksomheder": "Companies",
+
+                //admin-funktioner
+                "Slet_studerende": "Delete student account",
+                "Slet_virksomhed": "Delete company account",
+                "adminFunktion": "Administrative functions",
+                "Opret_uddannelse": "Create education",
+                "Slet_uddannelse": "Delete education",
 
             }
         }
