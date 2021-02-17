@@ -72,6 +72,46 @@
 
 
                         </div>
+
+                        <div class="panel-heading">
+                            <h6 id="collapse3Header" 
+                                class="panel-title mb-2 hand-hover" 
+                                data-toggle="collapse" 
+                                data-parent="#accordion" 
+                                href="#collapse3" 
+                                onclick="animateArrow(this)"
+                                data-key="By_html">
+                                    Afstand
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+
+                        <div id="collapse3" class="panel-collapse collapse in">
+                            <input id="geo_id" type="hidden" name="geo_id">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-column">
+                                    <label class="form-check-label flex-fill" data-key="Indtast_adresse">
+                                        Indtast adresse
+                                    </label>
+                                    <input id='inputAddress' class="align-self-center" type="search" name="geo_address">
+                                    
+                                </li>
+                                <li class="mb-2 d-flex flex-column">
+                                    <label class="form-check-label flex-fill" data-key="Radius_i_kilometer">
+                                        Radius i kilometer
+                                    </label>
+                                    <input id='geo_radius' class="align-self-center" type="number" name="geo_radius">
+                                    
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-success" onclick="addAddress()" data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success" onclick="removeAddress()" data-key="Ryd">Ryd</button>
+                                </li>
+                                
+                            </ul>
+
+
+                        </div>
                     </div>
                 </div>
                 {{!-- <button class="btn btn-success mb-2 mt-4" type="submit">Filtrer</button> --}}
@@ -129,3 +169,14 @@
     </div>
 </div>
 <script src="/javascript/search_cv.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+<script src='../dawa/js/dawa-autocomplete2.min.js'></script>
+<script>
+    dawaAutocomplete.dawaAutocomplete(document.getElementById("inputAddress"), {
+        select: function (selected) {
+            document.getElementById("geo_id").value = selected.data.id;
+        },
+        params: {per_side: '5'}
+    });
+</script>

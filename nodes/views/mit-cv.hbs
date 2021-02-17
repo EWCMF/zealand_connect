@@ -66,20 +66,35 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <!-- LinkedIn med inputfelt -->
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">LinkedIn</label>
-                        <input class="form-control" id="linkedIn" name="linkedIn" value='{{linkedIn}}' placeholder="https://example.dk">
-                     <p id="linkedInError" class="CVErrorColor" hidden="true" data-key="linkedIn_error">Du skal skrive et korrekt link til en LinkedIn Profil eller tømme feltet</p>
+                        <label for="exampleFormControlInput1" data-key="Postnummer">Postnummer</label>
+                        <input class="form-control" id="postcode" name="postcode" value='{{postcode}}'>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <!-- textarea om mig -->
-                <label for="exampleFormControlTextarea1" data-key="Link_til_CV_paa_Youtube">Link til CV på Youtube</label>
-                <textarea class="form-control" rows="3" id="youtube_link" name="youtube_link"
-                    placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">{{yt_link}}</textarea>
-                <p id="youtubeError" class="CVErrorColor" hidden="true" data-key="youtube_error">Du skal skrive et korrekt link til en Youtube video eller tømme feltet</p>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">LinkedIn</label>
+                        <input class="form-control" id="linkedIn" name="linkedIn" value='{{linkedIn}}' placeholder="https://www.linkedin.com/in/xxx-xxx-123456789">
+                     <p id="linkedInError" class="CVErrorColor" hidden="true" data-key="linkedIn_error">Du skal skrive et korrekt link til en LinkedIn Profil eller tømme feltet</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1" data-key="Hjemmeside">Hjemmeside</label>
+                        <input class="form-control" id="hjemmeside" name="hjemmeside" value='{{hjemmeside}}' placeholder="https://example.dk">
+                        <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-key="hjemmeside_error">Du skal skrive et korrekt link til din hjemmeside eller tømme feltet</p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1" data-key="Link_til_CV_paa_Youtube">Link til CV på Youtube</label>
+                        <input class="form-control" id="youtube_link" name="youtube_link"
+                            value='{{yt_link}}' placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+                        <p id="youtubeError" class="CVErrorColor" hidden="true" data-key="youtube_error">Du skal skrive et korrekt link til en Youtube video eller tømme feltet</p>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
@@ -112,12 +127,6 @@
                 <textarea class="form-control" rows="3" id="tidligere-uddannelse" name="tidligere_uddannelse"
                     placeholder="Tidligere eller lidt om din nuværende Uddannelse" data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea>
                 <p id="Tidligere-uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p> 
-            </div>
-            <div class="form-group">
-                <!-- textarea om mig -->
-                <label for="exampleFormControlTextarea1" data-key="Hjemmeside">Hjemmeside</label>
-                <textarea class="form-control" rows="3" id="hjemmeside" name="hjemmeside" placeholder="https://example.dk">{{hjemmeside}}</textarea>
-                <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-key="hjemmeside_error">Du skal skrive et korrekt link til din hjemmeside eller tømme feltet</p>
             </div>
             <div class="form-group">
                 <!-- textarea med hobby -->

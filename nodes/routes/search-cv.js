@@ -4,6 +4,8 @@ var hbs = require('handlebars');
 var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
+const fetch = require('node-fetch');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var {
     reqLang
 } = require('../public/javascript/request');
@@ -19,11 +21,18 @@ const makeArray = function (body, param) {
         body[param] = array;
     }
 };
-const handleWhere = function (paramContainer) {
+const handleWhere = async function (paramContainer) {
     let fk_education = {
         [Op.or]: []
     };
     let sprog = {
+        [Op.or]: []
+    };
+
+    let geo_lat = {
+        [Op.or]: []
+    };
+    let geo_lon = {
         [Op.or]: []
     };
 
@@ -83,9 +92,41 @@ const handleWhere = function (paramContainer) {
         }
     }
 
+    if (paramContainer.hasOwnProperty('geo_id') && paramContainer.hasOwnProperty('geo_radius')) {
+        let geo_id = paramContainer['geo_id'];
+        let geo_radius = paramContainer['geo_radius'];
+
+        const url = 'https://dawa.aws.dk/adresser?id=' + geo_id + "&format=geojson";
+        const res = await fetch(url);
+        const data = await res.json();//assuming data is json
+        if (data.type.includes('FeatureCollection')) {
+            let json = data;
+            
+            let longitude = +json.features[0].geometry.coordinates[0];
+            let latitude = +json.features[0].geometry.coordinates[1];
+            let radius = +geo_radius * 1000;
+
+            let R = 6371e3; // earth's mean radius in metres
+            let cos=Math.cos
+            let π = Math.PI;
+
+            let params = {
+                minLat: latitude - radius/R*180/π,
+                maxLat: latitude + radius/R*180/π,
+                minLon: longitude - radius/R*180/π / cos(latitude*π/180),
+                maxLon: longitude + radius/R*180/π / cos(latitude*π/180)
+            };
+
+            geo_lat[Op.or] = {[Op.between]: [params.minLat, params.maxLat]};
+            geo_lon[Op.or] = {[Op.between]: [params.minLon, params.maxLon]};
+        }
+    }
+
     return where = {
         fk_education,
         sprog,
+        geo_lat,
+        geo_lon,
         offentlig: true,
         gyldig: true
     }
@@ -105,7 +146,8 @@ router.get('/', async function (req, res, next) {
         offset = (page - 1) * limit;
     }
 
-    let where = handleWhere(req.query);
+    let where = await handleWhere(req.query);
+    console.log(where);
 
     let udd = await db.Uddannelse.findAll({
         attributes: ['id', 'name'],
@@ -164,8 +206,9 @@ router.post('/query', function (req, res) {
     formData.parse(req, async function (error, fields, files) {
         makeArray(fields, 'udd');
         makeArray(fields, 'lnd');
+        makeArray(fields, 'geo');
 
-        let where = handleWhere(fields);
+        let where = await handleWhere(fields);
 
         var page = parseInt(fields.page);
         var offset;

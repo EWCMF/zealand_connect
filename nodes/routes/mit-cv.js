@@ -5,6 +5,7 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 var { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 const { emailRegex, phoneRegex, linkRegex } = require('../constants/regex');
+const fetch = require('node-fetch');
 
 router.get('/', authorizeUser('student'), async function (req, res, next) {
     if (req.user == null) {
@@ -86,7 +87,8 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         tidligere_uddannelse: student.cv.tidligere_uddannelse,
         hjemmeside: student.cv.hjemmeside,
         fritidsinteresser: student.cv.fritidsinteresser,
-        offentlig: student.cv.offentlig
+        offentlig: student.cv.offentlig,
+        postcode: student.cv.postcode
     })
 });
 
@@ -114,6 +116,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let hjemmeside = req.body.hjemmeside;
     let fritidsinteresser = req.body.fritidsinteresser;
     let offentlig = req.body.tilgaengelighed;
+    let postcode = req.body.postcode;
 
     let emailWrittenCorrectly = emailRegex.test(email);
     let phoneCheck = phoneRegex.test(telefon);
@@ -146,9 +149,28 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         besked = lang != 'en' ? "CV'et er gemt." : "The CV is saved."
     }
 
-    var student_id = student.id
+    let geo_lat;
+    let geo_lon;
+    let city;
 
-    var json = {
+    if (postcode != '') {
+        const url = 'https://dawa.aws.dk/postnumre?nr=' + postcode;
+        const res = await fetch(url);
+        const data = await res.json();//assuming data is json
+        if (data[0].hasOwnProperty('href')) {
+            geo_lat = +data[0].visueltcenter[1];
+            geo_lon = +data[0].visueltcenter[0];
+            city = data[0].navn;
+        } else {
+            geo_lat = null;
+            geo_lon = null;
+            city = null;
+        }
+    }
+
+    let student_id = student.id
+
+    let json = {
         overskrift,
         fk_education,
         email,
@@ -166,7 +188,11 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         fritidsinteresser,
         offentlig,
         gyldig,
-        student_id
+        student_id,
+        postcode,
+        city,
+        geo_lat,
+        geo_lon
     }
 
     const [cv, created] = await db.CV.findOrCreate({
@@ -244,6 +270,7 @@ router.post('/preview', authorizeUser('student'), async function (req, res, next
         tidligere_uddannelse : req.body.tidligere_uddannelse,
         hjemmeside : req.body.hjemmeside,
         fritidsinteresser : req.body.fritidsinteresser,
+        postcode: req.body.postcode
     };
 
     res.render('cv', {

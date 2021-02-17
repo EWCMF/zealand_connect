@@ -38,7 +38,11 @@ module.exports = (sequelize, DataTypes) => {
     hjemmeside: DataTypes.STRING,
     fritidsinteresser: DataTypes.TEXT,
     offentlig: DataTypes.BOOLEAN,
-    gyldig: DataTypes.BOOLEAN
+    gyldig: DataTypes.BOOLEAN,
+    postcode: DataTypes.INTEGER,
+    city: DataTypes.STRING,
+    geo_lat: DataTypes.DOUBLE,
+    geo_lon: DataTypes.DOUBLE
   }, {
     sequelize,
     modelName: 'CV',
