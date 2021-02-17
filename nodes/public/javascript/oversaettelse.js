@@ -150,6 +150,7 @@ function getLangdata() {
                 "aKontakt": "Contact",
                 "aAlleCVer": "All resumes",
                 "aAllePraktikopslag": "All company posts",
+                "aAlleVirksomheder": "All companies",
                 "aLavPraktikOpslag": "Create post",
                 "aVirksomheder": "Companies",
                 "aOpslag": "Posts",
@@ -175,6 +176,7 @@ function getLangdata() {
                 "CV'er": "CV's",
                 "Uddannelser_html": 'Education <img src="images/chevron-right.svg" width="12" height="12">',
                 "Land_html": 'Country <img src="images/chevron-right.svg" width="12" height="12">',
+                "Afstand_html": 'Distance <img src="images/chevron-right.svg" width="12" height="12">',
                 "Indland": "Domestic",
                 "Udland": "Abroad",
                 "resultater": "results",
@@ -183,6 +185,9 @@ function getLangdata() {
                 "Raekkefoelge": "Order",
                 "Faldende": "Descending",
                 "Stigende": "Ascending",
+                "Indtast_adresse": "Specify address",
+                "Indtast_adresse_tooltip": ["?", "Specify your address together with a radius to focus your search. this filter only works on CV's that have a postcode specified and supports only Danish addresses."],
+                "Radius_i_kilometer": "Radius in kilometers",
 
                 //Pagination
                 "Foerste": "First",
@@ -321,11 +326,14 @@ function getLangdata() {
                 "Sprog_error": "You must specify language here",
                 //Speciale
                 "Telefon": "Telephone",
+                "Postnummer_tooltip": ["?", "When you  specify a postcode, the linked city is automatically shown on the CV. This field makes it possible for companies to focus their search and can help make you visible to them. Only Danish postcodes are supported."],
                 "Telefon_error": "You must specify a telephone number with 8 digits, not beginning with 0",
                 "linkedIn_error": "You must specify a working link to a LinkedIn profile or clear the field", 
                 "youtube_error": "You must specify a working link to a Youtube video or clear the field",
                 "hjemmeside_error": "You must specify a working link to your website or clear the field",
                 "Link_til_CV_paa_Youtube": "Link to CV on Youtube",
+                "Link_til_CV_paa_Youtube_tooltip": ["?", "If you've uploaded a video resume on Youtube, you can refer to the video here."],
+
                 //Om_mig
                 "Om_mig_placeholder": "This text is shown when companies search resumes",
                 //It_kompetencer

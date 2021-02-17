@@ -48,6 +48,42 @@ function addFilter(type, id) {
     submitForm(form);
 };
 
+function addAddress() {
+    let geo_id = document.getElementById('geo_id').value;
+    let radius = document.getElementById('geo_radius').value;
+    
+    // Tilføj query parameter uden refresh.
+    if (geo_id == '' || radius == '') {
+        return;
+    }
+    const url = new URL(window.location.href);
+    url.searchParams.set('geo_id', geo_id);
+    url.searchParams.set('geo_radius', radius);
+    window.history.replaceState(null, null, url);
+    removePageParam();
+    let form = document.getElementById('filterForm');
+    submitForm(form);
+}
+
+function removeAddress() {
+    document.getElementById('inputAddress').value = '';
+
+    document.getElementById('geo_id').value = '';
+    document.getElementById('geo_radius').value = '';
+    const url = new URL(window.location.href);
+    if (url.searchParams.has('geo_id') && url.searchParams.has('geo_radius')) {
+        url.searchParams.delete('geo_id');
+        url.searchParams.delete('geo_radius');
+    } else {
+        return;
+    }
+
+    window.history.replaceState(null, null, url);
+    removePageParam();
+    let form = document.getElementById('filterForm');
+    submitForm(form);
+}
+
 function handleParameters(key, value) {
     // Tilføj query parameter uden refresh.
     const url = new URL(window.location.href);
@@ -152,3 +188,36 @@ function checkCollapse(key, collapse, collapseHeader) {
 }
 checkCollapse('udd', 'collapse1', 'collapse1Header');
 checkCollapse('lnd', 'collapse2', 'collapse2Header');
+
+function checkAddressSearch() {
+    const url = new URL(window.location.href);
+    console.log(url.searchParams);
+    if (url.searchParams.has('geo_id') && url.searchParams.has('geo_radius')) {
+        let geo_id = url.searchParams.get('geo_id')
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            let res = JSON.parse(xhr.responseText);
+
+            let betegnelse = res.features[0].properties.betegnelse;
+            let geo_radius = url.searchParams.get('geo_radius')
+            
+            document.getElementById('inputAddress').value = betegnelse;
+            document.getElementById('geo_radius').value = geo_radius;
+            document.getElementById('geo_id').value = geo_id;
+        }
+        xhr.open("GET", "https://dawa.aws.dk/adresser?id=" + geo_id + "&format=geojson", true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send();
+    } 
+}
+checkAddressSearch();
+
+function checkCollapseSearch(id, key, collapse, collapseHeader) {
+    const url = new URL(window.location.href);
+    if (url.searchParams.has(key)) {
+        document.getElementById(collapse).classList.add('show');
+        animateArrow(document.getElementById(collapseHeader));
+        document.getElementById(id).value = url.searchParams.get(key);
+    }
+}
+checkCollapseSearch('inputAddress', 'geo_id', 'collapse3', 'collapse3Header');
