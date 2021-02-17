@@ -420,6 +420,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             texts = {
                 dato_downloadet: "Date downloaded: ",
                 telefon: "Phone:",
+                by: "City:",
                 hjemmeside: "Website:",
                 overskrift: "Headline",
                 om_mig: "About me",
@@ -439,6 +440,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             texts = {
                 dato_downloadet: "Dato downloadet: ",
                 telefon: "Telefon:",
+                by: "By:",
                 hjemmeside: "Hjemmeside:",
                 overskrift: "Overskrift",
                 om_mig: "Om mig",
@@ -481,6 +483,11 @@ router.get('/:id/create_pdf', function (req, res, next) {
         myDoc.text(texts.telefon, 220)
             .moveUp()
             .text(cv.telefon, 300);
+
+        let city = cv.postcode != null && cv.postcode != '' ? cv.postcode + " " + cv.city : texts.ikke_angivet;
+        myDoc.text(texts.by, 220)
+            .moveUp()
+            .text(city, 300);
 
         let hjemmeside = cv.hjemmeside != null && cv.hjemmeside != '' ? cv.hjemmeside : texts.ikke_angivet;
         myDoc.text(texts.hjemmeside, 220)

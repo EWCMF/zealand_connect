@@ -68,6 +68,9 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleFormControlInput1" data-key="Postnummer">Postnummer</label>
+                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                          title="Når du indtaster postnummer vises den knyttede by automatisk på CV'et. Feltet her gør det muligt for virksomheder at fokusere deres søgning baseret på afstand og kan hjælpe med at gøre dig synlig for dem. Kun danske postnumre er understøttet."
+                          data-Key="Postnummer_tooltip">?</span>
                         <input class="form-control" id="postcode" name="postcode" value='{{postcode}}'>
                     </div>
                 </div>
@@ -90,6 +93,9 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1" data-key="Link_til_CV_paa_Youtube">Link til CV på Youtube</label>
+                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                          title="Hvis du har uploadet et video CV på Youtube kan du referere til videoen her."
+                          data-Key="Link_til_CV_paa_Youtube_tooltip">?</span>
                         <input class="form-control" id="youtube_link" name="youtube_link"
                             value='{{yt_link}}' placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                         <p id="youtubeError" class="CVErrorColor" hidden="true" data-key="youtube_error">Du skal skrive et korrekt link til en Youtube video eller tømme feltet</p>

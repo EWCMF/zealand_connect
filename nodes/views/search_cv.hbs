@@ -80,7 +80,7 @@
                                 data-parent="#accordion" 
                                 href="#collapse3" 
                                 onclick="animateArrow(this)"
-                                data-key="By_html">
+                                data-key="Afstand_html">
                                     Afstand
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
@@ -90,9 +90,14 @@
                             <input id="geo_id" type="hidden" name="geo_id">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-column">
-                                    <label class="form-check-label flex-fill" data-key="Indtast_adresse">
+                                    <div>
+                                        <label class="form-check-label flex-fill" data-key="Indtast_adresse">
                                         Indtast adresse
-                                    </label>
+                                        </label>
+                                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                            title="Indtast din adresse samt en radius for at fokusere søgningen. Dette filter virker kun med CV'er hvor et postnummer er angivet og understøtter kun danske adresser."
+                                            data-Key="Indtast_adresse_tooltip">?</span>
+                                    </div>
                                     <input id='inputAddress' class="align-self-center" type="search" name="geo_address">
                                     
                                 </li>
