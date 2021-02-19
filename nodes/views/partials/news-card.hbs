@@ -8,8 +8,16 @@
         </div>
         {{#if ../isAdmin}}
             <button class="btn btn-success" onclick="window.location.href='/news/new-post?id={{id}}'">Rediger</button>
-            <button class="btn btn-danger">Slet</button>
+            <button class="btn btn-danger" onclick="confirmDeletePost({{id}})">Slet</button>
         {{/if}}
     </div>
 </div>
 {{/each}}
+
+<script>
+    function confirmDeletePost(id) {
+        if (confirm("Er du sikker?")) {
+            window.location = `/news/delete-post/${id}`
+        }
+    }
+</script>
