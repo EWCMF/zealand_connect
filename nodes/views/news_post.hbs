@@ -1,0 +1,97 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {{#if update}}
+                <h1 data-key="Rediger_opslag">Rediger opslag</h1>
+            {{else}}
+                <h1 data-key="Indryk_opslag">Indryk opslag</h1>
+            {{/if}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <form
+                    method="POST"
+                    action="/news/new-post"
+                    id="newsForm"
+            >
+                <input type="hidden" value="{{newsPost.id}}" name="id">
+                <div class="form-group required mb-5">
+                    <label for="newsTitle" data-key="Overskrift">Overskrift</label>
+                    <input type="text" value="{{newsPost.title}}" name="title" id="newsTitle" class="form-control"
+                           placeholder="Titel">
+                    <p id="titleError" class="CVErrorColor" hidden="true" data-key="Annonce_overskrift_error">Overskrift
+                     må ikke være tom</p>
+                </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="content" id="htmlContent"/>
+                    <label for="editor" data-key="Indhold">Indhold</label>
+                    <p id="contentError" class="CVErrorColor" hidden="true" data-key="Content_error">Indhold må ikke
+                    være tomt</p>
+                    <div id="editor">{{{newsPost.content}}}</div>
+                </div>
+            </form>
+            <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
+        </div>
+    </div>
+</div>
+<script src="/js/quill.min.js"></script>
+<script>
+    var toolbarOptions = [
+        [{
+            'size': ['small', false, 'large', 'huge']
+        }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{
+            'align': []
+        }],
+        [{
+            'list': 'ordered'
+        }, {
+            'list': 'bullet'
+        }],
+        [{
+            'color': []
+        }, {
+            'background': []
+        }],
+        ['link', 'image', 'video'],
+        ['clean']
+    ];
+    const editor = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow'
+    });
+
+    function copyQuillHtmlToHiddenInput() {
+        document.getElementById('htmlContent').value = editor.root.innerHTML;
+        validate_news_post();
+    }
+
+    function validate_news_post() {
+        let allValid = true;
+        let title = document.getElementById('newsTitle').value;
+        let content = editor.getText();
+
+        if (title.length === 0){
+            allValid = false;
+            document.getElementById('titleError').hidden = false;
+        } else {
+            document.getElementById('titleError').hidden = true;
+        }
+        if (content.length <= 1){
+            allValid = false;
+            document.getElementById('contentError').hidden = false;
+        } else {
+            document.getElementById('contentError').hidden = true;
+        }
+
+        if (allValid){
+            document.forms["newsForm"].submit();
+        }
+
+    }
+</script>

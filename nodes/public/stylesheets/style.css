@@ -684,6 +684,14 @@ input::placeholder {
   background: #f0f0f0;
 }
 
+#news-container .card {
+  border: none;
+}
+
+.ql-editor, #editor{
+  min-height:250px;
+}
+
 html, body {
   height: 100%;
 }

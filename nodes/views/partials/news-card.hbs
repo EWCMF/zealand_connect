@@ -1,0 +1,23 @@
+{{#each json}}
+<div class="card">
+    <div class="card-body">
+        <h3 id="title" class="card-title">{{title}}</h3>
+        <p id="date">{{date}}</p>
+        <div id="paragraph-container">
+            {{{content}}}
+        </div>
+        {{#if ../isAdmin}}
+            <button class="btn btn-success" onclick="window.location.href='/news/new-post?id={{id}}'">Rediger</button>
+            <button class="btn btn-danger" onclick="confirmDeletePost({{id}})">Slet</button>
+        {{/if}}
+    </div>
+</div>
+{{/each}}
+
+<script>
+    function confirmDeletePost(id) {
+        if (confirm("Er du sikker?")) {
+            window.location = `/news/delete-post/${id}`
+        }
+    }
+</script>
