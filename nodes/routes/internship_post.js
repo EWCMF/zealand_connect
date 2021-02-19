@@ -184,7 +184,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             indhold.company_link = null;
         }
 
-        if (fk_education == 0) {
+        if (fk_education == 0 || fk_education == '0' || fk_education == null) {
             console.log('Invalid choice');
             inputError = true;
         }
