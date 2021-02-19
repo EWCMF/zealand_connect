@@ -13,8 +13,15 @@ router.get('/', async function(req, res, next){
 });
 
 router.get('/new-post', authorizeUser('admin'), async function(req, res, next){
+    let update;
+    let newsPost;
 
-    res.render('news_post', {language: reqLang(req, res)});
+    if (req.query.id){
+        let id = req.query.id;
+        update = true;
+        newsPost = await Models.NewsPost.findByPk(id);
+    }
+    res.render('news_post', {language: reqLang(req, res), newsPost: newsPost, update: update});
 });
 
 router.post('/new-post', authorizeUser('admin'), async function(req, res, next){

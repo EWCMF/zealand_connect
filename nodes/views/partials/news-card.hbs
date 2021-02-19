@@ -7,7 +7,7 @@
             {{{content}}}
         </div>
         {{#if ../isAdmin}}
-            <button class="btn btn-success">Rediger</button>
+            <button class="btn btn-success" onclick="window.location.href='/news/new-post?id={{id}}'">Rediger</button>
             <button class="btn btn-danger">Slet</button>
         {{/if}}
     </div>

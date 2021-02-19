@@ -15,10 +15,10 @@
                     action="/news/new-post"
                     id="newsForm"
             >
-                <input type="hidden" value="{{id}}" name="id">
+                <input type="hidden" value="{{newsPost.id}}" name="id">
                 <div class="form-group required mb-5">
                     <label for="newsTitle" data-key="Overskrift">Overskrift</label>
-                    <input type="text" value="{{title}}" name="title" id="newsTitle" class="form-control"
+                    <input type="text" value="{{newsPost.title}}" name="title" id="newsTitle" class="form-control"
                            placeholder="Titel">
                     <p id="titleError" class="CVErrorColor" hidden="true" data-key="Annonce_overskrift_error">Du skal
                         angive
@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <input type="hidden" name="content" id="htmlContent"/>
                     <label for="editor" data-key="Indhold">Indhold</label>
-                    <div id="editor">{{{text}}}</div>
+                    <div id="editor">{{{newsPost.content}}}</div>
                 </div>
                 <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
             </form>
