@@ -17,7 +17,7 @@ function submitButton() {
     // få alle inputfelter ind i variabler
     let overskrift = document.getElementById("overskrift").value;
     let email = document.getElementById("email").value;
-    let telefon = parseInt(document.getElementById("telefon").value);
+    let telefon = document.getElementById("telefon").value;
     let linkedIn = document.getElementById("linkedIn").value;
     let yt_link = document.getElementById("youtube_link").value;
     let uddannelse = document.getElementById("uddannelse").value;
