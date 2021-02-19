@@ -688,6 +688,10 @@ input::placeholder {
   border: none;
 }
 
+.ql-editor, #editor{
+  min-height:250px;
+}
+
 html, body {
   height: 100%;
 }

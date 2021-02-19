@@ -2,7 +2,7 @@
     <div class="col-12 col-xl-6">
         <h1>Nyheder</h1>
         {{#if isAdmin}}
-            <button class="btn btn-success">Nyt indlæg</button>
+            <button class="btn btn-success" onclick="window.location.href='/news/new-post'">Nyt indlæg</button>
         {{/if}}
         <div id="news-container">
             {{> nyheder-card}}

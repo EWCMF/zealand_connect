@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {{#if update}}
+                <h1 data-key="Rediger_opslag">Rediger opslag</h1>
+            {{else}}
+                <h1 data-key="Indryk_opslag">Indryk opslag</h1>
+            {{/if}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <form
+                    method="POST"
+                    action="/news_post"
+                    id="newsForm"
+            >
+                <div class="form-group required mb-5">
+                    <label for="newsTitle" data-key="Overskrift">Overskrift</label>
+                    <input type="text" value="{{title}}" name="title" id="newsTitle" class="form-control"
+                           placeholder="Titel">
+                    <p id="titleError" class="CVErrorColor" hidden="true" data-key="Annonce_overskrift_error">Du skal
+                        angive
+                        en overskrift</p>
+                </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="post_text" id="htmlContent"/>
+                    <label for="editor" data-key="Indhold">Indhold</label>
+                    <div id="editor">{{{text}}}</div>
+                </div>
+                <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/quill.min.js"></script>
+<script>
+    var toolbarOptions = [
+        [{
+            'size': ['small', false, 'large', 'huge']
+        }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{
+            'align': []
+        }],
+        [{
+            'list': 'ordered'
+        }, {
+            'list': 'bullet'
+        }],
+        [{
+            'color': []
+        }, {
+            'background': []
+        }],
+        ['link', 'image', 'video'],
+        ['clean']
+    ];
+    var editor = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow'
+    });
+
+    function copyQuillHtmlToHiddenInput() {
+        document.getElementById('htmlContent').value = editor.root.innerHTML;
+        validate_news_post();
+    }
+
+    function validate_news_post() {
+        document.forms["newsForm"].submit();
+    }
+</script>
