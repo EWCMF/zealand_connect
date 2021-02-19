@@ -22,6 +22,7 @@ var kontaktRouter = require('./routes/kontakt');
 const omRouter = require('./routes/om');
 var opretBrugerRouter = require('./routes/opret-bruger');
 var loginStudentRouter = require('./routes/login-student');
+const newsRouter = require('./routes/news');
 
 var bodyParser = require('body-parser')
 
@@ -148,6 +149,7 @@ app.use('/opret-bruger', opretBrugerRouter);
 app.use('/login-student', loginStudentRouter);
 app.use('/kontakt', kontaktRouter);
 app.use('/om', omRouter);
+app.use('/news', newsRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));
