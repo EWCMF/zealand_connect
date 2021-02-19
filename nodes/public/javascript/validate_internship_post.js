@@ -102,7 +102,7 @@ function validate_internship_post() {
   }
 
   //Uddannelse
-  if (document.getElementById('educationSelect').value == 0) {
+  if (document.getElementById('educationSelect').value == 0 || document.getElementById('educationSelect').value == '0' || document.getElementById('educationSelect').value == null) {
     all_valid = false;
     document.getElementById('educationError').hidden = false;
   } else {
