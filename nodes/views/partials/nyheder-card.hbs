@@ -1,40 +1,15 @@
+{{#each json}}
 <div class="card">
     <div class="card-body">
-        <h3 id="titel" class="card-title">Overskrift</h3>
-        <p id="date">13-06-3027</p>
+        <h3 id="title" class="card-title">{{title}}</h3>
+        <p id="date">{{date}}</p>
         <div id="paragraph-container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae rutrum odio, nec mattis elit.
-                Phasellus gravida molestie pellentesque. Ut efficitur tellus sit amet tempor feugiat. In tempus dapibus
-                dictum. Quisque dignissim leo neque. In tincidunt tristique justo non tristique. Cras porttitor non enim
-                non finibus.
-
-                Nam ac cursus magna. Morbi lobortis tortor sit amet neque lacinia, nec sodales neque congue. Suspendisse
-                potenti. Fusce ac viverra mi, et eleifend turpis. Nam euismod facilisis malesuada. Vestibulum ante ipsum
-                primis in faucibus orci luctus et ultrices posuere cubilia curae; Suspendisse ut tortor a enim faucibus
-                aliquet vel id ex. Duis posuere hendrerit mattis. Quisque malesuada justo et lorem posuere, at imperdiet
-                metus rhoncus. Nunc ultrices imperdiet neque vitae aliquam.
-
-                Vivamus efficitur et tellus nec porttitor. Integer sodales leo nisi, nec ultricies mauris ornare vel.
-                Cras in velit vel nibh cursus ultricies at non nisl. Phasellus vel sapien euismod massa tempus efficitur
-                eu vitae mi. Praesent rhoncus, tellus non ultrices interdum, eros velit gravida ipsum, vitae tempus erat
-                magna ut eros. Mauris iaculis, purus id aliquet tempor, nulla mi tincidunt nulla, ac molestie elit ex
-                nec elit. Sed fermentum est dolor, ac mattis nunc pretium in. Donec mi eros, fermentum non sapien ac,
-                mollis condimentum dolor.
-
-                Donec in urna sit amet justo viverra accumsan sed vitae urna. Integer tempor dolor vitae justo ornare,
-                ut rutrum diam euismod. Etiam ut faucibus erat, bibendum interdum turpis. Praesent sodales varius
-                porttitor. Morbi venenatis neque vel posuere aliquet. Aliquam a erat tortor. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Proin volutpat est ultrices risus efficitur iaculis.
-
-                Integer tellus arcu, pharetra pharetra est ut, commodo condimentum ipsum. Sed a sagittis odio.
-                Vestibulum sit amet sapien ipsum. Fusce elementum, metus at euismod tempus, est lacus vulputate tortor,
-                quis maximus lacus est id tellus. Cras sapien tortor, varius eu sodales a, vestibulum et orci. Proin
-                finibus mauris pretium dui commodo dapibus. Duis eget est turpis. Aenean imperdiet turpis dui, in varius
-                sapien consequat id. Phasellus facilisis, mauris vel luctus rhoncus, metus orci blandit mauris, et
-                fringilla nunc ipsum eget erat. Proin a dictum magna, eget pulvinar erat. Nulla sollicitudin, tellus in
-                lacinia imperdiet, massa nibh molestie ante, nec pretium odio libero et lacus.</p>
+            {{{content}}}
         </div>
+        {{#if ../isAdmin}}
+            <button class="btn btn-success">Rediger</button>
+            <button class="btn btn-danger">Slet</button>
+        {{/if}}
     </div>
-
-
 </div>
+{{/each}}
