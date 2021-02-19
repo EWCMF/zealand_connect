@@ -20,18 +20,19 @@
                     <label for="newsTitle" data-key="Overskrift">Overskrift</label>
                     <input type="text" value="{{newsPost.title}}" name="title" id="newsTitle" class="form-control"
                            placeholder="Titel">
-                    <p id="titleError" class="CVErrorColor" hidden="true" data-key="Annonce_overskrift_error">Du skal
-                        angive
-                        en overskrift</p>
+                    <p id="titleError" class="CVErrorColor" hidden="true" data-key="Annonce_overskrift_error">Overskrift
+                     må ikke være tom</p>
                 </div>
 
                 <div class="form-group">
                     <input type="hidden" name="content" id="htmlContent"/>
                     <label for="editor" data-key="Indhold">Indhold</label>
+                    <p id="contentError" class="CVErrorColor" hidden="true" data-key="Content_error">Indhold må ikke
+                    være tomt</p>
                     <div id="editor">{{{newsPost.content}}}</div>
                 </div>
-                <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
             </form>
+            <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
         </div>
     </div>
 </div>
@@ -58,7 +59,7 @@
         ['link', 'image', 'video'],
         ['clean']
     ];
-    var editor = new Quill('#editor', {
+    const editor = new Quill('#editor', {
         modules: {
             toolbar: toolbarOptions
         },
@@ -71,6 +72,26 @@
     }
 
     function validate_news_post() {
-        document.forms["newsForm"].submit();
+        let allValid = true;
+        let title = document.getElementById('newsTitle').value;
+        let content = editor.getText();
+
+        if (title.length === 0){
+            allValid = false;
+            document.getElementById('titleError').hidden = false;
+        } else {
+            document.getElementById('titleError').hidden = true;
+        }
+        if (content.length <= 1){
+            allValid = false;
+            document.getElementById('contentError').hidden = false;
+        } else {
+            document.getElementById('contentError').hidden = true;
+        }
+
+        if (allValid){
+            document.forms["newsForm"].submit();
+        }
+
     }
 </script>
