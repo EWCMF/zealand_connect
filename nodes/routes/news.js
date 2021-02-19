@@ -17,6 +17,36 @@ router.get('/new-post', authorizeUser('admin'), async function(req, res, next){
     res.render('news_post', {language: reqLang(req, res)});
 });
 
+router.post('/new-post', authorizeUser('admin'), async function(req, res, next){
+    let id = req.body.id;
+    let title = req.body.title;
+    let content = req.body.content;
+    let date = new Date();
+    let formattedDate = ('0' + date.getDate()).slice(-2) + '-'
+        + ('0' + (date.getMonth()+1)).slice(-2) + '-'
+        + date.getFullYear();
+
+    let json = {
+        "id": id,
+        "title": title,
+        "content": content,
+        "date": formattedDate
+    }
+
+    if (id){
+        await Models.NewsPost.update(json, {
+            where: {
+                id: id
+            }
+        })
+    }
+    else {
+        await Models.NewsPost.create(json)
+    }
+
+    res.redirect('/news');
+});
+
 
 
 module.exports = router;

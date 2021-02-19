@@ -12,9 +12,10 @@
         <div class="col-12 col-md-8">
             <form
                     method="POST"
-                    action="/news_post"
+                    action="/news/new-post"
                     id="newsForm"
             >
+                <input type="hidden" value="{{id}}" name="id">
                 <div class="form-group required mb-5">
                     <label for="newsTitle" data-key="Overskrift">Overskrift</label>
                     <input type="text" value="{{title}}" name="title" id="newsTitle" class="form-control"
@@ -25,7 +26,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="hidden" name="post_text" id="htmlContent"/>
+                    <input type="hidden" name="content" id="htmlContent"/>
                     <label for="editor" data-key="Indhold">Indhold</label>
                     <div id="editor">{{{text}}}</div>
                 </div>
