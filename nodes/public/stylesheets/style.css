@@ -688,8 +688,22 @@ input::placeholder {
   border: none;
 }
 
+#news-container .card p {
+  margin: 0;
+}
+
 .ql-editor, #editor{
   min-height:250px;
+}
+
+.ql-size-small {
+  font-size: 0.75em;
+}
+.ql-size-large {
+  font-size: 1.5em;
+}
+.ql-size-huge {
+  font-size: 2.5em;
 }
 
 html, body {
