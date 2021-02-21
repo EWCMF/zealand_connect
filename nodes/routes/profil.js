@@ -39,7 +39,6 @@ router.get('/',  authorizeUser('student', 'company', 'admin'),function (req, res
                 visible_mail: user.visible_mail,
                 ejer: true
             }
-            console.log(loggedInVirksomhed)
             res.render('visprofil', {
                 language: reqLang(req, res),
                 loggedInVirksomhed
