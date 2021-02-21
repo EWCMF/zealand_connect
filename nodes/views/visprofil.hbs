@@ -115,8 +115,22 @@
         </div>
         <div class="col-4 col-sm-2 d-flex flex-column">
             {{#if loggedInVirksomhed.ejer}}
-            <button type="button" class="btn btn-success " onclick="window.location.href='/profil/rediger'" data-key="Rediger_profil">Rediger profil</button>
+            <button type="button" class="btn btn-success mb-3" onclick="window.location.href='/profil/rediger'" data-key="Rediger_profil">Rediger profil</button>
+            <button type="button" class="btn btn-danger mb-3" onclick="openSletBrugerModal()" id="sletKonto" data-key="Slet_brugerkonto">Slet brugerkonto</button>
             {{/if}}
         </div>
     </div>
 </div>
+
+{{> delete-account-modal }}
+
+<script>
+    function openSletBrugerModal() {
+        $('#sletBrugerModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        $("sletBrugerModal").modal('show');
+    }
+</script>
