@@ -25,6 +25,10 @@ router.get('/:id', async function (req, res) {
         }]
     });
 
+    let company = await models.Virksomhed.findByPk(result.fk_company, {
+        attributes: ["navn"]
+    })
+
     let educationId = result.fk_education;
 
     let education = await models.Uddannelse.findByPk(educationId);
@@ -50,7 +54,7 @@ router.get('/:id', async function (req, res) {
 
     let ejer = false;
     if (req.user != null) {
-        var found = res.locals.user;
+        let found = res.locals.user;
         if (found instanceof models.Virksomhed && found.id == result.fk_company) {
             ejer = true;
         }
@@ -69,6 +73,7 @@ router.get('/:id', async function (req, res) {
         title: result['title'],
         rid: id,
         rtitle: result['title'],
+        rcompany: company['navn'],
         remail: result['email'],
         rphone: result['phone_number'],
         rcontact: result['contact'],
@@ -81,7 +86,7 @@ router.get('/:id', async function (req, res) {
         rcity: result['city'],
         rpostcode: result['postcode'],
         rcvr: result.virksomhed.cvrnr,
-        rcompany: webLink,
+        rwebsite: webLink,
         rlogo: result.virksomhed.logo,
         rdoc: result["post_document"],
         rdocName: rdocName,
