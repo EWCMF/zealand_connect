@@ -17,6 +17,10 @@
                     </td>
                 </tr>
                 <tr>
+                    <td data-key="Virksomhed">Virksomhed:</td>
+                    <td id=companyContainer" data-key="{{rcompany}}">{{rcompany}}</td>
+                </tr>
+                <tr>
                     <td data-key="Uddannelse_kolon">Uddannelse:</td>
                     <td id="educationContainer" data-key="{{reducation}}">{{reducation}}</td>
                 </tr>
@@ -61,10 +65,10 @@
                         <td id="cvrContainer">{{rcvr}}</td>
                     </tr>
                 {{/if}}
-                {{#if rcompany}}
+                {{#if rwebsite}}
                     <tr>
                         <td data-key="Hjemmeside_kolon">Hjemmeside:</td>
-                        <td id="linkContainer"><a href="{{rcompany}}" target="_Blank">{{rcompany}}</a></td>
+                        <td id="linkContainer"><a href="{{rwebsite}}" target="_Blank">{{rwebsite}}</a></td>
                     </tr>
                 {{/if}}
                 {{#if rdoc}}
