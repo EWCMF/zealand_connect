@@ -18,10 +18,10 @@ router.get('/login', function (req, res, next) {
     let msg = error.error;
     switch (msg) {
         case 'incorrectusername':
-            res.render('login-admin', {errormessage: 'Du har indtastet forkerte oplysninger'});
+            res.render('login-admin', {errormessage: 'Email eller password er forkert'});
             break;
         case 'incorrectpassword':
-            res.render('login-admin', {errormessage: 'Du har indtastet forkerte oplysninger'});
+            res.render('login-admin', {errormessage: 'Email eller password er forkert'});
             break;
         case 'notloggedin':
             res.render('login-admin', {errormessage: 'Du skal logge ind før du kan se din profil.'});

@@ -24,8 +24,8 @@ router.get('/', function (req, res, next) {
     let msg = error.error;
     //console.log("THIS ERROR "+msg);
     switch (msg) {
-        case 'incorrectusername': res.render('login', { errormessage: 'Din account findes ikke i vores system gå til opret bruger for at oprette dig i systemet.', virksomhed: "true", language: reqLang(req, res) },); break;
-        case 'incorrectpassword': res.render('login', { errormessage: 'Din account findes i vores system, men dit password er forkert.', virksomhed: "true", language: reqLang(req, res) }); break;
+        case 'incorrectusername': res.render('login', { errormessage: 'Denne bruger findes ikke i systemet', virksomhed: "true", language: reqLang(req, res) },); break;
+        case 'incorrectpassword': res.render('login', { errormessage: 'Email eller password er forkert', virksomhed: "true", language: reqLang(req, res) }); break;
         case 'notloggedin': res.render('login', { errormessage: 'Du skal logge ind før du kan se din profil.', virksomhed: "true", language: reqLang(req, res) }); break;
         case 'incorretemaillogincombination': res.render('login', { errormessage: 'Din email findes men ikke som en virksomheds konto.', virksomhed: "true", language: reqLang(req, res) }); break;
         case 'none': res.redirect('/'); break;
