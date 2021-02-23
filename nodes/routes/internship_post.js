@@ -94,38 +94,46 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
         var inputError = false;
         let brugernavn = res.locals.user == null || res.locals.user == undefined ? "ukendt bruger" : res.locals.user.email;
-        let now = new Date().toDateString();  
-        let append = `user: ${brugernavn} time: ${now}`
+        let now = new Date();
+        let dateTime = now.toLocaleDateString() + " " + now.toLocaleTimeString();   
+        let append = `user: ${brugernavn} time: ${dateTime}`
+        let errors = "";
 
         //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
         if (1 > title.length || title.length > 255) {
             console.log('Title length invalid ' +  append);
+            errors += 'Title invalid or missing <br>';
             inputError = true;
         }
 
         if (post_type == 0) {
             console.log('Missing type ' +  append);
+            errors += 'Missing type <br>';
             inputError = true;
         }
 
         if (country == 0) {
             console.log('Missing country ' +  append);
+            errors += 'Missing country <br>';
             inputError = true;
         }
 
         if (country == 1 && dawa_uuid == '') {
             console.log('Missing address ' +  append);
+            errors += 'Missing address <br>';
             inputError = true;
         }
 
         if (email.length > 0) {
             if (email.length > 255) {
                 console.log('Email too long ' +  append);
+                errors += 'Email too long <br>';
                 inputError = true;
             }
     
             if (!emailRegex.test(email)) {
                 console.log('Invalid email ' +  append);
+                errors += 'Invalid email <br>';
                 inputError = true;
             }
         }
@@ -133,17 +141,20 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         if (phone_number.length > 0) {
             if (phone_number.length > 255) {
                 console.log('Phone number too long ' +  append);
+                errors += 'Phone number too long <br>';
                 inputError = true;
             }
 
             if (!phoneRegex.test(phone_number)) {
                 console.log('Invalid phone number ' +  append);
+                errors += 'Invalid phone number <br>';
                 inputError = true;
             }
         }
 
         if (1 > contact.length || contact.length > 255) {
             console.log('Contact length invalid ' +  append);
+            errors += 'Contact invalid or missing <br>';
             inputError = true;
         }
 
@@ -152,7 +163,8 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             let inputDate = new Date(post_start_date);
 
             if (currDate > inputDate) {
-                console.log('Past date ' +  append);
+                console.log('Past date specified ' +  append);
+                errors += 'Past date specified for internship start <br>';
                 inputError = true;
             }
         } else {
@@ -166,6 +178,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
                 if (currDate > inputDate) {
                     console.log('Past date ' +  append);
+                    errors += 'Past date specified for application deadline <br>';
                     inputError = true;
                 }
             }
@@ -175,12 +188,14 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
         if (post_text.length > 65536) {
             console.log('Plain text is to long ' +  append);
+            errors += 'Plain text is to long <br>';
             inputError = true;
         }
 
         if (company_link.length > 0) {
             if (!linkRegex.test(company_link)) {
                 console.log('Link Invalid ' +  append);
+                errors += 'Link Invalid <br>';
                 inputError = true;
             }
         } else {
@@ -188,7 +203,8 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         }
 
         if (fk_education == 0 || fk_education == '0' || fk_education == null) {
-            console.log('Invalid choice ' +  append);
+            console.log('Invalid education choice ' +  append);
+            errors += 'Invalid education choice <br>';
             inputError = true;
         }
 
@@ -206,6 +222,8 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     return res.status(400).send(error);
                 });
                 res.redirect('../internship_view/' + post.id)
+            } else {
+                return res.status(422).render('errorInternship', {layout: false, errors: errors});
             }
         }
 
