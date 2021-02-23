@@ -14,15 +14,12 @@ async function createUddanelse(nameobj) {
 async function findUddannelseByName(name) {
   let udd = null;
   return new Promise((resolve) => {
-    console.log("--finding uddannelse by Name: " + name + "---");
     models.Uddannelse.findOne({
       where: { name: name },
     }).then((uddannelse) => {
       if (uddannelse === null) {
-        console.log("en uddannelse med dette navn findes ikke!");
       }
       if (uddannelse instanceof models.Uddannelse) {
-        console.log("--- fandt en uddannelse med navnet ---");
         udd = uddannelse;
       }
       resolve(udd);

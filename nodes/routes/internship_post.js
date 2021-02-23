@@ -93,54 +93,57 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         };
 
         var inputError = false;
+        let brugernavn = res.locals.user == null || res.locals.user == undefined ? "ukendt bruger" : res.locals.user.email;
+        let now = new Date().toDateString();  
+        let append = `user: ${brugernavn} time: ${now}`
 
         //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
         if (1 > title.length || title.length > 255) {
-            console.log('Title length invalid');
+            console.log('Title length invalid ' +  append);
             inputError = true;
         }
 
         if (post_type == 0) {
-            console.log('Missing type');
+            console.log('Missing type ' +  append);
             inputError = true;
         }
 
         if (country == 0) {
-            console.log('Missing country');
+            console.log('Missing country ' +  append);
             inputError = true;
         }
 
         if (country == 1 && dawa_uuid == '') {
-            console.log('Missing address');
+            console.log('Missing address ' +  append);
             inputError = true;
         }
 
         if (email.length > 0) {
             if (email.length > 255) {
-                console.log('Email too long');
+                console.log('Email too long ' +  append);
                 inputError = true;
             }
     
             if (!emailRegex.test(email)) {
-                console.log('Invalid email');
+                console.log('Invalid email ' +  append);
                 inputError = true;
             }
         }
 
         if (phone_number.length > 0) {
             if (phone_number.length > 255) {
-                console.log('Phone number too long');
+                console.log('Phone number too long ' +  append);
                 inputError = true;
             }
 
             if (!phoneRegex.test(phone_number)) {
-                console.log('Invalid phone number');
+                console.log('Invalid phone number ' +  append);
                 inputError = true;
             }
         }
 
         if (1 > contact.length || contact.length > 255) {
-            console.log('Contact length invalid');
+            console.log('Contact length invalid ' +  append);
             inputError = true;
         }
 
@@ -149,7 +152,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             let inputDate = new Date(post_start_date);
 
             if (currDate > inputDate) {
-                console.log('Past date');
+                console.log('Past date ' +  append);
                 inputError = true;
             }
         } else {
@@ -162,7 +165,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                 let inputDate = new Date(post_end_date);
 
                 if (currDate > inputDate) {
-                    console.log('Past date');
+                    console.log('Past date ' +  append);
                     inputError = true;
                 }
             }
@@ -171,13 +174,13 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         }
 
         if (post_text.length > 65536) {
-            console.log('Plain text is to long');
+            console.log('Plain text is to long ' +  append);
             inputError = true;
         }
 
         if (company_link.length > 0) {
             if (!linkRegex.test(company_link)) {
-                console.log("Link Invalid");
+                console.log('Link Invalid ' +  append);
                 inputError = true;
             }
         } else {
@@ -185,7 +188,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         }
 
         if (fk_education == 0 || fk_education == '0' || fk_education == null) {
-            console.log('Invalid choice');
+            console.log('Invalid choice ' +  append);
             inputError = true;
         }
 

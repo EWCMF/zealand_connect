@@ -17,12 +17,8 @@ router.get('/', function (req, res, next) {
         check = "";
         virksomhed = false;
     }
-    //console.log("QUERY");
-    //console.log(req.user);
-    //console.log("her er fejl json objektet:");
-    //console.log("\n"+JSON.stringify(error)+"\n");
+
     let msg = error.error;
-    //console.log("THIS ERROR "+msg);
     switch (msg) {
         case 'incorrectusername': res.render('login', { errormessage: 'Din account findes ikke i vores system gå til opret bruger for at oprette dig i systemet.', virksomhed: "true", language: reqLang(req, res) },); break;
         case 'incorrectpassword': res.render('login', { errormessage: 'Din account findes i vores system, men dit password er forkert.', virksomhed: "true", language: reqLang(req, res) }); break;
@@ -45,8 +41,6 @@ router.post('/authenticateVirksomhed', function (req, res, next) {
         req.body = JSON.parse(req.body);
     }
     passport.authenticate('local', function(err, user, info) {
-        //console.log('HER ER USER EFTER CALLBACK:');
-        //console.log(user);
         //handle error
         if (!user) {
             return res.redirect('/login' + info.message);
@@ -70,8 +64,6 @@ router.post('/authenticateStudent', function (req, res, next) {
         req.body = JSON.parse(req.body);
     }
     passport.authenticate('local', function(err, user, info) {
-        //console.log('HER ER USER EFTER CALLBACK:');
-        //console.log(user);
         //handle error
         if (!user) {
             return res.redirect('/login' + info.message);

@@ -7,12 +7,7 @@ var { reqLang } = require('../public/javascript/request');
 router.get('/', function (req, res, next) {
        //REQUEST PARAMETERS:
        let error = req.query;
-       //console.log("QUERY");
-       //console.log(req.user);
-       //console.log("her er fejl json objektet:");
-       //console.log("\n"+JSON.stringify(error)+"\n");
        let msg = error.error;
-       //console.log("THIS ERROR "+msg);
        //baseret på fejlbeskeden render vi forskellige ting. hvis 'none' så var der ikke fejl og vi går til forside
        switch(msg){
            case 'incorrectusername': res.render('login-student', { errormessage: 'Din account findes ikke i vores system gå til opret bruger for at oprette dig i systemet.'}); break;
@@ -31,11 +26,7 @@ router.get('/profiles',function(req, res, next) {
 
 
 router.post('/authenticate', function (req, res, next) {
-    //console.log('HER ER REQUESTEN FRA POST!!!!');
-    //console.log(req.body);
     passport.authenticate('local', function(err, user, info) {
-        //console.log('HER ER USER EFTER CALLBACK:');
-        //console.log(user);
         //handle error
         if(!user){
             return res.redirect('/login-student'+info.message);

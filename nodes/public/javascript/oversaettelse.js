@@ -10,7 +10,6 @@ function brugStrings(lang) {
     //køre igennem alt i dokumentet, leder efter data-key keys i html
     document.querySelectorAll('html [data-key]').forEach(element => {
         if(lang.includes('da')) {
-            //console.log('stopper her')
              return;
         }
 

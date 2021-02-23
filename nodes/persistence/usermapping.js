@@ -148,7 +148,6 @@ async function deleteVirksomhed(email) {
 
         //slet virksomheden
         await virksomhed.destroy();
-        console.log("A virksomhed was deleted");
         return errorHappened;
     } catch (e) {
         console.log(e);
@@ -184,7 +183,6 @@ async function deleteStudent(email) {
 
             //slet studenten
             await student.destroy();
-            console.log("A student was deleted");
             return errorHappened;
         }
     } catch (e) {
@@ -195,16 +193,11 @@ async function deleteStudent(email) {
 async function findUserByCVR(CVR) {
     let user = null;
     return new Promise(resolve => {
-        console.log("---finding user by CVR: " + CVR + "---");
         models.Virksomhed.findOne({ where: { cvrnr: CVR } }).then((virksomhed) => {
             if (virksomhed === null) {
-                console.log('en virksomhed med dette CVR findes ikke!');
                 //resolve(null);
             }
             if (virksomhed instanceof models.Virksomhed) {
-                console.log("---i found the Virksomhed:---");
-                //console.log(user instanceof models.User); // true
-                //console.log(user.username); // 'My Title'
                 user = virksomhed;
             }
             resolve(user);
