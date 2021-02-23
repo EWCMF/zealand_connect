@@ -69,9 +69,6 @@ router.post('/create', (req, res) => {
      let postnr = jsonBody.postnr;
      let cvrnr = jsonBody.cvrnr;
 
-     console.log(req.body);
-     console.log(jsonBody);
-
      //reset errors
      let atLeastOneErrorIsPresent = false;
      let errors = {
@@ -143,7 +140,6 @@ router.post('/create', (req, res) => {
                 console.log("errors")
             } 
             if(!atLeastOneErrorIsPresent) {
-                console.log("ingen errors")
                 hashPassword(password).then((hashedPassword) => {
                     let virksomhedsBruger = {
                         email: email,
@@ -157,7 +153,6 @@ router.post('/create', (req, res) => {
                     createVirksomhed(virksomhedsBruger).then(()=>{
                         //vi sender errors tilbage selvom de er tomme, 
                         //men så ved frontend at backend er færdig og den kan lave en getrequest til login.
-                        console.log("VIRKSOMHED ER SKABT");
                         errors.areThereErrors="false";
                         res.send(errors);
                     });
@@ -178,10 +173,8 @@ router.post('/delete', function (req, res) {
 
 
 router.post('/studentCreate', (req, res, next)=> {
-    console.log('post')
      // Indlæs variable fra viewet
      let jsonBody = JSON.parse(req.body);
-     console.log(jsonBody)
      let email = jsonBody.email;
      let gentagEmail = jsonBody.gentagEmail;
      let password = jsonBody.password;
@@ -254,7 +247,6 @@ router.post('/studentCreate', (req, res, next)=> {
                     createStudent(studentBruger).then(()=>{ //create student istedet
                         //vi sender errors tilbage selvom de er tomme, 
                         //men så ved frontend at backend er færdig og den kan lave en getrequest til login.
-                        console.log("STUdentent ER SKABT");
                         errors.areThereErrors="false";
                         res.send(errors);
                     });

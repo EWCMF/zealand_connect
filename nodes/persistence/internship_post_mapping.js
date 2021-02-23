@@ -21,7 +21,6 @@ async function deleteInternshipPost(id) {
         
         //slet praktikopslaget
         await internshipPost.destroy();
-        console.log("An internship post was deleted");
         return errorHappened;
     } catch (e) {
         console.log(e);

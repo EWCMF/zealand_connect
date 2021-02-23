@@ -147,7 +147,6 @@ router.get('/', async function (req, res, next) {
     }
 
     let where = await handleWhere(req.query);
-    console.log(where);
 
     let udd = await db.Uddannelse.findAll({
         attributes: ['id', 'name'],
@@ -318,17 +317,14 @@ router.get('/:id', async function (req, res) {
 
     if (cv.hjemmeside.includes("://")) {
         cv.hjemmeside = cv.hjemmeside.substring(cv.hjemmeside.indexOf("://") + 3);
-        //console.log(cv.linkedIn);
     }
 
     if (cv.linkedIn.includes("://")) {
         cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
-        //console.log(cv.linkedIn);
     }
 
     if (cv.yt_link.includes("://")) {
         cv.yt_link = cv.yt_link.substring(cv.yt_link.indexOf("://") + 3);
-        //console.log(cv.linkedIn);
     }
 
     var ejer = false;

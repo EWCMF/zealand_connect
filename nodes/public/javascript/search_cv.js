@@ -191,7 +191,6 @@ checkCollapse('lnd', 'collapse2', 'collapse2Header');
 
 function checkAddressSearch() {
     const url = new URL(window.location.href);
-    console.log(url.searchParams);
     if (url.searchParams.has('geo_id') && url.searchParams.has('geo_radius')) {
         let geo_id = url.searchParams.get('geo_id')
         let xhr = new XMLHttpRequest();

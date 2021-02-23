@@ -101,11 +101,9 @@ router.post('/sletUddannelse', authorizeUser('admin'), (req, res, next) => {
 
     findUddannelseByName(name).then((uddannelseFundetMedNavn) => {
         if (uddannelseFundetMedNavn === null) {
-            console.log('sletter ikke noget der ikke findes')
             messages.findesIkke = "Uddannelsen findes ikke"
             res.send(messages);
         } else {
-            console.log('sletter uddannelse')
             sletUddannelse(name)
             messages.uddannelseSlettet = "Uddannelsen slettet"
             res.send(messages)

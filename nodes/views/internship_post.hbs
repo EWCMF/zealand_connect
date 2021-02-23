@@ -339,7 +339,6 @@
 
     function validateAndUpdateInputLabel(labelId, inputId) {
         var file = document.getElementById(inputId).files[0];
-        console.log(file)
         //Checker om der er tilføjet filer
         //Henter den indexerede fil i og sætter dens str til kilobytes
         var fsize = Math.round(file.size / 1000);
@@ -369,11 +368,10 @@
         var docName = "{{rdoc}}";
 
         if (docName.length != 0) {
-            console.log("File");
             document.getElementById("uploadedFile").href = "uploads/" + docName;
             document.getElementById("uploadedFile").hidden = false;
         } else {
-            console.log("No file");
+            //console.log("No file");
         }
 
         toggleNote();

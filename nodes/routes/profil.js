@@ -89,8 +89,6 @@ router.get('/virksomhed/:id', async function (req, res) {
 
 router.get('/rediger',  authorizeUser('student', 'company', 'admin'), function (req, res, next) {
     let errors = req.query;
-    console.log("ERRORS");
-    console.log(errors);
     //todo if Student render student else virksomhed
     //todo: find bruger og indsæt dens data i render hbs.
     findUserByEmail(req.user).then((user) => {

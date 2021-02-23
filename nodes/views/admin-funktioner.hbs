@@ -97,7 +97,6 @@
                     xhttp.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
                             let responseObject = JSON.parse(this.responseText)
-                            console.log(responseObject);
                             $('#student-error').show();
                             if(responseObject.errorHappened){
                                 document.getElementById('student-error').innerHTML = "Denne bruger findes ikke";
@@ -134,8 +133,7 @@
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function () {
                         if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
-                            let responseObject = JSON.parse(this.responseText)
-                            console.log(responseObject);
+                            let responseObject = JSON.parse(this.responseText);
                             $('#virk-error').show();
                             if(responseObject.errorHappened){
                                 document.getElementById('virk-error').innerHTML = "Denne bruger findes ikke";
@@ -165,7 +163,6 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log('sending post for create');
                 $('#udd-error').show();
                 let responseObj = JSON.parse(this.responseText)
                 if (responseObj.findesallerede != '') {
@@ -204,7 +201,6 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                console.log('sending post for create')
                 $('#findesIkke').show();
                 $('#slettetMessage').show();
                 let responseObj = JSON.parse(this.responseText)
