@@ -325,11 +325,12 @@ function getLangdata() {
                 "Sprog_error": "You must specify language here",
                 //Speciale
                 "Telefon": "Telephone",
-                "Postnummer_tooltip": ["?", "When you  specify a postcode, the linked city is automatically shown on the CV. This field makes it possible for companies to focus their search and can help make you visible to them. Only Danish postcodes are supported."],
+                "Postnummer_tooltip": ["?", "When you  specify a postcode, the associated city is automatically shown on the CV. This field makes it possible for companies to focus their search and can help make you visible to them. Only Danish postcodes are supported."],
                 "Telefon_error": "You must specify a telephone number with 8 digits, not beginning with 0",
                 "linkedIn_error": "You must specify a working link to a LinkedIn profile or clear the field", 
                 "youtube_error": "You must specify a working link to a Youtube video or clear the field",
                 "hjemmeside_error": "You must specify a working link to your website or clear the field",
+                "Postnummer_errorCV": "Only Danish postcodes are allowed and specify only the numbers. The associated city will automatically be found",
                 "Link_til_CV_paa_Youtube": "Link to CV on Youtube",
                 "Link_til_CV_paa_Youtube_tooltip": ["?", "If you've uploaded a video resume on Youtube, you can refer to the video here."],
 

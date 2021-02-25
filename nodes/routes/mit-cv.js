@@ -4,7 +4,7 @@ const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 var { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
-const { emailRegex, phoneRegex, linkRegex } = require('../constants/regex');
+const { emailRegex, phoneRegex, linkRegex, postcodeRegex } = require('../constants/regex');
 const fetch = require('node-fetch');
 
 router.get('/', authorizeUser('student'), async function (req, res, next) {
@@ -128,10 +128,11 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let hjemmesideKorrekt = hjemmeside.length != 0 ? linkRegex.test(hjemmeside) : true;
     let youtubeKorrekt = yt_link.length != 0 ? linkRegex.test(yt_link) : true;
     let linkedInKorrekt = linkedIn.length != 0 ? linkRegex.test(linkedIn) : true; 
+    let postcodeKorrekt = postcode.length != 0 ? postcodeRegex.test(postcode) : true;
 
     if (!emailWrittenCorrectly || !phoneCheck || !medOverskrift || !medSprog || 
         !medUddannelse || !medTidligere_uddannelse || !medIt_kompetencer ||
-        !hjemmesideKorrekt || !youtubeKorrekt || !linkedInKorrekt) {
+        !hjemmesideKorrekt || !youtubeKorrekt || !linkedInKorrekt || !postcodeKorrekt) {
         return res.send('One or more values in the form are missing');
     }
 
@@ -153,7 +154,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let geo_lon;
     let city;
 
-    if (postcode != '') {
+    if (postcode.length != 0) {
         const url = 'https://dawa.aws.dk/postnumre?nr=' + postcode;
         const res = await fetch(url);
         const data = await res.json();//assuming data is json
