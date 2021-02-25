@@ -30,6 +30,7 @@ function submitButton() {
     let erhvervserfaring = document.getElementById("erhvervserfaring").value;
     let hjemmeside = document.getElementById("hjemmeside").value;
     let fritidsinteresser = document.getElementById("fritidsinteresser").value;
+    let postcode = document.getElementById('postcode').value;
 
     let all_valid = true;
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
@@ -43,6 +44,8 @@ function submitButton() {
     let Mit_yt_link = linkRegex.test(yt_link);
 
     let hjemmesideKorrekt = linkRegex.test(hjemmeside);
+
+    let postcodeCheck = postcodeRegex.test(postcode);
 
     if (overskrift == "") {
         all_valid = false;
@@ -98,6 +101,13 @@ function submitButton() {
         document.getElementById("UddannelsesError").hidden = false;
     } else {
         document.getElementById("UddannelsesError").hidden = true;
+    }
+
+    if (postcode.length != 0 && !postcodeCheck) {
+        all_valid = false;
+        document.getElementById('postnummerError').hidden = false;
+    } else {
+        document.getElementById('postnummerError').hidden = true;
     }
 
     if (tidligere_uddannelse == "") {
