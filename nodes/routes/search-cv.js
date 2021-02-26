@@ -97,8 +97,9 @@ const handleWhere = async function (paramContainer) {
             let values = paramContainer[key];
             const CVsWithType = await db.CV_CVtype.findAll({
                 where: {
-                    cvtype_id: +values
-                }
+                    cvtype_id: values
+                },
+                raw: true
             })
             CVsWithType.forEach(element => {
                 id[Op.or].push(element.cv_id);
@@ -174,15 +175,12 @@ router.get('/', async function (req, res, next) {
         attributes: ['id', 'cvType'],
         order: [
             ['cvType', 'ASC']
-        ]
+        ],
     });
 
-    const {
-        count,
-        rows
-    } = await db.CV.findAndCountAll({
+    const rows = await db.CV.findAll({
         limit: limit,
-        raw: true,
+        raw: false,
         nest: true,
         offset: offset,
         order: [
@@ -196,10 +194,18 @@ router.get('/', async function (req, res, next) {
                 model: db.Uddannelse,
                 as: 'education',
                 attributes: ['name']
+            },
+            {
+                model: db.CVtype,
+                as: 'cvtype',
+                attributes: ['cvtype'],
+                through: db.CV_CVtype
             }
         ],
         where
     });
+
+    const count = rows.length;
 
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1 ? true : false;
@@ -243,12 +249,9 @@ router.post('/query', function (req, res) {
         }
         ;
 
-        const {
-            count,
-            rows
-        } = await db.CV.findAndCountAll({
+        let rows = await db.CV.findAll({
             limit: limit,
-            raw: true,
+            raw: false,
             nest: true,
             offset: offset,
             order: [
@@ -263,9 +266,42 @@ router.post('/query', function (req, res) {
                     model: db.Uddannelse,
                     as: 'education',
                     attributes: ['name']
+                },
+                {
+                    model: db.CVtype,
+                    as: 'cvtype',
+                    attributes: ['cvtype'],
+                    through: db.CV_CVtype
                 }
             ]
         });
+
+        // console.log(rows)
+        // console.log(rows[0].cvtype[0])
+
+        rows = rows.map(cv => {
+            return {
+                id: cv.id,
+                overskrift: cv.overskrift,
+                om_mig: cv.om_mig,
+                student: {
+                    fornavn: cv.student.fornavn,
+                    efternavn: cv.student.efternavn,
+                    profilbillede: cv.student.profilbillede
+                },
+                education: {
+                    name: cv.education.name
+                },
+                cvtype: cv.cvtype.map(cvtype => {
+                    console.log(cvtype.dataValues.cvtype)
+                    return {
+                        cvtype: cvtype.dataValues.cvtype
+                    }
+                })
+            }
+        })
+
+        const count = rows.length;
 
         var item = [count];
 
@@ -305,13 +341,15 @@ router.post('/query', function (req, res) {
                 let pageCount = Math.ceil(count / limit);
                 let withPages = pageCount > 1 ? true : false;
 
-                let html = template({
-                    pagination: {
-                        page: page,
-                        pageCount: pageCount
-                    },
-                    withPages
-                });
+                let html = template(
+                    {
+                        pagination: {
+                            page: page,
+                            pageCount: pageCount
+                        },
+                        withPages
+                    }
+                );
 
                 item.push(html);
                 res.send(item);

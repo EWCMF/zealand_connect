@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       CVtype.belongsToMany(models.CV, {
         through: models.CV_CVtype,
-        foreignKey: "cvtype_id",
+        foreignKey: "cv_id",
+        otherKey: "cvtype_id",
         as: "cvtype"
         /* options */ });
     }
