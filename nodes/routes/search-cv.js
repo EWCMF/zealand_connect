@@ -178,7 +178,7 @@ router.get('/', async function (req, res, next) {
         ],
     });
 
-    const rows = await db.CV.findAll({
+    let rows = await db.CV.findAll({
         limit: limit,
         raw: false,
         nest: true,
@@ -204,6 +204,28 @@ router.get('/', async function (req, res, next) {
         ],
         where
     });
+
+    rows = rows.map(cv => {
+        return {
+            id: cv.id,
+            overskrift: cv.overskrift,
+            om_mig: cv.om_mig,
+            student: {
+                fornavn: cv.student.fornavn,
+                efternavn: cv.student.efternavn,
+                profilbillede: cv.student.profilbillede
+            },
+            education: {
+                name: cv.education.name
+            },
+            cvtype: cv.cvtype.map(cvtype => {
+                console.log(cvtype.dataValues.cvtype)
+                return {
+                    cvtype: cvtype.dataValues.cvtype
+                }
+            })
+        }
+    })
 
     const count = rows.length;
 
