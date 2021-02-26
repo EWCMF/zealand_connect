@@ -22,6 +22,9 @@ const makeArray = function (body, param) {
     }
 };
 const handleWhere = async function (paramContainer) {
+    let id = {
+        [Op.or]: []
+    };
     let fk_education = {
         [Op.or]: []
     };
@@ -90,15 +93,16 @@ const handleWhere = async function (paramContainer) {
                 }
             }
         }
-        if (key.includes("cvtype")){
+        if (key.includes("cvtype")) {
             let values = paramContainer[key];
-            if (Array.isArray(values)) {
-                values.forEach(element => {
-                    fk_education[Op.or].push(+element);
-                });
-            } else {
-                fk_education[Op.or].push(+values);
-            }
+            const CVsWithType = await db.CV_CVtype.findAll({
+                where: {
+                    cvtype_id: +values
+                }
+            })
+            CVsWithType.forEach(element => {
+                id[Op.or].push(element.cv_id);
+            })
         }
     }
 
@@ -111,20 +115,20 @@ const handleWhere = async function (paramContainer) {
         const data = await res.json();//assuming data is json
         if (data.type.includes('FeatureCollection')) {
             let json = data;
-            
+
             let longitude = +json.features[0].geometry.coordinates[0];
             let latitude = +json.features[0].geometry.coordinates[1];
             let radius = +geo_radius * 1000;
 
             let R = 6371e3; // earth's mean radius in metres
-            let cos=Math.cos
+            let cos = Math.cos
             let π = Math.PI;
 
             let params = {
-                minLat: latitude - radius/R*180/π,
-                maxLat: latitude + radius/R*180/π,
-                minLon: longitude - radius/R*180/π / cos(latitude*π/180),
-                maxLon: longitude + radius/R*180/π / cos(latitude*π/180)
+                minLat: latitude - radius / R * 180 / π,
+                maxLat: latitude + radius / R * 180 / π,
+                minLon: longitude - radius / R * 180 / π / cos(latitude * π / 180),
+                maxLon: longitude + radius / R * 180 / π / cos(latitude * π / 180)
             };
 
             geo_lat[Op.or] = {[Op.between]: [params.minLat, params.maxLat]};
@@ -133,6 +137,7 @@ const handleWhere = async function (paramContainer) {
     }
 
     return where = {
+        id,
         fk_education,
         sprog,
         geo_lat,
@@ -165,6 +170,13 @@ router.get('/', async function (req, res, next) {
         ]
     });
 
+    let cvtype = await db.CVtype.findAll({
+        attributes: ['id', 'cvType'],
+        order: [
+            ['cvType', 'ASC']
+        ]
+    });
+
     const {
         count,
         rows
@@ -177,9 +189,9 @@ router.get('/', async function (req, res, next) {
             ['updatedAt', 'DESC']
         ],
         include: [{
-                model: db.Student,
-                as: 'student'
-            },
+            model: db.Student,
+            as: 'student'
+        },
             {
                 model: db.Uddannelse,
                 as: 'education',
@@ -199,6 +211,7 @@ router.get('/', async function (req, res, next) {
         json: rows,
         resultater: count,
         udd: udd,
+        cvtype: cvtype,
         pagination: {
             page: page,
             pageCount: pageCount
@@ -216,6 +229,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'udd');
         makeArray(fields, 'lnd');
         makeArray(fields, 'geo');
+        makeArray(fields, 'cvtype');
 
         let where = await handleWhere(fields);
 
@@ -226,7 +240,8 @@ router.post('/query', function (req, res) {
             offset = 0
         } else {
             offset = (page - 1) * limit;
-        };
+        }
+        ;
 
         const {
             count,
@@ -241,9 +256,9 @@ router.post('/query', function (req, res) {
             ],
             where,
             include: [{
-                    model: db.Student,
-                    as: 'student'
-                },
+                model: db.Student,
+                as: 'student'
+            },
                 {
                     model: db.Uddannelse,
                     as: 'education',
@@ -315,9 +330,9 @@ router.get('/:id', async function (req, res) {
             id: parseInt(id)
         },
         include: [{
-                model: db.Student,
-                as: 'student'
-            },
+            model: db.Student,
+            as: 'student'
+        },
             {
                 model: db.Uddannelse,
                 as: 'education'
@@ -391,9 +406,9 @@ router.get('/:id/create_pdf', function (req, res, next) {
             id: parseInt(id)
         },
         include: [{
-                model: db.Student,
-                as: 'student'
-            },
+            model: db.Student,
+            as: 'student'
+        },
             {
                 model: db.Uddannelse,
                 as: 'education'
@@ -592,7 +607,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
         // Udlandsophold og frivillig arbejde
         let udenlandsophold_og_frivilligt_arbejde = cv.udenlandsophold_og_frivilligt_arbejde != null
-            && cv.udenlandsophold_og_frivilligt_arbejde != '' ? cv.udenlandsophold_og_frivilligt_arbejde : texts.ikke_angivet
+        && cv.udenlandsophold_og_frivilligt_arbejde != '' ? cv.udenlandsophold_og_frivilligt_arbejde : texts.ikke_angivet
         myDoc.fontSize(16)
             .lineGap(16)
             .text(texts.udlandsophold_og_frivilligt_arbejde);
@@ -626,7 +641,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .lineGap(2)
             .text(cv.it_kompetencer);
 
-        myDoc.moveDown(2);        
+        myDoc.moveDown(2);
 
 
         // Sprog
@@ -638,7 +653,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .lineGap(2)
             .text(cv.sprog);
 
-    
+
         let a4Height = 841.89;
         const range = myDoc.bufferedPageRange();
         for (i = range.start, end = range.start + range.count, range.start <= end; i < end; i++) {
