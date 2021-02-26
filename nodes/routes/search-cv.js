@@ -90,6 +90,16 @@ const handleWhere = async function (paramContainer) {
                 }
             }
         }
+        if (key.includes("cvtype")){
+            let values = paramContainer[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    fk_education[Op.or].push(+element);
+                });
+            } else {
+                fk_education[Op.or].push(+values);
+            }
+        }
     }
 
     if (paramContainer.hasOwnProperty('geo_id') && paramContainer.hasOwnProperty('geo_radius')) {

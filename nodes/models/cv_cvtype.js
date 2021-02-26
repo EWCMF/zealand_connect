@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class CVtype extends Model {
+  class CV_CVtype extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      CVtype.belongsToMany(models.CV, { through: models.CV_CVtype, /* options */ });
     }
   };
-  CVtype.init({
-    cvType: DataTypes.STRING
+  CV_CVtype.init({
+    cvtype_id: DataTypes.INTEGER,
+    cv_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'CVtype',
+    modelName: 'CV_CVtype',
   });
-  return CVtype;
+  return CV_CVtype;
 };
