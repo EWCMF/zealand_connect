@@ -219,7 +219,6 @@ router.get('/', async function (req, res, next) {
                 name: cv.education.name
             },
             cvtype: cv.cvtype.map(cvtype => {
-                console.log(cvtype.dataValues.cvtype)
                 return {
                     cvtype: cvtype.dataValues.cvtype
                 }
@@ -297,9 +296,6 @@ router.post('/query', function (req, res) {
                 }
             ]
         });
-
-        // console.log(rows)
-        // console.log(rows[0].cvtype[0])
 
         rows = rows.map(cv => {
             return {
