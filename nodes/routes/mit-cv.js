@@ -139,6 +139,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let studiejob = req.body.studiejobCheck;
     let trainee = req.body.traineeCheck;
     let fuldtid = req.body.fuldtidCheck;
+    let cvtypes = [req.body.praktikCheck, req.body.studiejobCheck, req.body.traineeCheck, req.body.fuldtidCheck]
 
     let emailWrittenCorrectly = emailRegex.test(email);
     let phoneCheck = phoneRegex.test(telefon);
@@ -225,31 +226,6 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         defaults: json
     });
 
-    if (praktik){
-        const [cvtype, cvtypeCreated] = await db.CV_CVtype.findOrCreate({
-            where: {
-                cv_id: cv.id,
-                cvtype_id: 1
-            }
-        })
-
-        if (!cvtypeCreated) {
-            await db.CV_CVtype.update(json, {
-                where: {
-                    cv_id: cv.id,
-                    cvtype_id: 1
-                }
-            })
-        }
-    } else {
-        await db.CV_CVtype.destroy({
-            where: {
-                cv_id: cv.id,
-                cvtype_id: 1
-            }
-        })
-    }
-
     if (!created) {
         await db.CV.update(json, {
             where: {
@@ -266,6 +242,33 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     }
 
     let status = lang != 'en' ? 'Succes' : 'Success';
+
+    for (let i = 0; i < cvtypes.length; i++) {
+        if (typeof cvtypes[i] !== 'undefined'){
+            const [cvtype, cvtypeCreated] = await db.CV_CVtype.findOrCreate({
+                where: {
+                    cv_id: cv.id,
+                    cvtype_id: i + 1
+                }
+            })
+
+            if (!cvtypeCreated) {
+                await db.CV_CVtype.update(json, {
+                    where: {
+                        cv_id: cv.id,
+                        cvtype_id: i + 1
+                    }
+                })
+            }
+        } else {
+            await db.CV_CVtype.destroy({
+                where: {
+                    cv_id: cv.id,
+                    cvtype_id: i + 1
+                }
+            })
+        }
+    }
 
     res.render('mit-cv-success', {layout: false, status: status, message: besked, id: cv.id});
 });
