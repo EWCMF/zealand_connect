@@ -3,20 +3,62 @@
         <div class="col">
             <h1 id="cvOverskrift" data-key="Virksomheder">Virksomheder</h1>
             <hr>
-            <label id="results" class="mb-3 mt-5 ml-2 mr-0">
-                    {{resultater}} 
-            </label>
-            <label class="ml-0" data-key="virksomheder_registreret">
-                    virksomheder registreret
-            </label>
         </div>
     </div>
-    <div id="cards">
-    {{> search-virksomhed-card }}
-    </div>
+    <div class="row m-1 mt-5">
+        <div class="col-12 col-lg-2 {{!-- border --}} rounded h-100">
+            {{!-- <h5 class="m-2">Filter</h5> --}}
+            <form class="mt-3 mb-3" id="filterForm" method="POST" action="search-virksomheder/query" onsubmit="return submitForm(this);">
+                <div class="panel-group" id="accordion">
+                </div>
+            </form> 
+        </div>
+        <div class="col">
+            <div class="mb-2 d-flex flex-row" >
+                <label id="results" class="mb-0 flex align-self-center sorteringsContainer">
+                    {{resultater}}&nbsp;
+                </label>
+                <label class="mb-0 flex-fill align-self-center sorteringsContainer" data-key="virksomheder_registreret">
+                    virksomheder registreret
+                </label>
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer" data-key="Sortering">
+                    Sortering:
+                </label>
+                <div class="btn-group">
+                    <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" value="navn" data-key="Navn">
+                        Navn
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item sorteringsContainer" id="navn" data-key="Navn" onclick="changeSort(this, 'navn')">Navn</a>
+                            
+                        <a class="dropdown-item sorteringsContainer" id="senestOpdateret" data-key="Senest_opdateret"
+                            onclick="changeSort(this, 'updatedAt')">Senest opdateret</a>
+                    </div>
+                </div>
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer" data-key="Raekkefoelge">
+                    Rækkefølge:
+                </label>
+                <div class="btn-group">
+                    <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" value="ASC" data-key="Stigende">
+                        Stigende
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')" data-key="Stigende">Stigende</a>
+                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')" data-key="Faldende">Faldende</a>
+                    </div>
+                </div>
+
+            </div>
+            <div id="cards">
+                {{> search-virksomhed-card }}
+            </div>
+        </div>
+    </div>    
+
     <div class="row d-flex justify-content-center" id="pagination">
         {{> search-pagination}}
     </div>
-    <form id="filterForm" method="POST" action="search-virksomheder/query"></form>
 </div>
 <script src="/javascript/search-virksomhed.js"></script>

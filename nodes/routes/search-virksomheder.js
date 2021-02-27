@@ -4,14 +4,21 @@ const hbs = require('handlebars');
 const fs = require('fs');
 const formidable = require("formidable");
 const path = require('path');
-const { reqLang } = require('../public/javascript/request');
-const { Virksomhed } = require('../models');
+const {
+    reqLang
+} = require('../public/javascript/request');
+const {
+    Virksomhed
+} = require('../models');
 const limit = 20;
+const handleWhere = function () {
 
-router.get('/', async function(req, res, next) {
+}
 
-    var page;
-    var offset;
+router.get('/', async function (req, res, next) {
+
+    let page;
+    let offset;
     if (req.query.page == null) {
         page = 1
         offset = 0;
@@ -19,21 +26,38 @@ router.get('/', async function(req, res, next) {
         page = req.query.page
         offset = (page - 1) * limit;
     }
-    
-    const { 
-        count, 
-        rows 
+
+    let sort;
+    if (req.query.sort == null) {
+        sort = "navn"
+    } else {
+        sort = req.query.sort;
+    }
+
+    let order;
+    if (req.query.order == null) {
+        order = "ASC"
+    } else {
+        order = req.query.order
+    }
+
+
+    const {
+        count,
+        rows
     } = await Virksomhed.findAndCountAll({
         limit: limit,
         raw: true,
         offset: offset,
         order: [
-            ['createdAt', 'DESC']
+            [sort, order]
         ],
         where: {
             visible: true
         }
     });
+
+    let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1 ? true : false;
@@ -45,7 +69,8 @@ router.get('/', async function(req, res, next) {
             page: page,
             pageCount: pageCount
         },
-        withPages
+        withPages,
+        url: fullUrl
     });
 });
 
@@ -54,15 +79,27 @@ router.post('/query', function (req, res) {
     var formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
 
-        
-
-        var page = parseInt(fields.page);
-        var offset;
+        let page = parseInt(fields.page);
+        let offset;
 
         if (page == 1) {
             offset = 0
         } else {
             offset = (page - 1) * limit;
+        }
+
+        let sort;
+        if (fields.sort == null) {
+            sort = "navn"
+        } else {
+            sort = fields.sort;
+        }
+
+        let order;
+        if (fields.order == null) {
+            order = "ASC"
+        } else {
+            order = fields.order
         }
 
         const {
@@ -73,7 +110,7 @@ router.post('/query', function (req, res) {
             raw: true,
             offset: offset,
             order: [
-                ['createdAt', 'DESC']
+                [sort, order]
             ],
             where: {
                 visible: true
