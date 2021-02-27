@@ -30,17 +30,17 @@ router.post('/', function (req, res) {
         return res.send('One or more fields are invalid');
     }
 
-    const transport = nodemailer.createTransport({
+    // const transport = nodemailer.createTransport({
         
-    });
+    // });
 
-    const message = {
+    // const message = {
         
-    };
+    // };
 
-    transport.sendMail(message, function (err, info) {
+    // transport.sendMail(message, function (err, info) {
         
-    });
+    // });
 
     res.redirect('/forgot-password?success=true');
 })
