@@ -68,6 +68,20 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         res.status(403).render('error403', {layout: false});
     }
 
+    const CVtypes = await db.CV_CVtype.findAll({
+        where: {
+            cv_id: student.cv.id
+        }
+    })
+
+    let cvtypes = [false, false, false, false];
+
+    if (CVtypes.length > 0){
+        CVtypes.forEach(element => {
+            cvtypes[element.cvtype_id - 1] = true
+        })
+    }
+
     res.render('mit-cv', {
         language: reqLang(req, res),
         uddannelser: udd,
@@ -88,7 +102,11 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         hjemmeside: student.cv.hjemmeside,
         fritidsinteresser: student.cv.fritidsinteresser,
         offentlig: student.cv.offentlig,
-        postcode: student.cv.postcode
+        postcode: student.cv.postcode,
+        praktik: cvtypes[0],
+        studiejob: cvtypes[1],
+        trainee: cvtypes[2],
+        fuldtid: cvtypes[3]
     })
 });
 
@@ -117,6 +135,10 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let fritidsinteresser = req.body.fritidsinteresser;
     let offentlig = req.body.tilgaengelighed;
     let postcode = req.body.postcode;
+    let praktik = req.body.praktikCheck;
+    let studiejob = req.body.studiejobCheck;
+    let trainee = req.body.traineeCheck;
+    let fuldtid = req.body.fuldtidCheck;
 
     let emailWrittenCorrectly = emailRegex.test(email);
     let phoneCheck = phoneRegex.test(telefon);
@@ -127,10 +149,10 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let medIt_kompetencer = !it_kompetencer == ""
     let hjemmesideKorrekt = hjemmeside.length != 0 ? linkRegex.test(hjemmeside) : true;
     let youtubeKorrekt = yt_link.length != 0 ? linkRegex.test(yt_link) : true;
-    let linkedInKorrekt = linkedIn.length != 0 ? linkRegex.test(linkedIn) : true; 
+    let linkedInKorrekt = linkedIn.length != 0 ? linkRegex.test(linkedIn) : true;
     let postcodeKorrekt = postcode.length != 0 ? postcodeRegex.test(postcode) : true;
 
-    if (!emailWrittenCorrectly || !phoneCheck || !medOverskrift || !medSprog || 
+    if (!emailWrittenCorrectly || !phoneCheck || !medOverskrift || !medSprog ||
         !medUddannelse || !medTidligere_uddannelse || !medIt_kompetencer ||
         !hjemmesideKorrekt || !youtubeKorrekt || !linkedInKorrekt || !postcodeKorrekt) {
         return res.send('One or more values in the form are missing');
@@ -193,7 +215,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         postcode,
         city,
         geo_lat,
-        geo_lon
+        geo_lon,
     }
 
     const [cv, created] = await db.CV.findOrCreate({
@@ -202,6 +224,31 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         },
         defaults: json
     });
+
+    if (praktik){
+        const [cvtype, cvtypeCreated] = await db.CV_CVtype.findOrCreate({
+            where: {
+                cv_id: cv.id,
+                cvtype_id: 1
+            }
+        })
+
+        if (!cvtypeCreated) {
+            await db.CV_CVtype.update(json, {
+                where: {
+                    cv_id: cv.id,
+                    cvtype_id: 1
+                }
+            })
+        }
+    } else {
+        await db.CV_CVtype.destroy({
+            where: {
+                cv_id: cv.id,
+                cvtype_id: 1
+            }
+        })
+    }
 
     if (!created) {
         await db.CV.update(json, {
@@ -215,7 +262,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         } else {
             besked = lang != 'en' ? "Ændringer er gemt men CV'et er ikke gyldigt mere og vil derfor ikke vises på søgelisten." : "The changes are saved but the CV isn't valid anymore and will not be shown in the search list."
         }
-        
+
     }
 
     let status = lang != 'en' ? 'Succes' : 'Success';
