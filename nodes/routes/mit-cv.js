@@ -135,10 +135,6 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let fritidsinteresser = req.body.fritidsinteresser;
     let offentlig = req.body.tilgaengelighed;
     let postcode = req.body.postcode;
-    let praktik = req.body.praktikCheck;
-    let studiejob = req.body.studiejobCheck;
-    let trainee = req.body.traineeCheck;
-    let fuldtid = req.body.fuldtidCheck;
     let cvtypes = [req.body.praktikCheck, req.body.studiejobCheck, req.body.traineeCheck, req.body.fuldtidCheck]
 
     let emailWrittenCorrectly = emailRegex.test(email);
