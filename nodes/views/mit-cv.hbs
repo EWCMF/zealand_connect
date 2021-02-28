@@ -42,7 +42,7 @@
                     <div class="form-group required">
                         <label for="exampleFormControlInput1" data-key="Sprog">Sprog</label>
                         <input class="form-control" placeholder="Dansk" id="sprog" name="sprog" value={{sprog}}>
-                      <p id="sprogError" class="CVErrorColor" hidden="true" data-key="Sprog_error">Du skal skrive dit ønskede sprog her</p> 
+                      <p id="sprogError" class="CVErrorColor" hidden="true" data-key="Sprog_error">Du skal skrive dit ønskede sprog her</p>
                     </div>
                 </div>
             </div>
@@ -133,12 +133,50 @@
                 <label for="exampleFormControlTextarea1" data-key="Tidligere_udannelse">Tidligere uddannelse</label>
                 <textarea class="form-control" rows="3" id="tidligere-uddannelse" name="tidligere_uddannelse"
                     placeholder="Tidligere eller lidt om din nuværende Uddannelse" data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea>
-                <p id="Tidligere-uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p> 
+                <p id="Tidligere-uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
             </div>
             <div class="form-group">
                 <!-- textarea med hobby -->
                 <label for="exampleFormControlTextarea1" data-key="Fritidsinteresser">Fritidsinteresser</label>
                 <textarea class="form-control" rows="3" id="fritidsinteresser" name="fritidsinteresser" placeholder="Valgfri" data-key="Valgfri_placeholder">{{fritidsinteresser}}</textarea>
+            </div>
+            <!-- Checkboxes til CV-type -->
+            <div class="form-group">
+                <div>
+                    <label data-key="Jeg_søger:">Jeg søger:</label>
+                </div>
+                <div class="form-check">
+                    {{#if praktik}}
+                        <input class="checkbox-inline" type="checkbox" value="1" id="praktikCheck" name="praktikCheck" checked>
+                    {{else}}
+                        <input class="checkbox-inline" type="checkbox" value="1" id="praktikCheck" name="praktikCheck">
+                    {{/if}}
+                    <label class="form-check-label" for="praktikCheck" data-key="Praktik">Praktik</label>
+                </div>
+                <div class="form-check">
+                    {{#if studiejob}}
+                        <input class="checkbox-inline" type="checkbox" value="2" id="studiejobCheck" name="studiejobCheck" checked>
+                    {{else}}
+                        <input class="checkbox-inline" type="checkbox" value="2" id="studiejobCheck" name="studiejobCheck">
+                    {{/if}}
+                    <label class="form-check-label" for="studiejobCheck" data-key="Studiejob">Studiejob</label>
+                </div>
+                <div class="form-check">
+                    {{#if trainee}}
+                        <input class="checkbox-inline" type="checkbox" value="3" id="traineeCheck" name="traineeCheck" checked>
+                    {{else}}
+                        <input class="checkbox-inline" type="checkbox" value="3" id="traineeCheck" name="traineeCheck">
+                    {{/if}}
+                    <label class="form-check-label" for="traineeCheck" data-key="Trainne_stilling">Trainee stilling</label>
+                </div>
+                <div class="form-check">
+                    {{#if fuldtid}}
+                        <input class="checkbox-inline" type="checkbox" value="4" id="fuldtidCheck" name="fuldtidCheck" checked>
+                    {{else}}
+                        <input class="checkbox-inline" type="checkbox" value="4" id="fuldtidCheck" name="fuldtidCheck">
+                    {{/if}}
+                    <label class="form-check-label" for="jobCheck" data-key="Fuldtidsstilling">Fuldtidsstilling</label>
+                </div>
             </div>
             <!-- Radio til om en cv skal være offentlig -->
             <div class="form-group required pb-3">

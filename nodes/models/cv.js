@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "education",
         foreignKey: 'fk_education'
       })
+      CV.belongsToMany(models.CVtype, {
+        through: models.CV_CVtype,
+        foreignKey: "cv_id",
+        as: "cvtype"
+        /* options */ });
     }
   };
   CV.init({

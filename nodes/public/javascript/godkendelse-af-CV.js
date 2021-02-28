@@ -31,6 +31,7 @@ function submitButton() {
     let hjemmeside = document.getElementById("hjemmeside").value;
     let fritidsinteresser = document.getElementById("fritidsinteresser").value;
     let postcode = document.getElementById('postcode').value;
+    let praktik = document.getElementById('praktikCheck').value;
 
     let all_valid = true;
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet

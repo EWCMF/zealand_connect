@@ -126,6 +126,7 @@ function submitForm(formElement) {
 
     handleInputArrayAndSetToForm(formData, 'udd');
     handleInputArrayAndSetToForm(formData, 'lnd');
+    handleInputArrayAndSetToForm(formData, 'cvtype');
 
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -188,6 +189,7 @@ function checkCollapse(key, collapse, collapseHeader) {
 }
 checkCollapse('udd', 'collapse1', 'collapse1Header');
 checkCollapse('lnd', 'collapse2', 'collapse2Header');
+checkCollapse('cvtype', 'collapse4', 'collapse4Header');
 
 function checkAddressSearch() {
     const url = new URL(window.location.href);
