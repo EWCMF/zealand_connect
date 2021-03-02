@@ -11,13 +11,18 @@
     <div class="row">
         <div class="col-12 col-md-8">
             {{#if update}}
-            <form method="POST" onsubmit="return validate_internship_post(event)" enctype="multipart/form-data">
+            <form 
+                method="POST" 
+                action="/internship_update" 
+                enctype="multipart/form-data" 
+                id="internshipForm"
+            >
             {{else}}
             <form
-                    method="POST"
-                    action="/internship_post"
-                    enctype="multipart/form-data"
-                    id="internshipForm"
+                method="POST"
+                action="/internship_post"
+                enctype="multipart/form-data"
+                id="internshipForm"
             >
             {{/if}}
             <input type="hidden" value="{{rid}}" name="id">
@@ -56,7 +61,9 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="form-group required">
-                        <label for="countrySelect" data-key="Land">Land</label>
+                        <label for="countrySelect" data-key="Land">Land</label><span class="tooltiphelp ml-1" data-toggle="tooltip" data-placement="top"
+                            title="Hvis Danmark vælges som land kommer der et adressefelt til højre som også skal udfyldes"
+                            data-Key="Land_tooltip">?</span>
                         <select class="form-control" name="country" id="countrySelect" onchange="countryToggleFields()">
                             <option selected disabled hidden value="0" data-key="Vaelg_et_land">Vælg et land</option>
                             <option value="1" data-key="Danmark">Danmark</option>
@@ -69,7 +76,9 @@
                 </div>
                 <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
                     <div class="form-group required autocomplete-container">
-                        <label for="" data-key="Adresse">Adresse</label>
+                        <label for="" data-key="Adresse">Adresse</label><span class="tooltiphelp ml-1" data-toggle="tooltip" data-placement="top"
+                            title="Feltet her bruger Danmarks Adressers Web API til at udfylde feltet som er en service hvor man kan søge på danske adresser. For at være sikker på at en korrekt adresse er valgt skal adressen være synlig i grå tekst under feltet"
+                            data-Key="Adresse_tooltip">?</span>
                         <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
                         <input type="hidden" id="addressSearchJSON" name="dawa_json">
                         <input type="hidden" id="addressSearchCity" name="city">
@@ -261,10 +270,6 @@
     function rydPraktik() {
         document.getElementById('internshipEmploymentDate').value = '';
     }
-
-    var emailRegex = /{{{emailRegex}}}/;
-    var dateRegex = /{{{dateRegex}}}/;
-    var linkRegex = /{{{linkRegex}}}/;
 
             function setDefaultSelect() {
                 var update = '{{ update }}';

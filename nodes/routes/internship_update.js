@@ -225,11 +225,11 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             }
         }
 
-        db.InternshipPost.findByPk(req.query.id, {
+        db.InternshipPost.findByPk(id, {
             attributes: ["post_document"]
         }).then(result => {
             //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-            renameDoc(result["post_document"])
+            renameDoc(result["post_document"]);
         }).catch();
     });
 });
