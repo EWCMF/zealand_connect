@@ -141,8 +141,6 @@ const handleWhere = async function (paramContainer) {
         id,
         fk_education,
         sprog,
-        geo_lat,
-        geo_lon,
         offentlig: true,
         gyldig: true
     }
