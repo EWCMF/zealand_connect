@@ -90,7 +90,7 @@ function validate_internship_post() {
   }
 
   //Virksomheds Link
-  if (!document.getElementById('companyURL').value == '') {
+  if (!document.getElementById('companyURL').value.length) {
     if (!linkRegex.test(document.getElementById('companyURL').value)) {
       all_valid = false;
       document.getElementById('companylinkError').hidden = false;
