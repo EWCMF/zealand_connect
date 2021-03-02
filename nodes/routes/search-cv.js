@@ -141,6 +141,8 @@ const handleWhere = async function (paramContainer) {
         id,
         fk_education,
         sprog,
+        geo_lat,
+        geo_lon,
         offentlig: true,
         gyldig: true
     }
@@ -203,8 +205,6 @@ router.get('/', async function (req, res, next) {
         where
     });
 
-    console.log(rows);
-
     rows = rows.map(cv => {
         return {
             id: cv.id,
@@ -226,9 +226,9 @@ router.get('/', async function (req, res, next) {
         }
     })
 
-    console.log(rows);
-
-    const count = rows.length;
+    const count = await db.CV.count({
+        where
+    });
 
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1 ? true : false;
@@ -321,7 +321,9 @@ router.post('/query', function (req, res) {
             }
         })
 
-        const count = rows.length;
+        const count = await db.CV.count({
+            where
+        });
 
         var item = [count];
 
