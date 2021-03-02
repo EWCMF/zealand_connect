@@ -30,17 +30,25 @@ router.post('/', function (req, res) {
         return res.send('One or more fields are invalid');
     }
 
-    // const transport = nodemailer.createTransport({
-        
-    // });
+    const transport = nodemailer.createTransport({
+        host: "mailgateway.sszcloud.dk",
+        port: 25
+    });
 
-    // const message = {
-        
-    // };
+    const message = {
+        from: "noreply@connect.zealand.dk",
+        to: mail,
+        subject: "test",
+        text: "test"
+    };
 
-    // transport.sendMail(message, function (err, info) {
-        
-    // });
+    transport.sendMail(message, function (err, info) {
+        if (err) { 
+            console.log(err)
+        } else { 
+            console.log(info); 
+        }
+    });
 
     res.redirect('/forgot-password?success=true');
 })

@@ -195,13 +195,13 @@
                 <div id="editor">{{{rtext}}}</div>
             </div>
             <p id="posttextError" class="CVErrorColor" hidden="true" data-key="Du_har_angivet_for_mange_tegn">Du har angivet for mange tegn</p>
-            <div class="form-group">
-                <button type="submit" onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
+        </form>
+            <div class="mb-3">
+                <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
                 {{#if update}}
                     <button type="button" class="btn btn-danger" onclick="confirmDeletePost()" data-key="Slet_dette_opslag">Slet dette opslag</button>
                 {{/if}}
             </div>
-        </form>
         </div>
     </div>
 </div>

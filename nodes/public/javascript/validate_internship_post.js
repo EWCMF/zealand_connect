@@ -118,7 +118,7 @@ function validate_internship_post() {
   }
 
   if (document.getElementById('countrySelect').value == 1) {
-    if (document.getElementById('addressSearchUUID').value == '') {
+    if (document.getElementById('addressSearchUUID').value.length == 0) {
       all_valid = false;
       document.getElementById('addressError').hidden = false;
     } else {
