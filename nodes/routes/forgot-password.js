@@ -44,11 +44,13 @@ router.post('/', function (req, res) {
 
     transport.sendMail(message, function (err, info) {
         if (err) { 
-            console.log(err)
-        } else { 
+            console.log(err);
+        } else {
+            console.log('send mail');
             console.log(info); 
         }
     });
+    console.log('route used');
 
     res.redirect('/forgot-password?success=true');
 })
