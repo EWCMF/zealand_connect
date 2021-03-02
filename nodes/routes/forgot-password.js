@@ -32,7 +32,14 @@ router.post('/', function (req, res) {
 
     const transport = nodemailer.createTransport({
         host: "mailgateway.sszcloud.dk",
-        port: 25
+        port: 25,
+        requiresAuth: false,
+        ignoreTLS: true,
+        secure: false,
+        secureConnection: false,
+        tls: {
+            rejectUnauthorized: false
+        }
     });
 
     const message = {
