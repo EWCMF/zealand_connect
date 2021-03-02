@@ -138,9 +138,6 @@ const handleWhere = async function (paramContainer) {
     }
 
     return where = {
-        id,
-        fk_education,
-        sprog,
         offentlig: true,
         gyldig: true
     }
@@ -203,8 +200,6 @@ router.get('/', async function (req, res, next) {
         where
     });
 
-    console.log(rows);
-
     rows = rows.map(cv => {
         return {
             id: cv.id,
@@ -225,8 +220,6 @@ router.get('/', async function (req, res, next) {
             })
         }
     })
-
-    console.log(rows);
 
     const count = rows.length;
 
