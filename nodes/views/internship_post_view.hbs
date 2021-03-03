@@ -40,20 +40,23 @@
                     </tr>
                     <tr id="postcodeParent">
                         <td data-key="Postnummer_kolon">Postnummer:</td>
-                        <td>{{rpostcode}}</td>
+                        {{#if rpostcode}}
+                            <td>{{rpostcode}}</td>
+                        {{/if}}
+
                     </tr>
                 {{/if}}
                 {{#if remail}}
-                <tr>
-                    <td>Email:</td>
-                    <td id="emailContainer"><a href="mailto:{{remail}}">{{remail}}</a></td>
-                </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td id="emailContainer"><a href="mailto:{{remail}}">{{remail}}</a></td>
+                    </tr>
                 {{/if}}
                 {{#if rphone}}
-                <tr>
-                    <td data-key="Telefon_kolon">Telefon:</td>
-                    <td id="telefonContainer">{{rphone}}</td>
-                </tr>
+                    <tr>
+                        <td data-key="Telefon_kolon">Telefon:</td>
+                        <td id="telefonContainer">{{rphone}}</td>
+                    </tr>
                 {{/if}}
                 <tr>
                     <td data-key="Kontaktperson_kolon">Kontaktperson:</td>
@@ -84,7 +87,8 @@
             {{#unless noButtons}}
                 {{#if ejer}}
                     <button type="button" class="btn btn-success mt-3"
-                            onclick="window.location.href='../internship_update?id={{rid}}'" data-key="Rediger_oplag">Rediger opslag</button>
+                            onclick="window.location.href='../internship_update?id={{rid}}'"
+                    data-key="Rediger_oplag">Rediger opslag</button>
                 {{/if}}
             {{/unless}}
         </div>

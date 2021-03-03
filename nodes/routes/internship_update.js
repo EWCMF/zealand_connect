@@ -48,7 +48,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         } else {
             // sæt adresse feltets data til tomme strings hvis der er valgt et andet land end danmark
             city = '';
-            postcode = 0;
+            postcode = null;
             dawa_json = '';
             dawa_uuid = '';
         }
