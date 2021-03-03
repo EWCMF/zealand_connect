@@ -103,7 +103,7 @@ module.exports = {
          * Update existing Uddannelser
           */
         models.Uddannelse.update(
-            {fk_education_category: 3},
+            {fk_education_category: 1},
             {
                 where: {
                     name: "Datamatiker"
