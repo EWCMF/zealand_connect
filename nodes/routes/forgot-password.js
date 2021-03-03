@@ -50,8 +50,8 @@ router.post('/', function (req, res) {
     const message = {
         from: "noreply@connect.zealand.dk",
         to: mail,
-        subject: "test",
-        text: "test"
+        subject: "Genstart password på Zealand Connect",
+        text: "Tryk på dette link for at genstarte dit password: link"
     };
 
     transport.sendMail(message, function (err, info) {
