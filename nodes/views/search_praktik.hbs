@@ -75,7 +75,7 @@
                                             class="panel-title mb-2 hand-hover"
                                             data-toggle="collapse"
                                             data-parent="#accordion"
-                                            href="#{{name}}"
+                                            href="#category{{id}}"
                                             onclick="animateArrow(this)"
                                             data-key="">
                                             {{name}}
@@ -83,7 +83,7 @@
                                         </h6>
                                     </div>
 
-                                    <div id="{{name}}" class="panel-collapse collapse in">
+                                    <div id="category{{id}}" class="panel-collapse collapse in">
                                         <ul class="pl-3 mr-2" style="list-style: none;">
                                             {{#each uddannelser}}
                                                 <li class="mb-2 d-flex flex-row">

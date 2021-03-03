@@ -186,6 +186,7 @@ router.get('/', async function (req, res, next) {
     for (const category of categoryQuery) {
         categories.push(
             {
+                id: category.id,
                 name: category.name,
                 uddannelser: await db.Uddannelse.findAll({
                     raw: true,

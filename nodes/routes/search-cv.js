@@ -176,6 +176,7 @@ router.get('/', async function (req, res, next) {
     for (const category of categoryQuery) {
         categories.push(
             {
+                id: category.id,
                 name: category.name,
                 uddannelser: await db.Uddannelse.findAll({
                     raw: true,
@@ -186,6 +187,8 @@ router.get('/', async function (req, res, next) {
             }
         )
     }
+
+    console.log(categories)
 
     let cvtype = await db.CVtype.findAll({
         attributes: ['id', 'cvType'],
