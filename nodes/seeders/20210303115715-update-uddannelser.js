@@ -112,6 +112,15 @@ module.exports = {
         );
 
       models.Uddannelse.update(
+          {fk_education_category: 1},
+          {
+              where: {
+                  name: "IT sikkerhed"
+              }
+          }
+      );
+
+      models.Uddannelse.update(
           {fk_education_category: 5},
           {
               where: {
