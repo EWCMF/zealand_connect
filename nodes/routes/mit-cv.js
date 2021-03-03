@@ -186,6 +186,11 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
             geo_lon = null;
             city = null;
         }
+    } else {
+        postcode = null;
+        geo_lat = null;
+        geo_lon = null;
+        city = null;
     }
 
     let student_id = student.id
