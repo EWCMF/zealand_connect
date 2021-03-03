@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'internship_posts',
         foreignKey: 'fk_education'
       })
+
+      Uddannelse.belongsTo(models.EducationCategory, {
+        foreignKey: "fk_education_category",
+        as: "education_category"
+      });
     }
   };
   Uddannelse.init({

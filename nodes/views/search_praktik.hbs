@@ -13,11 +13,11 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h6 id="collapse5Header" 
-                                class="panel-title mb-2 hand-hover" 
-                                data-toggle="collapse" 
-                                data-parent="#accordion" 
-                                href="#collapse5" 
+                            <h6 id="collapse5Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse5"
                                 onclick="animateArrow(this)"
                                 data-key="Opslagstype_html">
                                     Opslagstype
@@ -53,12 +53,13 @@
 
 
                         </div>
+
                         <div class="panel-heading">
-                            <h6 id="collapse1Header" 
-                                class="panel-title mb-2 hand-hover" 
-                                data-toggle="collapse" 
-                                data-parent="#accordion" 
-                                href="#collapse1" 
+                            <h6 id="collapse1Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse1"
                                 onclick="animateArrow(this)"
                                 data-key="Uddannelser_html">
                                     Uddannelser
@@ -66,9 +67,45 @@
                             </h6>
                         </div>
 
+
+
+
                         <div id="collapse1" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
-                                {{#each udd}}
+                                {{#each categori}}
+
+                                    <div class="panel-heading">
+                                        <h6
+                                            class="panel-title mb-2 hand-hover"
+                                            data-toggle="collapse"
+                                            data-parent="#accordion"
+                                            href="#{{name}}"
+                                            onclick="animateArrow(this)"
+                                            data-key="">
+                                            {{name}}
+                                            <img src="images/chevron-right.svg" width="12" height="12">
+                                        </h6>
+                                    </div>
+
+                                    <div id="{{name}}" class="panel-collapse collapse in">
+                                        <ul class="pl-3 mr-2" style="list-style: none;">
+                                            {{#each udd}}
+                                                <li class="mb-2 d-flex flex-row">
+                                                    <label class="form-check-label flex-fill">
+                                                        {{name}}
+                                                    </label>
+                                                    <input {{checked}}{{#unless checked}}{{checkedStateURL ../url 'udd' id}}{{/unless}} class="align-self-center" type="checkbox" name="udd" value="{{id}}"
+                                                                                                                                        onclick="addFilter('udd', '{{id}}')">
+                                                    {{#if checked}}
+                                                        <body onload="addFilter('udd', {{id}})"></body>
+                                                    {{/if}}
+                                                </li>
+                                            {{/each}}
+                                        </ul>
+                                    </div>
+
+
+
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         {{name}}
@@ -82,12 +119,14 @@
                                 {{/each}}
                             </ul>
                         </div>
+
+
                         <div class="panel-heading">
-                            <h6 id="collapse2Header" 
-                                class="panel-title mb-2 hand-hover" 
-                                data-toggle="collapse" 
-                                data-parent="#accordion" 
-                                href="#collapse2" 
+                            <h6 id="collapse2Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse2"
                                 onclick="animateArrow(this)"
                                 data-key="Land_html">
                                     Land
@@ -118,11 +157,11 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse3Header" 
-                                class="panel-title mb-2 hand-hover" 
-                                data-toggle="collapse" 
-                                data-parent="#accordion" 
-                                href="#collapse3" 
+                            <h6 id="collapse3Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse3"
                                 onclick="animateArrow(this)">
                                     Region
                                 <img src="images/chevron-right.svg" width="12" height="12">
@@ -173,11 +212,11 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse4Header" 
-                                class="panel-title mb-2 hand-hover" 
-                                data-toggle="collapse" 
-                                data-parent="#accordion" 
-                                href="#collapse4" 
+                            <h6 id="collapse4Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse4"
                                 onclick="animateArrow(this)"
                                 data-key="By_html">
                                     By
@@ -192,18 +231,18 @@
                                         Indtast postnummer
                                     </label>
                                     <input id='inputPost' class="align-self-center" type="number" name="pos">
-                                    
+
                                 </li>
                                 <li>
                                     <button type="button" class="btn btn-success" onclick="addFilterSearch('pos', document.getElementById('inputPost').value)" data-key="Soeg">Søg</button>
                                     <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputPost', 'pos')" data-key="Ryd">Ryd</button>
                                 </li>
-                                
+
                             </ul>
 
 
                         </div>
-                        
+
                     </div>
                 </div>
 
