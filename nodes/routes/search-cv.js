@@ -164,12 +164,28 @@ router.get('/', async function (req, res, next) {
 
     let where = await handleWhere(req.query);
 
-    let udd = await db.Uddannelse.findAll({
+    let categoryQuery = await db.EducationCategory.findAll({
+        raw: true,
         attributes: ['id', 'name'],
         order: [
             ['name', 'ASC']
         ]
     });
+
+    let categories = []
+    for (const category of categoryQuery) {
+        categories.push(
+            {
+                name: category.name,
+                uddannelser: await db.Uddannelse.findAll({
+                    raw: true,
+                    where: {
+                        fk_education_category: category.id
+                    }
+                })
+            }
+        )
+    }
 
     let cvtype = await db.CVtype.findAll({
         attributes: ['id', 'cvType'],
@@ -239,7 +255,7 @@ router.get('/', async function (req, res, next) {
         language: reqLang(req, res),
         json: rows,
         resultater: count,
-        udd: udd,
+        categories: categories,
         cvtype: cvtype,
         pagination: {
             page: page,
@@ -313,7 +329,6 @@ router.post('/query', function (req, res) {
                     name: cv.education.name
                 },
                 cvtype: cv.cvtype.map(cvtype => {
-                    console.log(cvtype.dataValues.cvtype)
                     return {
                         cvtype: cvtype.dataValues.cvtype
                     }

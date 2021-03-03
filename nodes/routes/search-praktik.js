@@ -197,13 +197,6 @@ router.get('/', async function (req, res, next) {
         )
     }
 
-    const udd = await db.Uddannelse.findAll({
-        attributes: ['id', 'name'],
-        order: [
-            ['name', 'ASC']
-        ]
-    });
-
     const user = res.locals.user
 
     if (user !== undefined) {
