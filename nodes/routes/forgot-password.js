@@ -37,12 +37,15 @@ router.post('/', function (req, res) {
     const transport = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: 465,
+        secure: true,
         secureConnection: true,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
         }
     });
+
+    console.log(mail);
 
     const message = {
         from: "noreply@connect.zealand.dk",
