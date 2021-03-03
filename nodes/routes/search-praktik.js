@@ -174,6 +174,29 @@ router.get('/', async function (req, res, next) {
 
     let where = handleWhere(req.query);
 
+    let categoryQuery = await db.EducationCategory.findAll({
+        raw: true,
+        attributes: ['id', 'name'],
+        order: [
+            ['name', 'ASC']
+        ]
+    });
+
+    let categories = []
+    for (const category of categoryQuery) {
+        categories.push(
+            {
+                name: category.name,
+                uddannelser: await db.Uddannelse.findAll({
+                    raw: true,
+                    where: {
+                        fk_education_category: category.id
+                    }
+                })
+            }
+        )
+    }
+
     const udd = await db.Uddannelse.findAll({
         attributes: ['id', 'name'],
         order: [
@@ -185,12 +208,11 @@ router.get('/', async function (req, res, next) {
 
     if (user !== undefined) {
         if (user.cv != null) {
-            for (let index = 0; index < udd.length; index++) {
-                const element = udd[index].name;
-                
-                if (element == user.cv.education.name) {
-    
-                    udd[index].checked = 'checked'
+            for (const category of categories){
+                for (const uddannelse of category.uddannelser){
+                    if (uddannelse.name === user.cv.education.name){
+                        uddannelse.checked = 'checked'
+                    }
                 }
             }
         }
@@ -263,7 +285,7 @@ router.get('/', async function (req, res, next) {
         language: reqLang(req, res),
         json: rows,
         resultater: count,
-        udd: udd,
+        categories: categories,
         pagination: {
             page: page,
             pageCount: pageCount

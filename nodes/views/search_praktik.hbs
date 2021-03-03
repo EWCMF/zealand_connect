@@ -72,7 +72,7 @@
 
                         <div id="collapse1" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
-                                {{#each categori}}
+                                {{#each categories}}
 
                                     <div class="panel-heading">
                                         <h6
@@ -89,12 +89,12 @@
 
                                     <div id="{{name}}" class="panel-collapse collapse in">
                                         <ul class="pl-3 mr-2" style="list-style: none;">
-                                            {{#each udd}}
+                                            {{#each uddannelser}}
                                                 <li class="mb-2 d-flex flex-row">
                                                     <label class="form-check-label flex-fill">
                                                         {{name}}
                                                     </label>
-                                                    <input {{checked}}{{#unless checked}}{{checkedStateURL ../url 'udd' id}}{{/unless}} class="align-self-center" type="checkbox" name="udd" value="{{id}}"
+                                                    <input {{checked}}{{#unless checked}}{{checkedStateURL ../../url 'udd' id}}{{/unless}} class="align-self-center" type="checkbox" name="udd" value="{{id}}"
                                                                                                                                         onclick="addFilter('udd', '{{id}}')">
                                                     {{#if checked}}
                                                         <body onload="addFilter('udd', {{id}})"></body>
@@ -103,19 +103,6 @@
                                             {{/each}}
                                         </ul>
                                     </div>
-
-
-
-                                <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
-                                        {{name}}
-                                    </label>
-                                    <input {{checked}}{{#unless checked}}{{checkedStateURL ../url 'udd' id}}{{/unless}} class="align-self-center" type="checkbox" name="udd" value="{{id}}"
-                                        onclick="addFilter('udd', '{{id}}')">
-                                    {{#if checked}}
-                                    <body onload="addFilter('udd', {{id}})"></body>
-                                    {{/if}}
-                                </li>
                                 {{/each}}
                             </ul>
                         </div>
