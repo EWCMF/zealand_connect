@@ -2,7 +2,11 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert(
+
+      /**
+       * Add new uddannelser
+       */
+      await queryInterface.bulkInsert(
         'Uddannelser',
         [
           {
@@ -92,39 +96,81 @@ module.exports = {
         ],
         {},
     ),
-     await queryInterface.bulkUpdate(
-         'Uddannelser',
-         [
-           {fk_education_category: 1}, {
-             where: {
-               name: {
-                 $in: ["Datamatiker"]
-               }
-             }
-           },
-           {fk_education_category: 5}, {
-           where: {
-             name: {
-               $in: ["Handelsøkonom", "Finansøkonom"]
-             }
-           }
-         },
-           {fk_education_category: 3}, {
-           where: {
-             name: {
-               $in: ["Bygningskonstruktør", "Byggetekniker", "Installatør, stærkstrøm"]
-             }
-           }
-         },
-           {fk_education_category: 4}, {
-           where: {
-             name: {
-               $in: ["Innovation og Entrepreneurship", "International Handel og Markedsføring"]
-             }
-           }
-         },
-         ]
-     )
+
+        /**
+         * Update existing Uddannelser
+          */
+        models.Uddannelse.update(
+            {fk_education_category: 3},
+            {
+                where: {
+                    name: "Datamatiker"
+                }
+            }
+        );
+
+      models.Uddannelse.update(
+          {fk_education_category: 5},
+          {
+              where: {
+                  name: "Handelsøkonom"
+              }
+          }
+      );
+
+      models.Uddannelse.update(
+          {fk_education_category: 5},
+          {
+              where: {
+                  name: "Finansøkonom"
+              }
+          }
+      );
+
+      models.Uddannelse.update(
+          {fk_education_category: 3},
+          {
+              where: {
+                  name: "Installatør, stærkstrøm"
+              }
+          }
+      );
+
+      models.Uddannelse.update(
+          {fk_education_category: 3},
+          {
+              where: {
+                  name: "Bygningskonstruktør"
+              }
+          }
+      );
+
+      models.Uddannelse.update(
+          {fk_education_category: 3},
+          {
+              where: {
+                  name: "Byggetekniker"
+              }
+          }
+      );
+
+      models.Uddannelse.update(
+          {fk_education_category: 4},
+          {
+              where: {
+                  name: "Innovation og Entrepreneurship"
+              }
+          }
+      );
+
+      models.Uddannelse.update(
+          {fk_education_category: 4},
+          {
+              where: {
+                  name: "International Handel og Markedsføring"
+              }
+          }
+      );
   },
 
   down: async (queryInterface, Sequelize) => queryInterface.bulkDelete('Uddannelser', null, {}),
