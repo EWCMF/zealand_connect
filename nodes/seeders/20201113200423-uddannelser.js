@@ -38,7 +38,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: "Bygningskontruktør",
+        name: "Bygningskonstruktør",
         createdAt: new Date(),
         updatedAt: new Date()
       },
