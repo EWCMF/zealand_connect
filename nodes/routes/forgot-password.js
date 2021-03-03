@@ -30,6 +30,10 @@ router.post('/', function (req, res) {
         return res.send('One or more fields are invalid');
     }
 
+    console.log(process.env.EMAIL_HOST);
+    console.log(process.env.EMAIL_USER);
+    console.log(process.EMAIL_PASS);
+
     const transport = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: 465,
