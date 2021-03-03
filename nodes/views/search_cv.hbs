@@ -25,7 +25,7 @@
                             </h6>
                         </div>
                         <div id="collapse1" class="panel-collapse collapse in">
-                            <ul class="pl-3 mr-2" style="list-style: none;">
+                            <ul class="pl-1 mr-2" style="list-style: none;">
                                 {{#each categories}}
                                     <div class="panel-heading">
                                         <h6
@@ -33,14 +33,13 @@
                                                 data-toggle="collapse"
                                                 data-parent="#accordion"
                                                 href="#category{{id}}"
-                                                onclick="animateArrow(this)"
-                                                data-key="">
+                                                onclick="animateArrow(this)">
                                             {{name}}
-                                            <img src="images/chevron-right.svg" width="12" height="12">
+                                            <img src="images/chevron-right.svg" {{#if showCategory}}class="arrow-rotate"{{/if}} width="12" height="12">
                                         </h6>
                                     </div>
-                                    <div id="category{{id}}" class="panel-collapse collapse in">
-                                        <ul class="pl-3 mr-2" style="list-style: none;">
+                                    <div id="category{{id}}" class="panel-collapse collapse in {{showCategory}}">
+                                        <ul class="pl-1 mr-2" style="list-style: none;">
                                             {{#each uddannelser}}
                                                 <li class="mb-2 d-flex flex-row">
                                                     <label class="form-check-label flex-fill">
@@ -95,33 +94,6 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse4Header"
-                                class="panel-title mb-2 hand-hover"
-                                data-toggle="collapse"
-                                data-parent="#accordion"
-                                href="#collapse4"
-                                onclick="animateArrow(this)"
-                            >
-                                CV typer
-                                <img src="images/chevron-right.svg" width="12" height="12">
-                            </h6>
-                        </div>
-                        <div id="collapse4" class="panel-collapse collapse in">
-                            <ul class="pl-3 mr-2" style="list-style: none;">
-                                {{#each cvtype}}
-                                    <li class="mb-2 d-flex flex-row">
-                                        <label class="form-check-label flex-fill" data-key="{{cvType}}">
-                                            {{cvType}}
-                                        </label>
-                                        <input class="align-self-center" type="checkbox" name="cvtype" value='{{id}}'
-                                               onclick="addFilter('cvtype', '{{id}}')" {{checkedStateURL ../url 'cvtype' id}}>
-                                    </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-
-                        <!--
-                        <div class="panel-heading">
                             <h6 id="collapse3Header" 
                                 class="panel-title mb-2 hand-hover" 
                                 data-toggle="collapse" 
@@ -165,10 +137,37 @@
 
 
                         </div>
-                        -->
+
+                        <div class="panel-heading">
+                            <h6 id="collapse4Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse4"
+                                onclick="animateArrow(this)"
+                            >
+                                CV typer
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+                        <div id="collapse4" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                {{#each cvtype}}
+                                    <li class="mb-2 d-flex flex-row">
+                                        <label class="form-check-label flex-fill" data-key="{{cvType}}">
+                                            {{cvType}}
+                                        </label>
+                                        <input class="align-self-center" type="checkbox" name="cvtype" value='{{id}}'
+                                               onclick="addFilter('cvtype', '{{id}}')" {{checkedStateURL ../url 'cvtype' id}}>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+
+                        
+                        
                     </div>
                 </div>
-                {{!-- <button class="btn btn-success mb-2 mt-4" type="submit">Filtrer</button> --}}
             </form>
         </div>
         <div class="col">

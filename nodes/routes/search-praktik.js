@@ -184,16 +184,37 @@ router.get('/', async function (req, res, next) {
 
     let categories = []
     for (const category of categoryQuery) {
+        const uddannelser = await db.Uddannelse.findAll({
+            raw: true,
+            where: {
+                fk_education_category: category.id
+            }
+        });
+        let showCategory = '';
+
+        if (req.query.udd !== null) {
+            for (const uddannelse of uddannelser) {
+                if (Array.isArray(req.query.udd)) {
+                    for (const udd of req.query.udd) {
+                        if (uddannelse.id == udd) {
+                            showCategory = 'show'
+                            break;
+                        }
+                    }
+                } else {
+                    if (uddannelse.id == req.query.udd) {
+                        showCategory = 'show';
+                    }
+                }
+            }
+        }
+
         categories.push(
             {
                 id: category.id,
                 name: category.name,
-                uddannelser: await db.Uddannelse.findAll({
-                    raw: true,
-                    where: {
-                        fk_education_category: category.id
-                    }
-                })
+                uddannelser: uddannelser,
+                showCategory: showCategory
             }
         )
     }

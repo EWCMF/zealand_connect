@@ -200,3 +200,31 @@ function checkCollapseSearch(id, key, collapse, collapseHeader) {
     }
 }
 checkCollapseSearch('inputPost', 'pos', 'collapse4', 'collapse4Header');
+
+function preconfigEducationFilter(collapseId1, collapseId2, collapse2HeaderId, id) {
+    if (window.performance) {
+        let isReload = window.performance.getEntriesByType("navigation")[0].type == 'reload';
+        let isBackForward = window.performance.getEntriesByType("navigation")[0].type == 'back_forward';
+        if (isReload || isBackForward) {
+            return;
+        }
+    }
+
+    let key = 'udd'
+    animateArrow(document.getElementById(collapse2HeaderId))
+    document.getElementById(collapseId1).classList.add('show');
+    document.getElementById(collapseId2).classList.add('show');
+    // Tilføj query parameter uden refresh.
+    const url = new URL(window.location.href);
+    if (url.searchParams.has(key)) {
+        let values = url.searchParams.getAll(key);
+        if (!values.includes(id)) {
+            url.searchParams.append(key, id);
+        }
+    } else {
+        url.searchParams.append(key, id)
+    }
+    window.history.replaceState(null, null, url);
+    let form = document.getElementById('filterForm');
+    submitForm(form);
+}
