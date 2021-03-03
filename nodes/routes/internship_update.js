@@ -48,7 +48,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         } else {
             // sæt adresse feltets data til tomme strings hvis der er valgt et andet land end danmark
             city = '';
-            postcode = 0;
+            postcode = null;
             dawa_json = '';
             dawa_uuid = '';
         }
@@ -62,7 +62,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         let now = new Date();
         let dateTime = now.toLocaleDateString() + " " + now.toLocaleTimeString();    
         let append = `  user: ${brugernavn} time: ${dateTime}`
-
+        let errors = "";
 
 
         //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
@@ -84,11 +84,11 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             inputError = true;
         }
 
-        if (country == '1' && dawa_uuid == '') {
-            console.log('Missing address ' +  append);
-            errors += 'Missing address <br>';
-            inputError = true;
-        }
+        // if (country == '1' && dawa_uuid == '') {
+        //     console.log('Missing address ' +  append);
+        //     errors += 'Missing address <br>';
+        //     inputError = true;
+        // }
 
         if (email.length > 0) {
             if (email.length > 255) {

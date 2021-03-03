@@ -1,46 +1,50 @@
 {{#each json}}
-<div class="card mb-3">
-    <div class="card-header p-0">
-        <h6 class="m-2" data-key="{{post_type}}">
-            {{post_type}}
-        </h6>
-    </div>
-    <div class="row">
-        <div class="col-auto">
-            {{#if virksomhed.logo}}
-                <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
-            {{else}}
-                <img class="center-cropped" src="images/no-logo.png">
-            {{/if}}
+    <div class="card mb-3">
+        <div class="card-header p-0">
+            <h6 class="m-2" data-key="{{post_type}}">
+                {{post_type}}
+            </h6>
         </div>
-        <div class="col">
-            <div class="card-body">
-                <h4 class="card-title pb-1">{{title}}</h5>
-                <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h5>
-                <h6 class="card-text autobreak small text-secondary m-0">{{postcode}} {{city}}, {{region}}</h5>
+        <div class="row">
+            <div class="col-auto">
+                {{#if virksomhed.logo}}
+                    <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
+                {{else}}
+                    <img class="center-cropped" src="images/no-logo.png">
+                {{/if}}
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    <h4 class="card-title pb-1">{{title}}</h4>
+                    <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h6>
+                    {{#if postcode}}
+                        <h6 class="card-text autobreak small text-secondary m-0">{{postcode}} {{city}}, {{region}}</h6>
+                    {{/if}}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card-footer">
-        <div class="container ml-2">
+        <div class="card-footer">
+            <div class="container ml-2">
                 <div class="row d-flex">
                     <div class="row flex-grow-1">
-                        <p class="font-weight-bold pr-1" data-key="Uddannelse_kolon">Uddannelse:</p><p class="pr-2" data-key="{{education.name}}">{{education.name}}</p> 
+                        <p class="font-weight-bold pr-1" data-key="Uddannelse_kolon">Uddannelse:</p>
+                        <p class="pr-2" data-key="{{education.name}}">{{education.name}}</p>
                     </div>
                     <div class="row mr-2">
-                        <p class="font-weight-bold pr-1" data-key="Ansoegningsfrist_kolon">Ansøgningsfrist:</p> 
+                        <p class="font-weight-bold pr-1" data-key="Ansoegningsfrist_kolon">Ansøgningsfrist:</p>
                         {{#if post_start_date}}
-                        <p class="pr-2">{{post_start_date}}</p>
+                            <p class="pr-2">{{post_start_date}}</p>
                         {{else}}
-                        <p class="pr-2" data-key="Ingen">Ingen</p>
+                            <p class="pr-2" data-key="Ingen">Ingen</p>
                         {{/if}}
                         {{#if post_end_date}}
-                        <p class="font-weight-bold pr-1" data-key="Praktikstart_kolon">Praktikstart:</p>  <p>{{post_end_date}}</p>
+                            <p class="font-weight-bold pr-1" data-key="Praktikstart_kolon">Praktikstart:</p>
+                            <p>{{post_end_date}}</p>
                         {{/if}}
                     </div>
                 </div>
-        </div>      
+            </div>
+        </div>
+        <a href='/internship_view/{{id}}' class="stretched-link"></a>
     </div>
-    <a href='/internship_view/{{id}}' class="stretched-link"></a>
-</div>
 {{/each}}

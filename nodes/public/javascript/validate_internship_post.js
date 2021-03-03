@@ -117,14 +117,14 @@ function validate_internship_post() {
     document.getElementById('countryError').hidden = true;
   }
 
-  if (document.getElementById('countrySelect').value == 1) {
-    if (document.getElementById('addressSearchUUID').value.length == 0) {
-      all_valid = false;
-      document.getElementById('addressError').hidden = false;
-    } else {
-      document.getElementById('addressError').hidden = true;
-    }
-  }
+  // if (document.getElementById('countrySelect').value == 1) {
+  //   if (document.getElementById('addressSearchUUID').value.length == 0) {
+  //     all_valid = false;
+  //     document.getElementById('addressError').hidden = false;
+  //   } else {
+  //     document.getElementById('addressError').hidden = true;
+  //   }
+  // }
 
   //Vedhæftet tekstfil
   if (document.getElementById('companyDoc').files[0] != null && document.getElementById('companyDoc').files[0].size > 10240000) {
