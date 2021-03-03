@@ -90,7 +90,7 @@ function validate_internship_post() {
   }
 
   //Virksomheds Link
-  if (!document.getElementById('companyURL').value == '') {
+  if (!document.getElementById('companyURL').value.length) {
     if (!linkRegex.test(document.getElementById('companyURL').value)) {
       all_valid = false;
       document.getElementById('companylinkError').hidden = false;
@@ -118,7 +118,7 @@ function validate_internship_post() {
   }
 
   if (document.getElementById('countrySelect').value == 1) {
-    if (document.getElementById('addressSearchUUID').value == '') {
+    if (document.getElementById('addressSearchUUID').value.length == 0) {
       all_valid = false;
       document.getElementById('addressError').hidden = false;
     } else {
