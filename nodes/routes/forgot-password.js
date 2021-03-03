@@ -32,7 +32,7 @@ router.post('/', function (req, res) {
 
     console.log(process.env.EMAIL_HOST);
     console.log(process.env.EMAIL_USER);
-    console.log(process.EMAIL_PASS);
+    console.log(process.env.EMAIL_PASS);
 
     const transport = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
