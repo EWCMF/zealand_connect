@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     by: DataTypes.STRING,
     logo: DataTypes.STRING,
     visible: DataTypes.BOOLEAN,
-    visible_mail: DataTypes.BOOLEAN
+    visible_mail: DataTypes.BOOLEAN,
+    description: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Virksomhed',

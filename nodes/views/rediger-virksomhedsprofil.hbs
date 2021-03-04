@@ -15,7 +15,8 @@
     <form action="/profil/rediger-save" method="POST" id="redigerVirksomhedForm" name="redigerVirksomhedForm"
           enctype="multipart/form-data">
         <div class="row mb-5">
-            <div class="form-column col-12 col-md-4">
+            <div class="col-12 col-md-6">
+                <div class="form-column col-12 col-md-8">
 
                 <div class="form-group required">
                     <label for="navn" data-Key="Virksomheds_navn">Virksomheds navn</label>
@@ -84,15 +85,30 @@
                            value="{{loggedInVirksomhed.by}}">
                     <p id="byError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
-                <div>
+                </div>
+                <div class="form-column col-12">
+                    <div class="form-group">
+                        <label for="description" data-key="Om_virksomheden">Om virksomheden</label>
+                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                          title="Lav en kort beskrivelse af din virksomheds primære arbejdsområde og værdier."
+                          data-Key="Om_virksomheden_tooltip">?</span>
+                        <textarea class="form-control" name="description" id="description" rows="4"
+                        >{{loggedInVirksomhed.description}}</textarea>
+                    </div>
+                </div>
+                <div class="form-column col-12 mt-3">
+                    <div>
                     <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
                     <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
                             data-Key="Aendrer_password">Ændrer password
                     </button>
+                    </div>
                 </div>
+                
 
 
             </div>
+            
 
             <div class="form-column col-12 col-md-4">
                 <div style="display: flex; flex-direction: row;">
