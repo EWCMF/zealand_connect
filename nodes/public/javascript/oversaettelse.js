@@ -383,6 +383,7 @@ function getLangdata() {
                 //Postnummer_kolon
                 //By_kolon
                 //Rediger_profil
+                "Om_virksomheden": "About the company",
 
                 //rediger-studentprofil
                 //Fornavn
@@ -428,6 +429,7 @@ function getLangdata() {
                 "Gentag_passwordError": "The two passwords aren't the same",
                 "Bekraeft": "Confirm",
                 "Goer_mail_synlig": "Make mail visible on public profile",
+                "Om_virksomheden_tooltip": ["?", "Write a short description of your company's primary objectives and core values"],
 
                 //search-virksomheder
                 "Navn": "Name",
