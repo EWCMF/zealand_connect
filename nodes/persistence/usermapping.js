@@ -77,7 +77,8 @@ async function editVirksomhed(json) {
             postnr: json.postnr,
             by: json.by,
             logo: json.logo,
-            visible_mail: json.visibleMail
+            visible_mail: json.visibleMail,
+            description: json.description
         })
     })
 }

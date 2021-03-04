@@ -37,7 +37,8 @@ router.get('/',  authorizeUser('student', 'company', 'admin'),function (req, res
                 by: user.by,
                 logo: user.logo,
                 visible_mail: user.visible_mail,
-                ejer: true
+                description: user.description,
+                ejer: true,
             }
             res.render('visprofil', {
                 language: reqLang(req, res),
@@ -78,7 +79,8 @@ router.get('/virksomhed/:id', async function (req, res) {
         postnr: json.postnr,
         by: json.by,
         logo: json.logo,
-        visible_mail: json.visible_mail
+        visible_mail: json.visible_mail,
+        description: json.description
     };
 
     res.render('visprofil', {
@@ -119,7 +121,8 @@ router.get('/rediger',  authorizeUser('student', 'company', 'admin'), function (
                 postnr: user.postnr,
                 by: user.by,
                 logo: user.logo,
-                visible_mail: user.visible_mail
+                visible_mail: user.visible_mail,
+                description: user.description
             }
             //render with potential errors and information about the profile
             res.render("rediger-virksomhedsprofil", {
@@ -137,17 +140,6 @@ router.get('/rediger',  authorizeUser('student', 'company', 'admin'), function (
                 DirektoerError: errors.DirektoerError,
                 LandError: errors.LandError,
                 LogoError: errors.LogoError,
-                email: user.email,
-                tlfnr: user.tlfnr,
-                by: user.by,
-                postnummer: user.postnr,
-                cvr: user.cvrnr,
-                firmanavn: user.navn,
-                adresse: user.adresse,
-                hjemmeside: user.hjemmeside,
-                direktoer: user.direktoer,
-                land: user.land,
-                logo: user.logo,
                 language: reqLang(req),
                 loggedInVirksomhed
             });
@@ -291,7 +283,8 @@ router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, r
             land,
             logo,
             crop_base64,
-            visibleMail
+            visibleMail,
+            description
         } = fields;
         let content = {
             email,
@@ -306,7 +299,8 @@ router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, r
             land,
             logo,
             crop_base64,
-            visibleMail
+            visibleMail,
+            description
         };
 
         const imageBufferData = Buffer.from(crop_base64, 'base64');
