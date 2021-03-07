@@ -3,9 +3,9 @@
     <div class="row mt-4 mb-4">
         <div class="col-2">
             {{#if rlogo}}
-                <img class="img-thumbnail border-0" src="/uploads/{{rlogo}}" alt="COMPANY LOGO">
+                <a href='/profil/virksomhed/{{rcompanyid}}'><img class="img-thumbnail border-0" src="/uploads/{{rlogo}}" alt="COMPANY LOGO"></a>
             {{else}}
-                <img class="img-thumbnail border-0" src="/images/no-logo.png" alt="COMPANY LOGO">
+                <a href='/profil/virksomhed/{{rcompanyid}}'><img class="img-thumbnail border-0" src="/images/no-logo.png" alt="COMPANY LOGO"></a>
             {{/if}}
         </div>
 
@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td data-key="Virksomhed">Virksomhed:</td>
-                    <td id=companyContainer" data-key="{{rcompany}}"><a href='/profil/virksomhed/{{rcompanyid}}' class="stretched-link">{{rcompany}}</a></td>
+                    <td id=companyContainer" data-key="{{rcompany}}"><a href='/profil/virksomhed/{{rcompanyid}}'>{{rcompany}}</a></td>
                 </tr>
                 <tr>
                     <td data-key="Uddannelse_kolon">Uddannelse:</td>
