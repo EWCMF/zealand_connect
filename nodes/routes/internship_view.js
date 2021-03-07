@@ -26,7 +26,7 @@ router.get('/:id', async function (req, res) {
     });
 
     let company = await models.Virksomhed.findByPk(result.fk_company, {
-        attributes: ["navn"]
+        attributes: ["navn", "id"]
     })
 
     let educationId = result.fk_education;
@@ -74,6 +74,7 @@ router.get('/:id', async function (req, res) {
         rid: id,
         rtitle: result['title'],
         rcompany: company['navn'],
+        rcompanyid: company['id'],
         remail: result['email'],
         rphone: result['phone_number'],
         rcontact: result['contact'],
