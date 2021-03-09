@@ -56,7 +56,7 @@ function validateAndUpdateImage(labelId, inputId, imageTypeError, imageDimension
                                     maxHeight: 2048
                                 });
                                 
-                                let dataUrl = canvas.toDataURL('image/jpeg');
+                                let dataUrl = canvas.toDataURL('image/png');
 
                                 document.getElementById(crop64base).value = dataUrl.split(';base64,')[1];
                                 document.getElementById(imageElement).src = dataUrl;
