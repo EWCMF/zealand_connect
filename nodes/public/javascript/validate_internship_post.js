@@ -4,7 +4,7 @@ function validate_internship_post() {
 
   //e.preventDefault();
   //Title
-  if (document.getElementById('internshipTitle').value == '' || document.getElementById('internshipTitle').value.length > 255) {
+  if (!document.getElementById('internshipTitle').value || document.getElementById('internshipTitle').value.length > 255) {
     all_valid = false;
     document.getElementById('titleError').hidden = false;
   }
@@ -19,7 +19,7 @@ function validate_internship_post() {
   }
 
   //Email
-  if (document.getElementById('internshipEmail').value.length > 0) {
+  if (document.getElementById('internshipEmail').value) {
     if (document.getElementById('internshipEmail').value.length > 255 || !emailRegex.test(document.getElementById('internshipEmail').value)) {
       all_valid = false;
       document.getElementById('emailError').hidden = false;
@@ -29,7 +29,7 @@ function validate_internship_post() {
   
 
   //Telefon
-  if (document.getElementById('phoneNumber').value.length > 0) {
+  if (document.getElementById('phoneNumber').value) {
     if (!phoneRegex.test(document.getElementById('phoneNumber').value)) {
       all_valid = false;
       document.getElementById('phoneNumberError').hidden = false;
@@ -41,7 +41,7 @@ function validate_internship_post() {
   }
 
   //Kontakt person
-  if (document.getElementById('contactName').value.length == '' || document.getElementById('contactName').value.length > 255) {
+  if (!document.getElementById('contactName').value || document.getElementById('contactName').value.length > 255) {
     all_valid = false;
     document.getElementById('contactError').hidden = false;
   }
@@ -49,7 +49,7 @@ function validate_internship_post() {
 
   //Ansøgningsfrist
   let applicationDeadline = document.getElementById('applicationDeadline').value;
-  if (applicationDeadline.length > 0) {
+  if (applicationDeadline) {
     let inputDate = new Date(applicationDeadline);
     let currDate = new Date();
 
@@ -66,7 +66,7 @@ function validate_internship_post() {
   //Ansættelsestidspunkt
   if (document.getElementById('postTypeSelect').value == 1) {
     let internshipEmploymentDate = document.getElementById('internshipEmploymentDate').value;
-    if (internshipEmploymentDate.length > 0) {
+    if (internshipEmploymentDate) {
       let inputDate = new Date(internshipEmploymentDate);
       let currDate = new Date();
 
@@ -90,7 +90,7 @@ function validate_internship_post() {
   }
 
   //Virksomheds Link
-  if (!document.getElementById('companyURL').value.length) {
+  if (document.getElementById('companyURL').value) {
     if (!linkRegex.test(document.getElementById('companyURL').value)) {
       all_valid = false;
       document.getElementById('companylinkError').hidden = false;

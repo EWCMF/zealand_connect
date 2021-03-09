@@ -19,9 +19,6 @@ const {
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 var { reqLang } = require('../public/javascript/request');
-var tempDate = dateRegex.source;
-var tempEmail = emailRegex.source;
-var tempLink = linkRegex.source;
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
 router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
@@ -51,7 +48,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
         var region = '';
 
-        if (country == 1) {
+        if (country == '1' && postcode) {
             postcode = Number(postcode);
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function () {
@@ -100,7 +97,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         let errors = "";
 
         //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
-        if (1 > title.length || title.length > 255) {
+        if (!title || title.length > 255) {
             console.log('Title length invalid ' +  append);
             errors += 'Title invalid or missing <br>';
             inputError = true;
@@ -124,7 +121,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         //     inputError = true;
         // }
 
-        if (email.length > 0) {
+        if (email) {
             if (email.length > 255) {
                 console.log('Email too long ' +  append);
                 errors += 'Email too long <br>';
@@ -138,7 +135,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             }
         }
 
-        if (phone_number.length > 0) {
+        if (phone_number) {
             if (phone_number.length > 255) {
                 console.log('Phone number too long ' +  append);
                 errors += 'Phone number too long <br>';
@@ -152,13 +149,13 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             }
         }
 
-        if (1 > contact.length || contact.length > 255) {
+        if (!contact || contact.length > 255) {
             console.log('Contact length invalid ' +  append);
             errors += 'Contact invalid or missing <br>';
             inputError = true;
         }
 
-        if (post_start_date.length > 0) {
+        if (post_start_date) {
             let currDate = new Date();
             let inputDate = new Date(post_start_date);
 
@@ -192,7 +189,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             inputError = true;
         }
 
-        if (company_link.length > 0) {
+        if (company_link) {
             if (!linkRegex.test(company_link)) {
                 console.log('Link Invalid ' +  append);
                 errors += 'Link Invalid <br>';
@@ -301,9 +298,6 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
         res.render('internship_post', {
             language: reqLang(req, res),
             title: 'Opret opslag',
-            linkRegex: tempLink,
-            dateRegex: tempDate,
-            emailRegex: tempEmail,
             generatedEducationOptions: generatedEducationOptions,
             profMail: loggedInVirksomhed.email,
             profWeb: loggedInVirksomhed.hjemmeside,
