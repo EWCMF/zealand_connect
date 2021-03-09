@@ -110,7 +110,7 @@ async function createStudent(studentObj) {
             password: studentObj.password,
             fornavn: studentObj.fornavn,
             efternavn: studentObj.efternavn,
-            foedselsdato: studentObj.dato
+            foedselsdato: studentObj.foedselsdato
         })
     } catch (error) {
         console.log(error);
