@@ -59,26 +59,20 @@ router.post('/', async function (req, res) {
     });
 
     const transport = nodemailer.createTransport({
-        // host: process.env.EMAIL_HOST,
-        // port: 465,
-        // secure: true,
-        // secureConnection: true,
-        // auth: {
-        //     user: process.env.EMAIL_USER,
-        //     pass: process.env.EMAIL_PASS
-        // }
-        host: "smtp.mailtrap.io",
-        port: 2525,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: process.env.ENVIRONMENT === 'production',
+        secureConnection: process.env.ENVIRONMENT === 'production',
         auth: {
-            user: "96bd55c2e1698c",
-            pass: "b49a962c9d9f1b"
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     });
 
     const message = {
         from: "noreply@connect.zealand.dk",
         to: email,
-        subject: "Genstart password på Zealand Connect",
+        subject: "Nulstil password på Zealand Connect",
         text: "Tryk på dette link for at genstarte dit password:\n\n" + "localhost:3000/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
     };
 
