@@ -63,8 +63,8 @@ router.post('/', async function (req, res) {
     const transport = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
-        secure: process.env.ENVIRONMENT === 'production',
-        secureConnection: process.env.ENVIRONMENT === 'production',
+        secure: process.env.NODE_ENV === 'production',
+        secureConnection: process.env.NODE_ENV === 'production',
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
@@ -75,7 +75,7 @@ router.post('/', async function (req, res) {
         from: "noreply@connect.zealand.dk",
         to: email,
         subject: "Nulstil password på Zealand Connect",
-        text: "Tryk på dette link for at genstarte dit password:\n\n" + "localhost:3000/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
+        text: "Tryk på dette link for at genstarte dit password:\n\n" + process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
     };
 
     transport.sendMail(message, function (err, info) {
