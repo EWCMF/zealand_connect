@@ -18,7 +18,7 @@ router.get('/', async function (req, res, next) {
         return res.sendStatus(404);
     }
 
-    // Destroy expired tokens (expiration date is more than one hour ago)
+    // Destroy expired tokens (expiration date is less than now)
     await models.ResetToken.destroy({
         where: {
             expiration: {
