@@ -41,8 +41,6 @@ router.post('/', function (req, res) {
         }
     });
 
-    console.log(mail);
-
     const message = {
         from: "noreply@connect.zealand.dk",
         to: mail,
