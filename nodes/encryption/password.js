@@ -1,8 +1,5 @@
 const bcrypt = require('bcryptjs');
 
-//Todo: encrpytion password function
-
-
 async function verifyPassword(htmlPwd, dbPwd) {
     return new Promise(resolve => {
         bcrypt.compare(htmlPwd, dbPwd, function (err, result) {
