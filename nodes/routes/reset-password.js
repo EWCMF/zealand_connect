@@ -11,23 +11,33 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const { validatePasswordLength, checkForIdenticals} = require('../validation/input-validation');
 
 router.get('/', async function (req, res, next) {
+    let email = req.query.email;
+    let token = req.query.token;
+
+    if (email === undefined || token === undefined){
+        return res.sendStatus(404);
+    }
+
+    // Destroy expired tokens (expiration date is more than one hour ago)
     await models.ResetToken.destroy({
         where: {
-            expiration: {[Op.lt]: Sequelize.fn('CURDATE')},
+            expiration: {
+                [Op.lt]: new Date() - 3600000
+            },
         }
     });
 
     let record = await models.ResetToken.findOne({
         where: {
-            email: req.query.email,
+            email: email,
             expiration: {[Op.gt]: Sequelize.fn('CURDATE')},
-            token: req.query.token,
+            token: token,
             used: 0
         }
     });
 
     if (record == null) {
-        return res.render('user/reset-password', {
+        return res.render('reset-password', {
             message: 'Token has expired. Please try password reset again.',
             showForm: false
         });
@@ -45,9 +55,6 @@ router.post('/', async function (req, res, next) {
     let password2 = req.body.gentagPassword;
     let email = req.body.email;
     let token = req.body.token;
-
-    console.log(password);
-    console.log(password2);
 
     if (!checkForIdenticals(password, password2)){
         return res.json({status: 'error', message: 'Passwords do not match. Please try again.'});
