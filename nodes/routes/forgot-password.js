@@ -68,11 +68,22 @@ router.post('/', async function (req, res) {
             }
         });
 
+        let subject;
+        let text;
+
+        if (reqLang(req, res) === 'da'){
+            subject = "Nulstil adgangskode på Zealand Connect";
+            text = "Følg dette link for at nulstille din adgangskode:\n\n" + process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email;
+        } else {
+            subject = "Reset password at Zealand Connect";
+            text = "Follow this link to reset your password:\n\n" + process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email;
+        }
+
         const message = {
             from: "noreply@connect.zealand.dk",
             to: email,
-            subject: "Nulstil password på Zealand Connect",
-            text: "Følg dette link for at genstarte dit password:\n\n" + process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
+            subject: subject,
+            text: text
         };
 
         transport.sendMail(message, function (err, info) {
