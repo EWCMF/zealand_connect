@@ -180,15 +180,20 @@
                         <div id="collapse5" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-column">
-                                    <label class="form-check-label flex-fill" data-key="Soegefelt">
+                                    <div>
+                                        <label class="form-check-label flex-fill" data-key="Soegefelt">
                                         Søgefelt
-                                    </label>
+                                        </label>
+                                    <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                            title="Indtast søgeord adskilt med mellemrum"
+                                            data-Key="Indtast_search_tooltip">?</span>
+                                    </div>
                                     <input id='inputSearch' class="align-self-center" name="pos">
 
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-success" onclick="addFilterSearch('s', document.getElementById('inputSearch').value)" data-key="Soeg">Søg</button>
-                                    <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputSearch', 's')" data-key="Ryd">Ryd</button>
+                                    <button type="button" class="btn btn-success" onclick="addFilterSearch('search', document.getElementById('inputSearch').value)" data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputSearch', 'search')" data-key="Ryd">Ryd</button>
                                 </li>
 
                             </ul>

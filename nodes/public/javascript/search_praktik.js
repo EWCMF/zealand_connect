@@ -208,6 +208,7 @@ function checkCollapseSearch(id, key, collapse, collapseHeader) {
     }
 }
 checkCollapseSearch('inputPost', 'pos', 'collapse4', 'collapse4Header');
+checkCollapseSearch('inputSearch', 'search', 'collapse6', 'collapse6Header');
 
 function preconfigEducationFilter(collapseId1, collapseId2, collapse2HeaderId, id) {
     if (window.performance) {

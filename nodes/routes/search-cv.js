@@ -137,8 +137,67 @@ const handleWhere = async function (paramContainer) {
         }
     }
 
-    if (paramContainer.hasOwnProperty('s')) {
-        let toSearch = "%" + paramContainer['s'] + "%";
+    if (paramContainer.hasOwnProperty('search')) {
+        let overskrift = {
+            [Op.or]: []
+        };
+        let email = {
+            [Op.or]: []
+        };
+        let speciale = {
+            [Op.or]: []
+        };
+        let om_mig = {
+            [Op.or]: []
+        };
+        let iT_Kompetencer = {
+            [Op.or]: []
+        };
+        let udenlandsophold_og_frivilligt_arbejde = {
+            [Op.or]: []
+        };
+        let erhvervserfaring = {
+            [Op.or]: []
+        };
+        let tidligere_uddannelse = {
+            [Op.or]: []
+        };
+        let fritidsinteresser = {
+            [Op.or]: []
+        };
+
+        let search = paramContainer['search'].split(' ');
+        for (let i = 0; i < search.length; i++) {
+            let element = search[i];
+            element = "%" + element + "%"
+            overskrift[Op.or].push({
+                [Op.like]: element
+            });
+            email[Op.or].push({
+                [Op.like]: element
+            });
+            speciale[Op.or].push({
+                [Op.like]: element
+            });
+            om_mig[Op.or].push({
+                [Op.like]: element
+            });
+            iT_Kompetencer[Op.or].push({
+                [Op.like]: element
+            });
+            udenlandsophold_og_frivilligt_arbejde[Op.or].push({
+                [Op.like]: element
+            });
+            erhvervserfaring[Op.or].push({
+                [Op.like]: element
+            });
+            tidligere_uddannelse[Op.or].push({
+                [Op.like]: element
+            });
+            fritidsinteresser[Op.or].push({
+                [Op.like]: element
+            });
+        }
         return where = {
             id,
             fk_education,
@@ -149,55 +208,32 @@ const handleWhere = async function (paramContainer) {
             gyldig: true,
             [Op.or]: [
                 {
-                    overskrift: {
-                        [Op.like]: toSearch
-                    }
+                    overskrift
                 },
                 {
-                    email: {
-                        [Op.like]: toSearch
-                    }
+                    email
                 },
                 {
-                    sprog: {
-                        [Op.like]: toSearch
-                    }
+                    speciale
                 },
                 {
-                    speciale: {
-                        [Op.like]: toSearch
-                    }
+                    om_mig
                 },
                 {
-                    om_mig: {
-                        [Op.like]: toSearch
-                    }
+                    iT_Kompetencer
                 },
                 {
-                    iT_Kompetencer: {
-                        [Op.like]: toSearch
-                    }
+                    udenlandsophold_og_frivilligt_arbejde
                 },
                 {
-                    udenlandsophold_og_frivilligt_arbejde: {
-                        [Op.like]: toSearch
-                    }
+                    erhvervserfaring
                 },
                 {
-                    erhvervserfaring: {
-                        [Op.like]: toSearch
-                    }
+                    tidligere_uddannelse
                 },
                 {
-                    tidligere_uddannelse: {
-                        [Op.like]: toSearch
-                    }
+                    fritidsinteresser
                 },
-                {
-                    fritidsinteresser: {
-                        [Op.like]: toSearch
-                    }
-                }
             ]
         }
     }

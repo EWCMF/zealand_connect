@@ -158,9 +158,9 @@ function submitForm(formElement) {
     let s = [];
     if (document.getElementById('inputSearch').value) {
         s.push(document.getElementById('inputSearch').value)
-        formData.set('s', s);
+        formData.set('search', s);
     } else {
-        formData.delete('s');
+        formData.delete('search');
     }
 
     var xhr = new XMLHttpRequest();
@@ -257,4 +257,4 @@ function checkCollapseSearch(id, key, collapse, collapseHeader) {
     }
 }
 checkCollapseSearch('inputAddress', 'geo_id', 'collapse3', 'collapse3Header');
-checkCollapseSearch('inputSearch', 's', 'collapse5', 'collapse5Header');
+checkCollapseSearch('inputSearch', 'search', 'collapse5', 'collapse5Header');

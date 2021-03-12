@@ -266,8 +266,6 @@ const handleWhere = async function (paramContainer) {
                 }
             ]
         }
-
-        console.log(where);
         return where;
     };
     return where = {
