@@ -48,8 +48,10 @@ router.post('/', async function (req, res) {
         });
 
     let token = crypto.randomBytes(64).toString('base64');
+
+    // Set expire date to 1 hour from now
     let expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() + 1/24);
+    expireDate.setHours(expireDate.getHours() +1)
 
     let resetToken = await models.ResetToken.create({
         email: email,

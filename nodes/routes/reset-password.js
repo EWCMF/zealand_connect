@@ -22,7 +22,7 @@ router.get('/', async function (req, res, next) {
     await models.ResetToken.destroy({
         where: {
             expiration: {
-                [Op.lt]: new Date() - 3600000
+                [Op.lt]: new Date()
             },
         }
     });
