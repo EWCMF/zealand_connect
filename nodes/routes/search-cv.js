@@ -333,41 +333,6 @@ router.get('/', async function (req, res, next) {
         where
     });
 
-    // if (req.query.s) {
-    //     let filtered = [];
-
-    //     let toSearch = req.query.s;
-
-    //     rows.forEach(element => {
-    //         for (let key in element) {
-    //             const value = element[key];
-    //             if (typeof value === 'string') {
-    //                 let lowercase = value.toLowerCase();
-    //                 if (lowercase.indexOf(toSearch) != -1) {
-    //                     if (!filtered.includes(element)) {
-    //                         filtered.push(element);
-    //                     }
-    //                 }
-    //             } else if (typeof value === 'object' && value !== null) {
-    //                 for (let subKey in value) {
-    //                     const subValue = value[subKey];
-    //                     if (typeof subValue === 'string') {
-    //                         let lowercase = subValue.toLowerCase();
-    //                         if (lowercase.indexOf(toSearch) != -1) {
-    //                             if (!filtered.includes(element)) {
-    //                                 filtered.push(element);
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     });
-
-    //     rows = filtered;
-    //     count = filtered.length
-    // };
-
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1 ? true : false;
 
@@ -462,41 +427,6 @@ router.post('/query', function (req, res) {
         let count = await db.CV.count({
             where
         });
-
-        // if (fields.s) {
-        //     let filtered = [];
-    
-        //     let toSearch = fields.s.toLowerCase();
-    
-        //     rows.forEach(element => {
-        //         for (let key in element) {
-        //             const value = element[key];
-        //             if (typeof value === 'string') {
-        //                 let lowercase = value.toLowerCase();
-        //                 if (lowercase.indexOf(toSearch) != -1) {
-        //                     if (!filtered.includes(element)) {
-        //                         filtered.push(element);
-        //                     }
-        //                 }
-        //             } else if (typeof value === 'object' && value !== null) {
-        //                 for (let subKey in value) {
-        //                     const subValue = value[subKey];
-        //                     if (typeof subValue === 'string') {
-        //                         let lowercase = subValue.toLowerCase();
-        //                         if (lowercase.indexOf(toSearch) != -1) {
-        //                             if (!filtered.includes(element)) {
-        //                                 filtered.push(element);
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     });
-    
-        //     rows = filtered;
-        //     count = filtered.length
-        // };
 
         var item = [count];
 
