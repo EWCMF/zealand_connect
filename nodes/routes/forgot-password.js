@@ -79,7 +79,7 @@ router.post('/', async function (req, res) {
         from: "noreply@connect.zealand.dk",
         to: email,
         subject: "Genstart password på Zealand Connect",
-        text: "Tryk på dette link for at genstarte dit password:\n\nhttps://" + "localhost/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
+        text: "Tryk på dette link for at genstarte dit password:\n\n" + "localhost:3000/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
     };
 
     transport.sendMail(message, function (err, info) {
