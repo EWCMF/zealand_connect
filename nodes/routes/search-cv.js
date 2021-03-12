@@ -137,6 +137,71 @@ const handleWhere = async function (paramContainer) {
         }
     }
 
+    if (paramContainer.hasOwnProperty('s')) {
+        let toSearch = "%" + paramContainer['s'] + "%";
+        return where = {
+            id,
+            fk_education,
+            sprog,
+            geo_lat,
+            geo_lon,
+            offentlig: true,
+            gyldig: true,
+            [Op.or]: [
+                {
+                    overskrift: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    email: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    sprog: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    speciale: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    om_mig: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    iT_Kompetencer: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    udenlandsophold_og_frivilligt_arbejde: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    erhvervserfaring: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    tidligere_uddannelse: {
+                        [Op.like]: toSearch
+                    }
+                },
+                {
+                    fritidsinteresser: {
+                        [Op.like]: toSearch
+                    }
+                }
+            ]
+        }
+    }
+
     return where = {
         id,
         fk_education,
@@ -262,11 +327,46 @@ router.get('/', async function (req, res, next) {
                 }
             })
         }
-    })
+    });
 
-    const count = await db.CV.count({
+    let count = await db.CV.count({
         where
     });
+
+    // if (req.query.s) {
+    //     let filtered = [];
+
+    //     let toSearch = req.query.s;
+
+    //     rows.forEach(element => {
+    //         for (let key in element) {
+    //             const value = element[key];
+    //             if (typeof value === 'string') {
+    //                 let lowercase = value.toLowerCase();
+    //                 if (lowercase.indexOf(toSearch) != -1) {
+    //                     if (!filtered.includes(element)) {
+    //                         filtered.push(element);
+    //                     }
+    //                 }
+    //             } else if (typeof value === 'object' && value !== null) {
+    //                 for (let subKey in value) {
+    //                     const subValue = value[subKey];
+    //                     if (typeof subValue === 'string') {
+    //                         let lowercase = subValue.toLowerCase();
+    //                         if (lowercase.indexOf(toSearch) != -1) {
+    //                             if (!filtered.includes(element)) {
+    //                                 filtered.push(element);
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     });
+
+    //     rows = filtered;
+    //     count = filtered.length
+    // };
 
     let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1 ? true : false;
@@ -297,6 +397,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'lnd');
         makeArray(fields, 'geo');
         makeArray(fields, 'cvtype');
+        makeArray(fields, 's');
 
         let where = await handleWhere(fields);
 
@@ -356,11 +457,46 @@ router.post('/query', function (req, res) {
                     }
                 })
             }
-        })
+        });
 
-        const count = await db.CV.count({
+        let count = await db.CV.count({
             where
         });
+
+        // if (fields.s) {
+        //     let filtered = [];
+    
+        //     let toSearch = fields.s.toLowerCase();
+    
+        //     rows.forEach(element => {
+        //         for (let key in element) {
+        //             const value = element[key];
+        //             if (typeof value === 'string') {
+        //                 let lowercase = value.toLowerCase();
+        //                 if (lowercase.indexOf(toSearch) != -1) {
+        //                     if (!filtered.includes(element)) {
+        //                         filtered.push(element);
+        //                     }
+        //                 }
+        //             } else if (typeof value === 'object' && value !== null) {
+        //                 for (let subKey in value) {
+        //                     const subValue = value[subKey];
+        //                     if (typeof subValue === 'string') {
+        //                         let lowercase = subValue.toLowerCase();
+        //                         if (lowercase.indexOf(toSearch) != -1) {
+        //                             if (!filtered.includes(element)) {
+        //                                 filtered.push(element);
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     });
+    
+        //     rows = filtered;
+        //     count = filtered.length
+        // };
 
         var item = [count];
 
