@@ -446,6 +446,9 @@ function getLangdata() {
                 "Opret_uddannelse": "Create education",
                 "Slet_uddannelse": "Delete education",
 
+                //reset-password
+                "Password_hint_error": "The password is invalid. Hover over the yellow question mark for help.",
+                "Nulstil_adgangskode": "Reset password",
             }
         }
     }

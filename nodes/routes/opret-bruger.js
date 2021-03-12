@@ -207,7 +207,7 @@ router.post('/studentCreate', (req, res, next)=> {
     }
 
     if (!validatePasswordLength(password)) {
-        errors.PasswordError = "Adgangskode skal være mellem 8 og 16 tegn";
+        errors.PasswordError = "Adgangskode skal være mellem 8 og 20 tegn";
         atLeastOneErrorIsPresent = true;
     } else if (!checkForIdenticals(password, gentagPassword)) {
         errors.PasswordError = "Passwords er ikke ens";

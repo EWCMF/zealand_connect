@@ -8,6 +8,7 @@ const {
 } = require('../public/javascript/request');
 const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
+const { validatePasswordLength, checkForIdenticals} = require('../validation/input-validation');
 
 router.get('/', async function (req, res, next) {
     await models.ResetToken.destroy({
@@ -41,12 +42,19 @@ router.get('/', async function (req, res, next) {
 
 router.post('/', async function (req, res, next) {
     let password = req.body.password;
+    let password2 = req.body.gentagPassword;
     let email = req.body.email;
     let token = req.body.token;
 
-    console.log(password)
-    console.log(email)
-    console.log(token)
+    console.log(password);
+    console.log(password2);
+
+    if (!checkForIdenticals(password, password2)){
+        return res.json({status: 'error', message: 'Passwords do not match. Please try again.'});
+    }
+    if (!validatePasswordLength(password)){
+        return res.json({status: 'error', message: 'Password length is incorrect.'});
+    }
 
     const record = await models.ResetToken.findOne({
         where: {
@@ -92,7 +100,9 @@ router.post('/', async function (req, res, next) {
         return res.json({status: 'error', message: 'There was an error. Please try again.'});
     }
 
-    return res.json({status: 'ok', message: 'Password reset. Please login with your new password.'});
+    res.render('reset-password-success', {
+        language: reqLang(req, res)
+    });
 })
 
 module.exports = router;
