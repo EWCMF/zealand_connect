@@ -164,7 +164,42 @@
                             </ul>
                         </div>
 
-                        
+                        <div class="panel-heading">
+                            <h6 id="collapse5Header"
+                                class="panel-title mb-2 hand-hover"
+                                data-toggle="collapse"
+                                data-parent="#accordion"
+                                href="#collapse5"
+                                onclick="animateArrow(this)"
+                                data-key="Fri_soegning_html">
+                                    Fri søgning
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+
+                        <div id="collapse5" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-column">
+                                    <div>
+                                        <label class="form-check-label flex-fill" data-key="Soegefelt">
+                                        Søgefelt
+                                        </label>
+                                    <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                            title="Indtast søgeord adskilt med mellemrum"
+                                            data-Key="Indtast_search_tooltip">?</span>
+                                    </div>
+                                    <input id='inputSearch' class="align-self-center" name="pos">
+
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-success" onclick="addFilterSearch('search', document.getElementById('inputSearch').value)" data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputSearch', 'search')" data-key="Ryd">Ryd</button>
+                                </li>
+
+                            </ul>
+
+
+                        </div>
                         
                     </div>
                 </div>

@@ -48,6 +48,33 @@ function addFilter(type, id) {
     submitForm(form);
 };
 
+function addFilterSearch(type, value) {
+    // Tilføj query parameter uden refresh.
+    if (!value) {
+        return;
+    }
+    const url = new URL(window.location.href);
+    url.searchParams.set(type, value);
+    window.history.replaceState(null, null, url);
+    removePageParam();
+    let form = document.getElementById('filterForm');
+    submitForm(form);
+}
+
+function removeFilterSearch(element, type) {
+    document.getElementById(element).value = '';
+    const url = new URL(window.location.href);
+    if (url.searchParams.has(type)) {
+        url.searchParams.delete(type)
+    } else {
+        return;
+    }
+    window.history.replaceState(null, null, url);
+    removePageParam();
+    let form = document.getElementById('filterForm');
+    submitForm(form);
+}
+
 function addAddress() {
     let geo_id = document.getElementById('geo_id').value;
     let radius = document.getElementById('geo_radius').value;
@@ -119,7 +146,7 @@ function submitForm(formElement) {
 
 
     let page = document.getElementById('currentPage') ? document.getElementById('currentPage').value : null;
-    if (page === null || page === '') {
+    if (!page) {
         page = '1'
     }
     formData.append("page", page);
@@ -127,6 +154,14 @@ function submitForm(formElement) {
     handleInputArrayAndSetToForm(formData, 'udd');
     handleInputArrayAndSetToForm(formData, 'lnd');
     handleInputArrayAndSetToForm(formData, 'cvtype');
+
+    let s = [];
+    if (document.getElementById('inputSearch').value) {
+        s.push(document.getElementById('inputSearch').value)
+        formData.set('search', s);
+    } else {
+        formData.delete('search');
+    }
 
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -222,3 +257,4 @@ function checkCollapseSearch(id, key, collapse, collapseHeader) {
     }
 }
 checkCollapseSearch('inputAddress', 'geo_id', 'collapse3', 'collapse3Header');
+checkCollapseSearch('inputSearch', 'search', 'collapse5', 'collapse5Header');

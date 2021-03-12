@@ -125,6 +125,14 @@ function submitForm(formElement) {
     } else {
         formData.delete('pos');
     }
+
+    let s = [];
+    if (document.getElementById('inputSearch').value) {
+        s.push(document.getElementById('inputSearch').value)
+        formData.set('search', s);
+    } else {
+        formData.delete('search');
+    }
     
 
     let xhr = new XMLHttpRequest();
@@ -200,6 +208,7 @@ function checkCollapseSearch(id, key, collapse, collapseHeader) {
     }
 }
 checkCollapseSearch('inputPost', 'pos', 'collapse4', 'collapse4Header');
+checkCollapseSearch('inputSearch', 'search', 'collapse6', 'collapse6Header');
 
 function preconfigEducationFilter(collapseId1, collapseId2, collapse2HeaderId, id) {
     if (window.performance) {

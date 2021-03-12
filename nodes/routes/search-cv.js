@@ -137,6 +137,107 @@ const handleWhere = async function (paramContainer) {
         }
     }
 
+    if (paramContainer.hasOwnProperty('search')) {
+        let overskrift = {
+            [Op.or]: []
+        };
+        let email = {
+            [Op.or]: []
+        };
+        let speciale = {
+            [Op.or]: []
+        };
+        let om_mig = {
+            [Op.or]: []
+        };
+        let iT_Kompetencer = {
+            [Op.or]: []
+        };
+        let udenlandsophold_og_frivilligt_arbejde = {
+            [Op.or]: []
+        };
+        let erhvervserfaring = {
+            [Op.or]: []
+        };
+        let tidligere_uddannelse = {
+            [Op.or]: []
+        };
+        let fritidsinteresser = {
+            [Op.or]: []
+        };
+
+        let search = paramContainer['search'].split(' ');
+        for (let i = 0; i < search.length; i++) {
+            let element = search[i];
+            element = "%" + element + "%"
+            overskrift[Op.or].push({
+                [Op.like]: element
+            });
+            email[Op.or].push({
+                [Op.like]: element
+            });
+            speciale[Op.or].push({
+                [Op.like]: element
+            });
+            om_mig[Op.or].push({
+                [Op.like]: element
+            });
+            iT_Kompetencer[Op.or].push({
+                [Op.like]: element
+            });
+            udenlandsophold_og_frivilligt_arbejde[Op.or].push({
+                [Op.like]: element
+            });
+            erhvervserfaring[Op.or].push({
+                [Op.like]: element
+            });
+            tidligere_uddannelse[Op.or].push({
+                [Op.like]: element
+            });
+            fritidsinteresser[Op.or].push({
+                [Op.like]: element
+            });
+        }
+        return where = {
+            id,
+            fk_education,
+            sprog,
+            geo_lat,
+            geo_lon,
+            offentlig: true,
+            gyldig: true,
+            [Op.or]: [
+                {
+                    overskrift
+                },
+                {
+                    email
+                },
+                {
+                    speciale
+                },
+                {
+                    om_mig
+                },
+                {
+                    iT_Kompetencer
+                },
+                {
+                    udenlandsophold_og_frivilligt_arbejde
+                },
+                {
+                    erhvervserfaring
+                },
+                {
+                    tidligere_uddannelse
+                },
+                {
+                    fritidsinteresser
+                },
+            ]
+        }
+    }
+
     return where = {
         id,
         fk_education,
@@ -262,9 +363,9 @@ router.get('/', async function (req, res, next) {
                 }
             })
         }
-    })
+    });
 
-    const count = await db.CV.count({
+    let count = await db.CV.count({
         where
     });
 
@@ -297,6 +398,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'lnd');
         makeArray(fields, 'geo');
         makeArray(fields, 'cvtype');
+        makeArray(fields, 's');
 
         let where = await handleWhere(fields);
 
@@ -356,9 +458,9 @@ router.post('/query', function (req, res) {
                     }
                 })
             }
-        })
+        });
 
-        const count = await db.CV.count({
+        let count = await db.CV.count({
             where
         });
 
