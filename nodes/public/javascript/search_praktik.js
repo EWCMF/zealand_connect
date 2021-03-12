@@ -125,6 +125,14 @@ function submitForm(formElement) {
     } else {
         formData.delete('pos');
     }
+
+    let s = [];
+    if (document.getElementById('inputSearch').value) {
+        s.push(document.getElementById('inputSearch').value)
+        formData.set('search', s);
+    } else {
+        formData.delete('search');
+    }
     
 
     let xhr = new XMLHttpRequest();

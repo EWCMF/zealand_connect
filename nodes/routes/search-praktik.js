@@ -4,30 +4,38 @@ var hbs = require('handlebars');
 var fs = require('fs');
 const db = require('../models');
 var formidable = require("formidable");
-var { reqLang } = require('../public/javascript/request');
+var {
+    reqLang
+} = require('../public/javascript/request');
 const limit = 10;
-const { Op } = require('sequelize');
+const {
+    Op
+} = require('sequelize');
 const path = require('path');
-const makeArray = function(body, param) {
+const makeArray = function (body, param) {
     if (body.hasOwnProperty(param)) {
         let array = body[param].split(",");
         body[param] = array;
     }
 };
-const handleWhere = function(paramContainer) {
-    var fk_education = {
+const handleWhere = async function (paramContainer) {
+    let fk_company = {
+        [Op.or]: []
+    }
+
+    let fk_education = {
         [Op.or]: []
     };
-    var country = {
+    let country = {
         [Op.or]: []
     };
-    var region = {
+    let region = {
         [Op.or]: []
     };
-    var postcode = {
+    let postcode = {
         [Op.or]: []
     };
-    var post_type = {
+    let post_type = {
         [Op.or]: []
     };
 
@@ -102,7 +110,7 @@ const handleWhere = function(paramContainer) {
                             realName = 'Region Sjælland';
                             break;
                         case '5':
-                            realName = 'Region Syddanmark';                   
+                            realName = 'Region Syddanmark';
                     };
                     region[Op.or].push(realName);
                 });
@@ -122,7 +130,7 @@ const handleWhere = function(paramContainer) {
                         realName = 'Region Sjælland';
                         break;
                     case '5':
-                        realName = 'Region Syddanmark';                   
+                        realName = 'Region Syddanmark';
                 };
                 region[Op.or].push(realName);
             }
@@ -138,30 +146,158 @@ const handleWhere = function(paramContainer) {
                 postcode[Op.or].push(+values);
             }
         }
+
+        if (key.includes("search")) {
+            let navn = {
+                [Op.or]: []
+            }
+
+            let search = paramContainer['search'].split(' ');
+            for (let i = 0; i < search.length; i++) {
+                let element = search[i];
+                element = "%" + element + "%"
+                navn[Op.or].push({
+                    [Op.like]: element
+                });
+            }
+
+            const virksomheder = await db.Virksomhed.findAll({
+                where: {
+                    [Op.or]: [{
+                        navn
+                    }]
+                },
+                raw: true
+            })
+            virksomheder.forEach(element => {
+                fk_company[Op.or].push(element.id);
+            })
+        }
     }
 
     let date = new Date();
     let day = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getUTCFullYear();
+
+    if (paramContainer.hasOwnProperty('search')) {
+        let title = {
+            [Op.or]: []
+        };
+        let email = {
+            [Op.or]: []
+        }
+        let contact = {
+            [Op.or]: []
+        }
+        let post_text = {
+            [Op.or]: []
+        }
+        let company_link = {
+            [Op.or]: []
+        }
+
+        let search = paramContainer['search'].split(' ');
+        for (let i = 0; i < search.length; i++) {
+            let element = search[i];
+            element = "%" + element + "%"
+            title[Op.or].push({
+                [Op.like]: element
+            });
+            email[Op.or].push({
+                [Op.like]: element
+            });
+            contact[Op.or].push({
+                [Op.like]: element
+            });
+            post_text[Op.or].push({
+                [Op.like]: element
+            });
+            company_link[Op.or].push({
+                [Op.like]: element
+            });
+        }
+
+        let where = {
+            fk_education,
+            country,
+            region,
+            postcode,
+            post_type,
+            [Op.or]: [{
+                    'expired': {
+                        [Op.ne]: 1
+                    }
+                },
+                {
+                    [Op.and]: [{
+                            'expired': 1
+                        },
+                        {
+                            'post_start_date': {
+                                [Op.gt]: year + "-" + month + "-" + day
+                            }
+                        }
+                    ]
+                }
+            ],
+            [Op.or]: [
+                {
+                    fk_company
+                },
+                {
+                    [Op.or]: [
+                        {
+                            title
+                        },
+                        {
+                            email
+                        },
+                        {
+                            contact
+                        },
+                        {
+                            post_text
+                        },
+                        {
+                            company_link
+                        }
+                    ]
+                }
+            ]
+        }
+
+        console.log(where);
+        return where;
+    };
     return where = {
         fk_education,
         country,
         region,
         postcode,
         post_type,
-        [Op.or]: [
-            {'expired': {[Op.ne]: 1}},
-            {[ Op.and]:[
-               {'expired': 1}, 
-               { 'post_start_date': {[Op.gt]:year+"-"+month+"-"+day}}
-            ]}
+        [Op.or]: [{
+                'expired': {
+                    [Op.ne]: 1
+                }
+            },
+            {
+                [Op.and]: [{
+                        'expired': 1
+                    },
+                    {
+                        'post_start_date': {
+                            [Op.gt]: year + "-" + month + "-" + day
+                        }
+                    }
+                ]
+            }
         ]
     }
 }
 
 router.get('/', async function (req, res, next) {
-    
+
     let page;
     let offset;
     if (req.query.page == null) {
@@ -172,7 +308,7 @@ router.get('/', async function (req, res, next) {
         offset = (page - 1) * limit;
     }
 
-    let where = handleWhere(req.query);
+    let where = await handleWhere(req.query);
 
     let categoryQuery = await db.EducationCategory.findAll({
         raw: true,
@@ -209,23 +345,21 @@ router.get('/', async function (req, res, next) {
             }
         }
 
-        categories.push(
-            {
-                id: category.id,
-                name: category.name,
-                uddannelser: uddannelser,
-                showCategory: showCategory
-            }
-        )
+        categories.push({
+            id: category.id,
+            name: category.name,
+            uddannelser: uddannelser,
+            showCategory: showCategory
+        })
     }
 
     const user = res.locals.user
 
     if (user !== undefined) {
         if (user.cv != null) {
-            for (const category of categories){
-                for (const uddannelse of category.uddannelser){
-                    if (uddannelse.name === user.cv.education.name){
+            for (const category of categories) {
+                for (const uddannelse of category.uddannelser) {
+                    if (uddannelse.name === user.cv.education.name) {
                         uddannelse.checked = 'checked'
                     }
                 }
@@ -245,20 +379,20 @@ router.get('/', async function (req, res, next) {
             ['updatedAt', 'DESC']
         ],
         include: [{
-            model: db.Virksomhed,
-            as: 'virksomhed'
-        },
-        {
-            model: db.Uddannelse,
-            as: 'education',
-            attributes: ['name']
-        }],
+                model: db.Virksomhed,
+                as: 'virksomhed'
+            },
+            {
+                model: db.Uddannelse,
+                as: 'education',
+                attributes: ['name']
+            }
+        ],
         where
-        }   
-    );
+    });
 
     let pageCount = Math.ceil(count / limit);
-    let withPages = pageCount > 1  ? true : false;
+    let withPages = pageCount > 1 ? true : false;
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
@@ -289,7 +423,7 @@ router.get('/', async function (req, res, next) {
                 element['post_type'] = 'Studiejob';
                 break;
             case 3:
-                element['post_type'] = 'Trainee';     
+                element['post_type'] = 'Trainee';
         }
 
     }
@@ -322,11 +456,11 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'reg');
         makeArray(fields, 'pos');
 
-        let where = handleWhere(fields);
+        let where = await handleWhere(fields);
 
         let page = parseInt(fields.page);
         let offset;
-        
+
         if (page == 1) {
             offset = 0
         } else {
@@ -345,14 +479,15 @@ router.post('/query', function (req, res) {
                 [fields.sort, fields.order]
             ],
             include: [{
-                model: db.Virksomhed,
-                as: 'virksomhed'
-            },
-            {
-                model: db.Uddannelse,
-                as: 'education',
-                attributes: ['name']
-            }],
+                    model: db.Virksomhed,
+                    as: 'virksomhed'
+                },
+                {
+                    model: db.Uddannelse,
+                    as: 'education',
+                    attributes: ['name']
+                }
+            ],
             where
         });
 
@@ -363,11 +498,11 @@ router.post('/query', function (req, res) {
 
             if (element['post_start_date'].length > 0) {
                 let cropStart = element['post_start_date'].substring(0, 10);
-    
+
                 let startYear = cropStart.substring(0, cropStart.indexOf('-'));
                 let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
                 let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
-    
+
                 element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
             }
 
@@ -388,16 +523,16 @@ router.post('/query', function (req, res) {
                     element['post_type'] = 'Studiejob';
                     break;
                 case 3:
-                    element['post_type'] = 'Trainee';     
+                    element['post_type'] = 'Trainee';
             }
-            
+
         }
 
-        fs.readFileAsync = function(filename) {
-            return new Promise(function(resolve, reject) {
-                fs.readFile(filename, function(err, data){
-                    if (err) 
-                        reject(err); 
+        fs.readFileAsync = function (filename) {
+            return new Promise(function (resolve, reject) {
+                fs.readFile(filename, function (err, data) {
+                    if (err)
+                        reject(err);
                     else
                         resolve(data);
                 });
@@ -410,16 +545,18 @@ router.post('/query', function (req, res) {
 
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
-            let html = template({json: rows});
+            let html = template({
+                json: rows
+            });
             item.push(html);
 
             getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
-                
+
                 let pageCount = Math.ceil(count / limit);
                 let withPages = pageCount > 1 ? true : false;
-                
+
                 let html = template({
                     pagination: {
                         page: page,
@@ -427,7 +564,7 @@ router.post('/query', function (req, res) {
                     },
                     withPages
                 });
-            
+
                 item.push(html);
                 res.send(item);
             });
