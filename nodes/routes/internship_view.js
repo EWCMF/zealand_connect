@@ -14,7 +14,7 @@ router.get('/:id', async function (req, res) {
         nest: true,
         attributes: ["title", "email", "phone_number", "contact", "fk_education",
             "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode",
-            "company_link", "post_document", "fk_company"],
+            "company_link", "post_document", "fk_company", "dawa_json"],
         include: [{
             model: models.Virksomhed,
             as: 'virksomhed'
@@ -65,6 +65,12 @@ router.get('/:id', async function (req, res) {
 
         rdocName = result.post_document.replace(/^.*_/, "");
     }
+
+    let address
+    if (result.dawa_json) {
+        let dawa_json = JSON.parse(result.dawa_json);
+        address = `${dawa_json['vejnavn']} ${dawa_json['husnr']}`;
+    }
     
 
     //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
@@ -92,7 +98,9 @@ router.get('/:id', async function (req, res) {
         rdoc: result["post_document"],
         rdocName: rdocName,
         isDenmark: isDenmark,
-        ejer: ejer
+        ejer: ejer,
+        rdawa_json: result['dawa_json'],
+        raddress: address
     });
 
     //TODO: Fiks dette rod
