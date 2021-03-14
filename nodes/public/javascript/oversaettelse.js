@@ -446,6 +446,13 @@ function getLangdata() {
                 "Opret_uddannelse": "Create education",
                 "Slet_uddannelse": "Delete education",
 
+                //forgot-password
+                "Email_label": "Enter an email address and you will receive an e-mail for resetting your password.",
+                "Glemt_password": "Password recovery",
+
+                //reset-password
+                "Password_hint_error": "The password is invalid. Hover over the yellow question mark for help.",
+                "Nulstil_adgangskode": "Reset password",
             }
         }
     }

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const {
     reqLang
 } = require('../public/javascript/request');
@@ -7,14 +8,21 @@ const {
     emailRegex
 } = require('../constants/regex');
 const nodemailer = require('nodemailer');
+const models = require('../models');
+const crypto = require('crypto');
+const hbs = require('nodemailer-express-handlebars');
 
 router.get('/', function (req, res, next) {
     let msg = req.query.success;
 
+    const language = reqLang(req, res);
+
     if (msg !== null && msg !== undefined) {
         return res.render('forgot-password', {
-            language: reqLang(req, res),
-            message: "En mail er blevet sendt"
+            language: language,
+            message: language === "da"
+                ? "Hvis brugeren eksisterer, vil du modtage en email med oplysninger til at nulstille din adgangskode."
+                : "If the user exists you'll receive an email with information about resetting your password."
         });
     }
 
@@ -23,40 +31,98 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.post('/', function (req, res) {
-    let mail = req.body.mail;
+router.post('/', async function (req, res) {
+    let email = req.body.email;
 
-    if (mail.length == 0 || !emailRegex.test(mail)) {
+    if (email.length === 0 || !emailRegex.test(email)) {
         return res.send('One or more fields are invalid');
     }
 
-    const transport = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: 465,
-        secure: true,
-        secureConnection: true,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-        }
-    });
+    let user = await findUserByEmail(email);
+    if (user) {
+        await models.ResetToken.update({
+                used: 1
+            },
+            {
+                where: {
+                    email: email
+                }
+            });
 
-    const message = {
-        from: "noreply@connect.zealand.dk",
-        to: mail,
-        subject: "Genstart password på Zealand Connect",
-        text: "Tryk på dette link for at genstarte dit password: link"
-    };
+        let token = crypto.randomBytes(64).toString('base64');
 
-    transport.sendMail(message, function (err, info) {
-        if (err) { 
-            console.log(err);
+        // Set expire date to 1 hour from now
+        let expireDate = new Date();
+        expireDate.setHours(expireDate.getHours() +1)
+
+        let resetToken = await models.ResetToken.create({
+            email: email,
+            expiration: expireDate,
+            token: token,
+            used: 0
+        });
+
+        const transport = nodemailer.createTransport({
+            host: process.env.EMAIL_HOST,
+            port: process.env.EMAIL_PORT,
+            secure: process.env.NODE_ENV === 'production',
+            secureConnection: process.env.NODE_ENV === 'production',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        const options = {
+            viewEngine: {
+                partialsDir: __dirname + "/../views/partials",
+                layoutsDir: __dirname + "/../views/email-templates",
+                extname: ".hbs"
+            },
+            extName: ".hbs",
+            viewPath: "views/email-templates"
+        };
+
+        transport.use("compile", hbs(options));
+
+        let subject, title, text, buttonText;
+
+        if (reqLang(req, res) === 'da'){
+            subject = "Nulstil adgangskode på Zealand Connect";
+            title = "Nulstil adgangskode";
+            text = "Følg dette link for at nulstille din adgangskode.";
+            buttonText = "Nulstil adgangskode";
         } else {
-            console.log(info); 
+            subject = "Reset password at Zealand Connect";
+            title = "Reset password";
+            text = "Follow this link to reset your password.";
+            buttonText = "Reset password";
         }
-    });
 
-    res.redirect('/forgot-password?success=true');
+        const message = {
+            from: "noreply@connect.zealand.dk",
+            to: email,
+            subject: subject,
+            template: 'password-recovery',
+            context: {
+                link: process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
+                title: title,
+                text: text,
+                buttonText: buttonText
+            }
+        };
+
+        await transport.sendMail(message, function (err, info) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(info);
+            }
+        });
+        res.redirect('/forgot-password?success=true');
+    } else {
+        res.redirect('/forgot-password?success=true');
+    }
 })
 
 module.exports = router;

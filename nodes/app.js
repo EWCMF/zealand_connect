@@ -1,31 +1,32 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var profilRouter = require('./routes/profil');
-var internshipPostRouter = require('./routes/internship_post');
-var internshipUpdateRouter = require('./routes/internship_update');
-var internshipPostViewRouter = require('./routes/internship_view');
-var adminFunktionerRouter = require('./routes/admin-funktioner');
-var mit_CVRouter = require('./routes/mit-cv');
-var searchCVRouter = require('./routes/search-cv');
-var searchPraktikRouter = require('./routes/search-praktik');
-var searchVirksomhederRouter = require('./routes/search-virksomheder');
-var mineOpslagRouter = require('./routes/mine-opslag');
-var loginRouter = require('./routes/login');
-var languageRouter = require('./routes/language');
-var cookieRouter = require('./routes/cookie-confirm');
-var forsideRouter = require('./routes/forside');
-var kontaktRouter = require('./routes/kontakt');
+const profilRouter = require('./routes/profil');
+const internshipPostRouter = require('./routes/internship_post');
+const internshipUpdateRouter = require('./routes/internship_update');
+const internshipPostViewRouter = require('./routes/internship_view');
+const adminFunktionerRouter = require('./routes/admin-funktioner');
+const mit_CVRouter = require('./routes/mit-cv');
+const searchCVRouter = require('./routes/search-cv');
+const searchPraktikRouter = require('./routes/search-praktik');
+const searchVirksomhederRouter = require('./routes/search-virksomheder');
+const mineOpslagRouter = require('./routes/mine-opslag');
+const loginRouter = require('./routes/login');
+const languageRouter = require('./routes/language');
+const cookieRouter = require('./routes/cookie-confirm');
+const forsideRouter = require('./routes/forside');
+const kontaktRouter = require('./routes/kontakt');
 const omRouter = require('./routes/om');
-var opretBrugerRouter = require('./routes/opret-bruger');
-var loginStudentRouter = require('./routes/login-student');
+const opretBrugerRouter = require('./routes/opret-bruger');
+const loginStudentRouter = require('./routes/login-student');
 const newsRouter = require('./routes/news');
 const forgotPasswordRouter = require('./routes/forgot-password');
+const resetPasswordRouter = require('./routes/reset-password');
 
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -36,7 +37,7 @@ const hbs = require("express-handlebars");
 const findUserByEmail = require('./persistence/usermapping').findUserByEmail;
 const models = require('./models');
 
-var app = express();
+const app = express();
 
 // view engine setup
 
@@ -156,6 +157,7 @@ app.use('/kontakt', kontaktRouter);
 app.use('/om', omRouter);
 app.use('/news', newsRouter);
 app.use('/forgot-password', forgotPasswordRouter);
+app.use('/reset-password', resetPasswordRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));
