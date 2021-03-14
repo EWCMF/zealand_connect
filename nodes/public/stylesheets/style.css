@@ -562,12 +562,23 @@ input::placeholder {
   flex-direction: column;
 }
 
-#cookieBox {
+#cookieBox{
   margin-top: 10px;
   height: 26px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#forgotPasswordBox{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+#forgotPasswordBox a {
+  color: black;
+  text-decoration: none;
 }
 
 #loginContent {
