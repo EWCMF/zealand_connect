@@ -414,7 +414,10 @@ router.get('/', async function (req, res, next) {
                 element['post_type'] = 'Studiejob';
                 break;
             case 3:
-                element['post_type'] = 'Trainee';
+                element['post_type'] = 'Trainee stilling';
+                break;
+            case 4:
+                element['post_type'] = 'Fuldtidsstilling';
         }
 
     }
@@ -514,7 +517,10 @@ router.post('/query', function (req, res) {
                     element['post_type'] = 'Studiejob';
                     break;
                 case 3:
-                    element['post_type'] = 'Trainee';
+                    element['post_type'] = 'Trainee stilling';
+                    break;
+                case 4:
+                    element['post_type'] = 'Fuldtidsstilling';
             }
 
         }
