@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td data-key="Virksomhed">Virksomhed:</td>
-                    <td id=companyContainer" data-key="{{rcompany}}"><a href='/profil/virksomhed/{{rcompanyid}}'>{{rcompany}}</a></td>
+                    <td id="companyContainer" data-key="{{rcompany}}"><a href='/profil/virksomhed/{{rcompanyid}}'>{{rcompany}}</a></td>
                 </tr>
                 <tr>
                     <td data-key="Uddannelse_kolon">Uddannelse:</td>
@@ -99,11 +99,13 @@
     </div>
 
     <div class="row border rounded ml-1 mr-1 mb-4">
-        <div class="col mb-2">
+        <div class="col mb-2 postTextContainer">
             <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Annoncetekst_kolon">
                 Annoncetekst:
             </h4>
-            {{{rtext}}}
+            <div class="ql-editor">
+                {{{rtext}}}
+            </div>
         </div>
     </div>
 </div>
