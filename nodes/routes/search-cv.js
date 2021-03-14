@@ -39,6 +39,18 @@ const handleWhere = async function (paramContainer) {
         [Op.or]: []
     };
 
+    let where = {
+        id,
+        fk_education,
+        sprog,
+        geo_lat,
+        geo_lon,
+        offentlig: true,
+        gyldig: true
+    }
+
+
+
     for (let key in paramContainer) {
         if (key.includes("udd")) {
             let values = paramContainer[key];
@@ -198,55 +210,21 @@ const handleWhere = async function (paramContainer) {
                 [Op.like]: element
             });
         }
-        return where = {
-            id,
-            fk_education,
-            sprog,
-            geo_lat,
-            geo_lon,
-            offentlig: true,
-            gyldig: true,
-            [Op.or]: [
-                {
-                    overskrift
-                },
-                {
-                    email
-                },
-                {
-                    speciale
-                },
-                {
-                    om_mig
-                },
-                {
-                    iT_Kompetencer
-                },
-                {
-                    udenlandsophold_og_frivilligt_arbejde
-                },
-                {
-                    erhvervserfaring
-                },
-                {
-                    tidligere_uddannelse
-                },
-                {
-                    fritidsinteresser
-                },
-            ]
-        }
+
+        where[Op.or] = [
+            {overskrift},
+            {email},
+            {speciale},
+            {om_mig},
+            {iT_Kompetencer},
+            {udenlandsophold_og_frivilligt_arbejde},
+            {erhvervserfaring},
+            {tidligere_uddannelse},
+            {fritidsinteresser}
+        ]
     }
 
-    return where = {
-        id,
-        fk_education,
-        sprog,
-        geo_lat,
-        geo_lon,
-        offentlig: true,
-        gyldig: true
-    }
+    return where;
 }
 
 
