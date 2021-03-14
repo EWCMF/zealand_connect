@@ -29,10 +29,14 @@
                     <td id="countryContainer">{{rcountry}}</td>
                 </tr>
 
-                {{#if isDenmark}}
+                {{#if rdawa_json}}
                     <tr id="regionParent">
                         <td>Region:</td>
                         <td id="regionContainer">{{rregion}}</td>
+                    </tr>
+                    <tr id="addressParent">
+                        <td data-key="Adresse_kolon">Adresse:</td>
+                        <td id="addressContainer">{{raddress}}</td>
                     </tr>
                     <tr id="cityParent">
                         <td data-key="By_kolon">By:</td>
