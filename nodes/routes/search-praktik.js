@@ -19,10 +19,6 @@ const makeArray = function (body, param) {
     }
 };
 const handleWhere = async function (paramContainer) {
-    let fk_company = {
-        [Op.or]: []
-    }
-
     let fk_education = {
         [Op.or]: []
     };
@@ -37,6 +33,36 @@ const handleWhere = async function (paramContainer) {
     };
     let post_type = {
         [Op.or]: []
+    };
+
+    let date = new Date();
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getUTCFullYear();
+
+    let where = {
+        fk_education,
+        country,
+        region,
+        postcode,
+        post_type,
+        [Op.or]: [{
+                'expired': {
+                    [Op.ne]: 1
+                }
+            },
+            {
+                [Op.and]: [{
+                        'expired': 1
+                    },
+                    {
+                        'post_start_date': {
+                            [Op.gt]: year + "-" + month + "-" + day
+                        }
+                    }
+                ]
+            }
+        ]
     };
 
     for (let key in paramContainer) {
@@ -146,58 +172,54 @@ const handleWhere = async function (paramContainer) {
                 postcode[Op.or].push(+values);
             }
         }
-
-        if (key.includes("search")) {
-            let navn = {
-                [Op.or]: []
-            }
-
-            let search = paramContainer['search'].split(' ');
-            for (let i = 0; i < search.length; i++) {
-                let element = search[i];
-                element = "%" + element + "%"
-                navn[Op.or].push({
-                    [Op.like]: element
-                });
-            }
-
-            const virksomheder = await db.Virksomhed.findAll({
-                where: {
-                    [Op.or]: [{
-                        navn
-                    }]
-                },
-                raw: true
-            })
-            virksomheder.forEach(element => {
-                fk_company[Op.or].push(element.id);
-            })
-        }
     }
 
-    let date = new Date();
-    let day = ("0" + date.getDate()).slice(-2);
-    let month = ("0" + (date.getMonth() + 1)).slice(-2);
-    let year = date.getUTCFullYear();
-
     if (paramContainer.hasOwnProperty('search')) {
+        let fk_company = {
+            [Op.or]: []
+        };
+
+        let navn = {
+            [Op.or]: []
+        };
+
+        let search = paramContainer['search'].split(' ');
+        for (let i = 0; i < search.length; i++) {
+            let element = search[i];
+            element = "%" + element + "%"
+            navn[Op.or].push({
+                [Op.like]: element
+            });
+        };
+
+        const virksomheder = await db.Virksomhed.findAll({
+            where: {
+                [Op.or]: [{
+                    navn
+                }]
+            },
+            raw: true
+        });
+        virksomheder.forEach(element => {
+            fk_company[Op.or].push(element.id);
+        });
+
         let title = {
             [Op.or]: []
         };
         let email = {
             [Op.or]: []
-        }
+        };
         let contact = {
             [Op.or]: []
-        }
+        };
         let post_text = {
             [Op.or]: []
-        }
+        };
         let company_link = {
             [Op.or]: []
-        }
+        };
 
-        let search = paramContainer['search'].split(' ');
         for (let i = 0; i < search.length; i++) {
             let element = search[i];
             element = "%" + element + "%"
@@ -216,82 +238,53 @@ const handleWhere = async function (paramContainer) {
             company_link[Op.or].push({
                 [Op.like]: element
             });
-        }
+        };
 
-        let where = {
-            fk_education,
-            country,
-            region,
-            postcode,
-            post_type,
-            [Op.or]: [{
-                    'expired': {
-                        [Op.ne]: 1
-                    }
-                },
-                {
-                    [Op.and]: [{
-                            'expired': 1
-                        },
-                        {
-                            'post_start_date': {
-                                [Op.gt]: year + "-" + month + "-" + day
-                            }
+        delete where[Op.or];
+        where[Op.and] = [{
+                [Op.or]: [{
+                        'expired': {
+                            [Op.ne]: 1
                         }
-                    ]
-                }
-            ],
-            [Op.or]: [
-                {
-                    fk_company
-                },
-                {
-                    [Op.or]: [
-                        {
-                            title
-                        },
-                        {
-                            email
-                        },
-                        {
-                            contact
-                        },
-                        {
-                            post_text
-                        },
-                        {
-                            company_link
-                        }
-                    ]
-                }
-            ]
-        }
-        return where;
-    };
-    return where = {
-        fk_education,
-        country,
-        region,
-        postcode,
-        post_type,
-        [Op.or]: [{
-                'expired': {
-                    [Op.ne]: 1
-                }
-            },
-            {
-                [Op.and]: [{
-                        'expired': 1
                     },
                     {
-                        'post_start_date': {
-                            [Op.gt]: year + "-" + month + "-" + day
-                        }
+                        [Op.and]: [{
+                                'expired': 1
+                            },
+                            {
+                                'post_start_date': {
+                                    [Op.gt]: year + "-" + month + "-" + day
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                [Op.or]: [{
+                        fk_company
+                    },
+                    {
+                        title
+                    },
+                    {
+                        email
+                    },
+                    {
+                        contact
+                    },
+                    {
+                        post_text
+                    },
+                    {
+                        company_link
                     }
                 ]
             }
         ]
-    }
+    };
+
+    return where;
 }
 
 router.get('/', async function (req, res, next) {
@@ -421,7 +414,10 @@ router.get('/', async function (req, res, next) {
                 element['post_type'] = 'Studiejob';
                 break;
             case 3:
-                element['post_type'] = 'Trainee';
+                element['post_type'] = 'Trainee stilling';
+                break;
+            case 4:
+                element['post_type'] = 'Fuldtidsstilling';
         }
 
     }
@@ -521,7 +517,10 @@ router.post('/query', function (req, res) {
                     element['post_type'] = 'Studiejob';
                     break;
                 case 3:
-                    element['post_type'] = 'Trainee';
+                    element['post_type'] = 'Trainee stilling';
+                    break;
+                case 4:
+                    element['post_type'] = 'Fuldtidsstilling';
             }
 
         }
