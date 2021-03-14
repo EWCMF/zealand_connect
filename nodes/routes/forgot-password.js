@@ -15,10 +15,14 @@ const hbs = require('nodemailer-express-handlebars');
 router.get('/', function (req, res, next) {
     let msg = req.query.success;
 
+    const language = reqLang(req, res);
+
     if (msg !== null && msg !== undefined) {
         return res.render('forgot-password', {
-            language: reqLang(req, res),
-            message: "Hvis brugeren eksisterer, vil du modtage en email med oplysninger til at nulstille kodeordet."
+            language: language,
+            message: language === "da"
+                ? "Hvis brugeren eksisterer, vil du modtage en email med oplysninger til at nulstille din adgangskode."
+                : "If the user exists you'll receive an email with information about resetting your password."
         });
     }
 
