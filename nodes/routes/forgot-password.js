@@ -10,6 +10,7 @@ const {
 const nodemailer = require('nodemailer');
 const models = require('../models');
 const crypto = require('crypto');
+const hbs = require('nodemailer-express-handlebars');
 
 router.get('/', function (req, res, next) {
     let msg = req.query.success;
@@ -68,25 +69,46 @@ router.post('/', async function (req, res) {
             }
         });
 
-        let subject;
-        let text;
+        const options = {
+            viewEngine: {
+                partialsDir: __dirname + "/../views/partials",
+                layoutsDir: __dirname + "/../views/email-templates",
+                extname: ".hbs"
+            },
+            extName: ".hbs",
+            viewPath: "views/email-templates"
+        };
+
+        transport.use("compile", hbs(options));
+
+        let subject, title, text, buttonText;
 
         if (reqLang(req, res) === 'da'){
             subject = "Nulstil adgangskode på Zealand Connect";
-            text = "Følg dette link for at nulstille din adgangskode:\n\n" + process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email;
+            title = "Nulstil adgangskode";
+            text = "Følg dette link for at nulstille din adgangskode.";
+            buttonText = "Nulstil adgangskode";
         } else {
             subject = "Reset password at Zealand Connect";
-            text = "Follow this link to reset your password:\n\n" + process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email;
+            title = "Reset password";
+            text = "Follow this link to reset your password.";
+            buttonText = "Reset password";
         }
 
         const message = {
             from: "noreply@connect.zealand.dk",
             to: email,
             subject: subject,
-            text: text
+            template: 'password-recovery',
+            context: {
+                link: process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
+                title: title,
+                text: text,
+                buttonText: buttonText
+            }
         };
 
-        transport.sendMail(message, function (err, info) {
+        await transport.sendMail(message, function (err, info) {
             if (err) {
                 console.log(err);
             } else {
@@ -94,9 +116,9 @@ router.post('/', async function (req, res) {
             }
         });
         res.redirect('/forgot-password?success=true');
+    } else {
+        res.redirect('/forgot-password?success=true');
     }
-
-    res.redirect('/forgot-password?success=true');
 })
 
 module.exports = router;

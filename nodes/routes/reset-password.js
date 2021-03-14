@@ -37,10 +37,7 @@ router.get('/', async function (req, res, next) {
     });
 
     if (record == null) {
-        return res.render('reset-password', {
-            message: 'Token has expired. Please try password reset again.',
-            showForm: false
-        });
+        return res.send('Token has expired. Please try password reset again.')
     }
 
     res.render('reset-password', {
@@ -57,10 +54,10 @@ router.post('/', async function (req, res, next) {
     let token = req.body.token;
 
     if (!checkForIdenticals(password, password2)){
-        return res.json({status: 'error', message: 'Passwords do not match. Please try again.'});
+        return res.send('Passwords do not match. Please try again.')
     }
     if (!validatePasswordLength(password)){
-        return res.json({status: 'error', message: 'Password length is incorrect.'});
+        return res.send('Password length is incorrect.')
     }
 
     const record = await models.ResetToken.findOne({
@@ -73,7 +70,7 @@ router.post('/', async function (req, res, next) {
     });
 
     if (record == null) {
-        return res.json({status: 'error', message: 'Token not found. Please try the reset password process again.'});
+        return res.send('Token not found. Please try the reset password process again.')
     }
 
     await models.ResetToken.update({
@@ -104,7 +101,7 @@ router.post('/', async function (req, res, next) {
             }
         });
     } else {
-        return res.json({status: 'error', message: 'There was an error. Please try again.'});
+        return res.send('There was an error. Please try again.')
     }
 
     res.render('reset-password-success', {
