@@ -722,3 +722,8 @@ body {
 .footer {
   flex-shrink: 0;
 }
+
+.postTextContainer .ql-editor {
+  padding-top: 0;
+  white-space: normal;
+}
