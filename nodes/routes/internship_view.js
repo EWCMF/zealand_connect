@@ -69,7 +69,11 @@ router.get('/:id', async function (req, res) {
     let address
     if (result.dawa_json) {
         let dawa_json = JSON.parse(result.dawa_json);
-        address = `${dawa_json['vejnavn']} ${dawa_json['husnr']}`;
+        if (dawa_json.hasOwnProperty('data')) {
+            address = `${dawa_json.data['vejnavn']} ${dawa_json.data['husnr']}`;
+        } else {
+            address = `${dawa_json['vejnavn']} ${dawa_json['husnr']}`;
+        }
     }
     
 
