@@ -23,6 +23,7 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 var { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
+const mailer = require('../utils/mail-sender');
 
 router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
     //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
@@ -235,8 +236,9 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     idsArray.push(element.cv_id); 
                 });
 
-                let emails = await db.CV.findAll({
+                let cvs = await db.CV.findAll({
                     raw: true,
+                    nest: true,
                     attributes: ['email'],
                     where: {
                         [Op.or]: {
@@ -244,8 +246,30 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                         },
                         post_subscription: true,
                         fk_education: fk_education
+                    },
+                    include: {
+                        model: db.Student,
+                        as: 'student'
                     }
                 });
+
+                let mailInfos = [];
+                cvs.forEach(cv => {
+                    let mailInfo = {
+                        recipient: cv.email,
+                        subject: "A new post has been made on Zealand Connect matching your preferences",
+                        context: {
+                            greeting: `Hello ${cv.student.fornavn} ${cv.student.efternavn}`,
+                            name: user.navn,
+                            text1: "The company",
+                            text2: "has made a post matching your preferences. Follow this link to read the post.",
+                            link: process.env.DOMAIN + "/internship_view/" + post.id
+                        }
+                    }
+                    mailInfos.push(mailInfo);
+                });
+
+                mailer.sendMail('subscription-mail', mailInfos);
 
                 res.redirect('../internship_view/' + post.id)
             } else {
