@@ -2,6 +2,19 @@
 document.getElementById("gem").onclick = function () { submitButton() };
 document.getElementById("preview").onclick = function () { preview_cv() };
 
+const inputs = Object.freeze({
+    email: document.getElementById('email'),
+    praktik: document.getElementById('praktikCheck'),
+    studiejob: document.getElementById('studiejobCheck'),
+    trainee: document.getElementById('traineeCheck'),
+    fuldtidsjob: document.getElementById('fuldtidCheck'),
+    post_subscription: document.getElementById('post_subscription')
+});
+
+const errors = Object.freeze({
+    post_subscriptionError: document.getElementById('post_subscriptionError')
+})
+
 function preview_cv() {
     let form_URL = '../mit-cv/preview';
     document.getElementById("cvForm").action = form_URL;
@@ -134,10 +147,110 @@ function submitButton() {
         document.getElementById("tilgaengelighedError").hidden = true;
     }
 
+    if (!checkEmailSubscription()) {
+        all_valid = false;
+    }
+
     if (all_valid) {
         document.forms["cvForm"].submit();
     }
-}
+};
+
+function checkEmailSubscription() {
+    let post_subscription = inputs.post_subscription;
+    let email = inputs.email;
+    let error = errors.post_subscriptionError;
+    let cvTypes = {
+        praktik: inputs.praktik,
+        studiejob: inputs.studiejob,
+        trainee: inputs.trainee,
+        fuldtidsjob: inputs.fuldtidsjob
+    }
+
+    if (!post_subscription.checked) {
+        return true;
+    }
+
+    let typeSelected = false;
+    for (const type in cvTypes) {
+        if (Object.hasOwnProperty.call(cvTypes, type)) {
+            const element = cvTypes[type];
+            if (element.checked) {
+                typeSelected = true;
+                break;
+            }
+        }
+    };
+
+    if (!email.value) {
+        error.hidden = false;
+        error.innerHTML = translateErrorMessage('mailMangler');
+        return false;
+    };
+
+    if (!typeSelected) {
+        error.hidden = false;
+        error.innerHTML = translateErrorMessage('typeMangler');
+        return false;
+    };
+
+
+    error.hidden = true;
+    return true;
+};
+
+function addChangeEvents() {
+    inputs.email.addEventListener('change', function () {
+        checkEmailSubscription();
+    });
+
+    inputs.post_subscription.addEventListener('change', function () {
+        checkEmailSubscription();
+    });
+
+    inputs.praktik.addEventListener('change', function () {
+        checkEmailSubscription();
+    });
+
+    inputs.studiejob.addEventListener('change', function () {
+        checkEmailSubscription();
+    });
+
+    inputs.trainee.addEventListener('change', function () {
+        checkEmailSubscription();
+    });
+
+    inputs.fuldtidsjob.addEventListener('change', function () {
+        checkEmailSubscription();
+    });
+};
+addChangeEvents();
+
+
+function translateErrorMessage(key) {
+    let texts = {
+        "da": {
+            "mailMangler": "Udfyld emailfeltet",
+            "typeMangler": "Angiv hvad du søger"
+        },
+
+        "en": {
+            "mailMangler": "Please fill out the email field",
+            "mailIBrug": "Specify what you're looking for",
+        }
+    }
+
+    let useEnglish = document.cookie.includes('lang=en');
+
+    let table;
+    if (useEnglish) {
+        table = "en";
+    } else {
+        table = "da";
+    }
+
+    return texts[table][key];
+};
 
 
 function countChars(obj) {
