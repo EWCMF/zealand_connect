@@ -131,6 +131,18 @@
             }
         }
 
+        function changeLanguage(lang) {
+            let cookies = document.cookie;
+            let allowLang = !cookies.includes('cookie_consent=nolang');
+
+            if (allowLang) {
+                window.location.href = "../language/" + lang;
+            } else {
+                let message = 'Preference cookies must be allowed to change language. You can change cookie settings at the bottom of the page';
+                alert(message);
+            }
+        }
+
     </script>
 </body>
 
