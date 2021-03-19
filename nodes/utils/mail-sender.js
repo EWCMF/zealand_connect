@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
-const { reqLang } = require('../public/javascript/request');
 
 function sendMail(template, mailInfos) {
     const transport = nodemailer.createTransport({
@@ -28,7 +27,7 @@ function sendMail(template, mailInfos) {
 
     mailInfos.forEach(mailInfo => {
         const message = {
-            from: "noreply@connect.zealand.dk",
+            from: process.env.EMAIL_FROM,
             to: mailInfo.recipient,
             subject: mailInfo.subject,
             template: template,
