@@ -143,7 +143,7 @@
             <!-- Checkboxes til CV-type -->
             <div class="form-group">
                 <div>
-                    <label data-key="Jeg_søger:">Jeg søger:</label>
+                    <label data-key="Jeg_søger">Jeg søger</label>
                 </div>
                 <div class="form-check">
                     {{#if praktik}}
@@ -175,8 +175,24 @@
                     {{else}}
                         <input class="checkbox-inline" type="checkbox" value="4" id="fuldtidCheck" name="fuldtidCheck">
                     {{/if}}
-                    <label class="form-check-label" for="jobCheck" data-key="Fuldtidsstilling">Fuldtidsstilling</label>
+                    <label class="form-check-label" for="fuldtidCheck" data-key="Fuldtidsstilling">Fuldtidsstilling</label>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label data-key="Opslag_paa_mail">Opslag på mail</label>
+                </div>
+                <div class="form-check">
+                    {{#if post_subscription}}
+                        <input class="checkbox-inline" type="checkbox" id="post_subscription" value=true name="post_subscription" checked>
+                    {{else}}
+                        <input class="checkbox-inline" type="checkbox" id="post_subscription" value=true name="post_subscription">
+                    {{/if}}
+                    <label class="form-check-label" for="post_subscription" data-key="emailOptInOption1">Få tilsendt relevante opslag til din emailadresse</label>
+                    
+                </div>
+                <p id="post_subscriptionError" class="CVErrorColor mt-2" data-key="emailOptInOption1" hidden="true">Error</p>
             </div>
             <!-- Radio til om en cv skal være offentlig -->
             <div class="form-group required pb-3">

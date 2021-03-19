@@ -244,7 +244,7 @@ function getLangdata() {
                 "Rediger_CV": "Edit CV",
                 "Overskrift": "Headline",
                 "Om_mig": "About me",
-                "Jeg_søger:": "I'm looking for:",
+                "Jeg_søger": "I'm looking for",
                 "Praktik": "Internship",
                 "Studiejob": "Student job",
                 "Trainee_stilling": "Trainee position",
@@ -258,6 +258,8 @@ function getLangdata() {
                 "It_kompetencer": "IT skills",
                 "Sprog": "Language",
                 "Ikke_angivet": "Not specified",
+                "Opslag_paa_mail": "Email opt-in",
+                "emailOptInOption1": "Receive an email when a relevant post is made by a company",
 
                 //internship_post
                 "Rediger_opslag": "Edit post",

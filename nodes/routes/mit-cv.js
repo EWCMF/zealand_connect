@@ -106,7 +106,8 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         praktik: cvtypes[0],
         studiejob: cvtypes[1],
         trainee: cvtypes[2],
-        fuldtid: cvtypes[3]
+        fuldtid: cvtypes[3],
+        post_subscription: student.cv.post_subscription
     })
 });
 
@@ -136,6 +137,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let offentlig = req.body.tilgaengelighed;
     let postcode = req.body.postcode;
     let cvtypes = [req.body.praktikCheck, req.body.studiejobCheck, req.body.traineeCheck, req.body.fuldtidCheck]
+    let post_subscription = req.body.post_subscription;
 
     let emailWrittenCorrectly = emailRegex.test(email);
     let phoneCheck = phoneRegex.test(telefon);
@@ -193,6 +195,10 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         city = null;
     }
 
+    if (!post_subscription) {
+        post_subscription = false;
+    }
+
     let student_id = student.id
 
     let json = {
@@ -218,6 +224,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         city,
         geo_lat,
         geo_lon,
+        post_subscription
     }
 
     const [cv, created] = await db.CV.findOrCreate({

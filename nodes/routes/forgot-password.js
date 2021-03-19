@@ -107,8 +107,7 @@ router.post('/', async function (req, res) {
             context: {
                 link: process.env.DOMAIN + "/reset-password?token="+encodeURIComponent(token)+"&email=" + email,
                 title: title,
-                text: text,
-                buttonText: buttonText
+                text: text
             }
         };
 

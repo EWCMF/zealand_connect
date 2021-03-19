@@ -16,10 +16,14 @@ const db = require('../models');
 const {
     REPL_MODE_SLOPPY
 } = require('repl');
+const {
+    Op
+} = require('sequelize');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 var { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
+const mailer = require('../utils/mail-sender');
 
 router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
     //For at håndtere filupload og almindelige input data på tid skal man parse req igennem formidable.
@@ -218,6 +222,55 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     console.log(error);
                     return res.status(400).send(error);
                 });
+
+                let ids = await db.CV_CVtype.findAll({
+                    raw: true,
+                    attributes: ['cv_id'],
+                    where: {
+                        cvtype_id: post_type
+                    }
+                });
+
+                let idsArray = [];
+                ids.forEach(element => {
+                    idsArray.push(element.cv_id); 
+                });
+
+                let cvs = await db.CV.findAll({
+                    raw: true,
+                    nest: true,
+                    attributes: ['email'],
+                    where: {
+                        [Op.or]: {
+                            id: idsArray
+                        },
+                        post_subscription: true,
+                        fk_education: fk_education
+                    },
+                    include: {
+                        model: db.Student,
+                        as: 'student'
+                    }
+                });
+
+                let mailInfos = [];
+                cvs.forEach(cv => {
+                    let mailInfo = {
+                        recipient: cv.email,
+                        subject: "A new post has been made on Zealand Connect matching your preferences",
+                        context: {
+                            greeting: `Hello ${cv.student.fornavn} ${cv.student.efternavn}`,
+                            name: user.navn,
+                            text1: "The company",
+                            text2: "has made a post matching your preferences. Follow this link to read the post.",
+                            link: process.env.DOMAIN + "/internship_view/" + post.id
+                        }
+                    }
+                    mailInfos.push(mailInfo);
+                });
+
+                mailer.sendMail('subscription-mail', mailInfos);
+
                 res.redirect('../internship_view/' + post.id)
             } else {
                 return res.status(422).render('errorInternship', {layout: false, errors: errors});

@@ -47,7 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     postcode: DataTypes.INTEGER,
     city: DataTypes.STRING,
     geo_lat: DataTypes.DOUBLE,
-    geo_lon: DataTypes.DOUBLE
+    geo_lon: DataTypes.DOUBLE,
+    post_subscription: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'CV',

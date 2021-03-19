@@ -1,5 +1,7 @@
 var express = require('express');
-var { reqLang } = require('../public/javascript/request');
+var {
+    reqLang
+} = require('../public/javascript/request');
 var router = express.Router();
 var passport = require('passport');
 var models = require('../models');
@@ -20,12 +22,44 @@ router.get('/', function (req, res, next) {
 
     let msg = error.error;
     switch (msg) {
-        case 'incorrectusername': res.render('login', { errormessage: 'Denne bruger findes ikke i systemet', virksomhed: "true", language: reqLang(req, res) },); break;
-        case 'incorrectpassword': res.render('login', { errormessage: 'Email eller password er forkert', virksomhed: "true", language: reqLang(req, res) }); break;
-        case 'notloggedin': res.render('login', { errormessage: 'Du skal logge ind før du kan se din profil.', virksomhed: "true", language: reqLang(req, res) }); break;
-        case 'incorretemaillogincombination': res.render('login', { errormessage: 'Din email findes men ikke som en virksomheds konto.', virksomhed: "true", language: reqLang(req, res) }); break;
-        case 'none': res.redirect('/'); break;
-        default: res.render('login', { language: reqLang(req, res), check, startVirksomhed: virksomhed }); break;
+        case 'incorrectusername':
+            res.render('login', {
+                errormessage: 'Denne bruger findes ikke i systemet',
+                virksomhed: "true",
+                language: reqLang(req, res)
+            }, );
+            break;
+        case 'incorrectpassword':
+            res.render('login', {
+                errormessage: 'Email eller password er forkert',
+                virksomhed: "true",
+                language: reqLang(req, res)
+            });
+            break;
+        case 'notloggedin':
+            res.render('login', {
+                errormessage: 'Du skal logge ind før du kan se din profil.',
+                virksomhed: "true",
+                language: reqLang(req, res)
+            });
+            break;
+        case 'incorretemaillogincombination':
+            res.render('login', {
+                errormessage: 'Din email findes men ikke som en virksomheds konto.',
+                virksomhed: "true",
+                language: reqLang(req, res)
+            });
+            break;
+        case 'none':
+            res.redirect('/');
+            break;
+        default:
+            res.render('login', {
+                language: reqLang(req, res),
+                check,
+                startVirksomhed: virksomhed
+            });
+            break;
     }
 });
 
@@ -35,47 +69,23 @@ router.get('/profiles', function (req, res, next) {
 })
 
 
-router.post('/authenticateVirksomhed', function (req, res, next) {
+router.post('/authenticateUser', function (req, res, next) {
     //fra opret-bruger kommer body som en string version af json object, så den skal lige laves om
-    if(typeof(req.body)==="string"){
+    if (typeof (req.body) === "string") {
         req.body = JSON.parse(req.body);
     }
-    passport.authenticate('local', function(err, user, info) {
+    passport.authenticate('local', function (err, user, info) {
         //handle error
         if (!user) {
             return res.redirect('/login' + info.message);
-        }
-        if (!(user instanceof models.Virksomhed)) {
-            return res.redirect('/login?error=incorretemaillogincombination');
         }
         //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
         req.logout();
         //login skal være der for, at passport laver en cookie for brugeren
         req.logIn(user, function (err) {
-            if (err) { return next(err); }
-            return res.redirect('/login' + info.message);
-        });
-    })(req, res, next);
-});
-
-router.post('/authenticateStudent', function (req, res, next) {
-    //fra opret-bruger kommer body som en string version af json object, så den skal lige laves om
-    if(typeof(req.body)==="string"){
-        req.body = JSON.parse(req.body);
-    }
-    passport.authenticate('local', function(err, user, info) {
-        //handle error
-        if (!user) {
-            return res.redirect('/login' + info.message);
-        }
-        if (!(user instanceof models.Student)) {
-            return res.redirect('/login?error=incorretemaillogincombination');
-        }
-        //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
-        req.logout();
-        //login skal være der for, at passport laver en cookie for brugeren
-        req.logIn(user, function (err) {
-            if (err) { return next(err); }
+            if (err) {
+                return next(err);
+            }
             return res.redirect('/login' + info.message);
         });
     })(req, res, next);
