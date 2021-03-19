@@ -16,6 +16,9 @@ const db = require('../models');
 const {
     REPL_MODE_SLOPPY
 } = require('repl');
+const {
+    Op
+} = require('sequelize');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 var { reqLang } = require('../public/javascript/request');
@@ -218,6 +221,32 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     console.log(error);
                     return res.status(400).send(error);
                 });
+
+                let ids = await db.CV_CVtype.findAll({
+                    raw: true,
+                    attributes: ['cv_id'],
+                    where: {
+                        cvtype_id: post_type
+                    }
+                });
+
+                let idsArray = [];
+                ids.forEach(element => {
+                    idsArray.push(element.cv_id); 
+                });
+
+                let emails = await db.CV.findAll({
+                    raw: true,
+                    attributes: ['email'],
+                    where: {
+                        [Op.or]: {
+                            id: idsArray
+                        },
+                        post_subscription: true,
+                        fk_education: fk_education
+                    }
+                });
+
                 res.redirect('../internship_view/' + post.id)
             } else {
                 return res.status(422).render('errorInternship', {layout: false, errors: errors});
