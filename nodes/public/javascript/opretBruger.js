@@ -317,7 +317,7 @@ async function submitOpretVirksomhed() {
                         window.location.href = "../profil";
                     }
                 }
-                xhttp.open("POST", "/login/authenticateVirksomhed", true);
+                xhttp.open("POST", "/login/authenticateUser", true);
                 xhttp.setRequestHeader("Content-Type", "text/plain")
                 xhttp.send(JSON.stringify({
                     email: inputs.email.value,
@@ -406,7 +406,7 @@ async function submitOpretStudent() {
                         window.location.href = "../profil";
                     }
                 }
-                xhttp.open("POST", "/login/authenticateStudent", true); // ret her
+                xhttp.open("POST", "/login/authenticateUser", true); // ret her
                 xhttp.setRequestHeader("Content-Type", "text/plain")
                 xhttp.send(JSON.stringify({
                     email: inputsStudent.email.value,

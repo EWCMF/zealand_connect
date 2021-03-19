@@ -338,7 +338,7 @@ function getLangdata() {
                 //Speciale
                 "Telefon": "Telephone",
                 "Postnummer_tooltip": ["?", "When you  specify a postcode, the associated city is automatically shown on the CV. This field makes it possible for companies to focus their search and can help make you visible to them. Only Danish postcodes are supported."],
-                "Telefon_error": "You must specify a telephone number with 8 digits, not beginning with 0",
+                "Telefon_error": "You must specify a telephone number",
                 "linkedIn_error": "You must specify a working link to a LinkedIn profile or clear the field", 
                 "youtube_error": "You must specify a working link to a Youtube video or clear the field",
                 "hjemmeside_error": "You must specify a working link to your website or clear the field",
@@ -347,7 +347,7 @@ function getLangdata() {
                 "Link_til_CV_paa_Youtube_tooltip": ["?", "If you've uploaded a video resume on Youtube, you can refer to the video here."],
 
                 //Om_mig
-                "Om_mig_placeholder": "This text is shown when companies search resumes",
+                "Om_mig_placeholder": "Describe yourself",
                 //It_kompetencer
                 "Valgfri_placeholder": "Optional",
                 //Udlandsophold_og_frivilligt_arbejde

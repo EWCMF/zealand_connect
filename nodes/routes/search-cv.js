@@ -741,9 +741,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .lineGap(16)
             .text(texts.om_mig, 50);
 
+        let om_mig = cv.erhvervserfaring ? cv.erhvervserfaring : texts.ikke_angivet
         myDoc.fontSize(10)
             .lineGap(2)
-            .text(cv.om_mig);
+            .text(om_mig);
 
         myDoc.moveDown(2);
 

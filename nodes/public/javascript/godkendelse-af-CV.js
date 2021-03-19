@@ -3,158 +3,82 @@ document.getElementById("gem").onclick = function () { submitButton() };
 document.getElementById("preview").onclick = function () { preview_cv() };
 
 const inputs = Object.freeze({
+    overskrift: document.getElementById("overskrift"),
     email: document.getElementById('email'),
+    telefon: document.getElementById("telefon"),
+    linkedIn: document.getElementById("linkedIn"),
+    youtube_link: document.getElementById("youtube_link"),
+    uddannelse: document.getElementById("uddannelse"),
+    tidligere_uddannelse: document.getElementById("tidligere_uddannelse"),
+    sprog: document.getElementById("sprog"),
+    it_kompetencer: document.getElementById("it_kompetencer"),
+    speciale: document.getElementById("speciale"),
+    om_mig: document.getElementById("om mig"),
+    UogFA: document.getElementById("UogFA"),
+    erhvervserfaring: document.getElementById("erhvervserfaring"),
+    hjemmeside: document.getElementById("hjemmeside"),
+    fritidsinteresser: document.getElementById("fritidsinteresser"),
+    postcode: document.getElementById('postcode'),
     praktik: document.getElementById('praktikCheck'),
     studiejob: document.getElementById('studiejobCheck'),
     trainee: document.getElementById('traineeCheck'),
     fuldtidsjob: document.getElementById('fuldtidCheck'),
-    post_subscription: document.getElementById('post_subscription')
+    post_subscription: document.getElementById('post_subscription'),
+    tilgaengelighed1: document.getElementById('tilgaengelighed1'),
+    tilgaengelighed2: document.getElementById('tilgaengelighed2')
 });
 
 const errors = Object.freeze({
-    post_subscriptionError: document.getElementById('post_subscriptionError')
-})
+    post_subscriptionError: document.getElementById('post_subscriptionError'),
+    overskriftError: document.getElementById("overskriftError"),
+    sprogError: document.getElementById("sprogError"),
+    emailError: document.getElementById("emailError"),
+    telefonError: document.getElementById("telefonError"),
+    linkedInError: document.getElementById("linkedInError"),
+    youtubeError: document.getElementById('youtubeError'),
+    it_kompetencerError: document.getElementById('it_kompetencerError'),
+    hjemmesideError: document.getElementById('hjemmesideError'),
+    uddannelsesError: document.getElementById("uddannelsesError"),
+    postcodeError: document.getElementById('postcodeError'),
+    tidligere_uddannelseError: document.getElementById("tidligere_uddannelseError"),
+    tilgaengelighedError: document.getElementById("tilgaengelighedError")
+});
 
-function preview_cv() {
-    let form_URL = '../mit-cv/preview';
-    document.getElementById("cvForm").action = form_URL;
-    window.open('', 'form_target', 'width=1200 height=500');
-    document.getElementById("cvForm").setAttribute("target","form_target");
-    document.forms["cvForm"].submit();
-    form_URL = '../mit-cv/submit';
-    document.getElementById("cvForm").action = form_URL;
-    document.getElementById("cvForm").setAttribute("target","");
-}
-
-function submitButton() {
-    // få alle inputfelter ind i variabler
-    let overskrift = document.getElementById("overskrift").value;
-    let email = document.getElementById("email").value;
-    let telefon = document.getElementById("telefon").value;
-    let linkedIn = document.getElementById("linkedIn").value;
-    let yt_link = document.getElementById("youtube_link").value;
-    let uddannelse = document.getElementById("uddannelse").value;
-    let tidligere_uddannelse = document.getElementById("tidligere-uddannelse").value;
-    let sprog = document.getElementById("sprog").value;
-    let iT_Kompetencer = document.getElementById("iT_Kompetencer").value;
-    let speciale = document.getElementById("speciale").value;
-    let om_mig = document.getElementById("om mig").value;
-    let UogFA = document.getElementById("UogFA").value;
-    let erhvervserfaring = document.getElementById("erhvervserfaring").value;
-    let hjemmeside = document.getElementById("hjemmeside").value;
-    let fritidsinteresser = document.getElementById("fritidsinteresser").value;
-    let postcode = document.getElementById('postcode').value;
-    let praktik = document.getElementById('praktikCheck').value;
-
-    let all_valid = true;
-    // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
-    let emailWrittenCorrectly = emailRegex.test(email);
-
-    // Denne regex er checker at det kun er tal. Den er false hvis det ikke er tilfældet.
-    let phoneCheck = phoneRegex.test(telefon);
-
-    let Min_linkedIn = linkRegex.test(linkedIn);
-
-    let Mit_yt_link = linkRegex.test(yt_link);
-
-    let hjemmesideKorrekt = linkRegex.test(hjemmeside);
-
-    let postcodeCheck = postcodeRegex.test(postcode);
-
-    if (overskrift == "") {
-        all_valid = false;
-        document.getElementById("OverskriftError").hidden = false;
+function checkInputNotEmpty(input, error) {
+    let value = input.value; 
+    
+    if (!value) {
+        error.hidden = false;
+        return false;
     } else {
-        document.getElementById("OverskriftError").hidden = true;
-    }
-
-    if (sprog == "") {
-        all_valid = false;
-        document.getElementById("sprogError").hidden = false;
-    } else {
-        document.getElementById("sprogError").hidden = true;
-    }
-
-    if (!emailWrittenCorrectly) {
-        all_valid = false;
-        document.getElementById("emailError").hidden = false;
-    } else {
-        document.getElementById("emailError").hidden = true;
-    }
-
-    if (!phoneCheck) {
-        all_valid = false;
-        document.getElementById("telefonError").hidden = false;
-    } else {
-        document.getElementById("telefonError").hidden = true;
-    }
-
-    if (!Min_linkedIn && linkedIn.length != 0) {
-        all_valid = false;
-        document.getElementById("linkedInError").hidden = false;
-    } else {
-        document.getElementById("linkedInError").hidden = true;
-    }
-
-    if (!Mit_yt_link && yt_link.length != 0) {
-        all_valid = false;
-        document.getElementById('youtubeError').hidden = false;
-    } else {
-        document.getElementById('youtubeError').hidden = true;
-    }
-
-    if (!hjemmesideKorrekt && hjemmeside.length != 0) {
-        all_valid = false;
-        document.getElementById('hjemmesideError').hidden = false;
-    } else {
-        document.getElementById('hjemmesideError').hidden = true;
-    }
-
-    if (uddannelse == "") {
-        all_valid = false;
-        document.getElementById("UddannelsesError").hidden = false;
-    } else {
-        document.getElementById("UddannelsesError").hidden = true;
-    }
-
-    if (postcode.length != 0 && !postcodeCheck) {
-        all_valid = false;
-        document.getElementById('postnummerError').hidden = false;
-    } else {
-        document.getElementById('postnummerError').hidden = true;
-    }
-
-    if (tidligere_uddannelse == "") {
-        all_valid = false;
-        document.getElementById("Tidligere-uddannelseError").hidden = false;
-    } else {
-        document.getElementById("Tidligere-uddannelseError").hidden = true;
-    }
-
-    let radios = document.getElementsByClassName('tilgaengelighed');
-    let tilgaengelighed = '';
-    for (var i = 0; i < radios.length; i++) {
-        if (radios[i].checked) {
-            // get value, set checked flag or do whatever you need to
-            tilgaengelighed = radios[i].value;
-        }
-    }
-
-    if (tilgaengelighed == '') {
-        all_valid = false;
-        document.getElementById("tilgaengelighedError").hidden = false;
-    } else {
-        document.getElementById("tilgaengelighedError").hidden = true;
-    }
-
-    if (!checkEmailSubscription()) {
-        all_valid = false;
-    }
-
-    if (all_valid) {
-        document.forms["cvForm"].submit();
+        error.hidden = true;
+        return true;
     }
 };
+
+function checkInputRegex(input, error, regex) {
+    let value = input.value;
+
+    if (!regex.test(value)) {
+        error.hidden = false;
+        return false;
+    } else {
+        error.hidden = true;
+        return true;
+    }
+};
+
+function checkInputRegexOptional(input, error, regex) {
+    let value = input.value;
+
+    if (value && !regex.test(value)) {
+        error.hidden = false;
+        return false;
+    } else {
+        error.hidden = true;
+        return true;
+    }
+}
 
 function checkEmailSubscription() {
     let post_subscription = inputs.post_subscription;
@@ -194,14 +118,73 @@ function checkEmailSubscription() {
         return false;
     };
 
-
     error.hidden = true;
     return true;
 };
 
+function checkTilgaengelighed() {
+    let radios = document.getElementsByClassName('tilgaengelighed');
+    let tilgaengelighed;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            // get value, set checked flag or do whatever you need to
+            tilgaengelighed = radios[i].value;
+        }
+    }
+
+    if (!tilgaengelighed) {
+        document.getElementById("tilgaengelighedError").hidden = false;
+        return false;
+    } else {
+        document.getElementById("tilgaengelighedError").hidden = true;
+        return true;
+    }
+}
+
 function addChangeEvents() {
+    inputs.overskrift.addEventListener('change', function () {
+        checkInputNotEmpty(inputs.overskrift, errors.overskriftError);
+    });
+
+    inputs.uddannelse.addEventListener('change', function () {
+        checkInputNotEmpty(inputs.uddannelse, errors.uddannelsesError);
+    });
+
     inputs.email.addEventListener('change', function () {
         checkEmailSubscription();
+        checkInputRegex(inputs.email, errors.emailError, emailRegex);
+    });
+
+    inputs.sprog.addEventListener('change', function () {
+        checkInputNotEmpty(inputs.sprog, errors.sprogError);
+    });
+
+    inputs.telefon.addEventListener('change', function () {
+        checkInputRegex(inputs.telefon, errors.telefonError, phoneRegex)
+    });
+
+    inputs.postcode.addEventListener('change', function () {
+        checkInputRegexOptional(inputs.postcode, errors.postcodeError, postcodeRegex)
+    });
+
+    inputs.linkedIn.addEventListener('change', function () {
+        checkInputRegexOptional(inputs.linkedIn, errors.linkedInError, linkRegex);
+    });
+
+    inputs.hjemmeside.addEventListener('change', function () {
+        checkInputRegexOptional(inputs.hjemmeside, errors.hjemmesideError, linkRegex);
+    });
+
+    inputs.youtube_link.addEventListener('change', function () {
+        checkInputRegexOptional(inputs.youtube_link, errors.youtubeError, linkRegex);
+    });
+
+    inputs.it_kompetencer.addEventListener('change', function () {
+        checkInputNotEmpty(inputs.it_kompetencer, errors.it_kompetencerError);
+    });
+
+    inputs.tidligere_uddannelse.addEventListener('change', function () {
+        checkInputNotEmpty(inputs.tidligere_uddannelse, errors.tidligere_uddannelseError);
     });
 
     inputs.post_subscription.addEventListener('change', function () {
@@ -222,6 +205,14 @@ function addChangeEvents() {
 
     inputs.fuldtidsjob.addEventListener('change', function () {
         checkEmailSubscription();
+    });
+
+    inputs.tilgaengelighed1.addEventListener('change', function () {
+        checkTilgaengelighed();
+    });
+
+    inputs.tilgaengelighed2.addEventListener('change', function () {
+        checkTilgaengelighed();
     });
 };
 addChangeEvents();
@@ -252,6 +243,47 @@ function translateErrorMessage(key) {
     return texts[table][key];
 };
 
+function preview_cv() {
+    let form_URL = '../mit-cv/preview';
+    document.getElementById("cvForm").action = form_URL;
+    window.open('', 'form_target', 'width=1200 height=500');
+    document.getElementById("cvForm").setAttribute("target","form_target");
+    document.forms["cvForm"].submit();
+    form_URL = '../mit-cv/submit';
+    document.getElementById("cvForm").action = form_URL;
+    document.getElementById("cvForm").setAttribute("target","");
+}
+
+function submitButton() {
+    let all_valid = true;
+
+    let checkInputs = [
+        checkInputNotEmpty(inputs.overskrift, errors.overskriftError),
+        checkInputNotEmpty(inputs.uddannelse, errors.uddannelsesError),
+        checkInputRegex(inputs.email, errors.emailError, emailRegex),
+        checkInputNotEmpty(inputs.sprog, errors.sprogError),
+        checkInputRegex(inputs.telefon, errors.telefonError, phoneRegex),
+        checkInputRegexOptional(inputs.postcode, errors.postcodeError, postcodeRegex),
+        checkInputRegexOptional(inputs.linkedIn, errors.linkedInError, linkRegex),
+        checkInputRegexOptional(inputs.hjemmeside, errors.hjemmesideError, linkRegex),
+        checkInputRegexOptional(inputs.youtube_link, errors.youtubeError, linkRegex),
+        checkInputNotEmpty(inputs.it_kompetencer, errors.it_kompetencerError),
+        checkInputNotEmpty(inputs.tidligere_uddannelse, errors.tidligere_uddannelseError),
+        checkEmailSubscription(),
+        checkTilgaengelighed()
+    ];
+    
+    checkInputs.every(input => {
+        if (!input) {
+            all_valid = false;
+            return false;
+        }
+    });
+
+    if (all_valid) {
+        document.forms["cvForm"].submit();
+    }
+};
 
 function countChars(obj) {
     var maxLength = 255;

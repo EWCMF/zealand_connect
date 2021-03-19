@@ -128,7 +128,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let linkedIn = req.body.linkedIn;
     let yt_link = req.body.youtube_link;
     let om_mig = req.body.om;
-    let it_kompetencer = req.body.iT_Kompetencer;
+    let it_kompetencer = req.body.it_kompetencer;
     let udenlandsophold_og_frivilligt_arbejde = req.body.UogFA;
     let erhvervserfaring = req.body.erhvervserfaring;
     let tidligere_uddannelse = req.body.tidligere_uddannelse;

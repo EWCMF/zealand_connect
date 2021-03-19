@@ -9,7 +9,7 @@
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
                 placeholder="Hvad søger du f.eks job eller praktik" onkeyup="countChars(this)" data-key="Overskrift_placeholder">{{overskrift}}</textarea>
                 <p id="charNum">255 tegn</p>
-            <p id="OverskriftError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
+            <p id="overskriftError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
         </div>
         <!-- Uddannelse med dropdown -->
         <div class="form-group">
@@ -23,7 +23,7 @@
                             <option {{selectState name ../uddannelse }} value={{id}} data-key="{{name}}">{{name}}</option>
                             {{/each}}
                         </select>
-                     <p id="UddannelsesError" class="CVErrorColor" hidden="false" data-key="Vaelg_en_uddannelse_error">Du skal vælge en Uddannelse</p>
+                     <p id="uddannelsesError" class="CVErrorColor" hidden="false" data-key="Vaelg_en_uddannelse_error">Du skal vælge en Uddannelse</p>
                     </div>
                 </div>
                 <!-- email med inputfelt -->
@@ -61,8 +61,7 @@
                         <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678" title="Du skal skrive dit nummer, det skal præcist
                             være 8 tal og må ikke starte med 0"
                             value={{telefon}}>
-                           <p id="telefonError" class="CVErrorColor" hidden="true" data-key="Telefon_error">Du skal skrive dit nummer, det skal præcist
-                            være 8 tal og må ikke starte med 0</p>
+                           <p id="telefonError" class="CVErrorColor" hidden="true" data-key="Telefon_error">Du skal angive et telefonnummer</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -72,7 +71,7 @@
                           title="Når du indtaster postnummer vises den knyttede by automatisk på CV'et. Feltet her gør det muligt for virksomheder at fokusere deres søgning baseret på afstand og kan hjælpe med at gøre dig synlig for dem. Kun danske postnumre er understøttet."
                           data-Key="Postnummer_tooltip">?</span>
                         <input class="form-control" id="postcode" name="postcode" value='{{postcode}}'>
-                        <p id="postnummerError" class="CVErrorColor" hidden="true" data-key="Postnummer_errorCV">Kun danske postnumre er tilladte og angiv kun tallene. Den tilhørende by vil blive fundet automatisk.</p>
+                        <p id="postcodeError" class="CVErrorColor" hidden="true" data-key="Postnummer_errorCV">Kun danske postnumre er tilladte og angiv kun tallene. Den tilhørende by vil blive fundet automatisk.</p>
                     </div>
                 </div>
             </div>
@@ -107,14 +106,15 @@
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1" data-key="Om_mig">Om mig</label>
                 <textarea class="form-control" rows="3" id="om mig" name="om"
-                    placeholder="Denne tekst bliver vist når virksomheder søger på CV'er" data-key="Om_mig_placeholder">{{om}}</textarea>
+                    placeholder="Beskriv dig selv" data-key="Om_mig_placeholder">{{om}}</textarea>
             </div>
             <div class="form-group required">
                 <!-- textarea om mig -->
                 <label for="exampleFormControlTextarea1" data-key="It_kompetencer">IT kompetencer</label>
-                <textarea class="form-control" rows="3" id="iT_Kompetencer" name="iT_Kompetencer"
+                <textarea class="form-control" rows="3" id="it_kompetencer" name="it_kompetencer"
                     placeholder="Word, Excel" onkeyup="countChars2(this)">{{it_kompetencer}}</textarea>
                     <p id="charNum2">255 tegn</p>
+                    <p id="it_kompetencerError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
             </div>
             <div class="form-group">
                 <!-- textarea om mig -->
@@ -130,10 +130,10 @@
             </div>
             <div class="form-group required">
                 <!-- textarea med uddannelse -->
-                <label for="exampleFormControlTextarea1" data-key="Tidligere_udannelse">Tidligere uddannelse</label>
-                <textarea class="form-control" rows="3" id="tidligere-uddannelse" name="tidligere_uddannelse"
+                <label for="exampleFormControlTextarea1" for="tidligere_uddannelse" data-key="Tidligere_udannelse">Tidligere uddannelse</label>
+                <textarea class="form-control" rows="3" id="tidligere_uddannelse" name="tidligere_uddannelse"
                     placeholder="Tidligere eller lidt om din nuværende Uddannelse" data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea>
-                <p id="Tidligere-uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
+                <p id="tidligere_uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
             </div>
             <div class="form-group">
                 <!-- textarea med hobby -->

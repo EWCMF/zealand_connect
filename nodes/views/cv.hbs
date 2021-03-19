@@ -130,9 +130,15 @@
             <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Om_mig">
                 Om mig
             </h4>
+            {{#if json.om_mig}}
             <p class="autobreak">
                 {{json.om_mig}}
             </p>
+            {{else}}
+            <p class="autobreak" data-key="Ikke_angivet">
+                Ikke angivet
+            </p>
+            {{/if}}
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
