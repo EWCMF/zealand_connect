@@ -12,7 +12,7 @@ passport.serializeUser((user, done)=>{
     if(user.username != null){
         done(null, user.username);
     }
-})
+});
 
 //modtager en id fra cookie, så vi kan se om hvem der tilhører id'en
 passport.deserializeUser((cookieID, done)=>{
@@ -25,7 +25,7 @@ passport.deserializeUser((cookieID, done)=>{
             done(null, user.username);
         }
     })
-})
+});
 
 passport.use(new LocalStrategy({
         usernameField: 'email',
