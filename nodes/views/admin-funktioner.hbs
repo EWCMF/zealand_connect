@@ -57,6 +57,8 @@
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="Slet_studerende">Slet studerende</h2>
             </div>
+
+
             <form class="form-group text-left sletBrugerForm" onsubmit="return false">
                 <div>
                     <div class="formError float-left" id="student-error"></div>
@@ -65,17 +67,20 @@
                 <div class="row col-12">
                     <label for="email" class="col-form-label">Email</label>
                 </div>
-                <div class="form-group row">
-                    <div class="col-12">
+                <div class="input-group mb-3">
                         <input name="email" type="text" id="studentSletEmailInput" class="form-control"
                                placeholder="example@edu.easj.dk" style="background-color: #f7f7f7;" required
                                oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                oninput="this.setCustomValidity('')">
-                    </div>
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                                data-target="#searchStudentsModal">Søg studerende
+                        </button>
                 </div>
                 <input class="gulKnap rounded" onclick="submitSletStudent()" type="submit" data-key="slet" value="Slet">
                 <input id="submit_handle_student" type="submit" style="display: none">
             </form>
+
+
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="Slet_virksomhed">Slet virksomhed</h2>
             </div>
@@ -86,6 +91,8 @@
             <div class="row col-12">
                 <label for="email" class="col-form-label">Email</label>
             </div>
+
+
             <form class="sletBrugerForm" onsubmit="return false">
                 <div class="input-group mb-3">
                     <input name="email" type="text" id="virksomhedSletEmailInput" class="form-control"
@@ -99,10 +106,13 @@
                 <input class="gulKnap " onclick="submitSletVirksomhed()" type="submit" data-key="slet" value="Slet">
                 <input id="submit_handle_virk" type="submit" style="display: none">
             </form>
+
+
         </div>
     </div>
 </div>
 {{> admin-search-virk-modal }}
+{{> admin-search-stud-modal }}
 <script>
     let backendIsProcessing = false;
 
@@ -135,11 +145,11 @@
                         let responseObject = JSON.parse(this.responseText)
                         $('#student-error').show();
                         if (responseObject.errorHappened) {
-                            document.getElementById('student-error').innerHTML = "Denne bruger findes ikke";
+                            document.getElementById('student-error').innerHTML = `Brugeren med email ${email} findes ikke`;
                             document.getElementById("student-error").classList.add('formError');
                             document.getElementById("student-error").classList.remove('formSucess');
                         } else {
-                            document.getElementById('student-error').innerHTML = "Brugeren blev slettet";
+                            document.getElementById('student-error').innerHTML = `Brugeren med email ${email} blev slettet`;
                             document.getElementById("student-error").classList.remove('formError');
                             document.getElementById("student-error").classList.add('formSucess');
                         }
@@ -155,10 +165,11 @@
                 xhttp.send(JSON.stringify({
                     email: document.getElementById('studentSletEmailInput').value,
                     type: "student"
-
                 }));
             }
         }
+
+        document.getElementById("studentSletEmailInput").value = "";
     };
 
     function submitSletVirksomhed() {
@@ -189,11 +200,11 @@
                         let responseObject = JSON.parse(this.responseText);
                         $('#virk-error').show();
                         if (responseObject.errorHappened) {
-                            document.getElementById('virk-error').innerHTML = "Denne bruger findes ikke";
+                            document.getElementById('virk-error').innerHTML = `Brugeren med email ${email} findes ikke`;
                             document.getElementById("virk-error").classList.add('formError');
                             document.getElementById("virk-error").classList.remove('formSucess');
                         } else {
-                            document.getElementById('virk-error').innerHTML = "Brugeren blev slettet";
+                            document.getElementById('virk-error').innerHTML = `Brugeren med email ${email} blev slettet`;
                             document.getElementById("virk-error").classList.remove('formError');
                             document.getElementById("virk-error").classList.add('formSucess');
                         }
@@ -211,6 +222,8 @@
                 }));
             }
         }
+
+        document.getElementById("virksomhedSletEmailInput").value = "";
     };
 
     function opret() {
@@ -236,7 +249,7 @@
                     document.getElementById('udd-error').innerHTML = responseObj.findesallerede
                     document.getElementById("udd-error").classList.add('formError');
                     document.getElementById("udd-error").classList.remove('formSucess');
-                } else if (responseObj.tomtnavn != ''){
+                } else if (responseObj.tomtnavn != '') {
                     document.getElementById('udd-error').innerHTML = responseObj.tomtnavn
                     document.getElementById("udd-error").classList.add('formError');
                     document.getElementById("udd-error").classList.remove('formSucess');
