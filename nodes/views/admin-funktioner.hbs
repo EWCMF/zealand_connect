@@ -11,38 +11,46 @@
                 <div>
                     <div class="formError float-left text-success text-center" id="oprettetMessage"></div>
                     <div class="formError float-left opretUddannelseForm" id="udd-error"></div>
-                    </div><br>
-            
+                </div>
+                <br>
+
                 <div class="row">
                     <label for="opretUddannelse" class="col-5 col-form-label" data-key="Uddannelse">Uddannelse</label>
                     <div class="col-7 col-form-label formError text-danger mb-1" id="findesError"></div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12">
-                        <input type="text" id="uddannelseOpretInput" class="form-control" placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;">
+                        <input type="text" id="uddannelseOpretInput" class="form-control"
+                               placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;" required>
                     </div>
                 </div>
-            
-                <button class="gulKnap rounded" type="button" id="opretUddannelse-btn" data-key="opret" onclick="opret()">Opret</button>
-                
+
+                <button class="gulKnap rounded" type="button" id="opretUddannelse-btn" data-key="opret"
+                        onclick="opret()">Opret
+                </button>
+
             </form>
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="Slet_uddannelse">Slet uddannelse</h2>
             </div>
             <form action="" class="form-group text-left">
-                 <div>
+                <div>
                     <div class="float-left formError text-success text-center" id="slettetMessage"></div>
                     <div class="float-left formError opretUddannelseForm" id="findesIkke"></div>
-                    </div><br>
+                </div>
+                <br>
                 <div class="row">
                     <label for="opretUddannelse" class="col-5 col-form-label" data-key="uddannelse">Uddannelse</label>
                 </div>
                 <div class="form-group row">
                     <div class="col-12">
-                        <input id="uddannelseSletInput" type="text" class="form-control" placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;">
+                        <input id="uddannelseSletInput" type="text" class="form-control"
+                               placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;" required>
                     </div>
-                </div> 
-                    <button class="gulKnap rounded" type="button" id="sletUddannelse-btn" onclick="slet()" data-key="slet">Slet</button>
+                </div>
+                <button class="gulKnap rounded" type="button" id="sletUddannelse-btn" onclick="slet()" data-key="slet">
+                    Slet
+                </button>
             </form>
         </div>
         <div class="col-6">
@@ -51,15 +59,19 @@
             </div>
             <form class="form-group text-left sletBrugerForm" onsubmit="return false">
                 <div>
-                    <div class="formError float-left" id="student-error"></div><br>
+                    <div class="formError float-left" id="student-error"></div>
+                    <br>
                 </div>
                 <div class="row col-12">
                     <label for="email" class="col-form-label">Email</label>
                 </div>
                 <div class="form-group row">
                     <div class="col-12">
-                        <input name="email" type="text" id="studentSletEmailInput" class="form-control" placeholder="example@edu.easj.dk" style="background-color: #f7f7f7;" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
-                    </div> 
+                        <input name="email" type="text" id="studentSletEmailInput" class="form-control"
+                               placeholder="example@edu.easj.dk" style="background-color: #f7f7f7;" required
+                               oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
+                               oninput="this.setCustomValidity('')">
+                    </div>
                 </div>
                 <input class="gulKnap rounded" onclick="submitSletStudent()" type="submit" data-key="slet" value="Slet">
                 <input id="submit_handle_student" type="submit" style="display: none">
@@ -68,15 +80,21 @@
                 <h2 style="font-weight: bold;" data-key="Slet_virksomhed">Slet virksomhed</h2>
             </div>
             <div>
-                    <div class="formError float-left" id="virk-error"></div><br>
-                </div>
-                <div class="row col-12">
-                    <label for="email" class="col-form-label">Email</label>
-                </div>
+                <div class="formError float-left" id="virk-error"></div>
+                <br>
+            </div>
+            <div class="row col-12">
+                <label for="email" class="col-form-label">Email</label>
+            </div>
             <form class="sletBrugerForm" onsubmit="return false">
                 <div class="input-group mb-3">
-                    <input name="email" type="text" id="virksomhedSletEmailInput" class="form-control" placeholder="example@edu.easj.dk" style="background-color: #f7f7f7;" required oninvalid="this.setCustomValidity('Feltet må ikke være tomt')" oninput="this.setCustomValidity('')">
-                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#searchVirksomhederModal">Søg virksomheder</button>
+                    <input name="email" type="text" id="virksomhedSletEmailInput" class="form-control"
+                           placeholder="example@edu.easj.dk" style="background-color: #f7f7f7;" required
+                           oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
+                           oninput="this.setCustomValidity('')">
+                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                            data-target="#searchVirksomhederModal">Søg virksomheder
+                    </button>
                 </div>
                 <input class="gulKnap " onclick="submitSletVirksomhed()" type="submit" data-key="slet" value="Slet">
                 <input id="submit_handle_virk" type="submit" style="display: none">
@@ -86,81 +104,130 @@
 </div>
 {{> admin-search-virk-modal }}
 <script>
-        var backendIsProcessing = false;
-        function submitSletStudent() {
-            $('#submit_handle_student').click();
-            //kun hvis alle felter er udfylte sender vi videre til backend validering
-            if(document.getElementById("studentSletEmailInput").validity.valid){
-                if(!backendIsProcessing){
-                    backendIsProcessing = true;
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function () {
-                        if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
-                            let responseObject = JSON.parse(this.responseText)
-                            $('#student-error').show();
-                            if(responseObject.errorHappened){
-                                document.getElementById('student-error').innerHTML = "Denne bruger findes ikke";
-                                document.getElementById("student-error").classList.add('formError');
-                                document.getElementById("student-error").classList.remove('formSucess');
-                            } else {
-                                document.getElementById('student-error').innerHTML = "Brugeren blev slettet";
-                                document.getElementById("student-error").classList.remove('formError');
-                                document.getElementById("student-error").classList.add('formSucess');
-                            }
-                            setTimeout(function() {
-                                $('#student-error').fadeOut('fast')
-                            }, 2000);
-                            
-                            backendIsProcessing=false;
-                        }
-                    }
-                    xhttp.open("POST", "/admin-funktioner/slet-bruger", true);
-                    xhttp.setRequestHeader("Content-Type", "text/plain")
-                    xhttp.send(JSON.stringify ({
-                        email: document.getElementById('studentSletEmailInput').value,
-                        type: "student"
+    let backendIsProcessing = false;
 
-                    }));
-                }
-            }
-        };
-        function submitSletVirksomhed() {
-            $('#submit_handle_virksomhed').click();
-            //kun hvis alle felter er udfylte sender vi videre til backend validering
-            if(document.getElementById("virksomhedSletEmailInput").validity.valid){
-                if(!backendIsProcessing){
-                    backendIsProcessing = true;
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function () {
-                        if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
-                            let responseObject = JSON.parse(this.responseText);
-                            $('#virk-error').show();
-                            if(responseObject.errorHappened){
-                                document.getElementById('virk-error').innerHTML = "Denne bruger findes ikke";
-                                document.getElementById("virk-error").classList.add('formError');
-                                document.getElementById("virk-error").classList.remove('formSucess');
-                            } else {
-                                document.getElementById('virk-error').innerHTML = "Brugeren blev slettet";
-                                document.getElementById("virk-error").classList.remove('formError');
-                                document.getElementById("virk-error").classList.add('formSucess');
-                            }
-                            setTimeout(function() {
-                                $('#virk-error').fadeOut('fast')
-                            }, 2000);
-                            backendIsProcessing=false;
+    function submitSletStudent() {
+        let email = document.getElementById("studentSletEmailInput").value;
+
+        if (!email) {
+            return
+        }
+
+        let text;
+        if (confirm(`er du sikkert på du vil slette den studerende med email ${email}?`)) {
+            text = "Slettet"
+        } else {
+            text = "Afbrudt"
+        }
+
+        if (text === 'Afbrudt') {
+            return;
+        }
+
+        $('#submit_handle_student').click();
+        //kun hvis alle felter er udfylte sender vi videre til backend validering
+        if (document.getElementById("studentSletEmailInput").validity.valid) {
+            if (!backendIsProcessing) {
+                backendIsProcessing = true;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
+                        let responseObject = JSON.parse(this.responseText)
+                        $('#student-error').show();
+                        if (responseObject.errorHappened) {
+                            document.getElementById('student-error').innerHTML = "Denne bruger findes ikke";
+                            document.getElementById("student-error").classList.add('formError');
+                            document.getElementById("student-error").classList.remove('formSucess');
+                        } else {
+                            document.getElementById('student-error').innerHTML = "Brugeren blev slettet";
+                            document.getElementById("student-error").classList.remove('formError');
+                            document.getElementById("student-error").classList.add('formSucess');
                         }
+                        setTimeout(function () {
+                            $('#student-error').fadeOut('fast')
+                        }, 2000);
+
+                        backendIsProcessing = false;
                     }
-                    xhttp.open("POST", "/admin-funktioner/slet-bruger", true);
-                    xhttp.setRequestHeader("Content-Type", "text/plain")
-                    xhttp.send(JSON.stringify ({
-                        email: document.getElementById('virksomhedSletEmailInput').value,
-                        type: "virksomhed"
-                    }));
                 }
+                xhttp.open("POST", "/admin-funktioner/slet-bruger", true);
+                xhttp.setRequestHeader("Content-Type", "text/plain")
+                xhttp.send(JSON.stringify({
+                    email: document.getElementById('studentSletEmailInput').value,
+                    type: "student"
+
+                }));
             }
-        };
-        function opret() {
-        var xhttp = new XMLHttpRequest();
+        }
+    };
+
+    function submitSletVirksomhed() {
+        let email = document.getElementById("virksomhedSletEmailInput").value;
+
+        if (!email) {
+            return
+        }
+        let text;
+        if (confirm(`er du sikkert på du vil slette virksomheden med email ${email}?`)) {
+            text = "Slettet"
+        } else {
+            text = "Afbrudt"
+        }
+
+        if (text === 'Afbrudt') {
+            return;
+        }
+
+        $('#submit_handle_virksomhed').click();
+        //kun hvis alle felter er udfylte sender vi videre til backend validering
+        if (document.getElementById("virksomhedSletEmailInput").validity.valid) {
+            if (!backendIsProcessing) {
+                backendIsProcessing = true;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
+                        let responseObject = JSON.parse(this.responseText);
+                        $('#virk-error').show();
+                        if (responseObject.errorHappened) {
+                            document.getElementById('virk-error').innerHTML = "Denne bruger findes ikke";
+                            document.getElementById("virk-error").classList.add('formError');
+                            document.getElementById("virk-error").classList.remove('formSucess');
+                        } else {
+                            document.getElementById('virk-error').innerHTML = "Brugeren blev slettet";
+                            document.getElementById("virk-error").classList.remove('formError');
+                            document.getElementById("virk-error").classList.add('formSucess');
+                        }
+                        setTimeout(function () {
+                            $('#virk-error').fadeOut('fast')
+                        }, 2000);
+                        backendIsProcessing = false;
+                    }
+                }
+                xhttp.open("POST", "/admin-funktioner/slet-bruger", true);
+                xhttp.setRequestHeader("Content-Type", "text/plain")
+                xhttp.send(JSON.stringify({
+                    email: document.getElementById('virksomhedSletEmailInput').value,
+                    type: "virksomhed"
+                }));
+            }
+        }
+    };
+
+    function opret() {
+        let uddannelse = document.getElementById("uddannelseOpretInput").value;
+
+        let text;
+        if (confirm(`er du sikkert på du vil oprette uddannelsen ${uddannelse}?`)) {
+            text = "Slettet"
+        } else {
+            text = "Afbrudt"
+        }
+
+        if (text === 'Afbrudt') {
+            return;
+        }
+
+        let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 $('#udd-error').show();
@@ -169,35 +236,47 @@
                     document.getElementById('udd-error').innerHTML = responseObj.findesallerede
                     document.getElementById("udd-error").classList.add('formError');
                     document.getElementById("udd-error").classList.remove('formSucess');
+                } else if (responseObj.tomtnavn != ''){
+                    document.getElementById('udd-error').innerHTML = responseObj.tomtnavn
+                    document.getElementById("udd-error").classList.add('formError');
+                    document.getElementById("udd-error").classList.remove('formSucess');
                 } else {
                     document.getElementById('udd-error').innerHTML = responseObj.uddannelseOprettet;
                     document.getElementById("udd-error").classList.remove('formError');
                     document.getElementById("udd-error").classList.add('formSucess');
                 }
-                setTimeout(function() {
+                setTimeout(function () {
                     $('#udd-error').fadeOut('fast')
                 }, 2000);
-                
-                
             }
         }
         xhttp.open('POST', '/admin-funktioner/createUddannelse', true);
         xhttp.setRequestHeader("Content-Type", "text/plain")
-        xhttp.send(JSON.stringify ({
+        xhttp.send(JSON.stringify({
             name: document.getElementById('uddannelseOpretInput').value
         }));
+
+        document.getElementById("uddannelseOpretInput").value = "";
     }
 
     function slet() {
-        var text;
-        if(confirm('er du sikkert på du vil slette uddannelsen?')) {
+        let uddannelse = document.getElementById("uddannelseSletInput").value;
+
+        if (!uddannelse) {
+            return
+        }
+
+        let text;
+        if (confirm(`er du sikkert på du vil slette uddannelsen ${uddannelse}?`)) {
             text = "Slettet"
-        } else{text ="Afbrudt"}
-        
-        if(text=== 'Afbrudt') {
+        } else {
+            text = "Afbrudt"
+        }
+
+        if (text === 'Afbrudt') {
             return;
         }
-        
+
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -206,19 +285,21 @@
                 let responseObj = JSON.parse(this.responseText)
                 document.getElementById('findesIkke').innerHTML = responseObj.findesIkke
                 document.getElementById('slettetMessage').innerHTML = responseObj.uddannelseSlettet
-                
-                setTimeout(function() {
+
+                setTimeout(function () {
                     $('#findesIkke').fadeOut('fast')
                 }, 2000);
-                setTimeout(function() {
+                setTimeout(function () {
                     $('#slettetMessage').fadeOut('fast')
                 }, 2000);
             }
         }
         xhttp.open('POST', '/admin-funktioner/sletUddannelse', true);
         xhttp.setRequestHeader("Content-Type", "text/plain")
-        xhttp.send(JSON.stringify ({
+        xhttp.send(JSON.stringify({
             name: document.getElementById('uddannelseSletInput').value
         }));
+
+        document.getElementById("uddannelseSletInput").value = "";
     }
-    </script>
+</script>
