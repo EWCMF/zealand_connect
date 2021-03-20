@@ -14,8 +14,8 @@
             <p>Find virksomheder ved navn</p>
           </div>
           <div class="input-group row">
-            <input class="form-control" type="text" id="searchText">
-            <button class="btn btn-outline-secondary" onclick="search()">Søg</button>
+            <input class="form-control" type="text" id="searchCompanyText">
+            <button class="btn btn-outline-secondary" onclick="searchCompany()">Søg</button>
           </div>
           <br>
           <div class="row">
@@ -26,7 +26,7 @@
                   <th scope="col">Email</th>
                 </tr>
               </thead>
-              <tbody id="tableBody">
+              <tbody id="tableCompanyBody">
                 <!-- dynamisk indhold her -->
               </tbody>
             </table>
@@ -35,47 +35,46 @@
 
 
       </div>
-      <input type="hidden" id="selected">
+      <input type="hidden" id="selectedCompany">
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="finish()" data-dismiss="modal">Vælg</button>
+        <button type="button" class="btn btn-primary" onclick="finishCompany()" data-dismiss="modal">Vælg</button>
       </div>
     </div>
   </div>
 </div>
 <script>
-  function search() {
-    let searchText = document.getElementById('searchText').value;
+  function searchCompany() {
+    let searchCompanyText = document.getElementById('searchCompanyText').value;
 
     let xhr = new XMLHttpRequest();
     xhr.onload = function () {
         let data = JSON.parse(xhr.responseText);
-        let tableBody = document.getElementById('tableBody');
-        tableBody.innerHTML = '';
+        let tableCompanyBody = document.getElementById('tableCompanyBody');
+        tableCompanyBody.innerHTML = '';
 
         data.forEach((element, i) => {
-          let row = '<tr id="' + 'row' + i + '" onclick="select(\'' + element.email + '\', ' + i + ')">' +
+          let row = '<tr id="' + 'row' + i + '" onclick="selectCompany(\'' + element.email + '\', ' + i + ')">' +
             '<td>' + element.navn + '</td>' +
             '<td>' + element.email + '</td>' +
           '</tr>'
 
-          tableBody.innerHTML += row;
+            tableCompanyBody.innerHTML += row;
         });
     }
     xhr.open("POST", '/admin-funktioner/search-virksomhed');
-    xhr.send(JSON.stringify({"name": searchText}));
+    xhr.send(JSON.stringify({"name": searchCompanyText}));
   }
 
-  function select(selected, index) {
+  function selectCompany(selected, index) {
     document.querySelectorAll('tr.search-selected').forEach(element => {
       element.classList.remove('search-selected');
     });
 
     document.getElementById('row' + index).classList.add('search-selected');
-    document.getElementById('selected').value = selected;
+    document.getElementById('selectedCompany').value = selected;
   }
 
-  function finish() {
-    document.getElementById('virksomhedSletEmailInput').value = document.getElementById('selected').value
-
+  function finishCompany() {
+    document.getElementById('virksomhedSletEmailInput').value = document.getElementById('selectedCompany').value
   }
 </script>

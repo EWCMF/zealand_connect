@@ -15,7 +15,7 @@
           </div>
           <div class="input-group row">
             <input class="form-control" type="text" id="searchStudentName">
-            <button class="btn btn-outline-secondary" onclick="search()">Søg</button>
+            <button class="btn btn-outline-secondary" onclick="searchStudent()">Søg</button>
           </div>
           <br>
           <div class="row">
@@ -35,15 +35,15 @@
 
 
       </div>
-      <input type="hidden" id="selected">
+      <input type="hidden" id="selectedStudent">
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="finish()" data-dismiss="modal">Vælg</button>
+        <button type="button" class="btn btn-primary" onclick="finishStudent()" data-dismiss="modal">Vælg</button>
       </div>
     </div>
   </div>
 </div>
 <script>
-  function search() {
+  function searchStudent() {
     let searchStudentName = document.getElementById('searchStudentName').value;
 
     let xhr = new XMLHttpRequest();
@@ -53,7 +53,7 @@
         tableStudBody.innerHTML = '';
 
         data.forEach((element, i) => {
-          let row = '<tr id="' + 'row' + i + '" onclick="select(\'' + element.email + '\', ' + i + ')">' +
+          let row = '<tr id="' + 'row' + i + '" onclick="selectStudent(\'' + element.email + '\', ' + i + ')">' +
             '<td>' + (element.fornavn + " " + element.efternavn) + '</td>' +
             '<td>' + element.email + '</td>' +
           '</tr>'
@@ -65,17 +65,16 @@
     xhr.send(JSON.stringify({"name": searchStudentName}));
   }
 
-  function select(selected, index) {
+  function selectStudent(selected, index) {
     document.querySelectorAll('tr.search-selected').forEach(element => {
       element.classList.remove('search-selected');
     });
 
     document.getElementById('row' + index).classList.add('search-selected');
-    document.getElementById('selected').value = selected;
+    document.getElementById('selectedStudent').value = selected;
   }
 
-  function finish() {
-    document.getElementById('studentSletEmailInput').value = document.getElementById('selected').value
-
+  function finishStudent() {
+    document.getElementById('studentSletEmailInput').value = document.getElementById('selectedStudent').value
   }
 </script>

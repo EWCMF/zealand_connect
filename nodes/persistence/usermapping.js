@@ -237,6 +237,9 @@ async function editProfilePic(email, profilbillede){
 function searchVirksomhederByName(name) {
     const { Op } = require('sequelize');
 
+    console.log("test")
+    console.log(name)
+
     return models.Virksomhed.findAll({
         raw: true,
         limit: 10,
