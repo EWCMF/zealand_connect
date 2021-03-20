@@ -28,7 +28,6 @@
                 <button class="gulKnap rounded" type="button" id="opretUddannelse-btn" data-key="opret"
                         onclick="opret()">Opret
                 </button>
-
             </form>
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="Slet_uddannelse">Slet uddannelse</h2>
@@ -57,8 +56,6 @@
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="Slet_studerende">Slet studerende</h2>
             </div>
-
-
             <form class="form-group text-left sletBrugerForm" onsubmit="return false">
                 <div>
                     <div class="formError float-left" id="student-error"></div>
@@ -79,8 +76,6 @@
                 <input class="gulKnap rounded" onclick="submitSletStudent()" type="submit" data-key="slet" value="Slet">
                 <input id="submit_handle_student" type="submit" style="display: none">
             </form>
-
-
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="Slet_virksomhed">Slet virksomhed</h2>
             </div>
@@ -91,8 +86,6 @@
             <div class="row col-12">
                 <label for="email" class="col-form-label">Email</label>
             </div>
-
-
             <form class="sletBrugerForm" onsubmit="return false">
                 <div class="input-group mb-3">
                     <input name="email" type="text" id="virksomhedSletEmailInput" class="form-control"
@@ -106,8 +99,6 @@
                 <input class="gulKnap " onclick="submitSletVirksomhed()" type="submit" data-key="slet" value="Slet">
                 <input id="submit_handle_virk" type="submit" style="display: none">
             </form>
-
-
         </div>
     </div>
 </div>
@@ -168,7 +159,6 @@
                 }));
             }
         }
-
         document.getElementById("studentSletEmailInput").value = "";
     };
 
