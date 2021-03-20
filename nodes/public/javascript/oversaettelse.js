@@ -455,6 +455,10 @@ function getLangdata() {
                 //reset-password
                 "Password_hint_error": "The password is invalid. Hover over the yellow question mark for help.",
                 "Nulstil_adgangskode": "Reset password",
+                "Token_not_found": "The token you specified no longer exists. Try the password recovery process again.",
+                "Token_ikke_fundet": "Token not found",
+                "Token_expired": "The token you specified has expired. Try the password recovery process again.",
+                "Token_udloebet": "Token expired"
             }
         }
     }

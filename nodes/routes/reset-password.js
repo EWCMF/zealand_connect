@@ -37,7 +37,9 @@ router.get('/', async function (req, res, next) {
     });
 
     if (record == null) {
-        return res.send('Token has expired. Please try password reset again.')
+        return res.render('errors/token-expired', {
+            language: reqLang(req, res)
+        });
     }
 
     res.render('reset-password', {
@@ -70,7 +72,9 @@ router.post('/', async function (req, res, next) {
     });
 
     if (record == null) {
-        return res.send('Token not found. Please try the reset password process again.')
+        return res.render('errors/token-not-found', {
+            language: reqLang(req, res)
+        });
     }
 
     await models.ResetToken.update({
@@ -101,7 +105,10 @@ router.post('/', async function (req, res, next) {
             }
         });
     } else {
-        return res.send('There was an error. Please try again.')
+        return res.render('errors/error', {
+            language: reqLang(req, res),
+            message: "There was an error. Please try again."
+        });
     }
 
     res.render('reset-password-success', {
