@@ -74,9 +74,16 @@ router.post('/slet-bruger', authorizeUser('admin'), function (req, res, next) {
 router.post('/createUddannelse', authorizeUser('admin'), (req, res, next) => {
     let jsonBody = JSON.parse(req.body);
     let name = jsonBody.name
+
     let messages = {
         findesallerede: "",
-        uddannelseOprettet: ""
+        uddannelseOprettet: "",
+        tomtnavn: ""
+    }
+
+    if (name === ""){
+        messages.tomtnavn = "Feltet kan ikke være tomt";
+        return res.send(messages);
     }
 
     findUddannelseByName(name).then((uddannelseFundetMedNavn) => {

@@ -236,6 +236,10 @@
                     document.getElementById('udd-error').innerHTML = responseObj.findesallerede
                     document.getElementById("udd-error").classList.add('formError');
                     document.getElementById("udd-error").classList.remove('formSucess');
+                } else if (responseObj.tomtnavn != ''){
+                    document.getElementById('udd-error').innerHTML = responseObj.tomtnavn
+                    document.getElementById("udd-error").classList.add('formError');
+                    document.getElementById("udd-error").classList.remove('formSucess');
                 } else {
                     document.getElementById('udd-error').innerHTML = responseObj.uddannelseOprettet;
                     document.getElementById("udd-error").classList.remove('formError');
@@ -244,8 +248,6 @@
                 setTimeout(function () {
                     $('#udd-error').fadeOut('fast')
                 }, 2000);
-
-
             }
         }
         xhttp.open('POST', '/admin-funktioner/createUddannelse', true);
