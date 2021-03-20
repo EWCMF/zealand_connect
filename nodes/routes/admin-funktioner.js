@@ -85,7 +85,7 @@ router.post('/createUddannelse', authorizeUser('admin'), (req, res, next) => {
             res.send(messages)
         } else { // hvis uddannelsen ikke er i databasen
             createUddanelse(name);
-            messages.uddannelseOprettet = "Uddannelsen oprettet"
+            messages.uddannelseOprettet = `Uddannelsen ${name} oprettet`
             res.send(messages)
         }
     })
@@ -105,7 +105,7 @@ router.post('/sletUddannelse', authorizeUser('admin'), (req, res, next) => {
             res.send(messages);
         } else {
             sletUddannelse(name)
-            messages.uddannelseSlettet = "Uddannelsen slettet"
+            messages.uddannelseSlettet = `Uddannelsen ${name} slettet`
             res.send(messages)
         }
     })
