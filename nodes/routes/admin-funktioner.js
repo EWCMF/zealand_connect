@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {deleteVirksomhed, searchVirksomhederByName} = require('../persistence/usermapping');
+const {deleteVirksomhed, searchVirksomhederByName, findStudentByName} = require('../persistence/usermapping');
 var {reqLang} = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
@@ -123,6 +123,15 @@ router.post('/search-virksomhed', authorizeUser('admin'), async (req, res) => {
     let name = jsonBody.name;
 
     let data = await searchVirksomhederByName(name);
+
+    res.send(data);
+});
+
+router.post('/search-student', authorizeUser('admin'), async (req, res) => {
+    let jsonBody = JSON.parse(req.body);
+    let name = jsonBody.name;
+
+    let data = await findStudentByName(name);
 
     res.send(data);
 });

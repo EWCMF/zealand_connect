@@ -248,7 +248,26 @@ function searchVirksomhederByName(name) {
     });
 }
 
+function findStudentByName(name) {
+    const { Op } = require('sequelize');
+
+    return models.Student.findAll({
+        raw: true,
+        limit: 10,
+        where: {
+            [Op.or]: {
+                fornavn: {
+                    [Op.like]: "%" + name + "%"
+                },
+                efternavn: {
+                    [Op.like]: "%" + name + "%"
+                }
+            }
+        },
+    });
+}
+
 module.exports = {
     findUserByEmail, createVirksomhed, deleteVirksomhed, editVirksomhed, findUserByCVR, editStudent, deleteStudent,
-    editProfilePic, createStudent, editPassword, searchVirksomhederByName, findVirksomhedByCvr
+    editProfilePic, createStudent, editPassword, searchVirksomhederByName, findStudentByName, findVirksomhedByCvr
 }

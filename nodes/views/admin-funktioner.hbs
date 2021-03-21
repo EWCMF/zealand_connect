@@ -21,14 +21,16 @@
                 <div class="form-group row">
                     <div class="col-12">
                         <input type="text" id="uddannelseOpretInput" class="form-control"
-                               placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;" required>
+                               placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;" required
+                               oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
+                               oninput="this.setCustomValidity('')">
                     </div>
                 </div>
 
                 <button class="gulKnap rounded" type="button" id="opretUddannelse-btn" data-key="opret"
                         onclick="opret()">Opret
                 </button>
-
+                <input id="submit_handle_opret_udd" type="submit" style="display: none">
             </form>
             <div class="row p-3">
                 <h2 style="font-weight: bold;" data-key="Slet_uddannelse">Slet uddannelse</h2>
@@ -45,12 +47,15 @@
                 <div class="form-group row">
                     <div class="col-12">
                         <input id="uddannelseSletInput" type="text" class="form-control"
-                               placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;" required>
+                               placeholder="Uddannelse eksempel" style="background-color: #f7f7f7;" required
+                               oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
+                               oninput="this.setCustomValidity('')">
                     </div>
                 </div>
                 <button class="gulKnap rounded" type="button" id="sletUddannelse-btn" onclick="slet()" data-key="slet">
                     Slet
                 </button>
+                <input id="submit_handle_slet_udd" type="submit" style="display: none">
             </form>
         </div>
         <div class="col-6">
@@ -65,13 +70,14 @@
                 <div class="row col-12">
                     <label for="email" class="col-form-label">Email</label>
                 </div>
-                <div class="form-group row">
-                    <div class="col-12">
+                <div class="input-group mb-3">
                         <input name="email" type="text" id="studentSletEmailInput" class="form-control"
                                placeholder="example@edu.easj.dk" style="background-color: #f7f7f7;" required
                                oninvalid="this.setCustomValidity('Feltet må ikke være tomt')"
                                oninput="this.setCustomValidity('')">
-                    </div>
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                                data-target="#searchStudentsModal">Søg studerende
+                        </button>
                 </div>
                 <input class="gulKnap rounded" onclick="submitSletStudent()" type="submit" data-key="slet" value="Slet">
                 <input id="submit_handle_student" type="submit" style="display: none">
@@ -103,6 +109,7 @@
     </div>
 </div>
 {{> admin-search-virk-modal }}
+{{> admin-search-stud-modal }}
 <script>
     let backendIsProcessing = false;
 
@@ -135,11 +142,11 @@
                         let responseObject = JSON.parse(this.responseText)
                         $('#student-error').show();
                         if (responseObject.errorHappened) {
-                            document.getElementById('student-error').innerHTML = "Denne bruger findes ikke";
+                            document.getElementById('student-error').innerHTML = `Brugeren med email ${email} findes ikke`;
                             document.getElementById("student-error").classList.add('formError');
                             document.getElementById("student-error").classList.remove('formSucess');
                         } else {
-                            document.getElementById('student-error').innerHTML = "Brugeren blev slettet";
+                            document.getElementById('student-error').innerHTML = `Brugeren med email ${email} blev slettet`;
                             document.getElementById("student-error").classList.remove('formError');
                             document.getElementById("student-error").classList.add('formSucess');
                         }
@@ -155,10 +162,10 @@
                 xhttp.send(JSON.stringify({
                     email: document.getElementById('studentSletEmailInput').value,
                     type: "student"
-
                 }));
             }
         }
+        document.getElementById("studentSletEmailInput").value = "";
     };
 
     function submitSletVirksomhed() {
@@ -189,11 +196,11 @@
                         let responseObject = JSON.parse(this.responseText);
                         $('#virk-error').show();
                         if (responseObject.errorHappened) {
-                            document.getElementById('virk-error').innerHTML = "Denne bruger findes ikke";
+                            document.getElementById('virk-error').innerHTML = `Brugeren med email ${email} findes ikke`;
                             document.getElementById("virk-error").classList.add('formError');
                             document.getElementById("virk-error").classList.remove('formSucess');
                         } else {
-                            document.getElementById('virk-error').innerHTML = "Brugeren blev slettet";
+                            document.getElementById('virk-error').innerHTML = `Brugeren med email ${email} blev slettet`;
                             document.getElementById("virk-error").classList.remove('formError');
                             document.getElementById("virk-error").classList.add('formSucess');
                         }
@@ -211,6 +218,8 @@
                 }));
             }
         }
+
+        document.getElementById("virksomhedSletEmailInput").value = "";
     };
 
     function opret() {
@@ -227,35 +236,37 @@
             return;
         }
 
-        let xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                $('#udd-error').show();
-                let responseObj = JSON.parse(this.responseText)
-                if (responseObj.findesallerede != '') {
-                    document.getElementById('udd-error').innerHTML = responseObj.findesallerede
-                    document.getElementById("udd-error").classList.add('formError');
-                    document.getElementById("udd-error").classList.remove('formSucess');
-                } else if (responseObj.tomtnavn != ''){
-                    document.getElementById('udd-error').innerHTML = responseObj.tomtnavn
-                    document.getElementById("udd-error").classList.add('formError');
-                    document.getElementById("udd-error").classList.remove('formSucess');
-                } else {
-                    document.getElementById('udd-error').innerHTML = responseObj.uddannelseOprettet;
-                    document.getElementById("udd-error").classList.remove('formError');
-                    document.getElementById("udd-error").classList.add('formSucess');
+        $('#submit_handle_opret_udd').click();
+        if (document.getElementById("uddannelseOpretInput").validity.valid){
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    $('#udd-error').show();
+                    let responseObj = JSON.parse(this.responseText)
+                    if (responseObj.findesallerede != '') {
+                        document.getElementById('udd-error').innerHTML = responseObj.findesallerede
+                        document.getElementById("udd-error").classList.add('formError');
+                        document.getElementById("udd-error").classList.remove('formSucess');
+                    } else if (responseObj.tomtnavn != '') {
+                        document.getElementById('udd-error').innerHTML = responseObj.tomtnavn
+                        document.getElementById("udd-error").classList.add('formError');
+                        document.getElementById("udd-error").classList.remove('formSucess');
+                    } else {
+                        document.getElementById('udd-error').innerHTML = responseObj.uddannelseOprettet;
+                        document.getElementById("udd-error").classList.remove('formError');
+                        document.getElementById("udd-error").classList.add('formSucess');
+                    }
+                    setTimeout(function () {
+                        $('#udd-error').fadeOut('fast')
+                    }, 2000);
                 }
-                setTimeout(function () {
-                    $('#udd-error').fadeOut('fast')
-                }, 2000);
             }
+            xhttp.open('POST', '/admin-funktioner/createUddannelse', true);
+            xhttp.setRequestHeader("Content-Type", "text/plain")
+            xhttp.send(JSON.stringify({
+                name: document.getElementById('uddannelseOpretInput').value
+            }));
         }
-        xhttp.open('POST', '/admin-funktioner/createUddannelse', true);
-        xhttp.setRequestHeader("Content-Type", "text/plain")
-        xhttp.send(JSON.stringify({
-            name: document.getElementById('uddannelseOpretInput').value
-        }));
-
         document.getElementById("uddannelseOpretInput").value = "";
     }
 
@@ -277,28 +288,31 @@
             return;
         }
 
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                $('#findesIkke').show();
-                $('#slettetMessage').show();
-                let responseObj = JSON.parse(this.responseText)
-                document.getElementById('findesIkke').innerHTML = responseObj.findesIkke
-                document.getElementById('slettetMessage').innerHTML = responseObj.uddannelseSlettet
+        $('#submit_handle_slet_udd').click();
+        if (document.getElementById("uddannelseOpretInput").validity.valid) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    $('#findesIkke').show();
+                    $('#slettetMessage').show();
+                    let responseObj = JSON.parse(this.responseText)
+                    document.getElementById('findesIkke').innerHTML = responseObj.findesIkke
+                    document.getElementById('slettetMessage').innerHTML = responseObj.uddannelseSlettet
 
-                setTimeout(function () {
-                    $('#findesIkke').fadeOut('fast')
-                }, 2000);
-                setTimeout(function () {
-                    $('#slettetMessage').fadeOut('fast')
-                }, 2000);
+                    setTimeout(function () {
+                        $('#findesIkke').fadeOut('fast')
+                    }, 2000);
+                    setTimeout(function () {
+                        $('#slettetMessage').fadeOut('fast')
+                    }, 2000);
+                }
             }
+            xhttp.open('POST', '/admin-funktioner/sletUddannelse', true);
+            xhttp.setRequestHeader("Content-Type", "text/plain")
+            xhttp.send(JSON.stringify({
+                name: document.getElementById('uddannelseSletInput').value
+            }));
         }
-        xhttp.open('POST', '/admin-funktioner/sletUddannelse', true);
-        xhttp.setRequestHeader("Content-Type", "text/plain")
-        xhttp.send(JSON.stringify({
-            name: document.getElementById('uddannelseSletInput').value
-        }));
 
         document.getElementById("uddannelseSletInput").value = "";
     }
