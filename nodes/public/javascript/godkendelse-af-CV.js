@@ -278,6 +278,7 @@ function submitButton() {
             all_valid = false;
             return false;
         }
+        return true;
     });
 
     if (all_valid) {

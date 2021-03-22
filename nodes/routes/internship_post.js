@@ -107,13 +107,13 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             inputError = true;
         }
 
-        if (post_type == 0) {
+        if (!post_type) {
             console.log('Missing type ' +  append);
             errors += 'Missing type <br>';
             inputError = true;
         }
 
-        if (country == 0) {
+        if (!country) {
             console.log('Missing country ' +  append);
             errors += 'Missing country <br>';
             inputError = true;
@@ -203,7 +203,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             indhold.company_link = null;
         }
 
-        if (fk_education == 0 || fk_education == '0' || fk_education == null) {
+        if (!fk_education) {
             console.log('Invalid education choice ' +  append);
             errors += 'Invalid education choice <br>';
             inputError = true;

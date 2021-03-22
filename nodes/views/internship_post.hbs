@@ -2,214 +2,236 @@
     <div class="row">
         <div class="col-12">
             {{#if update}}
-                <h1 data-key="Rediger_opslag">Rediger opslag</h1>
+            <h1 data-key="Rediger_opslag">Rediger opslag</h1>
             {{else}}
-                <h1 data-key="Indryk_opslag">Indryk opslag</h1>
+            <h1 data-key="Indryk_opslag">Indryk opslag</h1>
             {{/if}}
         </div>
     </div>
     <div class="row">
         <div class="col-12 col-md-8">
             {{#if update}}
-            <form 
-                method="POST" 
-                action="/internship_update" 
-                enctype="multipart/form-data" 
-                id="internshipForm"
-            >
+            <form method="POST" action="/internship_update" enctype="multipart/form-data" id="internshipForm">
             {{else}}
-            <form
-                method="POST"
-                action="/internship_post"
-                enctype="multipart/form-data"
-                id="internshipForm"
-            >
+            <form method="POST" action="/internship_post" enctype="multipart/form-data" id="internshipForm">
             {{/if}}
-            <input type="hidden" value="{{rid}}" name="id">
-            <div class="form-group required mb-5">
-                <label for="internshipTitle" data-key="Annonce_overskrift">Annonce overskrift</label>
-                <input type="text" value="{{rtitle}}" name="title" id="internshipTitle" class="form-control"
-                       placeholder="Titel">
-                <p id="titleError" class="CVErrorColor" hidden="true" data-key="Annonce_overskrift_error">Du skal angive en annonce overskrift</p>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="form-group required">
-                        <label for="postTypeSelect" data-key="Opslagstype">Opslagstype</label>
-                        <select class="form-control" name="post_type" id="postTypeSelect"
+                <input type="hidden" value="{{rid}}" name="id">
+                <div class="form-group required mb-5">
+                    <label for="internshipTitle" data-key="Annonce_overskrift">Annonce overskrift</label>
+                    <input type="text" value="{{rtitle}}" name="title" id="internshipTitle" class="form-control"
+                        placeholder="Titel">
+                    <p id="titleError" class="CVErrorColor" hidden="true" data-key="Annonce_overskrift_error">Du
+                        skal angive en annonce overskrift</p>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="postTypeSelect" data-key="Opslagstype">Opslagstype</label>
+                            <select class="form-control" name="post_type" id="postTypeSelect"
                                 onchange="postTypeToggleFields()">
-                            <option selected disabled hidden value="0" data-key="Vaelg_en_opslagstype">Vælg en opslagstype</option>
-                            <option value="1" data-key="Praktik">Praktik</option>
-                            <option value="2" data-key="Studiejob">Studiejob</option>
-                            <option value="3">Trainee stilling</option>
-                            <option value="4">Fuldtidsstilling</option>
-                        </select>
-                        <p id="postTypeError" class="CVErrorColor" hidden="true" data-key="Opslagstype_error">Du skal angive en opslagstype</p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group required">
-                        <label for="education" data-key="Uddannelse">Uddannelse</label>
-                        <select class="form-control" name="fk_education" id="educationSelect" onchange="toggleNote()">
-                            <option selected disabled hidden value="0" data-key="Vaelg_en_uddannelse">Vælg en uddannelse</option>
-                            {{{generatedEducationOptions}}}
-                        </select>
-                        <p id="educationError" class="CVErrorColor" hidden="true" data-key="Vaelg_en_uddannelse_error">Du skal angive en uddannelse</p>
-                        <p id="educationNote" hidden="true" data-key="Vaelg_en_uddannelse_note">Den valgte uddannelse har lønnet praktik</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="form-group required">
-                        <label for="countrySelect" data-key="Land">Land</label><span class="tooltiphelp ml-1" data-toggle="tooltip" data-placement="top"
-                            title="Hvis Danmark vælges som land kommer der et adressefelt til højre som også skal udfyldes"
-                            data-Key="Land_tooltip">?</span>
-                        <select class="form-control" name="country" id="countrySelect" onchange="countryToggleFields()">
-                            <option selected disabled hidden value="0" data-key="Vaelg_et_land">Vælg et land</option>
-                            <option value="1" data-key="Danmark">Danmark</option>
-                            <option value="2" data-key="Tyskland">Tyskland</option>
-                            <option value="3" data-key="Sverige">Sverige</option>
-                            <option value="4" data-key="Udlandet">Udlandet</option>
-                        </select>
-                        <p id="countryError" class="CVErrorColor" hidden="true" data-key="Vaelg_et_land_error">Du skal angive et land</p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
-                    <div class="form-group autocomplete-container">
-                        <label for="" data-key="Adresse">Adresse</label><span class="tooltiphelp ml-1" data-toggle="tooltip" data-placement="top"
-                            title="Feltet her bruger Danmarks Adressers Web API til at udfylde feltet som er en service hvor man kan søge på danske adresser. For at være sikker på at en korrekt adresse er valgt skal adressen være synlig i grå tekst under feltet"
-                            data-Key="Adresse_tooltip">?</span>
-                        <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
-                        <input type="hidden" id="addressSearchJSON" name="dawa_json">
-                        <input type="hidden" id="addressSearchCity" name="city">
-                        <input type="hidden" id="addressSearchPostcode" name="postcode">
-                        <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
-                        <small id="selectedAddress" class="form-text text-muted"></small>
-                        <p id="addressError" class="CVErrorColor" hidden="true" data-key="Adresse_error">Du skal angive en adresse</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="form-group required">
-                        <label for="contactName" data-key="Navn_paa_kontaktperson">Navn på kontaktperson</label>
-                        <input type="text" value="{{rcontact}}" name="contact" id="contactName" class="form-control"
-                               placeholder="Navn">
-                        <p id="contactError" class="CVErrorColor" hidden="true" data-key="Navn_paa_kontaktperson_error">Du skal angive en kontaktperson</p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <label for="phoneNumber" data-key="Telefonnummer">Telefonnummer</label>
-                        <input type="text" value="{{rphone}}" name="phone_number" id="phoneNumber" class="form-control"
-                               placeholder="Telefonnummer" data-key="Telefonnummer_placeholder">
-                        <p id="phoneNumberError" class="CVErrorColor" hidden="true" data-key="phoneNumberError">Du skal angive et nummer med 8 tal</p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <div>
-                            <label for="company_link" data-key="Link_til_hjemmeside">Link til hjemmeside</label>
-                            {{#if profWeb}}
-                            <a class="ml-2 hand-hover" data-Key="Brug_info" onclick="useProfileWebsite('{{profWeb}}')">Brug info fra profil</a>
-                            {{/if}}
+                                <option selected disabled hidden value="" data-key="Vaelg_en_opslagstype">Vælg en
+                                    opslagstype</option>
+                                <option value="1" data-key="Praktik">Praktik</option>
+                                <option value="2" data-key="Studiejob">Studiejob</option>
+                                <option value="3">Trainee stilling</option>
+                                <option value="4">Fuldtidsstilling</option>
+                            </select>
+                            <p id="postTypeError" class="CVErrorColor" hidden="true" data-key="Opslagstype_error">Du
+                                skal angive en opslagstype</p>
                         </div>
-                        <input type="text" title="Link er ugyldigt" name="company_link"
-                               id="companyURL"
-                               class="form-control" placeholder="virksomhed.dk" value="{{rhomepage}}">
-                        <p id="companylinkError" class="CVErrorColor" hidden="true" data-key="Link_til_hjemmeside_error">Du skal angive et gyldigt link her i 
-                            enten formen: 'http(s)://www.hjemmeside.dk' eller 'www.hjemmeside.dk'</p>
                     </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <div>
-                            <label for="internshipEmail" data-key="Email_adresse">E-mail adresse</label>
-                            {{#if profMail}}
-                            <a class="ml-2 hand-hover" data-Key="Brug_profil_mail" onclick="useProfileMail('{{profMail}}')">Brug login mail</a>
-                            {{/if}}
-                        </div>
-                        
-                        <input type="email" value="{{remail}}" name="email" id="internshipEmail" class="form-control"
-                               placeholder="Email" >
-                        <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal skrive din email her og mindst
-                            bruge et @
-                        </p>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <div class="form-group">
-                        <div>
-                            <label for="post_start_date" data-key="Ansoegningsfrist_html">Ansøgningsfrist <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                            title="Hvis der ikke er en ansøgningsfrist, kan opslaget kun fjernes manuelt"
-                            data-Key="">?</span></label>
-                            <a class="ml-2 hand-hover" data-Key="Ryd" onclick="rydFrist()">Ryd</a>
-                        </div>
-                        
-                        <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
-                               id="applicationDeadline" placeholder="dd / mm / åååå">
-                        <p id="poststartdateError" class="CVErrorColor" hidden="true" data-key="Ansoegningsfrist_error">Du skal angive en ansøgningsfrist
-                        </p>
-                        <p id="poststartdateErrorPast" class="CVErrorColor" hidden="true" data-key="Dato_error">Den valgte dato er i fortiden
-                        </p>
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="expire_checkbox" name="expire_checkbox"
-                               onchange="setExpired()">
-                        <label class="form-check-label" for="expire_checkbox" data-key="Ansoegningsfrist_note">Skal opslaget skjules efter
-                            ansøgningsfristen?</label>
-                        <input type="hidden" id="expired" value="0" name="expired">
-                    </div>
-                </div>
-                <div class="col-12 col-md-6" id="internshipContainer" hidden="true">
-                    <div class="form-group">
-                        <div>
-                            <label for="post_end_date" data-key="Praktikstart">Praktikstart</label>
-                        <a class="ml-2 hand-hover" data-Key="Ryd" onclick="rydPraktik()">Ryd</a>
-                        </div>
-                        
-                        <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
-                               id="internshipEmploymentDate" placeholder="dd / mm / åååå">
-                        <p id="postenddateError" class="CVErrorColor" hidden="true" data-key="Praktikstart_error">Du skal angive en praktikstart dato
-                        </p>
-                        <p id="postenddateErrorPast" class="CVErrorColor" hidden="true" data-key="Dato_error">Den valgte dato er i fortiden
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <label for="post_document" data-key="Vedhaeft_fil_html">Vedhæft fil <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                        title="Filtyper: .pdf, .docx, .doc, .txt. Max. filstørrelse: 10MB."
-                        data-Key="">?</span></label><br/>
-                    <a id="uploadedFile" href="" target="_blank" hidden="true" data-key="Nuvaerende_Vedhaeftet_fil">Nuværende vedhæftet fil</a>
-                    <div class="form-group">
-                        <div class="custom-file">
-                            <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt"
-                                   class="custom-file-input"
-                                   id="companyDoc" onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
-                            <label class="custom-file-label" id="docLabel" for="companyDoc" data-key="Vaelg_fil">Vælg fil</label>
-                            <p id="companyDocError" class="CVErrorColor" hidden="true" data-key="Vaelg_fil_error">Du kan kun angive en fil på
-                                maximum 10MB</p>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="education" data-key="Uddannelse">Uddannelse</label>
+                            <select class="form-control" name="fk_education" id="educationSelect"
+                                onchange="toggleNote()">
+                                <option selected disabled hidden value="" data-key="Vaelg_en_uddannelse">Vælg en
+                                    uddannelse</option>
+                                {{{generatedEducationOptions}}}
+                            </select>
+                            <p id="educationError" class="CVErrorColor" hidden="true"
+                                data-key="Vaelg_en_uddannelse_error">Du skal angive en uddannelse</p>
+                            <p id="educationNote" hidden="true" data-key="Vaelg_en_uddannelse_note">Den valgte
+                                uddannelse har lønnet praktik</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <input type="hidden" name="post_text" id="plainText"/>
-                <label for="editor" data-key="Opslagstekst">Opslagstekst</label>
-                <div id="editor">{{{rtext}}}</div>
-            </div>
-            <p id="posttextError" class="CVErrorColor" hidden="true" data-key="Du_har_angivet_for_mange_tegn">Du har angivet for mange tegn</p>
-        </form>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="countrySelect" data-key="Land">Land</label><span class="tooltiphelp ml-1"
+                                data-toggle="tooltip" data-placement="top"
+                                title="Hvis Danmark vælges som land kommer der et adressefelt til højre som også skal udfyldes"
+                                data-Key="Land_tooltip">?</span>
+                            <select class="form-control" name="country" id="countrySelect"
+                                onchange="countryToggleFields()">
+                                <option selected disabled hidden value="" data-key="Vaelg_et_land">Vælg et land
+                                </option>
+                                <option value="1" data-key="Danmark">Danmark</option>
+                                <option value="2" data-key="Tyskland">Tyskland</option>
+                                <option value="3" data-key="Sverige">Sverige</option>
+                                <option value="4" data-key="Udlandet">Udlandet</option>
+                            </select>
+                            <p id="countryError" class="CVErrorColor" hidden="true" data-key="Vaelg_et_land_error">
+                                Du skal angive et land</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6" id="addressSearchContainer" hidden="true">
+                        <div class="form-group autocomplete-container">
+                            <label for="" data-key="Adresse">Adresse</label><span class="tooltiphelp ml-1"
+                                data-toggle="tooltip" data-placement="top"
+                                title="Feltet her bruger Danmarks Adressers Web API til at udfylde feltet som er en service hvor man kan søge på danske adresser. For at være sikker på at en korrekt adresse er valgt skal adressen være synlig i grå tekst under feltet"
+                                data-Key="Adresse_tooltip">?</span>
+                            <input type="search" class="form-control" id="addressSearch" placeholder="Adresse">
+                            <input type="hidden" id="addressSearchJSON" name="dawa_json">
+                            <input type="hidden" id="addressSearchCity" name="city">
+                            <input type="hidden" id="addressSearchPostcode" name="postcode">
+                            <input type="hidden" id="addressSearchUUID" name="dawa_uuid">
+                            <small id="selectedAddress" class="form-text text-muted"></small>
+                            <p id="addressError" class="CVErrorColor" hidden="true" data-key="Adresse_error">Du skal
+                                angive en adresse</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group required">
+                            <label for="contactName" data-key="Navn_paa_kontaktperson">Navn på kontaktperson</label>
+                            <input type="text" value="{{rcontact}}" name="contact" id="contactName"
+                                class="form-control" placeholder="Navn">
+                            <p id="contactError" class="CVErrorColor" hidden="true"
+                                data-key="Navn_paa_kontaktperson_error">Du skal angive en kontaktperson</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="phoneNumber" data-key="Telefonnummer">Telefonnummer</label>
+                            <input type="text" value="{{rphone}}" name="phone_number" id="phoneNumber"
+                                class="form-control" placeholder="Telefonnummer"
+                                data-key="Telefonnummer_placeholder">
+                            <p id="phoneNumberError" class="CVErrorColor" hidden="true" data-key="phoneNumberError">
+                                Du skal angive et gyldigt telefonnummer eller tømme feltet</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <div>
+                                <label for="company_link" data-key="Link_til_hjemmeside">Link til hjemmeside</label>
+                                {{#if profWeb}}
+                                <a class="ml-2 hand-hover" data-Key="Brug_info"
+                                    onclick="useProfileWebsite('{{profWeb}}')">Brug info fra profil</a>
+                                {{/if}}
+                            </div>
+                            <input type="text" title="Link er ugyldigt" name="company_link" id="companyURL"
+                                class="form-control" placeholder="virksomhed.dk" value="{{rhomepage}}">
+                            <p id="companylinkError" class="CVErrorColor" hidden="true"
+                                data-key="Link_til_hjemmeside_error">Hvis du angiver et link, skal det være
+                                enten i formen: 'http(s)://www.hjemmeside.dk' eller 'www.hjemmeside.dk'</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <div>
+                                <label for="internshipEmail" data-key="Email_adresse">E-mail adresse</label>
+                                {{#if profMail}}
+                                <a class="ml-2 hand-hover" data-Key="Brug_profil_mail"
+                                    onclick="useProfileMail('{{profMail}}')">Brug login mail</a>
+                                {{/if}}
+                            </div>
+
+                            <input type="email" value="{{remail}}" name="email" id="internshipEmail"
+                                class="form-control" placeholder="Email">
+                            <p id="emailError" class="CVErrorColor" hidden="true"
+                                data-key="Email_adresse_error_optional">Du skal angive en gyldig email med mindst et
+                                @ eller tømme feltet
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <div>
+                                <label for="post_start_date" data-key="Ansoegningsfrist_html">Ansøgningsfrist <span
+                                        class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                        title="Hvis der ikke er en ansøgningsfrist, kan opslaget kun fjernes manuelt"
+                                        data-Key="">?</span></label>
+                                <a class="ml-2 hand-hover" data-Key="Ryd" onclick="rydFrist()">Ryd</a>
+                            </div>
+
+                            <input type="date" value="{{rpoststart}}" class="form-control" name="post_start_date"
+                                id="applicationDeadline" placeholder="dd / mm / åååå">
+                            <p id="poststartdateError" class="CVErrorColor" hidden="true"
+                                data-key="Ansoegningsfrist_error">Du skal angive en ansøgningsfrist
+                            </p>
+                            <p id="poststartdateErrorPast" class="CVErrorColor" hidden="true" data-key="Dato_error">
+                                Den valgte dato er i fortiden
+                            </p>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="expire_checkbox"
+                                name="expire_checkbox" onchange="setExpired()">
+                            <label class="form-check-label" for="expire_checkbox"
+                                data-key="Ansoegningsfrist_note">Skal opslaget skjules efter
+                                ansøgningsfristen?</label>
+                            <input type="hidden" id="expired" value="0" name="expired">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6" id="internshipContainer" hidden="true">
+                        <div class="form-group">
+                            <div>
+                                <label for="post_end_date" data-key="Praktikstart">Praktikstart</label>
+                                <a class="ml-2 hand-hover" data-Key="Ryd" onclick="rydPraktik()">Ryd</a>
+                            </div>
+
+                            <input type="date" value="{{rpostend}}" class="form-control" name="post_end_date"
+                                id="internshipEmploymentDate" placeholder="dd / mm / åååå">
+                            <p id="postenddateError" class="CVErrorColor" hidden="true"
+                                data-key="Praktikstart_error">Du skal angive en praktikstart dato
+                            </p>
+                            <p id="postenddateErrorPast" class="CVErrorColor" hidden="true" data-key="Dato_error">
+                                Den valgte dato er i fortiden
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <label for="post_document" data-key="Vedhaeft_fil_html">Vedhæft fil <span
+                                class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                title="Filtyper: .pdf, .docx, .doc, .txt. Max. filstørrelse: 10MB."
+                                data-Key="">?</span></label><br />
+                        <a id="uploadedFile" href="" target="_blank" hidden="true"
+                            data-key="Nuvaerende_Vedhaeftet_fil">Nuværende vedhæftet fil</a>
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" name="post_document" accept=".pdf, .docx, .doc, .txt"
+                                    class="custom-file-input" id="companyDoc"
+                                    onchange="validateAndUpdateInputLabel('docLabel', 'companyDoc')">
+                                <label class="custom-file-label" id="docLabel" for="companyDoc"
+                                    data-key="Vaelg_fil">Vælg fil</label>
+                                <p id="companyDocError" class="CVErrorColor" hidden="true"
+                                    data-key="Vaelg_fil_error">Du kan kun angive en fil på
+                                    maximum 10MB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="post_text" id="plainText" />
+                    <label for="editor" data-key="Opslagstekst">Opslagstekst</label>
+                    <div id="editor">{{{rtext}}}</div>
+                </div>
+                <p id="posttextError" class="CVErrorColor" hidden="true" data-key="Du_har_angivet_for_mange_tegn">Du
+                    har angivet for mange tegn</p>
+            </form>
             <div class="mb-3">
-                <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>
+                <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2"
+                    data-key="Gem">Gem</button>
                 {{#if update}}
-                    <button type="button" class="btn btn-danger" onclick="confirmDeletePost()" data-key="Slet_dette_opslag">Slet dette opslag</button>
+                <button type="button" class="btn btn-danger" onclick="confirmDeletePost()"
+                    data-key="Slet_dette_opslag">Slet dette opslag</button>
                 {{/if}}
             </div>
         </div>
@@ -264,25 +286,17 @@
         document.getElementById('companyURL').value = website;
     };
 
-    function rydFrist() {
-        document.getElementById('applicationDeadline').value = '';
+    function setDefaultSelect() {
+        var update = '{{ update }}';
+        if (update != '') {
+            var reducation = '{{reducation}}';
+            var rcountry = '{{rcountry}}';
+            var rposttype = '{{rposttype}}'
+            document.getElementById('educationSelect').value = reducation;
+            document.getElementById('countrySelect').value = rcountry;
+            document.getElementById('postTypeSelect').value = rposttype;
+        }
     }
-
-    function rydPraktik() {
-        document.getElementById('internshipEmploymentDate').value = '';
-    }
-
-            function setDefaultSelect() {
-                var update = '{{ update }}';
-                if (update != '') {
-                    var reducation = '{{reducation}}';
-                    var rcountry = '{{rcountry}}';
-                    var rposttype = '{{rposttype}}'
-                    document.getElementById('educationSelect').value = reducation;
-                    document.getElementById('countrySelect').value = rcountry;
-                    document.getElementById('postTypeSelect').value = rposttype;
-                }
-            }
     setDefaultSelect();
 
     function confirmDeletePost() {
@@ -336,7 +350,27 @@
             document.getElementById("addressSearchPostcode").value = selected.data.postnr;
             document.getElementById("addressSearchUUID").value = selected.data.id;
         },
-        params: {per_side: '5'}
+        params: { per_side: '5' }
+    });
+
+    function checkIfDeleteAddress() {
+        let addressSearch = document.getElementById('addressSearch');
+        let selectedAddress = document.getElementById("selectedAddress");
+        let addressSearchJSON = document.getElementById("addressSearchJSON");
+        let addressSearchCity = document.getElementById("addressSearchCity");
+        let addressSearchPostcode = document.getElementById("addressSearchPostcode");
+        let addressSearchUUID = document.getElementById("addressSearchUUID");
+
+        if (addressSearch.value.length <= 3) {
+            selectedAddress.innerHTML = '';
+            addressSearchJSON.value = '';
+            addressSearchCity.value = '';
+            addressSearchPostcode.value = '';
+            addressSearchUUID.value = '';
+        }
+    };
+    document.getElementById('addressSearch').addEventListener('change', function () {
+        checkIfDeleteAddress();
     });
 
     //countryToggleFields skal kalds for at håndtere felter der kun er synlig i nogle situationer.
@@ -363,10 +397,6 @@
         } else {
             document.getElementById("educationNote").hidden = true;
         }
-
-        if (document.getElementById("educationSelect").option != 0) {
-            document.getElementById("educationError").hidden = true;
-        }
     }
 
     //Function til at sætte billed sti og dokument link hvis link findes.
@@ -379,8 +409,6 @@
         } else {
             //console.log("No file");
         }
-
-        toggleNote();
     }
 
     showIfURLexist();
