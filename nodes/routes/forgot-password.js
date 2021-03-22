@@ -11,6 +11,9 @@ const nodemailer = require('nodemailer');
 const models = require('../models');
 const crypto = require('crypto');
 const hbs = require('nodemailer-express-handlebars');
+const Sequelize = require('sequelize');
+
+const Op = Sequelize.Op;
 
 router.get('/', function (req, res, next) {
     let msg = req.query.success;
@@ -32,6 +35,15 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', async function (req, res) {
+    // Destroy expired tokens (expiration date is less than now)
+    await models.ResetToken.destroy({
+        where: {
+            expiration: {
+                [Op.lt]: new Date()
+            },
+        }
+    });
+
     let email = req.body.email;
 
     if (email.length === 0 || !emailRegex.test(email)) {

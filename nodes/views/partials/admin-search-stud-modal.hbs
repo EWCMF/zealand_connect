@@ -1,9 +1,9 @@
-<div class="modal fade" id="searchVirksomhederModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+<div class="modal fade" id="searchStudentsModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Søg virksomheder</h5>
+        <h5 class="modal-title" id="modalTitle">Søg studerende</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -11,11 +11,11 @@
       <div class="modal-body container">
         <div class="col">
           <div class="row">
-            <p>Find virksomheder ved navn</p>
+            <p>Find studerende ved navn</p>
           </div>
           <div class="input-group row">
-            <input class="form-control" type="text" id="searchCompanyText">
-            <button class="btn btn-outline-secondary" onclick="searchCompany()">Søg</button>
+            <input class="form-control" type="text" id="searchStudentName">
+            <button class="btn btn-outline-secondary" onclick="searchStudent()">Søg</button>
           </div>
           <br>
           <div class="row">
@@ -26,7 +26,7 @@
                   <th scope="col">Email</th>
                 </tr>
               </thead>
-              <tbody id="tableCompanyBody">
+              <tbody id="tableStudBody">
                 <!-- dynamisk indhold her -->
               </tbody>
             </table>
@@ -35,46 +35,46 @@
 
 
       </div>
-      <input type="hidden" id="selectedCompany">
+      <input type="hidden" id="selectedStudent">
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="finishCompany()" data-dismiss="modal">Vælg</button>
+        <button type="button" class="btn btn-primary" onclick="finishStudent()" data-dismiss="modal">Vælg</button>
       </div>
     </div>
   </div>
 </div>
 <script>
-  function searchCompany() {
-    let searchCompanyText = document.getElementById('searchCompanyText').value;
+  function searchStudent() {
+    let searchStudentName = document.getElementById('searchStudentName').value;
 
     let xhr = new XMLHttpRequest();
     xhr.onload = function () {
         let data = JSON.parse(xhr.responseText);
-        let tableCompanyBody = document.getElementById('tableCompanyBody');
-        tableCompanyBody.innerHTML = '';
+        let tableStudBody = document.getElementById('tableStudBody');
+        tableStudBody.innerHTML = '';
 
         data.forEach((element, i) => {
-          let row = '<tr id="' + 'row' + i + '" onclick="selectCompany(\'' + element.email + '\', ' + i + ')">' +
-            '<td>' + element.navn + '</td>' +
+          let row = '<tr id="' + 'row' + i + '" onclick="selectStudent(\'' + element.email + '\', ' + i + ')">' +
+            '<td>' + (element.fornavn + " " + element.efternavn) + '</td>' +
             '<td>' + element.email + '</td>' +
           '</tr>'
 
-            tableCompanyBody.innerHTML += row;
+          tableStudBody.innerHTML += row;
         });
     }
-    xhr.open("POST", '/admin-funktioner/search-virksomhed');
-    xhr.send(JSON.stringify({"name": searchCompanyText}));
+    xhr.open("POST", '/admin-funktioner/search-student');
+    xhr.send(JSON.stringify({"name": searchStudentName}));
   }
 
-  function selectCompany(selected, index) {
+  function selectStudent(selected, index) {
     document.querySelectorAll('tr.search-selected').forEach(element => {
       element.classList.remove('search-selected');
     });
 
     document.getElementById('row' + index).classList.add('search-selected');
-    document.getElementById('selectedCompany').value = selected;
+    document.getElementById('selectedStudent').value = selected;
   }
 
-  function finishCompany() {
-    document.getElementById('virksomhedSletEmailInput').value = document.getElementById('selectedCompany').value
+  function finishStudent() {
+    document.getElementById('studentSletEmailInput').value = document.getElementById('selectedStudent').value
   }
 </script>

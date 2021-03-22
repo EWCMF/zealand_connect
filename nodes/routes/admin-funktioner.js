@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {deleteVirksomhed, searchVirksomhederByName} = require('../persistence/usermapping');
+const {deleteVirksomhed, searchVirksomhederByName, findStudentByName} = require('../persistence/usermapping');
 var {reqLang} = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
@@ -74,9 +74,16 @@ router.post('/slet-bruger', authorizeUser('admin'), function (req, res, next) {
 router.post('/createUddannelse', authorizeUser('admin'), (req, res, next) => {
     let jsonBody = JSON.parse(req.body);
     let name = jsonBody.name
+
     let messages = {
         findesallerede: "",
-        uddannelseOprettet: ""
+        uddannelseOprettet: "",
+        tomtnavn: ""
+    }
+
+    if (name === ""){
+        messages.tomtnavn = "Feltet kan ikke være tomt";
+        return res.send(messages);
     }
 
     findUddannelseByName(name).then((uddannelseFundetMedNavn) => {
@@ -85,7 +92,7 @@ router.post('/createUddannelse', authorizeUser('admin'), (req, res, next) => {
             res.send(messages)
         } else { // hvis uddannelsen ikke er i databasen
             createUddanelse(name);
-            messages.uddannelseOprettet = "Uddannelsen oprettet"
+            messages.uddannelseOprettet = `Uddannelsen ${name} oprettet`
             res.send(messages)
         }
     })
@@ -105,7 +112,7 @@ router.post('/sletUddannelse', authorizeUser('admin'), (req, res, next) => {
             res.send(messages);
         } else {
             sletUddannelse(name)
-            messages.uddannelseSlettet = "Uddannelsen slettet"
+            messages.uddannelseSlettet = `Uddannelsen ${name} slettet`
             res.send(messages)
         }
     })
@@ -116,6 +123,15 @@ router.post('/search-virksomhed', authorizeUser('admin'), async (req, res) => {
     let name = jsonBody.name;
 
     let data = await searchVirksomhederByName(name);
+
+    res.send(data);
+});
+
+router.post('/search-student', authorizeUser('admin'), async (req, res) => {
+    let jsonBody = JSON.parse(req.body);
+    let name = jsonBody.name;
+
+    let data = await findStudentByName(name);
 
     res.send(data);
 });
