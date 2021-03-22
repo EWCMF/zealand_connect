@@ -287,13 +287,14 @@ function getLangdata() {
                 "Adresse_tooltip": ["?", "This field uses DAWA (Danmarks Adressers Web API) to fill it. DAWA is a service which can search Danish addresses. To make sure a correct address is specified, the address must be visible in grey under the field"],
                 "Adresse_error": "You must specify an address",
                 "Email_adresse": "E-mail address",
-                "Email_adresse_error": "An email must have one @ character",
+                "Email_adresse_error_optional": "You must specify a valid email with at least one @ or empty the field",
                 "Telefonnummer": "Phone number",
                 "Telefonnummer_placeholder": "Phone number",
+                "phoneNumberError": "You must specify a valid phone number or empty the field",
                 "Navn_paa_kontaktperson": "Name of contact person",
                 "Navn_paa_kontaktperson_error": "You must specify a contact person",
                 "Link_til_hjemmeside": "Link to website",
-                "Link_til_hjemmeside_error": "A valid link must be specified, e.g. http://www.zealandconnect.dk",
+                "Link_til_hjemmeside_error": "If a link is specified, it must be valid, e.g. http://www.zealandconnect.dk",
                 "Ansoegningsfrist_html": 'Application deadline <span class="tooltiphelp" data-toggle="tooltip" data-placement="top" title="If there\'s no application deadline, the post can only be removed manually" data-Key="">?</span>',
                 "Ansoegningsfrist_error": "You must specify an application deadline",
                 "Dato_error": "The selected date has already passed",
@@ -332,7 +333,7 @@ function getLangdata() {
                 //Vaelg_en_uddannelse
                 //Vaelg_en_uddannelse_error
                 //Email_adresse
-                //Email_adresse_error
+                "Email_adresse_error": "An email must have one @ character",
                 //Sprog
                 "Sprog_error": "You must specify language here",
                 //Speciale

@@ -1,140 +1,230 @@
 
-function validate_internship_post() {
-  let all_valid = true;
+const inputs = Object.freeze({
+  internshipTitle: document.getElementById('internshipTitle'),
+  postTypeSelect: document.getElementById('postTypeSelect'),
+  internshipEmail: document.getElementById('internshipEmail'),
+  phoneNumber: document.getElementById('phoneNumber'),
+  contactName: document.getElementById('contactName'),
+  applicationDeadline: document.getElementById('applicationDeadline'),
+  internshipEmploymentDate: document.getElementById('internshipEmploymentDate'),
+  plainText: document.getElementById('plainText'),
+  companyURL: document.getElementById('companyURL'),
+  educationSelect: document.getElementById('educationSelect'),
+  countrySelect: document.getElementById('countrySelect'),
+  addressSearchUUID: document.getElementById('addressSearchUUID'),
+  companyDoc: document.getElementById('companyDoc')
+});
 
-  //e.preventDefault();
-  //Title
-  if (!document.getElementById('internshipTitle').value || document.getElementById('internshipTitle').value.length > 255) {
-    all_valid = false;
-    document.getElementById('titleError').hidden = false;
-  }
-  else { document.getElementById('titleError').hidden = true; }
+const errors = Object.freeze({
+  titleError: document.getElementById('titleError'),
+  postTypeError: document.getElementById('postTypeError'),
+  emailError: document.getElementById('emailError'),
+  phoneNumberError: document.getElementById('phoneNumberError'),
+  contactError: document.getElementById('contactError'),
+  poststartdateErrorPast: document.getElementById('poststartdateErrorPast'),
+  postenddateErrorPast: document.getElementById('postenddateErrorPast'),
+  posttextError: document.getElementById('posttextError'),
+  companylinkError: document.getElementById('companylinkError'),
+  educationError: document.getElementById('educationError'),
+  countryError: document.getElementById('countryError'),
+  addressError: document.getElementById('addressError'),
+  companyDocError: document.getElementById('companyDocError')
+});
 
-  //Opslagstype
-  if (document.getElementById('postTypeSelect').value == 0) {
-    all_valid = false;
-    document.getElementById('postTypeError').hidden = false;
-  } else {
-    document.getElementById('postTypeError').hidden = true;
-  }
-
-  //Email
-  if (document.getElementById('internshipEmail').value) {
-    if (document.getElementById('internshipEmail').value.length > 255 || !emailRegex.test(document.getElementById('internshipEmail').value)) {
-      all_valid = false;
-      document.getElementById('emailError').hidden = false;
-    }
-    else { document.getElementById('emailError').hidden = true; }
-  } else { document.getElementById('emailError').hidden = true; }
+function checkInputNotEmpty(input, error) {
+  let value = input.value; 
   
-
-  //Telefon
-  if (document.getElementById('phoneNumber').value) {
-    if (!phoneRegex.test(document.getElementById('phoneNumber').value)) {
-      all_valid = false;
-      document.getElementById('phoneNumberError').hidden = false;
-    } else {
-      document.getElementById('phoneNumberError').hidden = true;
-    }
+  if (!value) {
+      error.hidden = false;
+      return false;
   } else {
-    document.getElementById('phoneNumberError').hidden = true;
+      error.hidden = true;
+      return true;
   }
+};
 
-  //Kontakt person
-  if (!document.getElementById('contactName').value || document.getElementById('contactName').value.length > 255) {
-    all_valid = false;
-    document.getElementById('contactError').hidden = false;
+function checkInputNotEmptyWithLimit(input, error, limit) {
+  let value = input.value; 
+  
+  if (!value || value.length > limit) {
+      error.hidden = false;
+      return false;
+  } else {
+      error.hidden = true;
+      return true;
   }
-  else { document.getElementById('contactError').hidden = true; }
+};
 
-  //Ansøgningsfrist
-  let applicationDeadline = document.getElementById('applicationDeadline').value;
-  if (applicationDeadline) {
-    let inputDate = new Date(applicationDeadline);
+function checkInputRegex(input, error, regex) {
+  let value = input.value;
+
+  if (!regex.test(value)) {
+      error.hidden = false;
+      return false;
+  } else {
+      error.hidden = true;
+      return true;
+  }
+};
+
+function checkInputRegexWithLimit(input, error, regex, limit) {
+  let value = input.value;
+
+  if (!regex.test(value) || value.length > limit) {
+      error.hidden = false;
+      return false;
+  } else {
+      error.hidden = true;
+      return true;
+  }
+};
+
+function checkInputRegexOptional(input, error, regex) {
+  let value = input.value;
+
+  if (value && !regex.test(value)) {
+      error.hidden = false;
+      return false;
+  } else {
+      error.hidden = true;
+      return true;
+  }
+};
+
+function checkInputRegexOptionalWithLimit(input, error, regex, limit) {
+  let value = input.value;
+
+  if (value && !regex.test(value) || value.length > limit) {
+      error.hidden = false;
+      return false;
+  } else {
+      error.hidden = true;
+      return true;
+  }
+};
+
+function checkInputUnderLimit(input, error, limit) {
+  let value = input.value; 
+  
+  if (value > limit) {
+      error.hidden = false;
+      return false;
+  } else {
+      error.hidden = true;
+      return true;
+  }
+};
+
+function checkNotInPast(input, error) {
+  let date = input.value;
+  
+  if (date) {
+    let inputDate = new Date(date);
     let currDate = new Date();
 
     if (currDate > inputDate) {
-      all_valid = false;
-      document.getElementById('poststartdateErrorPast').hidden = false;
+      error.hidden = false;
+      return false;
     } else {
-      document.getElementById('poststartdateErrorPast').hidden = true;
+      error.hidden = true;
+      return true;
     }
   } else {
-    document.getElementById('poststartdateErrorPast').hidden = true;
+    error.hidden = true;
+    return true;
   }
+};
 
-  //Ansættelsestidspunkt
-  if (document.getElementById('postTypeSelect').value == 1) {
-    let internshipEmploymentDate = document.getElementById('internshipEmploymentDate').value;
-    if (internshipEmploymentDate) {
-      let inputDate = new Date(internshipEmploymentDate);
-      let currDate = new Date();
+function checkUnderFileSizeLimit() {
+  let file = inputs.companyDoc.files[0];
 
-      if (currDate > inputDate) {
+    if (file != null && file.size > 10240000) {
+
+      errors.companyDocError.hidden = false;
+      return false;
+    } else {
+
+      errors.companyDocError.hidden = true;
+      return true;
+    }
+};
+
+function addChangeEvents() {
+  inputs.internshipTitle.addEventListener('change', function () {
+    checkInputNotEmptyWithLimit(inputs.internshipTitle, errors.titleError, 255);
+  });
+
+  inputs.postTypeSelect.addEventListener('change', function () {
+    checkInputNotEmpty(inputs.postTypeSelect, errors.postTypeError);
+  });
+
+  inputs.internshipEmail.addEventListener('change', function () {
+    checkInputRegexOptionalWithLimit(inputs.internshipEmail, errors.emailError, emailRegex, 255);
+  });
+
+  inputs.phoneNumber.addEventListener('change', function () {
+    checkInputRegexOptional(inputs.phoneNumber, errors.phoneNumberError, phoneRegex);
+  });
+
+  inputs.contactName.addEventListener('change', function () {
+    checkInputNotEmptyWithLimit(inputs.contactName, errors.contactError, 255);
+  });
+
+  inputs.applicationDeadline.addEventListener('change', function () {
+    checkNotInPast(inputs.applicationDeadline, errors.poststartdateErrorPast);
+  });
+
+  inputs.internshipEmploymentDate.addEventListener('change', function () {
+    checkNotInPast(inputs.internshipEmploymentDate, errors.postenddateErrorPast);
+  });
+
+  inputs.plainText.addEventListener('change', function () {
+    checkInputUnderLimit(inputs.plainText, errors.posttextError, 65536);
+  });
+
+  inputs.companyURL.addEventListener('change', function () {
+    checkInputRegexOptional(inputs.companyURL, errors.companylinkError, linkRegex);
+  });
+
+  inputs.educationSelect.addEventListener('change', function () {
+    checkInputNotEmpty(inputs.educationSelect, errors.educationError);
+  });
+
+  inputs.countrySelect.addEventListener('change', function () {
+    checkInputNotEmpty(inputs.countrySelect, errors.countryError);
+  });
+
+  inputs.companyDoc.addEventListener('change', function () {
+    checkUnderFileSizeLimit();
+  });
+};
+addChangeEvents();
+
+function validate_internship_post() {
+  let all_valid = true;
+
+  let checkInputs = [
+    checkInputNotEmptyWithLimit(inputs.internshipTitle, errors.titleError, 255),
+    checkInputNotEmpty(inputs.postTypeSelect, errors.postTypeError),
+    checkInputRegexOptionalWithLimit(inputs.internshipEmail, errors.emailError, emailRegex, 255),
+    checkInputRegexOptional(inputs.phoneNumber, errors.phoneNumberError, phoneRegex),
+    checkInputNotEmptyWithLimit(inputs.contactName, errors.contactError, 255),
+    checkNotInPast(inputs.applicationDeadline, errors.poststartdateErrorPast),
+    checkNotInPast(inputs.internshipEmploymentDate, errors.postenddateErrorPast),
+    checkInputUnderLimit(inputs.plainText, errors.posttextError, 65536),
+    checkInputRegexOptional(inputs.companyURL, errors.companylinkError, linkRegex),
+    checkInputNotEmpty(inputs.educationSelect, errors.educationError),
+    checkInputNotEmpty(inputs.countrySelect, errors.countryError),
+    checkUnderFileSizeLimit()
+  ];
+
+  checkInputs.every(input => {
+    if (!input) {
         all_valid = false;
-        document.getElementById('postenddateErrorPast').hidden = false;
-      } else {
-        document.getElementById('postenddateErrorPast').hidden = true;
-      }
-    } else {
-      document.getElementById('postenddateErrorPast').hidden = true;
+        return false;
     }
-  }
-
-  //Opslagstekst
-  if (document.getElementById('plainText').value.length > 65536) {
-    all_valid = false;
-    document.getElementById('posttextError').hidden = false;
-  } else {
-    document.getElementById('posttextError').hidden = true;
-  }
-
-  //Virksomheds Link
-  if (document.getElementById('companyURL').value) {
-    if (!linkRegex.test(document.getElementById('companyURL').value)) {
-      all_valid = false;
-      document.getElementById('companylinkError').hidden = false;
-    } else {
-      document.getElementById('companylinkError').hidden = true;
-    }
-  } else {
-    document.getElementById('companylinkError').hidden = true;
-  }
-
-  //Uddannelse
-  if (document.getElementById('educationSelect').value == 0 || document.getElementById('educationSelect').value == '0' || document.getElementById('educationSelect').value == null) {
-    all_valid = false;
-    document.getElementById('educationError').hidden = false;
-  } else {
-    document.getElementById('educationError').hidden = true;
-  }
-
-  //Land
-  if (document.getElementById('countrySelect').value == 0) {
-    all_valid = false;
-    document.getElementById('countryError').hidden = false;
-  } else {
-    document.getElementById('countryError').hidden = true;
-  }
-
-  // if (document.getElementById('countrySelect').value == 1) {
-  //   if (document.getElementById('addressSearchUUID').value.length == 0) {
-  //     all_valid = false;
-  //     document.getElementById('addressError').hidden = false;
-  //   } else {
-  //     document.getElementById('addressError').hidden = true;
-  //   }
-  // }
-
-  //Vedhæftet tekstfil
-  if (document.getElementById('companyDoc').files[0] != null && document.getElementById('companyDoc').files[0].size > 10240000) {
-
-      all_valid = false;
-      document.getElementById('companyDocError').hidden = false;
-    }
-  else {
-    document.getElementById('companyDocError').hidden = true;
-  }
+    return true;
+  });
 
   if (!all_valid){
     return false;
@@ -142,4 +232,14 @@ function validate_internship_post() {
   else {
     document.forms["internshipForm"].submit();
   }
+}
+
+function rydFrist() {
+  inputs.applicationDeadline.value = '';
+  checkNotInPast(inputs.applicationDeadline, errors.poststartdateErrorPast)
+}
+
+function rydPraktik() {
+  inputs.internshipEmploymentDate.value = '';
+  checkNotInPast(inputs.internshipEmploymentDate, errors.postenddateErrorPast)
 }
