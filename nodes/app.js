@@ -122,8 +122,11 @@ app.use(async function (req, res, next) {
     next();
   } else {
     var userRole = await findUserByEmail(req.user);
+    res.locals.hasGivenConsent = true;
+
     if(userRole instanceof models.Student){
       res.locals.isStudent = true;
+      res.locals.hasGivenConsent = userRole.user_data_consent;
     }
     if(userRole instanceof models.Virksomhed){
       res.locals.isCompany = true;

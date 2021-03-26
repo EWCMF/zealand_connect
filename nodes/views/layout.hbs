@@ -98,7 +98,11 @@
             });
         }
 
-        openDataConsent()
+        let consent = "{{hasGivenConsent}}" === "true"
+
+        if (!consent){
+            openDataConsent()
+        }
 
         function openCookieConsent(showCookieIndstillinger){
             $(document).ready(function(){
