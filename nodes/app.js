@@ -119,11 +119,11 @@ app.use(passport.session());
 app.use(bodyParser.text({ type: "text/plain"}));
 // Middleware til at finde login status i alle routes.
 app.use(async function (req, res, next) {
+  res.locals.hasGivenConsent = true;
   if (req.user == null || req.user === undefined) {
     next();
   } else {
     var userRole = await findUserByEmail(req.user);
-    res.locals.hasGivenConsent = true;
 
     if(userRole instanceof models.Student){
       res.locals.isStudent = true;
