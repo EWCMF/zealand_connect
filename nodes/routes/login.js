@@ -27,7 +27,7 @@ router.get('/', function (req, res, next) {
                 errormessage: 'Denne bruger findes ikke i systemet',
                 virksomhed: "true",
                 language: reqLang(req, res)
-            }, );
+            },);
             break;
         case 'incorrectpassword':
             res.render('login', {
@@ -82,10 +82,19 @@ router.post('/authenticateUser', function (req, res, next) {
         //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
         req.logout();
         //login skal være der for, at passport laver en cookie for brugeren
-        req.logIn(user, function (err) {
+        req.logIn(user, async function (err) {
             if (err) {
                 return next(err);
             }
+
+            await models.Student.update({
+                last_login: new Date()
+            }, {
+                where: {
+                    id: user.id
+                }
+            })
+
             return res.redirect('/login' + info.message);
         });
     })(req, res, next);

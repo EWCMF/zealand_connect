@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
     efternavn: DataTypes.STRING,
     tlfnr: DataTypes.STRING,
     foedselsdato: DataTypes.DATE,
-    profilbillede: DataTypes.STRING
+    profilbillede: DataTypes.STRING,
+    last_login: DataTypes.DATE,
+    user_data_consent: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Student',
