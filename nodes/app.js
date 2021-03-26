@@ -24,6 +24,7 @@ const opretBrugerRouter = require('./routes/opret-bruger');
 const newsRouter = require('./routes/news');
 const forgotPasswordRouter = require('./routes/forgot-password');
 const resetPasswordRouter = require('./routes/reset-password');
+const dataConsentRouter = require('./routes/data-consent');
 
 const bodyParser = require('body-parser')
 
@@ -159,6 +160,7 @@ app.use('/om', omRouter);
 app.use('/news', newsRouter);
 app.use('/forgot-password', forgotPasswordRouter);
 app.use('/reset-password', resetPasswordRouter);
+app.use('/data-consent', dataConsentRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));
