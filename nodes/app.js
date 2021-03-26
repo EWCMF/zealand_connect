@@ -119,7 +119,7 @@ app.use(passport.session());
 app.use(bodyParser.text({ type: "text/plain"}));
 // Middleware til at finde login status i alle routes.
 app.use(async function (req, res, next) {
-  res.locals.hasGivenConsent = true;
+  res.locals.missingConsent = false;
   if (req.user == null || req.user === undefined) {
     next();
   } else {
@@ -127,7 +127,7 @@ app.use(async function (req, res, next) {
 
     if(userRole instanceof models.Student){
       res.locals.isStudent = true;
-      res.locals.hasGivenConsent = userRole.user_data_consent;
+      res.locals.missingConsent = !userRole.user_data_consent;
     }
     if(userRole instanceof models.Virksomhed){
       res.locals.isCompany = true;
