@@ -46,7 +46,8 @@ const inputsStudent = Object.freeze({
     fornavn: document.getElementById('fornavnStudent'),
     efternavn: document.getElementById('efternavnStudent'),
     telefon: document.getElementById('telefonnummerStudent'),
-    dato: document.getElementById('date')
+    dato: document.getElementById('date'),
+    consent: document.getElementById('consent')
 });
 
 const errorsStudent = Object.freeze({
@@ -425,7 +426,8 @@ async function submitOpretStudent() {
         tflnr: inputsStudent.telefon.value,
         fornavn: inputsStudent.fornavn.value,
         efternavn: inputsStudent.efternavn.value,
-        dato: inputsStudent.dato.value
+        dato: inputsStudent.dato.value,
+        consent: inputsStudent.consent.checked
     }));
 };
 
@@ -473,3 +475,10 @@ function translateErrorMessage(key) {
 
     return texts[table][key];
 };
+
+function checkConsent(){
+    let consentCheckbox = document.getElementById("consent");
+    let submitButtonStudent = document.getElementById("submitBtn_Student");
+
+    submitButtonStudent.disabled = !consentCheckbox.checked;
+}
