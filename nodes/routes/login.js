@@ -87,13 +87,24 @@ router.post('/authenticateUser', function (req, res, next) {
                 return next(err);
             }
 
-            await models.Student.update({
-                last_login: new Date()
-            }, {
-                where: {
-                    id: user.id
-                }
-            })
+            if (user instanceof models.Student){
+                await models.Student.update({
+                    last_login: new Date()
+                }, {
+                    where: {
+                        id: user.id
+                    }
+                })
+            }
+            else if (user instanceof models.Virksomhed){
+                await models.Virksomhed.update({
+                    last_login: new Date()
+                }, {
+                    where: {
+                        id: user.id
+                    }
+                })
+            }
 
             return res.redirect('/login' + info.message);
         });
