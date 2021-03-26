@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+const {reqLang} = require('../public/javascript/request');
+
+router.get('/', async function (req, res, next) {
+    res.render('data-consent', {
+        language: reqLang(req, res)
+    });
+});
 
 router.post('/', async function (req, res, next) {
     let consent = req.body
