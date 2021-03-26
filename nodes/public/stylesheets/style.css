@@ -296,7 +296,7 @@ input::placeholder {
   transform: rotate(90deg);
 }
 
-#cookieModalHeader {
+.modalHeader {
   background-color: black;
 }
 
@@ -729,4 +729,10 @@ body {
 .postTextContainer .ql-editor {
   padding-top: 0;
   white-space: normal;
+}
+
+.consent-header {
+  margin-top: 30px;
+  margin-bottom: 0;
+  font-weight: bold;
 }

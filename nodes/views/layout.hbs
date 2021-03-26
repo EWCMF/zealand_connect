@@ -23,7 +23,7 @@
 
     <div class="page-content">
 
-    
+
     {{#unless navDisabled}}
 
     {{#if isStudent}}
@@ -37,7 +37,7 @@
     {{/if}}
 
     {{/unless}}
-    
+
     <div class="sidebar">
         {{#if disableSidebarButton}}
         <a class="navbar-brand">Zealand</a>
@@ -46,7 +46,7 @@
         {{/if}}
         <span>Connect</span>
     </div>
-    
+
     {{{body}}}
 
 
@@ -74,6 +74,7 @@
 
 
     {{> cookie-consent-modal}}
+    {{> user-data-consent-modal}}
     <!-- JQuery and Bootstrap linked here -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
@@ -86,6 +87,19 @@
             $('[data-toggle="tooltip"]').tooltip()
         })</script>
     <script>
+        function openDataConsent(){
+            $(document).ready(function(){
+                    $('#consentModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                    $("#consentModal").modal('show');
+            });
+        }
+
+        openDataConsent()
+
         function openCookieConsent(showCookieIndstillinger){
             $(document).ready(function(){
                 let cookies = document.cookie;
