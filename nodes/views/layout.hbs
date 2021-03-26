@@ -5,15 +5,16 @@
     <title>{{title}}</title>
     <!-- Bootstrap stylesheet here -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Quill rich text editor -->
     <link rel="stylesheet" href="/stylesheets/quill.snow.css">
     <!-- Custom stylesheet here -->
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
 
     <meta charset="UTF-8">
     <meta name="description" content="Praktik- og jobportal, der optimerer kontakten mellem studerende og virksomheder">
-    <meta name="keywords" content="Zealand Connect, ZealandConnect, Zealand, Connect, Praktik, Studiejob, Uddannelse, Sjællands Erhvervsakademi">
+    <meta name="keywords"
+          content="Zealand Connect, ZealandConnect, Zealand, Connect, Praktik, Studiejob, Uddannelse, Sjællands Erhvervsakademi">
     <meta name="author" content="Zealand - Sjællands Erhvervsakademi">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,28 +22,28 @@
 
 <body>
 
-    <div class="page-content">
+<div class="page-content">
 
 
     {{#unless navDisabled}}
 
-    {{#if isStudent}}
-    {{> role-student}}
-    {{else if isCompany}}
-    {{> role-company}}
-    {{else if isAdmin}}
-    {{> role-admin}}
-    {{else}}
-    {{> role-anonymous}}
-    {{/if}}
+        {{#if isStudent}}
+            {{> role-student}}
+        {{else if isCompany}}
+            {{> role-company}}
+        {{else if isAdmin}}
+            {{> role-admin}}
+        {{else}}
+            {{> role-anonymous}}
+        {{/if}}
 
     {{/unless}}
 
     <div class="sidebar">
         {{#if disableSidebarButton}}
-        <a class="navbar-brand">Zealand</a>
+            <a class="navbar-brand">Zealand</a>
         {{else}}
-        <a class="navbar-brand" href="/">Zealand</a>
+            <a class="navbar-brand" href="/">Zealand</a>
         {{/if}}
         <span>Connect</span>
     </div>
@@ -50,17 +51,24 @@
     {{{body}}}
 
 
-    </div>
+</div>
 
-    {{#unless hideFooter}}
+{{#unless hideFooter}}
     <footer class="footer">
         <hr id="navbarLine" class="mb-0">
         <nav class="navbar navbar-expand-lg navbar-light container-fluid">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link hand-hover" onclick="openCookieConsent(true)" data-key="Cookie_settings">Cookie settings</a>
+                        <a class="nav-link hand-hover" onclick="openCookieConsent(true)" data-key="Cookie_settings">Cookie
+                            settings</a>
                     </li>
+                    {{#if isStudent}}
+                        <li class="nav-item">
+                            <a class="nav-link hand-hover" href="/data-consent"
+                               data-key="Samtykke">Samtykkeerklæring</a>
+                        </li>
+                    {{/if}}
                     <!--
                     <li class="nav-item">
                         <a class="nav-link" href="/om" data-key="Om_ZealandConnect">Om Zealand Connect</a>
@@ -70,98 +78,97 @@
             </div>
         </nav>
     </footer>
-    {{/unless}}
+{{/unless}}
 
 
-    {{> cookie-consent-modal}}
-    {{> user-data-consent-modal}}
-    <!-- JQuery and Bootstrap linked here -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+{{> cookie-consent-modal}}
+{{> user-data-consent-modal}}
+<!-- JQuery and Bootstrap linked here -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
-    <script src="/javascript/oversaettelse.js"></script>
-    <script src="/javascript/navbar.js"></script>
-    <script src='/javascript/regex.js'></script>
-    <script>$(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })</script>
-    <script>
-        function openDataConsent(){
-            $(document).ready(function(){
-                    $('#consentModal').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-
-                    $("#consentModal").modal('show');
+<script src="/javascript/oversaettelse.js"></script>
+<script src="/javascript/navbar.js"></script>
+<script src='/javascript/regex.js'></script>
+<script>$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})</script>
+<script>
+    function openDataConsent() {
+        $(document).ready(function () {
+            $('#consentModal').modal({
+                backdrop: 'static',
+                keyboard: false
             });
-        }
 
-        let missingConsent = "{{missingConsent}}" === "true"
+            $("#consentModal").modal('show');
+        });
+    }
 
-        if (missingConsent){
-            openDataConsent()
-        }
+    let missingConsent = "{{missingConsent}}" === "true"
 
-        function openCookieConsent(showCookieIndstillinger){
-            $(document).ready(function(){
-                let cookies = document.cookie;
+    if (missingConsent) {
+        openDataConsent()
+    }
 
-                let hasCookie = cookies.includes('cookie_consent=');
-
-                if (!hasCookie) {
-                    $('#cookieModal').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-
-                    $("#cookieModal").modal('show');
-                } else if(showCookieIndstillinger) {
-                    $('#cookieModal').modal({
-                    });
-
-                    $("#cookieModal").modal('show');
-                }
-
-            });
-        }
-
-        openCookieConsent();
-
-        function confirmConsent(formId) {
-            let form = document.getElementById(formId);
-
-            let formData = new FormData(form);
-
-            let xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-            xhr.open(form.method, form.getAttribute("action"), true);
-            xhr.send(formData);
-
-            let cookiesAllowed = formData.get('preference') !== undefined && formData.get('preference') !== null;
-            let engLang = formData.get('lang') === 'en';
-
-            if (cookiesAllowed && engLang) {
-                brugStrings('en');
-                document.getElementById('en').style.display = 'none';
-                document.getElementById('da').style.display = 'block';
-            }
-        }
-
-        function changeLanguage(lang) {
+    function openCookieConsent(showCookieIndstillinger) {
+        $(document).ready(function () {
             let cookies = document.cookie;
-            let allowLang = !cookies.includes('cookie_consent=nolang');
 
-            if (allowLang) {
-                window.location.href = "../language/" + lang;
-            } else {
-                let message = 'Preference cookies must be allowed to change language. You can change cookie settings at the bottom of the page';
-                alert(message);
+            let hasCookie = cookies.includes('cookie_consent=');
+
+            if (!hasCookie) {
+                $('#cookieModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+
+                $("#cookieModal").modal('show');
+            } else if (showCookieIndstillinger) {
+                $('#cookieModal').modal({});
+
+                $("#cookieModal").modal('show');
             }
-        }
 
-    </script>
+        });
+    }
+
+    openCookieConsent();
+
+    function confirmConsent(formId) {
+        let form = document.getElementById(formId);
+
+        let formData = new FormData(form);
+
+        let xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open(form.method, form.getAttribute("action"), true);
+        xhr.send(formData);
+
+        let cookiesAllowed = formData.get('preference') !== undefined && formData.get('preference') !== null;
+        let engLang = formData.get('lang') === 'en';
+
+        if (cookiesAllowed && engLang) {
+            brugStrings('en');
+            document.getElementById('en').style.display = 'none';
+            document.getElementById('da').style.display = 'block';
+        }
+    }
+
+    function changeLanguage(lang) {
+        let cookies = document.cookie;
+        let allowLang = !cookies.includes('cookie_consent=nolang');
+
+        if (allowLang) {
+            window.location.href = "../language/" + lang;
+        } else {
+            let message = 'Preference cookies must be allowed to change language. You can change cookie settings at the bottom of the page';
+            alert(message);
+        }
+    }
+
+</script>
 </body>
 
 </html>
