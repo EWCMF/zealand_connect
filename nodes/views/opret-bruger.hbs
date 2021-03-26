@@ -3,7 +3,7 @@
     <!-- metode .submit tæller på samme måde som input submit og så kalde form's id  -->
     <div class="row justify-content-center">
         <div class="col-auto">
-            <div class="text-center">
+            <div class="text-center opretBrugerBoks">
                 <div>
                     <img src="/images/text-logo.png" id="zealandLogo" alt="Zealand">
                 </div>
@@ -197,6 +197,18 @@
                                 <div class="col-form-label formError pb-0" id="dateErrorStudent">Error</div>
                             </div>
                         </div>
+                        <div class="form-group mb-5">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="consent" name="consent">
+                                <label class="form-check-label" for="consent" data-key="Goer_mail_synlig">
+                                    Jeg bekræfter at have læst og forstået Zealand Connects
+                                    <a href="https://google.com/" target="_blank">samtykkeerklæring om personoplysninger</a>,
+                                    som baggrund for mit samtykke til behandling af mine personoplysninger til ovennævnte formål.
+                                </label>
+                            </div>
+                        </div>
+
+
                         <div class="row justify-content-center">
                             <div class="col-10">
                                 <button class="gulKnap" data-key="opretBruger" type="submit" id="submitBtn_Student"

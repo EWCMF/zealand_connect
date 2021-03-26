@@ -451,6 +451,10 @@ input::placeholder {
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 300px) {
 
+  .opretBrugerBoks {
+    max-width: 384.3px;
+  }
+
   .card-columns {
     column-count: 2;
   }
