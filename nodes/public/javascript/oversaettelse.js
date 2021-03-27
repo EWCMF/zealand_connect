@@ -82,7 +82,8 @@ function getLangdata() {
                 "opretBruger": "Create user",
                 "Foedselsdato": "Date of birth",
                 "cookie": "Cookies must be enabled in your browser",
-                "bekraeft_samtykke_html": "I confirm that I have read and understood Zealand Connect's <a href='/data-consent' target='_blank'>declaration of consent on the use of personal information</a>, as a basis for the consent to the processing of my personal data for the above purposes.",
+                "virk_bekraeft_samtykke_html": 'You must accept our <a class="link-primary" onclick="openCompanyConsent()">declaration of consent on the use of personal information</a> in order to create a user on Zealand Connect.',
+                "stud_bekraeft_samtykke_html": 'You must accept our <a class="link-primary" onclick="openDataConsent()">declaration of consent on the use of personal information</a> in order to create a user on Zealand Connect.',
                 "bekraeft_samtykke": "I confirm that I have read and understood Zealand Connect's declaration of consent on the use of personal information, as a basis for the consent to the processing of my personal data for the above purposes.",
 
                 // Login
@@ -486,9 +487,11 @@ function getLangdata() {
                 "data_consent_header8": "Storage time",
                 "data_consent_paragraph8": "We store your personal information for one year from the last login date as long as you have given your consent.",
                 "data_consent_header9": "The possibility to withdraw consent",
-                "data_consent_paragraph9": "Participation is voluntary and you can at any time withdraw your consent to the processing of personal information. This can be done by contacting Benjamin Kyhn at bekx@easj.dk or Tommy Hansen at tokx@easj.dk. You can also at any time delete your information and CV by logging in at Zealand Connect. If you withdraw your consent, it will only take effect from this moment and will not affect the legality of our use of personal information until now."
+                "data_consent_paragraph9": "Participation is voluntary and you can at any time withdraw your consent to the processing of personal information. This can be done by contacting Benjamin Kyhn at bekx@easj.dk or Tommy Hansen at tokx@easj.dk. You can also at any time delete your information and CV by logging in at Zealand Connect. If you withdraw your consent, it will only take effect from this moment and will not affect the legality of our use of personal information until now.",
 
-
+                "company_consent_paragraph4": "We process common personal information in the form of name, mailaddress, mobile number as well as other possible information that you provide.",
+                "company_consent_paragraph5": "The personal information is processed for the purpose of finding suitable students for internships in the company.",
+                "company_consent_paragraph6": "Information that you submit will be published at https://connect.zealand.dk/ and will be made freely available to companies, fellow students, other stakeholders etc. This is not a closed forum."
             }
         }
     }
