@@ -21,7 +21,7 @@
                 <div id="virksomhed">
 
                     <form name="virksomhedOpret" class="text-left" id="virksomhedOpret" onsubmit="return false"
-                        style="display: none;">
+                          style="display: none;">
                         <div style="color: red;" class="text-center" id="fejlBesked"></div>
                         <div style="color: green;" class="text-center" id="succesBesked"></div>
                         <br>
@@ -38,38 +38,38 @@
                                 email</label>
                             <div class="col-8">
                                 <input id="gentagEmail" name="gentagEmail" type="text" class="form-control"
-                                    placeholder="Gentag email" data-key="placeholderGentagEmail">
+                                       placeholder="Gentag email" data-key="placeholderGentagEmail">
                                 <div class="col-form-label form-label formError pb-0" id="gentagEmailError">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="adgangskode" data-key="labelAdgangskode_html"
-                                class="col-4 col-form-label">Adgangskode
+                                   class="col-4 col-form-label">Adgangskode
                                 <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                                    title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
+                                      title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
                             </label>
 
                             <div class="col-8">
                                 <input id="adgangskode" name="password" type="password" class="form-control"
-                                    placeholder="Adgangskode" data-key="placeholderAdgangskode">
+                                       placeholder="Adgangskode" data-key="placeholderAdgangskode">
                                 <div class="col-form-label formError pb-0" id="adgangskodeError">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="gentagAdgangskode" data-key="labelGentagAdgangskode"
-                                class="col-4 col-form-label">Gentag adgangskode</label>
+                                   class="col-4 col-form-label">Gentag adgangskode</label>
                             <div class="col-8">
                                 <input id="gentagAdgangskode" name="gentagPassword" type="password" class="form-control"
-                                    placeholder="Gentag adgangskode" data-key="placeholderGentagAdgangskode">
+                                       placeholder="Gentag adgangskode" data-key="placeholderGentagAdgangskode">
                                 <div class="col-form-label formError pb-0" id="gentagAdgangskodeError">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="virksomhedNavn" data-key="labelVirksomhedNavn"
-                                class="col-4 col-form-label">Virksomhedens navn</label>
+                                   class="col-4 col-form-label">Virksomhedens navn</label>
                             <div class="col-8">
                                 <input id="virksomhedNavn" name="virksomhedNavn" type="text" class="form-control"
-                                    placeholder="Virksomhedens navn" data-key="placeholderVirksomhedNavn">
+                                       placeholder="Virksomhedens navn" data-key="placeholderVirksomhedNavn">
                                 <div class="col-form-label formError pb-0" id="virksomhedNavnError">Error</div>
                             </div>
 
@@ -78,16 +78,16 @@
                             <label for="cvr" data-key="labelCvr" class="col-4 col-form-label">CVR-Nummer</label>
                             <div class="col-8">
                                 <input id="cvr" name="cvr" type="text" class="form-control" placeholder="CVR-nummer"
-                                    data-key="placeholderCvr">
+                                       data-key="placeholderCvr">
                                 <div class="col-form-label formError pb-0" id="cvrError">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="telefonnummer" data-key="labelTelefonnummer"
-                                class="col-4 col-form-label">Telefonnummer</label>
+                                   class="col-4 col-form-label">Telefonnummer</label>
                             <div class="col-8">
                                 <input id="telefonnummer" name="telefonnummer" type="string" class="form-control"
-                                    placeholder="Telefonnummer" data-key="placeholderTelefonnummer">
+                                       placeholder="Telefonnummer" data-key="placeholderTelefonnummer">
                                 <div class="col-form-label formError pb-0" id="telefonnummerError">Error</div>
                             </div>
                         </div>
@@ -95,34 +95,32 @@
                             <label for="by" data-key="labelBy" class="col-4 col-form-label">By</label>
                             <div class="col-8">
                                 <input id="by" name="by" type="string" class="form-control" placeholder="By"
-                                    data-key="placeholderBy">
+                                       data-key="placeholderBy">
                                 <div class="col-form-label formError pb-0" id="byError">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="postnummer" data-key="labelPostnummer"
-                                class="col-4 col-form-label">Postnummer</label>
+                                   class="col-4 col-form-label">Postnummer</label>
                             <div class="col-8">
                                 <input id="postnummer" name="postnummer" type="string" class="form-control"
-                                    placeholder="Postnummer" data-key="placeholderPostnummer">
+                                       placeholder="Postnummer" data-key="placeholderPostnummer">
                                 <div class="col-form-label formError pb-0" id="postnummerError">Error</div>
                             </div>
                         </div>
                         <div class="form-group mb-5">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="OpretBrugerVirkConsent" name="OpretBrugerVirkConsent" onchange="checkConsentVirkOpretBruger()">
-                                <label class="form-check-label" data-key="bekraeft_samtykke_html">
-                                    Jeg bekræfter at have læst og forstået Zealand Connects
-                                    <a class="link-primary" onclick="openVirkConsentForOpretBruger()">samtykkeerklæring om personoplysninger</a>,
-                                    som baggrund for mit samtykke til behandling af mine personoplysninger til ovennævnte formål.
-                                </label>
-                            </div>
+                            <label class="form-check-label" data-key="bekraeft_samtykke_html">
+                                Du skal acceptere vores
+                                <a class="link-primary" onclick="openCompanyConsent()">samtykkeerklæring om
+                                    personoplysninger</a>
+                                for at kunne oprette en bruger på Zealand Connect.
+                            </label>
                         </div>
 
                         <div class="row justify-content-center">
                             <div class="col-10">
                                 <button class="btn gulKnap" data-key="opretBruger" type="button" id="submitBtn"
-                                    onclick="submitOpretVirksomhed()" disabled>Opret Bruger
+                                        onclick="submitOpretVirksomhed()" disabled>Opret Bruger
                                 </button>
                             </div>
                         </div>
@@ -137,39 +135,40 @@
                             <label for="emailStudent" class="col-4 col-form-label">Email</label>
                             <div class="col-8">
                                 <input id="emailStudent" name="emailStudent" type="text" class="form-control"
-                                    placeholder="Email">
+                                       placeholder="Email">
                                 <div class="col-form-label formError pb-0" id="emailErrorStudent">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="gentagEmailStudent" data-key="labelGentagEmail"
-                                class="col-4 col-form-label">Gentag
+                                   class="col-4 col-form-label">Gentag
                                 email</label>
                             <div class="col-8">
                                 <input id="gentagEmailStudent" name="gentagEmailStudent" type="text"
-                                    class="form-control" placeholder="Gentag email" data-key="placeholderGentagEmail">
+                                       class="form-control" placeholder="Gentag email"
+                                       data-key="placeholderGentagEmail">
                                 <div class="col-form-label formError pb-0" id="gentagEmailErrorStudent">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="adgangskodeStudent" data-key="labelAdgangskode_html"
-                                class="col-4 col-form-label">Adgangskode
+                                   class="col-4 col-form-label">Adgangskode
                                 <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                                    title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
+                                      title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
                             </label>
                             <div class="col-8">
                                 <input id="adgangskodeStudent" name="passwordStudent" type="password"
-                                    class="form-control" placeholder="Adgangskode" data-key="placeholderAdgangskode">
+                                       class="form-control" placeholder="Adgangskode" data-key="placeholderAdgangskode">
                                 <div class="col-form-label formError pb-0" id="adgangskodeErrorStudent">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="gentagAdgangskodeStudent" data-key="labelGentagAdgangskode"
-                                class="col-4 col-form-label">Gentag adgangskode</label>
+                                   class="col-4 col-form-label">Gentag adgangskode</label>
                             <div class="col-8">
                                 <input id="gentagAdgangskodeStudent" name="gentagPasswordStudent" type="password"
-                                    class="form-control" placeholder="Gentag adgangskode"
-                                    data-key="placeholderGentagAdgangskode">
+                                       class="form-control" placeholder="Gentag adgangskode"
+                                       data-key="placeholderGentagAdgangskode">
                                 <div class="col-form-label formError pb-0" id="gentagAdgangskodeErrorStudent">Error
                                 </div>
                             </div>
@@ -178,26 +177,26 @@
                             <label for="fornavnStudent" data-key="Fornavn" class="col-4 col-form-label">Fornavn</label>
                             <div class="col-8">
                                 <input id="fornavnStudent" name="fornavnStudent" type="string" class="form-control"
-                                    placeholder="Fornavn" data-key="placeholderFornavn">
+                                       placeholder="Fornavn" data-key="placeholderFornavn">
                                 <div class="col-form-label formError pb-0" id="fornavnErrorStudent">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="efternavnStudent" data-key="Efternavn"
-                                class="col-4 col-form-label">Efternavn</label>
+                                   class="col-4 col-form-label">Efternavn</label>
                             <div class="col-8">
                                 <input id="efternavnStudent" name="efternavnStudent" type="string" class="form-control"
-                                    placeholder="Efternavn" data-key="placeholderEfternavn">
+                                       placeholder="Efternavn" data-key="placeholderEfternavn">
                                 <div class="col-form-label formError pb-0" id="efternavnErrorStudent">Error</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="telefonnummerStudent" data-key="labelTelefonnummer"
-                                class="col-4 col-form-label">Telefonnummer</label>
+                                   class="col-4 col-form-label">Telefonnummer</label>
                             <div class="col-8">
                                 <input id="telefonnummerStudent" name="telefonnummerStudent" type="string"
-                                    class="form-control" placeholder="Telefonnummer"
-                                    data-key="placeholderTelefonnummer">
+                                       class="form-control" placeholder="Telefonnummer"
+                                       data-key="placeholderTelefonnummer">
                                 <div class="col-form-label formError pb-0" id="telefonnummerErrorStudent">Error</div>
                             </div>
                         </div>
@@ -209,19 +208,18 @@
                             </div>
                         </div>
                         <div class="form-group mb-5">
-                            <div class="form-check">
-                                <label class="form-check-label" data-key="bekraeft_samtykke_html">
-                                    Du skal acceptere vores
-                                    <a class="link-primary" onclick="openDataConsent()">samtykkeerklæring om personoplysninger</a>
-                                    for at kunne oprette en bruger på Zealand Connect.
-                                </label>
-                            </div>
+                            <label class="form-check-label" data-key="bekraeft_samtykke_html">
+                                Du skal acceptere vores
+                                <a class="link-primary" onclick="openDataConsent()">samtykkeerklæring om
+                                    personoplysninger</a>
+                                for at kunne oprette en bruger på Zealand Connect.
+                            </label>
                         </div>
 
                         <div class="row justify-content-center">
                             <div class="col-10">
                                 <button class="btn gulKnap" data-key="opretBruger" type="submit" id="submitBtn_Student"
-                                    onclick="submitOpretStudent()" disabled>Opret Bruger
+                                        onclick="submitOpretStudent()" disabled>Opret Bruger
                                 </button>
                             </div>
                         </div>

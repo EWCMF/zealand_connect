@@ -83,6 +83,7 @@
 
 {{> cookie-consent-modal}}
 {{> stud-data-consent-modal}}
+{{> virk-data-consent-modal}}
 <!-- JQuery and Bootstrap linked here -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
@@ -110,6 +111,17 @@
 
     if (missingConsent) {
         openDataConsent()
+    }
+
+    function openCompanyConsent() {
+        $(document).ready(function () {
+            $('#companyConsentModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+
+            $("#companyConsentModal").modal('show');
+        });
     }
 
     function openCookieConsent(showCookieIndstillinger) {
