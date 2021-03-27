@@ -118,7 +118,7 @@
 <script>
     function submitCompanyConsent() {
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/company-consent', true);
+        xhr.open('POST', '/data-consent/company', true);
         xhr.setRequestHeader('Content-type', 'text/plain');
         xhr.send(document.getElementById('companyConsent').checked);
     }

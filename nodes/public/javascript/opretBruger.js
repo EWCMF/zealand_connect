@@ -47,7 +47,7 @@ const inputsStudent = Object.freeze({
     efternavn: document.getElementById('efternavnStudent'),
     telefon: document.getElementById('telefonnummerStudent'),
     dato: document.getElementById('date'),
-    consent: document.getElementById('consent')
+    consent: document.getElementById('studentConsent')
 });
 
 const errorsStudent = Object.freeze({

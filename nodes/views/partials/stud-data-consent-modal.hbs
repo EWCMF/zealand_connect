@@ -133,6 +133,7 @@
 
     function checkConsent() {
         let consentCheckbox = document.getElementById("consent");
+        let studConsentCheckbox = document.getElementById("studentConsent");
         let consentButton = document.getElementById("consentButton");
         let createStudentButton = document.getElementById("submitBtn_Student");
 
@@ -141,6 +142,7 @@
         }
         if (createStudentButton) {
             createStudentButton.disabled = !consentCheckbox.checked;
+            studConsentCheckbox.checked = consentCheckbox.checked;
         }
     }
 </script>
