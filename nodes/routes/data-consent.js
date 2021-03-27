@@ -27,18 +27,16 @@ router.post('/', async function (req, res, next) {
 router.post('/company', async function (req, res, next) {
     let consent = req.body
 
-    console.log(consent)
-
-    // if (consent){
-    //     await models.Virksomhed.update({
-    //         user_data_consent: consent
-    //     }, {
-    //         where: {
-    //             id: res.locals.user.id
-    //         }
-    //     })
-    // }
-    // return res.status(200).end();
+    if (consent){
+        await models.Virksomhed.update({
+            user_data_consent: consent
+        }, {
+            where: {
+                id: res.locals.user.id
+            }
+        })
+    }
+    return res.status(200).end();
 });
 
 module.exports = router;

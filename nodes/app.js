@@ -131,6 +131,7 @@ app.use(async function (req, res, next) {
     }
     if(userRole instanceof models.Virksomhed){
       res.locals.isCompany = true;
+      res.locals.missingConsent = !userRole.user_data_consent;
     }
     if(userRole instanceof models.Admin){
       res.locals.isAdmin = true;

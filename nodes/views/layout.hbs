@@ -110,7 +110,11 @@
     let missingConsent = "{{missingConsent}}" === "true"
 
     if (missingConsent) {
-        openDataConsent()
+        if ("{{isStudent}}"){
+            openDataConsent()
+        } else if ("{{isCompany}}"){
+            openCompanyConsent()
+        }
     }
 
     function openCompanyConsent() {
