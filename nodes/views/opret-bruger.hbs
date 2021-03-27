@@ -239,45 +239,10 @@
     </div>
 </div>
 
-{{> opret-bruger-stud-consent-modal}}
-{{> opret-bruger-virk-consent-modal}}
 <script src="/javascript/opretBruger.js"></script>
 <script>
     let companyChecked = '{{companyChecked}}';
     if (companyChecked == 'checked') {
         showVirksomhedOpret();
-    }
-
-    function openStudConsentForOpretBruger() {
-        $(document).ready(function () {
-            $('#opretBrugerStudConsentModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-
-            $("#opretBrugerStudConsentModal").modal('show');
-        });
-    }
-
-    function openVirkConsentForOpretBruger() {
-        $(document).ready(function () {
-            $('#opretBrugerVirkConsentModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-
-            $("#opretBrugerVirkConsentModal").modal('show');
-        });
-    }
-
-    function closeStudConsentForOpretBruger() {
-        $(document).ready(function () {
-            $('#opretBrugerStudConsentModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-
-
-        });
     }
 </script>
