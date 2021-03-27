@@ -476,8 +476,8 @@ function translateErrorMessage(key) {
     return texts[table][key];
 };
 
-function checkConsentForOpretBruger(){
-    let consentCheckbox = document.getElementById("OpretBrugerConsent");
+function checkConsentStudOpretBruger(){
+    let consentCheckbox = document.getElementById("OpretBrugerStudConsent");
     let submitButtonStudent = document.getElementById("submitBtn_Student");
 
     submitButtonStudent.disabled = !consentCheckbox.checked;
