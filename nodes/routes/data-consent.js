@@ -9,6 +9,12 @@ router.get('/', async function (req, res, next) {
     });
 });
 
+router.get('/company', async function (req, res, next) {
+    res.render('company-consent', {
+        language: reqLang(req, res)
+    });
+});
+
 router.post('/', async function (req, res, next) {
     let consent = req.body
 
