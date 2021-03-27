@@ -20,7 +20,8 @@
                                 Databeskyttelsesforordningen.
                             </p>
                             <h5 class="consent-header" data-key="data_consent_header2">Projektbeskrivelse</h5>
-                            <p data-key="data_consent_paragraph2"> Zealand Connect er en platform, hvor virksomheder har mulighed for at finde
+                            <p data-key="data_consent_paragraph2"> Zealand Connect er en platform, hvor virksomheder har
+                                mulighed for at finde
                                 praktikstuderende og hvor studerende kan lægge CV op for et match med en virksomhed.
                             </p>
                             <p><a href="https://connect.zealand.dk/">https://connect.zealand.dk/</a></p>
@@ -31,29 +32,36 @@
                                 dine personoplysninger. For så vidt angår kontakt angående persondataansvaret kan
                                 Benjamin Kyhn og Tommy Hansen kontaktes på hhv. bek@easj.dk og tokx@easj.dk.
                             </p>
-                            <h5 class="consent-header" data-key="data_consent_header4">Kategorier af personoplysninger der behandles om dig</h5>
+                            <h5 class="consent-header" data-key="data_consent_header4">Kategorier af personoplysninger
+                                der behandles om dig</h5>
                             <p data-key="data_consent_paragraph4">
                                 Vi behandler almindelige personoplysninger i form af navn, mailadresse, mobilnummer samt
                                 eventuelle øvrige oplysninger, som du afgiver i dit CV.
                             </p>
-                            <h5 class="consent-header" data-key="data_consent_header5">Formål og Behandlingsaktiviteter</h5>
+                            <h5 class="consent-header" data-key="data_consent_header5">Formål og
+                                Behandlingsaktiviteter</h5>
                             <p data-key="data_consent_paragraph5">
                                 Dine personoplysninger behandles med det formål at give virksomheder mulighed for at
                                 finde egnede praktikstuderende, og for at du kan finde en praktikplads.
                             </p>
-                            <h5 class="consent-header" data-key="data_consent_header6">Eventuelle modtagere eller kategorier af modtagere af personoplysningerne</h5>
+                            <h5 class="consent-header" data-key="data_consent_header6">Eventuelle modtagere eller
+                                kategorier af modtagere af personoplysningerne</h5>
                             <p data-key="data_consent_paragraph6">
                                 Dine personoplysninger bliver offentliggjort på https://connect.zealand.dk/ og bliver
                                 lagt frit tilgængelige for virksomheder, medstuderende, andre interessenter mv. Der er
                                 ikke tale om et lukket forum.
                             </p>
-                            <h5 class="consent-header" data-key="data_consent_header7">Overførsel til Tredjeland eller International Organisation</h5>
-                            <p data-key="data_consent_paragraph7">Vi overfører ikke dine personoplysninger til nogen uden for EU/EØS.</p>
+                            <h5 class="consent-header" data-key="data_consent_header7">Overførsel til Tredjeland eller
+                                International Organisation</h5>
+                            <p data-key="data_consent_paragraph7">Vi overfører ikke dine personoplysninger til nogen
+                                uden for EU/EØS.</p>
 
                             <h5 class="consent-header" data-key="data_consent_header8">Opbevaringstid</h5>
-                            <p data-key="data_consent_paragraph8">Vi opbevarer dine personoplysninger et år fra sidste logindato og så længe, du har
+                            <p data-key="data_consent_paragraph8">Vi opbevarer dine personoplysninger et år fra sidste
+                                logindato og så længe, du har
                                 accepteret dette samtykke.</p>
-                            <h5 class="consent-header" data-key="data_consent_header9">Mulighed for at trække samtykke tilbage</h5>
+                            <h5 class="consent-header" data-key="data_consent_header9">Mulighed for at trække samtykke
+                                tilbage</h5>
                             <p data-key="data_consent_paragraph9">
                                 Deltagelse er frivilligt og du kan til enhver tid trække dit samtykke til behandling af
                                 personoplysninger tilbage. Dette kan ske ved at kontakte Benjamin Kyhn på bekx@easj.dk
@@ -99,7 +107,12 @@
                                             disabled
                                     >Bekræft
                                     </button>
-                                    <a class="btn stdBtn gulKnap" id="logud" href="/login/logout" data-key="aLogud">Log ud</a>
+                                    {{#if isStudent}}
+                                        <a class="btn stdBtn gulKnap" id="logud" href="/login/logout" data-key="aLogud">Log
+                                            ud</a>
+                                    {{else}}
+                                        <a class="btn stdBtn gulKnap" id="" data-dismiss="modal" data-key="Luk">Luk</a>
+                                    {{/if}}
                                 </div>
                             </div>
 
@@ -111,14 +124,14 @@
     </div>
 </div>
 <script>
-    function submitDataConsent(){
+    function submitDataConsent() {
         let xhr = new XMLHttpRequest();
         xhr.open('POST', '/data-consent', true);
         xhr.setRequestHeader('Content-type', 'text/plain');
         xhr.send(document.getElementById('consent').checked);
     }
 
-    function checkConsent(){
+    function checkConsent() {
         let consentCheckbox = document.getElementById("consent");
         let consentButton = document.getElementById("consentButton");
 

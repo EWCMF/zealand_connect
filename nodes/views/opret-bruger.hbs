@@ -213,7 +213,7 @@
                                 <input class="form-check-input" type="checkbox" id="OpretBrugerStudConsent" name="OpretBrugerStudConsent" onchange="checkConsentStudOpretBruger()">
                                 <label class="form-check-label" data-key="bekraeft_samtykke_html">
                                     Jeg bekræfter at have læst og forstået Zealand Connects
-                                    <a class="link-primary" onclick="openStudConsentForOpretBruger()">samtykkeerklæring om personoplysninger</a>,
+                                    <a class="link-primary" onclick="openDataConsent()">samtykkeerklæring om personoplysninger</a>,
                                     som baggrund for mit samtykke til behandling af mine personoplysninger til ovennævnte formål.
                                 </label>
                             </div>
@@ -270,6 +270,17 @@
             });
 
             $("#opretBrugerVirkConsentModal").modal('show');
+        });
+    }
+
+    function closeStudConsentForOpretBruger() {
+        $(document).ready(function () {
+            $('#opretBrugerStudConsentModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+
+
         });
     }
 </script>
