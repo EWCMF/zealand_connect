@@ -23,7 +23,8 @@ const inputs = Object.freeze({
     cvrNummer: document.getElementById('cvr'),
     telefon: document.getElementById('telefonnummer'),
     by: document.getElementById('by'),
-    postnummer: document.getElementById('postnummer')
+    postnummer: document.getElementById('postnummer'),
+    consent: document.getElementById('companyConsentCreate')
 });
 
 const errors = Object.freeze({
@@ -337,7 +338,8 @@ async function submitOpretVirksomhed() {
         tflnr: inputs.telefon.value,
         by: inputs.by.value,
         postnr: inputs.postnummer.value,
-        cvrnr: inputs.cvrNummer.value
+        cvrnr: inputs.cvrNummer.value,
+        consent: inputs.consent.checked
     }));
 };
 

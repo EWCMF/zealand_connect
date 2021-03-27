@@ -125,6 +125,7 @@
 
     function checkCompanyConsent() {
         let consentCheckbox = document.getElementById("companyConsent");
+        let companyConsentCheckbox = document.getElementById("companyConsentCreate");
         let consentButton = document.getElementById("companyConsentButton");
         let createCompanyButton = document.getElementById("submitBtn");
 
@@ -133,6 +134,7 @@
         }
         if (createCompanyButton) {
             createCompanyButton.disabled = !consentCheckbox.checked;
+            companyConsentCheckbox.checked = consentCheckbox.checked;
         }
     }
 </script>

@@ -70,6 +70,10 @@ router.post('/create', (req, res) => {
     let by = jsonBody.by;
     let postnr = jsonBody.postnr;
     let cvrnr = jsonBody.cvrnr;
+    let consent = jsonBody.consent;
+
+    console.log("test 1")
+    console.log(consent)
 
     //reset errors
     let atLeastOneErrorIsPresent = false;
@@ -81,8 +85,13 @@ router.post('/create', (req, res) => {
         ByError: "",
         CVRError: "",
         PostnrError: "",
+        consentError: ""
     }
-    // valider 
+    // valider
+    if (!consent){
+        errors.consentError = "Manglende samtykke";
+        atLeastOneErrorIsPresent = true
+    }
     if (!validateEmail(email)) {
         errors.EmailError = "Email er ugyldig";
         atLeastOneErrorIsPresent = true;
@@ -150,7 +159,8 @@ router.post('/create', (req, res) => {
                         by: by,
                         postnr: postnr,
                         cvrnr: cvrnr,
-                        navn: virksomhedNavn
+                        navn: virksomhedNavn,
+                        user_data_consent: consent
                     }
                     createVirksomhed(virksomhedsBruger).then(() => {
                         //vi sender errors tilbage selvom de er tomme, 
@@ -201,7 +211,7 @@ router.post('/studentCreate', (req, res, next) => {
     }
     // valider
     if (!consent){
-        error.consentError = "Manglende samtykke";
+        errors.consentError = "Manglende samtykke";
         atLeastOneErrorIsPresent = true
     }
     if (!validateEmail(email)) {
