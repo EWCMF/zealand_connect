@@ -482,3 +482,10 @@ function checkConsentStudOpretBruger(){
 
     submitButtonStudent.disabled = !consentCheckbox.checked;
 }
+
+function checkConsentVirkOpretBruger(){
+    let consentCheckbox = document.getElementById("OpretBrugerVirkConsent");
+    let submitButtonStudent = document.getElementById("submitBtn");
+
+    submitButtonStudent.disabled = !consentCheckbox.checked;
+}
