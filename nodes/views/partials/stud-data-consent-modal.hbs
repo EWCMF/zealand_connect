@@ -97,17 +97,17 @@
                             </div>
                             <div class="col-2 align-self-center">
                                 <div class="row justify-content-end">
-                                    <button
-                                            id="consentButton"
-                                            type="button"
-                                            class="btn stdBtn gulKnap"
-                                            data-key="Bekraeft"
-                                            onclick="submitDataConsent()"
-                                            data-dismiss="modal"
-                                            disabled
-                                    >Bekræft
-                                    </button>
                                     {{#if isStudent}}
+                                        <button
+                                                id="consentButton"
+                                                type="button"
+                                                class="btn stdBtn gulKnap"
+                                                data-key="Bekraeft"
+                                                onclick="submitDataConsent()"
+                                                data-dismiss="modal"
+                                                disabled
+                                        >Bekræft
+                                        </button>
                                         <a class="btn stdBtn gulKnap" id="logud" href="/login/logout" data-key="aLogud">Log
                                             ud</a>
                                     {{else}}
@@ -134,7 +134,13 @@
     function checkConsent() {
         let consentCheckbox = document.getElementById("consent");
         let consentButton = document.getElementById("consentButton");
+        let createStudentButton = document.getElementById("submitBtn_Student");
 
-        consentButton.disabled = !consentCheckbox.checked;
+        if (consentButton) {
+            consentButton.disabled = !consentCheckbox.checked;
+        }
+        if (createStudentButton) {
+            createStudentButton.disabled = !consentCheckbox.checked;
+        }
     }
 </script>
