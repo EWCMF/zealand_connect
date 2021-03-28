@@ -68,7 +68,8 @@
                             <a class="nav-link hand-hover" href="/data-consent"
                                data-key="Samtykke">Samtykkeerklæring</a>
                         </li>
-                    {{else}}
+                    {{/if}}
+                    {{#if isCompany}}
                         <li class="nav-item">
                             <a class="nav-link hand-hover" href="/data-consent/company"
                                data-key="Samtykke">Samtykkeerklæring</a>
@@ -115,9 +116,9 @@
     let missingConsent = "{{missingConsent}}" === "true"
 
     if (missingConsent) {
-        if ("{{isStudent}}"){
+        if ("{{isStudent}}") {
             openDataConsent()
-        } else if ("{{isCompany}}"){
+        } else if ("{{isCompany}}") {
             openCompanyConsent()
         }
     }
