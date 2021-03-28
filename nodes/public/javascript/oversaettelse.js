@@ -469,6 +469,7 @@ function getLangdata() {
                 "Samtykke": "Declaration of consent",
 
                 //data-consent
+                "Luk": "Close",
                 "data_consent_title": "Consent to the processing of personal information",
                 "data_consent_header1": "Zealand Connect",
                 "data_consent_paragraph1": "As part of your user registration at Zealand Connect, we need your consent to process your personal data in accordance with the General Data Protection Regulation.",
