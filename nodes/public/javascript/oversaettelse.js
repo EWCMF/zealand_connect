@@ -471,15 +471,15 @@ function getLangdata() {
                 //data-consent
                 "data_consent_title": "Consent to the processing of personal information",
                 "data_consent_header1": "Zealand Connect",
-                "data_consent_paragraph1": "In connection with your registration of a user on Zealand Connect, we need your consent that we may process your personal data in accordance with the General Data Protection Regulation.",
+                "data_consent_paragraph1": "As part of your user registration at Zealand Connect, we need your consent to process your personal data in accordance with the General Data Protection Regulation.",
                 "data_consent_header2": "Project description",
                 "data_consent_paragraph2": "Zealand Connect is a platform where companies have the opportunity to find interns and where students can submit a CV to match with a company.",
                 "data_consent_header3": "Data controller",
-                "data_consent_paragraph3": "Zealand, Lyngvej 21, 4600 Køge, CVR nr. 31661471 is responsible for the processing of your personal information. With regards to correspondence about the responsibility of personal data, Benjamin Kyhn and Tommy Hansen can be contacted at bekx@easj.dk and tokx@easj.dk respectively.",
+                "data_consent_paragraph3": "Zealand, Lyngvej 21, 4600 Køge, CVR no. 31661471 is responsible for the processing of your personal information. For correspondence in regards to the responsibility of personal data please contact either Benjamin Kyhn or Tommy Hansen at bekx@easj.dk and tokx@easj.dk respectively.",
                 "data_consent_header4": "Categories of personal information about you that are processed.",
-                "data_consent_paragraph4": "We process common personal information in the form of name, mailaddress, mobile number as well as other possible information that you provide in your CV.",
+                "data_consent_paragraph4": "We process common personal information in the form of name, mailaddress, cell phone number as well as other possible information that you provide in your CV.",
                 "data_consent_header5": "Purpose and processing activities",
-                "data_consent_paragraph5": "Your personal information is used with the intent to give companies the opportunity to find capable students for internship, and for you to find a location for your internship.",
+                "data_consent_paragraph5": "Your personal information is used with the intent to give companies the opportunity to find capable students for internship and for you to find a location for your internship.",
                 "data_consent_header6": "Possible recipients or categories of recipients of your the personal data",
                 "data_consent_paragraph6": "Your personal information will be published at https://connect.zealand.dk/ and will be made freely available to companies, fellow students, other stakeholders etc. This is not a closed forum.",
                 "data_consent_header7": "Transferring to Third Country or International Organization",
@@ -487,11 +487,11 @@ function getLangdata() {
                 "data_consent_header8": "Storage time",
                 "data_consent_paragraph8": "We store your personal information for one year from the last login date as long as you have given your consent.",
                 "data_consent_header9": "The possibility to withdraw consent",
-                "data_consent_paragraph9": "Participation is voluntary and you can at any time withdraw your consent to the processing of personal information. This can be done by contacting Benjamin Kyhn at bekx@easj.dk or Tommy Hansen at tokx@easj.dk. You can also at any time delete your information and CV by logging in at Zealand Connect. If you withdraw your consent, it will only take effect from this moment and will not affect the legality of our use of personal information until now.",
+                "data_consent_paragraph9": "Participation is voluntary and you can at any time withdraw your consent to the processing of personal information. This can be done by contacting Benjamin Kyhn at bekx@easj.dk or Tommy Hansen at tokx@easj.dk. You can also delete your information and CV at any time by logging in at Zealand Connect. If you withdraw your consent it will only take effect from this moment and will not affect the legality of our use of personal information until now.",
 
                 "company_consent_paragraph4": "We process common personal information in the form of name, mailaddress, mobile number as well as other possible information that you provide.",
                 "company_consent_paragraph5": "The personal information is processed for the purpose of finding suitable students for internships in the company.",
-                "company_consent_paragraph6": "Information that you submit will be published at https://connect.zealand.dk/ and will be made freely available to companies, fellow students, other stakeholders etc. This is not a closed forum."
+                "company_consent_paragraph6": "Information that you submit will be published at https://connect.zealand.dk/ and will be made freely available to companies, students, other stakeholders etc. This is not a closed forum."
             }
         }
     }
