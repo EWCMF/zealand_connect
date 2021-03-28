@@ -94,7 +94,8 @@ async function createVirksomhed(virkObj) {
                 by: virkObj.by,
                 postnr: virkObj.postnr,
                 navn: virkObj.navn,
-                visible: true
+                visible: true,
+                user_data_consent: virkObj.user_data_consent
             }
         );
     } catch (e) {
@@ -110,7 +111,8 @@ async function createStudent(studentObj) {
             password: studentObj.password,
             fornavn: studentObj.fornavn,
             efternavn: studentObj.efternavn,
-            foedselsdato: studentObj.foedselsdato
+            foedselsdato: studentObj.foedselsdato,
+            user_data_consent: studentObj.user_data_consent
         })
     } catch (error) {
         console.log(error);

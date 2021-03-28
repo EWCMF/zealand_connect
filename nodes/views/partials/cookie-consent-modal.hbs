@@ -1,10 +1,10 @@
 <div class="modal rounded-0" tabindex="-1" role="dialog" id="cookieModal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content rounded-0">
-            <div id="cookieModalHeader" class="modal-header rounded-0">
+            <div id="cookieModalHeader" class="modal-header rounded-0 modalHeader">
                 <div class="container">
                     <div class="row">
-                        <h5 id="cookieModalTitle" class="modal-title text-white align-self-center pr-2">Zealand</h5>
+                        <h5 id="cookieModalTitle" class="modal-title text-white align-self-center pr-2">Zealand Connect</h5>
                         <a onclick="changeLang('da')" class="modal-title text-muted pr-2 btn btn-link">Dansk</a>
                         <a onclick="changeLang('en')" class="modal-title text-muted btn btn-link">English</a>
                     </div>
@@ -18,6 +18,7 @@
                             <p class="consent-text" data-key="Cookie_indstillinger_body_html">Vi bruger cookies for at give dig den bedste oplevelse af connect.zealand.dk. Når du klikker
                                 ‘Bekræft’, accepterer du vores brug af cookies og <a
                                     href="https://www.zealand.dk/persondatapolitik/">Zealand’s privatlivspolitik.</a>
+                                 Du kan læse mere om cookies <a href="https://www.zealand.dk/cookies/">her</a>.
                             </p>
                         </div>
                     </div>
@@ -27,7 +28,7 @@
                 <div class="modal-footer rounded-0">
                     <div class="container">
                         <div class="row align-self-center">
-                            <div class="col">
+                            <div class="col-10">
                                 <p class="consent-text" data-key="Du_kan_vaelge_html">
                                     Du kan vælge hvilke cookies der er tilladte.<br>Hold musen over for beskrivelse.
                                 </p>
@@ -46,9 +47,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col align-self-center">
+                            <div class="col-2 align-self-center">
                                 <div class="row justify-content-end">
-                                    <button type="button" class="btn btn-success consent-text" data-dismiss="modal" onclick="confirmConsent('formCookieConsent')" data-key="Bekraeft">Bekræft</button>
+                                    <button type="button" class="btn gulKnap" data-dismiss="modal" onclick="confirmConsent('formCookieConsent')" data-key="Bekraeft">Bekræft</button>
                                 </div>
                             </div>
 
@@ -67,7 +68,8 @@
             "en": {
                 "Cookie_indstillinger": "Cookie settings",
                 "Cookie_indstillinger_body_html": "We use cookies to give you the best experience using connect.zealand.dk. When you click 'confirm', you accept our use of cookies and " +
-                "<a href='https://www.zealand.dk/persondatapolitik/'>the private policy of Zealand.</a>",
+                "<a href='https://www.zealand.dk/persondatapolitik/'>the private policy of Zealand.</a> " +
+                        "Read more about cookies <a href='https://www.zealand.dk/cookies/'>here</a>.",
                 "Du_kan_vaelge_html": "You can choose which type of cookies are allowed.<br>Hover the mouse over for descriptions.",
                 "Noedvendige_cookies_title": ["Required cookies", "Required cookies are used e.g. to handle login. The site cannot function without these."],
                 "Praeference_cookies_title": ["Preference cookies", "Preference cookies are those that save personal preferences. It's used for language options on this site."],
@@ -77,7 +79,8 @@
             "da": {
                 "Cookie_indstillinger": "Cookie indstillinger",
                 "Cookie_indstillinger_body_html": "Vi bruger cookies for at give dig den bedste oplevelse af connect.zealand.dk. Når du klikker ‘Bekræft’, accepterer du vores brug af cookies og " +
-                "<a href='https://www.zealand.dk/persondatapolitik/'>Zealand’s privatlivspolitik.</a>",
+                "<a href='https://www.zealand.dk/persondatapolitik/'>Zealand’s privatlivspolitik.</a> " +
+                        "Du kan læse mere om cookies <a href='https://www.zealand.dk/cookies/'>her</a>.",
                 "Du_kan_vaelge_html": "Du kan vælge hvilke cookies der er tilladte.<br>Hold musen over for beskrivelse.",
                 "Noedvendige_cookies_title": ["Nødvendige cookies", "Nødvendige cookies er til f.eks at håndtere login. Siden kan ikke fungere uden disse."],
                 "Praeference_cookies_title": ["Præference cookies", "Præference cookies er dem der gemmer personlige præferencer. På denne side bruges det til sprog."],
@@ -110,11 +113,11 @@
                 element.textContent = langdata[lang][key][0];
                 element.title = langdata[lang][key][1];
                 $(element).tooltip();
-                
+
                 return;
             }
 
-            element.textContent = langdata[lang][key]; 
+            element.textContent = langdata[lang][key];
         });
     }
 </script>

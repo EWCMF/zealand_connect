@@ -23,7 +23,8 @@ const inputs = Object.freeze({
     cvrNummer: document.getElementById('cvr'),
     telefon: document.getElementById('telefonnummer'),
     by: document.getElementById('by'),
-    postnummer: document.getElementById('postnummer')
+    postnummer: document.getElementById('postnummer'),
+    consent: document.getElementById('companyConsentCreate')
 });
 
 const errors = Object.freeze({
@@ -46,7 +47,8 @@ const inputsStudent = Object.freeze({
     fornavn: document.getElementById('fornavnStudent'),
     efternavn: document.getElementById('efternavnStudent'),
     telefon: document.getElementById('telefonnummerStudent'),
-    dato: document.getElementById('date')
+    dato: document.getElementById('date'),
+    consent: document.getElementById('studentConsent')
 });
 
 const errorsStudent = Object.freeze({
@@ -336,7 +338,8 @@ async function submitOpretVirksomhed() {
         tflnr: inputs.telefon.value,
         by: inputs.by.value,
         postnr: inputs.postnummer.value,
-        cvrnr: inputs.cvrNummer.value
+        cvrnr: inputs.cvrNummer.value,
+        consent: inputs.consent.checked
     }));
 };
 
@@ -425,7 +428,8 @@ async function submitOpretStudent() {
         tflnr: inputsStudent.telefon.value,
         fornavn: inputsStudent.fornavn.value,
         efternavn: inputsStudent.efternavn.value,
-        dato: inputsStudent.dato.value
+        dato: inputsStudent.dato.value,
+        consent: inputsStudent.consent.checked
     }));
 };
 
@@ -473,3 +477,17 @@ function translateErrorMessage(key) {
 
     return texts[table][key];
 };
+
+function checkConsentStudOpretBruger(){
+    let consentCheckbox = document.getElementById("OpretBrugerStudConsent");
+    let submitButtonStudent = document.getElementById("submitBtn_Student");
+
+    submitButtonStudent.disabled = !consentCheckbox.checked;
+}
+
+function checkConsentVirkOpretBruger(){
+    let consentCheckbox = document.getElementById("OpretBrugerVirkConsent");
+    let submitButtonStudent = document.getElementById("submitBtn");
+
+    submitButtonStudent.disabled = !consentCheckbox.checked;
+}
