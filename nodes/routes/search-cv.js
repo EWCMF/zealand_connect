@@ -21,7 +21,16 @@ const makeArray = function (body, param) {
         body[param] = array;
     }
 };
-const handleWhere = async function (paramContainer) {
+
+async function fetchData(page, parameters) {
+    let offset;
+    if (!page) {
+        page = 1
+        offset = 0;
+    } else {
+        offset = (page - 1) * limit;
+    }
+
     let id = {
         [Op.or]: []
     };
@@ -47,13 +56,11 @@ const handleWhere = async function (paramContainer) {
         geo_lon,
         offentlig: true,
         gyldig: true
-    }
+    };
 
-
-
-    for (let key in paramContainer) {
+    for (let key in parameters) {
         if (key.includes("udd")) {
-            let values = paramContainer[key];
+            let values = parameters[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     fk_education[Op.or].push(+element);
@@ -64,7 +71,7 @@ const handleWhere = async function (paramContainer) {
         }
 
         if (key.includes("lnd")) {
-            let values = paramContainer[key];
+            let values = parameters[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     if (element.includes('ind')) {
@@ -106,7 +113,7 @@ const handleWhere = async function (paramContainer) {
             }
         }
         if (key.includes("cvtype")) {
-            let values = paramContainer[key];
+            let values = parameters[key];
             const CVsWithType = await db.CV_CVtype.findAll({
                 where: {
                     cvtype_id: values
@@ -119,9 +126,9 @@ const handleWhere = async function (paramContainer) {
         }
     }
 
-    if (paramContainer.hasOwnProperty('geo_id') && paramContainer.hasOwnProperty('geo_radius')) {
-        let geo_id = paramContainer['geo_id'];
-        let geo_radius = paramContainer['geo_radius'];
+    if (parameters.hasOwnProperty('geo_id') && parameters.hasOwnProperty('geo_radius')) {
+        let geo_id = parameters['geo_id'];
+        let geo_radius = parameters['geo_radius'];
 
         const url = 'https://dawa.aws.dk/adresser?id=' + geo_id + "&format=geojson";
         const res = await fetch(url);
@@ -149,7 +156,7 @@ const handleWhere = async function (paramContainer) {
         }
     }
 
-    if (paramContainer.hasOwnProperty('search')) {
+    if (parameters.hasOwnProperty('search')) {
         let overskrift = {
             [Op.or]: []
         };
@@ -178,7 +185,7 @@ const handleWhere = async function (paramContainer) {
             [Op.or]: []
         };
 
-        let search = paramContainer['search'].split(' ');
+        let search = parameters['search'].split(' ');
         for (let i = 0; i < search.length; i++) {
             let element = search[i];
             element = "%" + element + "%"
@@ -222,78 +229,7 @@ const handleWhere = async function (paramContainer) {
             {tidligere_uddannelse},
             {fritidsinteresser}
         ]
-    }
-
-    return where;
-}
-
-
-router.get('/', async function (req, res, next) {
-
-    let engLang = req.cookies.lang == 'en';
-    let page;
-    let offset;
-    if (req.query.page == null) {
-        page = 1
-        offset = 0;
-    } else {
-        page = req.query.page
-        offset = (page - 1) * limit;
-    }
-
-    let where = await handleWhere(req.query);
-
-    let categoryQuery = await db.EducationCategory.findAll({
-        raw: true,
-        attributes: ['id', 'name'],
-        order: [
-            ['name', 'ASC']
-        ]
-    });
-
-    let categories = []
-    for (const category of categoryQuery) {
-        const uddannelser = await db.Uddannelse.findAll({
-            raw: true,
-            where: {
-                fk_education_category: category.id
-            }
-        });
-        let showCategory = '';
-
-        if (req.query.udd !== null) {
-            for (const uddannelse of uddannelser) {
-                if (Array.isArray(req.query.udd)) {
-                    for (const udd of req.query.udd) {
-                        if (uddannelse.id == udd) {
-                            showCategory = 'show'
-                            break;
-                        }
-                    }
-                } else {
-                    if (uddannelse.id == req.query.udd) {
-                        showCategory = 'show';
-                    }
-                }
-            }
-        }
-
-        categories.push(
-            {
-                id: category.id,
-                name: category.name,
-                uddannelser: uddannelser,
-                showCategory: showCategory
-            }
-        );
-    }
-
-    let cvtype = await db.CVtype.findAll({
-        attributes: ['id', 'cvType'],
-        order: [
-            ['cvType', 'ASC']
-        ],
-    });
+    };
 
     let rows = await db.CV.findAll({
         limit: limit,
@@ -348,6 +284,75 @@ router.get('/', async function (req, res, next) {
     });
 
     let pageCount = Math.ceil(count / limit);
+
+    return {
+        count: count,
+        page: page,
+        pageCount: pageCount,
+        rows: rows
+    };
+}
+
+router.get('/', async function (req, res, next) {
+    let categoryQuery = await db.EducationCategory.findAll({
+        raw: true,
+        attributes: ['id', 'name'],
+        order: [
+            ['name', 'ASC']
+        ]
+    });
+
+    let categories = []
+    for (const category of categoryQuery) {
+        const uddannelser = await db.Uddannelse.findAll({
+            raw: true,
+            where: {
+                fk_education_category: category.id
+            }
+        });
+        let showCategory = '';
+
+        if (req.query.udd !== null) {
+            for (const uddannelse of uddannelser) {
+                if (Array.isArray(req.query.udd)) {
+                    for (const udd of req.query.udd) {
+                        if (uddannelse.id == udd) {
+                            showCategory = 'show'
+                            break;
+                        }
+                    }
+                } else {
+                    if (uddannelse.id == req.query.udd) {
+                        showCategory = 'show';
+                    }
+                }
+            }
+        }
+
+        categories.push(
+            {
+                id: category.id,
+                name: category.name,
+                uddannelser: uddannelser,
+                showCategory: showCategory
+            }
+        );
+    }
+
+    let cvtype = await db.CVtype.findAll({
+        attributes: ['id', 'cvType'],
+        order: [
+            ['cvType', 'ASC']
+        ],
+    });
+
+    let data = await fetchData(req.query.page, req.query);
+
+    let count = data.count;
+    let page = data.page;
+    let pageCount = data.pageCount;
+    let rows = data.rows;
+
     let withPages = pageCount > 1 ? true : false;
 
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
@@ -370,79 +375,21 @@ router.get('/', async function (req, res, next) {
 
 router.post('/query', function (req, res) {
 
-    var formData = new formidable.IncomingForm();
+    let formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
         makeArray(fields, 'udd');
         makeArray(fields, 'lnd');
         makeArray(fields, 'geo');
         makeArray(fields, 'cvtype');
-        makeArray(fields, 's');
 
-        let where = await handleWhere(fields);
+        let fetchedData = await fetchData(parseInt(fields.page), fields);
 
-        var page = parseInt(fields.page);
-        var offset;
+        let count = fetchedData.count;
+        let page = fetchedData.page;
+        let pageCount = fetchedData.pageCount;
+        let rows = fetchedData.rows;
 
-        if (page == 1) {
-            offset = 0
-        } else {
-            offset = (page - 1) * limit;
-        }
-        ;
-
-        let rows = await db.CV.findAll({
-            limit: limit,
-            raw: false,
-            nest: true,
-            offset: offset,
-            order: [
-                [fields.sort, fields.order]
-            ],
-            where,
-            include: [{
-                model: db.Student,
-                as: 'student'
-            },
-                {
-                    model: db.Uddannelse,
-                    as: 'education',
-                    attributes: ['name']
-                },
-                {
-                    model: db.CVtype,
-                    as: 'cvtype',
-                    attributes: ['cvtype'],
-                    through: db.CV_CVtype
-                }
-            ]
-        });
-
-        rows = rows.map(cv => {
-            return {
-                id: cv.id,
-                overskrift: cv.overskrift,
-                om_mig: cv.om_mig,
-                student: {
-                    fornavn: cv.student.fornavn,
-                    efternavn: cv.student.efternavn,
-                    profilbillede: cv.student.profilbillede
-                },
-                education: {
-                    name: cv.education.name
-                },
-                cvtype: cv.cvtype.map(cvtype => {
-                    return {
-                        cvtype: cvtype.dataValues.cvtype
-                    }
-                })
-            }
-        });
-
-        let count = await db.CV.count({
-            where
-        });
-
-        var item = [count];
+        let item = [count];
 
         fs.readFileAsync = function (filename) {
             return new Promise(function (resolve, reject) {
@@ -477,7 +424,6 @@ router.post('/query', function (req, res) {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
 
-                let pageCount = Math.ceil(count / limit);
                 let withPages = pageCount > 1 ? true : false;
 
                 let html = template(
