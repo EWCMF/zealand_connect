@@ -211,14 +211,11 @@ checkCollapseSearch('inputPost', 'pos', 'collapse4', 'collapse4Header');
 checkCollapseSearch('inputSearch', 'search', 'collapse6', 'collapse6Header');
 
 function preconfigEducationFilter(collapseId1, collapseId2, collapse2HeaderId, id) {
-
     const url = new URL(window.location.href);
-    if (url.href.includes('?')) {
-        return;
+    if (!url.href.includes('?')) {
+        handleParameters('udd', id);
+        handleParameters('pre', 1);
     }
-
-    handleParameters('udd', id);
-    handleParameters('pre', 1);
 
     document.querySelector(`[name='udd'][value='${id}']`).checked = true;
     animateArrow(document.getElementById(collapse2HeaderId))

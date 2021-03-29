@@ -76,13 +76,19 @@ app.engine(
       },
 
       checkedStateURL: (url, key, value) => {
-        let split = url.split(key + "=");
-        for (let string of split) {
-          string = string.replace('&', '');
-          if (string == value) {
-            return 'checked';
-          }
+        if (url.indexOf(key + "=") == -1) {
+          return '';
         }
+
+        string = url.substring(url.indexOf(key + "="));
+        if (string.indexOf('&') > -1) {
+          string = string.substring(0, string.indexOf('&'));
+        }
+
+        if (string == `${key}=${value}`) {
+          return 'checked';
+        }
+
         return '';
       }
     },
