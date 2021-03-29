@@ -421,7 +421,7 @@ router.get('/', async function (req, res, next) {
                     let found = category.uddannelser.find(uddannelse => uddannelse.id == user.cv.fk_education);
 
                     if (found) {
-                        categoryId = found.id;
+                        categoryId = found.fk_education_category;
                     }
 
                     return !found;
