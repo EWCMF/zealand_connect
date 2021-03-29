@@ -408,8 +408,6 @@ router.get('/', async function (req, res, next) {
         })
     }
 
-    console.log(categories);
-
     const user = res.locals.user
 
     let preconfigEducationFilter;
