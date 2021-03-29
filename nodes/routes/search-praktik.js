@@ -410,17 +410,30 @@ router.get('/', async function (req, res, next) {
 
     const user = res.locals.user
 
-    if (user !== undefined) {
-        if (user.cv != null) {
-            for (const category of categories) {
-                for (const uddannelse of category.uddannelser) {
-                    if (uddannelse.name === user.cv.education.name) {
-                        uddannelse.checked = 'checked'
+    let preconfigEducationFilter;
+    if (user) {
+        if (user.cv) {
+            if (Object.keys(req.query).length === 0) {
+                req.query.udd = [user.cv.fk_education];
+
+                let categoryId;
+                categories.every(category => {
+                    let found = category.uddannelser.find(uddannelse => uddannelse.id == user.cv.fk_education);
+
+                    if (found) {
+                        categoryId = found.id;
                     }
-                }
-            }
-        }
-    }
+
+                    return !found;
+                });
+
+                preconfigEducationFilter = {
+                    categoryId: categoryId,
+                    id: user.cv.fk_education
+                };
+            };
+        };
+    };
     
     let data = await fetchData(req.query.page, req.query);
 
@@ -443,7 +456,8 @@ router.get('/', async function (req, res, next) {
             pageCount: pageCount
         },
         withPages,
-        url: fullUrl
+        url: fullUrl,
+        preconfigEducationFilter: preconfigEducationFilter
     });
 
 });

@@ -13,14 +13,10 @@
                 <div class="panel-group" id="accordion">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h6 id="collapse5Header"
-                                class="panel-title mb-2 hand-hover"
-                                data-toggle="collapse"
-                                data-parent="#accordion"
-                                href="#collapse5"
-                                onclick="animateArrow(this)"
+                            <h6 id="collapse5Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse5" onclick="animateArrow(this)"
                                 data-key="Opslagstype_html">
-                                    Opslagstype
+                                Opslagstype
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
@@ -32,28 +28,28 @@
                                         Praktik
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="typ" value="1"
-                                        onclick="addFilter('typ', '1')" {{checkedStateURL url 'typ' '1'}}>
+                                        onclick="addFilter('typ', '1')" {{checkedStateURL url 'typ' '1' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill" data-key="Studiejob">
                                         Studiejob
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="typ" value="2"
-                                        onclick="addFilter('typ','2')" {{checkedStateURL url 'typ' '2'}}>
+                                        onclick="addFilter('typ','2')" {{checkedStateURL url 'typ' '2' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Trainee stilling
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="typ" value="3"
-                                        onclick="addFilter('typ','3')" {{checkedStateURL url 'typ' '3'}}>
+                                        onclick="addFilter('typ','3')" {{checkedStateURL url 'typ' '3' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Fuldtidsstilling
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="typ" value="4"
-                                        onclick="addFilter('typ','4')" {{checkedStateURL url 'typ' '4'}}>
+                                        onclick="addFilter('typ','4')" {{checkedStateURL url 'typ' '4' }}>
                                 </li>
 
                             </ul>
@@ -62,14 +58,10 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse1Header"
-                                class="panel-title mb-2 hand-hover"
-                                data-toggle="collapse"
-                                data-parent="#accordion"
-                                href="#collapse1"
-                                onclick="animateArrow(this)"
+                            <h6 id="collapse1Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)"
                                 data-key="Uddannelser_html">
-                                    Uddannelser
+                                Uddannelser
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
@@ -77,48 +69,39 @@
                             <ul class="pl-1 mr-2" style="list-style: none;">
                                 {{#each categories}}
 
-                                    <div class="panel-heading">
-                                        <h6
-                                            id="panel{{id}}"
-                                            class="panel-title mb-2 hand-hover"
-                                            data-toggle="collapse"
-                                            data-parent="#accordion"
-                                            href="#category{{id}}"
-                                            onclick="animateArrow(this)">
-                                            {{name}}
-                                            <img src="images/chevron-right.svg" {{#if showCategory}}class="arrow-rotate"{{/if}} width="12" height="12">
-                                        </h6>
-                                    </div>
+                                <div class="panel-heading">
+                                    <h6 id="panel{{id}}" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                        data-parent="#accordion" href="#category{{id}}" onclick="animateArrow(this)">
+                                        {{name}}
+                                        <img src="images/chevron-right.svg" {{#if showCategory}}class="arrow-rotate"
+                                            {{/if}} width="12" height="12">
+                                    </h6>
+                                </div>
 
-                                    <div id="category{{id}}" class="panel-collapse collapse in {{showCategory}}">
-                                        <ul class="pl-1 mr-2" style="list-style: none;">
-                                            {{#each uddannelser}}
-                                                <li class="mb-2 d-flex flex-row">
-                                                    <label class="form-check-label flex-fill">
-                                                        {{name}}
-                                                    </label>
-                                                    <input {{checked}}{{#unless checked}}{{checkedStateURL ../../url 'udd' id}}{{/unless}} class="align-self-center" type="checkbox" name="udd" value="{{id}}"
-                                                                                                                                        onclick="addFilter('udd', '{{id}}')">
-                                                    {{#if checked}}
-                                                        <body onload="preconfigEducationFilter('collapse1', 'category{{../id}}', 'panel{{../id}}',  '{{id}}')"></body>
-                                                    {{/if}}
-                                                </li>
-                                            {{/each}}
-                                        </ul>
-                                    </div>
+                                <div id="category{{id}}" class="panel-collapse collapse in {{showCategory}}">
+                                    <ul class="pl-1 mr-2" style="list-style: none;">
+                                        {{#each uddannelser}}
+                                        <li class="mb-2 d-flex flex-row">
+                                            <label class="form-check-label flex-fill">
+                                                {{name}}
+                                            </label>
+                                            <input class="align-self-center" type="checkbox" name="udd" value="{{id}}"
+                                                {{checkedStateURL ../../url 'udd' id}}
+                                                onclick="addFilter('udd', '{{id}}')">
+
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
                                 {{/each}}
                             </ul>
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse2Header"
-                                class="panel-title mb-2 hand-hover"
-                                data-toggle="collapse"
-                                data-parent="#accordion"
-                                href="#collapse2"
-                                onclick="animateArrow(this)"
+                            <h6 id="collapse2Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)"
                                 data-key="Land_html">
-                                    Land
+                                Land
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
@@ -130,14 +113,14 @@
                                         Indland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="lnd" value="ind"
-                                        onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind'}}>
+                                        onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill" data-key="Udland">
                                         Udland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="lnd" value="ud"
-                                        onclick="addFilter('lnd','ud')" {{checkedStateURL url 'lnd' 'ud'}}>
+                                        onclick="addFilter('lnd','ud')" {{checkedStateURL url 'lnd' 'ud' }}>
                                 </li>
 
                             </ul>
@@ -146,13 +129,9 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse3Header"
-                                class="panel-title mb-2 hand-hover"
-                                data-toggle="collapse"
-                                data-parent="#accordion"
-                                href="#collapse3"
-                                onclick="animateArrow(this)">
-                                    Region
+                            <h6 id="collapse3Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse3" onclick="animateArrow(this)">
+                                Region
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
@@ -164,35 +143,35 @@
                                         Hovedstaden
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="1"
-                                        onclick="addFilter('reg', '1')" {{checkedStateURL url 'reg' '1'}}>
+                                        onclick="addFilter('reg', '1')" {{checkedStateURL url 'reg' '1' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Midtjylland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="2"
-                                        onclick="addFilter('reg','2')" {{checkedStateURL url 'reg' '2'}}>
+                                        onclick="addFilter('reg','2')" {{checkedStateURL url 'reg' '2' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Nordjylland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="3"
-                                        onclick="addFilter('reg','3')" {{checkedStateURL url 'reg' '3'}}>
+                                        onclick="addFilter('reg','3')" {{checkedStateURL url 'reg' '3' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Sjælland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="4"
-                                        onclick="addFilter('reg','4')" {{checkedStateURL url 'reg' '4'}}>
+                                        onclick="addFilter('reg','4')" {{checkedStateURL url 'reg' '4' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
                                     <label class="form-check-label flex-fill">
                                         Syddanmark
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="5"
-                                        onclick="addFilter('reg','5')" {{checkedStateURL url 'reg' '5'}}>
+                                        onclick="addFilter('reg','5')" {{checkedStateURL url 'reg' '5' }}>
                                 </li>
 
                             </ul>
@@ -201,14 +180,10 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse4Header"
-                                class="panel-title mb-2 hand-hover"
-                                data-toggle="collapse"
-                                data-parent="#accordion"
-                                href="#collapse4"
-                                onclick="animateArrow(this)"
+                            <h6 id="collapse4Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse4" onclick="animateArrow(this)"
                                 data-key="By_html">
-                                    By
+                                By
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
@@ -223,8 +198,11 @@
 
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-success" onclick="addFilterSearch('pos', document.getElementById('inputPost').value)" data-key="Soeg">Søg</button>
-                                    <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputPost', 'pos')" data-key="Ryd">Ryd</button>
+                                    <button type="button" class="btn btn-success"
+                                        onclick="addFilterSearch('pos', document.getElementById('inputPost').value)"
+                                        data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success"
+                                        onclick="removeFilterSearch('inputPost', 'pos')" data-key="Ryd">Ryd</button>
                                 </li>
 
                             </ul>
@@ -233,14 +211,10 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse6Header"
-                                class="panel-title mb-2 hand-hover"
-                                data-toggle="collapse"
-                                data-parent="#accordion"
-                                href="#collapse6"
-                                onclick="animateArrow(this)"
+                            <h6 id="collapse6Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse6" onclick="animateArrow(this)"
                                 data-key="Fri_soegning_html">
-                                    Fri søgning
+                                Fri søgning
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
@@ -250,19 +224,23 @@
                                 <li class="mb-2 d-flex flex-column">
                                     <div>
                                         <label class="form-check-label flex-fill" data-key="Soegefelt">
-                                        Søgefelt
+                                            Søgefelt
                                         </label>
-                                    <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
                                             title="Indtast søgeord adskilt med mellemrum"
                                             data-Key="Indtast_search_tooltip">?</span>
                                     </div>
-                                    
+
                                     <input id='inputSearch' class="align-self-center" name="pos">
 
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-success" onclick="addFilterSearch('search', document.getElementById('inputSearch').value)" data-key="Soeg">Søg</button>
-                                    <button type="button" class="btn btn-success" onclick="removeFilterSearch('inputSearch', 'search')" data-key="Ryd">Ryd</button>
+                                    <button type="button" class="btn btn-success"
+                                        onclick="addFilterSearch('search', document.getElementById('inputSearch').value)"
+                                        data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success"
+                                        onclick="removeFilterSearch('inputSearch', 'search')"
+                                        data-key="Ryd">Ryd</button>
                                 </li>
 
                             </ul>
@@ -273,8 +251,6 @@
                     </div>
                 </div>
 
-
-                {{!-- <button class="btn btn-success mb-2 mt-4" type="submit">Filtrer</button> --}}
             </form>
         </div>
         <div class="col">
@@ -289,8 +265,9 @@
                     Sortering:
                 </label>
                 <div class="btn-group">
-                    <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" value="updatedAt" data-key="Senest_opdateret">
+                    <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle sorteringsContainer"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="updatedAt"
+                        data-key="Senest_opdateret">
                         Senest opdateret
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -306,13 +283,16 @@
                     Rækkefølge:
                 </label>
                 <div class="btn-group">
-                    <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle sorteringsContainer" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" value="DESC" data-key="Faldende">
+                    <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle sorteringsContainer"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="DESC"
+                        data-key="Faldende">
                         Faldende
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')" data-key="Stigende">Stigende</a>
-                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')" data-key="Faldende">Faldende</a>
+                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')"
+                            data-key="Stigende">Stigende</a>
+                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')"
+                            data-key="Faldende">Faldende</a>
                     </div>
                 </div>
 
@@ -327,4 +307,12 @@
         {{> search-pagination}}
     </div>
 </div>
+
+{{#if preconfigEducationFilter}}
+<body onload="preconfigEducationFilter('collapse1', 
+'category{{preconfigEducationFilter.categoryId}}', 
+'panel{{preconfigEducationFilter.categoryId}}',  
+'{{preconfigEducationFilter.id}}')"></body>
+{{/if}}
+
 <script src="/javascript/search_praktik.js"></script>
