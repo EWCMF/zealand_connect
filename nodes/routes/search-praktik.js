@@ -383,7 +383,7 @@ router.get('/', async function (req, res, next) {
         });
         let showCategory = '';
 
-        if (req.query.udd !== null) {
+        if (req.query.udd) {
             for (const uddannelse of uddannelser) {
                 if (Array.isArray(req.query.udd)) {
                     for (const udd of req.query.udd) {
@@ -407,6 +407,8 @@ router.get('/', async function (req, res, next) {
             showCategory: showCategory
         })
     }
+
+    console.log(categories);
 
     const user = res.locals.user
 
