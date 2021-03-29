@@ -24,6 +24,7 @@ const opretBrugerRouter = require('./routes/opret-bruger');
 const newsRouter = require('./routes/news');
 const forgotPasswordRouter = require('./routes/forgot-password');
 const resetPasswordRouter = require('./routes/reset-password');
+const dataConsentRouter = require('./routes/data-consent');
 
 const bodyParser = require('body-parser')
 
@@ -118,15 +119,19 @@ app.use(passport.session());
 app.use(bodyParser.text({ type: "text/plain"}));
 // Middleware til at finde login status i alle routes.
 app.use(async function (req, res, next) {
+  res.locals.missingConsent = false;
   if (req.user == null || req.user === undefined) {
     next();
   } else {
     var userRole = await findUserByEmail(req.user);
+
     if(userRole instanceof models.Student){
       res.locals.isStudent = true;
+      res.locals.missingConsent = !userRole.user_data_consent;
     }
     if(userRole instanceof models.Virksomhed){
       res.locals.isCompany = true;
+      res.locals.missingConsent = !userRole.user_data_consent;
     }
     if(userRole instanceof models.Admin){
       res.locals.isAdmin = true;
@@ -156,6 +161,7 @@ app.use('/om', omRouter);
 app.use('/news', newsRouter);
 app.use('/forgot-password', forgotPasswordRouter);
 app.use('/reset-password', resetPasswordRouter);
+app.use('/data-consent', dataConsentRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));

@@ -296,7 +296,7 @@ input::placeholder {
   transform: rotate(90deg);
 }
 
-#cookieModalHeader {
+.modalHeader {
   background-color: black;
 }
 
@@ -450,6 +450,10 @@ input::placeholder {
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 300px) {
+
+  .opretBrugerBoks {
+    max-width: 384.3px;
+  }
 
   .card-columns {
     column-count: 2;
@@ -725,4 +729,14 @@ body {
 .postTextContainer .ql-editor {
   padding-top: 0;
   white-space: normal;
+}
+
+.consent-header {
+  margin-top: 30px;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+.stdBtn {
+  max-width: 120px !important;
 }
