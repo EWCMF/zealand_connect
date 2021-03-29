@@ -18,7 +18,16 @@ const makeArray = function (body, param) {
         body[param] = array;
     }
 };
-const handleWhere = async function (paramContainer) {
+
+async function fetchData(page, parameters) {
+    let offset;
+    if (!page) {
+        page = 1
+        offset = 0;
+    } else {
+        offset = (page - 1) * limit;
+    }
+
     let fk_education = {
         [Op.or]: []
     };
@@ -65,9 +74,9 @@ const handleWhere = async function (paramContainer) {
         ]
     };
 
-    for (let key in paramContainer) {
+    for (let key in parameters) {
         if (key.includes("typ")) {
-            let values = paramContainer[key];
+            let values = parameters[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     post_type[Op.or].push(+element);
@@ -78,7 +87,7 @@ const handleWhere = async function (paramContainer) {
         }
 
         if (key.includes("udd")) {
-            let values = paramContainer[key];
+            let values = parameters[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     fk_education[Op.or].push(+element);
@@ -89,7 +98,7 @@ const handleWhere = async function (paramContainer) {
         }
 
         if (key.includes("lnd")) {
-            let values = paramContainer[key];
+            let values = parameters[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     if (element.includes('ind')) {
@@ -118,7 +127,7 @@ const handleWhere = async function (paramContainer) {
         }
 
         if (key.includes('reg')) {
-            let values = paramContainer[key];
+            let values = parameters[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     let realName = '';
@@ -163,7 +172,7 @@ const handleWhere = async function (paramContainer) {
         };
 
         if (key.includes('pos')) {
-            let values = paramContainer[key];
+            let values = parameters[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
                     postcode[Op.or].push(+element);
@@ -174,7 +183,7 @@ const handleWhere = async function (paramContainer) {
         }
     }
 
-    if (paramContainer.hasOwnProperty('search')) {
+    if (parameters.hasOwnProperty('search')) {
         let fk_company = {
             [Op.or]: []
         };
@@ -183,7 +192,7 @@ const handleWhere = async function (paramContainer) {
             [Op.or]: []
         };
 
-        let search = paramContainer['search'].split(' ');
+        let search = parameters['search'].split(' ');
         for (let i = 0; i < search.length; i++) {
             let element = search[i];
             element = "%" + element + "%"
@@ -284,23 +293,78 @@ const handleWhere = async function (paramContainer) {
         ]
     };
 
-    return where;
+    const {
+        count,
+        rows
+    } = await db.InternshipPost.findAndCountAll({
+        limit: limit,
+        raw: true,
+        nest: true,
+        offset: offset,
+        order: [
+            ['updatedAt', 'DESC']
+        ],
+        include: [{
+                model: db.Virksomhed,
+                as: 'virksomhed'
+            },
+            {
+                model: db.Uddannelse,
+                as: 'education',
+                attributes: ['name']
+            }
+        ],
+        where
+    });
+
+    let pageCount = Math.ceil(count / limit);
+
+    for (let index = 0; index < rows.length; index++) {
+        const element = rows[index];
+
+        if (element['post_start_date'].length > 0) {
+            let cropStart = element['post_start_date'].substring(0, 10);
+
+            let startYear = cropStart.substring(0, cropStart.indexOf('-'));
+            let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
+            let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
+
+            element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+        }
+
+        if (element['post_end_date'] != null && element['post_end_date'].length > 0) {
+            let cropEnd = element['post_end_date'].substring(0, 10);
+
+            let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
+            let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
+            let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
+            element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
+        }
+
+        switch (element['post_type']) {
+            case 1:
+                element['post_type'] = 'Praktik';
+                break;
+            case 2:
+                element['post_type'] = 'Studiejob';
+                break;
+            case 3:
+                element['post_type'] = 'Trainee stilling';
+                break;
+            case 4:
+                element['post_type'] = 'Fuldtidsstilling';
+        }
+    }
+
+    return {
+        count: count,
+        page: page,
+        pageCount: pageCount,
+        rows: rows
+    };
 }
 
 router.get('/', async function (req, res, next) {
-
-    let page;
-    let offset;
-    if (req.query.page == null) {
-        page = 1
-        offset = 0;
-    } else {
-        page = req.query.page
-        offset = (page - 1) * limit;
-    }
-
-    let where = await handleWhere(req.query);
-
     let categoryQuery = await db.EducationCategory.findAll({
         raw: true,
         attributes: ['id', 'name'],
@@ -357,70 +421,15 @@ router.get('/', async function (req, res, next) {
             }
         }
     }
+    
+    let data = await fetchData(req.query.page, req.query);
 
-    const {
-        count,
-        rows
-    } = await db.InternshipPost.findAndCountAll({
-        limit: limit,
-        raw: true,
-        nest: true,
-        offset: offset,
-        order: [
-            ['updatedAt', 'DESC']
-        ],
-        include: [{
-                model: db.Virksomhed,
-                as: 'virksomhed'
-            },
-            {
-                model: db.Uddannelse,
-                as: 'education',
-                attributes: ['name']
-            }
-        ],
-        where
-    });
+    let count = data.count;
+    let page = data.page;
+    let pageCount = data.pageCount;
+    let rows = data.rows;
 
-    let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1 ? true : false;
-    for (let index = 0; index < rows.length; index++) {
-        const element = rows[index];
-
-        if (element['post_start_date'].length > 0) {
-            let cropStart = element['post_start_date'].substring(0, 10);
-
-            let startYear = cropStart.substring(0, cropStart.indexOf('-'));
-            let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
-            let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
-
-            element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
-        }
-
-        if (element['post_end_date'] != null && element['post_end_date'].length > 0) {
-            let cropEnd = element['post_end_date'].substring(0, 10);
-
-            let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
-            let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
-            let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
-            element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
-        }
-
-        switch (element['post_type']) {
-            case 1:
-                element['post_type'] = 'Praktik';
-                break;
-            case 2:
-                element['post_type'] = 'Studiejob';
-                break;
-            case 3:
-                element['post_type'] = 'Trainee stilling';
-                break;
-            case 4:
-                element['post_type'] = 'Fuldtidsstilling';
-        }
-
-    }
 
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
@@ -441,7 +450,7 @@ router.get('/', async function (req, res, next) {
 
 router.post('/query', function (req, res) {
 
-    var formData = new formidable.IncomingForm();
+    let formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
 
         makeArray(fields, 'typ');
@@ -450,80 +459,14 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'reg');
         makeArray(fields, 'pos');
 
-        let where = await handleWhere(fields);
+        let fetchedData = await fetchData(parseInt(fields.page), fields); 
+        
+        let count = fetchedData.count;
+        let page = fetchedData.page;
+        let pageCount = fetchedData.pageCount;
+        let rows = fetchedData.rows;
 
-        let page = parseInt(fields.page);
-        let offset;
-
-        if (page == 1) {
-            offset = 0
-        } else {
-            offset = (page - 1) * limit;
-        }
-
-        const {
-            count,
-            rows
-        } = await db.InternshipPost.findAndCountAll({
-            limit: limit,
-            raw: true,
-            nest: true,
-            offset: offset,
-            order: [
-                [fields.sort, fields.order]
-            ],
-            include: [{
-                    model: db.Virksomhed,
-                    as: 'virksomhed'
-                },
-                {
-                    model: db.Uddannelse,
-                    as: 'education',
-                    attributes: ['name']
-                }
-            ],
-            where
-        });
-
-        var item = [count];
-
-        for (let index = 0; index < rows.length; index++) {
-            const element = rows[index];
-
-            if (element['post_start_date'].length > 0) {
-                let cropStart = element['post_start_date'].substring(0, 10);
-
-                let startYear = cropStart.substring(0, cropStart.indexOf('-'));
-                let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
-                let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
-
-                element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
-            }
-
-            if (element['post_end_date'] != null && element['post_end_date'].length > 0) {
-                let cropEnd = element['post_end_date'].substring(0, 10);
-
-                let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
-                let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
-                let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
-                element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
-            }
-
-            switch (element['post_type']) {
-                case 1:
-                    element['post_type'] = 'Praktik';
-                    break;
-                case 2:
-                    element['post_type'] = 'Studiejob';
-                    break;
-                case 3:
-                    element['post_type'] = 'Trainee stilling';
-                    break;
-                case 4:
-                    element['post_type'] = 'Fuldtidsstilling';
-            }
-
-        }
+        let item = [count];
 
         fs.readFileAsync = function (filename) {
             return new Promise(function (resolve, reject) {
@@ -551,7 +494,6 @@ router.post('/query', function (req, res) {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
 
-                let pageCount = Math.ceil(count / limit);
                 let withPages = pageCount > 1 ? true : false;
 
                 let html = template({

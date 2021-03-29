@@ -11,36 +11,30 @@ const {
     Virksomhed
 } = require('../models');
 const limit = 20;
-const handleWhere = function () {
 
-}
-
-router.get('/', async function (req, res, next) {
-
-    let page;
+async function fetchData(page, parameters) {
+    
     let offset;
-    if (req.query.page == null) {
-        page = 1
+    if (!page) {
+        page = 1;
         offset = 0;
     } else {
-        page = req.query.page
         offset = (page - 1) * limit;
-    }
+    };
 
     let sort;
-    if (req.query.sort == null) {
-        sort = "navn"
+    if (!parameters.sort) {
+        sort = "navn";
     } else {
-        sort = req.query.sort;
-    }
+        sort = parameters.sort;
+    };
 
     let order;
-    if (req.query.order == null) {
+    if (!parameters.order) {
         order = "ASC"
     } else {
-        order = req.query.order
+        order = parameters.order
     }
-
 
     const {
         count,
@@ -57,9 +51,28 @@ router.get('/', async function (req, res, next) {
         }
     });
 
+    let pageCount = Math.ceil(count / limit);
+
+    return {
+        count: count,
+        page: page,
+        pageCount: pageCount,
+        rows: rows
+    }
+
+}
+
+router.get('/', async function (req, res, next) {
+
+    let data = await fetchData(req.query.page, req.query);
+
+    let count = data.count;
+    let page = data.page;
+    let pageCount = data.pageCount;
+    let rows = data.rows;
+
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
-    let pageCount = Math.ceil(count / limit);
     let withPages = pageCount > 1 ? true : false;
     res.render('search-virksomheder', {
         language: reqLang(req, res),
@@ -76,46 +89,15 @@ router.get('/', async function (req, res, next) {
 
 router.post('/query', function (req, res) {
 
-    var formData = new formidable.IncomingForm();
+    let formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
 
-        let page = parseInt(fields.page);
-        let offset;
-
-        if (page == 1) {
-            offset = 0
-        } else {
-            offset = (page - 1) * limit;
-        }
-
-        let sort;
-        if (fields.sort == null) {
-            sort = "navn"
-        } else {
-            sort = fields.sort;
-        }
-
-        let order;
-        if (fields.order == null) {
-            order = "ASC"
-        } else {
-            order = fields.order
-        }
-
-        const {
-            count,
-            rows
-        } = await Virksomhed.findAndCountAll({
-            limit: limit,
-            raw: true,
-            offset: offset,
-            order: [
-                [sort, order]
-            ],
-            where: {
-                visible: true
-            }
-        });
+        let fetchedData = await fetchData(parseInt(fields.page), fields); 
+        
+        let count = fetchedData.count;
+        let page = fetchedData.page;
+        let pageCount = fetchedData.pageCount;
+        let rows = fetchedData.rows;
 
         let item = [count];
 
@@ -145,7 +127,6 @@ router.post('/query', function (req, res) {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
 
-                let pageCount = Math.ceil(count / limit);
                 let withPages = pageCount > 1 ? true : false;
 
                 let html = template({

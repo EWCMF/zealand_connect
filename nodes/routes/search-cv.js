@@ -290,7 +290,7 @@ async function fetchData(page, parameters) {
         page: page,
         pageCount: pageCount,
         rows: rows
-    }
+    };
 }
 
 router.get('/', async function (req, res, next) {
