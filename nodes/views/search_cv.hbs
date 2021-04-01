@@ -42,7 +42,7 @@
                                         <ul class="pl-1 mr-2" style="list-style: none;">
                                             {{#each uddannelser}}
                                                 <li class="mb-2 d-flex flex-row">
-                                                    <label class="form-check-label flex-fill">
+                                                    <label class="form-check-label flex-fill" data-key="{{name}}">
                                                         {{name}}
                                                     </label>
                                                     <input {{checkedStateURL ../../url 'udd' id}}
@@ -145,6 +145,7 @@
                                 data-parent="#accordion"
                                 href="#collapse4"
                                 onclick="animateArrow(this)"
+                                data-key="CVtyper_html"
                             >
                                 CV typer
                                 <img src="images/chevron-right.svg" width="12" height="12">

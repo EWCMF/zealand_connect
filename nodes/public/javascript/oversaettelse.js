@@ -100,7 +100,7 @@ function getLangdata() {
                 "The student’s tasks must be relevant and meet the learning objectives within the study programme in question. The tasks, which must be approved by the internship coordinator at Zealand, may be helpful in the daily work, in the conduction of analyses, development tasks etc.",
 
                 "Loen": "Salary",
-                "Loen_body_html": "The internship is unpaid – however, the internship is paid for students attending the Commerce Management study programme (Danish: handelsøkonom).<br><br>" +
+                "Loen_body_html": "The internship is unpaid – however, the internship is paid for students attending the Commerce Management (Danish: handelsøkonom) and laboratory technician study programmes.<br><br>" +
                 "The student may receive a gratuity from the company upon completion of the internship. Such gratuity is not considered as salary but as an appreciation of the student’s effort and work during the internship.",
 
                 "Forsikring": "Insurance",
@@ -179,6 +179,7 @@ function getLangdata() {
                 "Uddannelser_html": 'Education <img src="images/chevron-right.svg" width="12" height="12">',
                 "Land_html": 'Country <img src="images/chevron-right.svg" width="12" height="12">',
                 "Afstand_html": 'Distance <img src="images/chevron-right.svg" width="12" height="12">',
+                "CVtyper_html": 'CV types <img src="images/chevron-right.svg" width="12" height="12">',
                 "Indland": "Domestic",
                 "Udland": "Abroad",
                 "resultater": "results",
@@ -201,17 +202,29 @@ function getLangdata() {
                 "Datamatiker": "Computer Scientist",
                 "Handelsøkonom": "Commerce Management",
                 "Finansøkonom": "Financial Management",
+                "Serviceøkonom": "Service Management",
+                "Markedsføringsøkonom": "Marketing Management",
+                "Administrationsøkonom": "Administration Management",
                 "International Handel og Markedsføring": "International Sales and Marketing",
-                //Innovation og Entrepreneurship
+                "Innovation og Entrepreneurship": "Innovation and Entrepreneurship",
                 "Bygningskontruktør": "Constructing Architect",
                 "Byggetekniker": "Building Technician",
                 "Installatør, stærkstrøm": "Electrician",
+                "VVS-installatør": "Plumbing Installer",
+                "Urban Landskabsingeniør": "Urban Landscape Engineer",
+                "Jordbrug": "Agriculture",
+                "Jordbrugsteknolog": "Agricultural Technology",
+                "Laborant": "Laboratory Technician",
+                "Procesteknolog": "Process Technology",
+                "Autoteknolog": "Automotive Technology",
+                "Digital Konceptudvikling": "Digital Concept Development",
+                "Multimediedesigner": "Multimedia Design and Communication",
+                "Produktionsteknolog": "Production Technology",
+                "Web Development": "Web Development",
 
                 // search-praktik
                 "Opslag": "Posts",
                 "Opslagstype_html": 'Post type <img src="images/chevron-right.svg" width="12" height="12">',
-                "Praktik": "Internship",
-                "Studiejob": "Student job",
                 //Uddannelser_html,
                 //Land_html,
                 //Indland,
@@ -229,12 +242,18 @@ function getLangdata() {
                 //Raekkefoelge
                 //Faldende,
                 //Stigende
+                "Region Hovedstaden": "The Capital Region",
+                "Region Midtjylland": "Central Denmark Region",
+                "Region Nordjylland": "Northern Denmark Region",
+                "Region Sjælland": "Zealand Region",
+                "Region Syddanmark": "Southern Denmark Region",
 
                 //search-praktik-card
                 "Uddannelse_kolon": "Education:",
                 "Ansoegningsfrist_kolon": "Application deadline:",
                 "Praktikstart_kolon": "Internship start:",
                 "Ingen": "None",
+                "Soeger:": "Searching for:",
 
                 //Opslagstyper
                 "Praktik": "Internship",
@@ -248,8 +267,6 @@ function getLangdata() {
                 "Overskrift": "Headline",
                 "Om_mig": "About me",
                 "Jeg_søger": "I'm looking for",
-                "Praktik": "Internship",
-                "Studiejob": "Student job",
                 "Trainee_stilling": "Trainee position",
                 "Fuldtidsstilling": "Full time employment",
                 "Erhvervserfaring": "Work experience",
