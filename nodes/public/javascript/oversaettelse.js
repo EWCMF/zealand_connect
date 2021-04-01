@@ -242,12 +242,11 @@ function getLangdata() {
                 //Raekkefoelge
                 //Faldende,
                 //Stigende
-                "Hovedstadsområdet": "The Capital Area",
-                "Midtjylland": "Central Denmark",
-                "Nordjylland": "Northern Denmark",
-                "Sjælland": "Zealand",
-                "Syddanmark": "Southern Denmark",
-                "Fyn": "Funen",
+                "Region Hovedstaden": "The Capital Region",
+                "Region Midtjylland": "Central Denmark Region",
+                "Region Nordjylland": "Northern Denmark Region",
+                "Region Sjælland": "Zealand Region",
+                "Region Syddanmark": "Southern Denmark Region",
 
                 //search-praktik-card
                 "Uddannelse_kolon": "Education:",
