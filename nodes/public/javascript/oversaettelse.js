@@ -100,7 +100,7 @@ function getLangdata() {
                 "The student’s tasks must be relevant and meet the learning objectives within the study programme in question. The tasks, which must be approved by the internship coordinator at Zealand, may be helpful in the daily work, in the conduction of analyses, development tasks etc.",
 
                 "Loen": "Salary",
-                "Loen_body_html": "The internship is unpaid – however, the internship is paid for students attending the Commerce Management study programme (Danish: handelsøkonom).<br><br>" +
+                "Loen_body_html": "The internship is unpaid – however, the internship is paid for students attending the Commerce Management (Danish: handelsøkonom) and laboratory technician study programmes.<br><br>" +
                 "The student may receive a gratuity from the company upon completion of the internship. Such gratuity is not considered as salary but as an appreciation of the student’s effort and work during the internship.",
 
                 "Forsikring": "Insurance",
