@@ -210,8 +210,6 @@ function getLangdata() {
                 // search-praktik
                 "Opslag": "Posts",
                 "Opslagstype_html": 'Post type <img src="images/chevron-right.svg" width="12" height="12">',
-                "Praktik": "Internship",
-                "Studiejob": "Student job",
                 //Uddannelser_html,
                 //Land_html,
                 //Indland,
@@ -235,6 +233,7 @@ function getLangdata() {
                 "Ansoegningsfrist_kolon": "Application deadline:",
                 "Praktikstart_kolon": "Internship start:",
                 "Ingen": "None",
+                "Soeger:": "Searching for:",
 
                 //Opslagstyper
                 "Praktik": "Internship",
@@ -248,8 +247,6 @@ function getLangdata() {
                 "Overskrift": "Headline",
                 "Om_mig": "About me",
                 "Jeg_søger": "I'm looking for",
-                "Praktik": "Internship",
-                "Studiejob": "Student job",
                 "Trainee_stilling": "Trainee position",
                 "Fuldtidsstilling": "Full time employment",
                 "Erhvervserfaring": "Work experience",
