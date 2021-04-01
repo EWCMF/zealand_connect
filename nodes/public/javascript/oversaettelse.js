@@ -179,6 +179,7 @@ function getLangdata() {
                 "Uddannelser_html": 'Education <img src="images/chevron-right.svg" width="12" height="12">',
                 "Land_html": 'Country <img src="images/chevron-right.svg" width="12" height="12">',
                 "Afstand_html": 'Distance <img src="images/chevron-right.svg" width="12" height="12">',
+                "CVtyper_html": 'CV types <img src="images/chevron-right.svg" width="12" height="12">',
                 "Indland": "Domestic",
                 "Udland": "Abroad",
                 "resultater": "results",
@@ -201,11 +202,25 @@ function getLangdata() {
                 "Datamatiker": "Computer Scientist",
                 "Handelsøkonom": "Commerce Management",
                 "Finansøkonom": "Financial Management",
+                "Serviceøkonom": "Service Management",
+                "Markedsføringsøkonom": "Marketing Management",
+                "Administrationsøkonom": "Administration Management",
                 "International Handel og Markedsføring": "International Sales and Marketing",
-                //Innovation og Entrepreneurship
+                "Innovation og Entrepreneurship": "Innovation and Entrepreneurship",
                 "Bygningskontruktør": "Constructing Architect",
                 "Byggetekniker": "Building Technician",
                 "Installatør, stærkstrøm": "Electrician",
+                "VVS-installatør": "Plumbing Installer",
+                "Urban Landskabsingeniør": "Urban Landscape Engineer",
+                "Jordbrug": "Agriculture",
+                "Jordbrugsteknolog": "Agricultural Technology",
+                "Laborant": "Laboratory Technician",
+                "Procesteknolog": "Process Technology",
+                "Autoteknolog": "Automotive Technology",
+                "Digital Konceptudvikling": "Digital Concept Development",
+                "Multimediedesigner": "Multimedia Design and Communication",
+                "Produktionsteknolog": "Production Technology",
+                "Web Development": "Web Development",
 
                 // search-praktik
                 "Opslag": "Posts",
@@ -227,6 +242,12 @@ function getLangdata() {
                 //Raekkefoelge
                 //Faldende,
                 //Stigende
+                "Hovedstadsområdet": "The Capital Area",
+                "Midtjylland": "Central Denmark",
+                "Nordjylland": "Northern Denmark",
+                "Sjælland": "Zealand",
+                "Syddanmark": "Southern Denmark",
+                "Fyn": "Funen",
 
                 //search-praktik-card
                 "Uddannelse_kolon": "Education:",

@@ -82,7 +82,7 @@
                                     <ul class="pl-1 mr-2" style="list-style: none;">
                                         {{#each uddannelser}}
                                         <li class="mb-2 d-flex flex-row">
-                                            <label class="form-check-label flex-fill">
+                                            <label class="form-check-label flex-fill" data-key="{{name}}">
                                                 {{name}}
                                             </label>
                                             <input class="align-self-center" type="checkbox" name="udd" value="{{id}}"
@@ -139,35 +139,35 @@
                         <div id="collapse3" class="panel-collapse collapse in">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
-                                        Hovedstaden
+                                    <label class="form-check-label flex-fill" data-key="Hovedstadsområdet">
+                                        Hovedstadsområdet
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="1"
                                         onclick="addFilter('reg', '1')" {{checkedStateURL url 'reg' '1' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Midtjylland">
                                         Midtjylland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="2"
                                         onclick="addFilter('reg','2')" {{checkedStateURL url 'reg' '2' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Nordjylland">
                                         Nordjylland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="3"
                                         onclick="addFilter('reg','3')" {{checkedStateURL url 'reg' '3' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Sjælland">
                                         Sjælland
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="4"
                                         onclick="addFilter('reg','4')" {{checkedStateURL url 'reg' '4' }}>
                                 </li>
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill">
+                                    <label class="form-check-label flex-fill" data-key="Syddanmark">
                                         Syddanmark
                                     </label>
                                     <input class="align-self-center" type="checkbox" name="reg" value="5"
