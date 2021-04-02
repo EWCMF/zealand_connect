@@ -63,6 +63,10 @@
                         <a class="nav-link hand-hover" onclick="openCookieConsent(true)" data-key="Cookie_settings">Cookie
                             settings</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link hand-hover" href="/cookie-policy"
+                            data-key="Cookie-politik">Cookie-politik</a>
+                    </li>
                     {{#if isStudent}}
                         <li class="nav-item">
                             <a class="nav-link hand-hover" href="/data-consent"
@@ -75,6 +79,7 @@
                                data-key="Samtykke">Samtykkeerklæring</a>
                         </li>
                     {{/if}}
+                    
                     <!--
                     <li class="nav-item">
                         <a class="nav-link" href="/om" data-key="Om_ZealandConnect">Om Zealand Connect</a>
@@ -139,6 +144,23 @@
             let cookies = document.cookie;
 
             let hasCookie = cookies.includes('cookie_consent=');
+
+            let pathName = window.location.pathname;
+
+            let allowedPaths = [
+                "/cookie-policy"
+            ];
+
+            let allowed = false;
+            allowedPaths.forEach(allowedPath => {
+                if (allowedPath === pathName) {
+                    allowed = true;
+                }
+            });
+
+            if (allowed) {
+                return;
+            }
 
             if (!hasCookie) {
                 $('#cookieModal').modal({

@@ -9,10 +9,14 @@ router.post('/', async function (req, res, next) {
 
         let noLang = false;
         if (fields.preference === undefined) {
-            res.cookie('cookie_consent', 'nolang');
+            res.cookie('cookie_consent', 'nolang', {
+                maxAge: 1000 * 60 * 60 * 24 * 30
+            });
             noLang = true;
         } else {
-            res.cookie('cookie_consent', 'all');
+            res.cookie('cookie_consent', 'all', {
+                maxAge: 1000 * 60 * 60 * 24 * 30
+            });
         }
 
         if (!noLang && fields.lang === 'en') {

@@ -509,7 +509,25 @@ function getLangdata() {
 
                 "company_consent_paragraph4": "We process common personal information in the form of name, mailaddress, mobile number as well as other possible information that you provide.",
                 "company_consent_paragraph5": "The personal information is processed for the purpose of finding suitable students for internships in the company.",
-                "company_consent_paragraph6": "Information that you submit will be published at https://connect.zealand.dk/ and will be made freely available to companies, students, other stakeholders etc. This is not a closed forum."
+                "company_consent_paragraph6": "Information that you submit will be published at https://connect.zealand.dk/ and will be made freely available to companies, students, other stakeholders etc. This is not a closed forum.",
+
+                //cookie-policy
+                "cookie_politik_title": "Cookies",
+                "cookie_politik_header1": "What cookies do we use?",
+                "cookie_politik_paragraph1": "On this page you'll find a list of cookies that our site stores on computer as well as directions on how to withdraw consent or delete them.",
+                "cookie_politik_header2": "Cookie consent",
+                "cookie_politik_paragraph2": "When you accept our cookie policy your consent is also stored in a cookie. This cookie expires after 30 days.",
+                "cookie_politik_header3": "Language settings",
+                "cookie_politik_paragraph3": "We use cookies to manage the language you have selected. Therefore you cannot change language if you haven't accepted preference cookies. These cookies expire after 30 days.",
+                "cookie_politik_header4": "Session cookies",
+                "cookie_politik_paragraph4": "When you log in to Zealand Connect, a cookie with session data is created. This cookie means that you will not be logged out when you leave the site. This cookie is necessary for the site to function and expires after 2 hours.",
+                "cookie_politik_header5": "Cookie storage",
+                "cookie_politik_paragraph5": "We do not store cookies in our database. Your browser stores cookies until they expire or you delete them.",
+                "cookie_politik_header6": "Additional information",
+                "cookie_politik_header7": "This website is provided by:",
+                "cookie_politik_header8": "Cookie regulation",
+                "cookie_politik_paragraph7": 'All Danish websites are required to inform their users about cookies downloaded to their device. The information must comply with ”Bekendtgørelse om krav til information og samtykke ved lagring af og adgang til oplysninger i slutbrugeres terminaludstyr”.',
+                "cookie_politik_paragraph8_html": 'The regulation requires that the website receives consent from the user when the website wants to store cookies on the user\'s device. Read more about "The Cookie Regulation": <a href="http://erhvervsstyrelsen.dk/cookies">http://erhvervsstyrelsen.dk/cookies</a>.' 
             }
         }
     }
