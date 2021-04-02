@@ -116,7 +116,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieSession({
-  maxAge: 1000*60*60*24,
+  maxAge: 1000*60*60*2,
   keys: ["this_is_the_secret_cookie_encryption_key"]
 }));
 app.use(passport.initialize());
