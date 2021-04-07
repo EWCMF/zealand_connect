@@ -544,6 +544,10 @@ input::placeholder {
   .sidebar {
     display: flex;
   }
+
+  #cookie-accordions {
+    max-width: 300px;
+  }
 }
 
 #loginBoxBackground {
@@ -739,4 +743,45 @@ body {
 
 .stdBtn {
   max-width: 120px !important;
+}
+
+.cookie-accordion {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f6f6f7;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active-cookie-accordion {
+  background-color: black;
+  color: white;
+}
+
+#cookie-accordions button:focus { outline: none; }
+
+.cookie-panel {
+  padding: 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
+
+.cookie-panel li {
+  margin-bottom: 5px;
+}
+
+.chevron-white {
+  filter: invert(99%) sepia(1%) saturate(0%) hue-rotate(78deg) brightness(105%) contrast(101%);
+}
+
+.cookie-accordion-div {
+  margin-bottom: 2px;
 }
