@@ -745,7 +745,7 @@ body {
   max-width: 120px !important;
 }
 
-.accordion {
+.cookie-accordion {
   display: flex;
   justify-content: space-between;
   background-color: #f6f6f7;
@@ -760,21 +760,21 @@ body {
   transition: 0.4s;
 }
 
-.active-accordion {
+.active-cookie-accordion {
   background-color: black;
   color: white;
 }
 
 #cookie-accordions button:focus { outline: none; }
 
-.panel {
+.cookie-panel {
   padding: 18px;
   display: none;
   background-color: white;
   overflow: hidden;
 }
 
-.panel li {
+.cookie-panel li {
   margin-bottom: 5px;
 }
 
@@ -782,6 +782,6 @@ body {
   filter: invert(99%) sepia(1%) saturate(0%) hue-rotate(78deg) brightness(105%) contrast(101%);
 }
 
-.cookie-accordion {
+.cookie-accordion-div {
   margin-bottom: 2px;
 }

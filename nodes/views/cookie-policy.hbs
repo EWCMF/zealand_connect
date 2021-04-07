@@ -58,12 +58,12 @@
         <div id="cookie-accordions" class="col-md-6 col-12 mb-4 mt-4 mr-5">
 
             <h5 class="mb-5">Generel information</h5>
-            <div class="cookie-accordion">
-                <button class="accordion">
+            <div class="cookie-accordion-div">
+                <button class="cookie-accordion">
                     <span>Hvad er cookies?</span>
                     <img src="images/chevron-down.svg" width="12" height="12" class="accordion-image ml-5">
                 </button>
-                <div class="panel">
+                <div class="cookie-panel">
                     <p>En cookie er en lille tekstfil, der lagres i din browser for at kunne genkende din computer ved
                         tilbagevendende besøg. Der er ingen personlige oplysninger gemt i vores cookies, og de kan ikke
                         indeholde virus.</p>
@@ -71,23 +71,23 @@
                 </div>
             </div>
 
-            <div class="cookie-accordion">
-                <button class="accordion">
+            <div class="cookie-accordion-div">
+                <button class="cookie-accordion">
                     <span>Hvor længe opbevares cookies på min computer?</span>
                     <img src="images/chevron-down.svg" width="12" height="12" class="accordion-image ml-5"></button>
-                <div class="panel">
+                <div class="cookie-panel">
                     <p style="margin: 0">Cookies sletter sig selv efter et vist antal måneder. Det kan variere efter type,
                         hvor lang tid der går. De fornys dog efter hvert besøg. Du kan til enhver tid selv slette cookies
                         på din computer.</p>
                 </div>
             </div>
 
-            <div class="cookie-accordion">
-                <button class="accordion">
+            <div class="cookie-accordion-div">
+                <button class="cookie-accordion">
                     <span>Sådan undgår/sletter du cookies</span>
                     <img src="images/chevron-down.svg" width="12" height="12" class="accordion-image ml-5">
                 </button>
-                <div class="panel">
+                <div class="cookie-panel">
                     <p>Hvis du ikke ønsker at lagre cookies på din computer, har du mulighed for at få
                         en vejledning om, hvordan du – helt eller delvist – undgår at modtage og slette de cookies, der
                         ligger på din harddisk.</p>
@@ -130,12 +130,12 @@
 </div>
 
 <script>
-    let acc = document.getElementsByClassName("accordion");
+    let acc = document.getElementsByClassName("cookie-accordion");
     let i;
 
     for (i = 0; i < acc.length; i++) {
         acc[i].addEventListener("click", function () {
-            this.classList.toggle("active-accordion");
+            this.classList.toggle("active-cookie-accordion");
             let panel = this.nextElementSibling;
             let chevron = this.children[1];
             if (panel.style.display === "block") {
