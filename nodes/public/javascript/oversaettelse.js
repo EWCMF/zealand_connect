@@ -527,7 +527,35 @@ function getLangdata() {
                 "cookie_politik_header7": "This website is provided by:",
                 "cookie_politik_header8": "Cookie regulation",
                 "cookie_politik_paragraph7": 'All Danish websites are required to inform their users about cookies downloaded to their device. The information must comply with ”Bekendtgørelse om krav til information og samtykke ved lagring af og adgang til oplysninger i slutbrugeres terminaludstyr”.',
-                "cookie_politik_paragraph8_html": 'The regulation requires that the website receives consent from the user when the website wants to store cookies on the user\'s device. Read more about "The Cookie Regulation": <a href="http://erhvervsstyrelsen.dk/cookies">http://erhvervsstyrelsen.dk/cookies</a>.' 
+                "cookie_politik_paragraph8_html": 'The regulation requires that the website receives consent from the user when the website wants to store cookies on the user\'s device. Read more about "The Cookie Regulation": <a href="http://erhvervsstyrelsen.dk/cookies">http://erhvervsstyrelsen.dk/cookies</a>.',
+                "Generel_information": "General information",
+                "cookie_question_1": "What are cookies?",
+                "cookie_answer_1": "A cookie is a small text file that is stored in your browser and is used to recognize " +
+                    "your device with recurring visits. There is no personal information stored in our cookies and they " +
+                    "cannot contain viruses.",
+                "cookie_answer_1_2": "When you visit Zealand's websites your device will automatically receive one or more" +
+                    "cookies.",
+                "cookie_question_2": "How long are cookies stored on my device?",
+                "cookie_answer_2": "Cookies are automatically deleted after a certain number of months. When exactly it's" +
+                    "deleted varies by the type of cookie although they are always renewed upon recurring visits. You can" +
+                    "delete cookies on your device by yourself at any point in time.",
+                "cookie_question_3": "How to avoid/delete cookies",
+                "cookie_answer_3": "If you do not wish to store cookies on your computer you can read directions on how " +
+                    "to fully or partially avoid receiving cookies as well as how to delete the cookies that are already " +
+                    "stored on your device.",
+                "cookie_answer_3_2": "How to delete cookies:",
+                "cookie_link_1": "Delete cookies in Internet Explorer",
+                "cookie_link_2": "Delete cookies in Mozilla Firefox",
+                "cookie_link_3": "Delete cookies in Google Chrome",
+                "cookie_link_4": "Delete cookies in Safari",
+                "cookie_link_5": "Delete cookies in Opera",
+                "cookie_link_6": "Delete cookies on iPad, iPhone or iPod Touch",
+                "cookie_link_7": "Delete cookies on Android device",
+                "cookie_link_8": "Delete flash cookies (all browsers)",
+                "cookie_answer_3_3": "If you're using a browser not mentioned above you must find the proper directions" +
+                    " in that browser's guide section. If you do not wish to receive cookies, you can block them.",
+                "Persondatapolitik": "Personal Data Policy",
+                "cookie_answer_4": "Read about Zealand's Personal Data Policy here",
             }
         }
     }
