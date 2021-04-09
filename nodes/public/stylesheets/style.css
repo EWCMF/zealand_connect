@@ -785,3 +785,7 @@ body {
 .cookie-accordion-div {
   margin-bottom: 2px;
 }
+
+.pNewLine {
+  white-space: pre-line;
+}
