@@ -512,6 +512,7 @@ function getLangdata() {
                 "company_consent_paragraph6": "Information that you submit will be published at https://connect.zealand.dk/ and will be made freely available to companies, students, other stakeholders etc. This is not a closed forum.",
 
                 //cookie-policy
+                "Cookie-politik": "Cookie policy",
                 "cookie_politik_title": "Cookies",
                 "cookie_politik_header1": "What cookies do we use?",
                 "cookie_politik_paragraph1": "On this page you'll find a list of cookies that our site stores on computer as well as directions on how to withdraw consent or delete them.",

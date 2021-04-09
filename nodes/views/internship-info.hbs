@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="col-12 col-lg-6 p-3 m-0 d-flex flex-column">
+        {{#if isCompany}}
+            {{> forside-text-for-virk}}
+            {{> forside-text-arbejdtid}}
+            {{> forside-text-loen}}
+            {{> forside-text-forsikring}}
+            {{> forside-text-praktikaftale}}
+            {{> forside-text-praktikperiode}}
+            {{> forside-text-zealand}}
+        {{else if isStudent}}
+            {{> forside-text-arbejdtid}}
+            {{> forside-text-loen}}
+            {{> forside-text-forsikring}}
+            {{> forside-text-praktikaftale}}
+            {{> forside-text-praktikperiode}}
+            {{> forside-text-for-stud}}
+            {{> forside-text-slogan}}
+        {{else}}
+            {{> forside-text-for-virk}}
+            {{> forside-text-arbejdtid}}
+            {{> forside-text-loen}}
+            {{> forside-text-forsikring}}
+            {{> forside-text-praktikaftale}}
+            {{> forside-text-praktikperiode}}
+            {{> forside-text-zealand}}
+            {{> forside-text-for-stud}}
+            {{> forside-text-slogan}}
+        {{/if}}
+    </div>
+</div>
