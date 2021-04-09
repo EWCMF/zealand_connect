@@ -157,6 +157,7 @@ async function deleteVirksomhed(email) {
     }
 }
 
+// Note: this function is used in a cron job. Changes here will apply to the cron job as well.
 async function deleteStudent(email) {
     var errorHappened = false;
     try {

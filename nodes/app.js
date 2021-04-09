@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cronJob = require('./utils/cronjob');
 
 const profilRouter = require('./routes/profil');
 const internshipPostRouter = require('./routes/internship_post');
@@ -39,6 +40,8 @@ const findUserByEmail = require('./persistence/usermapping').findUserByEmail;
 const models = require('./models');
 
 const app = express();
+
+cronJob.runCronJobs();
 
 // view engine setup
 
