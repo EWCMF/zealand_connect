@@ -557,6 +557,13 @@ function getLangdata() {
                     " in that browser's guide section. If you do not wish to receive cookies, you can block them.",
                 "Persondatapolitik": "Personal Data Policy",
                 "cookie_answer_4": "Read about Zealand's Personal Data Policy here",
+
+                // Nyheder
+                "forside_nyhed_h_1": "New feature on Zealand Connect - receive new internship and job posts in your mailbox",
+                "forside_nyhed_p_1": "As a student you can now choose which types of posts that are relevant for you. You " +
+                "have the option of internship, study job, trainee and full time job. In your CV you can check the box \"" +
+                    "receive relevant posts in your mailbox\" you will receive an email when a relevant post is made by " +
+                    "a company. We check if the post matches your education and what you're looking for.",
             }
         }
     }
