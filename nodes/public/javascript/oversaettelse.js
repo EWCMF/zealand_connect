@@ -113,13 +113,13 @@ function getLangdata() {
                 "Praktikperiode": "Internship period",
                 "Praktikperiode_body_html": "Overview of internship periods for the study programmes" + '<img src="/images/praktikperioder.jpg">',
 
-                "For_virksomheden": "For companies",
+                "For_virksomheden": "For the company",
                 "For_virksomheden_body_html": "As part of the study programmes at Zealand, our students must do an internship. As a company, you have the opportunity to get an unpaid intern for 3 months. However, some study programmes have other internship agreements as regards duration, or the internship may be paid (read more under Salary).<br><br>" +
                 "An internship serves multiple purposes and is very rewarding for the company as well as for the student. Our students are ready to contribute with their broad theoretical knowledge. In the company, the students have the opportunity to put their skills in practice and thus get valuable specific experience in return.<br><br>" +
                 "The objective of the internship is to combine theories and tools from the study programme with the specific and practical challenges which companies meet every day.<br><br>" +
                 "The company appoints a contact person for the intern. This person is in contact with the student on a daily basis and offers the opportunity to guide and help the student during the internship. Moreover, the contact person will have to complete a digital evaluation of the student and the cooperation with Zealand upon completion of the internship.",
 
-                "For_studerende": "For students",
+                "For_studerende": "For the student",
                 "For_studerende_body": "As a student at Zealand, an internship is a mandatory part of your study programme. The duration of the internship period depends on the study programme the student is following (see the schedule under Internship period).",
 
                 "ZealandConnect_body": "Create an advertisement on Zealand Connect and find your next intern. In this advertisement, you describe what you can offer the student during the internship. If you want to search for an intern on your own, you can also screen the students’ resumes (CVs) and contact them if their skills meet your needs.",
@@ -512,6 +512,7 @@ function getLangdata() {
                 "company_consent_paragraph6": "Information that you submit will be published at https://connect.zealand.dk/ and will be made freely available to companies, students, other stakeholders etc. This is not a closed forum.",
 
                 //cookie-policy
+                "Cookie-politik": "Cookie policy",
                 "cookie_politik_title": "Cookies",
                 "cookie_politik_header1": "What cookies do we use?",
                 "cookie_politik_paragraph1": "On this page you'll find a list of cookies that our site stores on computer as well as directions on how to withdraw consent or delete them.",
@@ -556,6 +557,13 @@ function getLangdata() {
                     " in that browser's guide section. If you do not wish to receive cookies, you can block them.",
                 "Persondatapolitik": "Personal Data Policy",
                 "cookie_answer_4": "Read about Zealand's Personal Data Policy here",
+
+                // Nyheder
+                "forside_nyhed_h_1": "New feature on Zealand Connect - receive new internship and job posts in your mailbox",
+                "forside_nyhed_p_1": "As a student you can now choose which types of posts that are relevant for you. You " +
+                "have the option of internship, study job, trainee and full time job. In your CV you can check the box \"" +
+                    "receive relevant posts in your mailbox\" you will receive an email when a relevant post is made by " +
+                    "a company. We check if the post matches your education and what you're looking for.",
             }
         }
     }
