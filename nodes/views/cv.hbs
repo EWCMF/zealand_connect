@@ -275,14 +275,12 @@
             xhttp.onreadystatechange = function () {
                 let responseObject = JSON.parse(this.responseText);
                 if (this.readyState === 4 && this.status === 200) {
-                    window.location.href = "../search-cv";
                     alert(responseObject.message)
+                    window.location.href = "../search-cv";
                 } else if (this.readyState === 4 && this.status === 400) {
                     alert(responseObject.message)
                 }
             }
-        } else {
-            return;
         }
     }
 </script>
