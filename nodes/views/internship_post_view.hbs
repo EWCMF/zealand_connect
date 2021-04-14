@@ -89,11 +89,11 @@
         </div>
         <div class="col-12 col-lg-2 d-flex flex-column">
             {{#unless noButtons}}
-                {{#if ejer}}
+                {{#ifCond ejer '||' isAdmin}}
                     <button type="button" class="btn btn-success mt-3"
                             onclick="window.location.href='../internship_update?id={{rid}}'"
                     data-key="Rediger_oplag">Rediger opslag</button>
-                {{/if}}
+                {{/ifCond}}
             {{/unless}}
         </div>
     </div>

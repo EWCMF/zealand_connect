@@ -109,6 +109,10 @@
             <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'" data-key="Rediger_CV">Rediger
                 CV</button>
             {{/if}}
+            {{#if isAdmin}}
+                <form id="deleteCVForm" action="/admin-funktioner/delete-cv/{{json.id}}" method="post" class="form-group" onsubmit="return false"></form>
+                <button type="button" class="btn btn-danger" onclick="submitDeleteCV()" data-key="Slet_CV">Slet CV</button>
+            {{/if}}
         </div>
         {{/unless}}
     </div>
@@ -251,11 +255,20 @@
             </p>
         </div>
     </div>
-
 </div>
+
 <script>
     let autobreak = document.getElementsByClassName('autobreak');
     for (let i = 0; i < autobreak.length; i++) {
         autobreak[i].innerHTML = autobreak[i].innerHTML.trim();
+    }
+
+    function submitDeleteCV(){
+        let studentEmail = prompt("Skriv den studerendes email for at bekræfte handlingen?");
+        if (studentEmail){
+            document.forms["deleteCVForm"].submit();
+        } else {
+            return;
+        }
     }
 </script>

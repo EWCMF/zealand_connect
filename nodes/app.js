@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cronJob = require('./utils/cronjob');
+const handlebarsHelpers = require('./utils/handlebars-helpers').helpers;
 
 const profilRouter = require('./routes/profil');
 const internshipPostRouter = require('./routes/internship_post');
@@ -49,54 +50,7 @@ cronJob.runCronJobs();
 app.engine(
   "hbs",
   hbs({
-    helpers: {
-      paginate: require('handlebars-paginate'),
-
-      selectState: (state, value) => {
-        if(state === value) {
-            return 'selected';
-        }
-        return '';
-      },
-
-      checkedState: (state) => {
-        if(state === 'true' || state === true){
-            return 'checked';
-        }
-        return '';
-      },
-
-      checkedStateRadio: (state, id) => {
-        if (state === 'true' || state === true) {
-          if (id == 'tilgaengelighed1') {
-            return 'checked'
-          }
-        }
-        if (state === 'false' || state === false) {
-          if (id == 'tilgaengelighed2') {
-            return 'checked'
-          }
-        }
-        return '';
-      },
-
-      checkedStateURL: (url, key, value) => {
-        if (url.indexOf(key + "=") == -1) {
-          return '';
-        }
-
-        string = url.substring(url.indexOf(key + "="));
-        if (string.indexOf('&') > -1) {
-          string = string.substring(0, string.indexOf('&'));
-        }
-
-        if (string == `${key}=${value}`) {
-          return 'checked';
-        }
-
-        return '';
-      }
-    },
+    helpers: handlebarsHelpers,
     partialsDir: ["views/partials"],
     extname: ".hbs",
     layoutsDir: "views",

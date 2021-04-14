@@ -1,11 +1,12 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const {deleteVirksomhed, searchVirksomhederByName, findStudentByName} = require('../persistence/usermapping');
-var {reqLang} = require('../public/javascript/request');
+const {reqLang} = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
-var passport = require('passport');
+const passport = require('passport');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
+const models = require("../models");
 
 router.get('/', authorizeUser('admin'), function (req, res, next) {
     // Hele authorization håndteres nu af en middleware function
@@ -134,6 +135,20 @@ router.post('/search-student', authorizeUser('admin'), async (req, res) => {
     let data = await findStudentByName(name);
 
     res.send(data);
+});
+
+router.post('/delete-cv/:id', authorizeUser('admin'), function (req, res, next) {
+    let cvId = req.params.id;
+    if (cvId == null) {
+        res.send("Use id");
+    } else {
+        models.CV.destroy({
+            where: {
+                id: cvId
+            }
+        });
+        res.send("Entry deleted");
+    }
 });
 
 
