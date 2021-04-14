@@ -3,6 +3,7 @@ const router = express.Router();
 const {deleteVirksomhed, searchVirksomhederByName, findStudentByName} = require('../persistence/usermapping');
 const {reqLang} = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
+const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const passport = require('passport');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
@@ -142,7 +143,7 @@ router.post('/delete-cv/:id', authorizeUser('admin'), async function (req, res, 
     let email = jsonBody.email
     let cvId = req.params.id;
     if (!cvId) {
-        return res.status(400).json({message: "Angiv et ID for at slette et CV"})
+        return res.status(400).json({message: "Angiv et ID for at slette et CV."})
     } else {
         let CV = await models.CV.findByPk(cvId);
 
@@ -154,7 +155,25 @@ router.post('/delete-cv/:id', authorizeUser('admin'), async function (req, res, 
             })
             return res.status(200).json({message: "CV'et med emailen " + email + " blev slettet. Du vil blive omdirigeret til CV-listen."})
         } else {
-            return res.status(400).json({message: "Der findes intet CV med den email"})
+            return res.status(400).json({message: "Der findes intet CV med den email. Prøv igen."})
+        }
+    }
+});
+
+router.post('/delete-internship-post/:id', authorizeUser('admin'), async function (req, res, next) {
+    let jsonBody = JSON.parse(req.body)
+    let postTitle = jsonBody.postTitle
+    let postId = req.params.id;
+    if (!postId) {
+        return res.status(400).json({message: "Angiv et ID for at slette et opslag."})
+    } else {
+        let internshipPost = models.InternshipPost.findByPk(postId);
+
+        if (internshipPost.title === postTitle){
+            deleteInternshipPost(postId)
+            return res.status(200).json({message: "Opslaget med overskriften '" + postTitle + "' blev slettet. Du vil blive omdirigeret til listen med opslag."})
+        } else {
+            return res.status(400).json({message: "Der findes intet opslag med den overskrift. Prøv igen."})
         }
     }
 });
