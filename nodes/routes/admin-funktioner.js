@@ -137,17 +137,25 @@ router.post('/search-student', authorizeUser('admin'), async (req, res) => {
     res.send(data);
 });
 
-router.post('/delete-cv/:id', authorizeUser('admin'), function (req, res, next) {
+router.post('/delete-cv/:id', authorizeUser('admin'), async function (req, res, next) {
+    let jsonBody = JSON.parse(req.body)
+    let email = jsonBody.email
     let cvId = req.params.id;
-    if (cvId == null) {
-        res.send("Use id");
+    if (!cvId) {
+        return res.status(400).json({message: "Angiv et ID for at slette et CV"})
     } else {
-        models.CV.destroy({
-            where: {
-                id: cvId
-            }
-        });
-        res.send("Entry deleted");
+        let CV = await models.CV.findByPk(cvId);
+
+        if (CV.email === email){
+            await models.CV.destroy({
+                where: {
+                    id: cvId
+                }
+            })
+            return res.status(200).json({message: "CV'et med emailen " + email + " blev slettet. Du vil blive omdirigeret til CV-listen."})
+        } else {
+            return res.status(400).json({message: "Der findes intet CV med den email"})
+        }
     }
 });
 

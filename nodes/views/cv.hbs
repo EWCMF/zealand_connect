@@ -110,8 +110,7 @@
                 CV</button>
             {{/if}}
             {{#if isAdmin}}
-                <form id="deleteCVForm" action="/admin-funktioner/delete-cv/{{json.id}}" method="post" class="form-group" onsubmit="return false"></form>
-                <button type="button" class="btn btn-danger" onclick="submitDeleteCV()" data-key="Slet_CV">Slet CV</button>
+                <button type="button" class="btn btn-danger mt-3" onclick="submitDeleteCV()" data-key="Slet_CV">Slet CV</button>
             {{/if}}
         </div>
         {{/unless}}
@@ -264,9 +263,24 @@
     }
 
     function submitDeleteCV(){
+        let cvId = {{json.id}};
         let studentEmail = prompt("Skriv den studerendes email for at bekræfte handlingen?");
         if (studentEmail){
-            document.forms["deleteCVForm"].submit();
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/admin-funktioner/delete-cv/" + cvId, true);
+            xhttp.send(JSON.stringify({
+                email: studentEmail,
+            }));
+
+            xhttp.onreadystatechange = function () {
+                let responseObject = JSON.parse(this.responseText);
+                if (this.readyState === 4 && this.status === 200) {
+                    window.location.href = "../search-cv";
+                    alert(responseObject.message)
+                } else if (this.readyState === 4 && this.status === 400) {
+                    alert(responseObject.message)
+                }
+            }
         } else {
             return;
         }
