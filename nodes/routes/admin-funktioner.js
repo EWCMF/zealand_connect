@@ -167,8 +167,7 @@ router.post('/delete-internship-post/:id', authorizeUser('admin'), async functio
     if (!postId) {
         return res.status(400).json({message: "Angiv et ID for at slette et opslag."})
     } else {
-        let internshipPost = models.InternshipPost.findByPk(postId);
-
+        let internshipPost = await models.InternshipPost.findByPk(postId);
         if (internshipPost.title === postTitle){
             deleteInternshipPost(postId)
             return res.status(200).json({message: "Opslaget med overskriften '" + postTitle + "' blev slettet. Du vil blive omdirigeret til listen med opslag."})

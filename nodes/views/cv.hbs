@@ -110,7 +110,7 @@
                 CV</button>
             {{/if}}
             {{#if isAdmin}}
-                <button type="button" class="btn btn-danger mt-3" onclick="submitDeleteCV()" data-key="Slet_CV">Slet CV</button>
+                <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
             {{/if}}
         </div>
         {{/unless}}
@@ -262,7 +262,7 @@
         autobreak[i].innerHTML = autobreak[i].innerHTML.trim();
     }
 
-    function submitDeleteCV(){
+    function deleteCV(){
         let cvId = {{json.id}};
         let studentEmail = prompt("Skriv den studerendes email for at bekræfte handlingen?");
         if (studentEmail){
