@@ -16,8 +16,20 @@
           enctype="multipart/form-data">
         <div class="row mb-5">
             <div class="col-12 col-md-6">
-                <div class="form-column col-12 col-md-8">
+                <div class="form-column col-11">
 
+                <div class="form-group">
+                    <div class="">
+                        <label>Email</label>
+                        <div class="ml-3">
+                            <label class="inputImitation">{{loggedInVirksomhed.email}}</label>
+                            <button type="button" class="btn btn-success ml-1" onclick="openEmailModal()">Skift</button>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                </div>
                 <div class="form-group required">
                     <label for="navn" data-Key="Virksomheds_navn">Virksomheds navn</label>
                     <input class="form-control" name="navn" id="navn" rows="2" value="{{loggedInVirksomhed.navn}}">
@@ -85,9 +97,7 @@
                            value="{{loggedInVirksomhed.by}}">
                     <p id="byError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
                 </div>
-                </div>
-                <div class="form-column col-12">
-                    <div class="form-group">
+                <div class="form-group">
                         <label for="description" data-key="Om_virksomheden">Om virksomheden</label>
                         <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
                           title="Lav en kort beskrivelse af din virksomheds primære arbejdsområde og værdier"
@@ -96,21 +106,10 @@
                         >{{loggedInVirksomhed.description}}</textarea>
                     </div>
                 </div>
-                <div class="form-column col-12 mt-3">
-                    <div>
-                    <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
-                    <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
-                            data-Key="Aendrer_password">Ændrer password
-                    </button>
-                    </div>
-                </div>
-                
-
-
             </div>
             
 
-            <div class="form-column col-12 col-md-4">
+            <div class="form-column col-12 col-md-4 ml-3">
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel"
                            data-Key="Virksomhedslogo">Virksomhedslogo</label>
@@ -153,6 +152,15 @@
                 </div>
             </div>
 
+            <div class="form-column col-12 mt-3 ml-3">
+                    <div>
+                    <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
+                    <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
+                            data-Key="Aendrer_password">Ændrer password
+                    </button>
+                    </div>
+                </div>
+
     </form>
 
 </div>
@@ -160,6 +168,7 @@
 
 {{> cropper-modal }}
 {{> change-password-modal }}
+{{> change-email-modal }}
 
 <script>
     function updateElements() {
@@ -179,5 +188,14 @@
         });
 
         $("aendrePasswordModal").modal('show');
+    }
+
+    function openEmailModal() {
+        $('#skiftEmailModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        $("skiftEmailModal").modal('show');
     }
 </script>

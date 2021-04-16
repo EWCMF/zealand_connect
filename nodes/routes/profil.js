@@ -20,8 +20,12 @@ const {
 const checkForIdenticals = require('../validation/input-validation').checkForIdenticals;
 const validatePasswordLength = require('../validation/input-validation').validatePasswordLength;
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
+const {
+    emailRegex
+} = require('../constants/regex');
+const passport = require('passport');
 
-router.get('/',  authorizeUser('student', 'company', 'admin'),function (req, res, next) {
+router.get('/', authorizeUser('student', 'company', 'admin'), function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
         if (user instanceof models.Virksomhed) {
             let loggedInVirksomhed = {
@@ -89,7 +93,7 @@ router.get('/virksomhed/:id', async function (req, res) {
     });
 });
 
-router.get('/rediger',  authorizeUser('student', 'company', 'admin'), function (req, res, next) {
+router.get('/rediger', authorizeUser('student', 'company', 'admin'), function (req, res, next) {
     let errors = req.query;
     //todo if Student render student else virksomhed
     //todo: find bruger og indsæt dens data i render hbs.
@@ -147,7 +151,7 @@ router.get('/rediger',  authorizeUser('student', 'company', 'admin'), function (
     });
 });
 
-router.post('/redigerstudent-save',  authorizeUser('student', 'admin'), function (req, res) {
+router.post('/redigerstudent-save', authorizeUser('student', 'admin'), function (req, res) {
     let formData = new formidable.IncomingForm();
 
     formData.parse(req, async function (error, fields, files) {
@@ -389,7 +393,7 @@ router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, r
     });
 });
 
-router.get('/getUser',  authorizeUser('student', 'company', 'admin'), function (req, res, next) {
+router.get('/getUser', authorizeUser('student', 'company', 'admin'), function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
         res.send(user);
     })
@@ -448,6 +452,75 @@ router.post('/change-password-company', authorizeUser('company', 'admin'), async
 
 });
 
+router.post('/change-email-company', authorizeUser('company', 'admin'), async function (req, res, next) {
+    const {
+        verifyPassword
+    } = require('../encryption/password');
+
+    var formData = new formidable.IncomingForm();
+    formData.parse(req, async function (error, fields, files) {
+
+        let email = fields.nyEmail;
+        let repeatEmail = fields.gentagEmail;
+        let password = fields.emailPassword;
+
+        req.body.email = email;
+        req.body.password = password;
+
+        if (!emailRegex.test(email)) {
+            return res.status(400).send("errorInvalidEmail");
+        }
+
+        if (email !== repeatEmail) {
+            return res.status(400).send("errorNotSame");
+        }
+
+        let checkEmail = await findUserByEmail(email);
+        if (checkEmail) {
+            return res.status(400).send("errorEmailNotAvailable");
+        }
+
+        let id = res.locals.user.id;
+
+        let virksomhed = await models.Virksomhed.findByPk(id, {
+            raw: true,
+            attributes: ["password"]
+        });
+
+        if (!verifyPassword(password, virksomhed.password)) {
+            return res.status(400).send("errorIncorrectPassword");
+        }
+
+        models.Virksomhed.update({
+            email: email
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        passport.authenticate('local', function (err, user, info) {
+            //handle error
+            //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
+
+            req.logout();
+
+            console.log('test1')
+            //login skal være der for, at passport laver en cookie for brugeren
+            req.logIn(user, async function (err) {
+                if (err) {
+                    console.log('test2')
+                    return next(err);
+                }
+
+                console.log('test3')
+                return res.status(200).end();
+            });
+        })(req, res, next);
+    });
+
+});
+
 router.post('/delete-account', authorizeUser('student', 'company'), async function (req, res, next) {
     const {
         verifyPassword
@@ -461,18 +534,17 @@ router.post('/delete-account', authorizeUser('student', 'company'), async functi
 
         let user = null;
 
-        if (res.locals.isStudent){
+        if (res.locals.isStudent) {
             user = await models.Student.findByPk(id, {
                 attributes: ["password", "email"]
             });
-        }
-        else if (res.locals.isCompany){
+        } else if (res.locals.isCompany) {
             user = await models.Virksomhed.findByPk(id, {
                 attributes: ["password", "email"]
             });
         }
 
-        if (user){
+        if (user) {
             let passwordFromDb = user.password;
 
             if (!await verifyPassword(password, passwordFromDb)) {
@@ -483,16 +555,15 @@ router.post('/delete-account', authorizeUser('student', 'company'), async functi
                 return res.status(400).send(JSON.stringify(errors));
             }
 
-            if (user instanceof models.Student){
+            if (user instanceof models.Student) {
                 await deleteStudent(user.email)
-            } else if (user instanceof models.Virksomhed){
+            } else if (user instanceof models.Virksomhed) {
                 await deleteVirksomhed(user.email)
             }
 
             req.logout();
             res.status(200).send('ok');
-        }
-        else {
+        } else {
             res.status(404);
         }
     });
