@@ -19,13 +19,18 @@ router.get('/', function (req, res, next) {
     let studentChecked;
     let companyChecked;
 
-    if (req.query.virk != null) {
+    if (req.query.usertype) {
+        if (req.query.usertype === '1') {
+            studentChecked = '';
+            companyChecked = 'checked';
+        } else {
+            studentChecked = 'checked';
+            companyChecked = '';
+        }  
+    } else {
         studentChecked = '';
         companyChecked = 'checked';
-    } else {
-        studentChecked = 'checked';
-        companyChecked = '';
-    }
+    } 
 
     res.render('opret-bruger', {
         studentChecked,
