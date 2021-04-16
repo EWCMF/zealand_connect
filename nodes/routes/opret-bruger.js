@@ -72,9 +72,6 @@ router.post('/create', (req, res) => {
     let cvrnr = jsonBody.cvrnr;
     let consent = jsonBody.consent;
 
-    console.log("test 1")
-    console.log(consent)
-
     //reset errors
     let atLeastOneErrorIsPresent = false;
     let errors = {

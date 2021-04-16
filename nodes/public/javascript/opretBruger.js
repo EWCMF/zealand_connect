@@ -354,7 +354,7 @@ async function submitOpretVirksomhed() {
         by: inputs.by.value,
         postnr: inputs.postnummer.value,
         cvrnr: inputs.cvrNummer.value,
-        consent: inputs.consent.checked
+        consent: inputs.consent.value
     }));
 };
 
@@ -454,7 +454,7 @@ async function submitOpretStudent() {
         fornavn: inputsStudent.fornavn.value,
         efternavn: inputsStudent.efternavn.value,
         dato: inputsStudent.dato.value,
-        consent: inputsStudent.consent.checked
+        consent: inputsStudent.consent.value
     }));
 };
 
