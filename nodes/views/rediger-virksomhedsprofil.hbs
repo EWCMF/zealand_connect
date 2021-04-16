@@ -23,7 +23,7 @@
                         <label>Email</label>
                         <div class="ml-3">
                             <label class="inputImitation">{{loggedInVirksomhed.email}}</label>
-                            <button class="btn btn-success ml-1">Skift</button>
+                            <button type="button" class="btn btn-success ml-1" onclick="openEmailModal()">Skift</button>
                         </div>
                         
                     </div>
@@ -168,6 +168,7 @@
 
 {{> cropper-modal }}
 {{> change-password-modal }}
+{{> change-email-modal }}
 
 <script>
     function updateElements() {
@@ -187,5 +188,14 @@
         });
 
         $("aendrePasswordModal").modal('show');
+    }
+
+    function openEmailModal() {
+        $('#skiftEmailModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        $("skiftEmailModal").modal('show');
     }
 </script>
