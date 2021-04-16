@@ -140,6 +140,7 @@
         let companyConsent = document.getElementById("companyConsentCreate");
         let consentButton = document.getElementById("companyConsentButton");
         let createCompanyButton = document.getElementById("submitBtn");
+        let consentText = document.getElementById("consentText");
 
         if (consentButton) {
             consentButton.disabled = !consentCheckbox.checked;
@@ -147,6 +148,11 @@
         if (createCompanyButton) {
             createCompanyButton.disabled = !consentCheckbox.checked;
             companyConsent.value = consentCheckbox.checked;
+            if (consentCheckbox.checked) {
+                consentText.classList.remove('formError');
+            } else {
+                consentText.classList.add('formError');
+            }
         }
     }
 </script>

@@ -109,10 +109,10 @@
                             </div>
                         </div>
                         <div class="form-group mb-5">
-                            <label class="form-check-label" data-key="virk_bekraeft_samtykke_html">
+                            <label id="consentText" class="form-check-label formError" data-key="virk_bekraeft_samtykke_html">
                                 Du skal acceptere vores
-                                <a class="link-primary" onclick="openCompanyConsent()">samtykkeerklæring om
-                                    personoplysninger</a>
+                                <a class="link-primary" onclick="openCompanyConsent()"><b>samtykkeerklæring om
+                                    personoplysninger</b></a>
                                 for at kunne oprette en bruger på Zealand Connect.
                             </label>
                         </div>
@@ -210,10 +210,11 @@
                             </div>
                         </div>
                         <div class="form-group mb-5">
-                            <label class="form-check-label" data-key="stud_bekraeft_samtykke_html">
+                            {{!-- <p class="formError text-center"><b>VIGTIGT!</b></p> --}}
+                            <label id="consentTextStudent" class="form-check-label formError" data-key="stud_bekraeft_samtykke_html">
                                 Du skal acceptere vores
-                                <a class="link-primary" onclick="openDataConsent()">samtykkeerklæring om
-                                    personoplysninger</a>
+                                <a class="link-primary" onclick="openDataConsent()"><b>samtykkeerklæring om
+                                    personoplysninger</b></a>
                                 for at kunne oprette en bruger på Zealand Connect.
                             </label>
                         </div>
