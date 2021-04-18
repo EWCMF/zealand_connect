@@ -72,7 +72,6 @@ router.post('/authenticateUser', function (req, res, next) {
         req.body = JSON.parse(req.body);
     }
     passport.authenticate('local', function (err, user, info) {
-        console.log(user);
 
         //handle error
         if (!user) {

@@ -399,6 +399,59 @@ router.get('/getUser', authorizeUser('student', 'company', 'admin'), function (r
     })
 });
 
+router.post('/change-password-student', authorizeUser('student', 'admin'), async function (req, res, next) {
+    const {
+        hashPassword,
+        verifyPassword
+    } = require('../encryption/password');
+
+    var formData = new formidable.IncomingForm();
+    formData.parse(req, async function (error, fields, files) {
+
+        let oldPass = fields.gamlePassword;
+        let newPass = fields.nytPassword;
+        let repeatPass = fields.gentagNytPassword;
+
+        let errors = [];
+
+        let id = res.locals.user.id;
+
+        let student = await models.Student.findByPk(id, {
+            raw: true,
+            attributes: ["password"]
+        });
+
+        let passwordFromDb = student.password;
+
+        if (!await verifyPassword(oldPass, passwordFromDb)) {
+            errors.push(1);
+        }
+
+        if (!validatePasswordLength(newPass)) {
+            errors.push(2);
+        }
+
+        if (!checkForIdenticals(newPass, repeatPass)) {
+            errors.push(3);
+        }
+
+        if (errors.length > 0) {
+            return res.status(400).send(JSON.stringify(errors));
+        }
+
+        models.Student.update({
+            password: await hashPassword(newPass)
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        res.status(200).send('ok');
+    });
+
+});
+
 router.post('/change-password-company', authorizeUser('company', 'admin'), async function (req, res, next) {
     const {
         hashPassword,
@@ -491,7 +544,7 @@ router.post('/change-email-company', authorizeUser('company', 'admin'), async fu
             return res.status(400).send("errorIncorrectPassword");
         }
 
-        models.Virksomhed.update({
+        await models.Virksomhed.update({
             email: email
         }, {
             where: {
@@ -505,15 +558,77 @@ router.post('/change-email-company', authorizeUser('company', 'admin'), async fu
 
             req.logout();
 
-            console.log('test1')
             //login skal være der for, at passport laver en cookie for brugeren
             req.logIn(user, async function (err) {
                 if (err) {
-                    console.log('test2')
                     return next(err);
                 }
 
-                console.log('test3')
+                return res.status(200).end();
+            });
+        })(req, res, next);
+    });
+
+});
+
+router.post('/change-email-student', authorizeUser('student', 'admin'), async function (req, res, next) {
+    const {
+        verifyPassword
+    } = require('../encryption/password');
+
+    var formData = new formidable.IncomingForm();
+    formData.parse(req, async function (error, fields, files) {
+
+        let email = fields.nyEmail;
+        let repeatEmail = fields.gentagEmail;
+        let password = fields.emailPassword;
+
+        req.body.email = email;
+        req.body.password = password;
+
+        if (!emailRegex.test(email)) {
+            return res.status(400).send("errorInvalidEmail");
+        }
+
+        if (email !== repeatEmail) {
+            return res.status(400).send("errorNotSame");
+        }
+
+        let checkEmail = await findUserByEmail(email);
+        if (checkEmail) {
+            return res.status(400).send("errorEmailNotAvailable");
+        }
+
+        let id = res.locals.user.id;
+
+        let student = await models.Student.findByPk(id, {
+            raw: true,
+            attributes: ["password"]
+        });
+
+        if (!verifyPassword(password, student.password)) {
+            return res.status(400).send("errorIncorrectPassword");
+        }
+
+        await models.Student.update({
+            email: email
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        passport.authenticate('local', function (err, user, info) {
+            //handle error
+            //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
+
+            req.logout();
+
+            //login skal være der for, at passport laver en cookie for brugeren
+            req.logIn(user, async function (err) {
+                if (err) {
+                    return next(err);
+                }
                 return res.status(200).end();
             });
         })(req, res, next);

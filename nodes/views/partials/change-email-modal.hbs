@@ -78,8 +78,11 @@
         }
       }
     };
-
-    xhr.open('POST', '/profil/change-email-company');
+    if ("{{isCompany}}") {
+      xhr.open('POST', '/profil/change-email-company');
+    } else {
+      xhr.open('POST', '/profil/change-email-student');
+    }
     xhr.send(formData);
   }
 </script>

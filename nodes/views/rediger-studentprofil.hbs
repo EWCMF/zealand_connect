@@ -11,88 +11,104 @@
         </div>
     </div>
 
-    <form action="/profil/redigerstudent-save"
-          method="POST"
-          id="redigerStudentForm"
-          name="redigerStudentForm"
-          enctype="multipart/form-data">
+    <form action="/profil/redigerstudent-save" method="POST" id="redigerStudentForm" name="redigerStudentForm"
+        enctype="multipart/form-data">
 
-        <div class="row">
-            <div class="form-column col-12 col-md-4">
+        <div class="row mb-5">
+            <div class="col-12 col-md-6">
+                <div class="form-column col-11">
+                    <div class="form-group">
+                        <div class="">
+                            <label>Email</label>
+                            <div class="ml-3">
+                                <label class="inputImitation">{{loggedInUser.email}}</label>
+                                <button type="button" class="btn btn-success ml-1"
+                                    onclick="openEmailModal()">Skift</button>
+                            </div>
 
-                <div class="form-group required">
-                    <label for="fornavn" data-key="Fornavn">Fornavn</label>
-                    <input class="form-control" name="fornavn" id="fornavn" rows="2"
-                           value="{{loggedInUser.fornavn}}">
-                    <p id="fornavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
-                        udfyldes</p>
-                    <p id="fornavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_fornavn">Ugyldigt
-                        fornavn</p>
-                </div>
-                <div class="form-group required">
-                    <label for="efternavn" data-key="Efternavn">Efternavn</label>
-                    <input class="form-control" name="efternavn" id="efternavn" rows="2"
-                           value="{{loggedInUser.efternavn}}">
-                    <p id="efternavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
-                        udfyldes</p>
-                    <p id="efternavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_efternavn">
-                        Ugyldigt efternavn</p>
-                </div>
-                <div class="form-group required" style="display: none;">
-                    <label for="email">Email</label>
-                    <input class="form-control" name="email" id="email" rows="2" value="{{loggedInUser.email}}">
-                    <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal skrive
-                        din email her og mindst
-                        bruge
-                        et @</p>
-                </div>
-                <div class="form-group required">
-                    <label for="telefon" data-key="Telefon">Telefon</label>
-                    <input type="number" class="form-control" name="telefon" id="telefon" rows="2"
-                           value="{{loggedInUser.tlfnr}}">
-                    <p id="telefonError" class="CVErrorColor" hidden="true" data-key="Telefon_error">Du skal skrive dit
-                        nummer, det skal
-                        præcist
-                        være 8
-                        tal og må ikke starte med 0</p>
-                </div>
-                <div class="form-group">
-                    <label for="password" data-key="labelAdgangskode_html">Password
-                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                              title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
-                    </label>
+                        </div>
 
-                    <input type="password" class="form-control" name="password" id="password" rows="2">
-                    <p id="passwordLengthError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_password">
-                        Ugyldigt password
-                    </p>
-                    <p id="passwordMismatchError" class="CVErrorColor" hidden="true" data-key="Password_matcher_ikke">
-                        Password matcher ikke
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="gentagPassword" data-key="Gentag_password">Gentag password</label>
-                    <input type="password" class="form-control" name="gentagPassword" id="gentagPassword" rows="2">
-                </div>
-                <div>
-                    <button type="button" class="btn btn-success" id="gem" data-key="Gem">Gem</button>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="fornavn" data-key="Fornavn">Fornavn</label>
+                        <input class="form-control" name="fornavn" id="fornavn" rows="2"
+                            value="{{loggedInUser.fornavn}}">
+                        <p id="fornavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                            udfyldes</p>
+                        <p id="fornavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_fornavn">
+                            Ugyldigt
+                            fornavn</p>
+                    </div>
+                    <div class="form-group required">
+                        <label for="efternavn" data-key="Efternavn">Efternavn</label>
+                        <input class="form-control" name="efternavn" id="efternavn" rows="2"
+                            value="{{loggedInUser.efternavn}}">
+                        <p id="efternavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                            udfyldes</p>
+                        <p id="efternavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_efternavn">
+                            Ugyldigt efternavn</p>
+                    </div>
+                    <div class="form-group required" style="display: none;">
+                        <label for="email">Email</label>
+                        <input class="form-control" name="email" id="email" rows="2" value="{{loggedInUser.email}}">
+                        <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal
+                            skrive
+                            din email her og mindst
+                            bruge
+                            et @</p>
+                    </div>
+                    <div class="form-group required">
+                        <label for="telefon" data-key="Telefon">Telefon</label>
+                        <input type="number" class="form-control" name="telefon" id="telefon" rows="2"
+                            value="{{loggedInUser.tlfnr}}">
+                        <p id="telefonError" class="CVErrorColor" hidden="true" data-key="Telefon_error">Du skal skrive
+                            dit
+                            nummer, det skal
+                            præcist
+                            være 8
+                            tal og må ikke starte med 0</p>
+                    </div>
+                    {{!-- <div class="form-group">
+                        <label for="password" data-key="labelAdgangskode_html">Password
+                            <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
+                        </label>
+
+                        <input type="password" class="form-control" name="password" id="password" rows="2">
+                        <p id="passwordLengthError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_password">
+                            Ugyldigt password
+                        </p>
+                        <p id="passwordMismatchError" class="CVErrorColor" hidden="true"
+                            data-key="Password_matcher_ikke">
+                            Password matcher ikke
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="gentagPassword" data-key="Gentag_password">Gentag password</label>
+                        <input type="password" class="form-control" name="gentagPassword" id="gentagPassword" rows="2">
+                    </div> --}}
+
+                    {{!-- <div>
+                        <button type="button" class="btn btn-success" id="gem" data-key="Gem">Gem</button>
+                    </div> --}}
                 </div>
             </div>
-            <div class="form-column col-12 col-md-4">
+            <div class="form-column col-12 col-md-4 ml-3">
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel"
-                           data-key="Profilbillede">Profilbillede</label>
+                        data-key="Profilbillede">Profilbillede</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 10MB. Billedet kan skæres til efter det er valgt."
-                          data-key="Profilbillede_tooltip">?</span>
+                        title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 10MB. Billedet kan skæres til efter det er valgt."
+                        data-key="Profilbillede_tooltip">?</span>
                 </div>
                 <div class="profilePicHolder">
                     <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg"
-                         alt="PROFILBILLEDE">
+                        alt="PROFILBILLEDE">
                     <div class="custom-file">
                         <input id="crop_base64" type="text" name="crop_base64" class="d-none">
                         <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" class="custom-file-input"
-                               id="profilePic" onchange="validateAndUpdateImage('picLabel', 'profilePic',
+                            id="profilePic" onchange="validateAndUpdateImage('picLabel', 'profilePic',
                                'imageTypeError', 'imageDimensionsError', 'imageSizeError', 'cropperModal', 'cropFrame',
                                'profilbillede', 'crop_base64')">
                         <label id="picLabel" class="custom-file-label" for="profilePic" data-key="Vaelg_billede">Vælg
@@ -105,10 +121,20 @@
                             kun uploade en fil på maksimum
                             10MB</p>
                         <p id="imageDimensionsError" class="CVErrorColor mt-3" hidden="true"
-                           data-key="Vaelg_billede_error">
+                            data-key="Vaelg_billede_error">
                             Billedet skal være mindst 250 pixels i højde og bredde
                         </p>
                     </div>
+                </div>
+            </div>
+
+
+            <div class="form-column col-12 mt-3 ml-3">
+                <div>
+                    <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
+                    <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
+                        data-Key="Aendrer_password">Ændrer password
+                    </button>
                 </div>
             </div>
         </div>
@@ -116,6 +142,8 @@
 </div>
 
 {{> cropper-modal}}
+{{> change-password-modal }}
+{{> change-email-modal }}
 
 <script>
 
@@ -128,4 +156,22 @@
     }
 
     updateElements();
+
+    function openPasswordModal() {
+        $('#aendrePasswordModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        $("aendrePasswordModal").modal('show');
+    }
+
+    function openEmailModal() {
+        $('#skiftEmailModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        $("skiftEmailModal").modal('show');
+    }
 </script>
