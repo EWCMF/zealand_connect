@@ -312,10 +312,17 @@ async function fetchData(page, parameters) {
                 model: db.Uddannelse,
                 as: 'education',
                 attributes: ['name']
+            },
+            {
+                model: db.Student,
+                as: 'student',
+                through: db.favouritepost
             }
         ],
         where
     });
+
+    console.log(rows)
 
     let pageCount = Math.ceil(count / limit);
 
