@@ -28,11 +28,13 @@
                 </a>
             </div>
             <div class="col-auto mr-3 mt-2">
-                {{#if isFavourite}}
-                    <i class="icon-heart icon-2x favourite"></i>
-                {{else}}
-                    <i class="icon-heart-empty icon-2x unfavourite"></i>
-                {{/if}}
+                <button class="btn" onclick="favourite({{id}})">
+                    {{#if isFavourite}}
+                        <i id="fav-icon{{id}}" class="icon-heart icon-2x favourite"></i>
+                    {{else}}
+                        <i id="fav-icon{{id}}" class="icon-heart-empty icon-2x unfavourite"></i>
+                    {{/if}}
+                </button>
             </div>
         </div>
         <div class="card-footer">
@@ -52,10 +54,28 @@
                         {{#if post_end_date}}
                             <p class="font-weight-bold pr-1" data-key="Praktikstart_kolon">Praktikstart:</p>
                             <p>{{post_end_date}}</p>
-                        {{/if}}
+                        {{/if}}fLET
                     </div>
                 </div>
             </div>
         </div>
     </div>
 {{/each}}
+
+<script>
+    function favourite(id) {
+        let xhr = new XMLHttpRequest()
+        xhr.onload = function () {
+            let icon = document.getElementById("fav-icon" + id)
+            if (this.responseText === "true"){
+                icon.classList.remove('icon-heart-empty', 'unfavourite');
+                icon.classList.add('icon-heart', 'favourite');
+            } else {
+                icon.classList.remove('icon-heart', 'favourite');
+                icon.classList.add('icon-heart-empty', 'unfavourite');
+            }
+        }
+        xhr.open('POST', '/favourites/favourite-post');
+        xhr.send(id);
+    }
+</script>
