@@ -808,3 +808,7 @@ body {
 .unfavourite {
   color: black;
 }
+
+.fav-button {
+  box-shadow: none !important;;
+}
