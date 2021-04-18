@@ -28,7 +28,11 @@
                 </a>
             </div>
             <div class="col-auto mr-3 mt-2">
-                <i class="icon-heart icon-2x favourite"></i>
+                {{#if isFavourite}}
+                    <i class="icon-heart icon-2x favourite"></i>
+                {{else}}
+                    <i class="icon-heart-empty icon-2x unfavourite"></i>
+                {{/if}}
             </div>
         </div>
         <div class="card-footer">

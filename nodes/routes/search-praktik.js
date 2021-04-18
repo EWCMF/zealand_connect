@@ -19,7 +19,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters) {
+async function fetchData(page, parameters, res) {
     let offset;
     if (!page) {
         page = 1
@@ -370,6 +370,12 @@ async function fetchData(page, parameters) {
             case 4:
                 element['post_type'] = 'Fuldtidsstilling';
         }
+
+        favouritePosts.forEach(favouritePost => {
+            if (favouritePost.internship_post_id === element.id){
+                element['isFavourite'] = true;
+            }
+        })
     }
 
     return {
@@ -455,7 +461,7 @@ router.get('/', async function (req, res, next) {
     }
     ;
 
-    let data = await fetchData(req.query.page, req.query);
+    let data = await fetchData(req.query.page, req.query, res);
 
     let count = data.count;
     let page = data.page;
@@ -495,7 +501,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'reg');
         makeArray(fields, 'pos');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields);
+        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
 
         let count = fetchedData.count;
         let page = fetchedData.page;

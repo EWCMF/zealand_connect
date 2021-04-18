@@ -804,3 +804,7 @@ body {
 .favourite {
   color: red;
 }
+
+.unfavourite {
+  color: black;
+}
