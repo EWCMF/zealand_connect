@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'cv',
         foreignKey: 'student_id'
       });
+
+      Student.belongsToMany(models.InternshipPost, {
+        through: models.favouriteposts,
+        foreignKey: "student_id",
+        as: "student"
+        /* options */ });
     }
   };
   Student.init({

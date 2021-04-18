@@ -18,7 +18,13 @@ module.exports = (sequelize, DataTypes) => {
       InternshipPost.belongsTo(models.Uddannelse, {
         as: 'education',
         foreignKey: 'fk_education'
-      })
+      });
+
+      InternshipPost.belongsToMany(models.Student, {
+        through: models.favouriteposts,
+        foreignKey: "internship_post_id",
+        as: "internshipPost"
+      });
     }
   };
   InternshipPost.init({
