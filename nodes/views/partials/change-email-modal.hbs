@@ -15,24 +15,24 @@
             <div class="form-group">
               <label for="nyEmail" data-key="Ny_email">Ny email</label>
               <input class="form-control" type="email" name="nyEmail" id="nyEmail">
-              <label class="col-form-label formError" id="nyEmailError" data-key="Gamle_passwordError" >Emailen er ugyldig</label>
-              <label class="col-form-label formError" id="brugtEmailError" data-key="Gamle_passwordError" >Emailen er allerede i brug</label>
+              <label class="col-form-label formError" id="nyEmailError" data-key="nyEmailError" >Emailen er ugyldig</label>
+              <label class="col-form-label formError" id="brugtEmailError" data-key="brugtEmailError" >Emailen er allerede i brug</label>
             </div>
             <div class="form-group">
               <label for="gentagEmail" data-key="Gentag_ny_email">Gentag ny email</label>
               <input class="form-control" type="email" name="gentagEmail" id="gentagEmail">
-              <label class="col-form-label formError" id="gentagEmailError" data-key="Nyt_passwordError">Emailen er ikke den samme</label>
+              <label class="col-form-label formError" id="gentagEmailError" data-key="gentagEmailError">Emailen er ikke den samme</label>
             </div>
             <div class="form-group">
               <label for="emailPassword">Password</label>
               <input class="form-control" type="password" name="emailPassword" id="emailPassword">
-              <label class="col-form-label formError" id="emailPasswordError" data-key="Gentag_passwordError">Password er ikke korrekt.</label>
+              <label class="col-form-label formError" id="emailPasswordError" data-key="emailPasswordError">Password er ikke korrekt.</label>
             </div>
           </div>
         </div>
       </form>
       <div class="modal-footer">
-        <label id="emailSuccess" data-key="email_succes">Emailen er blevet ændret. Siden vil blive genindlæst om kort tid.</label>
+        <label id="emailSuccess" data-key="email_success">Emailen er blevet ændret. Siden vil blive genindlæst om kort tid.</label>
         <button id="validateButton" type="button" class="btn btn-success" onclick="validateEmail()" data-key="Bekraeft">Bekræft</button>
       </div>
     </div>
