@@ -258,6 +258,8 @@ async function fetchData(page, parameters) {
         where
     });
 
+    console.log(rows)
+
     rows = rows.map(cv => {
         return {
             id: cv.id,

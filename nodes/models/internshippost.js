@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             InternshipPost.belongsToMany(models.Student, {
                 through: models.FavouritePost,
                 foreignKey: "internship_post_id",
-                as: "internshipPost"
+                as: "likedBy"
             });
         }
     };

@@ -19,7 +19,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters) {
+async function fetchData(page, parameters, res) {
     let offset;
     if (!page) {
         page = 1
@@ -56,14 +56,14 @@ async function fetchData(page, parameters) {
         postcode,
         post_type,
         [Op.or]: [{
-                'expired': {
-                    [Op.ne]: 1
-                }
-            },
+            'expired': {
+                [Op.ne]: 1
+            }
+        },
             {
                 [Op.and]: [{
-                        'expired': 1
-                    },
+                    'expired': 1
+                },
                     {
                         'post_start_date': {
                             [Op.gt]: year + "-" + month + "-" + day
@@ -146,7 +146,8 @@ async function fetchData(page, parameters) {
                             break;
                         case '5':
                             realName = 'Region Syddanmark';
-                    };
+                    }
+                    ;
                     region[Op.or].push(realName);
                 });
             } else {
@@ -166,10 +167,12 @@ async function fetchData(page, parameters) {
                         break;
                     case '5':
                         realName = 'Region Syddanmark';
-                };
+                }
+                ;
                 region[Op.or].push(realName);
             }
-        };
+        }
+        ;
 
         if (key.includes('pos')) {
             let values = parameters[key];
@@ -199,7 +202,8 @@ async function fetchData(page, parameters) {
             navn[Op.or].push({
                 [Op.like]: element
             });
-        };
+        }
+        ;
 
         const virksomheder = await db.Virksomhed.findAll({
             where: {
@@ -247,32 +251,33 @@ async function fetchData(page, parameters) {
             company_link[Op.or].push({
                 [Op.like]: element
             });
-        };
+        }
+        ;
 
         delete where[Op.or];
         where[Op.and] = [{
-                [Op.or]: [{
-                        'expired': {
-                            [Op.ne]: 1
-                        }
-                    },
-                    {
-                        [Op.and]: [{
-                                'expired': 1
-                            },
-                            {
-                                'post_start_date': {
-                                    [Op.gt]: year + "-" + month + "-" + day
-                                }
-                            }
-                        ]
-                    }
-                ]
+            [Op.or]: [{
+                'expired': {
+                    [Op.ne]: 1
+                }
             },
+                {
+                    [Op.and]: [{
+                        'expired': 1
+                    },
+                        {
+                            'post_start_date': {
+                                [Op.gt]: year + "-" + month + "-" + day
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
             {
                 [Op.or]: [{
-                        fk_company
-                    },
+                    fk_company
+                },
                     {
                         title
                     },
@@ -291,7 +296,33 @@ async function fetchData(page, parameters) {
                 ]
             }
         ]
-    };
+    }
+    ;
+
+    let includeModels = [{
+        model: db.Virksomhed,
+        as: 'virksomhed'
+    },
+        {
+            model: db.Uddannelse,
+            as: 'education',
+            attributes: ['name']
+        }
+    ]
+    if (res.locals.user) {
+        includeModels.push({
+            model: db.Student,
+            attributes: [],
+            through: {
+                model: db.FavouritePost,
+                where: {
+                    student_id: res.locals.user.id
+                },
+                attributes: ['student_id', 'internship_post_id'],
+            },
+            as: "likedBy"
+        })
+    }
 
     const {
         count,
@@ -304,25 +335,11 @@ async function fetchData(page, parameters) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: [{
-                model: db.Virksomhed,
-                as: 'virksomhed'
-            },
-            {
-                model: db.Uddannelse,
-                as: 'education',
-                attributes: ['name']
-            },
-            {
-                model: db.Student,
-                as: 'student',
-                through: db.favouritepost
-            }
-        ],
+        include: includeModels,
         where
     });
 
-    console.log(rows)
+    console.log(rows[2])
 
     let pageCount = Math.ceil(count / limit);
 
@@ -438,11 +455,14 @@ router.get('/', async function (req, res, next) {
                     categoryId: categoryId,
                     id: user.cv.fk_education
                 };
-            };
-        };
-    };
-    
-    let data = await fetchData(req.query.page, req.query);
+            }
+            ;
+        }
+        ;
+    }
+    ;
+
+    let data = await fetchData(req.query.page, req.query, res);
 
     let count = data.count;
     let page = data.page;
@@ -480,8 +500,8 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'reg');
         makeArray(fields, 'pos');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields); 
-        
+        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
+
         let count = fetchedData.count;
         let page = fetchedData.page;
         let pageCount = fetchedData.pageCount;
