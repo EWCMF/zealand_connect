@@ -19,7 +19,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters, res) {
+async function fetchData(page, parameters) {
     let offset;
     if (!page) {
         page = 1
@@ -299,31 +299,6 @@ async function fetchData(page, parameters, res) {
     }
     ;
 
-    let includeModels = [{
-        model: db.Virksomhed,
-        as: 'virksomhed'
-    },
-        {
-            model: db.Uddannelse,
-            as: 'education',
-            attributes: ['name']
-        }
-    ]
-    if (res.locals.user) {
-        includeModels.push({
-            model: db.Student,
-            attributes: [],
-            through: {
-                model: db.FavouritePost,
-                where: {
-                    student_id: res.locals.user.id
-                },
-                attributes: ['student_id', 'internship_post_id'],
-            },
-            as: "likedBy"
-        })
-    }
-
     const {
         count,
         rows
@@ -335,11 +310,28 @@ async function fetchData(page, parameters, res) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: includeModels,
+        include: [{
+            model: db.Virksomhed,
+            as: 'virksomhed'
+        },
+            {
+                model: db.Uddannelse,
+                as: 'education',
+                attributes: ['name']
+            }
+        ],
         where
     });
 
-    console.log(rows[2])
+    let favouritePosts;
+    if (res.locals.user instanceof db.Student){
+        favouritePosts = await db.FavouritePost.findAll({
+            raw: true,
+            where: {
+                student_id: res.locals.user.id
+            }
+        })
+    }
 
     let pageCount = Math.ceil(count / limit);
 
@@ -384,7 +376,8 @@ async function fetchData(page, parameters, res) {
         count: count,
         page: page,
         pageCount: pageCount,
-        rows: rows
+        rows: rows,
+        favouritePosts: favouritePosts
     };
 }
 
@@ -462,12 +455,13 @@ router.get('/', async function (req, res, next) {
     }
     ;
 
-    let data = await fetchData(req.query.page, req.query, res);
+    let data = await fetchData(req.query.page, req.query);
 
     let count = data.count;
     let page = data.page;
     let pageCount = data.pageCount;
     let rows = data.rows;
+    let favouritePosts = data.favouritePosts
 
     let withPages = pageCount > 1 ? true : false;
 
@@ -484,7 +478,8 @@ router.get('/', async function (req, res, next) {
         },
         withPages,
         url: fullUrl,
-        preconfigEducationFilter: preconfigEducationFilter
+        preconfigEducationFilter: preconfigEducationFilter,
+        favouritePosts: favouritePosts
     });
 
 });
@@ -500,7 +495,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'reg');
         makeArray(fields, 'pos');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
+        let fetchedData = await fetchData(parseInt(fields.page), fields);
 
         let count = fetchedData.count;
         let page = fetchedData.page;
