@@ -330,7 +330,6 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
             adresse: user.adresse,
             tlfnr: user.tlfnr,
             hjemmeside: user.hjemmeside,
-            direktoer: user.direktoer,
             land: user.land,
             postnr: user.postnr,
             by: user.by,

@@ -41,11 +41,6 @@
                     Hjemmeside:
                 </h6>
                 {{/if}}
-                {{#if loggedInVirksomhed.direktoer}}
-                <h6 class="mb-3" data-key="Direktoer_kolon">
-                    Direktør:
-                </h6>
-                {{/if}}
                 {{#if loggedInVirksomhed.land}}
                 <h6 class="mb-3" data-key="Land_kolon">
                     Land:
@@ -88,12 +83,6 @@
                 {{#if loggedInVirksomhed.hjemmeside}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.hjemmeside}}
-                    <br>
-                </h6>
-                {{/if}}
-                {{#if loggedInVirksomhed.direktoer}}
-                <h6 class="mb-3">
-                    {{loggedInVirksomhed.direktoer}}
                     <br>
                 </h6>
                 {{/if}}
