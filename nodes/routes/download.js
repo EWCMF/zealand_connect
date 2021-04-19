@@ -8,7 +8,11 @@ router.get('/:name', function(req, res, next){
     let filePath = path.normalize(uploadFolder + param);
     let fileName = param.replace(/^.*_/, "")
 
-    res.download(filePath, fileName);
+    res.download(filePath, fileName, function(error) {
+        if (error) {
+            res.send('File not found');
+        }
+    });
 });
 
 module.exports = router;
