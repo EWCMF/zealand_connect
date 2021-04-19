@@ -72,7 +72,6 @@ async function editVirksomhed(json) {
             adresse: json.adresse,
             tlfnr: json.tlfnr,
             hjemmeside: json.hjemmeside,
-            direktoer: json.direktoer,
             land: json.land,
             postnr: json.postnr,
             by: json.by,

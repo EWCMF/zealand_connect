@@ -202,7 +202,7 @@
                                 class="tooltiphelp" data-toggle="tooltip" data-placement="top"
                                 title="Filtyper: .pdf, .docx, .doc, .txt. Max. filstørrelse: 10MB."
                                 data-Key="">?</span></label><br />
-                        <a id="uploadedFile" href="" target="_blank" hidden="true"
+                        <a id="uploadedFile" href="" hidden="true"
                             data-key="Nuvaerende_Vedhaeftet_fil">Nuværende vedhæftet fil</a>
                         <div class="form-group">
                             <div class="custom-file">
@@ -404,7 +404,7 @@
         var docName = "{{rdoc}}";
 
         if (docName.length != 0) {
-            document.getElementById("uploadedFile").href = "uploads/" + docName;
+            document.getElementById("uploadedFile").href = "download/" + docName;
             document.getElementById("uploadedFile").hidden = false;
         } else {
             //console.log("No file");

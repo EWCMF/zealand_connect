@@ -404,7 +404,6 @@ function getLangdata() {
                 //Tlf_kolon
                 "Adresse_kolon": "Address:",
                 //Hjemmeside_kolon
-                "Direktoer_kolon": "President:",
                 //Land_kolon
                 //Postnummer_kolon
                 //By_kolon

@@ -7,7 +7,6 @@ function submitButton() {
     let cvrnr = document.getElementById("cvrnr").value;
     let address = document.getElementById("address").value;
     let hjemmeside = document.getElementById("hjemmeside").value;
-    let direktoer = document.getElementById("direktoer").value;
     let land = document.getElementById("land").value;
     let postnr = document.getElementById("postnr").value;
     let by = document.getElementById("by").value;
@@ -50,12 +49,6 @@ function submitButton() {
     //     document.getElementById("hjemmesideError").hidden = false;
     // } else {
     //     document.getElementById("hjemmesideError").hidden = true;
-    // }
-
-    // if (direktoer == "") {
-    //     document.getElementById("direktoerError").hidden = false;
-    // } else {
-    //     document.getElementById("direktoerError").hidden = true;
     // }
     
     // if (land == "") {
