@@ -528,7 +528,8 @@ router.post('/query', function (req, res) {
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({
-                json: rows
+                json: rows,
+                isStudent: res.locals.isStudent
             });
             item.push(html);
 
@@ -543,7 +544,7 @@ router.post('/query', function (req, res) {
                         page: page,
                         pageCount: pageCount
                     },
-                    withPages
+                    withPages,
                 });
 
                 item.push(html);
