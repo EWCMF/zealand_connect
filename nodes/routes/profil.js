@@ -272,7 +272,7 @@ router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, r
         //laver et objekt med alle data
         const {
             email,
-            telefon,
+            tlfnr,
             by,
             postnr,
             cvrnr,
@@ -287,7 +287,7 @@ router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, r
         } = fields;
         let content = {
             email,
-            telefon,
+            tlfnr,
             by,
             postnr,
             cvrnr,
