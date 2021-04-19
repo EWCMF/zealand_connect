@@ -323,7 +323,7 @@ async function fetchData(page, parameters, res) {
         where
     });
 
-    let favouritePosts;
+    let favouritePosts = [];
     if (res.locals.user instanceof db.Student){
         favouritePosts = await db.FavouritePost.findAll({
             raw: true,

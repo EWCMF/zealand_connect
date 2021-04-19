@@ -28,13 +28,16 @@
                 </a>
             </div>
             <div class="col-auto mr-3 mt-2">
-                <button class="btn fav-button" style="outline: none;" onclick="favourite({{id}})">
-                    {{#if isFavourite}}
-                        <i id="fav-icon{{id}}" class="icon-heart icon-2x favourite"></i>
-                    {{else}}
-                        <i id="fav-icon{{id}}" class="icon-heart-empty icon-2x unfavourite"></i>
-                    {{/if}}
-                </button>
+                {{#if ../isStudent}}
+                    <button class="btn fav-button" style="outline: none;" onclick="favourite({{id}})">
+                        {{#if isFavourite}}
+                            <i id="fav-icon{{id}}" class="icon-heart icon-2x favourite"></i>
+                        {{else}}
+                            <i id="fav-icon{{id}}" class="icon-heart-empty icon-2x unfavourite"></i>
+                        {{/if}}
+                    </button>
+                {{/if}}
+
             </div>
         </div>
         <div class="card-footer">
@@ -67,7 +70,7 @@
         let xhr = new XMLHttpRequest()
         xhr.onload = function () {
             let icon = document.getElementById("fav-icon" + id)
-            if (this.responseText === "true"){
+            if (this.responseText === "true") {
                 icon.classList.remove('icon-heart-empty', 'unfavourite');
                 icon.classList.add('icon-heart', 'favourite');
             } else {
