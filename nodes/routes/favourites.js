@@ -84,7 +84,7 @@ router.get('/posts', authorizeUser('student'), async function (req, res){
     }
 
     // Render the view and send the array of objects
-    res.render('favourite-internship-posts', {
+    res.render('my-favourite-internship-posts', {
         language: reqLang(req, res),
         json: rows
     });
