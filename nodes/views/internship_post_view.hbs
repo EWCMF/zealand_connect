@@ -94,6 +94,10 @@
                             onclick="window.location.href='../internship_update?id={{rid}}'"
                     data-key="Rediger_oplag">Rediger opslag</button>
                 {{/if}}
+                {{#if isAdmin}}
+                    <button type="button" class="btn btn-danger mt-3" onclick="deletePost()" data-key="Slet_opslag">Slet opslag</button>
+                {{/if}}
+
             {{/unless}}
         </div>
     </div>
@@ -109,3 +113,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    function deletePost(){
+        let postId = {{rid}};
+        let postTitle = prompt("Skriv opslagets overskrift for at bekræfte handlingen?");
+        if (postTitle){
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/admin-funktioner/delete-internship-post/" + postId, true);
+            xhttp.send(JSON.stringify({
+                postTitle: postTitle,
+            }));
+
+            xhttp.onreadystatechange = function () {
+                let responseObject = JSON.parse(this.responseText);
+                if (this.readyState === 4 && this.status === 200) {
+                    alert(responseObject.message)
+                    window.location.href = "../search-praktik";
+                } else if (this.readyState === 4 && this.status === 400) {
+                    alert(responseObject.message)
+                }
+            }
+        }
+    }
+</script>

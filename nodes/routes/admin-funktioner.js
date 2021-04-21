@@ -1,11 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const {deleteVirksomhed, searchVirksomhederByName, findStudentByName} = require('../persistence/usermapping');
-var {reqLang} = require('../public/javascript/request');
+const {reqLang} = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
+const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
-var passport = require('passport');
+const passport = require('passport');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
+const models = require("../models");
 
 router.get('/', authorizeUser('admin'), function (req, res, next) {
     // Hele authorization håndteres nu af en middleware function
@@ -134,6 +136,45 @@ router.post('/search-student', authorizeUser('admin'), async (req, res) => {
     let data = await findStudentByName(name);
 
     res.send(data);
+});
+
+router.post('/delete-cv/:id', authorizeUser('admin'), async function (req, res, next) {
+    let jsonBody = JSON.parse(req.body)
+    let email = jsonBody.email
+    let cvId = req.params.id;
+    if (!cvId) {
+        return res.status(400).json({message: "Angiv et ID for at slette et CV."})
+    } else {
+        let CV = await models.CV.findByPk(cvId);
+
+        if (CV.email === email){
+            await models.CV.destroy({
+                where: {
+                    id: cvId
+                }
+            })
+            return res.status(200).json({message: "CV'et med emailen " + email + " blev slettet. Du vil blive omdirigeret til CV-listen."})
+        } else {
+            return res.status(400).json({message: "Der findes intet CV med den email. Prøv igen."})
+        }
+    }
+});
+
+router.post('/delete-internship-post/:id', authorizeUser('admin'), async function (req, res, next) {
+    let jsonBody = JSON.parse(req.body)
+    let postTitle = jsonBody.postTitle
+    let postId = req.params.id;
+    if (!postId) {
+        return res.status(400).json({message: "Angiv et ID for at slette et opslag."})
+    } else {
+        let internshipPost = await models.InternshipPost.findByPk(postId);
+        if (internshipPost.title === postTitle){
+            deleteInternshipPost(postId)
+            return res.status(200).json({message: "Opslaget med overskriften '" + postTitle + "' blev slettet. Du vil blive omdirigeret til listen med opslag."})
+        } else {
+            return res.status(400).json({message: "Der findes intet opslag med den overskrift. Prøv igen."})
+        }
+    }
 });
 
 

@@ -1,5 +1,5 @@
 {{#each json}}
-    <div class="card mb-3">
+    <div id="card{{id}}" class="card mb-3">
         <div class="card-header p-0">
             <h6 class="m-2" data-key="{{post_type}}">
                 {{post_type}}
@@ -7,20 +7,37 @@
         </div>
         <div class="row">
             <div class="col-auto">
-                {{#if virksomhed.logo}}
-                    <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
-                {{else}}
-                    <img class="center-cropped" src="images/no-logo.png">
-                {{/if}}
+                <a href='/internship_view/{{id}}' class="stretched-link">
+                    {{#if virksomhed.logo}}
+                        <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
+                    {{else}}
+                        <img class="center-cropped" src="/images/no-logo.png">
+                    {{/if}}
+                </a>
             </div>
             <div class="col">
-                <div class="card-body">
-                    <h4 class="card-title pb-1">{{title}}</h4>
-                    <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h6>
-                    {{#if postcode}}
-                        <h6 class="card-text autobreak small text-secondary m-0">{{postcode}} {{city}}, {{region}}</h6>
-                    {{/if}}
-                </div>
+                <a href='/internship_view/{{id}}' class="stretched-link">
+                    <div class="card-body">
+                        <h4 class="card-title pb-1">{{title}}</h4>
+                        <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h6>
+                        {{#if postcode}}
+                            <h6 class="card-text autobreak small text-secondary m-0">{{postcode}} {{city}}
+                                , {{region}}</h6>
+                        {{/if}}
+                    </div>
+                </a>
+            </div>
+            <div class="col-auto mr-3 mt-2">
+                {{#if ../isStudent}}
+                    <button class="btn fav-button" style="outline: none;" onclick="favourite({{id}})">
+                        {{#if isFavourite}}
+                            <i id="fav-icon{{id}}" class="icon-heart icon-2x favourite"></i>
+                        {{else}}
+                            <i id="fav-icon{{id}}" class="icon-heart-empty icon-2x unfavourite"></i>
+                        {{/if}}
+                    </button>
+                {{/if}}
+
             </div>
         </div>
         <div class="card-footer">
@@ -45,6 +62,33 @@
                 </div>
             </div>
         </div>
-        <a href='/internship_view/{{id}}' class="stretched-link"></a>
     </div>
 {{/each}}
+
+<script src="/javascript/animation.js"></script>
+<script>
+    function favourite(id) {
+        let xhr = new XMLHttpRequest()
+        xhr.onload = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let icon = document.getElementById("fav-icon" + id)
+                if (this.responseText === "true") {
+                    icon.classList.remove('icon-heart-empty', 'unfavourite');
+                    icon.classList.add('icon-heart', 'favourite');
+                } else {
+                    // If we're currently in "/favourites/posts" then remove the card element from the list view. If
+                    // we're anywhere else then just leave the card in the view
+                    const path = window.location.pathname;
+                    if (path === "/favourites/posts"){
+                        let card = document.getElementById("card" + id)
+                        removeFadeOut(card, 300)
+                    }
+                    icon.classList.remove('icon-heart', 'favourite');
+                    icon.classList.add('icon-heart-empty', 'unfavourite');
+                }
+            }
+        }
+        xhr.open('POST', '/favourites/mark-post-as-favourite');
+        xhr.send(id);
+    }
+</script>

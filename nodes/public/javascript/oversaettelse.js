@@ -122,19 +122,19 @@ function getLangdata() {
                 "For_studerende": "For the student",
                 "For_studerende_body": "As a student at Zealand, an internship is a mandatory part of your study programme. The duration of the internship period depends on the study programme the student is following (see the schedule under Internship period).",
 
-                "ZealandConnect_body": "Create an advertisement on Zealand Connect and find your next intern. In this advertisement, you describe what you can offer the student during the internship. If you want to search for an intern on your own, you can also screen the students’ resumes (CVs) and contact them if their skills meet your needs.",
+                "ZealandConnect_body": "Create an advertisement on Zealand Connect and find your next intern. In this advertisement, you describe what you can offer the student during the internship. If you want to search for an intern on your own, you can also screen the students’ CV's and contact them if their skills meet your needs.",
 
                 "forside_slogan": "Zealand Connect - create your future",
                 "forside_slogan_body": "With Zealand Connect you can easily find your future internship or workplace as you will find all vacancies here.",
 
                 "student_quick_access_headline" : "For students",
-                "student_quick_access_btn": "Find your next job or internship here. You can also increase your chances by creating a resume (CV).",
+                "student_quick_access_btn": "Find your next job or internship here. You can also increase your chances by creating a CV.",
                 "student_quick_access_internship_headline": "Browse posts",
                 "student_quick_access_internship_btn": "Browse a list of posts published by companies.",
                 "student_quick_access_CV_headline": "Create CV",
                 "student_quick_access_CV_btn": "Create a CV or edit an existing CV.",
                 "company_quick_access_headline" : "For companies",
-                "company_quick_access_btn": "Make your company visible to students by creating internship advertisements or job vacancies. You can also search for a student on your own by screening the available resumes (CVs).",
+                "company_quick_access_btn": "Make your company visible to students by creating internship advertisements or job vacancies. You can also search for a student on your own by screening the available CV's.",
                 "company_quick_access_CV_headline": "Browse CV list",
                 "company_quick_access_CV_btn": "Find a suitable intern for your company.",
                 "company_quick_access_post_headline": "Create post",
@@ -150,7 +150,7 @@ function getLangdata() {
 
                 // Navbar
                 "aKontakt": "Contact",
-                "aAlleCVer": "All resumes",
+                "aAlleCVer": "All CV's",
                 "aAllePraktikopslag": "All company posts",
                 "aAlleVirksomheder": "All companies",
                 "aLavPraktikOpslag": "Create post",
@@ -170,7 +170,7 @@ function getLangdata() {
                 "aLogin": "Login",
                 "aLogud": "Log out",
                 "aProfil": "Profile",
-                "aMitCV": "My resume",
+                "aMitCV": "My CV",
                 "aMinePraktikOpslag": "My company posts",
                 "aOpretBruger": "Create user",
 
@@ -365,7 +365,7 @@ function getLangdata() {
                 "hjemmeside_error": "You must specify a working link to your website or clear the field",
                 "Postnummer_errorCV": "Only Danish postcodes are allowed and specify only the numbers. The associated city will automatically be found",
                 "Link_til_CV_paa_Youtube": "Link to CV on Youtube",
-                "Link_til_CV_paa_Youtube_tooltip": ["?", "If you've uploaded a video resume on Youtube, you can refer to the video here."],
+                "Link_til_CV_paa_Youtube_tooltip": ["?", "If you've uploaded a video CV on Youtube, you can refer to the video here."],
 
                 //Om_mig
                 "Om_mig_placeholder": "Describe yourself",
@@ -382,7 +382,7 @@ function getLangdata() {
                 "Tilgængelighed": "Accessibility",
                 "Offentlig": "Public",
                 "Privat": "Private",
-                "Tilgængelighed_error": "You must specify if your resume is public or private",
+                "Tilgængelighed_error": "You must specify if your CV is public or private",
                 //Gem
 
                 //studentprofil
@@ -572,6 +572,10 @@ function getLangdata() {
                 "have the option of internship, study job, trainee and full time job. In your CV you can check the box \"" +
                     "receive relevant posts in your mailbox\" you will receive an email when a relevant post is made by " +
                     "a company. We check if the post matches your education and what you're looking for.",
+
+                // Favourites
+                "Mine_yndlingscver": "My favourite CV's",
+                "Mine_yndlingsopslag": "My favourite posts",
             }
         }
     }

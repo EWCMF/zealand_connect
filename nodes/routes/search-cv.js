@@ -22,7 +22,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters) {
+async function fetchData(page, parameters, res) {
     let offset;
     if (!page) {
         page = 1
@@ -229,7 +229,8 @@ async function fetchData(page, parameters) {
             {tidligere_uddannelse},
             {fritidsinteresser}
         ]
-    };
+    }
+    ;
 
     let rows = await db.CV.findAll({
         limit: limit,
@@ -239,10 +240,11 @@ async function fetchData(page, parameters) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: [{
-            model: db.Student,
-            as: 'student'
-        },
+        include: [
+            {
+                model: db.Student,
+                as: 'student'
+            },
             {
                 model: db.Uddannelse,
                 as: 'education',
@@ -278,6 +280,24 @@ async function fetchData(page, parameters) {
             })
         }
     });
+
+    let favouriteCVs = [];
+    if (res.locals.user instanceof db.Virksomhed) {
+        favouriteCVs = await db.FavouriteCV.findAll({
+            raw: true,
+            where: {
+                company_id: res.locals.user.id
+            }
+        })
+    }
+
+    rows.forEach(cv => {
+        favouriteCVs.forEach(favouriteCV => {
+            if (favouriteCV.cv_id === cv.id) {
+                cv['isFavourite'] = true;
+            }
+        })
+    })
 
     let count = await db.CV.count({
         where
@@ -346,7 +366,7 @@ router.get('/', async function (req, res, next) {
         ],
     });
 
-    let data = await fetchData(req.query.page, req.query);
+    let data = await fetchData(req.query.page, req.query, res);
 
     let count = data.count;
     let page = data.page;
@@ -382,7 +402,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'geo');
         makeArray(fields, 'cvtype');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields);
+        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
 
         let count = fetchedData.count;
         let page = fetchedData.page;

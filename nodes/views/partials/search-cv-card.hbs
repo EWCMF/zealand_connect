@@ -1,20 +1,23 @@
 {{#each json}}
-    <div class="card mb-3">
+    <div id="card{{id}}" class="card mb-3">
         <div class="row">
             <div class="col-auto">
-                {{#if student.profilbillede}}
-                    <img class="center-cropped" src="/uploads/{{student.profilbillede}}">
-                {{else}}
-                    <img class="center-cropped" src="images/dummy-profile-pic.jpg">
-                {{/if}}
+                <a href='/search-cv/{{id}}' class="stretched-link">
+                    {{#if student.profilbillede}}
+                        <img class="center-cropped" src="/uploads/{{student.profilbillede}}">
+                    {{else}}
+                        <img class="center-cropped" src="/images/dummy-profile-pic.jpg">
+                    {{/if}}
+                </a>
             </div>
             <div class="col">
-                <div class="card-body newLineContent">
-                    <h5 class="card-title">{{student.fornavn}} {{student.efternavn}}</h5>
-                    <h6 class="card-title" data-key="{{education.name}}">{{education.name}}</h6>
-                    {{#if cvtype}}
-                        <div style="display: flex; flex-direction: row">
-                            <p class="card-title" data-key="Soeger:">Søger:</p>&nbsp;
+                <a href='/search-cv/{{id}}' class="stretched-link">
+                    <div class="card-body newLineContent">
+                        <h5 class="card-title">{{student.fornavn}} {{student.efternavn}}</h5>
+                        <h6 class="card-title" data-key="{{education.name}}">{{education.name}}</h6>
+                        {{#if cvtype}}
+                            <div style="display: flex; flex-direction: row">
+                                <p class="card-title" data-key="Soeger:">Søger:</p>&nbsp;
                                 {{#each cvtype}}
                                     {{#if @last}}
                                         <p data-key="{{cvtype}}">{{cvtype}}</p>
@@ -22,12 +25,52 @@
                                         <p data-key="{{cvtype}}">{{cvtype}}</p>,&nbsp;
                                     {{/if}}
                                 {{/each}}
-                        </div>
-                    {{/if}}
-                    <p class="card-text autobreak">{{overskrift}}</p>
-                </div>
+                            </div>
+                        {{/if}}
+                        <p class="card-text autobreak">{{overskrift}}</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-auto mr-3 mt-2">
+                {{#if ../isCompany}}
+                    <button class="btn fav-button" style="outline: none;" onclick="favourite({{id}})">
+                        {{#if isFavourite}}
+                            <i id="fav-icon{{id}}" class="icon-heart icon-2x favourite"></i>
+                        {{else}}
+                            <i id="fav-icon{{id}}" class="icon-heart-empty icon-2x unfavourite"></i>
+                        {{/if}}
+                    </button>
+                {{/if}}
+
             </div>
         </div>
-        <a href='/search-cv/{{id}}' class="stretched-link"></a>
     </div>
 {{/each}}
+
+<script src="/javascript/animation.js"></script>
+<script>
+    function favourite(id) {
+        let xhr = new XMLHttpRequest()
+        xhr.onload = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let icon = document.getElementById("fav-icon" + id)
+                if (this.responseText === "true") {
+                    icon.classList.remove('icon-heart-empty', 'unfavourite');
+                    icon.classList.add('icon-heart', 'favourite');
+                } else {
+                    // If we're currently in "/favourites/posts" then remove the card element from the list view. If
+                    // we're anywhere else then just leave the card in the view
+                    const path = window.location.pathname;
+                    if (path === "/favourites/cvs"){
+                        let card = document.getElementById("card" + id)
+                        removeFadeOut(card, 300)
+                    }
+                    icon.classList.remove('icon-heart', 'favourite');
+                    icon.classList.add('icon-heart-empty', 'unfavourite');
+                }
+            }
+        }
+        xhr.open('POST', '/favourites/mark-cv-as-favourite');
+        xhr.send(id);
+    }
+</script>

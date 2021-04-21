@@ -48,6 +48,11 @@ input::placeholder {
   font-size: 13px;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
 .sidebar {
   display: none;
   justify-content: space-between;
@@ -435,10 +440,16 @@ input::placeholder {
   padding: 0;
 }
 
+.stretched-link, .stretched-link:hover {
+  color: black;
+  text-decoration: none;
+}
+
 .stretched-link:hover +.card-img +.card-img-overlay {
   background-color: #faee84;
   color: black;
   transition: .5s ease;
+  text-decoration: none;
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -788,6 +799,18 @@ body {
 
 .pNewLine {
   white-space: pre-line;
+}
+
+.favourite {
+  color: red;
+}
+
+.unfavourite {
+  color: black;
+}
+
+.fav-button {
+  box-shadow: none !important;;
 }
 
 .inputImitation {

@@ -19,7 +19,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters) {
+async function fetchData(page, parameters, res) {
     let offset;
     if (!page) {
         page = 1
@@ -56,14 +56,14 @@ async function fetchData(page, parameters) {
         postcode,
         post_type,
         [Op.or]: [{
-                'expired': {
-                    [Op.ne]: 1
-                }
-            },
+            'expired': {
+                [Op.ne]: 1
+            }
+        },
             {
                 [Op.and]: [{
-                        'expired': 1
-                    },
+                    'expired': 1
+                },
                     {
                         'post_start_date': {
                             [Op.gt]: year + "-" + month + "-" + day
@@ -146,7 +146,8 @@ async function fetchData(page, parameters) {
                             break;
                         case '5':
                             realName = 'Region Syddanmark';
-                    };
+                    }
+                    ;
                     region[Op.or].push(realName);
                 });
             } else {
@@ -166,10 +167,12 @@ async function fetchData(page, parameters) {
                         break;
                     case '5':
                         realName = 'Region Syddanmark';
-                };
+                }
+                ;
                 region[Op.or].push(realName);
             }
-        };
+        }
+        ;
 
         if (key.includes('pos')) {
             let values = parameters[key];
@@ -199,7 +202,8 @@ async function fetchData(page, parameters) {
             navn[Op.or].push({
                 [Op.like]: element
             });
-        };
+        }
+        ;
 
         const virksomheder = await db.Virksomhed.findAll({
             where: {
@@ -247,32 +251,33 @@ async function fetchData(page, parameters) {
             company_link[Op.or].push({
                 [Op.like]: element
             });
-        };
+        }
+        ;
 
         delete where[Op.or];
         where[Op.and] = [{
-                [Op.or]: [{
-                        'expired': {
-                            [Op.ne]: 1
-                        }
-                    },
-                    {
-                        [Op.and]: [{
-                                'expired': 1
-                            },
-                            {
-                                'post_start_date': {
-                                    [Op.gt]: year + "-" + month + "-" + day
-                                }
-                            }
-                        ]
-                    }
-                ]
+            [Op.or]: [{
+                'expired': {
+                    [Op.ne]: 1
+                }
             },
+                {
+                    [Op.and]: [{
+                        'expired': 1
+                    },
+                        {
+                            'post_start_date': {
+                                [Op.gt]: year + "-" + month + "-" + day
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
             {
                 [Op.or]: [{
-                        fk_company
-                    },
+                    fk_company
+                },
                     {
                         title
                     },
@@ -291,7 +296,8 @@ async function fetchData(page, parameters) {
                 ]
             }
         ]
-    };
+    }
+    ;
 
     const {
         count,
@@ -304,7 +310,8 @@ async function fetchData(page, parameters) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: [{
+        include: [
+            {
                 model: db.Virksomhed,
                 as: 'virksomhed'
             },
@@ -316,6 +323,16 @@ async function fetchData(page, parameters) {
         ],
         where
     });
+
+    let favouritePosts = [];
+    if (res.locals.user instanceof db.Student) {
+        favouritePosts = await db.FavouritePost.findAll({
+            raw: true,
+            where: {
+                student_id: res.locals.user.id
+            }
+        })
+    }
 
     let pageCount = Math.ceil(count / limit);
 
@@ -354,13 +371,20 @@ async function fetchData(page, parameters) {
             case 4:
                 element['post_type'] = 'Fuldtidsstilling';
         }
+
+        favouritePosts.forEach(favouritePost => {
+            if (favouritePost.internship_post_id === element.id) {
+                element['isFavourite'] = true;
+            }
+        })
     }
 
     return {
         count: count,
         page: page,
         pageCount: pageCount,
-        rows: rows
+        rows: rows,
+        favouritePosts: favouritePosts
     };
 }
 
@@ -431,16 +455,20 @@ router.get('/', async function (req, res, next) {
                     categoryId: categoryId,
                     id: user.cv.fk_education
                 };
-            };
-        };
-    };
-    
-    let data = await fetchData(req.query.page, req.query);
+            }
+            ;
+        }
+        ;
+    }
+    ;
+
+    let data = await fetchData(req.query.page, req.query, res);
 
     let count = data.count;
     let page = data.page;
     let pageCount = data.pageCount;
     let rows = data.rows;
+    let favouritePosts = data.favouritePosts
 
     let withPages = pageCount > 1 ? true : false;
 
@@ -457,7 +485,8 @@ router.get('/', async function (req, res, next) {
         },
         withPages,
         url: fullUrl,
-        preconfigEducationFilter: preconfigEducationFilter
+        preconfigEducationFilter: preconfigEducationFilter,
+        favouritePosts: favouritePosts
     });
 
 });
@@ -473,8 +502,8 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'reg');
         makeArray(fields, 'pos');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields); 
-        
+        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
+
         let count = fetchedData.count;
         let page = fetchedData.page;
         let pageCount = fetchedData.pageCount;
@@ -500,7 +529,8 @@ router.post('/query', function (req, res) {
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({
-                json: rows
+                json: rows,
+                isStudent: res.locals.isStudent
             });
             item.push(html);
 
@@ -515,7 +545,7 @@ router.post('/query', function (req, res) {
                         page: page,
                         pageCount: pageCount
                     },
-                    withPages
+                    withPages,
                 });
 
                 item.push(html);

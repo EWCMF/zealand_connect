@@ -109,6 +109,9 @@
             <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'" data-key="Rediger_CV">Rediger
                 CV</button>
             {{/if}}
+            {{#if isAdmin}}
+                <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
+            {{/if}}
         </div>
         {{/unless}}
     </div>
@@ -251,11 +254,33 @@
             </p>
         </div>
     </div>
-
 </div>
+
 <script>
     let autobreak = document.getElementsByClassName('autobreak');
     for (let i = 0; i < autobreak.length; i++) {
         autobreak[i].innerHTML = autobreak[i].innerHTML.trim();
+    }
+
+    function deleteCV(){
+        let cvId = {{json.id}};
+        let studentEmail = prompt("Skriv den studerendes email for at bekræfte handlingen?");
+        if (studentEmail){
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/admin-funktioner/delete-cv/" + cvId, true);
+            xhttp.send(JSON.stringify({
+                email: studentEmail,
+            }));
+
+            xhttp.onreadystatechange = function () {
+                let responseObject = JSON.parse(this.responseText);
+                if (this.readyState === 4 && this.status === 200) {
+                    alert(responseObject.message)
+                    window.location.href = "../search-cv";
+                } else if (this.readyState === 4 && this.status === 400) {
+                    alert(responseObject.message)
+                }
+            }
+        }
     }
 </script>

@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="row mt-3 mb-4">
-        <div class="col-12 col-sm-2">
+        <div class="col-12 col-md-auto" style="max-height: 400px; max-width: 400px">
 
             {{#if loggedInVirksomhed.logo}}
                 <img class="img-thumbnail border-0" src="/uploads/{{loggedInVirksomhed.logo}}">
@@ -15,8 +15,8 @@
             {{/if}}
 
         </div>
-        <div class="col-3 col-lg-1">
-            <div class="col">
+        <div class="col-12 col-md-auto row">
+            <div class="col-auto">
                 <h2 class="mb-3" data-key="Navn_kolon">
                     Navn:
                 </h2>
@@ -53,18 +53,16 @@
                     By:
                 </h6>
             </div>
-        </div>
-        <div class="col-7">
-            <div class="col">
+            <div class="col-auto">
                 <h2 class="mb-3">
                     {{loggedInVirksomhed.navn}}
                     <br>
                 </h2>
                 {{#if loggedInVirksomhed.visible_mail}}
-                <h6 class="mb-3">
-                    <a href="mailto:{{loggedInVirksomhed.email}}">{{loggedInVirksomhed.email}}</a>
-                    <br>
-                </h6>
+                    <h6 class="mb-3">
+                        <a href="mailto:{{loggedInVirksomhed.email}}">{{loggedInVirksomhed.email}}</a>
+                        <br>
+                    </h6>
                 {{/if}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.tlfnr}}
@@ -75,22 +73,22 @@
                     <br>
                 </h6>
                 {{#if loggedInVirksomhed.adresse}}
-                <h6 class="mb-3">
-                    {{loggedInVirksomhed.adresse}}
-                    <br>
-                </h6>
+                    <h6 class="mb-3">
+                        {{loggedInVirksomhed.adresse}}
+                        <br>
+                    </h6>
                 {{/if}}
                 {{#if loggedInVirksomhed.hjemmeside}}
-                <h6 class="mb-3">
-                    {{loggedInVirksomhed.hjemmeside}}
-                    <br>
-                </h6>
+                    <h6 class="mb-3">
+                        {{loggedInVirksomhed.hjemmeside}}
+                        <br>
+                    </h6>
                 {{/if}}
                 {{#if loggedInVirksomhed.land}}
-                <h6 class="mb-3">
-                    {{loggedInVirksomhed.land}}
-                    <br>
-                </h6>
+                    <h6 class="mb-3">
+                        {{loggedInVirksomhed.land}}
+                        <br>
+                    </h6>
                 {{/if}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.postnr}}
