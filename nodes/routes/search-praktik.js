@@ -310,10 +310,11 @@ async function fetchData(page, parameters, res) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: [{
-            model: db.Virksomhed,
-            as: 'virksomhed'
-        },
+        include: [
+            {
+                model: db.Virksomhed,
+                as: 'virksomhed'
+            },
             {
                 model: db.Uddannelse,
                 as: 'education',
@@ -324,7 +325,7 @@ async function fetchData(page, parameters, res) {
     });
 
     let favouritePosts = [];
-    if (res.locals.user instanceof db.Student){
+    if (res.locals.user instanceof db.Student) {
         favouritePosts = await db.FavouritePost.findAll({
             raw: true,
             where: {
@@ -372,7 +373,7 @@ async function fetchData(page, parameters, res) {
         }
 
         favouritePosts.forEach(favouritePost => {
-            if (favouritePost.internship_post_id === element.id){
+            if (favouritePost.internship_post_id === element.id) {
                 element['isFavourite'] = true;
             }
         })

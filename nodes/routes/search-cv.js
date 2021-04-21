@@ -229,7 +229,8 @@ async function fetchData(page, parameters) {
             {tidligere_uddannelse},
             {fritidsinteresser}
         ]
-    };
+    }
+    ;
 
     let rows = await db.CV.findAll({
         limit: limit,
@@ -239,10 +240,11 @@ async function fetchData(page, parameters) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: [{
-            model: db.Student,
-            as: 'student'
-        },
+        include: [
+            {
+                model: db.Student,
+                as: 'student'
+            },
             {
                 model: db.Uddannelse,
                 as: 'education',

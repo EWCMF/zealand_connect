@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
-const { reqLang } = require('../public/javascript/request');
+const {reqLang} = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
-router.get('/posts', authorizeUser('student'), async function (req, res){
+router.get('/posts', authorizeUser('student'), async function (req, res) {
     const userId = res.locals.user.id;
 
     // Find list elements (posts)
@@ -16,7 +16,7 @@ router.get('/posts', authorizeUser('student'), async function (req, res){
         attributes: ['internship_post_id']
     })
 
-    const postIds = [];
+    let postIds = [];
     favouritePosts.forEach(post => {
         postIds.push(post.internship_post_id)
     })
@@ -27,10 +27,11 @@ router.get('/posts', authorizeUser('student'), async function (req, res){
         where: {
             id: postIds
         },
-        include: [{
-            model: models.Virksomhed,
-            as: 'virksomhed'
-        },
+        include: [
+            {
+                model: models.Virksomhed,
+                as: 'virksomhed'
+            },
             {
                 model: models.Uddannelse,
                 as: 'education',
@@ -77,7 +78,7 @@ router.get('/posts', authorizeUser('student'), async function (req, res){
         }
 
         favouritePosts.forEach(favouritePost => {
-            if (favouritePost.internship_post_id === element.id){
+            if (favouritePost.internship_post_id === element.id) {
                 element['isFavourite'] = true;
             }
         })
@@ -90,7 +91,76 @@ router.get('/posts', authorizeUser('student'), async function (req, res){
     });
 })
 
-router.post('/favourite-post', authorizeUser('student'), async function (req, res){
+router.get('/cvs', authorizeUser('company'), async function (req, res) {
+    const userId = res.locals.user.id;
+
+    // Find list elements (cvs)
+    const favouriteCVs = await models.FavouriteCV.findAll({
+        raw: true,
+        where: {
+            company_id: userId
+        },
+        attributes: ['cv_id']
+    })
+
+    let cvIds = [];
+    favouriteCVs.forEach(cv => {
+        cvIds.push(cv.cv_id)
+    })
+
+    let rows = await models.CV.findAll({
+        raw: false,
+        nest: true,
+        where: {
+            id: cvIds
+        },
+        include: [
+            {
+                model: models.Student,
+                as: 'student'
+            }, {
+                model: models.Uddannelse,
+                as: 'education',
+                attributes: ['name']
+            },
+            {
+                model: models.CVtype,
+                as: 'cvtype',
+                attributes: ['cvtype'],
+                through: models.CV_CVtype
+            }
+        ],
+    })
+
+    rows = rows.map(cv => {
+        return {
+            id: cv.id,
+            overskrift: cv.overskrift,
+            om_mig: cv.om_mig,
+            student: {
+                fornavn: cv.student.fornavn,
+                efternavn: cv.student.efternavn,
+                profilbillede: cv.student.profilbillede
+            },
+            education: {
+                name: cv.education.name
+            },
+            cvtype: cv.cvtype.map(cvtype => {
+                return {
+                    cvtype: cvtype.dataValues.cvtype
+                }
+            })
+        }
+    });
+
+    // Render the view and send the array of objects
+    res.render('my-favourite-cvs', {
+        language: reqLang(req, res),
+        json: rows
+    });
+})
+
+router.post('/favourite-post', authorizeUser('student'), async function (req, res) {
     let postId = Number(req.body)
     let studentId = res.locals.user.id;
 
@@ -105,7 +175,7 @@ router.post('/favourite-post', authorizeUser('student'), async function (req, re
         }
     });
 
-    if (!created){
+    if (!created) {
         await favourite.destroy()
         return res.send(false)
     }
