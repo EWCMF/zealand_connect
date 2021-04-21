@@ -5,11 +5,17 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Virksomhed extends Model {
     static associate(models) {
+      // Relationshop for InternshipPost
       Virksomhed.hasMany(models.InternshipPost, {
         as: "internshipPosts",
         foreignKey: "fk_company"
       })
-      // define association here
+
+      // Relationship for FavouriteCV
+      Virksomhed.belongsToMany(models.CV, {
+        through: models.FavouriteCV,
+        foreignKey: "company_id"
+      });
     }
   };
   Virksomhed.init({

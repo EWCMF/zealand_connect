@@ -20,11 +20,19 @@ module.exports = (sequelize, DataTypes) => {
         as: "education",
         foreignKey: 'fk_education'
       })
+
+      // Relationship for CVtype
       CV.belongsToMany(models.CVtype, {
         through: models.CV_CVtype,
         foreignKey: "cv_id",
         as: "cvtype"
         /* options */ });
+
+      // Relationship for FavouriteCV
+      CV.belongsToMany(models.Virksomhed, {
+        through: models.FavouriteCV,
+        foreignKey: "cv_id"
+      });
     }
   };
   CV.init({
