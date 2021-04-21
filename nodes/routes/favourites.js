@@ -94,8 +94,6 @@ router.post('/favourite-post', authorizeUser('student'), async function (req, re
     let postId = Number(req.body)
     let studentId = res.locals.user.id;
 
-    console.log(postId)
-
     const [favourite, created] = await models.FavouritePost.findOrCreate({
         where: {
             student_id: studentId,
