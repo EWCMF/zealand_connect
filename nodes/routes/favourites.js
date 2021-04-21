@@ -153,6 +153,14 @@ router.get('/cvs', authorizeUser('company'), async function (req, res) {
         }
     });
 
+    rows.forEach(cv => {
+        favouriteCVs.forEach(favouriteCV => {
+            if (favouriteCV.cv_id === cv.id) {
+                cv['isFavourite'] = true;
+            }
+        })
+    })
+
     // Render the view and send the array of objects
     res.render('my-favourite-cvs', {
         language: reqLang(req, res),
