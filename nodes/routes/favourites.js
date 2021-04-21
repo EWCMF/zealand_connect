@@ -183,4 +183,27 @@ router.post('/favourite-post', authorizeUser('student'), async function (req, re
     return res.send(true)
 })
 
+router.post('/favourite-cv', authorizeUser('company'), async function (req, res) {
+    let cvId = Number(req.body)
+    let companyId = res.locals.user.id;
+
+    const [favourite, created] = await models.FavouriteCV.findOrCreate({
+        where: {
+            company_id: companyId,
+            cv_id: cvId
+        },
+        defaults: {
+            company_id: companyId,
+            cv_id: cvId
+        }
+    });
+
+    if (!created) {
+        await favourite.destroy()
+        return res.send(false)
+    }
+
+    return res.send(true)
+})
+
 module.exports = router;
