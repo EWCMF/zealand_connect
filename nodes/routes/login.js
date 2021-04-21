@@ -9,55 +9,52 @@ var models = require('../models');
 router.get('/', function (req, res, next) {
     //REQUEST PARAMETERS:
     let error = req.query;
-    let check;
-    let virksomhed;
-    if (req.query.login == "virksomhed") {
-        check = "checked";
-        virksomhed = true;
-
-    } else {
-        check = "";
-        virksomhed = false;
-    }
-
     let msg = error.error;
+    let usertype = req.query.usertype;
+
     switch (msg) {
         case 'incorrectusername':
             res.render('login', {
-                errormessage: 'Denne bruger findes ikke i systemet',
-                virksomhed: "true",
+                errormessage: 'Email eller password er forkert',
+                usertype: usertype,
                 language: reqLang(req, res)
             },);
             break;
         case 'incorrectpassword':
             res.render('login', {
                 errormessage: 'Email eller password er forkert',
-                virksomhed: "true",
+                usertype: usertype,
                 language: reqLang(req, res)
             });
             break;
         case 'notloggedin':
             res.render('login', {
                 errormessage: 'Du skal logge ind før du kan se din profil.',
-                virksomhed: "true",
+                usertype: usertype,
                 language: reqLang(req, res)
             });
             break;
         case 'incorretemaillogincombination':
             res.render('login', {
-                errormessage: 'Din email findes men ikke som en virksomheds konto.',
-                virksomhed: "true",
+                errormessage: 'Email eller password er forkert',
+                usertype: usertype,
                 language: reqLang(req, res)
             });
             break;
+        case 'missingcredentials':
+            res.render('login', {
+                errormessage: "Begge felter skal udfyldes",
+                usertype: usertype,
+                language: reqLang(req, res)
+            });
+            break;  
         case 'none':
             res.redirect('/');
             break;
         default:
             res.render('login', {
+                usertype: usertype,
                 language: reqLang(req, res),
-                check,
-                startVirksomhed: virksomhed
             });
             break;
     }
@@ -75,8 +72,14 @@ router.post('/authenticateUser', function (req, res, next) {
         req.body = JSON.parse(req.body);
     }
     passport.authenticate('local', function (err, user, info) {
+
         //handle error
         if (!user) {
+
+            if (info.message === "Missing credentials") {
+                return res.redirect('/login?error=missingcredentials')
+            }
+
             return res.redirect('/login' + info.message);
         }
         //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.

@@ -30,6 +30,7 @@ const dataConsentRouter = require('./routes/data-consent');
 const cookiePolicyRouter = require('./routes/cookie-policy');
 const internshipInfoRouter = require('./routes/internship-info');
 const favouritesRouter = require('./routes/favourites');
+const downloadRouter = require('./routes/download');
 
 const bodyParser = require('body-parser')
 
@@ -131,6 +132,7 @@ app.use('/data-consent', dataConsentRouter);
 app.use('/cookie-policy', cookiePolicyRouter);
 app.use('/internship-info', internshipInfoRouter);
 app.use('/favourites', favouritesRouter);
+app.use('/download', downloadRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));

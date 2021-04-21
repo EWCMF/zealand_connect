@@ -82,8 +82,8 @@ function getLangdata() {
                 "opretBruger": "Create user",
                 "Foedselsdato": "Date of birth",
                 "cookie": "Cookies must be enabled in your browser",
-                "virk_bekraeft_samtykke_html": 'You must accept our <a class="link-primary" onclick="openCompanyConsent()">declaration of consent on the use of personal information</a> in order to create a user on Zealand Connect.',
-                "stud_bekraeft_samtykke_html": 'You must accept our <a class="link-primary" onclick="openDataConsent()">declaration of consent on the use of personal information</a> in order to create a user on Zealand Connect.',
+                "virk_bekraeft_samtykke_html": 'You must accept our <a class="link-primary" onclick="openCompanyConsent()"><b>declaration of consent on the use of personal information</b></a> in order to create a user on Zealand Connect.',
+                "stud_bekraeft_samtykke_html": 'You must accept our <a class="link-primary" onclick="openDataConsent()"><b>declaration of consent on the use of personal information</b></a> in order to create a user on Zealand Connect.',
                 "bekraeft_samtykke": "I confirm that I have read and understood Zealand Connect's declaration of consent on the use of personal information, as a basis for the consent to the processing of my personal data for the above purposes.",
 
                 // Login
@@ -404,7 +404,6 @@ function getLangdata() {
                 //Tlf_kolon
                 "Adresse_kolon": "Address:",
                 //Hjemmeside_kolon
-                "Direktoer_kolon": "President:",
                 //Land_kolon
                 //Postnummer_kolon
                 //By_kolon
@@ -456,6 +455,15 @@ function getLangdata() {
                 "Bekraeft": "Confirm",
                 "Goer_mail_synlig": "Make mail visible on public profile",
                 "Om_virksomheden_tooltip": ["?", "Write a short description of your company's primary objectives and core values"],
+
+                //change-email-modal
+                "Skift": "Change",
+                "Ny_email": "New email",
+                "nyEmailError": "The email is invalid",
+                "brugtEmailError": "The email is already in use",
+                "gentagEmailError": "The email isn't the same",
+                "emailPasswordError": "The password is incorrect",
+                "email_success": "Email has been changed. The page will refresh in a moment",
 
                 //search-virksomheder
                 "Navn": "Name",

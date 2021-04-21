@@ -1,0 +1,88 @@
+<div class="modal fade" id="skiftEmailModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle" data-key="Skift_email">Skift email</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form class="form-column" id="emailForm">
+        <div class="modal-body container">
+          <div class="col passwordCol">
+            <div class="form-group">
+              <label for="nyEmail" data-key="Ny_email">Ny email</label>
+              <input class="form-control" type="email" name="nyEmail" id="nyEmail">
+              <label class="col-form-label formError" id="nyEmailError" data-key="nyEmailError" >Emailen er ugyldig</label>
+              <label class="col-form-label formError" id="brugtEmailError" data-key="brugtEmailError" >Emailen er allerede i brug</label>
+            </div>
+            <div class="form-group">
+              <label for="gentagEmail" data-key="Gentag_ny_email">Gentag ny email</label>
+              <input class="form-control" type="email" name="gentagEmail" id="gentagEmail">
+              <label class="col-form-label formError" id="gentagEmailError" data-key="gentagEmailError">Emailen er ikke den samme</label>
+            </div>
+            <div class="form-group">
+              <label for="emailPassword">Password</label>
+              <input class="form-control" type="password" name="emailPassword" id="emailPassword">
+              <label class="col-form-label formError" id="emailPasswordError" data-key="emailPasswordError">Password er ikke korrekt.</label>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <label id="emailSuccess" data-key="email_success">Emailen er blevet ændret. Siden vil blive genindlæst om kort tid.</label>
+        <button id="validateButton" type="button" class="btn btn-success" onclick="validateEmail()" data-key="Bekraeft">Bekræft</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('label.formError').forEach(element => {
+    element.hidden = true;
+  });
+  document.getElementById('emailSuccess').hidden = true;
+
+  function validateEmail() {
+
+    let formData = new FormData(document.getElementById('emailForm'));
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+      if (this.status == 200) {
+        document.getElementById('validateButton').onclick = null;
+        document.getElementById('emailSuccess').hidden = false;
+        document.querySelectorAll('label.formError').forEach(element => {
+          element.hidden = true;
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+        
+      } else {
+        let error = this.responseText;
+        switch (error) {
+            case "errorInvalidEmail":
+              document.getElementById('nyEmailError').hidden = false;
+              break;
+            case "errorNotSame":
+              document.getElementById('gentagEmailError').hidden = false;
+              break;
+            case "errorIncorrectPassword":
+              document.getElementById('emailPasswordError').hidden = false;
+              break;
+            case "errorEmailNotAvailable":
+              document.getElementById('brugtEmailError').hidden = false;
+        }
+      }
+    };
+    if ("{{isCompany}}") {
+      xhr.open('POST', '/profil/change-email-company');
+    } else {
+      xhr.open('POST', '/profil/change-email-student');
+    }
+    xhr.send(formData);
+  }
+</script>

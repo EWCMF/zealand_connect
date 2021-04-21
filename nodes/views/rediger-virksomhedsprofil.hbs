@@ -13,118 +13,119 @@
     </div>
 
     <form action="/profil/rediger-save" method="POST" id="redigerVirksomhedForm" name="redigerVirksomhedForm"
-          enctype="multipart/form-data">
+        enctype="multipart/form-data">
         <div class="row mb-5">
             <div class="col-12 col-md-6">
-                <div class="form-column col-12 col-md-8">
+                <div class="form-column col-11">
 
-                <div class="form-group required">
-                    <label for="navn" data-Key="Virksomheds_navn">Virksomheds navn</label>
-                    <input class="form-control" name="navn" id="navn" rows="2" value="{{loggedInVirksomhed.navn}}">
-                    <p id="navnError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
-                </div>
-                <div class="form-group required" style="display: none;">
-                    <label for="email">Email</label>
-                    <input class="form-control" name="email" id="email" rows="2" value="{{loggedInVirksomhed.email}}">
-                    <p id="emailError" class="CVErrorColor" hidden="true" data-Key="Email_adresse_error">Du skal skrive
-                        din email her og mindst bruge
-                        et @</p>
-                </div>
-                <div class="form-group required">
-                    <label for="telefon" data-Key="Telefon">Telefon</label>
-                    <input type="number" class="form-control" name="telefon" id="telefon" rows="2"
-                           value="{{loggedInVirksomhed.tlfnr}}">
-                    <p id="telefonError" class="CVErrorColor" hidden="true" data-Key="Telefon_error">Du skal skrive dit
-                        nummer, det skal præcist
-                        være 8 tal og må ikke starte med 0</p>
-                </div>
-                <div class="form-group required">
-                    <label for="cvrnr" data-Key="CVR_nummer">CVR nummer</label>
-                    <input type="number" class="form-control" name="cvrnr" id="cvrnr" rows="2"
-                           value="{{loggedInVirksomhed.cvrnr}}">
-                    <p id="cvrnrError" class="CVErrorColor" hidden="true" data-Key="CVR_nummer_error">Du skal skrive dit
-                        CVR nummer, det skal
-                        præcist være 8 tal og må ikke starte med 0</p>
-                </div>
-                <div class="form-group">
-                    <label for="address" data-Key="Adresse">Adresse</label>
-                    <input type="text" class="form-control" name="adresse" id="address" rows="2"
-                           value="{{loggedInVirksomhed.adresse}}">
-                    <p id="addressError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
-                </div>
-                <div class="form-group">
-                    <label for="hjemmeside" data-Key="Hjemmeside">Hjemmeside</label>
-                    <input type="text" class="form-control" name="hjemmeside" id="hjemmeside" rows="2"
-                           value="{{loggedInVirksomhed.hjemmeside}}">
-                    <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="direktoer">Direktør</label>
-                    <input type="text" class="form-control" name="direktoer" id="direktoer" rows="2"
-                           value="{{loggedInVirksomhed.direktoer}}">
-                    <p id="direktoerError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
-                </div>
-                <div class="form-group">
-                    <label for="land" data-Key="Land">Land</label>
-                    <input type="text" class="form-control" name="land" id="land" rows="2"
-                           value="{{loggedInVirksomhed.land}}">
-                    <p id="landError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
-                </div>
-                <div class="form-group required">
-                    <label for="postnr" data-Key="Postnummer">Postnummer</label>
-                    <input type="number" class="form-control" name="postnr" id="postnr" rows="2"
-                           value="{{loggedInVirksomhed.postnr}}">
-                    <p id="postnrError" class="CVErrorColor" hidden="true" data-Key="Postnummer_error">Du skal skrive
-                        dit postnummer, det skal
-                        præcist være 4 tal</p>
-                </div>
-                <div class="form-group required">
-                    <label for="by" data-Key="By">By</label>
-                    <input type="text" class="form-control" name="by" id="by" rows="2"
-                           value="{{loggedInVirksomhed.by}}">
-                    <p id="byError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
-                </div>
-                </div>
-                <div class="form-column col-12">
+                    <div class="form-group">
+                        <div class="">
+                            <label>Email</label>
+                            <div class="ml-3">
+                                <label class="inputImitation">{{loggedInVirksomhed.email}}</label>
+                                <button type="button" class="btn btn-success ml-1"
+                                   data-key="Skift" onclick="openEmailModal()">Skift</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="form-group required">
+                        <label for="navn" data-Key="Virksomheds_navn">Virksomheds navn</label>
+                        <input class="form-control" name="navn" id="navn" rows="2" value="{{loggedInVirksomhed.navn}}">
+                        <p id="navnError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
+                    </div>
+                    <div class="form-group required" style="display: none;">
+                        <label for="email">Email</label>
+                        <input class="form-control" name="email" id="email" rows="2"
+                            value="{{loggedInVirksomhed.email}}">
+                        <p id="emailError" class="CVErrorColor" hidden="true" data-Key="Email_adresse_error">Du skal
+                            skrive
+                            din email her og mindst bruge
+                            et @</p>
+                    </div>
+                    <div class="form-group required">
+                        <label for="tlfnr" data-Key="Telefon">Telefon</label>
+                        <input type="number" class="form-control" name="tlfnr" id="tlfnr" rows="2"
+                            value="{{loggedInVirksomhed.tlfnr}}">
+                        <p id="telefonError" class="CVErrorColor" hidden="true" data-Key="Telefon_error">Du skal skrive
+                            dit
+                            nummer, det skal præcist
+                            være 8 tal og må ikke starte med 0</p>
+                    </div>
+                    <div class="form-group required">
+                        <label for="cvrnr" data-Key="CVR_nummer">CVR nummer</label>
+                        <input type="number" class="form-control" name="cvrnr" id="cvrnr" rows="2"
+                            value="{{loggedInVirksomhed.cvrnr}}">
+                        <p id="cvrnrError" class="CVErrorColor" hidden="true" data-Key="CVR_nummer_error">Du skal skrive
+                            dit
+                            CVR nummer, det skal
+                            præcist være 8 tal og må ikke starte med 0</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" data-Key="Adresse">Adresse</label>
+                        <input type="text" class="form-control" name="adresse" id="address" rows="2"
+                            value="{{loggedInVirksomhed.adresse}}">
+                        <p id="addressError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="hjemmeside" data-Key="Hjemmeside">Hjemmeside</label>
+                        <input type="text" class="form-control" name="hjemmeside" id="hjemmeside" rows="2"
+                            value="{{loggedInVirksomhed.hjemmeside}}">
+                        <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal
+                            udfyldes
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="land" data-Key="Land">Land</label>
+                        <input type="text" class="form-control" name="land" id="land" rows="2"
+                            value="{{loggedInVirksomhed.land}}">
+                        <p id="landError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
+                    </div>
+                    <div class="form-group required">
+                        <label for="postnr" data-Key="Postnummer">Postnummer</label>
+                        <input type="number" class="form-control" name="postnr" id="postnr" rows="2"
+                            value="{{loggedInVirksomhed.postnr}}">
+                        <p id="postnrError" class="CVErrorColor" hidden="true" data-Key="Postnummer_error">Du skal
+                            skrive
+                            dit postnummer, det skal
+                            præcist være 4 tal</p>
+                    </div>
+                    <div class="form-group required">
+                        <label for="by" data-Key="By">By</label>
+                        <input type="text" class="form-control" name="by" id="by" rows="2"
+                            value="{{loggedInVirksomhed.by}}">
+                        <p id="byError" class="CVErrorColor" hidden="true" data-Key="Skal_udfyldes">Skal udfyldes</p>
+                    </div>
                     <div class="form-group">
                         <label for="description" data-key="Om_virksomheden">Om virksomheden</label>
                         <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                          title="Lav en kort beskrivelse af din virksomheds primære arbejdsområde og værdier"
-                          data-Key="Om_virksomheden_tooltip">?</span>
-                        <textarea class="form-control" name="description" id="description" rows="4"
-                        >{{loggedInVirksomhed.description}}</textarea>
+                            title="Lav en kort beskrivelse af din virksomheds primære arbejdsområde og værdier"
+                            data-Key="Om_virksomheden_tooltip">?</span>
+                        <textarea class="form-control" name="description" id="description"
+                            rows="4">{{loggedInVirksomhed.description}}</textarea>
                     </div>
                 </div>
-                <div class="form-column col-12 mt-3">
-                    <div>
-                    <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
-                    <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
-                            data-Key="Aendrer_password">Ændrer password
-                    </button>
-                    </div>
-                </div>
-                
-
-
             </div>
-            
 
-            <div class="form-column col-12 col-md-4">
+
+            <div class="form-column col-12 col-md-4 ml-3">
                 <div style="display: flex; flex-direction: row;">
                     <label style="margin-right: 5px" id="profilbilledeLabel"
-                           data-Key="Virksomhedslogo">Virksomhedslogo</label>
+                        data-Key="Virksomhedslogo">Virksomhedslogo</label>
                     <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                          title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 10MB. Billedet kan skæres til efter det er valgt."
-                          data-Key="Profilbillede_tooltip">?</span>
+                        title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 10MB. Billedet kan skæres til efter det er valgt."
+                        data-Key="Profilbillede_tooltip">?</span>
                 </div>
                 <div class="profilePicHolder">
                     <img id="profilbillede" class="img-thumbnail border-0" src="\images\no-logo.png"
-                         alt="PROFILBILLEDE">
+                        alt="PROFILBILLEDE">
                     <div class="custom-file">
                         <input id="crop_base64" type="text" name="crop_base64" class="d-none">
                         <input type="file" name="logo" accept=".jpg, .jpeg, .png" class="custom-file-input"
-                               id="profilePic" onchange="validateAndUpdateImage('picLabel', 'profilePic',
+                            id="profilePic" onchange="validateAndUpdateImage('picLabel', 'profilePic',
                                'imageTypeError', 'imageDimensionsError', 'imageSizeError', 'cropperModal', 'cropFrame',
                                'profilbillede', 'crop_base64')">
                         <label id="picLabel" class="custom-file-label" for="profilePic" data-Key="Vaelg_billede">Vælg
@@ -137,7 +138,7 @@
                             kun uploade en fil på maksimum
                             10MB</p>
                         <p id="imageDimensionsError" class="CVErrorColor mt-3" hidden="true"
-                           data-key="Vaelg_billede_error">
+                            data-key="Vaelg_billede_error">
                             Billedet skal være mindst 250 pixels i højde og bredde
                         </p>
                     </div>
@@ -145,7 +146,7 @@
                 <div class="mt-4 form-group">
                     <div class="form-check form-check-inline">
                         <input {{checkedState loggedInVirksomhed.visible_mail}} class="form-check-input" type="checkbox"
-                                                                                id="visibleMail" name="visibleMail">
+                            id="visibleMail" name="visibleMail">
                         <label class="form-check-label" for="visibleMail" data-key="Goer_mail_synlig">Gør mail synlig på
                             offentlig profil</label>
                     </div>
@@ -153,13 +154,22 @@
                 </div>
             </div>
 
+            <div class="form-column col-12 mt-3 ml-3">
+                <div>
+                    <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
+                    <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
+                        data-Key="Aendrer_password">Ændrer password
+                    </button>
+                </div>
+            </div>
+        </div>
     </form>
 
-</div>
 </div>
 
 {{> cropper-modal }}
 {{> change-password-modal }}
+{{> change-email-modal }}
 
 <script>
     function updateElements() {
@@ -179,5 +189,14 @@
         });
 
         $("aendrePasswordModal").modal('show');
+    }
+
+    function openEmailModal() {
+        $('#skiftEmailModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        $("skiftEmailModal").modal('show');
     }
 </script>

@@ -237,6 +237,12 @@ function checkDato() {
     let input = new Date(inputsStudent.dato.value);
     let error = errorsStudent.dato;
 
+    if (input == "Invalid Date") {
+        error.style.visibility = 'visible'
+        error.textContent = translateErrorMessage("datoMissing");
+        return false;
+    }
+
     if (input > today) {
         error.style.visibility = 'visible'
         error.textContent = translateErrorMessage("datoFejl");
@@ -257,11 +263,14 @@ inputs.gentagEmail.addEventListener('change', function () {
 });
 inputs.password.addEventListener('change', function () {
     checkAdgangskode(inputs.password.value, errors.password);
+    if (inputs.gentagPassword.value) {
+        checkGentagAdgangskode(inputs.gentagPassword.value, errors.gentagPassword,
+            inputs.password.value);
+    }
 });
 inputs.gentagPassword.addEventListener('change', function () {
-    inputs.gentagPassword.value,
-        errors.gentagPassword,
-        inputs.password.value
+    checkGentagAdgangskode(inputs.gentagPassword.value, errors.gentagPassword,
+        inputs.password.value);
 });
 inputs.virksomhedNavn.addEventListener('change', function () {
     checkFeltIkkeTomt(inputs.virksomhedNavn.value, errors.virksomhedNavn);
@@ -285,23 +294,29 @@ async function submitOpretVirksomhed() {
         checkAdgangskode(inputs.password.value, errors.password),
         checkGentagAdgangskode(inputs.gentagPassword.value, errors.gentagPassword, inputs.password.value),
         checkFeltIkkeTomt(inputs.virksomhedNavn.value, errors.virksomhedNavn),
-        checkCvrNummer(),
         checkTelefon(inputs.telefon.value, errors.telefon),
         checkFeltIkkeTomt(inputs.by.value, errors.by),
         checkFeltIkkeTomt(inputs.postnummer.value, errors.postnummer)
     ];
 
     let check = true;
-    checks.forEach(element => {
+    checks.every(element => {
         if (element == false) {
             check = false;
+            return false;
         }
+        return true;
     });
 
-    check = await checkEmail(inputs.email.value, errors.email);
-    check = await checkCvrNummer();
-
     if (!check) {
+        document.getElementById('submitBtn').onclick = submitOpretVirksomhed;
+        return;
+    }
+
+    let emailCheck = await checkEmail(inputs.email.value, errors.email);
+    let CVRcheck = await checkCvrNummer();
+
+    if (!emailCheck || !CVRcheck) {
         document.getElementById('submitBtn').onclick = submitOpretVirksomhed;
         return;
     }
@@ -339,7 +354,7 @@ async function submitOpretVirksomhed() {
         by: inputs.by.value,
         postnr: inputs.postnummer.value,
         cvrnr: inputs.cvrNummer.value,
-        consent: inputs.consent.checked
+        consent: inputs.consent.value
     }));
 };
 
@@ -351,11 +366,14 @@ inputsStudent.gentagEmail.addEventListener('change', function () {
 });
 inputsStudent.password.addEventListener('change', function () {
     checkAdgangskode(inputsStudent.password.value, errorsStudent.password);
+    if (inputsStudent.gentagPassword.value) {
+        checkGentagAdgangskode(inputsStudent.gentagPassword.value, errorsStudent.gentagPassword,
+            inputsStudent.password.value);
+    }
 });
 inputsStudent.gentagPassword.addEventListener('change', function () {
-    inputsStudent.gentagPassword.value,
-        errorsStudent.gentagPassword,
-        inputsStudent.password.value
+    checkGentagAdgangskode(inputsStudent.gentagPassword.value, errorsStudent.gentagPassword,
+        inputsStudent.password.value);
 });
 inputsStudent.fornavn.addEventListener('change', function () {
     checkFeltIkkeTomt(inputsStudent.fornavn, errorsStudent.fornavn);
@@ -384,15 +402,22 @@ async function submitOpretStudent() {
     ];
 
     let check = true;
-    checks.forEach(element => {
+    checks.every(element => {
         if (element == false) {
             check = false;
+            return false;
         }
+        return true;
     });
 
-    check = await checkEmail(inputsStudent.email.value, errorsStudent.email);
-
     if (!check) {
+        document.getElementById('submitBtn_Student').onclick = submitOpretStudent;
+        return;
+    }
+
+    let emailCheck = await checkEmail(inputsStudent.email.value, errorsStudent.email);
+
+    if (!emailCheck) {
         document.getElementById('submitBtn_Student').onclick = submitOpretStudent;
         return;
     }
@@ -429,7 +454,7 @@ async function submitOpretStudent() {
         fornavn: inputsStudent.fornavn.value,
         efternavn: inputsStudent.efternavn.value,
         dato: inputsStudent.dato.value,
-        consent: inputsStudent.consent.checked
+        consent: inputsStudent.consent.value
     }));
 };
 
@@ -447,7 +472,8 @@ function translateErrorMessage(key) {
             "cvrIBrug": "Det angivne CVR-nummer er allerede i brug",
             "cvrLedig": "Det angivne CVR-nummer er ledigt",
             "telefonFejl": "Telefonnummeret er ugyldigt",
-            "datoFejl": "En fremtidig dato er valgt"
+            "datoFejl": "En fremtidig dato er valgt",
+            "datoMissing": "Ugyldig dato"
         },
 
         "en": {
@@ -462,7 +488,8 @@ function translateErrorMessage(key) {
             "cvrIBrug": "This CVR number is already in use",
             "cvrLedig": "The specified mail is available",
             "telefonFejl": "The phone number is invalid",
-            "datoFejl": "A future date has been chosen"
+            "datoFejl": "A future date has been chosen",
+            "datoMissing": "Invalid date"
         }
     }
 

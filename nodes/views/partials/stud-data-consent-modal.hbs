@@ -137,16 +137,23 @@
 
     function checkConsent() {
         let consentCheckbox = document.getElementById("consent");
-        let studConsentCheckbox = document.getElementById("studentConsent");
+        let studConsent = document.getElementById("studentConsent");
         let consentButton = document.getElementById("consentButton");
         let createStudentButton = document.getElementById("submitBtn_Student");
+        let consentText = document.getElementById("consentTextStudent");
 
         if (consentButton) {
             consentButton.disabled = !consentCheckbox.checked;
         }
         if (createStudentButton) {
             createStudentButton.disabled = !consentCheckbox.checked;
-            studConsentCheckbox.checked = consentCheckbox.checked;
+            studConsent.value = consentCheckbox.checked;
+            if (consentCheckbox.checked) {
+                consentText.classList.remove('formError');
+            } else {
+                consentText.classList.add('formError');
+            }
+            
         }
     }
 </script>
