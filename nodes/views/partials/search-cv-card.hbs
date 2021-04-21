@@ -1,5 +1,5 @@
 {{#each json}}
-    <div class="card mb-3">
+    <div id="card{{id}}" class="card mb-3">
         <div class="row">
             <div class="col-auto">
                 <a href='/search-cv/{{id}}' class="stretched-link">
@@ -50,6 +50,27 @@
 <script src="/javascript/animation.js"></script>
 <script>
     function favourite(id) {
-        console.log("testing stuff")
+        let xhr = new XMLHttpRequest()
+        xhr.onload = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let icon = document.getElementById("fav-icon" + id)
+                if (this.responseText === "true") {
+                    icon.classList.remove('icon-heart-empty', 'unfavourite');
+                    icon.classList.add('icon-heart', 'favourite');
+                } else {
+                    // If we're currently in "/favourites/posts" then remove the card element from the list view. If
+                    // we're anywhere else then just leave the card in the view
+                    const path = window.location.pathname;
+                    if (path === "/favourites/cvs"){
+                        let card = document.getElementById("card" + id)
+                        removeFadeOut(card, 300)
+                    }
+                    icon.classList.remove('icon-heart', 'favourite');
+                    icon.classList.add('icon-heart-empty', 'unfavourite');
+                }
+            }
+        }
+        xhr.open('POST', '/favourites/mark-cv-as-favourite');
+        xhr.send(id);
     }
 </script>
