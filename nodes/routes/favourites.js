@@ -24,6 +24,9 @@ router.get('/posts', authorizeUser('student'), async function (req, res) {
     const rows = await models.InternshipPost.findAll({
         raw: true,
         nest: true,
+        order: [
+            ['updatedAt', 'DESC']
+        ],
         where: {
             id: postIds
         },
@@ -111,6 +114,9 @@ router.get('/cvs', authorizeUser('company'), async function (req, res) {
     let rows = await models.CV.findAll({
         raw: false,
         nest: true,
+        order: [
+            ['updatedAt', 'DESC']
+        ],
         where: {
             id: cvIds
         },
