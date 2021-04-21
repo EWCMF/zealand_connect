@@ -160,7 +160,7 @@ router.get('/cvs', authorizeUser('company'), async function (req, res) {
     });
 })
 
-router.post('/favourite-post', authorizeUser('student'), async function (req, res) {
+router.post('/mark-post-as-favourite', authorizeUser('student'), async function (req, res) {
     let postId = Number(req.body)
     let studentId = res.locals.user.id;
 
@@ -183,7 +183,7 @@ router.post('/favourite-post', authorizeUser('student'), async function (req, re
     return res.send(true)
 })
 
-router.post('/favourite-cv', authorizeUser('company'), async function (req, res) {
+router.post('/mark-cv-as-favourite', authorizeUser('company'), async function (req, res) {
     let cvId = Number(req.body)
     let companyId = res.locals.user.id;
 
