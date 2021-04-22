@@ -9,6 +9,7 @@ const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const passport = require('passport');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 const models = require("../models");
+const mailer = require('../utils/mail-sender');
 
 router.get('/', authorizeUser('admin'), function (req, res, next) {
     // Hele authorization håndteres nu af en middleware function
@@ -173,6 +174,47 @@ router.post('/delete-internship-post/:id', authorizeUser('admin'), async functio
         }
     }
 });
+
+router.get('/delete-notification-mail', authorizeUser('admin'), async function (req, res){
+    let mailInfos = [];
+    let students = await models.Student.findAll({
+        where: {
+            last_login: null
+        },
+        include: [{
+            model: models.CV,
+            attributes: ['sprog'],
+            as: 'cv'
+        }]
+    })
+
+    students.forEach(student => {
+        let dansk = false;
+        let subject = "Your account on Zealand Connect will be deleted soon";
+
+        if (student.cv){
+            if (student.cv.sprog.toLowerCase().includes('dansk')){
+                dansk = true;
+                subject = "Din konto på Zealand Connect bliver snart slettet"
+            }
+        }
+
+        let mailInfo = {
+            recipient: student.email,
+            subject: subject,
+            context: {
+                dansk: dansk,
+                fornavn: student.fornavn,
+                efternavn: student.efternavn
+            }
+        }
+        mailInfos.push(mailInfo);
+    });
+
+    mailer.sendMail('delete-account-notification', mailInfos);
+
+    res.send("Tjek din mailtrap bitch")
+})
 
 
 module.exports = router;
