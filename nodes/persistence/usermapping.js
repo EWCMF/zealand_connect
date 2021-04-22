@@ -1,5 +1,6 @@
 const models = require("../models");
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
+const deleteCV = require('../persistence/cv-mapping').deleteCV;
 const hashPassword = require('../encryption/password').hashPassword;
 const unlinkOldFiles = require("../utils/file-handling").unlinkOldFiles;
 
@@ -177,7 +178,7 @@ async function deleteStudent(email) {
         else {
             //slet studentens cv hvis det findes
             if (student.cv != null) {
-                await student.cv.destroy();
+                deleteCV(student.cv.id);
             }
 
             if (student.profilbillede){
