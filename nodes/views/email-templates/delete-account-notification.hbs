@@ -1,0 +1,15 @@
+<div>
+    {{#if dansk}}
+        <p>Kære {{fornavn}} {{efternavn}}</p>
+        <p>Vi skriver til dig, fordi din bruger på Zealand Connect bliver slettet d. {{date}}. Hvis du vil beholde din konto og
+            fortsætte med at bruge Zealand Connect, så skal du logge ind på https://connect.zealand.dk inden ovennævnte dato.
+            Vi håber du vil fortsætte med at bruge hjemmesiden.</p>
+        <p>Mvh Zealand Connect Teamet</p>
+    {{else}}
+        <p>Hello {{fornavn}} {{efternavn}}</p>
+        <p>Your account on Zealand Connect is flagged for deletion on {{date}}. If you wish to keep your account
+            and continue to use Zealand Connect you must login to https://connect.zealand.dk before the mentioned date. We hope
+            you will continue to use our website.</p>
+        <p>Regards, The Zealand Connect Team</p>
+    {{/if}}
+</div>
