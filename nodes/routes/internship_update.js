@@ -290,17 +290,20 @@ router.get('/', authorizeUser('company', 'admin'), function (req, res, next) {
     }).catch();
 });
 
-router.get('/delete/:id', authorizeUser('company', 'admin'), async function (req, res, next) {
+router.get('/delete/:id', authorizeUser('company'), async function (req, res, next) {
     let internshipPost = await models.InternshipPost.findByPk(req.params.id);
     let company = await findUserByEmail(req.user);
 
-    if (company.id === internshipPost.fk_company) {
-        deleteInternshipPost(req.params.id)
-        res.redirect('/');
+    if (company instanceof models.Virksomhed){
+        if (company.id === internshipPost.fk_company) {
+            deleteInternshipPost(req.params.id)
+            res.redirect('/');
+        } else {
+            res.status(403).render('error403', {layout: false});
+        }
     } else {
         res.status(403).render('error403', {layout: false});
     }
-
 });
 
 module.exports = router;
