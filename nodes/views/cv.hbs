@@ -108,9 +108,10 @@
             {{#if ejer}}
             <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'" data-key="Rediger_CV">Rediger
                 CV</button>
+                <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
             {{/if}}
             {{#if isAdmin}}
-                <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
+                <button type="button" class="btn btn-danger mt-3" onclick="adminDeleteCV()" data-key="Slet_CV">Slet CV</button>
             {{/if}}
         </div>
         {{/unless}}
@@ -262,9 +263,9 @@
         autobreak[i].innerHTML = autobreak[i].innerHTML.trim();
     }
 
-    function deleteCV(){
+    function adminDeleteCV(){
         let cvId = {{json.id}};
-        let studentEmail = prompt("Skriv den studerendes email for at bekræfte handlingen?");
+        let studentEmail = prompt("Skriv den studerendes email for at bekræfte handlingen");
         if (studentEmail){
             let xhttp = new XMLHttpRequest();
             xhttp.open("POST", "/admin-funktioner/delete-cv/" + cvId, true);
@@ -281,6 +282,12 @@
                     alert(responseObject.message)
                 }
             }
+        }
+    }
+
+    function deleteCV(){
+        if (confirm("Er du sikker?")) {
+            window.location = "/mit-cv/delete";
         }
     }
 </script>
