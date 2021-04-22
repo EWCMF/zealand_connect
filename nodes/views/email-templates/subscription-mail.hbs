@@ -1,5 +1,12 @@
-<div>
-    <p>{{greeting}}</p>
-    <p>{{text1}} <span class="font-weight-bold">{{name}}</span> {{text2}}</p>
-    {{link}}
-</div>
+<tr>
+    <td>
+        {{#if dansk}}
+        <p>Hej {{studentName}}</p>
+        <p>Firmaet <b>{{name}}</b> Har lavet et opslag der matcher dine præferencer. Følg dette link for at se opslaget</p>
+        {{else}}
+        <p>Hello {{studentName}}</p>
+        <p>The company <b>{{name}}</b> has made a post matching your preferences. Follow this link to read the post.</p>
+        {{/if}}
+        <a href="{{link}}">{{link}}</a>
+    </td>
+</tr>

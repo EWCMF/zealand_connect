@@ -239,7 +239,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                 let cvs = await db.CV.findAll({
                     raw: true,
                     nest: true,
-                    attributes: ['email'],
+                    attributes: ['email', 'sprog'],
                     where: {
                         [Op.or]: {
                             id: idsArray
@@ -255,14 +255,22 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
                 let mailInfos = [];
                 cvs.forEach(cv => {
+                    let subject = "A new post has been made on Zealand Connect matching your preferences";
+                    let dansk = false;
+                    if (cv.sprog) {
+                        if (cv.sprog.toLowerCase().includes('dansk')) {
+                            subject = "Et nyt opslag er blevet lavet på Zealand Connect som matcher dine præferencer";
+                            dansk = true;
+                        }
+                    }
+
                     let mailInfo = {
-                        recipient: cv.email,
-                        subject: "A new post has been made on Zealand Connect matching your preferences",
+                        recipient: `${cv.student.fornavn} ${cv.student.efternavn} <${cv.email}>`,
+                        subject: subject,
                         context: {
-                            greeting: `Hello ${cv.student.fornavn} ${cv.student.efternavn}`,
+                            studentName: `${cv.student.fornavn} ${cv.student.efternavn}`,
                             name: user.navn,
-                            text1: "The company",
-                            text2: "has made a post matching your preferences. Follow this link to read the post.",
+                            dansk: dansk,
                             link: process.env.DOMAIN + "/internship_view/" + post.id
                         }
                     }
