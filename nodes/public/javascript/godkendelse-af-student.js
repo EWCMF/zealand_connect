@@ -4,8 +4,6 @@ function submitButton() {
     let fornavn = document.getElementById("fornavn").value;
     let efternavn = document.getElementById("efternavn").value;
     let telefon = document.getElementById("telefon").value;
-    let password = document.getElementById("password").value;
-    let gentagPassword = document.getElementById("gentagPassword").value;
     // regex her er fået fra datavalidering.test.js. Den checker at det er gyldig email. Den siger true hvis det er tilfældet
     // var emailWrittenCorrectly = emailRegex.test(email);
 
@@ -49,22 +47,6 @@ function submitButton() {
         document.getElementById("telefonError").hidden = false;
     } else {
         document.getElementById("telefonError").hidden = true;
-    }
-
-    if (password !== ""){
-        if (password.length < 8 || password.length > 20) {
-            errors.push('passwordLengthError')
-            document.getElementById("passwordLengthError").hidden = false;
-            document.getElementById("passwordMismatchError").hidden = true;
-        } else if (password !== gentagPassword){
-            errors.push('passwordMismatchError')
-            document.getElementById("passwordLengthError").hidden = true;
-            document.getElementById("passwordMismatchError").hidden = false;
-        }
-        else {
-            document.getElementById("passwordLengthError").hidden = true;
-            document.getElementById("passwordMismatchError").hidden = true;
-        }
     }
 
     if (errors === undefined || errors.length === 0) {
