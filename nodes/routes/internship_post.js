@@ -265,7 +265,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     }
 
                     let mailInfo = {
-                        recipient: `${cv.student.fornavn} ${cv.student.efternavn} <${cv.email}>`,
+                        recipient: cv.email,
                         subject: subject,
                         context: {
                             studentName: `${cv.student.fornavn} ${cv.student.efternavn}`,
