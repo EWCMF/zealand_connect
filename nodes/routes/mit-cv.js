@@ -282,12 +282,20 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     res.render('mit-cv-success', {layout: false, status: status, message: besked, id: cv.id});
 });
 
-router.get('/delete', authorizeUser('student', 'admin'), function (req, res, next) {
-    if (req.query.id == null) {
-        res.send("Use id");
-    } else {
-        deleteCV(req.query.id);
-        res.send("Entry deleted");
+router.get('/delete', authorizeUser('student'), async function (req, res, next) {
+    let user = res.locals.user;
+
+    if (user instanceof db.Student){
+        try {
+            let CV = await db.CV.findOne({
+                where: {
+                    student_id: user.id
+                }
+            })
+            deleteCV(CV.id)
+        } catch (e) {
+            console.log(e)
+        }
     }
 });
 

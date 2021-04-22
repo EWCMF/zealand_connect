@@ -108,9 +108,10 @@
             {{#if ejer}}
             <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'" data-key="Rediger_CV">Rediger
                 CV</button>
+                <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
             {{/if}}
             {{#if isAdmin}}
-                <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
+                <button type="button" class="btn btn-danger mt-3" onclick="adminDeleteCV()" data-key="Slet_CV">Slet CV</button>
             {{/if}}
         </div>
         {{/unless}}
@@ -125,7 +126,7 @@
             <p class="autobreak">
                 {{json.overskrift}}
             </p>
-            
+
         </div>
     </div>
     <div class="row border rounded ml-1 mr-1 mb-4">
@@ -205,7 +206,7 @@
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Udlandsophold_og_frivilligt_arbejde">
-                Udlandsophold og frivilligt arbejde   
+                Udlandsophold og frivilligt arbejde
             </h4>
             {{#if json.udenlandsophold_og_frivilligt_arbejde}}
             <p class="autobreak">
@@ -262,9 +263,9 @@
         autobreak[i].innerHTML = autobreak[i].innerHTML.trim();
     }
 
-    function deleteCV(){
+    function adminDeleteCV(){
         let cvId = {{json.id}};
-        let studentEmail = prompt("Skriv den studerendes email for at bekræfte handlingen?");
+        let studentEmail = prompt("Skriv den studerendes email for at bekræfte handlingen");
         if (studentEmail){
             let xhttp = new XMLHttpRequest();
             xhttp.open("POST", "/admin-funktioner/delete-cv/" + cvId, true);
@@ -281,6 +282,12 @@
                     alert(responseObject.message)
                 }
             }
+        }
+    }
+
+    function deleteCV(){
+        if (confirm("Er du sikker?")) {
+            window.location = "/mit-cv/delete";
         }
     }
 </script>
