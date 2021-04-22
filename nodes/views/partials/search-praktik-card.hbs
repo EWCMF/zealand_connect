@@ -41,22 +41,22 @@
             </div>
         </div>
         <div class="card-footer">
-            <div class="container ml-2">
-                <div class="row d-flex">
-                    <div class="row flex-grow-1">
-                        <p class="font-weight-bold pr-1" data-key="Uddannelse_kolon">Uddannelse:</p>
-                        <p class="pr-2" data-key="{{education.name}}">{{education.name}}</p>
+            <div class="ml-4">
+                <div class="row d-flex" style="justify-content: space-between">
+                    <div class="row flex">
+                        <p class="font-weight-bold pr-1 mb-0" data-key="Uddannelse_kolon">Uddannelse:</p>
+                        <p class="pr-2 mb-0" data-key="{{education.name}}">{{education.name}}</p>
                     </div>
-                    <div class="row mr-2">
-                        <p class="font-weight-bold pr-1" data-key="Ansoegningsfrist_kolon">Ansøgningsfrist:</p>
+                    <div class="row mr-2 flex">
+                        <p class="font-weight-bold pr-1 mb-0" data-key="Ansoegningsfrist_kolon">Ansøgningsfrist:</p>
                         {{#if post_start_date}}
-                            <p class="pr-2">{{post_start_date}}</p>
+                            <p class="pr-2 mb-0">{{post_start_date}}</p>
                         {{else}}
-                            <p class="pr-2" data-key="Ingen">Ingen</p>
+                            <p class="pr-2 mb-0" data-key="Ingen">Ingen</p>
                         {{/if}}
                         {{#if post_end_date}}
-                            <p class="font-weight-bold pr-1" data-key="Praktikstart_kolon">Praktikstart:</p>
-                            <p>{{post_end_date}}</p>
+                            <p class="font-weight-bold pr-1 mb-0" data-key="Praktikstart_kolon">Praktikstart:</p>
+                            <p class="mb-0">{{post_end_date}}</p>
                         {{/if}}
                     </div>
                 </div>
