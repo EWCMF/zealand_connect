@@ -27,13 +27,13 @@
                     </div>
                 </a>
             </div>
-            <div class="col-auto mr-3 mt-2">
+            <div class="col-auto mr-2 mt-2">
                 {{#if ../isStudent}}
                     <button class="btn fav-button" style="outline: none;" onclick="favourite({{id}})">
                         {{#if isFavourite}}
-                            <i id="fav-icon{{id}}" class="icon-heart icon-2x favourite"></i>
+                            <i id="fav-icon{{id}}" class="fas fa-star fa-2x"></i>
                         {{else}}
-                            <i id="fav-icon{{id}}" class="icon-heart-empty icon-2x unfavourite"></i>
+                            <i id="fav-icon{{id}}" class="far fa-star fa-2x"></i>
                         {{/if}}
                     </button>
                 {{/if}}
@@ -73,8 +73,8 @@
             if (this.readyState == 4 && this.status == 200) {
                 let icon = document.getElementById("fav-icon" + id)
                 if (this.responseText === "true") {
-                    icon.classList.remove('icon-heart-empty', 'unfavourite');
-                    icon.classList.add('icon-heart', 'favourite');
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
                 } else {
                     // If we're currently in "/favourites/posts" then remove the card element from the list view. If
                     // we're anywhere else then just leave the card in the view
@@ -83,8 +83,8 @@
                         let card = document.getElementById("card" + id)
                         removeFadeOut(card, 300)
                     }
-                    icon.classList.remove('icon-heart', 'favourite');
-                    icon.classList.add('icon-heart-empty', 'unfavourite');
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
                 }
             }
         }
