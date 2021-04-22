@@ -202,7 +202,7 @@ router.get('/delete-notification-mail', authorizeUser('admin'), async function (
         }
 
         let mailInfo = {
-            recipient: `${student.fornavn} ${student.efternavn} <${student.email}>`,
+            recipient: student.email,
             subject: subject,
             context: {
                 dansk: dansk,
