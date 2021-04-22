@@ -191,21 +191,24 @@ router.get('/delete-notification-mail', authorizeUser('admin'), async function (
     students.forEach(student => {
         let dansk = false;
         let subject = "Your account on Zealand Connect will be deleted soon";
+        let date = "the 29. of April"
 
         if (student.cv){
             if (student.cv.sprog.toLowerCase().includes('dansk')){
                 dansk = true;
-                subject = "Din konto på Zealand Connect bliver snart slettet"
+                subject = "Din konto på Zealand Connect bliver snart slettet";
+                date = "29/4";
             }
         }
 
         let mailInfo = {
-            recipient: student.email,
+            recipient: `${student.fornavn} ${student.efternavn} <${student.email}>`,
             subject: subject,
             context: {
                 dansk: dansk,
                 fornavn: student.fornavn,
-                efternavn: student.efternavn
+                efternavn: student.efternavn,
+                date: date
             }
         }
         mailInfos.push(mailInfo);

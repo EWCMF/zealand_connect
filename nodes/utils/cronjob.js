@@ -64,7 +64,7 @@ function runCronJobs() {
             }
 
             let mailInfo = {
-                recipient: student.email,
+                recipient: `${student.fornavn} ${student.efternavn} <${student.email}>`,
                 subject: subject,
                 context: {
                     dansk: dansk,
