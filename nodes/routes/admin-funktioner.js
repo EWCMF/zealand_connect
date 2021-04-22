@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {deleteVirksomhed, searchVirksomhederByName, findStudentByName} = require('../persistence/usermapping');
+const deleteCV = require('../persistence/cv-mapping').deleteCV;
 const {reqLang} = require('../public/javascript/request');
 const {createUddanelse, findUddannelseByName, sletUddannelse} = require('../persistence/uddanelsemapping');
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
@@ -148,11 +149,7 @@ router.post('/delete-cv/:id', authorizeUser('admin'), async function (req, res, 
         let CV = await models.CV.findByPk(cvId);
 
         if (CV.email === email){
-            await models.CV.destroy({
-                where: {
-                    id: cvId
-                }
-            })
+            deleteCV(cvId);
             return res.status(200).json({message: "CV'et med emailen " + email + " blev slettet. Du vil blive omdirigeret til CV-listen."})
         } else {
             return res.status(400).json({message: "Der findes intet CV med den email. Prøv igen."})

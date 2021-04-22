@@ -574,8 +574,8 @@ function getLangdata() {
                     "a company. We check if the post matches your education and what you're looking for.",
 
                 // Favourites
-                "Mine_yndlingscver": "My favourite CV's",
-                "Mine_yndlingsopslag": "My favourite posts",
+                "Mine_foretrukne_cver": "My favourite CV's",
+                "Mine_foretrukne_opslag": "My favourite posts",
             }
         }
     }

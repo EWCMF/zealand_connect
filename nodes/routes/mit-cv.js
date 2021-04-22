@@ -1,8 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
-var { reqLang } = require('../public/javascript/request');
+const deleteCV = require('../persistence/cv-mapping').deleteCV;
+const { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 const { emailRegex, phoneRegex, linkRegex, postcodeRegex } = require('../constants/regex');
 const fetch = require('node-fetch');
@@ -285,11 +286,7 @@ router.get('/delete', authorizeUser('student', 'admin'), function (req, res, nex
     if (req.query.id == null) {
         res.send("Use id");
     } else {
-        db.CV.destroy({
-            where: {
-                id: req.query.id
-            }
-        });
+        deleteCV(req.query.id);
         res.send("Entry deleted");
     }
 });

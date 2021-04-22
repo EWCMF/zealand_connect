@@ -801,14 +801,6 @@ body {
   white-space: pre-line;
 }
 
-.favourite {
-  color: red;
-}
-
-.unfavourite {
-  color: black;
-}
-
 .fav-button {
   box-shadow: none !important;;
 }

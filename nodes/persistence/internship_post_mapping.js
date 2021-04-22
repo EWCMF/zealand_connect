@@ -15,6 +15,14 @@ async function deleteInternshipPost(id) {
             return errorHappened;
         }
 
+        // Slet favourite associations
+        await models.FavouritePost.destroy({
+            where: {
+                internship_post_id: id
+            }
+        })
+
+        // Slet filer tilknyttet opslaget
         if (internshipPost.post_document){
             unlinkOldFiles(internshipPost.post_document)
         }
