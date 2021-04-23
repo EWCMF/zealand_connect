@@ -189,6 +189,15 @@ router.get('/delete-notification-mail', authorizeUser('admin'), async function (
     })
 
     students.forEach(student => {
+        if (student.email_notification_date) {
+            let oneYearAgo = new Date();
+            oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+            if (student.email_notification_date > oneYearAgo) {
+                return;
+            }
+        }
+
         let dansk = false;
         let subject = "Your account on Zealand Connect will be deleted soon";
         let date = "the 29. of April"
@@ -202,6 +211,7 @@ router.get('/delete-notification-mail', authorizeUser('admin'), async function (
         }
 
         let mailInfo = {
+            student: student,
             recipient: student.email,
             subject: subject,
             context: {
@@ -214,7 +224,16 @@ router.get('/delete-notification-mail', authorizeUser('admin'), async function (
         mailInfos.push(mailInfo);
     });
 
-    mailer.sendMail('delete-account-notification', mailInfos);
+    mailInfos.forEach(async mailInfo => {
+        try {
+            await mailer.sendMail('delete-account-notification', mailInfo);
+            mailInfo.student.email_notification_date = new Date();
+            mailInfo.student.save();
+        } catch (error) {
+            console.log(`Mail to student ${mailInfo.student.id} failed`);
+        }
+    });
+    
 
     res.send("Tjek din mailtrap bitch")
 })

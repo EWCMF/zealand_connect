@@ -123,7 +123,7 @@ router.post('/', async function (req, res) {
             }
         };
 
-        await transport.sendMail(message, function (err, info) {
+        transport.sendMail(message, function (err, info) {
             if (err) {
                 console.log(err);
             } else {

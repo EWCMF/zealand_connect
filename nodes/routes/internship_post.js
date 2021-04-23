@@ -265,6 +265,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     }
 
                     let mailInfo = {
+                        student: cv.student,
                         recipient: cv.email,
                         subject: subject,
                         context: {
@@ -277,7 +278,13 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     mailInfos.push(mailInfo);
                 });
 
-                mailer.sendMail('subscription-mail', mailInfos);
+                mailInfos.forEach(async mailInfo => {
+                    try {
+                        await mailer.sendMail('subscription-mail', mailInfos);
+                    } catch (error) {
+                        console.log(`Mail to student ${mailInfo.student.id} failed`);
+                    }
+                });
 
                 res.redirect('../internship_view/' + post.id)
             } else {

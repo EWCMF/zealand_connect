@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
         foedselsdato: DataTypes.DATE,
         profilbillede: DataTypes.STRING,
         last_login: DataTypes.DATE,
-        user_data_consent: DataTypes.BOOLEAN
+        user_data_consent: DataTypes.BOOLEAN,
+        email_notification_date: DataTypes.DATE
     }, {
         sequelize,
         modelName: 'Student',
