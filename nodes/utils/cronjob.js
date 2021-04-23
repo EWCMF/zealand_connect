@@ -1,9 +1,10 @@
 const cron = require('node-cron');
-const models = require('../models')
+const models = require('../models');
 const {
     Op
 } = require('sequelize');
-const deleteStudent = require('../persistence/usermapping').deleteStudent
+const deleteStudent = require('../persistence/usermapping').deleteStudent;
+const deleteCompany = require('../persistence/usermapping').deleteVirksomhed;
 const mailer = require('./mail-sender');
 
 
@@ -11,7 +12,7 @@ function runCronJobs() {
     /* WARNING: Do not change this cron job unless you know what you're doing. 
     This cron deletes student that have been inactive for a year 
     because of our data protection policy */
-    cron.schedule('0 0 * * *', async function() {
+    cron.schedule('* * * * *', async function() {
         let oneYearAgo = new Date();
         oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
@@ -26,6 +27,19 @@ function runCronJobs() {
         oldStudents.forEach(oldStudent => {
             console.log(`Student with email ${oldStudent.email} was deleted by cron job because the student was inactive for a year`);
             deleteStudent(oldStudent.email);
+        });
+
+        oldCompanies = await models.Virksomhed.findAll({
+            where: {
+                last_login: {
+                    [Op.lt]: oneYearAgo
+                }
+            }
+        });
+
+        oldCompanies.forEach(oldCompany => {
+            console.log(`Company with email ${oldCompany.email} was deleted by cron job because the student was inactive for a year`);
+            deleteCompany(oldCompany.email);
         });
     });
 
