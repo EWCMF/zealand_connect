@@ -15,14 +15,21 @@ async function deleteCV(id) {
         }
 
         // Slet favourite associations
-        await models.FavouriteCV.destroy({
+        models.FavouriteCV.destroy({
             where: {
                 cv_id: id
             }
-        })
+        });
+
+        // Slet CV type associations
+        models.CV_CVtype.destroy({
+            where: {
+                cv_id: id
+            }
+        });
 
         //slet CV'et
-        await CV.destroy();
+        CV.destroy();
         return errorHappened;
     } catch (e) {
         console.log(e);
