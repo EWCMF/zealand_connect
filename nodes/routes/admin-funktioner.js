@@ -202,6 +202,7 @@ router.get('/delete-notification-mail', authorizeUser('admin'), async function (
         }
 
         let mailInfo = {
+            student: student,
             recipient: student.email,
             subject: subject,
             context: {
@@ -214,7 +215,16 @@ router.get('/delete-notification-mail', authorizeUser('admin'), async function (
         mailInfos.push(mailInfo);
     });
 
-    mailer.sendMail('delete-account-notification', mailInfos);
+    mailInfos.forEach(async mailInfo => {
+        try {
+            await mailer.sendMail('delete-account-notification', mailInfo);
+            mailInfo.student.email_notification_date = new Date();
+            mailInfo.student.save();
+        } catch (error) {
+            console.log(`Mail to student ${mailInfo.student.id} failed`);
+        }
+    });
+    
 
     res.send("Tjek din mailtrap bitch")
 })

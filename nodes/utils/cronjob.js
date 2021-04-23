@@ -40,7 +40,7 @@ function runCronJobs() {
             where: {
                 last_login: {
                     [Op.lt]: elevenMonthsAgo
-                }
+                },
             },
             include: [{
                 model: models.CV,
@@ -50,6 +50,16 @@ function runCronJobs() {
         })
 
         students.forEach(student => {
+            if (student.email_notification_date) {
+                let oneYearAgo = new Date();
+                oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+                if (student.email_notification_date > oneYearAgo) {
+                    return;
+                }
+            }
+            
+
             let dansk = false;
             let subject = "Your account on Zealand Connect will be deleted soon";
             let dateForDeletion = new Date();
@@ -64,6 +74,7 @@ function runCronJobs() {
             }
 
             let mailInfo = {
+                student: student,
                 recipient: student.email,
                 subject: subject,
                 context: {
@@ -76,7 +87,15 @@ function runCronJobs() {
             mailInfos.push(mailInfo);
         });
 
-        mailer.sendMail('delete-account-notification', mailInfos);
+        mailInfos.forEach(async mailInfo => {
+            try {
+                mailer.sendMail('delete-account-notification', mailInfo);
+                mailInfo.student.email_notification_date = new Date();
+                mailInfo.student.save();
+            } catch (error) {
+                console.log(`Mail to student ${mailInfo.student.id} failed`);
+            }
+        });
     })
 }
 
