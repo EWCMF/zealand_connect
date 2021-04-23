@@ -189,6 +189,15 @@ router.get('/delete-notification-mail', authorizeUser('admin'), async function (
     })
 
     students.forEach(student => {
+        if (student.email_notification_date) {
+            let oneYearAgo = new Date();
+            oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+            if (student.email_notification_date > oneYearAgo) {
+                return;
+            }
+        }
+
         let dansk = false;
         let subject = "Your account on Zealand Connect will be deleted soon";
         let date = "the 29. of April"
