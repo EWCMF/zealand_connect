@@ -121,6 +121,7 @@
         </div>
     </div>
 
+    {{#unless loggedInVirksomhed.ejer}}
     <div class="row mb-3">
         <div class="col-12 col-sm-8 ml-3">
             <h2 class="mb-3" data-key="">Aktuelle opslag</h2>
@@ -142,6 +143,7 @@
             {{/if}}
         </div>
     </div>
+    {{/unless}}
 </div>
 
 {{> delete-account-modal }}

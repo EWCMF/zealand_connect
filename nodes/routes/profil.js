@@ -67,6 +67,12 @@ router.get('/', authorizeUser('student', 'company', 'admin'), function (req, res
 router.get('/virksomhed/:id', async function (req, res) {
     let id = req.params.id;
 
+    if (res.locals.user instanceof models.Virksomhed) {
+        if (res.locals.user.id == id) {
+            return res.redirect('/profil')
+        }
+    }
+
     let json = await models.Virksomhed.findByPk(id, {
         raw: true,
         nest: true,
@@ -218,7 +224,7 @@ async function getPosts(res, id, page) {
         })
     }
 
-    let pageCount = Math.floor(count / limit);
+    let pageCount = Math.ceil(count / limit);
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
