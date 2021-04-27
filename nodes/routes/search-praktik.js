@@ -296,8 +296,7 @@ async function fetchData(page, parameters, res) {
                 ]
             }
         ]
-    }
-    ;
+    };
 
     const {
         count,
@@ -376,7 +375,7 @@ async function fetchData(page, parameters, res) {
             if (favouritePost.internship_post_id === element.id) {
                 element['isFavourite'] = true;
             }
-        })
+        });
     }
 
     return {
