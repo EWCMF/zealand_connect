@@ -175,67 +175,19 @@ router.post('/delete-internship-post/:id', authorizeUser('admin'), async functio
     }
 });
 
-router.get('/delete-notification-mail', authorizeUser('admin'), async function (req, res){
-    let mailInfos = [];
+router.get('/delete-inactive-users', authorizeUser('admin'), async function (req, res){
     let students = await models.Student.findAll({
+        raw: true,
         where: {
             last_login: null
-        },
-        include: [{
-            model: models.CV,
-            attributes: ['sprog'],
-            as: 'cv'
-        }]
+        }
     })
 
     students.forEach(student => {
-        if (student.email_notification_date) {
-            let oneYearAgo = new Date();
-            oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+        deleteStudent(student.email)
+    })
 
-            if (student.email_notification_date > oneYearAgo) {
-                return;
-            }
-        }
-
-        let dansk = false;
-        let subject = "Your account on Zealand Connect will be deleted soon";
-        let date = "the 29. of April"
-
-        if (student.cv){
-            if (student.cv.sprog.toLowerCase().includes('dansk')){
-                dansk = true;
-                subject = "Din konto på Zealand Connect bliver snart slettet";
-                date = "29/4";
-            }
-        }
-
-        let mailInfo = {
-            student: student,
-            recipient: student.email,
-            subject: subject,
-            context: {
-                dansk: dansk,
-                fornavn: student.fornavn,
-                efternavn: student.efternavn,
-                date: date
-            }
-        }
-        mailInfos.push(mailInfo);
-    });
-
-    mailInfos.forEach(async mailInfo => {
-        try {
-            await mailer.sendMail('delete-account-notification', mailInfo);
-            mailInfo.student.email_notification_date = new Date();
-            mailInfo.student.save();
-        } catch (error) {
-            console.log(`Mail to student ${mailInfo.student.id} failed`);
-        }
-    });
-    
-
-    res.send("Tjek din mailtrap bitch")
+    res.json(students);
 })
 
 
