@@ -253,8 +253,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     }
                 });
 
-                let mailInfos = [];
-                cvs.forEach(cv => {
+                for (const cv of cvs) {
                     let subject = "A new post has been made on Zealand Connect matching your preferences";
                     let dansk = false;
                     if (cv.sprog) {
@@ -275,17 +274,14 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                             link: process.env.DOMAIN + "/internship_view/" + post.id
                         }
                     }
-                    mailInfos.push(mailInfo);
-                });
-
-                mailInfos.forEach(async mailInfo => {
                     try {
-                        await mailer.sendMail('subscription-mail', mailInfos);
-                    } catch (error) {
-                        console.log(`Mail to student ${mailInfo.student.id} failed`);
+                        mailer.sendMail('subscription-mail', mailInfo)
                     }
-                });
-
+                    catch (e){
+                        console.log(e)
+                        console.log(`Mail to student ${mailInfo.student.id} failed`)
+                    }
+                }
                 res.redirect('../internship_view/' + post.id)
             } else {
                 return res.status(422).render('errorInternship', {layout: false, errors: errors});

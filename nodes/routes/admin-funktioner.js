@@ -175,20 +175,4 @@ router.post('/delete-internship-post/:id', authorizeUser('admin'), async functio
     }
 });
 
-router.get('/delete-inactive-users', authorizeUser('admin'), async function (req, res){
-    let students = await models.Student.findAll({
-        raw: true,
-        where: {
-            last_login: null
-        }
-    })
-
-    students.forEach(student => {
-        deleteStudent(student.email)
-    })
-
-    res.json(students);
-})
-
-
 module.exports = router;
