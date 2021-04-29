@@ -6,7 +6,7 @@ const unlinkOldFiles = require("../utils/file-handling").unlinkOldFiles;
 
 async function findUserByEmail(email) {
     let user = null;
-    if(email == undefined){
+    if (email == undefined) {
         return user;
     }
     //denne metode prøver først at se om en student matcher email, så bagefter virksomhed.
@@ -30,7 +30,7 @@ async function findUserByEmail(email) {
                 user = student
             }
         }).then(() => {
-            models.Virksomhed.findOne({ where: { email: email } }).then((virksomhed) => {
+            models.Virksomhed.findOne({where: {email: email}}).then((virksomhed) => {
                 if (virksomhed === null) {
                     return;
                 }
@@ -38,11 +38,11 @@ async function findUserByEmail(email) {
                     user = virksomhed;
                 }
             }).then(() => {
-                models.Admin.findOne({ where: { username: email}}).then((admin)=>{
+                models.Admin.findOne({where: {username: email}}).then((admin) => {
                     if (admin === null) {
                         resolve(user);
                     }
-                    if(admin instanceof models.Admin){
+                    if (admin instanceof models.Admin) {
                         user = admin;
                     }
                     resolve(user);
@@ -52,7 +52,7 @@ async function findUserByEmail(email) {
     })
 }
 
-async function findVirksomhedByCvr(cvr){
+async function findVirksomhedByCvr(cvr) {
     let user = await models.Virksomhed.findOne({
         where: {
             cvrnr: cvr
@@ -64,7 +64,7 @@ async function findVirksomhedByCvr(cvr){
 
 async function editVirksomhed(json) {
     json.visibleMail == 'on' ? json.visibleMail = true : json.visibleMail = false;
-    
+
     //vi bruger email til at finde virksomheden.
     findUserByEmail(json.email).then(virksomhed => {
         virksomhed.update({
@@ -129,7 +129,7 @@ async function deleteVirksomhed(email) {
                 email: email
             }
         });
-        if(virksomhed == null){
+        if (virksomhed == null) {
             errorHappened = true;
             return errorHappened;
         }
@@ -145,7 +145,7 @@ async function deleteVirksomhed(email) {
             deleteInternshipPost(internshipPosts[i].id);
         }
 
-        if (virksomhed.logo){
+        if (virksomhed.logo) {
             unlinkOldFiles(virksomhed.logo)
         }
 
@@ -174,19 +174,14 @@ async function deleteStudent(email) {
         if (student == null) {
             errorHappened = true;
             return errorHappened;
-        }
-        else {
+        } else {
             //slet studentens cv hvis det findes
             if (student.cv != null) {
                 deleteCV(student.cv.id);
             }
 
-            try {
-                if (student.profilbillede){
-                    unlinkOldFiles(student.profilbillede)
-                }
-            } catch (e){
-                console.log(e)
+            if (student.profilbillede) {
+                unlinkOldFiles(student.profilbillede)
             }
 
             //slet studenten
@@ -201,7 +196,7 @@ async function deleteStudent(email) {
 async function findUserByCVR(CVR) {
     let user = null;
     return new Promise(resolve => {
-        models.Virksomhed.findOne({ where: { cvrnr: CVR } }).then((virksomhed) => {
+        models.Virksomhed.findOne({where: {cvrnr: CVR}}).then((virksomhed) => {
             if (virksomhed === null) {
                 //resolve(null);
             }
@@ -233,7 +228,7 @@ async function editPassword(email, password) {
     })
 }
 
-async function editProfilePic(email, profilbillede){
+async function editProfilePic(email, profilbillede) {
     findUserByEmail(email).then(student => {
         student.update({
             profilbillede: profilbillede
@@ -242,7 +237,7 @@ async function editProfilePic(email, profilbillede){
 }
 
 function searchVirksomhederByName(name) {
-    const { Op } = require('sequelize');
+    const {Op} = require('sequelize');
 
     return models.Virksomhed.findAll({
         raw: true,
@@ -256,7 +251,7 @@ function searchVirksomhederByName(name) {
 }
 
 function findStudentByName(name) {
-    const { Op } = require('sequelize');
+    const {Op} = require('sequelize');
 
     return models.Student.findAll({
         raw: true,
