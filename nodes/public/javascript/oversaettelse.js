@@ -233,7 +233,7 @@ function getLangdata() {
                 "Indtast_postnummer": "Enter postcode",
                 "Soeg": "Search",
                 "Ryd": "Clear",
-                "Fri_soegning_html": 'Free search <img src="images/chevron-right.svg" width="12" height="12">', 
+                "Fri_soegning_html": 'Free search <img src="images/chevron-right.svg" width="12" height="12">',
                 "Soegefelt": "Search box",
                 "Indtast_search_tooltip": ["?", "Specify key words seperated by spaces"],
                 //resultater,
@@ -360,7 +360,7 @@ function getLangdata() {
                 "Telefon": "Telephone",
                 "Postnummer_tooltip": ["?", "When you  specify a postcode, the associated city is automatically shown on the CV. This field makes it possible for companies to focus their search and can help make you visible to them. Only Danish postcodes are supported."],
                 "Telefon_error": "You must specify a telephone number",
-                "linkedIn_error": "You must specify a working link to a LinkedIn profile or clear the field", 
+                "linkedIn_error": "You must specify a working link to a LinkedIn profile or clear the field",
                 "youtube_error": "You must specify a working link to a Youtube video or clear the field",
                 "hjemmeside_error": "You must specify a working link to your website or clear the field",
                 "Postnummer_errorCV": "Only Danish postcodes are allowed and specify only the numbers. The associated city will automatically be found",
@@ -501,7 +501,7 @@ function getLangdata() {
                 "data_consent_header2": "Project description",
                 "data_consent_paragraph2": "Zealand Connect is a platform where companies have the opportunity to find interns and where students can submit a CV to match with a company.",
                 "data_consent_header3": "Data controller",
-                "data_consent_paragraph3": "Zealand, Lyngvej 21, 4600 Køge, CVR no. 31661471 is responsible for the processing of your personal information. For correspondence in regards to the responsibility of personal data please contact either Benjamin Kyhn or Tommy Hansen at bekx@easj.dk and tokx@easj.dk respectively.",
+                "data_consent_paragraph3": "Zealand, Lyngvej 21, 4600 Køge, CVR no. 31661471 is responsible for the processing of your personal information. For correspondence in regards to the responsibility of personal data please contact zcsupport@zealand.dk.",
                 "data_consent_header4": "Categories of personal information about you that are processed.",
                 "data_consent_paragraph4": "We process common personal information in the form of name, mailaddress, cell phone number as well as other possible information that you provide in your CV.",
                 "data_consent_header5": "Purpose and processing activities",
@@ -513,7 +513,7 @@ function getLangdata() {
                 "data_consent_header8": "Storage time",
                 "data_consent_paragraph8": "We store your personal information for one year from the last login date as long as you have given your consent.",
                 "data_consent_header9": "The possibility to withdraw consent",
-                "data_consent_paragraph9": "Participation is voluntary and you can at any time withdraw your consent to the processing of personal information. This can be done by contacting Benjamin Kyhn at bekx@easj.dk or Tommy Hansen at tokx@easj.dk. You can also delete your information and CV at any time by logging in at Zealand Connect. If you withdraw your consent it will only take effect from this moment and will not affect the legality of our use of personal information until now.",
+                "data_consent_paragraph9": "Participation is voluntary and you can at any time withdraw your consent to the processing of personal information. This can be done by contacting zcsupport@zealand.dk. You can also delete your information and CV at any time by logging in at Zealand Connect. If you withdraw your consent it will only take effect from this moment and will not affect the legality of our use of personal information until now.",
 
                 "company_consent_paragraph4": "We process common personal information in the form of name, mailaddress, mobile number as well as other possible information that you provide.",
                 "company_consent_paragraph5": "The personal information is processed for the purpose of finding suitable students for internships in the company.",
@@ -572,7 +572,13 @@ function getLangdata() {
                 "have the option of internship, study job, trainee and full time job. In your CV you can check the box \"" +
                     "receive relevant posts in your mailbox\" you will receive an email when a relevant post is made by " +
                     "a company. We check if the post matches your education and what you're looking for.",
-
+                "forside_nyhed_h_2": "New feature on Zealand Connect - save interesting posts and CV's to your favourites",
+                "forside_nyhed_p_2_html": 'Zealand Connect now has a function for saving posts and CV\'s as favourites. Companies ' +
+                    'can save CV\'s and students can save posts. You save a CV or a post by going to the list of posts/CV\'s ' +
+                    'and clicking on the star <i class="far fa-star"></i> that\'s located by each post/CV. Your favourites ' +
+                    'can be found by clicking on your name in the top bar and choosing "My favourite...". This way you can ' +
+                        'quickly find posts or CV\'s that you\'ve liked earlier.',
+                "memes_html": '<i class="far fa-star"></i>',
                 // Favourites
                 "Mine_foretrukne_cver": "My favourite CV's",
                 "Mine_foretrukne_opslag": "My favourite posts",
