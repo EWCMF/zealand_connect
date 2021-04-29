@@ -1,4 +1,4 @@
-const { emailRegex, cvrRegex, phoneRegex, cityRegex } = require('../constants/regex');
+const { emailRegex, cvrRegex, phoneRegex, cityRegex, postcodeRegex } = require('../constants/regex');
 
 // Email skal følge et specifik format givet ved regex
 function validateEmail(email){
@@ -20,7 +20,11 @@ function validateCity(city){
     return cityRegex.test(city);
 }
 
-// Password skal være mellem 8 og 16 karakterer
+function validatePostcode(postcode){
+    return postcodeRegex.test(postcode);
+}
+
+// Password skal være mellem 8 og 20 karakterer
 function validatePasswordLength(password){
     return password.length > 7 && password.length < 21;
 }
@@ -47,6 +51,6 @@ function validateNavn(navn) {
 }
 
 module.exports = {
-    validateEmail, validateCVR, validatePhone, validateCity, validatePasswordLength, validateCvrLength,
-    checkForIdenticals, validateCprLength, validateNavn
+    validateEmail, validateCVR, validatePhone, validateCity, validatePostcode, validatePasswordLength,
+    validateCvrLength, checkForIdenticals, validateCprLength, validateNavn
 }

@@ -6,6 +6,7 @@
             </h6>
         </div>
         <div class="row">
+            {{#unless ../inProfile}}
             <div class="col-auto">
                 <a href='/internship_view/{{id}}' class="stretched-link">
                     {{#if virksomhed.logo}}
@@ -15,11 +16,14 @@
                     {{/if}}
                 </a>
             </div>
+            {{/unless}}
             <div class="col">
                 <a href='/internship_view/{{id}}' class="stretched-link">
                     <div class="card-body">
                         <h4 class="card-title pb-1">{{title}}</h4>
+                        {{#unless ../inProfile}}
                         <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h6>
+                        {{/unless}}
                         {{#if postcode}}
                             <h6 class="card-text autobreak small text-secondary m-0">{{postcode}} {{city}}
                                 , {{region}}</h6>

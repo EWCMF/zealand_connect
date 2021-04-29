@@ -6,6 +6,7 @@ const editStudent = require('../persistence/usermapping').editStudent;
 const editPassword = require('../persistence/usermapping').editPassword;
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
+const hbs = require('handlebars');
 const models = require("../models");
 const uploadFolder = require("../constants/references").uploadFolder();
 const formidable = require("formidable");
@@ -66,11 +67,19 @@ router.get('/', authorizeUser('student', 'company', 'admin'), function (req, res
 router.get('/virksomhed/:id', async function (req, res) {
     let id = req.params.id;
 
+    if (res.locals.user instanceof models.Virksomhed) {
+        if (res.locals.user.id == id) {
+            return res.redirect('/profil')
+        }
+    }
+
     let json = await models.Virksomhed.findByPk(id, {
-        raw: true
+        raw: true,
+        nest: true,
     });
 
     let loggedInVirksomhed = {
+        id: json.id,
         email: json.email,
         cvrnr: json.cvrnr,
         navn: json.navn,
@@ -82,14 +91,192 @@ router.get('/virksomhed/:id', async function (req, res) {
         by: json.by,
         logo: json.logo,
         visible_mail: json.visible_mail,
-        description: json.description
+        description: json.description,
     };
+
+    let data = await getPosts(res, id, req.query.page);
+
+    let count = data.count;
+    let page = data.page;
+    let pageCount = data.pageCount;
+    let rows = data.rows;
+    let favouritePosts = data.favouritePosts
+
+    let withPages = pageCount > 1 ? true : false;
 
     res.render('visprofil', {
         language: reqLang(req, res),
-        loggedInVirksomhed
+        loggedInVirksomhed,
+        json: rows,
+        pagination: {
+            page: page,
+            pageCount: pageCount
+        },
+        withPages,
+        favouritePosts: favouritePosts,
+        inProfile: true
     });
 });
+
+router.post('/virksomhed/:id/query', async function (req, res) {
+    let formData = new formidable.IncomingForm();
+    formData.parse(req, async function (error, fields, files) {
+
+        let id = req.params.id;
+        let fetchedData = await getPosts(res, id, fields.page);
+
+        let count = fetchedData.count;
+        let page = fetchedData.page;
+        let pageCount = fetchedData.pageCount;
+        let rows = fetchedData.rows;
+
+        let item = [count];
+
+        fs.readFileAsync = function (filename) {
+            return new Promise(function (resolve, reject) {
+                fs.readFile(filename, function (err, data) {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(data);
+                });
+            });
+        };
+
+        function getFile(filename) {
+            return fs.readFileAsync(filename, 'utf8');
+        }
+
+        getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
+            let template = hbs.compile(data + '');
+            let html = template({
+                json: rows,
+                isStudent: res.locals.isStudent,
+                inProfile: true
+            });
+            item.push(html);
+
+            getFile(path.normalize('views/partials/search-pagination.hbs')).then((data) => {
+                hbs.registerHelper('paginate', require('handlebars-paginate'));
+                let template = hbs.compile(data + '');
+
+                let withPages = pageCount > 1 ? true : false;
+
+                let html = template({
+                    pagination: {
+                        page: page,
+                        pageCount: pageCount
+                    },
+                    withPages,
+                });
+
+                item.push(html);
+                res.send(item);
+            });
+        })
+    });
+});
+
+async function getPosts(res, id, page) {
+    let offset;
+    let limit = 5;
+    if (!page) {
+        page = 1
+        offset = 0;
+    } else {
+        offset = (page - 1) * limit;
+    }
+
+    const {
+        count,
+        rows
+    } = await models.InternshipPost.findAndCountAll({
+        where: {
+            fk_company: id
+        },
+        limit: limit,
+        raw: true,
+        nest: true,
+        offset: offset,
+        order: [
+            ['updatedAt', 'DESC']
+        ],
+        include: [
+            {
+                model: models.Virksomhed,
+                as: 'virksomhed'
+            },
+            {
+                model: models.Uddannelse,
+                as: 'education',
+                attributes: ['name']
+            }
+        ],
+    });
+
+    let favouritePosts = [];
+    if (res.locals.user instanceof models.Student) {
+        favouritePosts = await models.FavouritePost.findAll({
+            raw: true,
+            where: {
+                student_id: res.locals.user.id
+            }
+        })
+    }
+
+    let pageCount = Math.ceil(count / limit);
+
+    for (let index = 0; index < rows.length; index++) {
+        const element = rows[index];
+
+        if (element['post_start_date'].length > 0) {
+            let cropStart = element['post_start_date'].substring(0, 10);
+
+            let startYear = cropStart.substring(0, cropStart.indexOf('-'));
+            let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
+            let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
+
+            element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
+        }
+
+        if (element['post_end_date'] != null && element['post_end_date'].length > 0) {
+            let cropEnd = element['post_end_date'].substring(0, 10);
+
+            let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
+            let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
+            let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
+            element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
+        }
+
+        switch (element['post_type']) {
+            case 1:
+                element['post_type'] = 'Praktik';
+                break;
+            case 2:
+                element['post_type'] = 'Studiejob';
+                break;
+            case 3:
+                element['post_type'] = 'Trainee stilling';
+                break;
+            case 4:
+                element['post_type'] = 'Fuldtidsstilling';
+        }
+
+        favouritePosts.forEach(favouritePost => {
+            if (favouritePost.internship_post_id === element.id) {
+                element['isFavourite'] = true;
+            }
+        });
+    }
+
+    return {
+        count: count,
+        page: page,
+        pageCount: pageCount,
+        rows: rows,
+        favouritePosts: favouritePosts
+    };
+}
 
 router.get('/rediger', authorizeUser('student', 'company', 'admin'), function (req, res, next) {
     let errors = req.query;

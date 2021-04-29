@@ -221,7 +221,7 @@ function checkTelefon(input, error) {
     let regex = phoneRegex;
 
     if (!regex.test(input)) {
-        error.style.visibility = 'visible'
+        error.style.visibility = 'visible';
         error.textContent = translateErrorMessage("telefonFejl");
         return false;
     }
@@ -231,6 +231,21 @@ function checkTelefon(input, error) {
 
     return true;
 };
+
+function checkPostnummer(input, error) {
+    let regex = postcodeRegex;
+
+    if (!regex.test(input)) {
+        error.style.visibility = 'visible';
+        error.textContent = translateErrorMessage('postnummerFejl');
+        return false;
+    }
+
+    error.style.visibility = 'hidden';
+    error.textContent = 'Error';
+
+    return true;
+}
 
 function checkDato() {
     let today = Date.now();
@@ -283,7 +298,7 @@ inputs.by.addEventListener('change', function () {
     checkFeltIkkeTomt(inputs.by.value, errors.by);
 });
 inputs.postnummer.addEventListener('change', function () {
-    checkFeltIkkeTomt(inputs.postnummer.value, errors.postnummer);
+    checkPostnummer(inputs.postnummer.value, errors.postnummer);
 });
 
 async function submitOpretVirksomhed() {
@@ -296,7 +311,7 @@ async function submitOpretVirksomhed() {
         checkFeltIkkeTomt(inputs.virksomhedNavn.value, errors.virksomhedNavn),
         checkTelefon(inputs.telefon.value, errors.telefon),
         checkFeltIkkeTomt(inputs.by.value, errors.by),
-        checkFeltIkkeTomt(inputs.postnummer.value, errors.postnummer)
+        checkPostnummer(inputs.postnummer.value, errors.postnummer)
     ];
 
     let check = true;
@@ -473,7 +488,8 @@ function translateErrorMessage(key) {
             "cvrLedig": "Det angivne CVR-nummer er ledigt",
             "telefonFejl": "Telefonnummeret er ugyldigt",
             "datoFejl": "En fremtidig dato er valgt",
-            "datoMissing": "Ugyldig dato"
+            "datoMissing": "Ugyldig dato",
+            "postnummerFejl": "Det angivne postnummer er ugyldigt"
         },
 
         "en": {
@@ -489,7 +505,8 @@ function translateErrorMessage(key) {
             "cvrLedig": "The specified mail is available",
             "telefonFejl": "The phone number is invalid",
             "datoFejl": "A future date has been chosen",
-            "datoMissing": "Invalid date"
+            "datoMissing": "Invalid date",
+            "postnummerFejl": "The specified postcode is invalid"
         }
     }
 

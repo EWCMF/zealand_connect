@@ -10,8 +10,7 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const findVirksomhedByCvr = require('../persistence/usermapping').findVirksomhedByCvr;
 const {
     validateEmail, validateCVR, validatePhone, validateCity, validatePasswordLength, validateCvrLength,
-    checkForIdenticals,
-    validateNavn
+    checkForIdenticals, validatePostcode, validateNavn
 } = require('../validation/input-validation');
 
 router.get('/', function (req, res, next) {
@@ -136,6 +135,11 @@ router.post('/create', (req, res) => {
 
     if (!validateCity(by)) {
         errors.ByError = "By er ugyldig";
+        atLeastOneErrorIsPresent = true;
+    }
+
+    if (!validatePostcode(postnr)) {
+        errors.PostnrError = "Postnummer er ugyldig";
         atLeastOneErrorIsPresent = true;
     }
 

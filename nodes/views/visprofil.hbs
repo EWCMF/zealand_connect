@@ -9,9 +9,9 @@
         <div class="col-12 col-md-auto" style="max-height: 400px; max-width: 400px">
 
             {{#if loggedInVirksomhed.logo}}
-                <img class="img-thumbnail border-0" src="/uploads/{{loggedInVirksomhed.logo}}">
+            <img class="img-thumbnail border-0" src="/uploads/{{loggedInVirksomhed.logo}}">
             {{else}}
-                <img class="img-thumbnail border-0" src="/images/no-logo.png">
+            <img class="img-thumbnail border-0" src="/images/no-logo.png">
             {{/if}}
 
         </div>
@@ -59,10 +59,10 @@
                     <br>
                 </h2>
                 {{#if loggedInVirksomhed.visible_mail}}
-                    <h6 class="mb-3">
-                        <a href="mailto:{{loggedInVirksomhed.email}}">{{loggedInVirksomhed.email}}</a>
-                        <br>
-                    </h6>
+                <h6 class="mb-3">
+                    <a href="mailto:{{loggedInVirksomhed.email}}">{{loggedInVirksomhed.email}}</a>
+                    <br>
+                </h6>
                 {{/if}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.tlfnr}}
@@ -73,22 +73,22 @@
                     <br>
                 </h6>
                 {{#if loggedInVirksomhed.adresse}}
-                    <h6 class="mb-3">
-                        {{loggedInVirksomhed.adresse}}
-                        <br>
-                    </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.adresse}}
+                    <br>
+                </h6>
                 {{/if}}
                 {{#if loggedInVirksomhed.hjemmeside}}
-                    <h6 class="mb-3">
-                        {{loggedInVirksomhed.hjemmeside}}
-                        <br>
-                    </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.hjemmeside}}
+                    <br>
+                </h6>
                 {{/if}}
                 {{#if loggedInVirksomhed.land}}
-                    <h6 class="mb-3">
-                        {{loggedInVirksomhed.land}}
-                        <br>
-                    </h6>
+                <h6 class="mb-3">
+                    {{loggedInVirksomhed.land}}
+                    <br>
+                </h6>
                 {{/if}}
                 <h6 class="mb-3">
                     {{loggedInVirksomhed.postnr}}
@@ -102,19 +102,48 @@
         </div>
         <div class="col-4 col-sm-2 d-flex flex-column">
             {{#if loggedInVirksomhed.ejer}}
-            <button type="button" class="btn btn-success mb-3" onclick="window.location.href='/profil/rediger'" data-key="Rediger_profil">Rediger profil</button>
-            <button type="button" class="btn btn-danger mb-3" onclick="openSletBrugerModal()" id="sletKonto" data-key="Slet_brugerkonto">Slet brugerkonto</button>
+            <button type="button" class="btn btn-success mb-3" onclick="window.location.href='/profil/rediger'"
+                data-key="Rediger_profil">Rediger profil</button>
+            <button type="button" class="btn btn-danger mb-3" onclick="openSletBrugerModal()" id="sletKonto"
+                data-key="Slet_brugerkonto">Slet brugerkonto</button>
             {{/if}}
         </div>
     </div>
-    {{#if loggedInVirksomhed.description}}
+
     <div class="row mb-5">
         <div class="col-12 col-sm-8 ml-3">
             <h2 class="mb-3" data-key="Om_virksomheden">Om virksomheden</h2>
+            {{#if loggedInVirksomhed.description}}
             <p class="pNewLine">{{loggedInVirksomhed.description}}</p>
+            {{else}}
+            <p class="pNewLine">Ingen beskrivelse angivet</p>
+            {{/if}}
         </div>
     </div>
-    {{/if}}
+
+    {{#unless loggedInVirksomhed.ejer}}
+    <div class="row mb-3">
+        <div class="col-12 col-sm-8 ml-3">
+            <h2 class="mb-3" data-key="">Aktuelle opslag</h2>
+
+            {{#if json}}
+            <script src="/javascript/search-virksomhed-praktik.js"></script>
+            <div id="cards">
+                {{> search-praktik-card}}
+            </div>
+            <form id="pageForm" action="/profil/virksomhed/{{loggedInVirksomhed.id}}/query" method="POST">
+                <div class="row mb-5 d-flex justify-content-center" id="pagination">
+                    {{> search-pagination}}
+                </div>
+            </form>
+            {{else}}
+            <div>
+                <p class="mb-5">Ingen aktuelle opslag</p>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    {{/unless}}
 </div>
 
 {{> delete-account-modal }}
