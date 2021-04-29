@@ -181,8 +181,12 @@ async function deleteStudent(email) {
                 deleteCV(student.cv.id);
             }
 
-            if (student.profilbillede){
-                unlinkOldFiles(student.profilbillede)
+            try {
+                if (student.profilbillede){
+                    unlinkOldFiles(student.profilbillede)
+                }
+            } catch (e){
+                console.log(e)
             }
 
             //slet studenten
