@@ -572,7 +572,13 @@ function getLangdata() {
                 "have the option of internship, study job, trainee and full time job. In your CV you can check the box \"" +
                     "receive relevant posts in your mailbox\" you will receive an email when a relevant post is made by " +
                     "a company. We check if the post matches your education and what you're looking for.",
-
+                "forside_nyhed_h_2": "New feature on Zealand Connect - save interesting posts and CV's to your favourites",
+                "forside_nyhed_p_2_html": 'Zealand Connect now has a function for saving posts and CV\'s as favourites. Companies ' +
+                    'can save CV\'s and students can save posts. You save a CV or a post by going to the list of posts/CV\'s ' +
+                    'and clicking on the star <i class="far fa-star"></i> that\'s located by each post/CV. Your favourites ' +
+                    'can be found by clicking on your name in the top bar and choosing "My favourite...". This way you can ' +
+                        'quickly find posts or CV\'s that you\'ve liked earlier.',
+                "memes_html": '<i class="far fa-star"></i>',
                 // Favourites
                 "Mine_foretrukne_cver": "My favourite CV's",
                 "Mine_foretrukne_opslag": "My favourite posts",
