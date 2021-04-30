@@ -303,7 +303,6 @@ async function fetchData(page, parameters, res) {
         rows
     } = await db.InternshipPost.findAndCountAll({
         limit: limit,
-        raw: true,
         nest: true,
         offset: offset,
         order: [
@@ -316,12 +315,14 @@ async function fetchData(page, parameters, res) {
             },
             {
                 model: db.Uddannelse,
-                as: 'education',
-                attributes: ['name']
-            }
+                attributes: ['name'],
+                through: db.InternshipPost_Education
+            },
         ],
         where
     });
+
+    console.log(rows)
 
     let favouritePosts = [];
     if (res.locals.user instanceof db.Student) {
@@ -553,5 +554,28 @@ router.post('/query', function (req, res) {
         })
     });
 });
+
+router.get("/memes", async function (req, res){
+    let rows = await db.InternshipPost.findAll({
+        include: [
+            {
+                model: db.Virksomhed,
+                as: 'virksomhed'
+            },
+            {
+                model: db.Uddannelse,
+                attributes: ['name'],
+                through: db.InternshipPost_Education
+            },
+        ],
+        where: {
+            id: 1
+        }
+    });
+
+    console.log(rows[0].Uddannelses[0])
+
+    res.json(rows)
+})
 
 module.exports = router;
