@@ -557,6 +557,8 @@ router.post('/query', function (req, res) {
             let html = template({
                 json: rows,
                 isStudent: res.locals.isStudent
+            }, {
+                allowProtoPropertiesByDefault: true
             });
             item.push(html);
 

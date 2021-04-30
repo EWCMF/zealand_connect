@@ -32,7 +32,6 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
         rows
     } = await db.InternshipPost.findAndCountAll({
         limit: limit,
-        raw: true,
         nest: true,
         offset: offset,
         order: [
@@ -44,8 +43,9 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
             },
             {
                 model: db.Uddannelse,
-                as: 'education'
-            }
+                attributes: ['name'],
+                through: db.InternshipPost_Education,
+            },
         ],
         where: {
             fk_company: user.id
@@ -122,7 +122,6 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
             rows
         } = await db.InternshipPost.findAndCountAll({
             limit: limit,
-            raw: true,
             nest: true,
             offset: offset,
             order: [
@@ -134,8 +133,9 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
                 },
                 {
                     model: db.Uddannelse,
-                    as: 'education'
-                }
+                    attributes: ['name'],
+                    through: db.InternshipPost_Education,
+                },
             ],
             where: {
                 fk_company: user.id
@@ -194,9 +194,37 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
         }
 
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
+            hbs.registerHelper('ifCond', function(v1, operator, v2, options){
+                switch (operator) {
+                    case '==':
+                        return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                    case '===':
+                        return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                    case '!=':
+                        return (v1 != v2) ? options.fn(this) : options.inverse(this);
+                    case '!==':
+                        return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+                    case '<':
+                        return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                    case '<=':
+                        return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+                    case '>':
+                        return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                    case '>=':
+                        return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+                    case '&&':
+                        return (v1 && v2) ? options.fn(this) : options.inverse(this);
+                    case '||':
+                        return (v1 || v2) ? options.fn(this) : options.inverse(this);
+                    default:
+                        return options.inverse(this);
+                }
+            });
             let template = hbs.compile(data + '');
             let html = template({
                 json: rows
+            }, {
+                allowProtoPropertiesByDefault: true
             });
             item.push(html);
 

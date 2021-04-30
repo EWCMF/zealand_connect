@@ -33,8 +33,8 @@
                                     opslagstype</option>
                                 <option value="1" data-key="Praktik">Praktik</option>
                                 <option value="2" data-key="Studiejob">Studiejob</option>
-                                <option value="3">Trainee stilling</option>
-                                <option value="4">Fuldtidsstilling</option>
+                                <option value="3" data-key="Trainee_stilling">Trainee stilling</option>
+                                <option value="4" data-key="Fuldtidsstilling">Fuldtidsstilling</option>
                             </select>
                             <p id="postTypeError" class="CVErrorColor" hidden="true" data-key="Opslagstype_error">Du
                                 skal angive en opslagstype</p>
@@ -45,15 +45,16 @@
                             <label for="education" data-key="Uddannelse">Uddannelse</label>
                                 <div class="selectBox" onclick="showCheckboxes()">
                                     <select id="educationSelect" class="form-control">
-                                        <option>Select an option</option>
+                                        <option>Vælg en eller flere uddannelser</option>
                                     </select>
                                     <div class="overSelect"></div>
                                 </div>
                                 <div id="checkboxes">
                                     {{#each educations}}
                                         <label for="{{id}}">
-                                            <input type="checkbox" id="{{id}}" name="fk_education[]" value="{{name}}" class="mr-1" data-key="{{name}}" onclick="toggleNote()"/>{{name}}</label>
+                                            <input type="checkbox" id="{{id}}" class="mr-1 educationCheckbox" data-key="{{name}}" value="{{id}}"/>{{name}}</label>
                                     {{/each}}
+                                    <input type="hidden" id="educations" name="educations">
                                 </div>
                             <p id="educationError" class="CVErrorColor" hidden="true"
                                 data-key="Vaelg_en_uddannelse_error">Du skal angive en uddannelse</p>
@@ -293,14 +294,22 @@
     };
 
     function setDefaultSelect() {
-        var update = '{{ update }}';
+        let update = '{{ update }}';
         if (update != '') {
-            var reducation = '{{reducation}}';
-            var rcountry = '{{rcountry}}';
-            var rposttype = '{{rposttype}}'
-            document.getElementById('educationSelect').value = reducation;
+            let reducations = JSON.parse('{{reducation}}');
+            let rcountry = '{{rcountry}}';
+            let rposttype = '{{rposttype}}'
+
             document.getElementById('countrySelect').value = rcountry;
             document.getElementById('postTypeSelect').value = rposttype;
+
+            document.querySelectorAll('.educationCheckbox').forEach(element => {
+                for (reducation of reducations) {
+                    if (reducation === +element.value) {
+                        element.checked = true;
+                    }
+                }
+            });
         }
     }
     setDefaultSelect();

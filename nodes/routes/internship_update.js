@@ -3,16 +3,23 @@ var router = express.Router();
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; //Skal bruges til kalder API'er.
 var sortJsonArray = require('sort-json-array'); //Brugt til at få byer i alfabetisk orden.
 var formidable = require("formidable"); //Skal bruges når man håndtere filupload og alm. input i samme POST.
-var fs = require("fs");//Bruges til grundlæggen file hændtering.
-var mv = require('mv');//Skal bruges for kunne gemme uploads uden for container.
-const {emailRegex, dateRegex, linkRegex, phoneRegex} = require("../constants/regex.js");
+var fs = require("fs"); //Bruges til grundlæggen file hændtering.
+var mv = require('mv'); //Skal bruges for kunne gemme uploads uden for container.
+const {
+    emailRegex,
+    dateRegex,
+    linkRegex,
+    phoneRegex
+} = require("../constants/regex.js");
 const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 const unlinkOldFiles = require('../utils/file-handling').unlinkOldFiles;
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const uploadFolder = require('../constants/references').uploadFolder();
-var {reqLang} = require('../public/javascript/request');
+var {
+    reqLang
+} = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
 /* POST home page. */
@@ -24,9 +31,27 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
     formData.parse(req, function (error, fields, files) {
         //laver et objekt med alle data
         var {
-            id, title, post_type, email, contact, fk_education, country, post_start_date, post_end_date, post_text,
-            city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired, phone_number
+            id,
+            title,
+            post_type,
+            email,
+            contact,
+            educations,
+            country,
+            post_start_date,
+            post_end_date,
+            post_text,
+            city,
+            postcode,
+            company_link,
+            post_document,
+            dawa_json,
+            dawa_uuid,
+            expired,
+            phone_number
         } = fields;
+
+        educations = JSON.parse(educations);
 
         var region = '';
 
@@ -50,32 +75,49 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         }
 
         var indhold = {
-            id, title, post_type, email, contact, fk_education, country, region, post_start_date, post_end_date,
-            post_text, city, postcode, company_link, post_document, dawa_json, dawa_uuid, expired, phone_number
+            id,
+            title,
+            post_type,
+            email,
+            contact,
+            educations,
+            country,
+            region,
+            post_start_date,
+            post_end_date,
+            post_text,
+            city,
+            postcode,
+            company_link,
+            post_document,
+            dawa_json,
+            dawa_uuid,
+            expired,
+            phone_number
         };
         var inputError = false;
         let brugernavn = res.locals.user == null || res.locals.user == undefined ? "ukendt bruger" : res.locals.user.email;
         let now = new Date();
-        let dateTime = now.toLocaleDateString() + " " + now.toLocaleTimeString();    
+        let dateTime = now.toLocaleDateString() + " " + now.toLocaleTimeString();
         let append = `  user: ${brugernavn} time: ${dateTime}`
         let errors = "";
 
 
         //Test inputfelterne hvis javascript er deaktiveret af sikkerhedsmæssige årsager
         if (!title || title.length > 255) {
-            console.log('Title length invalid ' +  append);
+            console.log('Title length invalid ' + append);
             errors += 'Title invalid or missing <br>';
             inputError = true;
         }
 
         if (!post_type) {
-            console.log('Missing type ' +  append);
+            console.log('Missing type ' + append);
             errors += 'Missing type <br>';
             inputError = true;
         }
 
         if (!country) {
-            console.log('Missing country ' +  append);
+            console.log('Missing country ' + append);
             errors += 'Missing country <br>';
             inputError = true;
         }
@@ -88,13 +130,13 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
         if (email) {
             if (email.length > 255) {
-                console.log('Email too long ' +  append);
+                console.log('Email too long ' + append);
                 errors += 'Email too long <br>';
                 inputError = true;
             }
-    
+
             if (!emailRegex.test(email)) {
-                console.log('Invalid email ' +  append);
+                console.log('Invalid email ' + append);
                 errors += 'Invalid email <br>';
                 inputError = true;
             }
@@ -102,20 +144,20 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
         if (phone_number) {
             if (phone_number.length > 255) {
-                console.log('Phone number too long ' +  append);
+                console.log('Phone number too long ' + append);
                 errors += 'Phone number too long <br>';
                 inputError = true;
             }
 
             if (!phoneRegex.test(phone_number)) {
-                console.log('Invalid phone number ' +  append);
+                console.log('Invalid phone number ' + append);
                 errors += 'Invalid phone number <br>';
                 inputError = true;
             }
         }
 
         if (!contact || contact.length > 255) {
-            console.log('Contact length invalid ' +  append);
+            console.log('Contact length invalid ' + append);
             errors += 'Contact invalid or missing <br>';
             inputError = true;
         }
@@ -125,7 +167,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             let inputDate = new Date(post_start_date);
 
             if (currDate > inputDate) {
-                console.log('Past date specified' +  append);
+                console.log('Past date specified' + append);
                 errors += 'Past date specified for application deadline <br>';
                 inputError = true;
             }
@@ -139,7 +181,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                 let inputDate = new Date(post_end_date);
 
                 if (currDate > inputDate) {
-                    console.log('Past date ' +  append);
+                    console.log('Past date ' + append);
                     errors += 'Past date specified for internship start <br>';
                     inputError = true;
                 }
@@ -147,16 +189,16 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         } else {
             indhold.post_end_date = null;
         }
-        
+
         if (post_text.length > 65536) {
-            console.log('Plain text is to long ' +  append);
+            console.log('Plain text is to long ' + append);
             errors += 'Plain text is to long <br>';
             inputError = true;
         }
 
         if (company_link) {
             if (!linkRegex.test(company_link)) {
-                console.log('Link Invalid ' +  append);
+                console.log('Link Invalid ' + append);
                 errors += 'Link Invalid <br>';
                 inputError = true;
             }
@@ -164,13 +206,13 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             indhold.company_link = null;
         }
 
-        if (!fk_education) {
-            console.log('Invalid choice ' +  append);
+        if (educations.length <= 0) {
+            console.log('Invalid choice ' + append);
             errors += 'Invalid choice <br>';
             inputError = true;
         }
 
-        function dbExe() {
+        async function dbExe() {
             if (!inputError) {
                 db.InternshipPost.update(indhold, {
                     where: {
@@ -179,9 +221,43 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     /*dette skal være her for at felterne i databasen bliver opdateret returning: true,
                     plain: true*/
                 });
+
+
+
+                let associatedEducations = await db.InternshipPost_Education.findAll({
+                    where: {
+                        post_id: id
+                    }
+                });
+                for (const associatedEducation of associatedEducations) {
+                    let markedForDeletion = true;
+
+                    for (const education of educations) {
+                        if (+education === +associatedEducation.education_id) {
+                            markedForDeletion = false;
+                            break
+                        }
+                    }
+                    if (markedForDeletion) {
+                        associatedEducation.destroy();
+                    }
+                }
+
+                for (const education of educations) {
+                    await db.InternshipPost_Education.findOrCreate({
+                        where: {
+                            post_id: id,
+                            education_id: education
+                        }
+                    });
+                }
+
                 res.redirect('../internship_view/' + id)
             } else {
-                return res.status(422).render('errorInternship', {layout: false, errors: errors});
+                return res.status(422).render('errorInternship', {
+                    layout: false,
+                    errors: errors
+                });
             }
         };
 
@@ -232,77 +308,86 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
 
 /* GET home page. */
-router.get('/', authorizeUser('company', 'admin'), function (req, res, next) {
-    var generatedEducationOptions = "";
-    db.Uddannelse.findAll({
+router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
+    
+    let educations = await db.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]
-    }).then(result => {
-        result.forEach(element => {
-            generatedEducationOptions += "<option value='" + element.dataValues.id + "'>" + element.dataValues.name + "</option>";
-        });
-        db.InternshipPost.findByPk(req.query.id, {
-            attributes: ["title", "post_type", "email", "contact", "fk_education", "country", "region", "post_start_date", "post_end_date", "post_text", "city", "postcode", "company_link", "post_document", "dawa_json", "dawa_uuid", "expired", "phone_number"]
-        }).then(result => {
-            var address = '';
+    });
 
-            if (result['country'] == '1') {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var json = JSON.parse(this.responseText);
-                        address = JSON.stringify(json[0])
-                    }
-                };
-                xmlhttp.open("GET", "https://dawa.aws.dk/autocomplete?id=" + result['dawa_uuid'] + "&type=adresse", false);
-                xmlhttp.setRequestHeader("Content-type", "application/json");
-                xmlhttp.send();
+    let post = await db.InternshipPost.findByPk(req.query.id, {
+        include: {
+            model: db.Uddannelse,
+            through: db.InternshipPost_Education
+        }
+    });
+
+    let postEducations = []
+    for (const uddannelse of post.Uddannelses) {
+        postEducations.push(uddannelse.id);
+    }
+
+    let address = '';
+
+    if (post['country'] == '1') {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var json = JSON.parse(this.responseText);
+                address = JSON.stringify(json[0])
             }
+        };
+        xmlhttp.open("GET", "https://dawa.aws.dk/autocomplete?id=" + post['dawa_uuid'] + "&type=adresse", false);
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send();
+    }
 
-            //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
-            res.render('internship_post', {
-                language: reqLang(req, res),
-                title: 'Rediger opslag',
-                rid: req.query.id,
-                rtitle: result['title'],
-                rposttype: result['post_type'],
-                remail: result['email'],
-                rphone: result['phone_number'],
-                rcontact: result['contact'],
-                reducation: result['fk_education'],
-                rcountry: result['country'],
-                rregion: result['region'],
-                rpoststart /*start date*/: result['post_start_date'],
-                rpostend: /*end date*/ result['post_end_date'],
-                rtext /*post_text*/: result['post_text'],
-                rcity: result['city'],
-                rpostcode: result['postcode'],
-                rhomepage: result['company_link'],
-                rdoc: result["post_document"],
-                raddress: address,
+    //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
+    res.render('internship_post', {
+        language: reqLang(req, res),
+        title: 'Rediger opslag',
+        rid: req.query.id,
+        rtitle: post['title'],
+        rposttype: post['post_type'],
+        remail: post['email'],
+        rphone: post['phone_number'],
+        rcontact: post['contact'],
+        reducation: JSON.stringify(postEducations),
+        rcountry: post['country'],
+        rregion: post['region'],
+        rpoststart /*start date*/: post['post_start_date'],
+        rpostend: /*end date*/ post['post_end_date'],
+        rtext /*post_text*/: post['post_text'],
+        rcity: post['city'],
+        rpostcode: post['postcode'],
+        rhomepage: post['company_link'],
+        rdoc: post["post_document"],
+        raddress: address,
 
-                expired: result['expired'],
-                generatedEducationOptions: generatedEducationOptions,
-                update: true
-            });
-        }).catch();
-    }).catch();
+        expired: post['expired'],
+        educations: educations,
+        update: true
+    });
 });
 
 router.get('/delete/:id', authorizeUser('company'), async function (req, res, next) {
     let internshipPost = await models.InternshipPost.findByPk(req.params.id);
     let company = await findUserByEmail(req.user);
 
-    if (company instanceof models.Virksomhed){
+    if (company instanceof models.Virksomhed) {
         if (company.id === internshipPost.fk_company) {
             deleteInternshipPost(req.params.id)
             res.redirect('/');
         } else {
-            res.status(403).render('error403', {layout: false});
+            res.status(403).render('error403', {
+                layout: false
+            });
         }
     } else {
-        res.status(403).render('error403', {layout: false});
+        res.status(403).render('error403', {
+            layout: false
+        });
     }
 });
 
