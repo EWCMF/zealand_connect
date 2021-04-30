@@ -810,3 +810,30 @@ body {
   font-weight: 400;
   line-height: 1.5;
 }
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  padding-top: 10px;
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes label {
+  margin-left: 20px;
+  display: block;
+}

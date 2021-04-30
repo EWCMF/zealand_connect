@@ -43,12 +43,18 @@
                     <div class="col-12 col-md-6">
                         <div class="form-group required">
                             <label for="education" data-key="Uddannelse">Uddannelse</label>
-                            <select class="form-control" name="fk_education" id="educationSelect"
-                                onchange="toggleNote()">
-                                <option selected disabled hidden value="" data-key="Vaelg_en_uddannelse">Vælg en
-                                    uddannelse</option>
-                                {{{generatedEducationOptions}}}
-                            </select>
+                                <div class="selectBox" onclick="showCheckboxes()">
+                                    <select id="educationSelect" class="form-control">
+                                        <option>Select an option</option>
+                                    </select>
+                                    <div class="overSelect"></div>
+                                </div>
+                                <div id="checkboxes">
+                                    {{#each educations}}
+                                        <label for="{{id}}">
+                                            <input type="checkbox" id="{{id}}" name="fk_education[]" value="{{name}}" class="mr-1" data-key="{{name}}" onclick="toggleNote()"/>{{name}}</label>
+                                    {{/each}}
+                                </div>
                             <p id="educationError" class="CVErrorColor" hidden="true"
                                 data-key="Vaelg_en_uddannelse_error">Du skal angive en uddannelse</p>
                             <p id="educationNote" hidden="true" data-key="Vaelg_en_uddannelse_note">Den valgte
@@ -436,4 +442,17 @@
     }
 
     setExpiredCheckbox();
+
+    var expanded = false;
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
 </script>
