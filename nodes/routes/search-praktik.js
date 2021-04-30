@@ -308,7 +308,8 @@ async function fetchData(page, parameters, res) {
         nest: true,
         offset: offset,
         order: [
-            ['updatedAt', 'DESC']
+            ['updatedAt', 'DESC'],
+            [{model: db.Uddannelse}, 'name', 'ASC']
         ],
         include: [
             {

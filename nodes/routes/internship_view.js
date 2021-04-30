@@ -23,7 +23,10 @@ router.get('/:id', async function (req, res) {
             model: models.Uddannelse,
             attributes: ['name'],
             through: models.InternshipPost_Education
-        }]
+        }],
+        order: [
+            [{model: models.Uddannelse}, 'name', 'ASC']
+        ]
     });
 
     let company = await models.Virksomhed.findByPk(result.fk_company, {

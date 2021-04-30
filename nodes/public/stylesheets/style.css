@@ -837,3 +837,7 @@ body {
   margin-left: 20px;
   display: block;
 }
+
+#selectAllLabel {
+  font-weight: bold;
+}

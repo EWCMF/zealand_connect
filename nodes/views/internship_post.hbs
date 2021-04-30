@@ -50,6 +50,8 @@
                                     <div class="overSelect"></div>
                                 </div>
                                 <div id="checkboxes">
+                                        <label for="selectAll" id="selectAllLabel">
+                                            <input type="checkbox" id="selectAll" class="mr-1" data-key="Vaelg_alle" onchange="selectAllCheckboxes()"/>Vælg alle</label>
                                     {{#each educations}}
                                         <label for="{{id}}">
                                             <input type="checkbox" id="{{id}}" class="mr-1 educationCheckbox" data-key="{{name}}" value="{{id}}"/>{{name}}</label>
@@ -452,16 +454,30 @@
 
     setExpiredCheckbox();
 
-    var expanded = false;
+    let expanded = false;
 
     function showCheckboxes() {
-        var checkboxes = document.getElementById("checkboxes");
+        let checkboxes = document.getElementById("checkboxes");
         if (!expanded) {
             checkboxes.style.display = "block";
             expanded = true;
         } else {
             checkboxes.style.display = "none";
             expanded = false;
+        }
+    }
+
+    function selectAllCheckboxes() {
+        let selectAll = document.getElementById('selectAll');
+        let checkboxes = document.querySelectorAll('.educationCheckbox');
+        if (selectAll.checked) {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = true;
+            });
+        } else {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
         }
     }
 </script>

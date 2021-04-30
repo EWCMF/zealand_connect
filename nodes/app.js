@@ -80,10 +80,16 @@ app.use(cookieSession({
   maxAge: 1000*60*60*2,
   keys: ["this_is_the_secret_cookie_encryption_key"]
 }));
+
+// Opdaterer session hvis et minut er gået siden sidst (Bevarer login session).
+app.use(function (req, res, next) {
+  req.session.nowInMinutes = Math.floor(Date.now() / 60e3)
+  next()
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.text({ type: "text/plain"}));
 // Middleware til at finde login status i alle routes.
 app.use(async function (req, res, next) {
   res.locals.missingConsent = false;

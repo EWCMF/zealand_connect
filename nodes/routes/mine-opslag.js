@@ -35,7 +35,8 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
         nest: true,
         offset: offset,
         order: [
-            ['updatedAt', 'DESC']
+            ['updatedAt', 'DESC'],
+            [{model: db.Uddannelse}, 'name', 'ASC']
         ],
         include: [{
                 model: db.Virksomhed,
@@ -125,7 +126,8 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
             nest: true,
             offset: offset,
             order: [
-                ['updatedAt', 'DESC']
+                ['updatedAt', 'DESC'],
+                [{model: db.Uddannelse}, 'name', 'ASC']
             ],
             include: [{
                     model: db.Virksomhed,
@@ -134,6 +136,7 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
                 {
                     model: db.Uddannelse,
                     attributes: ['name'],
+                    order: ['name', 'ASC'],
                     through: db.InternshipPost_Education,
                 },
             ],
