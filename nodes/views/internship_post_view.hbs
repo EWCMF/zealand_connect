@@ -3,9 +3,11 @@
     <div class="row mt-4 mb-4">
         <div class="col-2">
             {{#if rlogo}}
-                <a href='/profil/virksomhed/{{rcompanyid}}'><img class="img-thumbnail border-0" src="/uploads/{{rlogo}}" alt="COMPANY LOGO"></a>
+                <a href='/profil/virksomhed/{{rcompanyid}}'><img class="img-thumbnail border-0" src="/uploads/{{rlogo}}"
+                                                                 alt="COMPANY LOGO"></a>
             {{else}}
-                <a href='/profil/virksomhed/{{rcompanyid}}'><img class="img-thumbnail border-0" src="/images/no-logo.png" alt="COMPANY LOGO"></a>
+                <a href='/profil/virksomhed/{{rcompanyid}}'><img class="img-thumbnail border-0"
+                                                                 src="/images/no-logo.png" alt="COMPANY LOGO"></a>
             {{/if}}
         </div>
 
@@ -18,11 +20,21 @@
                 </tr>
                 <tr>
                     <td data-key="Virksomhed">Virksomhed:</td>
-                    <td id="companyContainer" data-key="{{rcompany}}"><a href='/profil/virksomhed/{{rcompanyid}}'>{{rcompany}}</a></td>
+                    <td id="companyContainer" data-key="{{rcompany}}"><a
+                            href='/profil/virksomhed/{{rcompanyid}}'>{{rcompany}}</a></td>
                 </tr>
-                <tr>
+                <tr style="vertical-align: top;">
                     <td data-key="Uddannelse_kolon">Uddannelse:</td>
-                    <td id="educationContainer" data-key="{{reducation}}">{{reducation}}</td>
+                    <td id="educationContainer" class="row ml-0 pl-0">
+                        {{#each reducation}}
+                            {{#if @last}}
+                                <div data-key="{{name}}">{{name}}</div>
+                            {{else}}
+                                <div data-key="{{name}}">{{name}}</div>,&nbsp;
+                            {{/if}}
+
+                        {{/each}}
+                    </td>
                 </tr>
                 <tr>
                     <td data-key="Land_kolon">Land:</td>
@@ -95,7 +107,9 @@
                     data-key="Rediger_oplag">Rediger opslag</button>
                 {{/if}}
                 {{#if isAdmin}}
-                    <button type="button" class="btn btn-danger mt-3" onclick="deletePost()" data-key="Slet_opslag">Slet opslag</button>
+                    <button type="button" class="btn btn-danger mt-3" onclick="deletePost()" data-key="Slet_opslag">Slet
+                        opslag
+                    </button>
                 {{/if}}
 
             {{/unless}}
@@ -115,10 +129,10 @@
 </div>
 
 <script>
-    function deletePost(){
+    function deletePost() {
         let postId = {{rid}};
         let postTitle = prompt("Skriv opslagets overskrift for at bekræfte handlingen?");
-        if (postTitle){
+        if (postTitle) {
             let xhttp = new XMLHttpRequest();
             xhttp.open("POST", "/admin-funktioner/delete-internship-post/" + postId, true);
             xhttp.send(JSON.stringify({
