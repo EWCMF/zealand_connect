@@ -11,9 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'fk_education'
       });
 
-      Uddannelse.hasMany(models.InternshipPost, {
+      Uddannelse.belongsToMany(models.InternshipPost, {
+        through: models.InternshipPost_Education,
         as: 'internship_posts',
-        foreignKey: 'fk_education'
+        foreignKey: 'post_id'
       })
 
       Uddannelse.belongsTo(models.EducationCategory, {
