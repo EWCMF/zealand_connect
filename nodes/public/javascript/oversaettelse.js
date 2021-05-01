@@ -254,6 +254,7 @@ function getLangdata() {
                 "Praktikstart_kolon": "Internship start:",
                 "Ingen": "None",
                 "Soeger:": "Searching for:",
+                "m.fl.": "and others",
 
                 //Opslagstyper
                 "Praktik": "Internship",
