@@ -32,8 +32,6 @@ const internshipInfoRouter = require('./routes/internship-info');
 const favouritesRouter = require('./routes/favourites');
 const downloadRouter = require('./routes/download');
 
-const bodyParser = require('body-parser')
-
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
@@ -67,17 +65,23 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 if (app.get('env') == 'production') {
-  app.use(logger('common', { skip: function(req, res) { return res.statusCode < 400 } }));
+  app.use(logger('common', {
+    skip: function (req, res) {
+      return res.statusCode < 400
+    }
+  }));
 } else {
   app.use(logger('dev'));
 }
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieSession({
-  maxAge: 1000*60*60*2,
+  maxAge: 1000 * 60 * 60 * 2,
   keys: ["this_is_the_secret_cookie_encryption_key"]
 }));
 
@@ -98,15 +102,15 @@ app.use(async function (req, res, next) {
   } else {
     var userRole = await findUserByEmail(req.user);
 
-    if(userRole instanceof models.Student){
+    if (userRole instanceof models.Student) {
       res.locals.isStudent = true;
       res.locals.missingConsent = !userRole.user_data_consent;
     }
-    if(userRole instanceof models.Virksomhed){
+    if (userRole instanceof models.Virksomhed) {
       res.locals.isCompany = true;
       res.locals.missingConsent = !userRole.user_data_consent;
     }
-    if(userRole instanceof models.Admin){
+    if (userRole instanceof models.Admin) {
       res.locals.isAdmin = true;
     }
     res.locals.user = userRole;
@@ -126,8 +130,8 @@ app.use('/login', loginRouter);
 app.use('*/language', languageRouter);
 app.use('*/cookie-confirm', cookieRouter);
 app.use('/', forsideRouter);
-app.use ('/profil', profilRouter);
-app.use ('/admin-funktioner', adminFunktionerRouter);
+app.use('/profil', profilRouter);
+app.use('/admin-funktioner', adminFunktionerRouter);
 app.use('/opret-bruger', opretBrugerRouter);
 app.use('/kontakt', kontaktRouter);
 app.use('/om', omRouter);
@@ -144,19 +148,21 @@ app.use('/download', downloadRouter);
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error', {layout: false});
+  res.render('error', {
+    layout: false
+  });
 });
 
 module.exports = app;
