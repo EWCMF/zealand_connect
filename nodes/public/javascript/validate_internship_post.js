@@ -149,6 +149,22 @@ function checkUnderFileSizeLimit() {
     }
 };
 
+function checkEducationNotEmpty() {
+  let educations = []
+    document.querySelectorAll('.educationCheckbox').forEach(element => {
+      if (element.checked) {
+        educations.push(element.value);
+      }
+    });
+    if (educations.length == 0) {
+      errors.educationError.hidden = false;
+      return false;
+    } else {
+      errors.educationError.hidden = true;
+      return true;
+    }
+}
+
 function addChangeEvents() {
   inputs.internshipTitle.addEventListener('change', function () {
     checkInputNotEmptyWithLimit(inputs.internshipTitle, errors.titleError, 255);
@@ -213,7 +229,7 @@ function validate_internship_post() {
     checkNotInPast(inputs.internshipEmploymentDate, errors.postenddateErrorPast),
     checkInputUnderLimit(inputs.plainText, errors.posttextError, 65536),
     checkInputRegexOptional(inputs.companyURL, errors.companylinkError, linkRegex),
-    checkInputNotEmpty(inputs.educationSelect, errors.educationError),
+    checkEducationNotEmpty(),
     checkInputNotEmpty(inputs.countrySelect, errors.countryError),
     checkUnderFileSizeLimit()
   ];
@@ -230,6 +246,14 @@ function validate_internship_post() {
     return false;
   }
   else {
+    let educations = []
+    document.querySelectorAll('.educationCheckbox').forEach(element => {
+      if (element.checked) {
+        educations.push(element.value);
+      }
+    })
+    document.getElementById('educations').value = JSON.stringify(educations);
+
     document.forms["internshipForm"].submit();
   }
 }

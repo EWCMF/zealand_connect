@@ -254,6 +254,7 @@ function getLangdata() {
                 "Praktikstart_kolon": "Internship start:",
                 "Ingen": "None",
                 "Soeger:": "Searching for:",
+                "m.fl.": "and others",
 
                 //Opslagstyper
                 "Praktik": "Internship",
@@ -285,6 +286,7 @@ function getLangdata() {
                 "Rediger_opslag": "Edit post",
                 "Indryk_opslag": "Create post",
                 "Annonce_overskrift": "Post headline",
+                "Annonce_overskrift_placeholder": "Title",
                 "Annonce_overskrift_error": "You must specify a post headline",
                 "Opslagstype": "Post type",
                 "Vaelg_en_opslagstype": "Choose a post type",
@@ -292,7 +294,7 @@ function getLangdata() {
                 //Studiejob
                 "Opslagstype_error": "You must specify a post type",
                 //Uddannelse
-                "Vaelg_en_uddannelse": "Select an education",
+                "Vaelg_en_uddannelse": "Select one or more educations",
                 "Vaelg_en_uddannelse_error": "You must specify an education",
                 "Vaelg_en_uddannelse_note": "The selected education has paid internship",
                 "Land": "Country",
@@ -312,6 +314,7 @@ function getLangdata() {
                 "Telefonnummer_placeholder": "Phone number",
                 "phoneNumberError": "You must specify a valid phone number or empty the field",
                 "Navn_paa_kontaktperson": "Name of contact person",
+                "Navn_paa_kontaktperson_placeholder": "Name",
                 "Navn_paa_kontaktperson_error": "You must specify a contact person",
                 "Link_til_hjemmeside": "Link to website",
                 "Link_til_hjemmeside_error": "If a link is specified, it must be valid, e.g. http://www.zealandconnect.dk",

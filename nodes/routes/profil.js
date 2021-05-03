@@ -148,11 +148,39 @@ router.post('/virksomhed/:id/query', async function (req, res) {
         }
 
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
+            hbs.registerHelper('ifCond', function(v1, operator, v2, options){
+                switch (operator) {
+                    case '==':
+                        return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                    case '===':
+                        return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                    case '!=':
+                        return (v1 != v2) ? options.fn(this) : options.inverse(this);
+                    case '!==':
+                        return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+                    case '<':
+                        return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                    case '<=':
+                        return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+                    case '>':
+                        return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                    case '>=':
+                        return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+                    case '&&':
+                        return (v1 && v2) ? options.fn(this) : options.inverse(this);
+                    case '||':
+                        return (v1 || v2) ? options.fn(this) : options.inverse(this);
+                    default:
+                        return options.inverse(this);
+                }
+            });
             let template = hbs.compile(data + '');
             let html = template({
                 json: rows,
                 isStudent: res.locals.isStudent,
                 inProfile: true
+            }, {
+                allowProtoPropertiesByDefault: true
             });
             item.push(html);
 
@@ -195,7 +223,6 @@ async function getPosts(res, id, page) {
             fk_company: id
         },
         limit: limit,
-        raw: true,
         nest: true,
         offset: offset,
         order: [
@@ -208,9 +235,9 @@ async function getPosts(res, id, page) {
             },
             {
                 model: models.Uddannelse,
-                as: 'education',
-                attributes: ['name']
-            }
+                attributes: ['name'],
+                through: models.InternshipPost_Education,
+            },
         ],
     });
 

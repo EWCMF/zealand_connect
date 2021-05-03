@@ -70,7 +70,7 @@ const helpers = {
         }
 
         return '';
-    }
+    },
 }
 
 module.exports = { helpers }

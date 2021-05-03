@@ -22,6 +22,13 @@ async function deleteInternshipPost(id) {
             }
         })
 
+        // Slet education associations
+        await models.InternshipPost_Education.destroy({
+            where: {
+                post_id: id
+            }
+        });
+
         // Slet filer tilknyttet opslaget
         if (internshipPost.post_document){
             unlinkOldFiles(internshipPost.post_document)

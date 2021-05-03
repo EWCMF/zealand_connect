@@ -7,22 +7,22 @@
         </div>
         <div class="row">
             {{#unless ../inProfile}}
-            <div class="col-auto">
-                <a href='/internship_view/{{id}}' class="stretched-link">
-                    {{#if virksomhed.logo}}
-                        <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
-                    {{else}}
-                        <img class="center-cropped" src="/images/no-logo.png">
-                    {{/if}}
-                </a>
-            </div>
+                <div class="col-auto">
+                    <a href='/internship_view/{{id}}' class="stretched-link">
+                        {{#if virksomhed.logo}}
+                            <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
+                        {{else}}
+                            <img class="center-cropped" src="/images/no-logo.png">
+                        {{/if}}
+                    </a>
+                </div>
             {{/unless}}
             <div class="col">
                 <a href='/internship_view/{{id}}' class="stretched-link">
                     <div class="card-body">
                         <h4 class="card-title pb-1">{{title}}</h4>
                         {{#unless ../inProfile}}
-                        <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h6>
+                            <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h6>
                         {{/unless}}
                         {{#if postcode}}
                             <h6 class="card-text autobreak small text-secondary m-0">{{postcode}} {{city}}
@@ -49,7 +49,18 @@
                 <div class="row d-flex" style="justify-content: space-between">
                     <div class="row flex">
                         <p class="font-weight-bold pr-1 mb-0" data-key="Uddannelse_kolon">Uddannelse:</p>
-                        <p class="pr-2 mb-0" data-key="{{education.name}}">{{education.name}}</p>
+                        {{#each Uddannelses}}
+                            {{#ifCond @index '<' 5}}
+                                {{#if @last}}
+                                    <p class="mb-0" data-key="{{name}}">{{name}}</p>
+                                {{else}}
+                                    <p class="mb-0" data-key="{{name}}">{{name}}</p>,&nbsp;
+                                {{/if}}
+                            {{/ifCond}}
+                            {{#ifCond @index '==' 5}}
+                                <p class="mb-0" data-key="m.fl.">m.fl.</p>
+                            {{/ifCond}}
+                        {{/each}}
                     </div>
                     <div class="row mr-2 flex">
                         <p class="font-weight-bold pr-1 mb-0" data-key="Ansoegningsfrist_kolon">Ansøgningsfrist:</p>
@@ -83,7 +94,7 @@
                     // If we're currently in "/favourites/posts" then remove the card element from the list view. If
                     // we're anywhere else then just leave the card in the view
                     const path = window.location.pathname;
-                    if (path === "/favourites/posts"){
+                    if (path === "/favourites/posts") {
                         let card = document.getElementById("card" + id)
                         removeFadeOut(card, 300)
                     }

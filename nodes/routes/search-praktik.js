@@ -28,7 +28,7 @@ async function fetchData(page, parameters, res) {
         offset = (page - 1) * limit;
     }
 
-    let fk_education = {
+    let id = {
         [Op.or]: []
     };
     let country = {
@@ -50,7 +50,7 @@ async function fetchData(page, parameters, res) {
     let year = date.getUTCFullYear();
 
     let where = {
-        fk_education,
+        id,
         country,
         region,
         postcode,
@@ -88,13 +88,15 @@ async function fetchData(page, parameters, res) {
 
         if (key.includes("udd")) {
             let values = parameters[key];
-            if (Array.isArray(values)) {
-                values.forEach(element => {
-                    fk_education[Op.or].push(+element);
-                });
-            } else {
-                fk_education[Op.or].push(+values);
-            }
+            const PostEducations = await db.InternshipPost_Education.findAll({
+                where: {
+                    education_id: values
+                },
+                raw: true
+            })
+            PostEducations.forEach(element => {
+                id[Op.or].push(element.post_id);
+            })
         }
 
         if (key.includes("lnd")) {
@@ -303,11 +305,11 @@ async function fetchData(page, parameters, res) {
         rows
     } = await db.InternshipPost.findAndCountAll({
         limit: limit,
-        raw: true,
         nest: true,
         offset: offset,
         order: [
-            ['updatedAt', 'DESC']
+            ['updatedAt', 'DESC'],
+            [{model: db.Uddannelse}, 'name', 'ASC']
         ],
         include: [
             {
@@ -316,9 +318,9 @@ async function fetchData(page, parameters, res) {
             },
             {
                 model: db.Uddannelse,
-                as: 'education',
-                attributes: ['name']
-            }
+                attributes: ['name'],
+                through: db.InternshipPost_Education,
+            },
         ],
         where
     });
@@ -526,10 +528,38 @@ router.post('/query', function (req, res) {
         }
 
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
+            hbs.registerHelper('ifCond', function(v1, operator, v2, options){
+                switch (operator) {
+                    case '==':
+                        return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                    case '===':
+                        return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                    case '!=':
+                        return (v1 != v2) ? options.fn(this) : options.inverse(this);
+                    case '!==':
+                        return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+                    case '<':
+                        return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                    case '<=':
+                        return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+                    case '>':
+                        return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                    case '>=':
+                        return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+                    case '&&':
+                        return (v1 && v2) ? options.fn(this) : options.inverse(this);
+                    case '||':
+                        return (v1 || v2) ? options.fn(this) : options.inverse(this);
+                    default:
+                        return options.inverse(this);
+                }
+            });
             let template = hbs.compile(data + '');
             let html = template({
                 json: rows,
                 isStudent: res.locals.isStudent
+            }, {
+                allowProtoPropertiesByDefault: true
             });
             item.push(html);
 
@@ -553,5 +583,28 @@ router.post('/query', function (req, res) {
         })
     });
 });
+
+router.get("/memes", async function (req, res){
+    let rows = await db.InternshipPost.findAll({
+        include: [
+            {
+                model: db.Virksomhed,
+                as: 'virksomhed'
+            },
+            {
+                model: db.Uddannelse,
+                attributes: ['name'],
+                through: db.InternshipPost_Education
+            },
+        ],
+        where: {
+            id: 1
+        }
+    });
+
+    console.log(rows[0].Uddannelses[0])
+
+    res.json(rows)
+})
 
 module.exports = router;

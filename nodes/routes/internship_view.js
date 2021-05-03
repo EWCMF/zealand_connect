@@ -21,17 +21,17 @@ router.get('/:id', async function (req, res) {
         },
         {
             model: models.Uddannelse,
-            as: 'education'
-        }]
+            attributes: ['name'],
+            through: models.InternshipPost_Education
+        }],
+        order: [
+            [{model: models.Uddannelse}, 'name', 'ASC']
+        ]
     });
 
     let company = await models.Virksomhed.findByPk(result.fk_company, {
         attributes: ["navn", "id"]
     })
-
-    let educationId = result.fk_education;
-
-    let education = await models.Uddannelse.findByPk(educationId);
 
     //Tilføjer https:// bag på links hvis det mangler på weblink i databasen.
     let webLink = result['company_link'];
@@ -88,7 +88,7 @@ router.get('/:id', async function (req, res) {
         remail: result['email'],
         rphone: result['phone_number'],
         rcontact: result['contact'],
-        reducation: education.name,
+        reducation: result['Uddannelses'],
         rcountry: country,
         rregion: result['region'],
         rpoststart/*start date*/: result['post_start_date'],
