@@ -20,6 +20,12 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.addColumn(
+        'Uddannelser',
+        'fk_education_category', {
+          type: Sequelize.INTEGER
+        });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Uddannelser');

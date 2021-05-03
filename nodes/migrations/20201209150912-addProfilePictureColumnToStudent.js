@@ -2,11 +2,9 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return Promise.all([
-        queryInterface.addColumn('Students', 'profilbillede', {
+    await queryInterface.addColumn('Students', 'profilbillede', {
           type: Sequelize.STRING
-        }),
-    ]);
+        });
     /**
      * Add altering commands here.
      *
