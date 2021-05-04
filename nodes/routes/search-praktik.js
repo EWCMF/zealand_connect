@@ -93,10 +93,15 @@ async function fetchData(page, parameters, res) {
                     education_id: values
                 },
                 raw: true
-            })
-            PostEducations.forEach(element => {
-                id[Op.or].push(element.post_id);
-            })
+            });
+
+            if (PostEducations.length != 0) {
+                PostEducations.forEach(element => {
+                    id[Op.or].push(element.post_id);
+                });
+            } else {
+                id[Op.or].push(-1);
+            }
         }
 
         if (key.includes("lnd")) {
@@ -333,7 +338,7 @@ async function fetchData(page, parameters, res) {
             where: {
                 student_id: res.locals.user.id
             }
-        })
+        });
     }
 
     let pageCount = Math.ceil(count / limit);
@@ -431,7 +436,7 @@ router.get('/', async function (req, res, next) {
             name: category.name,
             uddannelser: uddannelser,
             showCategory: showCategory
-        })
+        });
     }
 
     const user = res.locals.user
@@ -457,12 +462,9 @@ router.get('/', async function (req, res, next) {
                     categoryId: categoryId,
                     id: user.cv.fk_education
                 };
-            }
-            ;
-        }
-        ;
-    }
-    ;
+            };
+        };
+    };
 
     let data = await fetchData(req.query.page, req.query, res);
 
@@ -584,28 +586,5 @@ router.post('/query', function (req, res) {
         })
     });
 });
-
-router.get("/memes", async function (req, res){
-    let rows = await db.InternshipPost.findAll({
-        include: [
-            {
-                model: db.Virksomhed,
-                as: 'virksomhed'
-            },
-            {
-                model: db.Uddannelse,
-                attributes: ['name'],
-                through: db.InternshipPost_Education
-            },
-        ],
-        where: {
-            id: 1
-        }
-    });
-
-    console.log(rows[0].Uddannelses[0])
-
-    res.json(rows)
-})
 
 module.exports = router;
