@@ -14,29 +14,31 @@ const {
 } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
-router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
 
-    var page;
-    var offset;
-    if (req.query.page == null) {
+async function fetchData(page, res) {
+    const user = res.locals.user
+    let offset;
+
+    if (!page) {
         page = 1
         offset = 0;
-    } else {
-        page = req.query.page
+    }  else {
         offset = (page - 1) * limit;
     }
 
-    const user = res.locals.user
     const {
         count,
         rows
     } = await db.InternshipPost.findAndCountAll({
         limit: limit,
         nest: true,
+        distinct: true,
         offset: offset,
         order: [
             ['updatedAt', 'DESC'],
-            [{model: db.Uddannelse}, 'name', 'ASC']
+            [{
+                model: db.Uddannelse
+            }, 'name', 'ASC']
         ],
         include: [{
                 model: db.Virksomhed,
@@ -51,11 +53,10 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
         where: {
             fk_company: user.id
         }
-
     });
 
     let pageCount = Math.ceil(count / limit);
-    let withPages = pageCount > 1 ? true : false;
+
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
@@ -88,8 +89,26 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
             case 3:
                 element['post_type'] = 'Trainee';
         }
-
     }
+
+    return {
+        count: count,
+        page: page,
+        pageCount: pageCount,
+        rows: rows
+    };
+}
+
+router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
+
+    let data = await fetchData(req.query.page, res);
+
+    let count = data.count;
+    let page = data.page;
+    let pageCount = data.pageCount;
+    let rows = data.rows;
+
+    let withPages = pageCount > 1 ? true : false;
 
     res.render('mine-opslag', {
         language: reqLang(req, res),
@@ -104,82 +123,18 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
 });
 
 router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
-    const user = res.locals.user
 
-    var formData = new formidable.IncomingForm();
+    let formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
 
-        var page = parseInt(fields.page);
-        var offset;
+        let data = await fetchData(fields.page, res)
 
-        if (page == 1) {
-            offset = 0
-        } else {
-            offset = (page - 1) * limit;
-        }
+        let count = data.count;
+        let page = data.page;
+        let pageCount = data.pageCount;
+        let rows = data.rows; 
 
-        const {
-            count,
-            rows
-        } = await db.InternshipPost.findAndCountAll({
-            limit: limit,
-            nest: true,
-            offset: offset,
-            order: [
-                ['updatedAt', 'DESC'],
-                [{model: db.Uddannelse}, 'name', 'ASC']
-            ],
-            include: [{
-                    model: db.Virksomhed,
-                    as: 'virksomhed'
-                },
-                {
-                    model: db.Uddannelse,
-                    attributes: ['name'],
-                    order: ['name', 'ASC'],
-                    through: db.InternshipPost_Education,
-                },
-            ],
-            where: {
-                fk_company: user.id
-            }
-        });
-
-        var item = [count];
-
-        for (let index = 0; index < rows.length; index++) {
-            const element = rows[index];
-
-            if (element['post_start_date'].length > 0) {
-                let cropStart = element['post_start_date'].substring(0, 10);
-    
-                let startYear = cropStart.substring(0, cropStart.indexOf('-'));
-                let startMonth = cropStart.substring(cropStart.indexOf('-') + 1, cropStart.lastIndexOf('-'));
-                let startDay = cropStart.substring(cropStart.lastIndexOf('-') + 1);
-    
-                element['post_start_date'] = startDay + '/' + startMonth + '/' + startYear;
-            }
-    
-            if (element['post_end_date'] != null && element['post_end_date'].length > 0) {
-                let cropEnd = element['post_end_date'].substring(0, 10);
-    
-                let endYear = cropEnd.substring(0, cropEnd.indexOf('-'));
-                let endMonth = cropEnd.substring(cropEnd.indexOf('-') + 1, cropEnd.lastIndexOf('-'));
-                let endDay = cropEnd.substring(cropEnd.lastIndexOf('-') + 1);
-                element['post_end_date'] = endDay + '/' + endMonth + '/' + endYear;
-            }
-    
-            switch (element['post_type']) {
-                case 1:
-                    element['post_type'] = 'Praktik';
-                    break;
-                case 2:
-                    element['post_type'] = 'Studiejob';
-                    break;
-                case 3:
-                    element['post_type'] = 'Trainee';
-            }
-        }
+        let item = [count];
 
         fs.readFileAsync = function (filename) {
             return new Promise(function (resolve, reject) {
@@ -197,7 +152,7 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
         }
 
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
-            hbs.registerHelper('ifCond', function(v1, operator, v2, options){
+            hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
                 switch (operator) {
                     case '==':
                         return (v1 == v2) ? options.fn(this) : options.inverse(this);
@@ -235,7 +190,6 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
                 hbs.registerHelper('paginate', require('handlebars-paginate'));
                 let template = hbs.compile(data + '');
 
-                let pageCount = Math.ceil(count / limit);
                 let withPages = pageCount > 1 ? true : false;
 
                 let html = template({
