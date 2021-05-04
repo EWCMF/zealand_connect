@@ -306,6 +306,7 @@ async function fetchData(page, parameters, res) {
     } = await db.InternshipPost.findAndCountAll({
         limit: limit,
         nest: true,
+        distinct: true,
         offset: offset,
         order: [
             ['updatedAt', 'DESC'],
