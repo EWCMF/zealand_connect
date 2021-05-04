@@ -224,6 +224,7 @@ async function getPosts(res, id, page) {
         },
         limit: limit,
         nest: true,
+        distinct: true,
         offset: offset,
         order: [
             ['updatedAt', 'DESC']
