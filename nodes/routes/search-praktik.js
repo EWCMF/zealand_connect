@@ -55,23 +55,12 @@ async function fetchData(page, parameters, res) {
         region,
         postcode,
         post_type,
-        [Op.or]: [{
-            'expired': {
-                [Op.ne]: 1
-            }
+        post_start_date: {
+            [Op.or]: [
+                {[Op.gt]: year + "-" + month + "-" + day},
+                ''
+            ]
         },
-            {
-                [Op.and]: [{
-                    'expired': 1
-                },
-                    {
-                        'post_start_date': {
-                            [Op.gt]: year + "-" + month + "-" + day
-                        }
-                    }
-                ]
-            }
-        ]
     };
 
     for (let key in parameters) {
@@ -263,23 +252,12 @@ async function fetchData(page, parameters, res) {
 
         delete where[Op.or];
         where[Op.and] = [{
-            [Op.or]: [{
-                'expired': {
-                    [Op.ne]: 1
-                }
+            post_start_date: {
+                [Op.or]: [
+                    {[Op.gt]: year + "-" + month + "-" + day},
+                    ''
+                ]
             },
-                {
-                    [Op.and]: [{
-                        'expired': 1
-                    },
-                        {
-                            'post_start_date': {
-                                [Op.gt]: year + "-" + month + "-" + day
-                            }
-                        }
-                    ]
-                }
-            ]
         },
             {
                 [Op.or]: [{

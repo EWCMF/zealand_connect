@@ -47,7 +47,6 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             post_document,
             dawa_json,
             dawa_uuid,
-            expired,
             phone_number
         } = fields;
 
@@ -92,7 +91,6 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             post_document,
             dawa_json,
             dawa_uuid,
-            expired,
             phone_number
         };
         var inputError = false;
@@ -171,8 +169,6 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                 errors += 'Past date specified for application deadline <br>';
                 inputError = true;
             }
-        } else {
-            indhold.expired = false;
         }
 
         if (post_type == 1) {
@@ -365,7 +361,6 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
         rdoc: post["post_document"],
         raddress: address,
 
-        expired: post['expired'],
         educations: educations,
         update: true
     });
