@@ -180,14 +180,6 @@
                                     Den valgte dato er i fortiden
                                 </p>
                             </div>
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="expire_checkbox"
-                                    name="expire_checkbox" onchange="setExpired()">
-                                <label class="form-check-label" for="expire_checkbox"
-                                    data-key="Ansoegningsfrist_note">Skal opslaget skjules efter
-                                    ansøgningsfristen?</label>
-                                <input type="hidden" id="expired" value="0" name="expired">
-                            </div>
                         </div>
                         <div class="col-12 col-md-6" id="internshipContainer" hidden="true">
                             <div class="form-group">
@@ -431,30 +423,6 @@
     }
 
     showIfURLexist();
-
-    document.getElementById('expire_checkbox').checked = false;
-
-    function setExpired() {
-        if (document.getElementById('expire_checkbox').checked) {
-            document.getElementById('expired').value = 1;
-        } else {
-            document.getElementById('expired').value = 0;
-        }
-    }
-
-    function setExpiredCheckbox() {
-        let expired = '{{ expired }}';
-        if (expired == '1') {
-            document.getElementById('expire_checkbox').checked = true;
-            expired = 1;
-        } else {
-            document.getElementById('expire_checkbox').checked = false;
-            expired = 0;
-        }
-        document.getElementById('expired').value = expired
-    }
-
-    setExpiredCheckbox();
 
     let expanded = false;
 

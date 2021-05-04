@@ -43,7 +43,6 @@ module.exports = (sequelize, DataTypes) => {
         post_document: DataTypes.STRING,
         dawa_json: DataTypes.TEXT,
         dawa_uuid: DataTypes.STRING,
-        expired: DataTypes.BOOLEAN,
         phone_number: DataTypes.STRING
     }, {
         sequelize,

@@ -8,6 +8,9 @@ const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
 const hbs = require('handlebars');
 const models = require("../models");
+const {
+    Op
+} = require('sequelize');
 const uploadFolder = require("../constants/references").uploadFolder();
 const formidable = require("formidable");
 const imageSize = require('image-size');
@@ -215,12 +218,23 @@ async function getPosts(res, id, page) {
         offset = (page - 1) * limit;
     }
 
+    let date = new Date();
+    let day = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getUTCFullYear();
+
     const {
         count,
         rows
     } = await models.InternshipPost.findAndCountAll({
         where: {
-            fk_company: id
+            fk_company: id,
+            post_start_date: {
+                [Op.or]: [
+                    {[Op.gt]: year + "-" + month + "-" + day},
+                    ''
+                ]
+            },
         },
         limit: limit,
         nest: true,

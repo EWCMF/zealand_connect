@@ -46,7 +46,6 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             post_document,
             dawa_json,
             dawa_uuid,
-            expired,
             phone_number
         } = fields;
 
@@ -90,7 +89,6 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             post_document,
             dawa_json,
             dawa_uuid,
-            expired,
             phone_number
         };
         
@@ -169,8 +167,6 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                 errors += 'Past date specified for internship start <br>';
                 inputError = true;
             }
-        } else {
-            indhold.expired = false;
         }
         
         if (post_type == 1) {
