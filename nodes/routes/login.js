@@ -92,7 +92,8 @@ router.post('/authenticateUser', function (req, res, next) {
 
             if (user instanceof models.Student){
                 await models.Student.update({
-                    last_login: new Date()
+                    last_login: new Date(),
+                    email_notification_date: null
                 }, {
                     where: {
                         id: user.id
@@ -101,7 +102,8 @@ router.post('/authenticateUser', function (req, res, next) {
             }
             else if (user instanceof models.Virksomhed){
                 await models.Virksomhed.update({
-                    last_login: new Date()
+                    last_login: new Date(),
+                    email_notification_date: null
                 }, {
                     where: {
                         id: user.id
