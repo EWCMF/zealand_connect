@@ -44,7 +44,10 @@ module.exports = (sequelize, DataTypes) => {
         dawa_json: DataTypes.TEXT,
         dawa_uuid: DataTypes.STRING,
         phone_number: DataTypes.STRING,
-        visible: DataTypes.BOOLEAN,
+        visible: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+        },
     }, {
         sequelize,
         modelName: 'InternshipPost',
