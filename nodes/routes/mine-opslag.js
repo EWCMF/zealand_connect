@@ -59,6 +59,7 @@ async function fetchData(page, res) {
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
+        element.mineOpslag = true;
 
         if (element['post_start_date'].length > 0) {
             let cropStart = element['post_start_date'].substring(0, 10);

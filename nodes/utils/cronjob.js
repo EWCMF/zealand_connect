@@ -112,7 +112,7 @@ function runCronJobs() {
         });
     });
 
-    cron.schedule('0 0 * * *', async function () {
+    cron.schedule('* * * * *', async function () {
         let sixMonthsAgo = new Date();
         sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
@@ -124,7 +124,12 @@ function runCronJobs() {
                 email_notification_date: {
                     [Op.is]: null
                 }
-            }
+            },
+            include:
+                {
+                    model: models.InternshipPost,
+                    as: "internshipPosts",
+                }
         });
 
         let mailInfos = [];
@@ -135,11 +140,12 @@ function runCronJobs() {
                 recipient: company.email,
                 subject: "Your posts on Zealand Connect have been made hidden because of inactivity",
                 context: {
-                    company_name: company.navn 
+                    company_name: company.navn
                 }
             }
             mailInfos.push(mailInfo);
         }
+
 
         for (const mailInfo of mailInfos) {
             try {
@@ -148,6 +154,15 @@ function runCronJobs() {
                 await mailInfo.company.save();
             } catch (error) {
                 console.log(`Mail to company ${mailInfo.company.id} failed`);
+            }
+        }
+
+        for (const company of companies) {
+            for (const internshipPost of company.internshipPosts) {
+                if (internshipPost.post_start_date === "") {
+                    internshipPost.visible = false;
+                    await internshipPost.save();
+                }
             }
         }
     });

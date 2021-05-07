@@ -40,7 +40,12 @@
                             <i id="fav-icon{{id}}" class="far fa-star fa-2x"></i>
                         {{/if}}
                     </button>
+                {{else if mineOpslag}}
+                    <button class="btn {{#if visible}}btn-danger{{else}}gulKnap{{/if}}">
+                        {{#if visible}}Skjul{{else}}Gem{{/if}}
+                    </button>
                 {{/if}}
+
 
             </div>
         </div>
