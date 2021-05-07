@@ -12,7 +12,7 @@ function runCronJobs() {
     /* WARNING: Do not change this cron job unless you know what you're doing. 
     This cron deletes student that have been inactive for a year 
     because of our data protection policy */
-    cron.schedule('* * * * *', async function() {
+    cron.schedule('0 0 * * *', async function() {
         let oneYearAgo = new Date();
         oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
@@ -38,7 +38,7 @@ function runCronJobs() {
         });
 
         oldCompanies.forEach(oldCompany => {
-            console.log(`Company with email ${oldCompany.email} was deleted by cron job because the student was inactive for a year`);
+            console.log(`Company with email ${oldCompany.email} was deleted by cron job because the company was inactive for a year`);
             deleteCompany(oldCompany.email);
         });
     });
@@ -61,7 +61,7 @@ function runCronJobs() {
                 attributes: ['sprog'],
                 as: 'cv'
             }]
-        })
+        });
 
         students.forEach(student => {
             if (student.email_notification_date) {
@@ -103,14 +103,69 @@ function runCronJobs() {
 
         mailInfos.forEach(async mailInfo => {
             try {
-                mailer.sendMail('delete-account-notification', mailInfo);
+                await mailer.sendMail('delete-account-notification', mailInfo);
                 mailInfo.student.email_notification_date = new Date();
                 mailInfo.student.save();
             } catch (error) {
                 console.log(`Mail to student ${mailInfo.student.id} failed`);
             }
         });
-    })
+    });
+
+    cron.schedule('* * * * *', async function () {
+        let sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+        let companies = await models.Virksomhed.findAll({
+            where: {
+                last_login: {
+                    [Op.lt]: sixMonthsAgo
+                },
+                email_notification_date: {
+                    [Op.is]: null
+                }
+            },
+            include:
+                {
+                    model: models.InternshipPost,
+                    as: "internshipPosts",
+                }
+        });
+
+        let mailInfos = [];
+        for (const company of companies) {
+
+            let mailInfo = {
+                company: company,
+                recipient: company.email,
+                subject: "Your posts on Zealand Connect have been made hidden because of inactivity",
+                context: {
+                    company_name: company.navn
+                }
+            }
+            mailInfos.push(mailInfo);
+        }
+
+
+        for (const mailInfo of mailInfos) {
+            try {
+                await mailer.sendMail('company-six-month-notice', mailInfo);
+                mailInfo.company.email_notification_date = new Date();
+                await mailInfo.company.save();
+            } catch (error) {
+                console.log(`Mail to company ${mailInfo.company.id} failed`);
+            }
+        }
+
+        for (const company of companies) {
+            for (const internshipPost of company.internshipPosts) {
+                if (internshipPost.post_start_date === "") {
+                    internshipPost.visible = false;
+                    await internshipPost.save();
+                }
+            }
+        }
+    });
 }
 
 module.exports = { runCronJobs }

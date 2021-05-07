@@ -13,6 +13,7 @@ router.get('/posts', authorizeUser('student'), async function (req, res) {
         where: {
             student_id: userId
         },
+        visible: true,
         attributes: ['internship_post_id']
     })
 

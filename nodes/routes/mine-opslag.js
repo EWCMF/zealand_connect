@@ -59,6 +59,7 @@ async function fetchData(page, res) {
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
+        element.mineOpslag = true;
 
         if (element['post_start_date'].length > 0) {
             let cropStart = element['post_start_date'].substring(0, 10);
@@ -205,6 +206,22 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
             });
         });
     });
+});
+
+router.post("/toggle-visibility", authorizeUser("company"), async function (req, res) {
+    console.log(req.body);
+    let id = Number(req.body)
+
+    let internshipPost = await db.InternshipPost.findByPk(id);
+
+    if (res.locals.user.id !== internshipPost.fk_company) {
+        return res.status(403);
+    }
+
+    internshipPost.visible = !internshipPost.visible;
+    await internshipPost.save();
+
+    res.send(internshipPost.visible);
 });
 
 module.exports = router;
