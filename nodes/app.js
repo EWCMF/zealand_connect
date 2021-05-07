@@ -32,6 +32,8 @@ const internshipInfoRouter = require('./routes/internship-info');
 const favouritesRouter = require('./routes/favourites');
 const downloadRouter = require('./routes/download');
 
+const bodyParser = require('body-parser')
+
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const passportSetup = require('./config/passport_setup');
@@ -94,6 +96,7 @@ app.use(function (req, res, next) {
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(bodyParser.text({ type: "text/plain"}));
 // Middleware til at finde login status i alle routes.
 app.use(async function (req, res, next) {
   res.locals.missingConsent = false;

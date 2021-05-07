@@ -61,6 +61,7 @@ async function fetchData(page, parameters, res) {
                 ''
             ]
         },
+        visible: true
     };
 
     for (let key in parameters) {
@@ -258,6 +259,7 @@ async function fetchData(page, parameters, res) {
                     ''
                 ]
             },
+            visible: true
         },
             {
                 [Op.or]: [{

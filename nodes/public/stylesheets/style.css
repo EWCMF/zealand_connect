@@ -841,3 +841,7 @@ body {
 #selectAllLabel {
   font-weight: bold;
 }
+
+.greyed-out {
+  opacity: 0.25;
+}

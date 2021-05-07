@@ -235,6 +235,7 @@ async function getPosts(res, id, page) {
                     ''
                 ]
             },
+            visible: true
         },
         limit: limit,
         nest: true,

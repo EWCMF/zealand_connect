@@ -208,4 +208,20 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
     });
 });
 
+router.post("/toggle-visibility", authorizeUser("company"), async function (req, res) {
+    console.log(req.body);
+    let id = Number(req.body)
+
+    let internshipPost = await db.InternshipPost.findByPk(id);
+
+    if (res.locals.user.id !== internshipPost.fk_company) {
+        return res.status(403);
+    }
+
+    internshipPost.visible = !internshipPost.visible;
+    await internshipPost.save();
+
+    res.send(internshipPost.visible);
+});
+
 module.exports = router;

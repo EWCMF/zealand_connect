@@ -10,16 +10,16 @@
                 <div class="col-auto">
                     <a href='/internship_view/{{id}}' class="stretched-link">
                         {{#if virksomhed.logo}}
-                            <img class="center-cropped" src="/uploads/{{virksomhed.logo}}">
+                            <img id="img{{id}}" class="center-cropped {{#unless visible}}greyed-out{{/unless}}" src="/uploads/{{virksomhed.logo}}">
                         {{else}}
-                            <img class="center-cropped" src="/images/no-logo.png">
+                            <img id="img{{id}}" class="center-cropped {{#unless visible}}greyed-out{{/unless}}" src="/images/no-logo.png">
                         {{/if}}
                     </a>
                 </div>
             {{/unless}}
             <div class="col">
                 <a href='/internship_view/{{id}}' class="stretched-link">
-                    <div class="card-body">
+                    <div id="body{{id}}" class="card-body {{#unless visible}}greyed-out{{/unless}}">
                         <h4 class="card-title pb-1">{{title}}</h4>
                         {{#unless ../inProfile}}
                             <h6 class="card-text autobreak mb-1">{{virksomhed.navn}}</h6>
@@ -41,8 +41,8 @@
                         {{/if}}
                     </button>
                 {{else if mineOpslag}}
-                    <button class="btn {{#if visible}}btn-danger{{else}}gulKnap{{/if}}">
-                        {{#if visible}}Skjul{{else}}Gem{{/if}}
+                    <button id="toggleButton{{id}}" class="btn {{#if visible}}btn-danger{{else}}btn-success{{/if}}" onclick="toggleVisibility({{id}})">
+                        {{#if visible}}Skjul{{else}}Vis{{/if}}
                     </button>
                 {{/if}}
 
@@ -90,7 +90,7 @@
     function favourite(id) {
         let xhr = new XMLHttpRequest()
         xhr.onload = function () {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 200) {
                 let icon = document.getElementById("fav-icon" + id)
                 if (this.responseText === "true") {
                     icon.classList.remove('far');
@@ -109,6 +109,28 @@
             }
         }
         xhr.open('POST', '/favourites/mark-post-as-favourite');
+        xhr.send(id);
+    }
+
+    function toggleVisibility(id) {
+        let xhr = new XMLHttpRequest()
+        xhr.onload = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                let image = document.getElementById("img" + id);
+                let body = document.getElementById("body" + id);
+                let button = document.getElementById("toggleButton" + id);
+                if (this.responseText === "true") {
+                    button.innerText = "Skjul";
+                } else {
+                    button.innerText = "Vis";
+                }
+                button.classList.toggle("btn-danger");
+                button.classList.toggle("btn-success");
+                image.classList.toggle('greyed-out');
+                body.classList.toggle('greyed-out');
+            }
+        }
+        xhr.open('POST', '/mine-opslag/toggle-visibility');
         xhr.send(id);
     }
 </script>
