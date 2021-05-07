@@ -34,7 +34,8 @@ module.exports = (sequelize, DataTypes) => {
     visible_mail: DataTypes.BOOLEAN,
     description: DataTypes.TEXT,
     last_login: DataTypes.DATE,
-    user_data_consent: DataTypes.BOOLEAN
+    user_data_consent: DataTypes.BOOLEAN,
+    email_notification_date: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Virksomhed',

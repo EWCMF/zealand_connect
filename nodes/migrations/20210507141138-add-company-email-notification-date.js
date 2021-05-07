@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.addColumn(
-      "Students", 
+      "Virksomheds", 
       "email_notification_date",
       {
         type: Sequelize.DATE,
@@ -11,6 +11,10 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn('Students', 'email_notification_date', {});
+    await queryInterface.removeColumn(
+      "Virksomheds", 
+      "email_notification_date",
+      {
+    });
   }
 };
