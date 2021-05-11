@@ -7,10 +7,11 @@ const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const deleteCompany = require('../persistence/usermapping').deleteVirksomhed;
 const mailer = require('./mail-sender');
 
-
+/* !!!!!!WARNING!!!!!!!
+Do not change any cron jobs unless you know what you're doing.
+*/
 function runCronJobs() {
-    /* WARNING: Do not change this cron job unless you know what you're doing. 
-    This cron deletes student that have been inactive for a year 
+    /* This cron deletes student that have been inactive for a year
     because of our data protection policy */
     cron.schedule('0 0 * * *', async function() {
         let oneYearAgo = new Date();
@@ -43,7 +44,7 @@ function runCronJobs() {
         });
     });
 
-    /* Send emails to users who have not logged in for 11 months telling them that their account will be deleted in a
+    /* Send emails to students who have not logged in for 11 months telling them that their account will be deleted in a
      month */
     cron.schedule('0 0 * * *', async function(){
         let elevenMonthsAgo = new Date();
@@ -112,7 +113,8 @@ function runCronJobs() {
         });
     });
 
-    cron.schedule('* * * * *', async function () {
+    // Send emails to companies who have not logged in for 6 months telling them that their posts will be hidden
+    cron.schedule('0 0 * * *', async function () {
         let sixMonthsAgo = new Date();
         sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
