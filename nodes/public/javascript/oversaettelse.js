@@ -290,6 +290,11 @@ function getLangdata() {
                 "Annonce_overskrift_error": "You must specify a post headline",
                 "Opslagstype": "Post type",
                 "Vaelg_en_opslagstype": "Choose a post type",
+                "internship_info_box_title": "The validity of your post",
+                "internship_info_box": "Your post is valid until the expiration date. If you do not specify an expiration" +
+                    "date the post will be valid as long as your account has been active within 6 months or until you" +
+                    "delete it yourself." +
+                    "After 6 months of inactivity the post will be hidden, but you have the option of showing it again.",
                 //Praktik
                 //Studiejob
                 "Opslagstype_error": "You must specify a post type",

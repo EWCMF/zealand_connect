@@ -68,3 +68,6 @@ config/config.json
 
 # excludes pdf filer
 pdf/*.pdf
+
+# IDE specific files
+.idea
