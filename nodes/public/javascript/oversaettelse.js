@@ -282,8 +282,8 @@ function getLangdata() {
                 "Opslag_paa_mail": "Email opt-in",
                 "emailOptInOption1": "Receive an email when a relevant post is made by a company",
                 "CV_info_box_title": "The validity of your CV",
-                "CV_info_box": "Your CV is valid as long as you've been active within the last 6 months or you delete it" +
-                    "by yourself." +
+                "CV_info_box": "Your CV is valid as long as you've been active within the last 6 months or you delete it " +
+                    "by yourself. " +
                     "After 6 months of inactivity your CV will be set to private meaning only you can see it.",
 
                 //internship_post
@@ -295,9 +295,9 @@ function getLangdata() {
                 "Opslagstype": "Post type",
                 "Vaelg_en_opslagstype": "Choose a post type",
                 "internship_info_box_title": "The validity of your post",
-                "internship_info_box": "Your post is valid until the expiration date. If you do not specify an expiration" +
-                    "date the post will be valid as long as your account has been active within 6 months or until you" +
-                    "delete it yourself." +
+                "internship_info_box": "Your post is valid until the expiration date. If you do not specify an expiration " +
+                    "date the post will be valid as long as your account has been active within 6 months or until you " +
+                    "delete it yourself. " +
                     "After 6 months of inactivity the post will be hidden, but you have the option of showing it again.",
                 //Praktik
                 //Studiejob
