@@ -281,6 +281,10 @@ function getLangdata() {
                 "Ikke_angivet": "Not specified",
                 "Opslag_paa_mail": "Email opt-in",
                 "emailOptInOption1": "Receive an email when a relevant post is made by a company",
+                "CV_info_box_title": "The validity of your CV",
+                "CV_info_box": "Your CV is valid as long as you've been active within the last 6 months or you delete it" +
+                    "by yourself." +
+                    "After 6 months of inactivity your CV will be set to private meaning only you can see it.",
 
                 //internship_post
                 "Rediger_opslag": "Edit post",
