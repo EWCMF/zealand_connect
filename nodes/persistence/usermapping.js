@@ -46,7 +46,13 @@ async function findUserByEmail(email) {
                         user = admin;
                     }
                 }).then(() => {
-                    models.Professor.findOne({where: {email: email}}).then((professor) => {
+                    models.Professor.findOne({
+                        where: {email: email},
+                        include: {
+                            model: models.ProfessorCV,
+                            as: 'cv'
+                        }
+                    }).then((professor) => {
                         if (professor === null) {
                             resolve(user);
                         }

@@ -55,6 +55,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let interesser = req.body.interesser;
     let offentlig = req.body.tilgaengelighed;
     let postcode = req.body.postcode;
+    let tidligere_projekter = req.body.tidligere_projekter;
 
     let emailWrittenCorrectly = emailRegex.test(email);
     let phoneCheck = phoneRegex.test(telefon);
@@ -62,7 +63,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let postcodeKorrekt = postcode.length !== 0 ? postcodeRegex.test(postcode) : true;
 
     if (!emailWrittenCorrectly || !phoneCheck || !email || !overskrift ||
-        !sprog || !arbejdssted || !stilling ||
+        !sprog || !arbejdssted || !stilling || !tidligere_uddannelse || !erhvervserfaring ||
         !uddannelse || !it_kompetencer || !linkedInKorrekt || !postcodeKorrekt) {
         return res.send('One or more values in the form are missing');
     }
@@ -117,7 +118,8 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
         postcode,
         city,
         geo_lat,
-        geo_lon
+        geo_lon,
+        tidligere_projekter
     }
 
     const [cv, created] = await db.ProfessorCV.findOrCreate({
@@ -138,6 +140,35 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let status = lang !== 'en' ? 'Succes' : 'Success';
 
     res.render('professor-cv-success', {layout: false, status: status, message: besked, id: cv.id});
+});
+
+router.get('/edit', authorizeUser('professor'), async function (req, res, next) {
+    let professor = res.locals.user;
+
+    if (professor.cv == null) {
+        res.status(403).render('error403', {layout: false});
+    }
+
+    res.render('professor-cv', {
+        language: reqLang(req, res),
+        uddannelse: professor.cv.uddannelse,
+        arbejdssted: professor.cv.arbejdssted,
+        stilling: professor.cv.stilling,
+        profil: professor.fornavn + " " + professor.efternavn,
+        overskrift: professor.cv.overskrift,
+        email: professor.cv.email,
+        sprog: professor.cv.sprog,
+        telefon: professor.cv.telefon,
+        linkedIn: professor.cv.linkedIn,
+        about: professor.cv.about,
+        it_kompetencer: professor.cv.it_kompetencer,
+        erhvervserfaring: professor.cv.erhvervserfaring,
+        tidligere_uddannelse: professor.cv.tidligere_uddannelse,
+        tidligere_projekter: professor.cv.tidligere_projekter,
+        interesser: professor.cv.interesser,
+        offentlig: professor.cv.offentlig,
+        postcode: professor.cv.postcode,
+    })
 });
 
 module.exports = router;

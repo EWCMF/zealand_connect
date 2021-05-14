@@ -32,6 +32,7 @@ const internshipInfoRouter = require('./routes/internship-info');
 const favouritesRouter = require('./routes/favourites');
 const downloadRouter = require('./routes/download');
 const professorCVRouter = require('./routes/professor-cv');
+const searchProfessorCVRouter = require('./routes/search-professor-cv');
 
 const bodyParser = require('body-parser')
 
@@ -152,6 +153,7 @@ app.use('/internship-info', internshipInfoRouter);
 app.use('/favourites', favouritesRouter);
 app.use('/download', downloadRouter);
 app.use('/professor-cv', professorCVRouter);
+app.use('/search-professor-cv', searchProfessorCVRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));

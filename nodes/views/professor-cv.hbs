@@ -1,4 +1,4 @@
-<script src='/javascript/godkendelse-af-CV.js' defer></script>
+<script src='/javascript/godkendelse-af-professor-CV.js' defer></script>
 <div class="container-fluid">
     <!-- tekst med dit navn og start på form -->
     <h3 class="text-center">{{profil}}</h3>
@@ -53,9 +53,11 @@
             <div class="row">
                 <!-- Arbejdssted med inputfelt -->
                 <div class="col-sm-4">
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label for="exampleFormControlSelect1" data-key="Arbejdssted">Arbejdssted</label>
                         <input class="form-control" id="arbejdssted" name="arbejdssted" value='{{arbejdssted}}'>
+                        <p id="arbejdsstedError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                            udfyldes</p>
                     </div>
                 </div>
                 <!-- Postnr med inputfelt -->
@@ -85,16 +87,20 @@
             <div class="row">
                 <!-- Stilling med inputfelt -->
                 <div class="col-sm-4">
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label for="exampleFormControlSelect1" data-key="Stilling">Stilling</label>
                         <input class="form-control" id="stilling" name="stilling" value='{{stilling}}'>
+                        <p id="stillingError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                            udfyldes</p>
                     </div>
                 </div>
                 <!-- udannelse med inputfelt -->
                 <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1" data-key="Udannelse">Udannelse</label>
-                        <input class="form-control" id="udannelse" name="udannelse" value='{{udannelse}}'>
+                    <div class="form-group required">
+                        <label for="exampleFormControlSelect1" data-key="Uddannelse">Uddannelse</label>
+                        <input class="form-control" id="uddannelse" name="uddannelse" value='{{uddannelse}}'>
+                        <p id="uddannelsesError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                            udfyldes</p>
                     </div>
                 </div>
                 <!-- underviser i med inputfelt -->
