@@ -13,7 +13,10 @@
                     <label class="form-check-label mr-3" data-key="Studerende" for="tab1">Studerende</label>
                     <input class="form-check-input" type="radio" name="tabset" id="tab2" aria-controls="login"
                         {{companyChecked}} onclick="showVirksomhedOpret()">
-                    <label class="form-check-label" data-key="Virksomhed" for="tab2">Virksomhed</label>
+                    <label class="form-check-label mr-3" data-key="Virksomhed" for="tab2">Virksomhed</label>
+                    <input class="form-check-input" type="radio" name="tabset" id="tab3" aria-controls="login"
+                        onclick="showProfessorOpret()">
+                    <label class="form-check-label" data-key="Professor" for="tab2">Adjunkt/Lektor</label>
                 </div>
 
                 <p class="mb-0 mt-3" data-key="Alle_felter">Alle felter skal udfyldes</p>
@@ -229,6 +232,91 @@
 
                         <input id="submit_handle_Student" type="submit" style="display: none">
                         <input id="studentConsent" type="hidden" name="studentConsent">
+                    </form>
+
+                    <!-- Professor form -->
+                    <form class="text-left" name="professorOpret" id="professorOpret" onsubmit="return false">
+                        <div style="color: red;" class="text-center" id="fejlBesked">{{fejlBesked}}</div>
+                        <div style="color: green;" class="text-center" id="succesBesked">{{succesBesked}}</div>
+                        <br>
+                        <div class="form-group row">
+                            <label for="emailProfessor" class="col-4 col-form-label">Email</label>
+                            <div class="col-8">
+                                <input id="emailProfessor" name="emailProfessor" type="text" class="form-control"
+                                       placeholder="Email">
+                                <div class="col-form-label formError pb-0" id="emailErrorProfessor">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gentagEmailProfessor" data-key="labelGentagEmail"
+                                   class="col-4 col-form-label">Gentag
+                                email</label>
+                            <div class="col-8">
+                                <input id="gentagEmailProfessor" name="gentagEmailProfessor" type="text"
+                                       class="form-control" placeholder="Gentag email"
+                                       data-key="placeholderGentagEmail">
+                                <div class="col-form-label formError pb-0" id="gentagEmailErrorProfessor">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="adgangskodeProfessor" data-key="labelAdgangskode_html"
+                                   class="col-4 col-form-label">Adgangskode
+                                <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                      title="Adgangskoden skal være mellem 8 og 20 cifre">?</span>
+                            </label>
+                            <div class="col-8">
+                                <input id="adgangskodeProfessor" name="passwordProfessor" type="password"
+                                       class="form-control" placeholder="Adgangskode" data-key="placeholderAdgangskode">
+                                <div class="col-form-label formError pb-0" id="adgangskodeErrorProfessor">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="gentagAdgangskodeProfessor" data-key="labelGentagAdgangskode"
+                                   class="col-4 col-form-label">Gentag adgangskode</label>
+                            <div class="col-8">
+                                <input id="gentagAdgangskodeProfessor" name="gentagPasswordProfessor" type="password"
+                                       class="form-control" placeholder="Gentag adgangskode"
+                                       data-key="placeholderGentagAdgangskode">
+                                <div class="col-form-label formError pb-0" id="gentagAdgangskodeErrorProfessor">Error
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="fornavnProfessor" data-key="Fornavn" class="col-4 col-form-label">Fornavn</label>
+                            <div class="col-8">
+                                <input id="fornavnProfessor" name="fornavnProfessor" type="string" class="form-control"
+                                       placeholder="Fornavn" data-key="placeholderFornavn">
+                                <div class="col-form-label formError pb-0" id="fornavnErrorProfessor">Error</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="efternavnProfessor" data-key="Efternavn"
+                                   class="col-4 col-form-label">Efternavn</label>
+                            <div class="col-8">
+                                <input id="efternavnProfessor" name="efternavnProfessor" type="string" class="form-control"
+                                       placeholder="Efternavn" data-key="placeholderEfternavn">
+                                <div class="col-form-label formError pb-0" id="efternavnErrorProfessor">Error</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-5">
+                            <label id="consentTextProfessor" class="form-check-label formError" data-key="stud_bekraeft_samtykke_html">
+                                Du skal acceptere vores
+                                <a class="link-primary" onclick="openDataConsent()"><b>samtykkeerklæring om
+                                    personoplysninger</b></a>
+                                for at kunne oprette en bruger på Zealand Connect.
+                            </label>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-10">
+                                <button class="btn gulKnap" data-key="opretBruger" type="submit" id="submitBtn_Professor"
+                                        onclick="submitOpretProfessor()" disabled>Opret Bruger
+                                </button>
+                            </div>
+                        </div>
+
+                        <input id="professorConsent" type="hidden" name="professorConsent">
                     </form>
                 </div>
             </div>
