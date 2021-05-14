@@ -1,9 +1,8 @@
-var express = require('express');
+const express = require('express');
 const {findUserByCVR} = require('../persistence/usermapping');
-var router = express.Router();
-var {reqLang} = require('../public/javascript/request');
+const router = express.Router();
+const {reqLang} = require('../public/javascript/request');
 const createVirksomhed = require('../persistence/usermapping').createVirksomhed;
-const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
 const createStudent = require('../persistence/usermapping').createStudent;
 const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
@@ -181,12 +180,6 @@ router.post('/create', (req, res) => {
         })
     })
 });
-
-router.post('/delete', function (req, res) {
-    deleteVirksomhed("")
-    res.redirect('back');
-});
-
 
 router.post('/studentCreate', (req, res, next) => {
     // Indlæs variable fra viewet
