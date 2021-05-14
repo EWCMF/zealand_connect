@@ -1,0 +1,260 @@
+<div class="container-fluid newLineContent">
+    <div class="row mt-4 mb-4">
+        <div class="col-12 col-lg-2">
+            {{#if json.professor.profilbillede}}
+            <img class="img-thumbnail border-0" src="/uploads/{{json.professor.profilbillede}}" alt="PROFILBILLEDE">
+            {{else}}
+            <img class="img-thumbnail border-0" src="/images/dummy-profile-pic.jpg" alt="PROFILBILLEDE">
+            {{/if}}
+        </div>
+        <div class="col-12 col-lg-8" id="cvDescriptionHeadlines">
+            <div class="col">
+                <div class="row">
+                    <h2 class="row col-lg-3 cvnavn" data-key="Navn_kolon">
+                        Navn:
+                    </h2>
+                    <h2 class="row col-lg-7 mb-3 cvnavn">
+                        {{json.professor.fornavn}} {{json.professor.efternavn}}
+                    </h2>
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3" data-key="Tlf_kolon">
+                        Tlf:
+                    </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        {{json.telefon}}
+                    </h6>
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3" data-key="By_kolon">
+                        By:
+                    </h6>
+                    {{#if json.postcode}}
+                        <h6 class="row col-lg-7 mb-3">
+                            {{json.postcode}} {{json.city}}
+                        </h6>
+                    {{else}}
+                        <h6 class="row col-lg-7 mb-3" data-key="Ikke_angivet">
+                            Ikke angivet
+                        </h6>
+                    {{/if}}
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Mail:
+                    </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        <a href="mailto:{{json.email}}">{{json.email}}</a>
+                    </h6>
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        LinkedIn:
+                    </h6>
+                    {{#if json.linkedIn}}
+                    <a href="//{{json.linkedIn}}">
+                        <h6 class="row col-lg-7 mb-3">
+                            {{json.linkedIn}}
+                        </h6>
+                    </a>
+                    {{else}}
+                    <h6 class="row col-lg-7 mb-3" data-key="Ikke_angivet">
+                            Ikke angivet
+                    </h6>
+                    {{/if}}
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Arbejdssted:
+                    </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        {{json.arbejdssted}}
+                    </h6>
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Uddannelse:
+                    </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        {{json.uddannelse}}
+                    </h6>
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Stilling:
+                    </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        {{json.stilling}}
+                    </h6>
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3">
+                        Underviser i:
+                    </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        {{json.teaches}}
+                    </h6>
+                </div>
+
+            </div>
+        </div>
+
+        {{#unless noButtons}}
+        <div class="col-12 col-lg-2 d-flex flex-column mt-2">
+            <button type="button" class="btn btn-success"
+                onclick="window.location.href='/search-cv/{{json.id}}/create_pdf'">Download Pdf</button>
+            {{#if ejer}}
+            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../mit-cv/edit'" data-key="Rediger_CV">Rediger
+                CV</button>
+                <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
+            {{/if}}
+            {{#if isAdmin}}
+                <button type="button" class="btn btn-danger mt-3" onclick="adminDeleteCV()" data-key="Slet_CV">Slet CV</button>
+            {{/if}}
+        </div>
+        {{/unless}}
+    </div>
+    <hr class="mb-4">
+
+    <div class="row border rounded ml-1 mr-1 mb-4 ">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Overskrift">
+                Overskrift
+            </h4>
+            <p class="autobreak">
+                {{json.overskrift}}
+            </p>
+
+        </div>
+    </div>
+
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Om_mig">
+                Om mig
+            </h4>
+            {{#if json.about}}
+            <p class="autobreak">
+                {{json.about}}
+            </p>
+            {{else}}
+            <p class="autobreak" data-key="Ikke_angivet">
+                Ikke angivet
+            </p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Erhvervserfaring">
+                Erhvervserfaring
+            </h4>
+            {{#if json.erhvervserfaring}}
+            <p class="autobreak">
+                {{json.erhvervserfaring}}
+            </p>
+            {{else}}
+            <p class="autobreak" data-key="Ikke_angivet">
+                Ikke angivet
+            </p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Tidligere_uddannelse">
+                Uddannelse
+            </h4>
+            {{#if json.tidligere_uddannelse}}
+            <p class="autobreak">
+                {{json.tidligere_uddannelse}}
+            </p>
+            {{else}}
+            <p class="autobreak" data-key="Ikke_angivet">
+                Ikke angivet
+            </p>
+            {{/if}}
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Interesser">
+                Interesser
+            </h4>
+            {{#if json.interesser}}
+            <p class="autobreak">
+                {{json.interesser}}
+            </p>
+            {{else}}
+            <p class="autobreak" data-key="Ikke_angivet">
+                Ikke angivet
+            </p>
+            {{/if}}
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Sprog">
+                Sprog
+            </h4>
+            <p class="autobreak">
+                {{json.sprog}}
+            </p>
+        </div>
+    </div>
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="It_kompetencer">
+                It-kompetencer
+            </h4>
+            <p class="autobreak">
+                {{json.it_kompetencer}}
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let autobreak = document.getElementsByClassName('autobreak');
+    for (let i = 0; i < autobreak.length; i++) {
+        autobreak[i].innerHTML = autobreak[i].innerHTML.trim();
+    }
+
+    function adminDeleteCV(){
+        let cvId = {{json.id}};
+        let professorEmail = prompt("Skriv personens email for at bekræfte handlingen");
+        if (professorEmail){
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/admin-funktioner/delete-pro-cv/" + cvId, true);
+            xhttp.send(JSON.stringify({
+                email: professorEmail,
+            }));
+
+            xhttp.onreadystatechange = function () {
+                let responseObject = JSON.parse(this.responseText);
+                if (this.readyState === 4 && this.status === 200) {
+                    alert(responseObject.message)
+                    window.location.href = "../search-cv";
+                } else if (this.readyState === 4 && this.status === 400) {
+                    alert(responseObject.message)
+                }
+            }
+        }
+    }
+
+    function deleteCV(){
+        if (confirm("Er du sikker?")) {
+            window.location = "/professor-cv/delete";
+        }
+    }
+</script>
