@@ -38,7 +38,6 @@ router.get('/posts', authorizeUser('student'), async function (req, res) {
             },
             {
                 model: models.Uddannelse,
-                as: 'education',
                 attributes: ['name']
             }
         ],
