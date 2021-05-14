@@ -5,6 +5,7 @@ var {reqLang} = require('../public/javascript/request');
 const createVirksomhed = require('../persistence/usermapping').createVirksomhed;
 const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
 const createStudent = require('../persistence/usermapping').createStudent;
+const createProfessor = require('../persistence/usermapping').createProfessor;
 const hashPassword = require('../encryption/password').hashPassword;
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const findVirksomhedByCvr = require('../persistence/usermapping').findVirksomhedByCvr;
@@ -281,4 +282,71 @@ router.post('/studentCreate', (req, res, next) => {
     })
 
 })
+
+router.post('/professorCreate', (req, res, next) => {
+    // Indlæs variable fra viewet
+    let jsonBody = JSON.parse(req.body);
+    let email = jsonBody.email;
+    let gentagEmail = jsonBody.gentagEmail;
+    let password = jsonBody.password;
+    let gentagPassword = jsonBody.gentagPassword;
+    let fornavn = jsonBody.fornavn;
+    let efternavn = jsonBody.efternavn;
+    let consent = jsonBody.consent;
+
+    //reset errors
+    let atLeastOneErrorIsPresent = false;
+    let errors = {
+        areThereErrors: "true",
+    }
+
+    // valider
+    if (!consent){
+        atLeastOneErrorIsPresent = true
+    }
+    if (!validateEmail(email)) {
+        atLeastOneErrorIsPresent = true;
+    } else if (!checkForIdenticals(email, gentagEmail)) {
+        atLeastOneErrorIsPresent = true;
+    }
+
+    if (!validatePasswordLength(password)) {
+        atLeastOneErrorIsPresent = true;
+    } else if (!checkForIdenticals(password, gentagPassword)) {
+        atLeastOneErrorIsPresent = true;
+    }
+
+    if (!validateNavn(fornavn)) {
+        atLeastOneErrorIsPresent = true;
+    }
+    if (!validateNavn(efternavn)) {
+        atLeastOneErrorIsPresent = true;
+    }
+
+    findUserByEmail(email).then((userFoundByEmail) => {
+        if (userFoundByEmail !== null) {
+            atLeastOneErrorIsPresent = true;
+        }
+        if (!atLeastOneErrorIsPresent) {
+            hashPassword(password).then((hashedPassword) => {
+                let professorBruger = {
+                    email: email,
+                    fornavn: fornavn,
+                    efternavn: efternavn,
+                    password: hashedPassword,
+                    user_data_consent: consent
+
+                }
+                createProfessor(professorBruger).then(() => {
+                    errors.areThereErrors = "false";
+                    res.send(errors);
+                });
+            });
+        } else {
+            res.send(errors);
+        }
+    })
+
+})
+
 module.exports = router;

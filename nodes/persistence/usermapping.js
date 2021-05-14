@@ -119,6 +119,20 @@ async function createStudent(studentObj) {
     }
 }
 
+async function createProfessor(professorObj) {
+    try {
+        await models.Professor.create({
+            email: professorObj.email,
+            password: professorObj.password,
+            fornavn: professorObj.fornavn,
+            efternavn: professorObj.efternavn,
+            user_data_consent: professorObj.user_data_consent
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 async function deleteVirksomhed(email) {
     let errorHappened = false;
@@ -271,5 +285,6 @@ function findStudentByName(name) {
 
 module.exports = {
     findUserByEmail, createVirksomhed, deleteVirksomhed, editVirksomhed, findUserByCVR, editStudent, deleteStudent,
-    editProfilePic, createStudent, editPassword, searchVirksomhederByName, findStudentByName, findVirksomhedByCvr
+    editProfilePic, createStudent, editPassword, searchVirksomhederByName, findStudentByName, findVirksomhedByCvr,
+    createProfessor
 }
