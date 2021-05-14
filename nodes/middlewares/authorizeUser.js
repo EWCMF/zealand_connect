@@ -7,6 +7,8 @@ function authorizeUser (...permittedRoles) {
             next();
         } else if (permittedRoles.includes('company') && res.locals.isCompany) {
             next();
+        } else if (permittedRoles.includes('professor') && res.locals.isProfessor) {
+            next();
         } else if (permittedRoles.includes('admin') && res.locals.isAdmin){
             next();
         } else {

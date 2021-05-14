@@ -109,11 +109,15 @@ app.use(async function (req, res, next) {
       res.locals.isStudent = true;
       res.locals.missingConsent = !userRole.user_data_consent;
     }
-    if (userRole instanceof models.Virksomhed) {
+    else if (userRole instanceof models.Virksomhed) {
       res.locals.isCompany = true;
       res.locals.missingConsent = !userRole.user_data_consent;
     }
-    if (userRole instanceof models.Admin) {
+    else if (userRole instanceof models.Professor) {
+      res.locals.isProfessor = true;
+      res.locals.missingConsent = !userRole.user_data_consent;
+    }
+    else if (userRole instanceof models.Admin) {
       res.locals.isAdmin = true;
     }
     res.locals.user = userRole;

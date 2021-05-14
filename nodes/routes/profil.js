@@ -29,7 +29,7 @@ const {
 } = require('../constants/regex');
 const passport = require('passport');
 
-router.get('/', authorizeUser('student', 'company', 'admin'), function (req, res, next) {
+router.get('/', authorizeUser('student', 'company', 'professor', 'admin'), function (req, res, next) {
     findUserByEmail(req.user).then((user) => {
         if (user instanceof models.Virksomhed) {
             let loggedInVirksomhed = {
@@ -60,6 +60,17 @@ router.get('/', authorizeUser('student', 'company', 'admin'), function (req, res
                 profilbillede: user.profilbillede
             }
             res.render("studentprofil", {
+                language: reqLang(req, res),
+                loggedInUser
+            });
+        } else if (user instanceof models.Professor) {
+            let loggedInUser = {
+                email: user.email,
+                fornavn: user.fornavn,
+                efternavn: user.efternavn,
+                profilbillede: user.profilbillede
+            }
+            res.render("professorprofil", {
                 language: reqLang(req, res),
                 loggedInUser
             });

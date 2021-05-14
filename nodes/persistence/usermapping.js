@@ -46,6 +46,15 @@ async function findUserByEmail(email) {
                         user = admin;
                     }
                     resolve(user);
+                }).then(() => {
+                    models.Professor.findOne({where: {email: email}}).then((professor) => {
+                        if (professor === null) {
+                            return;
+                        }
+                        if (professor instanceof models.Professor) {
+                            user = professor;
+                        }
+                    })
                 })
             });
         })
