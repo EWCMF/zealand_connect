@@ -40,20 +40,20 @@ async function findUserByEmail(email) {
             }).then(() => {
                 models.Admin.findOne({where: {username: email}}).then((admin) => {
                     if (admin === null) {
-                        resolve(user);
+                        return;
                     }
                     if (admin instanceof models.Admin) {
                         user = admin;
                     }
-                    resolve(user);
                 }).then(() => {
                     models.Professor.findOne({where: {email: email}}).then((professor) => {
                         if (professor === null) {
-                            return;
+                            resolve(user);
                         }
                         if (professor instanceof models.Professor) {
                             user = professor;
                         }
+                        resolve(user);
                     })
                 })
             });

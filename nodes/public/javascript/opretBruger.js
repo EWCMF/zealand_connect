@@ -527,7 +527,11 @@ inputsProfessor.efternavn.addEventListener('change', function () {
 });
 
 async function submitOpretProfessor() {
+    console.log("test1")
+
     document.getElementById('submitBtn_Professor').onclick = null;
+
+    console.log("test2")
 
     let checks = [
         checkGentagEmail(inputsProfessor.gentagEmail.value, errorsProfessor.gentagEmail, inputsProfessor.email.value),
@@ -536,6 +540,8 @@ async function submitOpretProfessor() {
         checkFeltIkkeTomt(inputsProfessor.fornavn.value, errorsProfessor.fornavn),
         checkFeltIkkeTomt(inputsProfessor.efternavn.value, errorsProfessor.efternavn),
     ];
+
+    console.log("test3")
 
     let check = true;
     checks.every(element => {
@@ -546,17 +552,28 @@ async function submitOpretProfessor() {
         return true;
     });
 
+    console.log("test4")
+
     if (!check) {
         document.getElementById('submitBtn_Professor').onclick = submitOpretProfessor;
         return;
     }
 
+    console.log("test5")
+
     let emailCheck = await checkEmail(inputsProfessor.email.value, errorsProfessor.email);
+
+    console.log("test6")
 
     if (!emailCheck) {
         document.getElementById('submitBtn_Professor').onclick = submitOpretProfessor;
         return;
     }
+
+    console.log("test7")
+
+    console.log(checks)
+    console.log(emailCheck)
 
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
