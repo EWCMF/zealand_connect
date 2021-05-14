@@ -52,6 +52,51 @@ async function fetchData(page, parameters, res) {
         offentlig: true
     };
 
+    for (let key in parameters) {
+        if (key.includes("lnd")) {
+            let values = parameters[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    if (element.includes('ind')) {
+                        sprog[Op.or].push({
+                            [Op.like]: '%dansk%'
+                        });
+                        sprog[Op.or].push({
+                            [Op.like]: '%Dansk%'
+                        });
+                    }
+                    if (element.includes('ud')) {
+                        sprog[Op.or].push({
+                            [Op.notLike]: '%dansk%'
+                        });
+
+                        sprog[Op.or].push({
+                            [Op.notLike]: '%Dansk%'
+                        });
+                    }
+                });
+            } else {
+                if (values.includes('ind')) {
+                    sprog[Op.or].push({
+                        [Op.like]: '%dansk%'
+                    });
+                    sprog[Op.or].push({
+                        [Op.like]: '%Dansk%'
+                    });
+                }
+                if (values.includes('ud')) {
+                    sprog[Op.or].push({
+                        [Op.notLike]: '%dansk%'
+                    });
+
+                    sprog[Op.or].push({
+                        [Op.notLike]: '%Dansk%'
+                    });
+                }
+            }
+        }
+    }
+
     if (parameters.hasOwnProperty('geo_id') && parameters.hasOwnProperty('geo_radius')) {
         let geo_id = parameters['geo_id'];
         let geo_radius = parameters['geo_radius'];
@@ -272,6 +317,9 @@ router.post('/query', function (req, res) {
                             pageCount: pageCount
                         },
                         withPages
+                    },
+                    {
+                        allowProtoPropertiesByDefault: true
                     }
                 );
 
@@ -297,7 +345,7 @@ router.get('/:id', async function (req, res) {
         }]
     });
 
-    if (cv.linkedIn){
+    if (cv.linkedIn) {
         if (cv.linkedIn.includes("://")) {
             cv.linkedIn = cv.linkedIn.substring(cv.linkedIn.indexOf("://") + 3);
         }
