@@ -1,0 +1,23 @@
+{{#each json}}
+    <div id="card{{id}}" class="card mb-3">
+        <div class="row">
+            <div class="col-auto">
+                <a href='/search-professor-cv/{{id}}' class="stretched-link">
+                    {{#if professor.profilbillede}}
+                        <img class="center-cropped" src="/uploads/{{professor.profilbillede}}">
+                    {{else}}
+                        <img class="center-cropped" src="/images/dummy-profile-pic.jpg">
+                    {{/if}}
+                </a>
+            </div>
+            <div class="col">
+                <a href='/search-professor-cv/{{id}}' class="stretched-link">
+                    <div class="card-body newLineContent">
+                        <h5 class="card-title">{{professor.fornavn}} {{professor.efternavn}}</h5>
+                        <p class="card-text autobreak">{{overskrift}}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+{{/each}}
