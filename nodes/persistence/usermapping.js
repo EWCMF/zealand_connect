@@ -207,7 +207,7 @@ async function findUserByCVR(CVR) {
 }
 
 async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
-    let student = await models.findOne({ where: {email: email}});
+    let student = await models.Student.findOne({ where: {email: email}});
     student.update({
         fornavn: fornavn,
         efternavn: efternavn,
