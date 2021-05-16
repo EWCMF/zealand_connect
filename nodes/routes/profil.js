@@ -7,6 +7,7 @@ const editProfessor = require('../persistence/usermapping').editProfessor;
 const editPassword = require('../persistence/usermapping').editPassword;
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
+const deleteProfessor = require('../persistence/usermapping').deleteProfessor;
 const hbs = require('handlebars');
 const models = require("../models");
 const {
@@ -1052,7 +1053,7 @@ router.post('/change-email-student', authorizeUser('student', 'admin'), async fu
 
 });
 
-router.post('/delete-account', authorizeUser('student', 'company'), async function (req, res, next) {
+router.post('/delete-account', authorizeUser('student', 'company', 'professor'), async function (req, res, next) {
     const {
         verifyPassword
     } = require('../encryption/password');
@@ -1073,7 +1074,12 @@ router.post('/delete-account', authorizeUser('student', 'company'), async functi
             user = await models.Virksomhed.findByPk(id, {
                 attributes: ["password", "email"]
             });
+        } else if (res.locals.isProfessor) {
+            user = await models.Professor.findByPk(id, {
+                attributes: ["password", "email"]
+            });
         }
+
 
         if (user) {
             let passwordFromDb = user.password;
@@ -1090,8 +1096,9 @@ router.post('/delete-account', authorizeUser('student', 'company'), async functi
                 await deleteStudent(user.email)
             } else if (user instanceof models.Virksomhed) {
                 await deleteVirksomhed(user.email)
+            } else if (user instanceof models.Professor) {
+                await deleteProfessor(user.email)
             }
-
             req.logout();
             res.status(200).send('ok');
         } else {

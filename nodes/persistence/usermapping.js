@@ -222,6 +222,39 @@ async function deleteStudent(email) {
     }
 }
 
+async function deleteProfessor(email) {
+    let errorHappened = false;
+    try {
+        let professor = await models.Professor.findOne({
+            include: [{
+                model: models.ProfessorCV,
+                as: 'cv',
+            }],
+            where: {
+                email: email,
+            }
+        });
+        if (professor == null) {
+            errorHappened = true;
+            return errorHappened;
+        } else {
+            //slet cv hvis det findes
+            if (professor.cv != null) {
+                //TODO implement function for deleting Professor CV's
+            }
+
+            if (professor.profilbillede) {
+                unlinkOldFiles(professor.profilbillede)
+            }
+
+            await professor.destroy();
+            return errorHappened;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function findUserByCVR(CVR) {
     let user = null;
     return new Promise(resolve => {
@@ -314,5 +347,5 @@ function findStudentByName(name) {
 module.exports = {
     findUserByEmail, createVirksomhed, deleteVirksomhed, editVirksomhed, findUserByCVR, editStudent, deleteStudent,
     editProfilePic, createStudent, editPassword, searchVirksomhederByName, findStudentByName, findVirksomhedByCvr,
-    createProfessor, editProfessor
+    createProfessor, editProfessor, deleteProfessor
 }
