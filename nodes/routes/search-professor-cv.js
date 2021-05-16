@@ -300,7 +300,9 @@ router.post('/query', function (req, res) {
         getFile(path.normalize('views/partials/search-professor-cv-card.hbs')).then((data) => {
             let template = hbs.compile(data + '');
             let html = template({
-                json: rows
+                json: rows,
+            }, {
+                allowProtoPropertiesByDefault: true
             });
             item.push(html);
 
@@ -317,9 +319,6 @@ router.post('/query', function (req, res) {
                             pageCount: pageCount
                         },
                         withPages
-                    },
-                    {
-                        allowProtoPropertiesByDefault: true
                     }
                 );
 
