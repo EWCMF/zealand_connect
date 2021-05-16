@@ -1,0 +1,143 @@
+<script src='/javascript/godkendelse-af-professor.js' defer></script>
+<script src='/javascript/godkendelse-af-billede.js' defer></script>
+<script src="/js/cropper.js"></script>
+<link href="/stylesheets/cropper.css" rel="stylesheet">
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>{{loggedInUser.fornavn}} {{loggedInUser.efternavn}}</h1>
+        </div>
+    </div>
+
+    <form action="/profil/rediger-professor-save" method="POST" id="redigerProfessorForm" name="redigerProfessorForm"
+        enctype="multipart/form-data">
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-6">
+                <div class="form-column col-11">
+                    <div class="form-group">
+                        <div class="">
+                            <label>Email</label>
+                            <div class="ml-3">
+                                <label class="inputImitation">{{loggedInUser.email}}</label>
+                                <button type="button" class="btn btn-success ml-1"
+                                   data-key="Skift" onclick="openEmailModal()">Skift</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="fornavn" data-key="Fornavn">Fornavn</label>
+                        <input class="form-control" name="fornavn" id="fornavn" rows="2"
+                            value="{{loggedInUser.fornavn}}">
+                        <p id="fornavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                            udfyldes</p>
+                        <p id="fornavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_fornavn">
+                            Ugyldigt
+                            fornavn</p>
+                    </div>
+                    <div class="form-group required">
+                        <label for="efternavn" data-key="Efternavn">Efternavn</label>
+                        <input class="form-control" name="efternavn" id="efternavn" rows="2"
+                            value="{{loggedInUser.efternavn}}">
+                        <p id="efternavnLengthError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                            udfyldes</p>
+                        <p id="efternavnInvalidError" class="CVErrorColor" hidden="true" data-key="Ugyldigt_efternavn">
+                            Ugyldigt efternavn</p>
+                    </div>
+                    <div class="form-group required" style="display: none;">
+                        <label for="email">Email</label>
+                        <input class="form-control" name="email" id="email" rows="2" value="{{loggedInUser.email}}">
+                        <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal
+                            skrive
+                            din email her og mindst
+                            bruge
+                            et @</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-column col-12 col-md-4 ml-3">
+                <div style="display: flex; flex-direction: row;">
+                    <label style="margin-right: 5px" id="profilbilledeLabel"
+                        data-key="Profilbillede">Profilbillede</label>
+                    <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                        title="Filtyper: .jpg, .jpeg, .png. Min. bredde: 250px. Min. højde: 250px. Max. filstørrelse: 10MB. Billedet kan skæres til efter det er valgt."
+                        data-key="Profilbillede_tooltip">?</span>
+                </div>
+                <div class="profilePicHolder">
+                    <img id="profilbillede" class="img-thumbnail border-0" src="\images\dummy-profile-pic.jpg"
+                        alt="PROFILBILLEDE">
+                    <div class="custom-file">
+                        <input id="crop_base64" type="text" name="crop_base64" class="d-none">
+                        <input type="file" name="profile_picture" accept=".jpg, .jpeg, .png" class="custom-file-input"
+                            id="profilePic" onchange="validateAndUpdateImage('picLabel', 'profilePic',
+                               'imageTypeError', 'imageDimensionsError', 'imageSizeError', 'cropperModal', 'cropFrame',
+                               'profilbillede', 'crop_base64')">
+                        <label id="picLabel" class="custom-file-label" for="profilePic" data-key="Vaelg_billede">Vælg
+                            billede</label>
+                        <p id="imageTypeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">
+                            Du kan kun uploade billeder med filtyperne .jpg eller .png
+                        </p>
+                        <p id="imageSizeError" class="CVErrorColor mt-3" hidden="true" data-key="Vaelg_billede_error">Du
+                            kan
+                            kun uploade en fil på maksimum
+                            10MB</p>
+                        <p id="imageDimensionsError" class="CVErrorColor mt-3" hidden="true"
+                            data-key="Vaelg_billede_error">
+                            Billedet skal være mindst 250 pixels i højde og bredde
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-column col-12 mt-3 ml-3">
+                <div>
+                    <button type="button" class="btn btn-success" id="gem" data-Key="Gem">Gem</button>
+                    <button type="button" class="btn btn-success ml-2" id="aendrePassowrd" onclick="openPasswordModal()"
+                        data-Key="Aendrer_password">Ændrer password
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{{> cropper-modal}}
+{{> change-password-modal }}
+{{> change-email-modal }}
+
+<script>
+
+    function updateElements() {
+        let profilePicture = "{{loggedInUser.profilbillede}}";
+
+        if (profilePicture !== "" && profilePicture != null) {
+            document.getElementById("profilbillede").src = '/uploads/' + profilePicture;
+        }
+    }
+
+    updateElements();
+
+    function openPasswordModal() {
+        $('#aendrePasswordModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        $("aendrePasswordModal").modal('show');
+    }
+
+    function openEmailModal() {
+        $('#skiftEmailModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        $("skiftEmailModal").modal('show');
+    }
+</script>

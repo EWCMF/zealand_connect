@@ -333,7 +333,7 @@ async function getPosts(res, id, page) {
     };
 }
 
-router.get('/rediger', authorizeUser('student', 'company', 'admin'), function (req, res, next) {
+router.get('/rediger', authorizeUser('student', 'company', 'professor', 'admin'), function (req, res, next) {
     let errors = req.query;
     //todo if Student render student else virksomhed
     //todo: find bruger og indsæt dens data i render hbs.
@@ -352,6 +352,18 @@ router.get('/rediger', authorizeUser('student', 'company', 'admin'), function (r
                 loggedInUser
             });
 
+        } else if (user instanceof models.Professor) {
+            let loggedInUser = {
+                email: user.email,
+                fornavn: user.fornavn,
+                efternavn: user.efternavn,
+                profilbillede: user.profilbillede
+            }
+
+            res.render("rediger-professorprofil", {
+                language: reqLang(req, res),
+                loggedInUser
+            });
         } else {
             let loggedInVirksomhed = {
                 email: user.email,

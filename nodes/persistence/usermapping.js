@@ -253,7 +253,7 @@ async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
 }
 
 async function editProfessor(email, fornavn, efternavn, profilbillede) {
-    let professor = models.Professor.findOne({ where: { email: email}});
+    let professor = await models.Professor.findOne({ where: { email: email}});
     professor.update({
         fornavn: fornavn,
         efternavn: efternavn,
