@@ -65,21 +65,19 @@ async function findVirksomhedByCvr(cvr) {
 async function editVirksomhed(json) {
     json.visibleMail == 'on' ? json.visibleMail = true : json.visibleMail = false;
 
-    //vi bruger email til at finde virksomheden.
-    findUserByEmail(json.email).then(virksomhed => {
-        virksomhed.update({
-            cvrnr: json.cvrnr,
-            navn: json.navn,
-            adresse: json.adresse,
-            tlfnr: json.tlfnr,
-            hjemmeside: json.hjemmeside,
-            land: json.land,
-            postnr: json.postnr,
-            by: json.by,
-            logo: json.logo,
-            visible_mail: json.visibleMail,
-            description: json.description
-        })
+    let virksomhed = await models.Virksomhed.findOne({ where: {email: json.email}});
+    virksomhed.update({
+        cvrnr: json.cvrnr,
+        navn: json.navn,
+        adresse: json.adresse,
+        tlfnr: json.tlfnr,
+        hjemmeside: json.hjemmeside,
+        land: json.land,
+        postnr: json.postnr,
+        by: json.by,
+        logo: json.logo,
+        visible_mail: json.visibleMail,
+        description: json.description
     })
 }
 
@@ -209,13 +207,12 @@ async function findUserByCVR(CVR) {
 }
 
 async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
-    findUserByEmail(email).then(student => {
-        student.update({
-            fornavn: fornavn,
-            efternavn: efternavn,
-            tlfnr: telefon,
-            profilbillede: profilbillede
-        });
+    let student = await models.findOne({ where: {email: email}});
+    student.update({
+        fornavn: fornavn,
+        efternavn: efternavn,
+        tlfnr: telefon,
+        profilbillede: profilbillede
     })
 }
 
