@@ -238,13 +238,26 @@ async function findUserByCVR(CVR) {
 }
 
 async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
-    findUserByEmail(email).then(student => {
-        student.update({
-            fornavn: fornavn,
-            efternavn: efternavn,
-            tlfnr: telefon,
-            profilbillede: profilbillede
-        });
+    findUserByEmail(email).then(user => {
+        if (user instanceof models.Student){
+            user.update({
+                fornavn: fornavn,
+                efternavn: efternavn,
+                tlfnr: telefon,
+                profilbillede: profilbillede
+            });
+        } else {
+            console.log("This user is not a student")
+        }
+    })
+}
+
+async function editProfessor(email, fornavn, efternavn, profilbillede) {
+    let professor = models.Professor.findOne({ where: { email: email}});
+    professor.update({
+        fornavn: fornavn,
+        efternavn: efternavn,
+        profilbillede: profilbillede
     })
 }
 
@@ -258,8 +271,8 @@ async function editPassword(email, password) {
 }
 
 async function editProfilePic(email, profilbillede) {
-    findUserByEmail(email).then(student => {
-        student.update({
+    findUserByEmail(email).then(user => {
+        user.update({
             profilbillede: profilbillede
         });
     })
@@ -301,5 +314,5 @@ function findStudentByName(name) {
 module.exports = {
     findUserByEmail, createVirksomhed, deleteVirksomhed, editVirksomhed, findUserByCVR, editStudent, deleteStudent,
     editProfilePic, createStudent, editPassword, searchVirksomhederByName, findStudentByName, findVirksomhedByCvr,
-    createProfessor
+    createProfessor, editProfessor
 }

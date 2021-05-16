@@ -3,6 +3,7 @@ const router = express.Router();
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const editVirksomhed = require('../persistence/usermapping').editVirksomhed;
 const editStudent = require('../persistence/usermapping').editStudent;
+const editProfessor = require('../persistence/usermapping').editProfessor;
 const editPassword = require('../persistence/usermapping').editPassword;
 const deleteStudent = require('../persistence/usermapping').deleteStudent;
 const deleteVirksomhed = require('../persistence/usermapping').deleteVirksomhed;
@@ -623,6 +624,121 @@ router.post('/rediger-save', authorizeUser('company', 'admin'), function (req, r
         } else {
             // Intet logo, så nøjes med at opdatere de andre felter
             editVirksomhed(content);
+            res.redirect('/profil/rediger');
+        }
+    });
+});
+
+router.post('/rediger-professor-save', authorizeUser('professor', 'admin'), function (req, res) {
+    let formData = new formidable.IncomingForm();
+
+    formData.parse(req, async function (error, fields, files) {
+        //laver et objekt med alle data
+        const {
+            email,
+            fornavn,
+            efternavn,
+            profile_picture,
+            crop_base64,
+            password,
+            gentagPassword
+        } = fields;
+        let content = {
+            email,
+            fornavn,
+            efternavn,
+            profile_picture,
+            crop_base64,
+            password,
+            gentagPassword
+        };
+
+        const imageBufferData = Buffer.from(crop_base64, 'base64');
+
+        let size = Buffer.byteLength(imageBufferData);
+
+        if (size > 0) {
+            /*fileUpload here*/
+            let img = files.profile_picture;
+
+            const imgData = imageSize(imageBufferData);
+
+            //Stien til upload mappen skal være til stien i docker containeren.
+            // VIRKER IKKE PÅ WINDOWS
+            let publicUploadFolder = uploadFolder;
+
+            //Generere unik data til filnavn med Date.now() og tilfældig tal.
+            let datetime = Date.now();
+            let randomNumber = Math.floor(Math.random() * (10 - 0 + 1) + 0);
+
+            //Kombinere oprindelig filnavn med unik data for at lave unike filnavne.
+            let newPicName = datetime + randomNumber + "_" + img.name;
+
+            if (imgData.width >= 250 && imgData.height >= 250) {
+                if (size <= 10000000) {
+                    //Når filer bliver uploaded bliver de lagt i en midlertigt mappe med tilfældignavn.
+                    //Nedenstående flytter og omdøber filer på sammetid
+                    if (img.type === "image/jpeg" || img.type === "image/png" || img.type === "image/svg+xml" || img.type === "image/bmp") {
+                        let tempPath = path.join(os.tmpdir(), Date.now() + '');
+
+                        //Gemmer buffer til en midlertidig fil i temp mappen med tilfældigt navn.
+                        //Dette er nødvendigt da man ikke kan bruge mv med buffer dataen direkte.
+                        fs.writeFileSync(tempPath, imageBufferData, function (err) {
+                            if (err) {
+                                return res.error(err);
+                            }
+                        });
+
+                        mv(tempPath, publicUploadFolder + newPicName, (errorRename) => {
+                            if (errorRename) {
+                                console.log("Unable to move file.");
+                            } else {
+                                models.Professor.findOne({
+                                    where: {
+                                        email: email
+                                    }
+                                }).then(result => {
+                                    if (result.profilbillede !== null) {
+                                        // Search the directory for the old profile picture
+                                        fs.readdir(uploadFolder, function (err, list) {
+                                            if (err) throw err;
+                                            for (let i = 0; i < list.length; i++) {
+                                                // If the old profile picture exists, delete it
+                                                if (list[i] === result.profilbillede) {
+                                                    unlinkOldFiles(result["profilbillede"])
+                                                }
+                                            }
+                                        });
+                                    }
+                                }).catch();
+                                content.profile_picture = newPicName;
+
+                                // Edit the students information
+                                if (password && password === gentagPassword && validatePasswordLength(password) && checkForIdenticals(password, gentagPassword)) {
+                                    editPassword(email, password);
+                                }
+                                editProfessor(email, fornavn, efternavn, content.profile_picture);
+                                res.redirect('/profil/rediger');
+                            }
+                        });
+                    } else {
+                        console.log("invalid file");
+                        res.redirect('/profil/rediger');
+                    }
+                } else {
+                    console.log("invalid filesize");
+                    res.redirect('/profil/rediger');
+                }
+            } else {
+                console.log("Invalid image dimensions");
+                res.redirect('/profil/rediger');
+            }
+        } else {
+            // Intet profilbillede, så nøjes med at opdatere de andre felter
+            if (password && password === gentagPassword) {
+                editPassword(email, password);
+            }
+            editProfessor(email, fornavn, efternavn);
             res.redirect('/profil/rediger');
         }
     });
