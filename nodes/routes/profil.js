@@ -815,6 +815,59 @@ router.post('/change-password-student', authorizeUser('student', 'admin'), async
 
 });
 
+router.post('/change-password-professor', authorizeUser('professor', 'admin'), async function (req, res, next) {
+    const {
+        hashPassword,
+        verifyPassword
+    } = require('../encryption/password');
+
+    var formData = new formidable.IncomingForm();
+    formData.parse(req, async function (error, fields, files) {
+
+        let oldPass = fields.gamlePassword;
+        let newPass = fields.nytPassword;
+        let repeatPass = fields.gentagNytPassword;
+
+        let errors = [];
+
+        let id = res.locals.user.id;
+
+        let professor = await models.Professor.findByPk(id, {
+            raw: true,
+            attributes: ["password"]
+        });
+
+        let passwordFromDb = professor.password;
+
+        if (!await verifyPassword(oldPass, passwordFromDb)) {
+            errors.push(1);
+        }
+
+        if (!validatePasswordLength(newPass)) {
+            errors.push(2);
+        }
+
+        if (!checkForIdenticals(newPass, repeatPass)) {
+            errors.push(3);
+        }
+
+        if (errors.length > 0) {
+            return res.status(400).send(JSON.stringify(errors));
+        }
+
+        models.Professor.update({
+            password: await hashPassword(newPass)
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        res.status(200).send('ok');
+    });
+
+});
+
 router.post('/change-password-company', authorizeUser('company', 'admin'), async function (req, res, next) {
     const {
         hashPassword,
