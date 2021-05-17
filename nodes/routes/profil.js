@@ -11,6 +11,7 @@ const models = require("../models");
 const {
     Op
 } = require('sequelize');
+const sequelize = require('sequelize');
 const uploadFolder = require("../constants/references").uploadFolder();
 const formidable = require("formidable");
 const imageSize = require('image-size');
@@ -97,7 +98,7 @@ router.get('/virksomhed/:id', async function (req, res) {
         description: json.description,
     };
 
-    let data = await getPosts(res, id, req.query.page);
+    let data = await getPosts(req, res, id, req.query.page);
 
     let count = data.count;
     let page = data.page;
@@ -126,7 +127,7 @@ router.post('/virksomhed/:id/query', async function (req, res) {
     formData.parse(req, async function (error, fields, files) {
 
         let id = req.params.id;
-        let fetchedData = await getPosts(res, id, fields.page);
+        let fetchedData = await getPosts(req, res, id, fields.page);
 
         let count = fetchedData.count;
         let page = fetchedData.page;
@@ -208,7 +209,7 @@ router.post('/virksomhed/:id/query', async function (req, res) {
     });
 });
 
-async function getPosts(res, id, page) {
+async function getPosts(req, res, id, page) {
     let offset;
     let limit = 5;
     if (!page) {
@@ -222,6 +223,13 @@ async function getPosts(res, id, page) {
     let day = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getUTCFullYear();
+
+    let formatDate;
+    if (reqLang(req, res) === 'en') {
+        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'];
+    } else {
+        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%d/%m/%Y'), 'updatedAt'];
+    };
 
     const {
         count,
@@ -241,6 +249,7 @@ async function getPosts(res, id, page) {
         nest: true,
         distinct: true,
         offset: offset,
+        attributes: ['id', 'title', 'post_type', 'postcode', 'city', 'region', formatDate, 'post_start_date', 'post_end_date', 'visible'],
         order: [
             ['updatedAt', 'DESC']
         ],

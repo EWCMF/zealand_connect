@@ -31,9 +31,9 @@
                     </div>
                 </a>
             </div>
-            <div class="col-auto mr-2 mt-2">
+            <div class="col-auto mr-2 mt-2 d-flex flex-column justify-content-between">
                 {{#if ../isStudent}}
-                    <button class="btn fav-button" style="outline: none;" onclick="favourite({{id}})">
+                    <button class="btn fav-button align-self-end" style="outline: none;" onclick="favourite({{id}})">
                         {{#if isFavourite}}
                             <i id="fav-icon{{id}}" class="fas fa-star fa-2x"></i>
                         {{else}}
@@ -41,12 +41,28 @@
                         {{/if}}
                     </button>
                 {{else if mineOpslag}}
-                    <button id="toggleButton{{id}}" class="btn {{#if visible}}btn-danger{{else}}btn-success{{/if}}" onclick="toggleVisibility({{id}})">
-                        {{#if visible}}Hide{{else}}Show{{/if}}
+                    <button id="toggleButton{{id}}" class="btn {{#if visible}}btn-danger{{else}}btn-success{{/if}} align-self-end" onclick="toggleVisibility({{id}})">
+                        {{#if visible}}
+                            {{#if (simpleEq ../language 'en')}}
+                            Hide
+                            {{else}}
+                            Skjul
+                            {{/if}}
+                        {{else}}
+                            {{#if (simpleEq ../language 'en')}}
+                            Show
+                            {{else}}
+                            Vis
+                            {{/if}}
+                        {{/if}}
                     </button>
+                {{else}}
+                <div></div>
                 {{/if}}
-
-
+                <div class="d-flex">
+                    <p class="text-muted text-right mb-2" data-key="Senest_opdateret:">Senest opdateret:</p>
+                    <p class="text-muted text-right mb-2 mr-2">&nbsp;{{updatedAt}}</p>
+                </div>
             </div>
         </div>
         <div class="card-footer">
@@ -88,6 +104,8 @@
 <script src="/javascript/animation.js"></script>
 <script>
     function favourite(id) {
+        let lang = '{{language}}';
+
         let xhr = new XMLHttpRequest()
         xhr.onload = function () {
             if (this.readyState === 4 && this.status === 200) {
@@ -120,9 +138,9 @@
                 let body = document.getElementById("body" + id);
                 let button = document.getElementById("toggleButton" + id);
                 if (this.responseText === "true") {
-                    button.innerText = "Skjul";
+                    lang == 'en' ? button.innerText = "Hide" : button.innerText = "Skjul"
                 } else {
-                    button.innerText = "Vis";
+                    lang == 'en' ? button.innerText = "Show" : button.innerText = "Vis"
                 }
                 button.classList.toggle("btn-danger");
                 button.classList.toggle("btn-success");
