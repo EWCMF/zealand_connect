@@ -8,7 +8,6 @@ const limit = 5;
 const {
     Op
 } = require('sequelize');
-const sequelize = require('sequelize');
 const path = require('path');
 const {
     reqLang
@@ -27,13 +26,6 @@ async function fetchData(page, req, res) {
         offset = (page - 1) * limit;
     };
 
-    let formatDate;
-    if (reqLang(req, res) === 'en') {
-        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'];
-    } else {
-        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%d/%m/%Y'), 'updatedAt'];
-    };
-
     const {
         count,
         rows
@@ -42,7 +34,6 @@ async function fetchData(page, req, res) {
         nest: true,
         distinct: true,
         offset: offset,
-        attributes: ['id', 'title', 'post_type', 'postcode', 'city', 'region', formatDate, 'post_start_date', 'post_end_date', 'visible'],
         order: [
             ['updatedAt', 'DESC'],
             [{
@@ -69,6 +60,13 @@ async function fetchData(page, req, res) {
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
         element.mineOpslag = true;
+
+        let formatDate = new Date(element['updatedAt']);
+        let leadingZeroDay = formatDate.getDate() < 10 ? '0' : '';
+        let leadingZeroMonth = (formatDate.getMonth() + 1) < 10 ? '0' : '';
+
+        let newDate = leadingZeroDay + formatDate.getDate() + "/" + leadingZeroMonth + (formatDate.getMonth() + 1) + "/" + formatDate.getFullYear();
+        element.formattedDate = newDate;
 
         if (element['post_start_date'].length > 0) {
             let cropStart = element['post_start_date'].substring(0, 10);

@@ -11,7 +11,6 @@ const limit = 10;
 const {
     Op
 } = require('sequelize');
-const sequelize = require('sequelize');
 const path = require('path');
 const makeArray = function (body, param) {
     if (body.hasOwnProperty(param)) {
@@ -20,7 +19,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters, req, res) {
+async function fetchData(page, parameters, res) {
     let offset;
     if (!page) {
         page = 1
@@ -286,13 +285,6 @@ async function fetchData(page, parameters, req, res) {
         ]
     };
 
-    let formatDate;
-    if (reqLang(req, res) === 'en') {
-        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'];
-    } else {
-        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%d/%m/%Y'), 'updatedAt'];
-    };
-
     const {
         count,
         rows
@@ -301,7 +293,6 @@ async function fetchData(page, parameters, req, res) {
         nest: true,
         distinct: true,
         offset: offset,
-        attributes: ['id', 'title', 'post_type', 'postcode', 'city', 'region', formatDate, 'post_start_date', 'post_end_date', 'visible'],
         order: [
             ['updatedAt', 'DESC'],
             [{model: db.Uddannelse}, 'name', 'ASC']
@@ -334,6 +325,14 @@ async function fetchData(page, parameters, req, res) {
 
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
+
+        let formatDate = new Date(element['updatedAt']);
+        let leadingZeroDay = formatDate.getDate() < 10 ? '0' : '';
+        let leadingZeroMonth = (formatDate.getMonth() + 1) < 10 ? '0' : '';
+
+        let newDate = leadingZeroDay + formatDate.getDate() + "/" + leadingZeroMonth + (formatDate.getMonth() + 1) + "/" + formatDate.getFullYear();
+
+        element.formattedDate = newDate;
 
         if (element['post_start_date'].length > 0) {
             let cropStart = element['post_start_date'].substring(0, 10);
@@ -455,7 +454,7 @@ router.get('/', async function (req, res, next) {
         };
     };
 
-    let data = await fetchData(req.query.page, req.query, req, res);
+    let data = await fetchData(req.query.page, req.query, res);
 
     let count = data.count;
     let page = data.page;
@@ -495,7 +494,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'reg');
         makeArray(fields, 'pos');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields, req, res);
+        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
 
         let count = fetchedData.count;
         let page = fetchedData.page;

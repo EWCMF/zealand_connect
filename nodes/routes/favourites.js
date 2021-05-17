@@ -20,7 +20,7 @@ router.get('/posts', authorizeUser('student'), async function (req, res) {
     let postIds = [];
     favouritePosts.forEach(post => {
         postIds.push(post.internship_post_id)
-    })
+    });
 
     const rows = await models.InternshipPost.findAll({
         raw: true,
@@ -41,11 +41,19 @@ router.get('/posts', authorizeUser('student'), async function (req, res) {
                 attributes: ['name']
             }
         ],
-    })
+    });
+
 
     // Manipulate the array to contain the information we want
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
+
+        let formatDate = new Date(element['updatedAt']);
+        let leadingZeroDay = formatDate.getDate() < 10 ? '0' : '';
+        let leadingZeroMonth = (formatDate.getMonth() + 1) < 10 ? '0' : '';
+
+        let newDate = leadingZeroDay + formatDate.getDate() + "/" + leadingZeroMonth + (formatDate.getMonth() + 1) + "/" + formatDate.getFullYear();
+        element.formattedDate = newDate;
 
         if (element['post_start_date'].length > 0) {
             let cropStart = element['post_start_date'].substring(0, 10);
@@ -84,7 +92,7 @@ router.get('/posts', authorizeUser('student'), async function (req, res) {
             if (favouritePost.internship_post_id === element.id) {
                 element['isFavourite'] = true;
             }
-        })
+        });
     }
 
     // Render the view and send the array of objects
@@ -109,7 +117,7 @@ router.get('/cvs', authorizeUser('company'), async function (req, res) {
     let cvIds = [];
     favouriteCVs.forEach(cv => {
         cvIds.push(cv.cv_id)
-    })
+    });
 
     let rows = await models.CV.findAll({
         raw: false,
@@ -139,6 +147,12 @@ router.get('/cvs', authorizeUser('company'), async function (req, res) {
     })
 
     rows = rows.map(cv => {
+        let formatDate = new Date(cv.updatedAt);
+        let leadingZeroDay = formatDate.getDate() < 10 ? '0' : '';
+        let leadingZeroMonth = (formatDate.getMonth() + 1) < 10 ? '0' : '';
+
+        let updatedAt = leadingZeroDay + formatDate.getDate() + "/" + leadingZeroMonth + (formatDate.getMonth() + 1) + "/" + formatDate.getFullYear();
+
         return {
             id: cv.id,
             overskrift: cv.overskrift,
@@ -155,7 +169,8 @@ router.get('/cvs', authorizeUser('company'), async function (req, res) {
                 return {
                     cvtype: cvtype.dataValues.cvtype
                 }
-            })
+            }),
+            formattedDate: updatedAt
         }
     });
 

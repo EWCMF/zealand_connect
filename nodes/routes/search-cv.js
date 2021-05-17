@@ -14,7 +14,6 @@ const limit = 10;
 const {
     Op
 } = require('sequelize');
-const sequelize = require('sequelize');
 const uploadFolder = require('../constants/references').uploadFolder();
 const makeArray = function (body, param) {
     if (body.hasOwnProperty(param)) {
@@ -233,19 +232,11 @@ async function fetchData(page, parameters, req, res) {
     }
     ;
 
-    let formatDate;
-    if (reqLang(req, res) === 'en') {
-        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'];
-    } else {
-        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%d/%m/%Y'), 'updatedAt'];
-    };
-
     let rows = await db.CV.findAll({
         limit: limit,
         raw: false,
         nest: true,
         offset: offset,
-        attributes: ['id', 'overskrift', 'om_mig', formatDate],
         order: [
             ['updatedAt', 'DESC']
         ],
@@ -270,6 +261,12 @@ async function fetchData(page, parameters, req, res) {
     });
 
     rows = rows.map(cv => {
+        let formatDate = new Date(cv.updatedAt);
+        let leadingZeroDay = formatDate.getDate() < 10 ? '0' : '';
+        let leadingZeroMonth = (formatDate.getMonth() + 1) < 10 ? '0' : '';
+
+        let updatedAt = leadingZeroDay + formatDate.getDate() + "/" + leadingZeroMonth + (formatDate.getMonth() + 1) + "/" + formatDate.getFullYear();
+
         return {
             id: cv.id,
             overskrift: cv.overskrift,
@@ -287,7 +284,7 @@ async function fetchData(page, parameters, req, res) {
                     cvtype: cvtype.dataValues.cvtype
                 }
             }),
-            updatedAt: cv.updatedAt
+            formattedDate: updatedAt
         }
     });
 
