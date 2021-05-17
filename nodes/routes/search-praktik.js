@@ -11,6 +11,7 @@ const limit = 10;
 const {
     Op
 } = require('sequelize');
+const sequelize = require('sequelize');
 const path = require('path');
 const makeArray = function (body, param) {
     if (body.hasOwnProperty(param)) {
@@ -19,7 +20,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters, res) {
+async function fetchData(page, parameters, req, res) {
     let offset;
     if (!page) {
         page = 1
@@ -285,6 +286,13 @@ async function fetchData(page, parameters, res) {
         ]
     };
 
+    let formatDate;
+    if (reqLang(req, res) === 'en') {
+        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'];
+    } else {
+        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%d/%m/%Y'), 'updatedAt'];
+    };
+
     const {
         count,
         rows
@@ -293,6 +301,7 @@ async function fetchData(page, parameters, res) {
         nest: true,
         distinct: true,
         offset: offset,
+        attributes: ['id', 'title', 'post_type', 'postcode', 'city', 'region', formatDate, 'post_start_date', 'post_end_date', 'visible'],
         order: [
             ['updatedAt', 'DESC'],
             [{model: db.Uddannelse}, 'name', 'ASC']
@@ -446,7 +455,7 @@ router.get('/', async function (req, res, next) {
         };
     };
 
-    let data = await fetchData(req.query.page, req.query, res);
+    let data = await fetchData(req.query.page, req.query, req, res);
 
     let count = data.count;
     let page = data.page;
@@ -486,7 +495,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'reg');
         makeArray(fields, 'pos');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
+        let fetchedData = await fetchData(parseInt(fields.page), fields, req, res);
 
         let count = fetchedData.count;
         let page = fetchedData.page;

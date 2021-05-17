@@ -14,6 +14,7 @@ const limit = 10;
 const {
     Op
 } = require('sequelize');
+const sequelize = require('sequelize');
 const uploadFolder = require('../constants/references').uploadFolder();
 const makeArray = function (body, param) {
     if (body.hasOwnProperty(param)) {
@@ -22,7 +23,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters, res) {
+async function fetchData(page, parameters, req, res) {
     let offset;
     if (!page) {
         page = 1
@@ -232,11 +233,19 @@ async function fetchData(page, parameters, res) {
     }
     ;
 
+    let formatDate;
+    if (reqLang(req, res) === 'en') {
+        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'];
+    } else {
+        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%d/%m/%Y'), 'updatedAt'];
+    };
+
     let rows = await db.CV.findAll({
         limit: limit,
         raw: false,
         nest: true,
         offset: offset,
+        attributes: ['id', 'overskrift', 'om_mig', formatDate],
         order: [
             ['updatedAt', 'DESC']
         ],
@@ -277,7 +286,8 @@ async function fetchData(page, parameters, res) {
                 return {
                     cvtype: cvtype.dataValues.cvtype
                 }
-            })
+            }),
+            updatedAt: cv.updatedAt
         }
     });
 
@@ -296,8 +306,8 @@ async function fetchData(page, parameters, res) {
             if (favouriteCV.cv_id === cv.id) {
                 cv['isFavourite'] = true;
             }
-        })
-    })
+        });
+    });
 
     let count = await db.CV.count({
         where
@@ -366,7 +376,7 @@ router.get('/', async function (req, res, next) {
         ],
     });
 
-    let data = await fetchData(req.query.page, req.query, res);
+    let data = await fetchData(req.query.page, req.query, req, res);
 
     let count = data.count;
     let page = data.page;
@@ -402,7 +412,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'geo');
         makeArray(fields, 'cvtype');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
+        let fetchedData = await fetchData(parseInt(fields.page), fields, req, res);
 
         let count = fetchedData.count;
         let page = fetchedData.page;

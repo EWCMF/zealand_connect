@@ -27,6 +27,10 @@ const helpers = {
         }
     },
 
+    simpleEq: (v1, v2) => {
+        return v1 === v2;
+    },
+
     selectState: (state, value) => {
         if(state === value) {
             return 'selected';

@@ -8,6 +8,7 @@ const limit = 5;
 const {
     Op
 } = require('sequelize');
+const sequelize = require('sequelize');
 const path = require('path');
 const {
     reqLang
@@ -15,7 +16,7 @@ const {
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
 
-async function fetchData(page, res) {
+async function fetchData(page, req, res) {
     const user = res.locals.user
     let offset;
 
@@ -24,7 +25,14 @@ async function fetchData(page, res) {
         offset = 0;
     }  else {
         offset = (page - 1) * limit;
-    }
+    };
+
+    let formatDate;
+    if (reqLang(req, res) === 'en') {
+        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%Y-%m-%d'), 'updatedAt'];
+    } else {
+        formatDate = [sequelize.fn('date_format', sequelize.col('updatedAt'), '%d/%m/%Y'), 'updatedAt'];
+    };
 
     const {
         count,
@@ -34,6 +42,7 @@ async function fetchData(page, res) {
         nest: true,
         distinct: true,
         offset: offset,
+        attributes: ['id', 'title', 'post_type', 'postcode', 'city', 'region', formatDate, 'post_start_date', 'post_end_date', 'visible'],
         order: [
             ['updatedAt', 'DESC'],
             [{
@@ -102,7 +111,7 @@ async function fetchData(page, res) {
 
 router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
 
-    let data = await fetchData(req.query.page, res);
+    let data = await fetchData(req.query.page, req, res);
 
     let count = data.count;
     let page = data.page;
@@ -128,7 +137,7 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
     let formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
 
-        let data = await fetchData(fields.page, res)
+        let data = await fetchData(fields.page, req, res)
 
         let count = data.count;
         let page = data.page;

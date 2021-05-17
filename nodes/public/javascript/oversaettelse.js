@@ -185,6 +185,7 @@ function getLangdata() {
                 "resultater": "results",
                 "Sortering": "Sort by:",
                 "Senest_opdateret": "Recently updated",
+                "Senest_opdateret:": "Updated at:",
                 "Raekkefoelge": "Order:",
                 "Faldende": "Descending",
                 "Stigende": "Ascending",
