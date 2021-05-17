@@ -296,13 +296,3 @@ function countChars(obj) {
         document.getElementById('charNum').innerHTML = charRemain + ' tegn tilbage';
     }
 }
-function countChars2(obj) {
-    var maxLength = 255;
-    var strLength = obj.value.length;
-    var charRemain = (maxLength - strLength);
-    if (charRemain < 0) {
-        document.getElementById('charNum2').innerHTML = '<span style="color:red;">Du har lavet mere end ' + maxLength + ' tegn</span>';
-    } else {
-        document.getElementById('charNum2').innerHTML = charRemain + ' tegn tilbage';
-    }
-}
