@@ -56,8 +56,9 @@ async function fetchData(page, parameters, res) {
         postcode,
         post_type,
         post_start_date: {
-            [Op.or]: [
-                {[Op.gt]: year + "-" + month + "-" + day},
+            [Op.or]: [{
+                    [Op.gt]: year + "-" + month + "-" + day
+                },
                 ''
             ]
         },
@@ -143,8 +144,7 @@ async function fetchData(page, parameters, res) {
                             break;
                         case '5':
                             realName = 'Region Syddanmark';
-                    }
-                    ;
+                    };
                     region[Op.or].push(realName);
                 });
             } else {
@@ -164,12 +164,10 @@ async function fetchData(page, parameters, res) {
                         break;
                     case '5':
                         realName = 'Region Syddanmark';
-                }
-                ;
+                };
                 region[Op.or].push(realName);
             }
-        }
-        ;
+        };
 
         if (key.includes('pos')) {
             let values = parameters[key];
@@ -199,8 +197,7 @@ async function fetchData(page, parameters, res) {
             navn[Op.or].push({
                 [Op.like]: element
             });
-        }
-        ;
+        };
 
         const virksomheder = await db.Virksomhed.findAll({
             where: {
@@ -248,23 +245,23 @@ async function fetchData(page, parameters, res) {
             company_link[Op.or].push({
                 [Op.like]: element
             });
-        }
-        ;
+        };
 
         delete where[Op.or];
         where[Op.and] = [{
-            post_start_date: {
-                [Op.or]: [
-                    {[Op.gt]: year + "-" + month + "-" + day},
-                    ''
-                ]
+                post_start_date: {
+                    [Op.or]: [{
+                            [Op.gt]: year + "-" + month + "-" + day
+                        },
+                        ''
+                    ]
+                },
+                visible: true
             },
-            visible: true
-        },
             {
                 [Op.or]: [{
-                    fk_company
-                },
+                        fk_company
+                    },
                     {
                         title
                     },
@@ -295,10 +292,11 @@ async function fetchData(page, parameters, res) {
         offset: offset,
         order: [
             ['updatedAt', 'DESC'],
-            [{model: db.Uddannelse}, 'name', 'ASC']
+            [{
+                model: db.Uddannelse
+            }, 'name', 'ASC']
         ],
-        include: [
-            {
+        include: [{
                 model: db.Virksomhed,
                 as: 'virksomhed'
             },
@@ -423,7 +421,7 @@ router.get('/', async function (req, res, next) {
 
     let preconfigEducationFilter;
     if (user) {
-        if (user.cv) {
+        if (user.cv && user instanceof db.Student) {
             if (Object.keys(req.query).length === 0) {
                 req.query.udd = [user.cv.fk_education];
 
@@ -511,7 +509,7 @@ router.post('/query', function (req, res) {
         }
 
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
-            hbs.registerHelper('ifCond', function(v1, operator, v2, options){
+            hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
                 switch (operator) {
                     case '==':
                         return (v1 == v2) ? options.fn(this) : options.inverse(this);

@@ -240,6 +240,11 @@ async function fetchData(page, parameters, res) {
                 model: models.Professor,
                 as: 'professor'
             },
+            {
+                model: models.Uddannelse,
+                attributes: ['name'],
+                through: models.ProfessorCV_Education,
+            },
         ],
         where
     });
