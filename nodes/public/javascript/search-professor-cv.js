@@ -150,6 +150,7 @@ function submitForm(formElement) {
     }
     formData.append("page", page);
 
+    handleInputArrayAndSetToForm(formData, 'udd');
     handleInputArrayAndSetToForm(formData, 'lnd');
 
     let s = [];
@@ -219,6 +220,7 @@ function checkCollapse(key, collapse, collapseHeader) {
         }
     });
 }
+checkCollapse('udd', 'collapse1', 'collapse1Header');
 checkCollapse('lnd', 'collapse2', 'collapse2Header');
 
 function checkAddressSearch() {

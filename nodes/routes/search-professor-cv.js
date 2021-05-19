@@ -95,6 +95,24 @@ async function fetchData(page, parameters, res) {
                 }
             }
         }
+
+        if (key.includes("udd")) {
+            let values = parameters[key];
+            const CVEducations = await models.ProfessorCV_Education.findAll({
+                where: {
+                    education_id: values
+                },
+                raw: true
+            });
+
+            if (CVEducations.length != 0) {
+                CVEducations.forEach(element => {
+                    id[Op.or].push(element.cv_id);
+                });
+            } else {
+                id[Op.or].push(-1);
+            }
+        }
     }
 
     if (parameters.hasOwnProperty('geo_id') && parameters.hasOwnProperty('geo_radius')) {
@@ -241,6 +259,49 @@ async function fetchData(page, parameters, res) {
 }
 
 router.get('/', async function (req, res, next) {
+    let categoryQuery = await models.EducationCategory.findAll({
+        raw: true,
+        attributes: ['id', 'name'],
+        order: [
+            ['name', 'ASC']
+        ]
+    });
+
+    let categories = []
+    for (const category of categoryQuery) {
+        const uddannelser = await models.Uddannelse.findAll({
+            raw: true,
+            where: {
+                fk_education_category: category.id
+            }
+        });
+        let showCategory = '';
+
+        if (req.query.udd) {
+            for (const uddannelse of uddannelser) {
+                if (Array.isArray(req.query.udd)) {
+                    for (const udd of req.query.udd) {
+                        if (uddannelse.id == udd) {
+                            showCategory = 'show'
+                            break;
+                        }
+                    }
+                } else {
+                    if (uddannelse.id == req.query.udd) {
+                        showCategory = 'show';
+                    }
+                }
+            }
+        }
+
+        categories.push({
+            id: category.id,
+            name: category.name,
+            uddannelser: uddannelser,
+            showCategory: showCategory
+        });
+    }
+
     let data = await fetchData(req.query.page, req.query, res);
 
     let count = data.count;
@@ -254,6 +315,7 @@ router.get('/', async function (req, res, next) {
 
     res.render('search-professor-cv', {
         language: reqLang(req, res),
+        categories: categories,
         json: rows,
         resultater: count,
         pagination: {
@@ -270,6 +332,7 @@ router.post('/query', function (req, res) {
 
     let formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
+        makeArray(fields, 'udd');
         makeArray(fields, 'lnd');
         makeArray(fields, 'geo');
 
