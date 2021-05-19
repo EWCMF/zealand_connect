@@ -32,13 +32,13 @@
                         By:
                     </h6>
                     {{#if json.postcode}}
-                        <h6 class="row col-lg-7 mb-3">
-                            {{json.postcode}} {{json.city}}
-                        </h6>
+                    <h6 class="row col-lg-7 mb-3">
+                        {{json.postcode}} {{json.city}}
+                    </h6>
                     {{else}}
-                        <h6 class="row col-lg-7 mb-3" data-key="Ikke_angivet">
-                            Ikke angivet
-                        </h6>
+                    <h6 class="row col-lg-7 mb-3" data-key="Ikke_angivet">
+                        Ikke angivet
+                    </h6>
                     {{/if}}
                 </div>
 
@@ -63,7 +63,7 @@
                     </a>
                     {{else}}
                     <h6 class="row col-lg-7 mb-3" data-key="Ikke_angivet">
-                            Ikke angivet
+                        Ikke angivet
                     </h6>
                     {{/if}}
                 </div>
@@ -83,11 +83,11 @@
                     </h6>
                     <h6 class="row col-lg-7 mb-3">
                         {{#each educations}}
-                            {{#if @last}}
-                                <div data-key="{{name}}">{{name}}</div>
-                            {{else}}
-                                <div data-key="{{name}}">{{name}}</div>,&nbsp;
-                            {{/if}}
+                        {{#if @last}}
+                        <div data-key="{{name}}">{{name}}</div>
+                        {{else}}
+                        <div data-key="{{name}}">{{name}},&nbsp;</div>
+                        {{/if}}
 
                         {{/each}}
                     </h6>
@@ -98,7 +98,7 @@
                         Stilling:
                     </h6>
                     <h6 class="row col-lg-7 mb-3">
-                        {{json.stilling}}
+                        {{json.position.name}}
                     </h6>
                 </div>
 
@@ -106,9 +106,15 @@
                     <h6 class="row col-lg-3">
                         Underviser i:
                     </h6>
+                    {{#if json.teaches}}
                     <h6 class="row col-lg-7 mb-3">
                         {{json.teaches}}
                     </h6>
+                    {{else}}
+                    <h6 class="row col-lg-7 mb-3" data-key="Ikke_angivet">
+                        Ikke angivet
+                    </h6>
+                    {{/if}}
                 </div>
 
             </div>
@@ -119,12 +125,14 @@
             <button type="button" class="btn btn-success"
                 onclick="window.location.href='/search-cv/{{json.id}}/create_pdf'">Download Pdf</button>
             {{#if ejer}}
-            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../professor-cv/edit'" data-key="Rediger_CV">Rediger
+            <button type="button" class="btn btn-success mt-3" onclick="window.location.href='../professor-cv/edit'"
+                data-key="Rediger_CV">Rediger
                 CV</button>
-                <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
+            <button type="button" class="btn btn-danger mt-3" onclick="deleteCV()" data-key="Slet_CV">Slet CV</button>
             {{/if}}
             {{#if isAdmin}}
-                <button type="button" class="btn btn-danger mt-3" onclick="adminDeleteCV()" data-key="Slet_CV">Slet CV</button>
+            <button type="button" class="btn btn-danger mt-3" onclick="adminDeleteCV()" data-key="Slet_CV">Slet
+                CV</button>
             {{/if}}
         </div>
         {{/unless}}
@@ -237,29 +245,29 @@
         autobreak[i].innerHTML = autobreak[i].innerHTML.trim();
     }
 
-    function adminDeleteCV(){
-        let cvId = {{json.id}};
+    function adminDeleteCV() {
+        let cvId = {{ json.id }};
         let professorEmail = prompt("Skriv personens email for at bekræfte handlingen");
-        if (professorEmail){
-            let xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/admin-funktioner/delete-pro-cv/" + cvId, true);
-            xhttp.send(JSON.stringify({
-                email: professorEmail,
-            }));
+    if (professorEmail) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/admin-funktioner/delete-pro-cv/" + cvId, true);
+        xhttp.send(JSON.stringify({
+            email: professorEmail,
+        }));
 
-            xhttp.onreadystatechange = function () {
-                let responseObject = JSON.parse(this.responseText);
-                if (this.readyState === 4 && this.status === 200) {
-                    alert(responseObject.message)
-                    window.location.href = "../search-cv";
-                } else if (this.readyState === 4 && this.status === 400) {
-                    alert(responseObject.message)
-                }
+        xhttp.onreadystatechange = function () {
+            let responseObject = JSON.parse(this.responseText);
+            if (this.readyState === 4 && this.status === 200) {
+                alert(responseObject.message)
+                window.location.href = "../search-cv";
+            } else if (this.readyState === 4 && this.status === 400) {
+                alert(responseObject.message)
             }
         }
     }
+    }
 
-    function deleteCV(){
+    function deleteCV() {
         if (confirm("Er du sikker?")) {
             window.location = "/professor-cv/delete";
         }

@@ -89,9 +89,16 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlSelect1" data-key="Stilling">Stilling</label>
-                        <input class="form-control" id="stilling" name="stilling" value='{{stilling}}'>
-                        <p id="stillingError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
-                            udfyldes</p>
+                        <select class="form-control" id="stilling" name="stilling">
+                            <option selected disabled hidden value="" data-key="Vaelg_en_uddannelse">Vælg din stilling
+                            </option>
+                            {{#each positions}}
+                            <option {{selectState name ../position }} value={{id}} data-key="{{name}}">{{name}}
+                            </option>
+                            {{/each}}
+                        </select>
+                        <p id="stillingError" class="CVErrorColor" hidden="false"
+                            data-key="Vaelg_en_uddannelse_error">Du skal vælge en Stilling</p>
                     </div>
                 </div>
                 <!-- udannelse med inputfelt -->

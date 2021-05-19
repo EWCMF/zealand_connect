@@ -18,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       ProfessorCV.belongsToMany(models.Uddannelse, {
         through: models.ProfessorCV_Education,
         foreignKey: 'cv_id'
-    });
+      });
+
+      ProfessorCV.belongsTo(models.ProfessorPosition, {
+        foreignKey: 'position_id',
+        as: 'position'
+      });
     }
   };
   ProfessorCV.init({

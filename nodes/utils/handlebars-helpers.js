@@ -28,6 +28,8 @@ const helpers = {
     },
 
     selectState: (state, value) => {
+        console.log(state)
+        console.log(value);
         if(state === value) {
             return 'selected';
         }

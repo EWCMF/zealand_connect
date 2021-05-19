@@ -18,12 +18,19 @@ router.get('/', authorizeUser('professor'), async function (req, res, next) {
             ]
         });
 
+        let positions = await db.ProfessorPosition.findAll({
+            order: [
+                ['name', 'ASC']
+            ]
+        });
+
         return res.render('professor-cv', {
             language: reqLang(req, res),
+            positions: positions,
             profil: professor.fornavn + " " + professor.efternavn,
             email: professor.email,
             educations: educations,
-        })
+        });
     }
 
     db.ProfessorCV.findOne({
@@ -52,7 +59,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let telefon = req.body.telefon;
     let linkedIn = req.body.linkedIn;
     let arbejdssted = req.body.arbejdssted;
-    let stilling = req.body.stilling;
+    let position_id = req.body.stilling;
     let educations = req.body.educations;
     let teaches = req.body.teaches;
     let about = req.body.about;
@@ -70,7 +77,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let postcodeKorrekt = postcode.length !== 0 ? postcodeRegex.test(postcode) : true;
 
     if (!emailWrittenCorrectly || !phoneCheck || !email || !overskrift ||
-        !sprog || !arbejdssted || !stilling || !tidligere_uddannelse || !erhvervserfaring ||
+        !sprog || !arbejdssted || !position_id || !tidligere_uddannelse || !erhvervserfaring ||
         !educations || !it_kompetencer || !linkedInKorrekt || !postcodeKorrekt) {
         return res.send('One or more values in the form are missing');
     }
@@ -112,7 +119,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
         about,
         teaches,
         arbejdssted,
-        stilling,
+        position_id,
         email,
         sprog,
         telefon,
@@ -198,11 +205,19 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         ]
     });
 
+    let positions = await db.ProfessorPosition.findAll({
+        order: [
+            ['name', 'ASC']
+        ]
+    });
+
     let cvEducations = await db.ProfessorCV_Education.findAll({
         where: {
             cv_id: professor.cv.id
         }
     });
+
+    let position = await db.ProfessorPosition.findByPk(professor.cv.position_id);
 
     let educationIds = []
     for (const cvEducation of cvEducations) {
@@ -211,6 +226,8 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
 
     res.render('professor-cv', {
         update: true,
+        positions: positions,
+        position: position.name,
         educations: educations,
         educationIds: JSON.stringify(educationIds),
         language: reqLang(req, res),

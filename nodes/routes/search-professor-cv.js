@@ -121,7 +121,7 @@ async function fetchData(page, parameters, res) {
 
         const url = 'https://dawa.aws.dk/adresser?id=' + geo_id + "&format=geojson";
         const res = await fetch(url);
-        const data = await res.json();//assuming data is json
+        const data = await res.json(); //assuming data is json
         if (data.type.includes('FeatureCollection')) {
             let json = data;
 
@@ -140,8 +140,12 @@ async function fetchData(page, parameters, res) {
                 maxLon: longitude + radius / R * 180 / π / cos(latitude * π / 180)
             };
 
-            geo_lat[Op.or] = {[Op.between]: [params.minLat, params.maxLat]};
-            geo_lon[Op.or] = {[Op.between]: [params.minLon, params.maxLon]};
+            geo_lat[Op.or] = {
+                [Op.between]: [params.minLat, params.maxLat]
+            };
+            geo_lon[Op.or] = {
+                [Op.between]: [params.minLon, params.maxLon]
+            };
         }
     }
 
@@ -213,19 +217,35 @@ async function fetchData(page, parameters, res) {
             });
         }
 
-        where[Op.or] = [
-            {overskrift},
-            {email},
-            {arbejdssted},
-            {stilling},
-            {it_kompetencer},
-            {erhvervserfaring},
-            {tidligere_uddannelse},
-            {tidligere_projekter},
-            {interesser}
+        where[Op.or] = [{
+                overskrift
+            },
+            {
+                email
+            },
+            {
+                arbejdssted
+            },
+            {
+                stilling
+            },
+            {
+                it_kompetencer
+            },
+            {
+                erhvervserfaring
+            },
+            {
+                tidligere_uddannelse
+            },
+            {
+                tidligere_projekter
+            },
+            {
+                interesser
+            }
         ]
-    }
-    ;
+    };
 
     let rows = await models.ProfessorCV.findAll({
         limit: limit,
@@ -235,8 +255,7 @@ async function fetchData(page, parameters, res) {
         order: [
             ['updatedAt', 'DESC']
         ],
-        include: [
-            {
+        include: [{
                 model: models.Professor,
                 as: 'professor'
             },
@@ -245,6 +264,11 @@ async function fetchData(page, parameters, res) {
                 attributes: ['name'],
                 through: models.ProfessorCV_Education,
             },
+            {
+                model: models.ProfessorPosition,
+                attributes: ['name'],
+                as: 'position'
+            }
         ],
         where
     });
@@ -380,15 +404,13 @@ router.post('/query', function (req, res) {
 
                 let withPages = pageCount > 1 ? true : false;
 
-                let html = template(
-                    {
-                        pagination: {
-                            page: page,
-                            pageCount: pageCount
-                        },
-                        withPages
-                    }
-                );
+                let html = template({
+                    pagination: {
+                        page: page,
+                        pageCount: pageCount
+                    },
+                    withPages
+                });
 
                 item.push(html);
                 res.send(item);
@@ -406,16 +428,24 @@ router.get('/:id', async function (req, res) {
             id: parseInt(id)
         },
         include: [{
-            model: models.Professor,
-            as: 'professor'
-        },
-        {
-            model: models.Uddannelse,
-            attributes: ['name'],
-            through: models.ProfessorCV_Education
-        }],
+                model: models.Professor,
+                as: 'professor'
+            },
+            {
+                model: models.Uddannelse,
+                attributes: ['name'],
+                through: models.ProfessorCV_Education
+            },
+            {
+                model: models.ProfessorPosition,
+                attributes: ['name'],
+                as: 'position'
+            }
+        ],
         order: [
-            [{model: models.Uddannelse}, 'name', 'ASC']
+            [{
+                model: models.Uddannelse
+            }, 'name', 'ASC']
         ]
     });
 
