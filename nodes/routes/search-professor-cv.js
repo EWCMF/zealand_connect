@@ -333,7 +333,6 @@ router.get('/:id', async function (req, res) {
     let id = req.params.id
 
     let cv = await models.ProfessorCV.findOne({
-        raw: true,
         nest: true,
         where: {
             id: parseInt(id)
@@ -341,7 +340,15 @@ router.get('/:id', async function (req, res) {
         include: [{
             model: models.Professor,
             as: 'professor'
-        }]
+        },
+        {
+            model: models.Uddannelse,
+            attributes: ['name'],
+            through: models.ProfessorCV_Education
+        }],
+        order: [
+            [{model: models.Uddannelse}, 'name', 'ASC']
+        ]
     });
 
     if (cv.linkedIn) {
@@ -366,9 +373,12 @@ router.get('/:id', async function (req, res) {
         }
     }
 
+    console.log(cv);
+
     res.render('professor-cv-view', {
         language: reqLang(req, res),
         json: cv,
+        educations: cv.Uddannelses,
         ejer: ejer
     });
 

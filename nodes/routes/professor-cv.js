@@ -12,10 +12,17 @@ router.get('/', authorizeUser('professor'), async function (req, res, next) {
     var professor = res.locals.user;
 
     if (professor.cv == null) {
+        const educations = await db.Uddannelse.findAll({
+            order: [
+                ['name', 'ASC']
+            ]
+        });
+
         return res.render('professor-cv', {
             language: reqLang(req, res),
             profil: professor.fornavn + " " + professor.efternavn,
             email: professor.email,
+            educations: educations,
         })
     }
 
@@ -46,7 +53,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let linkedIn = req.body.linkedIn;
     let arbejdssted = req.body.arbejdssted;
     let stilling = req.body.stilling;
-    let uddannelse = req.body.uddannelse;
+    let educations = req.body.educations;
     let teaches = req.body.teaches;
     let about = req.body.about;
     let it_kompetencer = req.body.it_kompetencer;
@@ -64,9 +71,11 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
 
     if (!emailWrittenCorrectly || !phoneCheck || !email || !overskrift ||
         !sprog || !arbejdssted || !stilling || !tidligere_uddannelse || !erhvervserfaring ||
-        !uddannelse || !it_kompetencer || !linkedInKorrekt || !postcodeKorrekt) {
+        !educations || !it_kompetencer || !linkedInKorrekt || !postcodeKorrekt) {
         return res.send('One or more values in the form are missing');
     }
+
+    educations = JSON.parse(educations);
 
     let lang = reqLang(req, res);
     let besked = lang !== 'en' ? "CV'et er gemt." : "The CV is saved."
@@ -104,7 +113,6 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
         teaches,
         arbejdssted,
         stilling,
-        uddannelse,
         email,
         sprog,
         telefon,
@@ -134,7 +142,42 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
             where: {
                 id: cv.id
             }
-        })
+        });
+
+        let associatedEducations = await db.ProfessorCV_Education.findAll({
+            where: {
+                cv_id: cv.id
+            }
+        });
+        for (const associatedEducation of associatedEducations) {
+            let markedForDeletion = true;
+
+            for (const education of educations) {
+                if (+education === +associatedEducation.education_id) {
+                    markedForDeletion = false;
+                    break
+                }
+            }
+            if (markedForDeletion) {
+                associatedEducation.destroy();
+            }
+        }
+
+        for (const education of educations) {
+            await db.ProfessorCV_Education.findOrCreate({
+                where: {
+                    cv_id: cv.id,
+                    education_id: education
+                }
+            });
+        }
+    } else {
+        for (const education of educations) {
+            await db.ProfessorCV_Education.create({
+                cv_id: cv.id,
+                education_id: education
+            });
+        }
     }
 
     let status = lang !== 'en' ? 'Succes' : 'Success';
@@ -149,7 +192,27 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         res.status(403).render('error403', {layout: false});
     }
 
+    let educations = await db.Uddannelse.findAll({
+        order: [
+            ['name', 'ASC']
+        ]
+    });
+
+    let cvEducations = await db.ProfessorCV_Education.findAll({
+        where: {
+            cv_id: professor.cv.id
+        }
+    });
+
+    let educationIds = []
+    for (const cvEducation of cvEducations) {
+        educationIds.push(cvEducation.education_id);
+    }
+
     res.render('professor-cv', {
+        update: true,
+        educations: educations,
+        educationIds: JSON.stringify(educationIds),
         language: reqLang(req, res),
         uddannelse: professor.cv.uddannelse,
         arbejdssted: professor.cv.arbejdssted,

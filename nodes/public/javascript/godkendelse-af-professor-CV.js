@@ -5,7 +5,7 @@ const inputs = Object.freeze({
     email: document.getElementById('email'),
     telefon: document.getElementById("telefon"),
     linkedIn: document.getElementById("linkedIn"),
-    uddannelse: document.getElementById("uddannelse"),
+    educationSelect: document.getElementById('educationSelect'),
     arbejdssted: document.getElementById("arbejdssted"),
     stilling: document.getElementById("stilling"),
     tidligere_uddannelse: document.getElementById("tidligere_uddannelse"),
@@ -27,7 +27,7 @@ const errors = Object.freeze({
     linkedInError: document.getElementById("linkedInError"),
     it_kompetencerError: document.getElementById('it_kompetencerError'),
     erhvervserfaringError: document.getElementById("erhvervserfaringError"),
-    uddannelsesError: document.getElementById("uddannelsesError"),
+    educationError: document.getElementById('educationError'),
     arbejdsstedError: document.getElementById("arbejdsstedError"),
     stillingError: document.getElementById("stillingError"),
     postcodeError: document.getElementById('postcodeError'),
@@ -90,13 +90,25 @@ function checkTilgaengelighed() {
     }
 }
 
+function checkEducationNotEmpty() {
+    let educations = []
+      document.querySelectorAll('.educationCheckbox').forEach(element => {
+        if (element.checked) {
+          educations.push(element.value);
+        }
+      });
+      if (educations.length == 0) {
+        errors.educationError.hidden = false;
+        return false;
+      } else {
+        errors.educationError.hidden = true;
+        return true;
+      }
+  }
+
 function addChangeEvents() {
     inputs.overskrift.addEventListener('change', function () {
         checkInputNotEmpty(inputs.overskrift, errors.overskriftError);
-    });
-
-    inputs.uddannelse.addEventListener('change', function () {
-        checkInputNotEmpty(inputs.uddannelse, errors.uddannelsesError);
     });
 
     inputs.arbejdssted.addEventListener('change', function () {
@@ -180,7 +192,7 @@ function submitButton() {
 
     let checkInputs = [
         checkInputNotEmpty(inputs.overskrift, errors.overskriftError),
-        checkInputNotEmpty(inputs.uddannelse, errors.uddannelsesError),
+        checkEducationNotEmpty(),
         checkInputRegex(inputs.email, errors.emailError, emailRegex),
         checkInputNotEmpty(inputs.sprog, errors.sprogError),
         checkInputRegex(inputs.telefon, errors.telefonError, phoneRegex),
@@ -203,6 +215,14 @@ function submitButton() {
     });
 
     if (all_valid) {
+        let educations = []
+        document.querySelectorAll('.educationCheckbox').forEach(element => {
+        if (element.checked) {
+            educations.push(element.value);
+        }
+        });
+        document.getElementById('educations').value = JSON.stringify(educations);
+
         document.forms["cvForm"].submit();
     }
 };

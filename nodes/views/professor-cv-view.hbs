@@ -82,7 +82,14 @@
                         Uddannelse:
                     </h6>
                     <h6 class="row col-lg-7 mb-3">
-                        {{json.uddannelse}}
+                        {{#each educations}}
+                            {{#if @last}}
+                                <div data-key="{{name}}">{{name}}</div>
+                            {{else}}
+                                <div data-key="{{name}}">{{name}}</div>,&nbsp;
+                            {{/if}}
+
+                        {{/each}}
                     </h6>
                 </div>
 
