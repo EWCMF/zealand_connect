@@ -106,21 +106,11 @@ async function checkCvrNummer() {
         return false;
     }
 
-    let valid = await checkCvrExists(input)
-
     error.style.visibility = 'visible';
 
-    if (!valid) {
-        if (!error.classList.contains('formError')) {
-            error.classList.add('formError');
-        }
-        error.textContent = translateErrorMessage("cvrIBrug");
-        return false;
-    }
     if (error.classList.contains('formError')) {
         error.classList.remove('formError');
     }
-    error.textContent = translateErrorMessage("cvrLedig");
 
     error.style.visibility = 'hidden';
     error.textContent = 'Error';
