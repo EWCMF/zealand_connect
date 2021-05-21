@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     telefon: DataTypes.STRING,
     sprog: DataTypes.STRING,
-    linkedin: DataTypes.STRING,
+    linkedIn: DataTypes.STRING,
     postcode: DataTypes.INTEGER,
     city: DataTypes.STRING,
     arbejdssted: DataTypes.STRING,
@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     interesser: DataTypes.STRING,
     erhvervserfaring: DataTypes.TEXT,
     tidligere_uddannelse: DataTypes.TEXT,
+    tidligere_projekter: DataTypes.TEXT,
     offentlig: DataTypes.BOOLEAN
   }, {
     sequelize,

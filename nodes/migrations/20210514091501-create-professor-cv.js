@@ -20,7 +20,7 @@ module.exports = {
       sprog: {
         type: Sequelize.STRING
       },
-      linkedin: {
+      linkedIn: {
         type: Sequelize.STRING
       },
       postcode: {

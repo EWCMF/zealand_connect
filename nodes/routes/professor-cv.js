@@ -248,6 +248,7 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         interesser: professor.cv.interesser,
         offentlig: professor.cv.offentlig,
         postcode: professor.cv.postcode,
+        teaches: professor.cv.teaches
     })
 });
 

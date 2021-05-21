@@ -201,6 +201,24 @@
             {{/if}}
         </div>
     </div>
+
+    <div class="row border rounded ml-1 mr-1 mb-4">
+        <div class="col mb-2">
+            <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Tidligere_projekter">
+                Tidligere projekter
+            </h4>
+            {{#if json.tidligere_projekter}}
+                <p class="autobreak">
+                    {{json.tidligere_projekter}}
+                </p>
+            {{else}}
+                <p class="autobreak" data-key="Ikke_angivet">
+                    Ikke angivet
+                </p>
+            {{/if}}
+        </div>
+    </div>
+
     <div class="row border rounded ml-1 mr-1 mb-4">
         <div class="col mb-2">
             <h4 class="mb-3 mt-2 d-flex align-self-center" data-key="Interesser">
