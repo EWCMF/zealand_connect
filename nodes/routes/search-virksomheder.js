@@ -36,10 +36,8 @@ async function fetchData(page, parameters) {
         order = parameters.order
     }
 
-    const {
-        count,
-        rows
-    } = await Virksomhed.findAndCountAll({
+    const rows = await Virksomhed.findAll({
+        group: ["cvrnr"],
         limit: limit,
         raw: true,
         offset: offset,
@@ -50,6 +48,8 @@ async function fetchData(page, parameters) {
             visible: true
         }
     });
+
+    const count = rows.length;
 
     let pageCount = Math.ceil(count / limit);
 
