@@ -5,9 +5,9 @@
     <form method="POST" action="../professor-cv/submit" id="cvForm" name="cvForm" target="">
         <!-- Overskrift textarea -->
         <div class="form-group required">
-            <label for="exampleFormControlInput1" data-key="Overskrift">Overskrift</label>
+            <label for="exampleFormControlInput1">CV (Curriculum Vitae)</label>
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
-                placeholder="fx en kort opsummering af dig eller lidt om, hvad du søger?" onkeyup="countChars(this)"
+                placeholder='fx "Adjunkt på datamatikeruddannelsen søger nye og spændende projekter inden for IT-sikkerhed". Dette er overskriften på dit CV og vil blive vist på kortet til dit CV.' onkeyup="countChars(this)"
                 data-key="Overskrift_placeholder_pro">{{overskrift}}</textarea>
             <p id="charNum">255 tegn</p>
             <p id="overskriftError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
@@ -19,7 +19,7 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlInput1" data-key="Email_adresse">Email adresse</label>
-                        <input type="email" class="form-control" placeholder="name@example.com" id="email" name="email"
+                        <input type="email" class="form-control" placeholder="fx name@example.com" id="email" name="email"
                             title="Du skal skrive din email her og mindst
                             bruge et @" value={{email}}>
                         <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal
@@ -31,7 +31,7 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlInput1" data-key="Telefon">Telefon</label>
-                        <input type="number" class="form-control" id="telefon" name="telefon" placeholder="12345678"
+                        <input type="number" class="form-control" id="telefon" name="telefon" placeholder="fx 12345678"
                                title="Du skal skrive dit nummer, det skal præcist
                             være 8 tal og må ikke starte med 0" value={{telefon}}>
                         <p id="telefonError" class="CVErrorColor" hidden="true" data-key="Telefon_error">Du skal angive
@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">LinkedIn</label>
                         <input class="form-control" id="linkedIn" name="linkedIn" value='{{linkedIn}}'
-                               placeholder="https://www.linkedin.com/in/xxx-xxx-123456789">
+                               placeholder="fx https://www.linkedin.com/in/xxx-xxx-123456789">
                         <p id="linkedInError" class="CVErrorColor" hidden="true" data-key="linkedIn_error">Du skal
                             skrive et korrekt link til en LinkedIn Profil eller tømme feltet</p>
                     </div>
@@ -55,7 +55,8 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlSelect1" data-key="Arbejdssted">Arbejdssted</label>
-                        <input class="form-control" id="arbejdssted" name="arbejdssted" value='{{arbejdssted}}'>
+                        <input class="form-control" id="arbejdssted" name="arbejdssted" value='{{arbejdssted}}'
+                               placeholder="fx Zealand Sjællands Erhvervsakademi, Næstved">
                         <p id="arbejdsstedError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
                             udfyldes</p>
                     </div>
@@ -67,7 +68,8 @@
                         <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
                             title="Når du indtaster postnummer vises den knyttede by automatisk på CV'et. Feltet her gør det muligt for virksomheder at fokusere deres søgning baseret på afstand og kan hjælpe med at gøre dig synlig for dem. Kun danske postnumre er understøttet."
                             data-Key="Postnummer_tooltip">?</span>
-                        <input class="form-control" id="postcode" name="postcode" value='{{postcode}}'>
+                        <input class="form-control" id="postcode" name="postcode" value='{{postcode}}'
+                               placeholder="fx 4700">
                         <p id="postcodeError" class="CVErrorColor" hidden="true" data-key="Postnummer_errorCV">Kun
                             danske postnumre er tilladte og angiv kun tallene. Den tilhørende by vil blive fundet
                             automatisk.</p>
@@ -77,7 +79,7 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlInput1" data-key="Sprog">Sprog</label>
-                        <input class="form-control" placeholder="Dansk" id="sprog" name="sprog" value='{{sprog}}'>
+                        <input class="form-control" placeholder="fx dansk, engelsk" id="sprog" name="sprog" value='{{sprog}}'>
                         <p id="sprogError" class="CVErrorColor" hidden="true" data-key="Sprog_error">Du skal skrive dit
                             ønskede sprog her</p>
                     </div>
@@ -104,7 +106,7 @@
                 <!-- udannelse med inputfelt -->
                 <div class="col-sm-4">
                     <div class="form-group required">
-                                <label for="education" data-key="Uddannelse">Uddannelse</label>
+                                <label for="education" data-key="Tilknyttet_uddannelse">Tilknyttet uddannelse</label>
                                 <div class="selectBox" onclick="showCheckboxes()">
                                     <select id="educationSelect" class="form-control outsideClickHide">
                                         <option id="educationSelectedText" data-key="Vaelg_en_uddannelse">Vælg en eller flere uddannelser</option>
@@ -132,22 +134,27 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1" data-key="Underviser_i">Underviser i</label>
-                        <input class="form-control" id="teaches" name="teaches" value='{{teaches}}'>
+                        <input class="form-control" id="teaches" name="teaches" value='{{teaches}}'
+                        placeholder="fx IT-sikkerhed, teknologi, programmering">
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <!-- textarea om mig -->
-                <label for="exampleFormControlTextarea1" data-key="Om_mig">Om mig</label>
-                <textarea class="form-control" rows="3" id="about" name="about" placeholder="Beskriv dig selv"
+                <!-- textarea kort præsentation -->
+                <label for="exampleFormControlTextarea1" data-key="Kort_praesentation">Kort præsentation</label>
+                <textarea class="form-control" rows="3" id="about" name="about" placeholder="Her har du muligheden for skrive en kort præsentation om dig selv. Hvis du har nogle kvalifikationer, som ikke passer i de andre felter, kan du også nævne dem her."
                     data-key="Om_mig_placeholder">{{about}}</textarea>
             </div>
             <div class="form-group required">
                 <!-- textarea med erhvervserfaring -->
                 <label for="exampleFormControlTextarea1" data-key="Erhvervserfaring">Erhvervserfaring</label>
                 <textarea class="form-control" rows="3" id="erhvervserfaring" name="erhvervserfaring"
-                    placeholder="Tidligere eller nuværende erhvervserfaring"
+                    placeholder="fx
+- 2002-nu: Adjunkt hos Zealand Sjællands Erhvervsakademi
+- 1996-2001: IT-konsulent hos Telia
+- 1993-1995: Salgsassistent hos Telia
+- 1987-1988: Flaskedreng i Netto"
                     data-key="Erhvervserfaring_placeholder">{{erhvervserfaring}}</textarea>
                 <p id="erhvervserfaringError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
                     udfyldes</p>
@@ -157,7 +164,10 @@
                 <label for="exampleFormControlTextarea1" for="tidligere_uddannelse"
                     data-key="Udannelse">Uddannelse</label>
                 <textarea class="form-control" rows="3" id="tidligere_uddannelse" name="tidligere_uddannelse"
-                    placeholder="Tidligere uddannelser og nuværende uddannelse"
+                          placeholder="fx
+- 2005: CCISP certifikat i IT-sikkerhed
+- 1991-1996: Cand.it. v. Københavns Universitet
+- 1988-1991: HHX Næstved"
                     data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea>
                 <p id="tidligere_uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
                     udfyldes</p>
@@ -166,20 +176,23 @@
                 <!-- textarea med tidligere projekter -->
                 <label for="exampleFormControlTextarea1" data-key="Tidligere_projekter">Tidligere projekter</label>
                 <textarea class="form-control" rows="3" id="tidligere_projekter" name="tidligere_projekter"
-                          placeholder="Tidligere eller nuværende projekter"
+                          placeholder="fx
+- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)'
+- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)
+"
                           data-key="Projekter_placeholder">{{tidligere_projekter}}</textarea>
             </div>
             <div class="form-group">
                 <!-- textarea med interesser -->
                 <label for="exampleFormControlTextarea1" data-key="Interesser">Interesser</label>
                 <textarea class="form-control" rows="3" id="interesser" name="interesser"
-                    placeholder="Valgfri" data-key="Valgfri_placeholder">{{interesser}}</textarea>
+                    placeholder="fx bagning, fitness og badminton" data-key="Valgfri_placeholder">{{interesser}}</textarea>
             </div>
             <div class="form-group required">
                 <!-- it-kompetencer om mig -->
                 <label for="exampleFormControlTextarea1" data-key="It_kompetencer">IT kompetencer</label>
                 <textarea class="form-control" rows="3" id="it_kompetencer" name="it_kompetencer"
-                          placeholder="Word, Excel">{{it_kompetencer}}</textarea>
+                          placeholder="fx Office-pakken, Photoshop, InkScape, MySQL">{{it_kompetencer}}</textarea>
                 <p id="it_kompetencerError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes
                 </p>
             </div>
