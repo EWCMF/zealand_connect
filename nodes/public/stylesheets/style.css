@@ -845,3 +845,7 @@ body {
 .greyed-out {
   opacity: 0.25;
 }
+
+.modal-content {
+  border: none;
+}
