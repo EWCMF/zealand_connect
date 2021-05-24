@@ -592,6 +592,18 @@ function getLangdata() {
                     'can be found by clicking on your name in the top bar and choosing "My favourite...". This way you can ' +
                         'quickly find posts or CV\'s that you\'ve liked earlier.',
                 "memes_html": '<i class="far fa-star"></i>',
+                "forside_nyhed_h_3": "Career Day on 7th May 2021",
+                "forside_nyhed_p_3_1": "On Friday 7th May we held our first virtual Career Day across the majority of our " +
+                    "educations at Zealand in Næstved.",
+                "forside_nyhed_p_3_2": 'The purpose of Career Day is to gather our partners and create more awareness of ' +
+                    'our educations and students. Furthermore, the internship platform Zealand Connect was introduced and ' +
+                    'it was well received by both companies and students - awesome! The keychain in the image below is created ' +
+                    'in FABLAB by Helle Hauskov. The keychain was sent to all participating companies and students with ' +
+                    'the message "Join Zealand Connect". The keychain symbolises the cooperation between Zealand, the ' +
+                    'students and the companies. Besides the good vibes and matchmaking between students and companies, ' +
+                    'we were fortunate that Peter Juul Regnergaard who is co-founder of the company TRUE GUM held an ' +
+                    'inspiring presentation. The presentation focused on innovation, entrepreneurship and sustainability.',
+                "forside_nyhed_p_3_3": "Many thanks to all the participating companies and students.",
                 // Favourites
                 "Mine_foretrukne_cver": "My favourite CV's",
                 "Mine_foretrukne_opslag": "My favourite posts",
