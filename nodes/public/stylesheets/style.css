@@ -163,7 +163,7 @@ input::placeholder {
 }
 
 #loginForm .form-control {
-  width: 339px;
+  width: inherit;
 }
 
 #virksomhedOpret {
@@ -591,10 +591,11 @@ input::placeholder {
 #loginContent {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   padding: 30px 20px 30px 20px;
   background-color: #f7f7f7;
+  width: 100%;
 }
 
 .radioBtnBox {
@@ -609,19 +610,17 @@ input::placeholder {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  min-width: 339px;
 }
 
 #loginContent {
-  padding: 30px 200px 30px 200px;
-  min-width: 339px;
+  padding: 30px;
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   #loginContent {
     padding: 30px 300px 30px 300px;
-    min-width: 339px;
+    max-width: 50vw;
   }
 }
 
