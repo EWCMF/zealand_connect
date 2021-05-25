@@ -228,17 +228,22 @@
             <!-- Radio til om en cv skal være offentlig -->
             <div class="form-group required pb-3">
                 <label data-key="Tilgængelighed">Tilgængelighed</label>
-                <div class="form-radio ml-3 ">
-                    <input {{checkedStateRadio offentlig 'tilgaengelighed1' }} type="radio" id="tilgaengelighed1"
+                <div class="form-radio tilgaengelighed ml-3 ">
+                    <input {{checkedStateRadio availability 'tilgaengelighed2' }} type="radio" id="tilgaengelighed2"
+                        name="tilgaengelighed" class="form-control-input tilgaengelighed" value=2>
+                    <label class="form-control-label" for="tilgaengelighed2" data-key="Offentlig">Offentlig</label>
+                </div>
+                <div class="form-radio tilgaengelighed ml-3 ">
+                    <input {{checkedStateRadio availability 'tilgaengelighed1' }} type="radio" id="tilgaengelighed1"
                         name="tilgaengelighed" class="form-control-input tilgaengelighed" value=1>
-                    <label class="form-control-label" for="tilgaengelighed1" data-key="Offentlig">Offentlig</label>
+                    <label class="form-control-label" for="tilgaengelighed1" data-key="Kun_synlig_for_brugere">Kun synlig for brugere</label>
                 </div>
                 <div class="form-radio tilgaengelighed ml-3">
-                    <input {{checkedStateRadio offentlig 'tilgaengelighed2' }} type="radio" id="tilgaengelighed2"
+                    <input {{checkedStateRadio availability 'tilgaengelighed0' }} type="radio" id="tilgaengelighed0"
                         name="tilgaengelighed" class="form-control-input tilgaengelighed" value=0>
-                    <label class="form-control-label" for="tilgaengelighed2" data-key="Privat">Privat</label>
+                    <label class="form-control-label" for="tilgaengelighed0" data-key="Privat">Privat</label>
                     <p id="tilgaengelighedError" class="CVErrorColor" hidden="true" data-key="Tilgængelighed_error">Du
-                        skal vælge om dit CV skal være offentligt eller privat</p>
+                        skal vælge om dit CV skal være offentligt, privat eller kun synlig for brugere</p>
                 </div>
             </div>
             <div class="d-flex justify-content-center">

@@ -394,8 +394,9 @@ function getLangdata() {
                 //Fritidsinteresser
                 "Tilgængelighed": "Accessibility",
                 "Offentlig": "Public",
+                "Kun_synlig_for_brugere": "Only visible to users",
                 "Privat": "Private",
-                "Tilgængelighed_error": "You must specify if your CV is public or private",
+                "Tilgængelighed_error": "You must specify if your CV is public, private or only visible to users",
                 //Gem
 
                 //studentprofil

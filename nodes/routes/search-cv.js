@@ -48,13 +48,17 @@ async function fetchData(page, parameters, req, res) {
         [Op.or]: []
     };
 
+    let availability = req.user ? 1 : 2
+
     let where = {
         id,
         fk_education,
         sprog,
         geo_lat,
         geo_lon,
-        offentlig: true,
+        availability: {
+            [Op.gte]: availability
+        },
         gyldig: true
     };
 
@@ -512,13 +516,19 @@ router.get('/:id', async function (req, res) {
 
     if (!cv.gyldig) {
         if (!ejer) {
-            res.status(403).render('error403', {
+            return res.status(403).render('error403', {
                 layout: false
             });
         }
-    } else if (!cv.offentlig) {
-        if (req.user == null) {
-            res.status(403).render('error403', {
+    } else if (cv.availability == 0) {
+        if (!ejer) {
+            return res.status(403).render('error403', {
+                layout: false
+            });
+        }
+    } else {
+        if (!req.user && cv.availability == 1) {
+            return res.status(403).render('error403', {
                 layout: false
             });
         }

@@ -102,7 +102,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         tidligere_uddannelse: student.cv.tidligere_uddannelse,
         hjemmeside: student.cv.hjemmeside,
         fritidsinteresser: student.cv.fritidsinteresser,
-        offentlig: student.cv.offentlig,
+        availability: student.cv.availability,
         postcode: student.cv.postcode,
         praktik: cvtypes[0],
         studiejob: cvtypes[1],
@@ -135,7 +135,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let tidligere_uddannelse = req.body.tidligere_uddannelse;
     let hjemmeside = req.body.hjemmeside;
     let fritidsinteresser = req.body.fritidsinteresser;
-    let offentlig = req.body.tilgaengelighed;
+    let availability = req.body.tilgaengelighed;
     let postcode = req.body.postcode;
     let cvtypes = [req.body.praktikCheck, req.body.studiejobCheck, req.body.traineeCheck, req.body.fuldtidCheck]
     let post_subscription = req.body.post_subscription;
@@ -218,7 +218,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         tidligere_uddannelse,
         hjemmeside,
         fritidsinteresser,
-        offentlig,
+        availability,
         gyldig,
         student_id,
         postcode,

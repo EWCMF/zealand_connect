@@ -24,8 +24,9 @@ const inputs = Object.freeze({
     trainee: document.getElementById('traineeCheck'),
     fuldtidsjob: document.getElementById('fuldtidCheck'),
     post_subscription: document.getElementById('post_subscription'),
+    tilgaengelighed0: document.getElementById('tilgaengelighed0'),
     tilgaengelighed1: document.getElementById('tilgaengelighed1'),
-    tilgaengelighed2: document.getElementById('tilgaengelighed2')
+    tilgaengelighed2: document.getElementById('tilgaengelighed2'),
 });
 
 const errors = Object.freeze({
@@ -205,6 +206,10 @@ function addChangeEvents() {
 
     inputs.fuldtidsjob.addEventListener('change', function () {
         checkEmailSubscription();
+    });
+
+    inputs.tilgaengelighed0.addEventListener('change', function () {
+        checkTilgaengelighed();
     });
 
     inputs.tilgaengelighed1.addEventListener('change', function () {
