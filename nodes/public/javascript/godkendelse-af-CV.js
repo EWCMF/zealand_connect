@@ -244,12 +244,12 @@ function translateErrorMessage(key) {
 };
 
 function preview_cv() {
-    let form_URL = '../mit-cv/preview';
+    let form_URL = '../cv/preview';
     document.getElementById("cvForm").action = form_URL;
     window.open('', 'form_target', 'width=1200 height=500');
     document.getElementById("cvForm").setAttribute("target","form_target");
     document.forms["cvForm"].submit();
-    form_URL = '../mit-cv/submit';
+    form_URL = '../cv/submit';
     document.getElementById("cvForm").action = form_URL;
     document.getElementById("cvForm").setAttribute("target","");
 }

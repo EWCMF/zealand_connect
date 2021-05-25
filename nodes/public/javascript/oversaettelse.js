@@ -359,7 +359,7 @@ function getLangdata() {
                 "Rediger_oplag": "Edit post",
                 "Annoncetekst_kolon": "Post text:",
 
-                //mit-cv
+                //cv
                 //Overskrift
                 "Overskrift_placeholder": "What you're looking for e.g. job or internship",
                 "Skal_udfyldes": "Required field",

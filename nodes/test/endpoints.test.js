@@ -14,16 +14,16 @@ chai.use(chaiHttp);
     });
 });*/
 
-// describe('GET /mit-CV', function () {
+// describe('GET /cv', function () {
 //     it('respond with status code Access denied 403', function(done) {
-//         request(app).get('/mit-cv').expect(403, done);
+//         request(app).get('/cv').expect(403, done);
 //     })
 // });
 
 // Denne er udkommenteret da den ellers bare ville lave tomme CV entries i databasen.
-// describe('POST /mit-CV/submit', function () {
+// describe('POST /cv/submit', function () {
 //     it('respond with status code OK 200', function(done) {
-//         request(app).post('/mit-CV/submit').expect(200, done);
+//         request(app).post('/cv/submit').expect(200, done);
 //     })
 // });
 
