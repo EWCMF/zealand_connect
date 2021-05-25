@@ -524,7 +524,7 @@ router.get('/:id', async function (req, res) {
         }
     }
 
-    res.render('cv', {
+    res.render('cv-view', {
         language: reqLang(req, res),
         json: cv,
         ejer: ejer
