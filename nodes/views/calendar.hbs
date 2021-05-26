@@ -1,0 +1,87 @@
+<div class="container-fluid">
+    <div class="col-12 col-lg-8">
+        <div id='calendar'></div>
+    </div>
+</div>
+
+<style>
+    .tooltip-inner {
+        max-width: 236px !important;
+        height: 76px;
+        font-weight: 500;
+        padding: 10px 15px 10px 20px;
+        background: #faee84;
+        color: rgb(0, 0, 0, .7);
+        border: 1px solid #000000;
+        text-align: left;
+    }
+
+    .tooltip.show {
+        opacity: 1;
+    }
+
+    .tooltip-arrow {
+        background: #faee84;
+        color: #faee84;
+    }
+</style>
+
+<script src='fullcalendar/main.js'></script>
+<script src='fullcalendar/locales/da.js'></script>
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let calendarEl = document.getElementById('calendar');
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            themeSystem: 'bootstrap',
+            headerToolbar: {
+                start: 'title', // will normally be on the left. if RTL, will be on the right
+                center: '',
+                end: 'prevYear,prev today next,nextYear' // will normally be on the right. if RTL, will be on the left
+            },
+            titleFormat: {
+                year: 'numeric',
+                month: 'long'
+            },
+            locale: 'da',
+            timeZone: 'local',
+            buttonText: {
+                today:    'today',
+                month:    'month',
+                week:     'week',
+                day:      'day',
+                list:     'list'
+            },
+            eventDidMount: function(info) {
+                info.el.setAttribute("title", info.event._def.title + ':\n' + info.event.extendedProps.description);
+                info.el.setAttribute("data-toggle", "tooltip");
+            }
+        });
+
+        let events = null;
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            events = JSON.parse(xhr.responseText);
+            console.log(events)
+            for (let event of events) {
+                let formattedEvent = {
+                    title: event.title,
+                    start: event.startDate,
+                    end: event.endDate,
+                    description: "test"
+                }
+                if (event.url){
+                    formattedEvent.url = event.url
+                }
+                calendar.addEvent(formattedEvent)
+            }
+        }
+        xhr.open("POST", '/calendar/events');
+        xhr.send();
+
+        calendar.render();
+    });
+
+</script>
