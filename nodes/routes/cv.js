@@ -22,7 +22,7 @@ router.get('/', authorizeUser('student'), async function (req, res, next) {
             ]
         });
 
-        return res.render('mit-cv', {
+        return res.render('cv', {
             language: reqLang(req, res),
             profil: student.fornavn + " " + student.efternavn,
             telefon: student.tlfnr,
@@ -83,7 +83,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         })
     }
 
-    res.render('mit-cv', {
+    res.render('cv', {
         language: reqLang(req, res),
         uddannelser: udd,
         uddannelse: student.cv.education.name,
@@ -102,7 +102,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         tidligere_uddannelse: student.cv.tidligere_uddannelse,
         hjemmeside: student.cv.hjemmeside,
         fritidsinteresser: student.cv.fritidsinteresser,
-        offentlig: student.cv.offentlig,
+        availability: student.cv.availability,
         postcode: student.cv.postcode,
         praktik: cvtypes[0],
         studiejob: cvtypes[1],
@@ -135,7 +135,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let tidligere_uddannelse = req.body.tidligere_uddannelse;
     let hjemmeside = req.body.hjemmeside;
     let fritidsinteresser = req.body.fritidsinteresser;
-    let offentlig = req.body.tilgaengelighed;
+    let availability = req.body.tilgaengelighed;
     let postcode = req.body.postcode;
     let cvtypes = [req.body.praktikCheck, req.body.studiejobCheck, req.body.traineeCheck, req.body.fuldtidCheck]
     let post_subscription = req.body.post_subscription;
@@ -218,7 +218,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         tidligere_uddannelse,
         hjemmeside,
         fritidsinteresser,
-        offentlig,
+        availability,
         gyldig,
         student_id,
         postcode,
@@ -279,7 +279,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         }
     }
 
-    res.render('mit-cv-success', {layout: false, status: status, message: besked, id: cv.id});
+    res.render('cv-success', {layout: false, status: status, message: besked, id: cv.id});
 });
 
 router.get('/delete', authorizeUser('student'), async function (req, res, next) {
@@ -337,7 +337,7 @@ router.post('/preview', authorizeUser('student'), async function (req, res, next
         postcode: req.body.postcode
     };
 
-    res.render('cv', {
+    res.render('cv-view', {
         language: reqLang(req, res),
         json: json,
         navDisabled: true,

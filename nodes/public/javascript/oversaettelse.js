@@ -359,7 +359,7 @@ function getLangdata() {
                 "Rediger_oplag": "Edit post",
                 "Annoncetekst_kolon": "Post text:",
 
-                //mit-cv
+                //cv
                 //Overskrift
                 "Overskrift_placeholder": "What you're looking for e.g. job or internship",
                 "Skal_udfyldes": "Required field",
@@ -394,8 +394,9 @@ function getLangdata() {
                 //Fritidsinteresser
                 "Tilgængelighed": "Accessibility",
                 "Offentlig": "Public",
+                "Kun_synlig_for_brugere": "Only visible to users",
                 "Privat": "Private",
-                "Tilgængelighed_error": "You must specify if your CV is public or private",
+                "Tilgængelighed_error": "You must specify if your CV is public, private or only visible to users",
                 //Gem
 
                 //studentprofil

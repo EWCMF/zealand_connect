@@ -24,8 +24,9 @@ const inputs = Object.freeze({
     trainee: document.getElementById('traineeCheck'),
     fuldtidsjob: document.getElementById('fuldtidCheck'),
     post_subscription: document.getElementById('post_subscription'),
+    tilgaengelighed0: document.getElementById('tilgaengelighed0'),
     tilgaengelighed1: document.getElementById('tilgaengelighed1'),
-    tilgaengelighed2: document.getElementById('tilgaengelighed2')
+    tilgaengelighed2: document.getElementById('tilgaengelighed2'),
 });
 
 const errors = Object.freeze({
@@ -207,6 +208,10 @@ function addChangeEvents() {
         checkEmailSubscription();
     });
 
+    inputs.tilgaengelighed0.addEventListener('change', function () {
+        checkTilgaengelighed();
+    });
+
     inputs.tilgaengelighed1.addEventListener('change', function () {
         checkTilgaengelighed();
     });
@@ -244,12 +249,12 @@ function translateErrorMessage(key) {
 };
 
 function preview_cv() {
-    let form_URL = '../mit-cv/preview';
+    let form_URL = '../cv/preview';
     document.getElementById("cvForm").action = form_URL;
     window.open('', 'form_target', 'width=1200 height=500');
     document.getElementById("cvForm").setAttribute("target","form_target");
     document.forms["cvForm"].submit();
-    form_URL = '../mit-cv/submit';
+    form_URL = '../cv/submit';
     document.getElementById("cvForm").action = form_URL;
     document.getElementById("cvForm").setAttribute("target","");
 }

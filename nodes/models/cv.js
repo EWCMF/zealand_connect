@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     tidligere_uddannelse: DataTypes.TEXT,
     hjemmeside: DataTypes.STRING,
     fritidsinteresser: DataTypes.TEXT,
-    offentlig: DataTypes.BOOLEAN,
+    availability: DataTypes.INTEGER,
     gyldig: DataTypes.BOOLEAN,
     postcode: DataTypes.INTEGER,
     city: DataTypes.STRING,
