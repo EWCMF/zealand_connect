@@ -49,7 +49,10 @@ async function fetchData(page, parameters) {
         }
     });
 
-    const count = rows.length;
+    const count = await Virksomhed.count({
+        distinct: true,
+        col: 'cvrnr'
+    });
 
     let pageCount = Math.ceil(count / limit);
 
