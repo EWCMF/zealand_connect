@@ -4,6 +4,8 @@
     </div>
 </div>
 
+{{> event-modal}}
+
 <style>
     .tooltip-inner {
         max-width: 236px !important;
@@ -31,6 +33,17 @@
 <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
 <script>
+    function openEventModal() {
+        $(document).ready(function () {
+            $('#eventModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+
+            $("#eventModal").modal('show');
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -54,9 +67,27 @@
                 day:      'day',
                 list:     'list'
             },
-            eventDidMount: function(info) {
-                info.el.setAttribute("title", info.event._def.title + ':\n' + info.event.extendedProps.description);
-                info.el.setAttribute("data-toggle", "tooltip");
+            // // Experiment with a popover
+            // eventDidMount: function(info) {
+            //     info.el.setAttribute("title", info.event._def.title);
+            //     info.el.setAttribute("data-content", info.event.extendedProps.description);
+            //     info.el.setAttribute("data-toggle", "popover");
+            // },
+            eventClick: function(info) {
+                info.jsEvent.preventDefault(); // don't let the browser navigate
+                console.log(info)
+                document.getElementById("eventTitle").innerHTML = info.event._def.title;
+                document.getElementById("startTime").innerHTML = "<b>Starttidspunkt: </b>" + info.event._instance.range.start;
+                document.getElementById("endTime").innerHTML = "<b>Sluttidspunkt: </b>" + info.event._instance.range.end;
+                document.getElementById("eventDescription").innerHTML = info.event.extendedProps.description;
+                if(info.event._def.url){
+                    document.getElementById("eventURL").innerHTML = info.event._def.url;
+                    document.getElementById("eventURL").href = info.event._def.url;
+                } else {
+                    document.getElementById("eventURL").innerHTML = null;
+                    document.getElementById("eventURL").href = null;
+                }
+                openEventModal()
             }
         });
 
@@ -64,14 +95,14 @@
         let xhr = new XMLHttpRequest();
         xhr.onload = function () {
             events = JSON.parse(xhr.responseText);
-            console.log(events)
             for (let event of events) {
                 let formattedEvent = {
                     title: event.title,
                     start: event.startDate,
                     end: event.endDate,
-                    description: "test"
+                    description: event.description
                 }
+                // console.log(event.description)
                 if (event.url){
                     formattedEvent.url = event.url
                 }

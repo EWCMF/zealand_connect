@@ -105,9 +105,14 @@
 <script src="/javascript/oversaettelse.js"></script>
 <script src="/javascript/navbar.js"></script>
 <script src='/javascript/regex.js'></script>
-<script>$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})</script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
 <script>
     function openDataConsent() {
         $(document).ready(function () {

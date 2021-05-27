@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
     url: DataTypes.STRING,
-    allday: DataTypes.BOOLEAN
+    allday: DataTypes.BOOLEAN,
+    description: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Event',

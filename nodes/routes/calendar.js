@@ -19,6 +19,8 @@ router.post('/events', async function(req, res, next){
         raw: true
     });
 
+    console.log(events)
+
     res.json(events);
 });
 
