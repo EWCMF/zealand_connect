@@ -7,7 +7,6 @@ router.get('/', async function(req, res, next){
     const events = await models.Event.findAll({
         raw: true
     });
-    console.log(events)
 
     res.render('calendar', {
         language: reqLang(req, res)
@@ -18,8 +17,6 @@ router.post('/events', async function(req, res, next){
     const events = await models.Event.findAll({
         raw: true
     });
-
-    console.log(events)
 
     res.json(events);
 });

@@ -58,14 +58,14 @@
                 year: 'numeric',
                 month: 'long'
             },
-            locale: 'da',
+            locale: '{{language}}',
             timeZone: 'local',
             buttonText: {
-                today:    'today',
-                month:    'month',
-                week:     'week',
-                day:      'day',
-                list:     'list'
+                today:    '{{language}}' === 'en' ? 'today' : 'i dag',
+                month:    '{{language}}' === 'en' ? 'month' : 'måned',
+                week:     '{{language}}' === 'en' ? 'week' : 'uge',
+                day:      '{{language}}' === 'en' ? 'day' : 'dag',
+                list:     '{{language}}' === 'en' ? 'list' : 'liste'
             },
             // // Experiment with a popover
             // eventDidMount: function(info) {
