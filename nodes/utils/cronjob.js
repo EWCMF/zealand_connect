@@ -11,7 +11,7 @@ const mailer = require('./mail-sender');
 Do not change any cron jobs unless you know what you're doing.
 */
 function runCronJobs() {
-    /* This cron deletes student that have been inactive for a year
+    /* This cron deletes students and companies that have been inactive for a year
     because of our data protection policy */
     cron.schedule('0 0 * * *', async function() {
         let oneYearAgo = new Date();
