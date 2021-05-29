@@ -849,3 +849,8 @@ body {
   border: none;
 }
 
+.disable-form {
+  opacity:0.2; 
+  pointer-events:none;
+}
+
