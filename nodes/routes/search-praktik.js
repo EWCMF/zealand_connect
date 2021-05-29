@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var hbs = require('handlebars');
 var fs = require('fs');
-const db = require('../models');
+const models = require('../models');
 var formidable = require("formidable");
 var {
     reqLang
@@ -78,7 +78,7 @@ async function fetchData(page, parameters, res) {
 
         if (key.includes("udd")) {
             let values = parameters[key];
-            const PostEducations = await db.InternshipPost_Education.findAll({
+            const PostEducations = await models.InternshipPost_Education.findAll({
                 where: {
                     education_id: values
                 },
@@ -202,7 +202,7 @@ async function fetchData(page, parameters, res) {
         }
         ;
 
-        const virksomheder = await db.Virksomhed.findAll({
+        const virksomheder = await models.Virksomhed.findAll({
             where: {
                 [Op.or]: [{
                     navn
@@ -288,32 +288,32 @@ async function fetchData(page, parameters, res) {
     const {
         count,
         rows
-    } = await db.InternshipPost.findAndCountAll({
+    } = await models.InternshipPost.findAndCountAll({
         limit: limit,
         nest: true,
         distinct: true,
         offset: offset,
         order: [
             ['updatedAt', 'DESC'],
-            [{model: db.Uddannelse}, 'name', 'ASC']
+            [{model: models.Uddannelse}, 'name', 'ASC']
         ],
         include: [
             {
-                model: db.Virksomhed,
+                model: models.Virksomhed,
                 as: 'virksomhed'
             },
             {
-                model: db.Uddannelse,
+                model: models.Uddannelse,
                 attributes: ['name'],
-                through: db.InternshipPost_Education,
+                through: models.InternshipPost_Education,
             },
         ],
         where
     });
 
     let favouritePosts = [];
-    if (res.locals.user instanceof db.Student) {
-        favouritePosts = await db.FavouritePost.findAll({
+    if (res.locals.user instanceof models.Student) {
+        favouritePosts = await models.FavouritePost.findAll({
             raw: true,
             where: {
                 student_id: res.locals.user.id
@@ -384,7 +384,7 @@ async function fetchData(page, parameters, res) {
 }
 
 router.get('/', async function (req, res, next) {
-    let categoryQuery = await db.EducationCategory.findAll({
+    let categoryQuery = await models.EducationCategory.findAll({
         raw: true,
         attributes: ['id', 'name'],
         order: [
@@ -394,7 +394,7 @@ router.get('/', async function (req, res, next) {
 
     let categories = []
     for (const category of categoryQuery) {
-        const uddannelser = await db.Uddannelse.findAll({
+        const uddannelser = await models.Uddannelse.findAll({
             raw: true,
             where: {
                 fk_education_category: category.id
