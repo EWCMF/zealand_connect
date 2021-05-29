@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
+    location: DataTypes.STRING,
     url: DataTypes.STRING,
     allday: DataTypes.BOOLEAN,
     description: DataTypes.TEXT

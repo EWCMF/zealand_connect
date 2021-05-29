@@ -6,32 +6,8 @@
 
 {{> event-modal}}
 
-<style>
-    .tooltip-inner {
-        max-width: 236px !important;
-        height: 76px;
-        font-weight: 500;
-        padding: 10px 15px 10px 20px;
-        background: #faee84;
-        color: rgb(0, 0, 0, .7);
-        border: 1px solid #000000;
-        text-align: left;
-    }
-
-    .tooltip.show {
-        opacity: 1;
-    }
-
-    .tooltip-arrow {
-        background: #faee84;
-        color: #faee84;
-    }
-</style>
-
 <script src='fullcalendar/main.js'></script>
 <script src='fullcalendar/locales/da.js'></script>
-<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
-<script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
 <script>
     function openEventModal() {
         $(document).ready(function () {
@@ -75,10 +51,9 @@
             // },
             eventClick: function(info) {
                 info.jsEvent.preventDefault(); // don't let the browser navigate
-                console.log(info)
-                document.getElementById("eventTitle").innerHTML = info.event._def.title;
-                document.getElementById("startTime").innerHTML = "<b>Starttidspunkt: </b>" + info.event._instance.range.start;
-                document.getElementById("endTime").innerHTML = "<b>Sluttidspunkt: </b>" + info.event._instance.range.end;
+                document.getElementById("eventTitle").innerHTML = info.event._def.title;             
+                document.getElementById("startTime").innerHTML = "<b>Starttidspunkt: </b>" + info.event.extendedProps.formattedStartDate;
+                document.getElementById("endTime").innerHTML = "<b>Sluttidspunkt: </b>" + info.event.extendedProps.formattedEndDate;
                 document.getElementById("eventDescription").innerHTML = info.event.extendedProps.description;
                 if(info.event._def.url){
                     document.getElementById("eventURL").innerHTML = info.event._def.url;
@@ -100,9 +75,10 @@
                     title: event.title,
                     start: event.startDate,
                     end: event.endDate,
-                    description: event.description
+                    description: event.description,
+                    formattedStartDate: event.formattedStartDate,
+                    formattedEndDate: event.formattedEndDate,
                 }
-                // console.log(event.description)
                 if (event.url){
                     formattedEvent.url = event.url
                 }
