@@ -1,12 +1,11 @@
-<div class="container-fluid">
-    <div class="col-12 col-lg-8 mt-5 mb-5">
-        <div id='calendar'></div>
-    </div>
-</div>
+<h1 class="mb-5" data-key="Kalender">
+    Kalender
+</h1>
+<div id='calendar'></div>
 
 {{> event-modal}}
 {{#if isAdmin}}
-{{> create-event-modal}}
+    {{> create-event-modal}}
 {{/if}}
 
 <script src='fullcalendar/main.js'></script>
@@ -16,8 +15,9 @@
     document.addEventListener('DOMContentLoaded', function () {
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
+            initialView: 'listWeek',
             themeSystem: 'bootstrap',
+            height: 'auto',
             headerToolbar: {
                 start: 'title', // will normally be on the left. if RTL, will be on the right
                 center: '',
