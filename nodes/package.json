@@ -45,6 +45,7 @@
     "sort-json-array": "^0.1.7",
     "sqlite3": "^5.0.1",
     "supertest": "^6.0.1",
+    "uuid": "^8.3.2",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
