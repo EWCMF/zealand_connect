@@ -12,7 +12,6 @@ const {
     linkRegex,
     phoneRegex
 } = require("../constants/regex.js");
-const models = require('../models');
 const {
     REPL_MODE_SLOPPY
 } = require('repl');
