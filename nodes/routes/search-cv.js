@@ -4,6 +4,7 @@ var hbs = require('handlebars');
 var fs = require('fs');
 const models = require('../models');
 var formidable = require("formidable");
+const { v4: uuidv4 } = require('uuid');
 const fetch = require('node-fetch');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var {
@@ -555,7 +556,9 @@ router.get('/:id/create_pdf', function (req, res, next) {
         size: 'A4'
     });
     var cvOutside;
-    var pdfStream = fs.createWriteStream('public/pdf/temp.pdf', {
+    let uniqueId = uuidv4();
+    console.log(uniqueId)
+    var pdfStream = fs.createWriteStream('public/pdf/' + uniqueId + '.pdf', {
         encoding: 'utf8'
     });
     myDoc.pipe(pdfStream);
@@ -826,14 +829,14 @@ router.get('/:id/create_pdf', function (req, res, next) {
     });
     pdfStream.addListener('finish', function () {
         res.setHeader('content-type', 'application/pdf'),
-            res.download('public/pdf/temp.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
+            res.download('public/pdf/' + uniqueId + '.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
     });
 
     async function deleteFile() {
         try {
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => resolve(
-                    fs.unlinkSync('public/pdf/temp.pdf', (err) => {
+                    fs.unlinkSync('public/pdf/' + uniqueId + '.pdf', (err) => {
                         if (err) {
                             console.error(err)
                             return
