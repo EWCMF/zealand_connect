@@ -6,7 +6,12 @@
 
 {{> event-modal}}
 {{#if isAdmin}}
-{{> create-event-modal}}
+<div hidden="true" id="eventModalCreate">
+{{> event-modal-create}}
+</div>
+<div hidden="true" id="eventModalShow">
+{{> event-modal-show}}
+</div>
 {{/if}}
 
 <script src='fullcalendar/main.js'></script>
@@ -75,19 +80,21 @@
                     return;
                 }
 
-                $(document).ready(function () {
-                    $('#createEventModal').modal({
+                $(document).ready(async function () {
+
+                    document.getElementById('modal-content').innerHTML = document.getElementById('eventModalCreate').innerHTML;
+
+                    $('#eventModal').modal({
                         backdrop: 'static',
                         keyboard: false
                     });
 
-                    $("#createEventModal").modal('show');
+                    $("#eventModal").modal('show');
 
                     document.getElementById('startDate').value = info.dateStr
 
-                    $('#createEventModal').on('hidden.bs.modal', function (e) {
-                        document.getElementById('eventForm').reset();
-                        greyOutTime()
+                    $('#eventModal').on('hidden.bs.modal', function (e) {
+                        document.getElementById('modal-content').innerHTML = document.getElementById('eventModalShow').innerHTML;
                     })
                 });
 

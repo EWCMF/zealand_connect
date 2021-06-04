@@ -1,27 +1,7 @@
 <div class="modal rounded-0" tabindex="-1" role="dialog" id="eventModal">
     <div class="modal-dialog modal-md modal-dialog-centered" role="document">
-        <div class="modal-content rounded-0">
-            <div class="modal-header rounded-0 modalHeader">
-                <div class="container">
-                    <div class="row">
-                        <h5 class="modal-title text-white align-self-center pr-2">Zealand Connect</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-body ml-3 mr-3 mb-4">
-                <div class="container">
-                        <div class="column">
-                            <h3 id="eventTitle" class="pt-4 pb-4 consent-text">Titel på begivenhed</h3>
-                            <p id="startTime"></p>
-                            <p id="endTime"></p>
-                            <p id="eventDescription" class="consent-text">Beskrivelse af begivenhed</p>
-                            <a id="eventURL" href=""></a>
-                            <div>
-                                <a class="btn stdBtn gulKnap mt-5" id="" data-dismiss="modal" data-key="Luk">Luk</a>
-                            </div>
-                        </div>
-                </div>
-            </div>
+        <div id="modal-content" class="modal-content rounded-0">
+            {{> event-modal-show}}
         </div>
     </div>
 </div>
