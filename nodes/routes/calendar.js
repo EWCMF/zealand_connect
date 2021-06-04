@@ -23,18 +23,24 @@ router.post('/events', async function(req, res, next){
 
     let options = {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+    };
+
+    let optionsWithTime = {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
         hour: 'numeric', minute: 'numeric',
         timeZoneName: 'short'
-      };
+    };
 
     let lang = reqLang(req, res);
     for (const event of events) {
+        let usedOption = event.allday ? options : optionsWithTime
+
         if (lang === 'en') {
-            event.formattedStartDate = new Intl.DateTimeFormat('en-GB', options).format(event.startDate);
-            event.formattedEndDate = new Intl.DateTimeFormat('en-GB', options).format(event.endDate);
+            event.formattedStartDate = new Intl.DateTimeFormat('en-GB', usedOption).format(event.startDate);
+            event.formattedEndDate = new Intl.DateTimeFormat('en-GB', usedOption).format(event.endDate);
         } else {
-            event.formattedStartDate = new Intl.DateTimeFormat('da-DK', options).format(event.startDate);
-            event.formattedEndDate = new Intl.DateTimeFormat('da-DK', options).format(event.endDate);
+            event.formattedStartDate = new Intl.DateTimeFormat('da-DK', usedOption).format(event.startDate);
+            event.formattedEndDate = new Intl.DateTimeFormat('da-DK', usedOption).format(event.endDate);
         }
         
     }
@@ -44,6 +50,7 @@ router.post('/events', async function(req, res, next){
 
 router.post('/create-event', function(req, res) {
     let {
+        id,
         title,
         startDate,
         endDate,
@@ -75,7 +82,7 @@ router.post('/create-event', function(req, res) {
         }
     }
 
-    models.Event.create({
+    let json = {
         title: title,
         startDate: startDate,
         endDate: endDate,
@@ -83,8 +90,19 @@ router.post('/create-event', function(req, res) {
         description: description,
         location: location ? location : null,
         url: url ? url : null,
-    });
+    }
 
+    if (id) {
+        models.Event.update(json, {
+            where: {
+                id: id
+            }
+        })
+    } else {
+        models.Event.create(json);
+    }
+
+    
     res.redirect('/calendar');
 });
 

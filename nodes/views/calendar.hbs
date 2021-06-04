@@ -23,6 +23,7 @@
 <script src='javascript/calendar.js'></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+    
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
@@ -46,7 +47,7 @@
                 list: '{{language}}' === 'en' ? 'list' : 'liste'
             },
             eventClick: function (info) {
-                openEvent(info);
+                openEvent(info, '{{isAdmin}}');
             },
             dateClick: function (info) {
                 createEvent(info, '{{isAdmin}}');
@@ -55,6 +56,12 @@
 
         getEvents(calendar);
         calendar.render();
+
+        if ('{{isAdmin}}' === 'true') {
+            $('#eventModal').on('hidden.bs.modal', function (e) {
+                document.getElementById('modal-content').innerHTML = document.getElementById('eventModalShow').innerHTML;
+            });
+        }  
     });
 
 </script>

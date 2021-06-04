@@ -5,6 +5,7 @@ function getEvents(calendar){
         events = JSON.parse(xhr.responseText);
         for (let event of events) {
             let formattedEvent = {
+                id: event.id,
                 title: event.title,
                 start: event.startDate,
                 end: event.endDate,
@@ -26,7 +27,7 @@ function getEvents(calendar){
     xhr.send();
 }
 
-function openEvent(info){
+function openEvent(info, admin){
         info.jsEvent.preventDefault(); // don't let the browser navigate
         document.getElementById("eventTitle").innerHTML = info.event._def.title;
         document.getElementById("startTime").innerHTML = "<b>Starttidspunkt: </b>" + info.event.extendedProps.formattedStartDate;
@@ -48,10 +49,14 @@ function openEvent(info){
             document.getElementById("eventLocation").hidden = true;
             document.getElementById('eventLocationLabel').hidden = true;
         }
-        document.getElementById('modalEditButton').onclick = null;
-        document.getElementById('modalEditButton').onclick = function () {
+
+        let isAdmin = admin === 'true';
+        if (isAdmin) {
+            document.getElementById('modalEditButton').onclick = null;
+            document.getElementById('modalEditButton').onclick = function () {
             passInfoToEdit(info);
-        }
+            }
+        }  
         openEventModal()
 }
 
@@ -59,8 +64,6 @@ function passInfoToEdit(info) {
     document.getElementById('modal-content').innerHTML = document.getElementById('eventModalCreate').innerHTML;
 
     let startDate = new Date(info.event.start);
-
-    console.log(info);
     
     let formattedStartDate = startDate.getFullYear() + "-" + zeroPadDate(startDate.getMonth() + 1) 
     + (startDate.getMonth() + 1) + "-" + zeroPadDate(startDate.getDate()) + startDate.getDate();
@@ -73,10 +76,8 @@ function passInfoToEdit(info) {
     document.getElementById('startDate').value = formattedStartDate;
     document.getElementById('endDate').value = formattedEndDate;
 
-    let startTime = zeroPadDate(startDate.getUTCHours()) + startDate.getUTCHours() + ':' + zeroPadDate(startDate.getMinutes()) + startDate.getMinutes();
-    let endTime = zeroPadDate(endDate.getUTCHours()) + endDate.getUTCHours() + ':' + zeroPadDate(endDate.getMinutes()) + endDate.getMinutes();
-
-    console.log(startTime);
+    let startTime = zeroPadDate(startDate.getHours()) + startDate.getHours() + ':' + zeroPadDate(startDate.getMinutes()) + startDate.getMinutes();
+    let endTime = zeroPadDate(endDate.getHours()) + endDate.getHours() + ':' + zeroPadDate(endDate.getMinutes()) + endDate.getMinutes();
 
     document.getElementById('formStartTime').value = startTime;
     document.getElementById('formEndTime').value = endTime;
@@ -95,8 +96,9 @@ function passInfoToEdit(info) {
     if (info.event.url) {
         document.getElementById('url').value = info.event.url
     }
-
+    
     document.getElementById('description').value = info.event.extendedProps.description;
+    document.getElementById('EventId').value = info.event.id;
 }
 
 function zeroPadDate(number) {
@@ -133,10 +135,6 @@ function createEvent(info, admin){
         $("#eventModal").modal('show');
 
         document.getElementById('startDate').value = info.dateStr
-
-        $('#eventModal').on('hidden.bs.modal', function (e) {
-            document.getElementById('modal-content').innerHTML = document.getElementById('eventModalShow').innerHTML;
-        })
     });
 }
 
