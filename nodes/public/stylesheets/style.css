@@ -239,8 +239,9 @@ input::placeholder {
   height: auto;
 }
 
-#cvOverskrift {
+.side-overskrift {
   padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .center-cropped {
