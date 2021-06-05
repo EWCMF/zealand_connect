@@ -56,8 +56,18 @@ function openEvent(info, admin){
             document.getElementById('modalEditButton').onclick = function () {
             passInfoToEdit(info);
             }
+            document.getElementById('modalDeleteButton').onclick = null;
+            document.getElementById('modalDeleteButton').onclick = function () {
+                deleteEvent(info.event.id);
+            }
         }  
         openEventModal()
+}
+
+function deleteEvent(id) {
+    if (confirm("Er du sikker?")) {
+        window.location = "/calendar/delete-event/" + id;
+    }
 }
 
 function passInfoToEdit(info) {
@@ -139,6 +149,12 @@ function createEvent(info, admin){
 
         document.getElementById('startDate').value = info.dateStr
     });
+}
+
+function changeURL(dateInfo) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('date', dateInfo.startStr.substring(0, 10));
+    window.history.replaceState(null, null, url);
 }
 
 function greyOutTime() {

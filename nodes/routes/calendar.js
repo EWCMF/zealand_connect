@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { reqLang } = require('../public/javascript/request');
 const models = require('../models');
+const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
 router.get('/', async function(req, res, next){
     const events = await models.Event.findAll({
@@ -9,10 +10,25 @@ router.get('/', async function(req, res, next){
     });
 
     let isAdmin = res.locals.isAdmin;
-
+    let date = req.query.date;
+    if (req.query.date) {
+        date = new Date(req.query.date);
+        console.log(date.toISOString());
+        if (date.getDate() >= 25) {
+            date.setDate(1);
+            date.setMonth(date.getMonth() + 1);
+        }
+        date = date.toISOString().substring(0, 10);
+        console.log(date);
+    } else {
+        date = new Date();
+        date = date.toISOString().substring(0, 10);
+    }
+    
     res.render('calendar', {
         isAdmin: isAdmin,
-        language: reqLang(req, res)
+        language: reqLang(req, res),
+        date: date,
     });
 });
 
@@ -48,7 +64,18 @@ router.post('/events', async function(req, res, next){
     res.json(events);
 });
 
-router.post('/create-event', function(req, res) {
+router.get('/delete-event/:id', authorizeUser('admin'), async function(req, res) {
+    let id = req.params.id;
+    await models.Event.destroy({
+        where: {
+          id: id
+        }
+    });
+
+    res.redirect('back');
+});
+
+router.post('/create-event', authorizeUser('admin'), function(req, res) {
     let {
         id,
         title,
@@ -108,7 +135,7 @@ router.post('/create-event', function(req, res) {
     }
 
     
-    res.redirect('/calendar');
+    res.redirect('back');
 });
 
 module.exports = router;

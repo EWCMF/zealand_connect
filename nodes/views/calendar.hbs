@@ -22,11 +22,14 @@
 <script src='fullcalendar/locales/da.js'></script>
 <script src='javascript/calendar.js'></script>
 <script>
+    let date = '{{ date }}'
+
     document.addEventListener('DOMContentLoaded', function () {
     
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            initialDate: date,
             themeSystem: 'bootstrap',
             headerToolbar: {
                 start: 'title', // will normally be on the left. if RTL, will be on the right
@@ -39,6 +42,10 @@
             },
             locale: '{{language}}',
             timeZone: 'local',
+            weekNumbers: true,
+            weekNumberFormat: {
+                week: 'short'
+            },
             buttonText: {
                 today: '{{language}}' === 'en' ? 'today' : 'i dag',
                 month: '{{language}}' === 'en' ? 'month' : 'måned',
@@ -46,11 +53,17 @@
                 day: '{{language}}' === 'en' ? 'day' : 'dag',
                 list: '{{language}}' === 'en' ? 'list' : 'liste'
             },
+            businessHours: {
+                daysOfWeek: [ 1, 2, 3, 4, 5 ],
+            },
             eventClick: function (info) {
                 openEvent(info, '{{isAdmin}}');
             },
             dateClick: function (info) {
                 createEvent(info, '{{isAdmin}}');
+            },
+            datesSet: function (dateInfo) {
+                changeURL(dateInfo);
             }
         });
 
