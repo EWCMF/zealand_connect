@@ -70,11 +70,14 @@ function passInfoToEdit(info) {
 
     let endDate = new Date(info.event.end);
 
-    let formattedEndDate = endDate.getFullYear() + "-" + zeroPadDate(endDate.getMonth() + 1) 
-    + (endDate.getMonth() + 1) + "-" + zeroPadDate(endDate.getDate()) + endDate.getDate();
+    if (info.event._def.hasEnd) {
+        let formattedEndDate = endDate.getFullYear() + "-" + zeroPadDate(endDate.getMonth() + 1) 
+        + (endDate.getMonth() + 1) + "-" + zeroPadDate(endDate.getDate()) + endDate.getDate();
+        document.getElementById('endDate').value = formattedEndDate;
+    }
 
     document.getElementById('startDate').value = formattedStartDate;
-    document.getElementById('endDate').value = formattedEndDate;
+    
 
     let startTime = zeroPadDate(startDate.getHours()) + startDate.getHours() + ':' + zeroPadDate(startDate.getMinutes()) + startDate.getMinutes();
     let endTime = zeroPadDate(endDate.getHours()) + endDate.getHours() + ':' + zeroPadDate(endDate.getMinutes()) + endDate.getMinutes();
@@ -147,5 +150,50 @@ function greyOutTime() {
         document.getElementById('timeArea').classList.add('disable-form');
     } else {
         document.getElementById('timeArea').classList.remove('disable-form');
+    }
+}
+
+function validateEvent() {
+    let startDate = document.getElementById('startDate').value;
+    let title = document.getElementById('formTitle').value
+    let description = document.getElementById('description').value;
+    let startTime = document.getElementById('formStartTime').value;
+    let endTime = document.getElementById('formEndTime').value;
+
+    let valid = true;
+    if (!startDate) {
+        document.getElementById('startDateError').hidden = false;
+        valid = false;
+    } else {
+        document.getElementById('startDateError').hidden = true;
+    }
+
+    if (startTime || endTime) {
+        if (!startTime || !endTime) {
+            document.getElementById('timeError').hidden = false;
+            valid = false;
+        } else {
+            document.getElementById('timeError').hidden = true;
+        }
+    } else {
+        document.getElementById('timeError').hidden = true;
+    }
+
+    if (!title) {
+        document.getElementById('titleError').hidden = false;
+        valid = false;
+    } else {
+        document.getElementById('titleError').hidden = true;
+    }
+
+    if (!description) {
+        document.getElementById('descriptionError').hidden = false;
+        valid = false;
+    } else {
+        document.getElementById('descriptionError').hidden = true;
+    }
+
+    if (valid) {
+        document.forms['eventForm'].submit();
     }
 }

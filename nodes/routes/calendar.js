@@ -74,9 +74,14 @@ router.post('/create-event', function(req, res) {
             endTime = new Date(endDate);
         }   
     } else {
-        if (startTime && endTime && endDate) {
+        if (startTime && endTime) {
+            let startDateCopy = JSON.parse(JSON.stringify(startDate));
             startDate = new Date(startDate + "T" + startTime);
-            endDate = new Date(endDate + "T" + endTime)
+            if (endDate) {
+                endDate = new Date(endDate + "T" + endTime);
+            } else {
+                endDate = new Date(startDateCopy + "T" + endTime);
+            }
         } else {
             return res.send('One or more values in the form are missing')
         }
