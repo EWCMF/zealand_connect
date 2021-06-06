@@ -24,6 +24,16 @@
                 center: '',
                 end: 'prevYear,prev today next,nextYear' // will normally be on the right. if RTL, will be on the left
             },
+            noEventsDidMount: function(arg){
+                arg.el.style.background = '#ffffff'
+                arg.el.parentElement.parentElement.style.border = 'none'
+            },
+            noEventsWillUnmount: function(arg){
+                arg.el.parentElement.parentElement.style.border = '1px solid #dee2e6'
+            },
+            noEventsContent: function(arg){
+                arg.text = arg.text += " for " + arg.view.title
+            },
             titleFormat: {
                 year: 'numeric',
                 month: 'long'
