@@ -292,7 +292,8 @@ router.get('/delete', authorizeUser('student'), async function (req, res, next) 
                     student_id: user.id
                 }
             })
-            deleteCV(CV.id)
+            deleteCV(CV.id);
+            return res.redirect('/');
         } catch (e) {
             console.log(e)
         }
