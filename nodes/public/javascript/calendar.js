@@ -60,7 +60,15 @@ function openEvent(info, admin){
             document.getElementById('modalDeleteButton').onclick = function () {
                 deleteEvent(info.event.id);
             }
-        }  
+
+            document.getElementById("modalDeleteButton").hidden = true;
+            document.getElementById("modalEditButton").hidden = true;
+            if(window.location.pathname.includes('calendar')) {
+                document.getElementById("modalDeleteButton").hidden = false;
+                document.getElementById("modalEditButton").hidden = false;
+            }
+        }
+
         openEventModal()
 }
 
