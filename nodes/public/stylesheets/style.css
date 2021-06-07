@@ -226,6 +226,13 @@ input::placeholder {
   margin-top: 10px;
 }
 
+.gulKnapSmall {
+  height: 39px;
+  border: transparent;
+  background-color: #FFF387;
+  margin-top: 10px;
+}
+
 #questionMarkButton {
   border: none;
   background-color: transparent;
@@ -441,9 +448,8 @@ input::placeholder {
   padding: 0;
 }
 
-.stretched-link, .stretched-link:hover {
-  color: black;
-  text-decoration: none;
+.card-img-overlay {
+  background-color: rgba(0, 0, 0, 0.25);;
 }
 
 .stretched-link:hover +.card-img +.card-img-overlay {
