@@ -226,6 +226,13 @@ input::placeholder {
   margin-top: 10px;
 }
 
+.gulKnapSmall {
+  height: 39px;
+  border: transparent;
+  background-color: #FFF387;
+  margin-top: 10px;
+}
+
 #questionMarkButton {
   border: none;
   background-color: transparent;
