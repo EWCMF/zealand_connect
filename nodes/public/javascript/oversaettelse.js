@@ -608,6 +608,11 @@ function getLangdata() {
                 // Favourites
                 "Mine_foretrukne_cver": "My favourite CV's",
                 "Mine_foretrukne_opslag": "My favourite posts",
+
+                // Kontakt
+                "Praktikkoordinatorer": "Internship Coordinators",
+                "Contact_headline_2": "Development and support of Zealand Connect",
+                "Alle_uddannelser": "All educations"
             }
         }
     }
