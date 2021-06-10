@@ -153,6 +153,14 @@ function submitForm(formElement) {
     handleInputArrayAndSetToForm(formData, 'udd');
     handleInputArrayAndSetToForm(formData, 'lnd');
 
+    let pos = [];
+    if (document.getElementById('inputPost').value != 0) {
+        pos.push(document.getElementById('inputPost').value)
+        formData.set('pos', pos);
+    } else {
+        formData.delete('pos');
+    }
+
     let s = [];
     if (document.getElementById('inputSearch').value) {
         s.push(document.getElementById('inputSearch').value)
@@ -253,5 +261,5 @@ function checkCollapseSearch(id, key, collapse, collapseHeader) {
         document.getElementById(id).value = url.searchParams.get(key);
     }
 }
-checkCollapseSearch('inputAddress', 'geo_id', 'collapse3', 'collapse3Header');
+checkCollapseSearch('inputPost', 'pos', 'collapse3', 'collapse3Header');
 checkCollapseSearch('inputSearch', 'search', 'collapse5', 'collapse5Header');

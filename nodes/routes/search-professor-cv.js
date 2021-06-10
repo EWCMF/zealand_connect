@@ -37,18 +37,14 @@ async function fetchData(page, parameters, res) {
     let sprog = {
         [Op.or]: []
     };
-    let geo_lat = {
-        [Op.or]: []
-    };
-    let geo_lon = {
+    let postcode = {
         [Op.or]: []
     };
 
     let where = {
         id,
         sprog,
-        geo_lat,
-        geo_lon,
+        postcode,
         offentlig: true
     };
 
@@ -113,39 +109,16 @@ async function fetchData(page, parameters, res) {
                 id[Op.or].push(-1);
             }
         }
-    }
 
-    if (parameters.hasOwnProperty('geo_id') && parameters.hasOwnProperty('geo_radius')) {
-        let geo_id = parameters['geo_id'];
-        let geo_radius = parameters['geo_radius'];
-
-        const url = 'https://dawa.aws.dk/adresser?id=' + geo_id + "&format=geojson";
-        const res = await fetch(url);
-        const data = await res.json(); //assuming data is json
-        if (data.type.includes('FeatureCollection')) {
-            let json = data;
-
-            let longitude = +json.features[0].geometry.coordinates[0];
-            let latitude = +json.features[0].geometry.coordinates[1];
-            let radius = +geo_radius * 1000;
-
-            let R = 6371e3; // earth's mean radius in metres
-            let cos = Math.cos
-            let π = Math.PI;
-
-            let params = {
-                minLat: latitude - radius / R * 180 / π,
-                maxLat: latitude + radius / R * 180 / π,
-                minLon: longitude - radius / R * 180 / π / cos(latitude * π / 180),
-                maxLon: longitude + radius / R * 180 / π / cos(latitude * π / 180)
-            };
-
-            geo_lat[Op.or] = {
-                [Op.between]: [params.minLat, params.maxLat]
-            };
-            geo_lon[Op.or] = {
-                [Op.between]: [params.minLon, params.maxLon]
-            };
+        if (key.includes('pos')) {
+            let values = parameters[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    postcode[Op.or].push(+element);
+                });
+            } else {
+                postcode[Op.or].push(+values);
+            }
         }
     }
 
@@ -157,9 +130,6 @@ async function fetchData(page, parameters, res) {
             [Op.or]: []
         };
         let arbejdssted = {
-            [Op.or]: []
-        };
-        let stilling = {
             [Op.or]: []
         };
         let about = {
@@ -192,9 +162,6 @@ async function fetchData(page, parameters, res) {
                 [Op.like]: element
             });
             arbejdssted[Op.or].push({
-                [Op.like]: element
-            });
-            stilling[Op.or].push({
                 [Op.like]: element
             });
             about[Op.or].push({
@@ -335,8 +302,6 @@ router.get('/', async function (req, res, next) {
     let pageCount = data.pageCount;
     let rows = data.rows;
 
-    console.log(rows)
-
     let withPages = pageCount > 1 ? true : false;
 
     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
@@ -362,7 +327,7 @@ router.post('/query', function (req, res) {
     formData.parse(req, async function (error, fields, files) {
         makeArray(fields, 'udd');
         makeArray(fields, 'lnd');
-        makeArray(fields, 'geo');
+        makeArray(fields, 'pos');
 
         let fetchedData = await fetchData(parseInt(fields.page), fields, res);
 
@@ -496,8 +461,6 @@ router.get('/:id', async function (req, res) {
             });
         }
     }
-
-    console.log(cv);
 
     res.render('professor-cv-view', {
         language: reqLang(req, res),

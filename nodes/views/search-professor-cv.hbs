@@ -99,33 +99,31 @@
                             </h6>
                         </div>
 
+                        <div class="panel-heading">
+                            <h6 id="collapse3Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse3" onclick="animateArrow(this)"
+                                data-key="By_html">
+                                By
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+
                         <div id="collapse3" class="panel-collapse collapse in">
-                            <input id="geo_id" type="hidden" name="geo_id">
                             <ul class="pl-3 mr-2" style="list-style: none;">
                                 <li class="mb-2 d-flex flex-column">
-                                    <div>
-                                        <label class="form-check-label flex-fill" data-key="Indtast_adresse">
-                                        Indtast adresse
-                                        </label>
-                                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                                            title="Indtast din adresse samt en radius for at fokusere søgningen. Dette filter virker kun med CV'er hvor et postnummer er angivet og understøtter kun danske adresser."
-                                            data-Key="Indtast_adresse_tooltip">?</span>
-                                    </div>
-                                    <input id='inputAddress' style="max-width: 200px" type="search" name="geo_address">
-                                    
-                                </li>
-                                <li class="mb-2 d-flex flex-column">
-                                    <label class="form-check-label flex-fill" data-key="Radius_i_kilometer">
-                                        Radius i kilometer
+                                    <label class="form-check-label flex-fill" data-key="Indtast_postnummer">
+                                        Indtast postnummer
                                     </label>
-                                    <input id='geo_radius' style="max-width: 200px" type="number" name="geo_radius">
-                                    
+                                    <input id='inputPost' class="align-self-center" type="number" name="pos">
+
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-success" onclick="addAddress()" data-key="Soeg">Søg</button>
-                                    <button type="button" class="btn btn-success" onclick="removeAddress()" data-key="Ryd">Ryd</button>
+                                    <button type="button" class="btn btn-success"
+                                            onclick="addFilterSearch('pos', document.getElementById('inputPost').value)"
+                                            data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success"
+                                            onclick="removeFilterSearch('inputPost', 'pos')" data-key="Ryd">Ryd</button>
                                 </li>
-                                
                             </ul>
                         </div>
 
@@ -153,7 +151,7 @@
                                               title="Indtast søgeord adskilt med mellemrum"
                                               data-Key="Indtast_search_tooltip">?</span>
                                     </div>
-                                    <input id='inputSearch' class="align-self-center" name="pos">
+                                    <input id='inputSearch' class="align-self-center">
 
                                 </li>
                                 <li>
