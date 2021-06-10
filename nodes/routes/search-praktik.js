@@ -28,6 +28,13 @@ async function fetchData(page, parameters, res) {
         offset = (page - 1) * limit;
     }
 
+    let order;
+    if (!parameters.order) {
+        order = "DESC"
+    } else {
+        order = parameters.order
+    }
+
     let id = {
         [Op.or]: []
     };
@@ -291,7 +298,7 @@ async function fetchData(page, parameters, res) {
         distinct: true,
         offset: offset,
         order: [
-            ['updatedAt', 'DESC'],
+            ['updatedAt', order],
             [{
                 model: db.Uddannelse
             }, 'name', 'ASC']

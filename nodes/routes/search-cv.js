@@ -31,6 +31,13 @@ async function fetchData(page, parameters, res) {
         offset = (page - 1) * limit;
     }
 
+    let order;
+    if (!parameters.order) {
+        order = "DESC"
+    } else {
+        order = parameters.order
+    }
+
     let id = {
         [Op.or]: []
     };
@@ -238,7 +245,7 @@ async function fetchData(page, parameters, res) {
         nest: true,
         offset: offset,
         order: [
-            ['updatedAt', 'DESC']
+            ['updatedAt', order]
         ],
         include: [
             {
