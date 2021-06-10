@@ -120,9 +120,6 @@
                             <div id="overSelect" class="overSelect outsideClickHide"></div>
                         </div>
                         <div id="checkboxes" class="outsideClickHide">
-                            <label for="selectAll" id="selectAllLabel">
-                                <input type="checkbox" id="selectAll" class="mr-1" data-key="Vaelg_alle"
-                                       onchange="selectAllCheckboxes()"/>Vælg alle</label>
                             {{#each educations}}
                                 <label for="{{id}}">
                                     <input type="checkbox" id="{{id}}" class="mr-1 educationCheckbox"
@@ -257,7 +254,6 @@
         if (update != '') {
             let reducations = JSON.parse('{{educationIds}}');
 
-            console.log(reducations);
             document.querySelectorAll('.educationCheckbox').forEach(element => {
                 for (reducation of reducations) {
                     if (reducation === +element.value) {
@@ -282,23 +278,6 @@
             checkboxes.style.display = "none";
             expanded = false;
         }
-    }
-
-    function selectAllCheckboxes() {
-        let selectAll = document.getElementById('selectAll');
-        let checkboxes = document.querySelectorAll('.educationCheckbox');
-        document.getElementById('educationSelect').focus();
-        if (selectAll.checked) {
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = true;
-            });
-        } else {
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
-            });
-
-        }
-        checkCount();
     }
 
     window.onload = function () {
