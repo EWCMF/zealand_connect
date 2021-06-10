@@ -1,5 +1,3 @@
-document.getElementById("gem").onclick = function () { submitButton() };
-
 const inputs = Object.freeze({
     overskrift: document.getElementById("overskrift"),
     email: document.getElementById('email'),

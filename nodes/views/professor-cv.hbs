@@ -179,12 +179,13 @@
             <div class="form-group">
                 <!-- textarea med tidligere projekter -->
                 <label for="exampleFormControlTextarea1" data-key="Tidligere_projekter">Tidligere projekter</label>
-                <textarea class="form-control" rows="3" id="tidligere_projekter" name="tidligere_projekter"
-                          placeholder="fx
-- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)'
-- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)
-"
-                          data-key="Projekter_placeholder">{{tidligere_projekter}}</textarea>
+                <div id="editor" spellcheck="false" >{{{tidligere_projekter}}}</div>
+                <input type="hidden" name="tidligere_projekter" id="tidligere_projekter" />
+<!--                <textarea class="form-control" rows="3" id="tidligere_projekter" name="tidligere_projekter"-->
+<!--                          data-key="Projekter_placeholder" placeholder="fx-->
+<!--- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)'-->
+<!--- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)-->
+<!--">{{tidligere_projekter}}</textarea>-->
             </div>
             <div class="form-group">
                 <!-- textarea med interesser -->
@@ -242,12 +243,13 @@
             <div class="text-center">
                 <!-- Button der sender informationen videre -->
                 <div>
-                    <button type="button" class="btn btn-success" id="gem" data-key="Gem">Gem</button>
+                    <button type="button" class="btn btn-success" id="gem" onclick="copyQuillHtmlToHiddenInput()" data-key="Gem">Gem</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
+<script src="/js/quill.min.js"></script>
 <script>
     function setDefaultSelect() {
         let update = '{{ update }}';
@@ -342,5 +344,41 @@
         } else {
             educationSelectedText.text = texts[lang][3]
         }
+    }
+
+    let toolbarOptions = [
+        [{
+            'size': ['small', false, 'large', 'huge']
+        }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{
+            'align': []
+        }],
+        [{
+            'list': 'ordered'
+        }, {
+            'list': 'bullet'
+        }],
+        [{
+            'color': []
+        }, {
+            'background': []
+        }],
+        ['link'],
+        ['clean']
+    ];
+    let editor = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow',
+        placeholder: "fx " +
+                "\n- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)" +
+                "\n- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)"
+    });
+
+    function copyQuillHtmlToHiddenInput() {
+        document.getElementById('tidligere_projekter').value = editor.root.innerHTML;
+        submitButton()
     }
 </script>
