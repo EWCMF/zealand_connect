@@ -1,6 +1,7 @@
 const models = require("../models");
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const deleteCV = require('../persistence/cv-mapping').deleteCV;
+const deleteProCV = require('../persistence/cv-mapping').deleteProCV;
 const hashPassword = require('../encryption/password').hashPassword;
 const unlinkOldFiles = require("../utils/file-handling").unlinkOldFiles;
 
@@ -240,7 +241,7 @@ async function deleteProfessor(email) {
         } else {
             //slet cv hvis det findes
             if (professor.cv != null) {
-                //TODO implement function for deleting Professor CV's
+                deleteProCV(professor.cv.id)
             }
 
             if (professor.profilbillede) {

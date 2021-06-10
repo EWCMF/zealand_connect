@@ -104,6 +104,14 @@ router.post('/', async function (req, res, next) {
                 email: email
             }
         });
+    } else if (user instanceof models.Professor){
+        models.Professor.update({
+            password: await hashPassword(password)
+        }, {
+            where: {
+                email: email
+            }
+        });
     } else {
         return res.render('errors/error', {
             language: reqLang(req, res),
