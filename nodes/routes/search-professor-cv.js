@@ -227,9 +227,6 @@ async function fetchData(page, parameters, res) {
                 arbejdssted
             },
             {
-                stilling
-            },
-            {
                 it_kompetencer
             },
             {
@@ -337,6 +334,8 @@ router.get('/', async function (req, res, next) {
     let page = data.page;
     let pageCount = data.pageCount;
     let rows = data.rows;
+
+    console.log(rows)
 
     let withPages = pageCount > 1 ? true : false;
 

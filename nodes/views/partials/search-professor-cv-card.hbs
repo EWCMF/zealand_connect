@@ -13,21 +13,24 @@
             <div class="col">
                 <a href='/search-professor-cv/{{id}}' class="stretched-link">
                     <div class="card-body newLineContent">
-                        <h5 class="card-title">{{professor.fornavn}} {{professor.efternavn}}</h5>
+                        <h5 class="card-title">{{professor.fornavn}} {{professor.efternavn}}, {{position.name}}</h5>
                         <div class="row ml-0 mb-2">
                             {{#each Uddannelses}}
-                            {{#ifCond @index '<' 5}}
-                                {{#if @last}}
-                                    <h6 class="mb-0" data-key="{{name}}">{{name}}</h6>
-                                {{else}}
-                                    <h6 class="mb-0" data-key="{{name}}">{{name}}</h6>,&nbsp;
-                                {{/if}}
-                            {{/ifCond}}
-                            {{#ifCond @index '==' 5}}
-                                <h6 class="mb-0" data-key="m.fl.">m.fl.</h6>
-                            {{/ifCond}}
-                        {{/each}}
+                                {{#ifCond @index '<' 5}}
+                                    {{#if @last}}
+                                        <h6 class="mb-0" data-key="{{name}}">{{name}}</h6>
+                                    {{else}}
+                                        <h6 class="mb-0" data-key="{{name}}">{{name}}</h6>,&nbsp;
+                                    {{/if}}
+                                {{/ifCond}}
+                                {{#ifCond @index '==' 5}}
+                                    <h6 class="mb-0" data-key="m.fl.">m.fl.</h6>
+                                {{/ifCond}}
+                            {{/each}}
                         </div>
+                        <h6 class="ml-0 mb-2">
+                            {{city}}
+                        </h6>
                         <p class="card-text autobreak">{{overskrift}}</p>
                     </div>
                 </a>
