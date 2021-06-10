@@ -60,7 +60,7 @@
         setTimeout(() => {
           window.location.reload();
         }, 3000);
-        
+
       } else {
         let error = this.responseText;
         switch (error) {
@@ -80,6 +80,8 @@
     };
     if ("{{isCompany}}") {
       xhr.open('POST', '/profil/change-email-company');
+    } else if ("{{isProfessor}}") {
+        xhr.open('POST', '/profil/change-email-professor');
     } else {
       xhr.open('POST', '/profil/change-email-student');
     }

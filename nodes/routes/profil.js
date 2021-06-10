@@ -988,6 +988,72 @@ router.post('/change-email-company', authorizeUser('company', 'admin'), async fu
 
 });
 
+router.post('/change-email-professor', authorizeUser('professor', 'admin'), async function (req, res, next) {
+    const {
+        verifyPassword
+    } = require('../encryption/password');
+
+    var formData = new formidable.IncomingForm();
+    formData.parse(req, async function (error, fields, files) {
+
+        let email = fields.nyEmail;
+        let repeatEmail = fields.gentagEmail;
+        let password = fields.emailPassword;
+
+        req.body.email = email;
+        req.body.password = password;
+
+        if (!emailRegex.test(email)) {
+            return res.status(400).send("errorInvalidEmail");
+        }
+
+        if (email !== repeatEmail) {
+            return res.status(400).send("errorNotSame");
+        }
+
+        let checkEmail = await findUserByEmail(email);
+        if (checkEmail) {
+            return res.status(400).send("errorEmailNotAvailable");
+        }
+
+        let id = res.locals.user.id;
+
+        let professor = await models.Professor.findByPk(id, {
+            raw: true,
+            attributes: ["password"]
+        });
+
+        if (!verifyPassword(password, professor.password)) {
+            return res.status(400).send("errorIncorrectPassword");
+        }
+
+        await models.Professor.update({
+            email: email
+        }, {
+            where: {
+                id: id
+            }
+        });
+
+        passport.authenticate('local', function (err, user, info) {
+            //handle error
+            //Der var ikke nogle fejl så den gamle cookie skal stoppes. ellers kan den nye cookie ikke oprettes.
+
+            req.logout();
+
+            //login skal være der for, at passport laver en cookie for brugeren
+            req.logIn(user, async function (err) {
+                if (err) {
+                    return next(err);
+                }
+
+                return res.status(200).end();
+            });
+        })(req, res, next);
+    });
+
+});
+
 router.post('/change-email-student', authorizeUser('student', 'admin'), async function (req, res, next) {
     const {
         verifyPassword
