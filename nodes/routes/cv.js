@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../models');
+const models = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const deleteCV = require('../persistence/cv-mapping').deleteCV;
 const { reqLang } = require('../public/javascript/request');
@@ -16,13 +16,13 @@ router.get('/', authorizeUser('student'), async function (req, res, next) {
     var student = res.locals.user;
 
     if (student.cv == null) {
-        const udd = await db.Uddannelse.findAll({
+        const udd = await models.Uddannelse.findAll({
             order: [
                 ['name', 'ASC']
             ]
         });
 
-        return res.render('mit-cv', {
+        return res.render('cv', {
             language: reqLang(req, res),
             profil: student.fornavn + " " + student.efternavn,
             telefon: student.tlfnr,
@@ -31,18 +31,18 @@ router.get('/', authorizeUser('student'), async function (req, res, next) {
         })
     }
 
-    db.CV.findOne({
+    models.CV.findOne({
         raw: true,
         nest: true,
         where: {
             id: parseInt(student.cv.id)
         },
         include: [{
-            model: db.Student,
+            model: models.Student,
             as: 'student'
         },
         {
-            model: db.Uddannelse,
+            model: models.Uddannelse,
             as: 'education'
         }]
     }).then((cv) => {
@@ -59,7 +59,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
 
     var student = res.locals.user;
 
-    const udd = await db.Uddannelse.findAll({
+    const udd = await models.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]
@@ -69,7 +69,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         res.status(403).render('error403', {layout: false});
     }
 
-    const CVtypes = await db.CV_CVtype.findAll({
+    const CVtypes = await models.CV_CVtype.findAll({
         where: {
             cv_id: student.cv.id
         }
@@ -83,7 +83,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         })
     }
 
-    res.render('mit-cv', {
+    res.render('cv', {
         language: reqLang(req, res),
         uddannelser: udd,
         uddannelse: student.cv.education.name,
@@ -102,7 +102,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         tidligere_uddannelse: student.cv.tidligere_uddannelse,
         hjemmeside: student.cv.hjemmeside,
         fritidsinteresser: student.cv.fritidsinteresser,
-        offentlig: student.cv.offentlig,
+        availability: student.cv.availability,
         postcode: student.cv.postcode,
         praktik: cvtypes[0],
         studiejob: cvtypes[1],
@@ -135,7 +135,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let tidligere_uddannelse = req.body.tidligere_uddannelse;
     let hjemmeside = req.body.hjemmeside;
     let fritidsinteresser = req.body.fritidsinteresser;
-    let offentlig = req.body.tilgaengelighed;
+    let availability = req.body.tilgaengelighed;
     let postcode = req.body.postcode;
     let cvtypes = [req.body.praktikCheck, req.body.studiejobCheck, req.body.traineeCheck, req.body.fuldtidCheck]
     let post_subscription = req.body.post_subscription;
@@ -218,7 +218,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         tidligere_uddannelse,
         hjemmeside,
         fritidsinteresser,
-        offentlig,
+        availability,
         gyldig,
         student_id,
         postcode,
@@ -228,7 +228,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         post_subscription
     }
 
-    const [cv, created] = await db.CV.findOrCreate({
+    const [cv, created] = await models.CV.findOrCreate({
         where: {
             student_id: student.id
         },
@@ -236,7 +236,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     });
 
     if (!created) {
-        await db.CV.update(json, {
+        await models.CV.update(json, {
             where: {
                 id: cv.id
             }
@@ -254,7 +254,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
 
     for (let i = 0; i < cvtypes.length; i++) {
         if (typeof cvtypes[i] !== 'undefined'){
-            const [cvtype, cvtypeCreated] = await db.CV_CVtype.findOrCreate({
+            const [cvtype, cvtypeCreated] = await models.CV_CVtype.findOrCreate({
                 where: {
                     cv_id: cv.id,
                     cvtype_id: i + 1
@@ -262,7 +262,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
             })
 
             if (!cvtypeCreated) {
-                await db.CV_CVtype.update(json, {
+                await models.CV_CVtype.update(json, {
                     where: {
                         cv_id: cv.id,
                         cvtype_id: i + 1
@@ -270,7 +270,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
                 })
             }
         } else {
-            await db.CV_CVtype.destroy({
+            await models.CV_CVtype.destroy({
                 where: {
                     cv_id: cv.id,
                     cvtype_id: i + 1
@@ -279,20 +279,21 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         }
     }
 
-    res.render('mit-cv-success', {layout: false, status: status, message: besked, id: cv.id});
+    res.render('cv-success', {layout: false, status: status, message: besked, id: cv.id});
 });
 
 router.get('/delete', authorizeUser('student'), async function (req, res, next) {
     let user = res.locals.user;
 
-    if (user instanceof db.Student){
+    if (user instanceof models.Student){
         try {
-            let CV = await db.CV.findOne({
+            let CV = await models.CV.findOne({
                 where: {
                     student_id: user.id
                 }
             })
             await deleteCV(CV.id)
+            return res.redirect('/');
         } catch (e) {
             res.send('Couldn\'t delete CV');
             console.log(e)
@@ -303,7 +304,7 @@ router.get('/delete', authorizeUser('student'), async function (req, res, next) 
 router.post('/preview', authorizeUser('student'), async function (req, res, next) {
     let student = await findUserByEmail(req.user);
 
-    let udd = await db.Uddannelse.findByPk(req.body.uddannelse, {
+    let udd = await models.Uddannelse.findByPk(req.body.uddannelse, {
         attributes: ["name"]
     });
     if (udd == null) {
@@ -329,7 +330,7 @@ router.post('/preview', authorizeUser('student'), async function (req, res, next
         linkedIn : req.body.linkedIn,
         yt_link : req.body.youtube_link,
         om_mig : req.body.om,
-        it_kompetencer : req.body.iT_Kompetencer,
+        it_kompetencer : req.body.it_kompetencer,
         udenlandsophold_og_frivilligt_arbejde : req.body.UogFA,
         erhvervserfaring : req.body.erhvervserfaring,
         tidligere_uddannelse : req.body.tidligere_uddannelse,
@@ -338,7 +339,7 @@ router.post('/preview', authorizeUser('student'), async function (req, res, next
         postcode: req.body.postcode
     };
 
-    res.render('cv', {
+    res.render('cv-view', {
         language: reqLang(req, res),
         json: json,
         navDisabled: true,

@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var hbs = require('handlebars');
 var fs = require('fs');
-const db = require('../models');
+const models = require('../models');
 var formidable = require("formidable");
+const { v4: uuidv4 } = require('uuid');
 const fetch = require('node-fetch');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var {
@@ -22,7 +23,7 @@ const makeArray = function (body, param) {
     }
 };
 
-async function fetchData(page, parameters, res) {
+async function fetchData(page, parameters, req, res) {
     let offset;
     if (!page) {
         page = 1
@@ -55,13 +56,17 @@ async function fetchData(page, parameters, res) {
         [Op.or]: []
     };
 
+    let availability = req.user ? 1 : 2
+
     let where = {
         id,
         fk_education,
         sprog,
         geo_lat,
         geo_lon,
-        offentlig: true,
+        availability: {
+            [Op.gte]: availability
+        },
         gyldig: true
     };
 
@@ -121,7 +126,7 @@ async function fetchData(page, parameters, res) {
         }
         if (key.includes("cvtype")) {
             let values = parameters[key];
-            const CVsWithType = await db.CV_CVtype.findAll({
+            const CVsWithType = await models.CV_CVtype.findAll({
                 where: {
                     cvtype_id: values
                 },
@@ -176,7 +181,7 @@ async function fetchData(page, parameters, res) {
         let om_mig = {
             [Op.or]: []
         };
-        let iT_Kompetencer = {
+        let it_kompetencer = {
             [Op.or]: []
         };
         let udenlandsophold_og_frivilligt_arbejde = {
@@ -208,7 +213,7 @@ async function fetchData(page, parameters, res) {
             om_mig[Op.or].push({
                 [Op.like]: element
             });
-            iT_Kompetencer[Op.or].push({
+            it_kompetencer[Op.or].push({
                 [Op.like]: element
             });
             udenlandsophold_og_frivilligt_arbejde[Op.or].push({
@@ -230,7 +235,7 @@ async function fetchData(page, parameters, res) {
             {email},
             {speciale},
             {om_mig},
-            {iT_Kompetencer},
+            {it_kompetencer},
             {udenlandsophold_og_frivilligt_arbejde},
             {erhvervserfaring},
             {tidligere_uddannelse},
@@ -239,7 +244,7 @@ async function fetchData(page, parameters, res) {
     }
     ;
 
-    let rows = await db.CV.findAll({
+    let rows = await models.CV.findAll({
         limit: limit,
         raw: false,
         nest: true,
@@ -249,25 +254,31 @@ async function fetchData(page, parameters, res) {
         ],
         include: [
             {
-                model: db.Student,
+                model: models.Student,
                 as: 'student'
             },
             {
-                model: db.Uddannelse,
+                model: models.Uddannelse,
                 as: 'education',
                 attributes: ['name']
             },
             {
-                model: db.CVtype,
+                model: models.CVtype,
                 as: 'cvtype',
                 attributes: ['cvtype'],
-                through: db.CV_CVtype
+                through: models.CV_CVtype
             }
         ],
         where
     });
 
     rows = rows.map(cv => {
+        let formatDate = new Date(cv.updatedAt);
+        let leadingZeroDay = formatDate.getDate() < 10 ? '0' : '';
+        let leadingZeroMonth = (formatDate.getMonth() + 1) < 10 ? '0' : '';
+
+        let updatedAt = leadingZeroDay + formatDate.getDate() + "/" + leadingZeroMonth + (formatDate.getMonth() + 1) + "/" + formatDate.getFullYear();
+
         return {
             id: cv.id,
             overskrift: cv.overskrift,
@@ -284,13 +295,14 @@ async function fetchData(page, parameters, res) {
                 return {
                     cvtype: cvtype.dataValues.cvtype
                 }
-            })
+            }),
+            formattedDate: updatedAt
         }
     });
 
     let favouriteCVs = [];
-    if (res.locals.user instanceof db.Virksomhed) {
-        favouriteCVs = await db.FavouriteCV.findAll({
+    if (res.locals.user instanceof models.Virksomhed) {
+        favouriteCVs = await models.FavouriteCV.findAll({
             raw: true,
             where: {
                 company_id: res.locals.user.id
@@ -303,10 +315,10 @@ async function fetchData(page, parameters, res) {
             if (favouriteCV.cv_id === cv.id) {
                 cv['isFavourite'] = true;
             }
-        })
-    })
+        });
+    });
 
-    let count = await db.CV.count({
+    let count = await models.CV.count({
         where
     });
 
@@ -321,7 +333,7 @@ async function fetchData(page, parameters, res) {
 }
 
 router.get('/', async function (req, res, next) {
-    let categoryQuery = await db.EducationCategory.findAll({
+    let categoryQuery = await models.EducationCategory.findAll({
         raw: true,
         attributes: ['id', 'name'],
         order: [
@@ -331,7 +343,7 @@ router.get('/', async function (req, res, next) {
 
     let categories = []
     for (const category of categoryQuery) {
-        const uddannelser = await db.Uddannelse.findAll({
+        const uddannelser = await models.Uddannelse.findAll({
             raw: true,
             where: {
                 fk_education_category: category.id
@@ -366,14 +378,14 @@ router.get('/', async function (req, res, next) {
         );
     }
 
-    let cvtype = await db.CVtype.findAll({
+    let cvtype = await models.CVtype.findAll({
         attributes: ['id', 'cvType'],
         order: [
             ['cvType', 'ASC']
         ],
     });
 
-    let data = await fetchData(req.query.page, req.query, res);
+    let data = await fetchData(req.query.page, req.query, req, res);
 
     let count = data.count;
     let page = data.page;
@@ -409,7 +421,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'geo');
         makeArray(fields, 'cvtype');
 
-        let fetchedData = await fetchData(parseInt(fields.page), fields, res);
+        let fetchedData = await fetchData(parseInt(fields.page), fields, req, res);
 
         let count = fetchedData.count;
         let page = fetchedData.page;
@@ -473,18 +485,18 @@ router.post('/query', function (req, res) {
 router.get('/:id', async function (req, res) {
     let id = req.params.id
 
-    var cv = await db.CV.findOne({
+    var cv = await models.CV.findOne({
         raw: true,
         nest: true,
         where: {
             id: parseInt(id)
         },
         include: [{
-            model: db.Student,
+            model: models.Student,
             as: 'student'
         },
             {
-                model: db.Uddannelse,
+                model: models.Uddannelse,
                 as: 'education'
             }
         ]
@@ -505,26 +517,32 @@ router.get('/:id', async function (req, res) {
     var ejer = false;
     if (req.user != null) {
         var found = res.locals.user;
-        if (found instanceof db.Student && found.id == cv.student_id) {
+        if (found instanceof models.Student && found.id == cv.student_id) {
             ejer = true;
         }
     }
 
     if (!cv.gyldig) {
         if (!ejer) {
-            res.status(403).render('error403', {
+            return res.status(403).render('error403', {
                 layout: false
             });
         }
-    } else if (!cv.offentlig) {
-        if (req.user == null) {
-            res.status(403).render('error403', {
+    } else if (cv.availability == 0) {
+        if (!ejer) {
+            return res.status(403).render('error403', {
+                layout: false
+            });
+        }
+    } else {
+        if (!req.user && cv.availability == 1) {
+            return res.status(403).render('error403', {
                 layout: false
             });
         }
     }
 
-    res.render('cv', {
+    res.render('cv-view', {
         language: reqLang(req, res),
         json: cv,
         ejer: ejer
@@ -545,22 +563,24 @@ router.get('/:id/create_pdf', function (req, res, next) {
         size: 'A4'
     });
     var cvOutside;
-    var pdfStream = fs.createWriteStream('public/pdf/temp.pdf', {
+    let uniqueId = uuidv4();
+    console.log(uniqueId)
+    var pdfStream = fs.createWriteStream('public/pdf/' + uniqueId + '.pdf', {
         encoding: 'utf8'
     });
     myDoc.pipe(pdfStream);
-    db.CV.findOne({
+    models.CV.findOne({
         raw: true,
         nest: true,
         where: {
             id: parseInt(id)
         },
         include: [{
-            model: db.Student,
+            model: models.Student,
             as: 'student'
         },
             {
-                model: db.Uddannelse,
+                model: models.Uddannelse,
                 as: 'education'
             }
         ],
@@ -816,14 +836,14 @@ router.get('/:id/create_pdf', function (req, res, next) {
     });
     pdfStream.addListener('finish', function () {
         res.setHeader('content-type', 'application/pdf'),
-            res.download('public/pdf/temp.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
+            res.download('public/pdf/' + uniqueId + '.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
     });
 
     async function deleteFile() {
         try {
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => resolve(
-                    fs.unlinkSync('public/pdf/temp.pdf', (err) => {
+                    fs.unlinkSync('public/pdf/' + uniqueId + '.pdf', (err) => {
                         if (err) {
                             console.error(err)
                             return

@@ -11,7 +11,6 @@ const {
     linkRegex,
     phoneRegex
 } = require("../constants/regex.js");
-const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const models = require("../models");
 const unlinkOldFiles = require('../utils/file-handling').unlinkOldFiles;
@@ -210,7 +209,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
         async function dbExe() {
             if (!inputError) {
-                db.InternshipPost.update(indhold, {
+                models.InternshipPost.update(indhold, {
                     where: {
                         id: id
                     },
@@ -220,7 +219,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 
 
 
-                let associatedEducations = await db.InternshipPost_Education.findAll({
+                let associatedEducations = await models.InternshipPost_Education.findAll({
                     where: {
                         post_id: id
                     }
@@ -240,7 +239,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                 }
 
                 for (const education of educations) {
-                    await db.InternshipPost_Education.findOrCreate({
+                    await models.InternshipPost_Education.findOrCreate({
                         where: {
                             post_id: id,
                             education_id: education
@@ -293,7 +292,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
             }
         }
 
-        db.InternshipPost.findByPk(id, {
+        models.InternshipPost.findByPk(id, {
             attributes: ["post_document"]
         }).then(result => {
             //når vi kalder noget r, f.eks. rtitle eller remail er det for at refere til resultat så der principelt set kommer til at stå "result email"
@@ -306,16 +305,16 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 /* GET home page. */
 router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
     
-    let educations = await db.Uddannelse.findAll({
+    let educations = await models.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]
     });
 
-    let post = await db.InternshipPost.findByPk(req.query.id, {
+    let post = await models.InternshipPost.findByPk(req.query.id, {
         include: {
-            model: db.Uddannelse,
-            through: db.InternshipPost_Education
+            model: models.Uddannelse,
+            through: models.InternshipPost_Education
         }
     });
 

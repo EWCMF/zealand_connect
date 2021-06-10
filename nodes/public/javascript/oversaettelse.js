@@ -134,7 +134,7 @@ function getLangdata() {
                 "student_quick_access_CV_headline": "Create CV",
                 "student_quick_access_CV_btn": "Create a CV or edit an existing CV.",
                 "company_quick_access_headline" : "For companies",
-                "company_quick_access_btn": "Make your company visible to students by creating internship advertisements or job vacancies. You can also search for a student on your own by screening the available CV's.",
+                "company_quick_access_btn": "Make your company visible to students by creating internship advertisements or job vacancies. You can also screen the available CV's.",
                 "company_quick_access_CV_headline": "Browse CV list",
                 "company_quick_access_CV_btn": "Find a suitable intern for your company.",
                 "company_quick_access_post_headline": "Create post",
@@ -185,6 +185,7 @@ function getLangdata() {
                 "resultater": "results",
                 "Sortering": "Sort by:",
                 "Senest_opdateret": "Recently updated",
+                "Senest_opdateret:": "Updated at:",
                 "Raekkefoelge": "Order:",
                 "Faldende": "Descending",
                 "Stigende": "Ascending",
@@ -358,7 +359,7 @@ function getLangdata() {
                 "Rediger_oplag": "Edit post",
                 "Annoncetekst_kolon": "Post text:",
 
-                //mit-cv
+                //cv
                 //Overskrift
                 "Overskrift_placeholder": "What you're looking for e.g. job or internship",
                 "Skal_udfyldes": "Required field",
@@ -393,8 +394,9 @@ function getLangdata() {
                 //Fritidsinteresser
                 "Tilgængelighed": "Accessibility",
                 "Offentlig": "Public",
+                "Kun_synlig_for_brugere": "Only visible to users",
                 "Privat": "Private",
-                "Tilgængelighed_error": "You must specify if your CV is public or private",
+                "Tilgængelighed_error": "You must specify if your CV is public, private or only visible to users",
                 //Gem
 
                 //studentprofil
@@ -591,9 +593,26 @@ function getLangdata() {
                     'can be found by clicking on your name in the top bar and choosing "My favourite...". This way you can ' +
                         'quickly find posts or CV\'s that you\'ve liked earlier.',
                 "memes_html": '<i class="far fa-star"></i>',
+                "forside_nyhed_h_3": "Career Day on 7th May 2021",
+                "forside_nyhed_p_3_1": "On Friday 7th May we held our first virtual Career Day across the majority of our " +
+                    "educations at Zealand in Næstved.",
+                "forside_nyhed_p_3_2": 'The purpose of Career Day is to gather our partners and create more awareness of ' +
+                    'our educations and students. Furthermore, the internship platform Zealand Connect was introduced and ' +
+                    'it was well received by both companies and students - awesome! The keychain in the image below is created ' +
+                    'in FABLAB by Helle Hauskov. The keychain was sent to all participating companies and students with ' +
+                    'the message "Join Zealand Connect". The keychain symbolises the cooperation between Zealand, the ' +
+                    'students and the companies. Besides the good vibes and matchmaking between students and companies, ' +
+                    'we were fortunate that Peter Juul Regnergaard who is co-founder of the company TRUE GUM held an ' +
+                    'inspiring presentation. The presentation focused on innovation, entrepreneurship and sustainability.',
+                "forside_nyhed_p_3_3": "Many thanks to all the participating companies and students.",
                 // Favourites
                 "Mine_foretrukne_cver": "My favourite CV's",
                 "Mine_foretrukne_opslag": "My favourite posts",
+
+                // Kontakt
+                "Praktikkoordinatorer": "Internship Coordinators",
+                "Contact_headline_2": "Development and support of Zealand Connect",
+                "Alle_uddannelser": "All educations"
             }
         }
     }

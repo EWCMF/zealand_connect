@@ -1,5 +1,5 @@
 const express = require('express');
-const {findUserByCVR} = require('../persistence/usermapping');
+//const {findUserByCVR} = require('../persistence/usermapping');
 const router = express.Router();
 const {reqLang} = require('../public/javascript/request');
 const createVirksomhed = require('../persistence/usermapping').createVirksomhed;
@@ -156,35 +156,28 @@ router.post('/create', (req, res) => {
             aUserExistsWithThatEmail = true;
             atLeastOneErrorIsPresent = true;
         }
-        findUserByCVR(cvrnr).then((userFoundByCVR) => {
-            if (userFoundByCVR !== null) {
-                errors.CVRError = "CVR-nummer findes allerede i systemet";
-                atLeastOneErrorIsPresent = true;
-                console.log("errors")
-            }
-            if (!atLeastOneErrorIsPresent) {
-                hashPassword(password).then((hashedPassword) => {
-                    let virksomhedsBruger = {
-                        email: email,
-                        password: hashedPassword,
-                        tlfnr: tlfnr,
-                        by: by,
-                        postnr: postnr,
-                        cvrnr: cvrnr,
-                        navn: virksomhedNavn,
-                        user_data_consent: consent
-                    }
-                    createVirksomhed(virksomhedsBruger).then(() => {
-                        //vi sender errors tilbage selvom de er tomme, 
-                        //men så ved frontend at backend er færdig og den kan lave en getrequest til login.
-                        errors.areThereErrors = "false";
-                        res.send(errors);
-                    });
+        if (!atLeastOneErrorIsPresent) {
+            hashPassword(password).then((hashedPassword) => {
+                let virksomhedsBruger = {
+                    email: email,
+                    password: hashedPassword,
+                    tlfnr: tlfnr,
+                    by: by,
+                    postnr: postnr,
+                    cvrnr: cvrnr,
+                    navn: virksomhedNavn,
+                    user_data_consent: consent
+                }
+                createVirksomhed(virksomhedsBruger).then(() => {
+                    //vi sender errors tilbage selvom de er tomme,
+                    //men så ved frontend at backend er færdig og den kan lave en getrequest til login.
+                    errors.areThereErrors = "false";
+                    res.send(errors);
                 });
-            } else {
-                res.send(errors);
-            }
-        })
+            });
+        } else {
+            res.send(errors);
+        }
     })
 });
 

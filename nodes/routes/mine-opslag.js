@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const hbs = require('handlebars');
 const fs = require('fs');
-const db = require('../models');
+const models = require('../models');
 var formidable = require("formidable");
 const limit = 5;
 const {
@@ -15,7 +15,7 @@ const {
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 
 
-async function fetchData(page, res) {
+async function fetchData(page, req, res) {
     const user = res.locals.user
     let offset;
 
@@ -24,12 +24,12 @@ async function fetchData(page, res) {
         offset = 0;
     }  else {
         offset = (page - 1) * limit;
-    }
+    };
 
     const {
         count,
         rows
-    } = await db.InternshipPost.findAndCountAll({
+    } = await models.InternshipPost.findAndCountAll({
         limit: limit,
         nest: true,
         distinct: true,
@@ -37,17 +37,17 @@ async function fetchData(page, res) {
         order: [
             ['updatedAt', 'DESC'],
             [{
-                model: db.Uddannelse
+                model: models.Uddannelse
             }, 'name', 'ASC']
         ],
         include: [{
-                model: db.Virksomhed,
+                model: models.Virksomhed,
                 as: 'virksomhed'
             },
             {
-                model: db.Uddannelse,
+                model: models.Uddannelse,
                 attributes: ['name'],
-                through: db.InternshipPost_Education,
+                through: models.InternshipPost_Education,
             },
         ],
         where: {
@@ -60,6 +60,13 @@ async function fetchData(page, res) {
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
         element.mineOpslag = true;
+
+        let formatDate = new Date(element['updatedAt']);
+        let leadingZeroDay = formatDate.getDate() < 10 ? '0' : '';
+        let leadingZeroMonth = (formatDate.getMonth() + 1) < 10 ? '0' : '';
+
+        let newDate = leadingZeroDay + formatDate.getDate() + "/" + leadingZeroMonth + (formatDate.getMonth() + 1) + "/" + formatDate.getFullYear();
+        element.formattedDate = newDate;
 
         if (element['post_start_date'].length > 0) {
             let cropStart = element['post_start_date'].substring(0, 10);
@@ -102,7 +109,7 @@ async function fetchData(page, res) {
 
 router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
 
-    let data = await fetchData(req.query.page, res);
+    let data = await fetchData(req.query.page, req, res);
 
     let count = data.count;
     let page = data.page;
@@ -128,7 +135,7 @@ router.post('/query', authorizeUser('company', 'admin'), function (req, res) {
     let formData = new formidable.IncomingForm();
     formData.parse(req, async function (error, fields, files) {
 
-        let data = await fetchData(fields.page, res)
+        let data = await fetchData(fields.page, req, res)
 
         let count = data.count;
         let page = data.page;
@@ -212,7 +219,7 @@ router.post("/toggle-visibility", authorizeUser("company"), async function (req,
     console.log(req.body);
     let id = Number(req.body)
 
-    let internshipPost = await db.InternshipPost.findByPk(id);
+    let internshipPost = await models.InternshipPost.findByPk(id);
 
     if (res.locals.user.id !== internshipPost.fk_company) {
         return res.status(403);

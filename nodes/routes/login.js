@@ -126,21 +126,6 @@ router.post('/authenticateUser', function (req, res, next) {
     })(req, res, next);
 });
 
-//denne route bliver kaldt i layout.hbs, så den ved om man er logget ind eller ej
-router.get('/loggedIn', function (req, res, next) {
-    if (req.user === undefined) {
-        //Brugeren er ikke logget ind
-        res.send({
-            email: ""
-        });
-    } else {
-        //Brugeren er logget ind
-        res.send({
-            email: req.user
-        });
-    }
-});
-
 router.get('/logout', function (req, res, next) {
     //angående logout:
     /*Passport exposes a logout() function on req (also aliased as logOut()) 

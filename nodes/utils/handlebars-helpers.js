@@ -27,6 +27,10 @@ const helpers = {
         }
     },
 
+    simpleEq: (v1, v2) => {
+        return v1 === v2;
+    },
+
     selectState: (state, value) => {
         if(state === value) {
             return 'selected';
@@ -42,15 +46,24 @@ const helpers = {
     },
 
     checkedStateRadio: (state, id) => {
-        if (state === 'true' || state === true) {
-            if (id == 'tilgaengelighed1') {
-                return 'checked'
-            }
-        }
-        if (state === 'false' || state === false) {
-            if (id == 'tilgaengelighed2') {
-                return 'checked'
-            }
+        switch (state) {
+            case 0:
+                if (id === 'tilgaengelighed0') {
+                    return 'checked'
+                }
+                break;
+            case 1:
+                if (id === 'tilgaengelighed1') {
+                    return 'checked'
+                }
+                break;
+            case 2:
+                if (id === 'tilgaengelighed2') {
+                    return 'checked'
+                }
+                break;
+            default:
+                break;
         }
         return '';
     },

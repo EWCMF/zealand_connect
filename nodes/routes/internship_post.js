@@ -12,7 +12,6 @@ const {
     linkRegex,
     phoneRegex
 } = require("../constants/regex.js");
-const db = require('../models');
 const {
     REPL_MODE_SLOPPY
 } = require('repl');
@@ -215,19 +214,19 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
         
                 indhold.fk_company = company_id;
         
-                const post = await db.InternshipPost.create(indhold).catch((error) => {
+                const post = await models.InternshipPost.create(indhold).catch((error) => {
                     console.log(error);
                     return res.status(400).send(error);
                 });
 
                 for (const education of educations) {
-                    await db.InternshipPost_Education.create({
+                    await models.InternshipPost_Education.create({
                         post_id: post.id,
                         education_id: education
                     });
                 }
                 
-                let ids = await db.CV_CVtype.findAll({
+                let ids = await models.CV_CVtype.findAll({
                     raw: true,
                     attributes: ['cv_id'],
                     where: {
@@ -240,7 +239,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                     idsArray.push(element.cv_id);
                 });
         
-                let cvs = await db.CV.findAll({
+                let cvs = await models.CV.findAll({
                     raw: true,
                     nest: true,
                     attributes: ['email', 'sprog'],
@@ -254,7 +253,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
                         }
                     },
                     include: {
-                        model: db.Student,
+                        model: models.Student,
                         as: 'student'
                     }
                 });
@@ -356,7 +355,7 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
 
     var generatedEducationOptions = '';
 
-    const educations = await db.Uddannelse.findAll({
+    const educations = await models.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]

@@ -11,7 +11,7 @@ const internshipPostRouter = require('./routes/internship_post');
 const internshipUpdateRouter = require('./routes/internship_update');
 const internshipPostViewRouter = require('./routes/internship_view');
 const adminFunktionerRouter = require('./routes/admin-funktioner');
-const mit_CVRouter = require('./routes/mit-cv');
+const CVRouter = require('./routes/cv');
 const searchCVRouter = require('./routes/search-cv');
 const searchPraktikRouter = require('./routes/search-praktik');
 const searchVirksomhederRouter = require('./routes/search-virksomheder');
@@ -130,7 +130,7 @@ app.use(async function (req, res, next) {
 app.use('/internship_post', internshipPostRouter);
 app.use('/internship_update', internshipUpdateRouter);
 app.use('/internship_view', internshipPostViewRouter);
-app.use('/mit-cv', mit_CVRouter);
+app.use('/cv', CVRouter);
 app.use('/search-cv', searchCVRouter);
 app.use('/search-praktik', searchPraktikRouter);
 app.use('/search-virksomheder', searchVirksomhederRouter);

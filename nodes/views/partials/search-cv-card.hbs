@@ -31,17 +31,23 @@
                     </div>
                 </a>
             </div>
-            <div class="col-auto mr-2 mt-2">
+            <div class="col-12 col-md-auto mr-2 mt-2 d-flex flex-column justify-content-between">
                 {{#if ../isCompany}}
-                    <button class="btn fav-button" style="outline: none;" onclick="favourite({{id}})">
+                    <button class="btn fav-button align-self-end" style="outline: none;" onclick="favourite({{id}})">
                         {{#if isFavourite}}
                             <i id="fav-icon{{id}}" class="fas fa-star fa-2x"></i>
                         {{else}}
                             <i id="fav-icon{{id}}" class="far fa-star fa-2x"></i>
                         {{/if}}
                     </button>
+                {{else}}
+                <div></div>
                 {{/if}}
-
+                <div class="d-flex">
+                    <p class="text-muted text-right mb-2" data-key="Senest_opdateret:">Senest opdateret:</p>
+                    <p class="text-muted text-right mb-2 mr-2">&nbsp;{{formattedDate}}</p>
+                </div>
+                
             </div>
         </div>
     </div>

@@ -110,7 +110,7 @@ router.get('/virksomhed/:id', async function (req, res) {
         description: json.description,
     };
 
-    let data = await getPosts(res, id, req.query.page);
+    let data = await getPosts(req, res, id, req.query.page);
 
     let count = data.count;
     let page = data.page;
@@ -139,7 +139,7 @@ router.post('/virksomhed/:id/query', async function (req, res) {
     formData.parse(req, async function (error, fields, files) {
 
         let id = req.params.id;
-        let fetchedData = await getPosts(res, id, fields.page);
+        let fetchedData = await getPosts(req, res, id, fields.page);
 
         let count = fetchedData.count;
         let page = fetchedData.page;
@@ -221,7 +221,7 @@ router.post('/virksomhed/:id/query', async function (req, res) {
     });
 });
 
-async function getPosts(res, id, page) {
+async function getPosts(req, res, id, page) {
     let offset;
     let limit = 5;
     if (!page) {
@@ -236,12 +236,16 @@ async function getPosts(res, id, page) {
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getUTCFullYear();
 
+    let company = await models.Virksomhed.findByPk(id, {
+        raw: true,
+        attributes: ['cvrnr']
+    });
+
     const {
         count,
         rows
     } = await models.InternshipPost.findAndCountAll({
         where: {
-            fk_company: id,
             post_start_date: {
                 [Op.or]: [
                     {[Op.gt]: year + "-" + month + "-" + day},
@@ -260,7 +264,10 @@ async function getPosts(res, id, page) {
         include: [
             {
                 model: models.Virksomhed,
-                as: 'virksomhed'
+                as: 'virksomhed',
+                where: {
+                    cvrnr: company.cvrnr,
+                }
             },
             {
                 model: models.Uddannelse,
@@ -285,6 +292,13 @@ async function getPosts(res, id, page) {
     for (let index = 0; index < rows.length; index++) {
         const element = rows[index];
 
+        let formatDate = new Date(element['updatedAt']);
+        let leadingZeroDay = formatDate.getDate() < 10 ? '0' : '';
+        let leadingZeroMonth = (formatDate.getMonth() + 1) < 10 ? '0' : '';
+
+        let newDate = leadingZeroDay + formatDate.getDate() + "/" + leadingZeroMonth + (formatDate.getMonth() + 1) + "/" + formatDate.getFullYear();
+        element.formattedDate = newDate;
+        
         if (element['post_start_date'].length > 0) {
             let cropStart = element['post_start_date'].substring(0, 10);
 
