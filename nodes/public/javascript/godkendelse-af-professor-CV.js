@@ -132,7 +132,7 @@ function addChangeEvents() {
     });
 
     inputs.postcode.addEventListener('change', function () {
-        checkInputRegexOptional(inputs.postcode, errors.postcodeError, postcodeRegex)
+        checkInputRegex(inputs.postcode, errors.postcodeError, postcodeRegex)
     });
 
     inputs.linkedIn.addEventListener('change', function () {
@@ -196,7 +196,7 @@ function submitButton() {
         checkInputRegex(inputs.email, errors.emailError, emailRegex),
         checkInputNotEmpty(inputs.sprog, errors.sprogError),
         checkInputRegex(inputs.telefon, errors.telefonError, phoneRegex),
-        checkInputRegexOptional(inputs.postcode, errors.postcodeError, postcodeRegex),
+        checkInputRegex(inputs.postcode, errors.postcodeError, postcodeRegex),
         checkInputRegexOptional(inputs.linkedIn, errors.linkedInError, linkRegex),
         checkInputNotEmpty(inputs.it_kompetencer, errors.it_kompetencerError),
         checkInputNotEmpty(inputs.tidligere_uddannelse, errors.tidligere_uddannelseError),

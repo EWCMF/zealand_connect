@@ -78,7 +78,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
 
     if (!emailWrittenCorrectly || !phoneCheck || !email || !overskrift ||
         !sprog || !arbejdssted || !position_id || !tidligere_uddannelse || !erhvervserfaring ||
-        !educations || !it_kompetencer || !linkedInKorrekt || !postcodeKorrekt) {
+        !educations || !it_kompetencer || !linkedInKorrekt || !postcodeKorrekt || !postcode) {
         return res.send('One or more values in the form are missing');
     }
 

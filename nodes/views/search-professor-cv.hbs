@@ -220,12 +220,3 @@
 <script src="/javascript/search-professor-cv.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
-<script src='../dawa/js/dawa-autocomplete2.min.js'></script>
-<script>
-    dawaAutocomplete.dawaAutocomplete(document.getElementById("inputAddress"), {
-        select: function (selected) {
-            document.getElementById("geo_id").value = selected.data.id;
-        },
-        params: {per_side: '5'}
-    });
-</script>

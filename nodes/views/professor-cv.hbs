@@ -7,8 +7,9 @@
         <div class="form-group required">
             <label for="exampleFormControlInput1">CV (Curriculum Vitae)</label>
             <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
-                placeholder='fx "Adjunkt på datamatikeruddannelsen søger nye og spændende projekter inden for IT-sikkerhed". Dette er overskriften på dit CV og vil blive vist på kortet til dit CV.' onkeyup="countChars(this)"
-                data-key="Overskrift_placeholder_pro">{{overskrift}}</textarea>
+                      placeholder='fx "Adjunkt på datamatikeruddannelsen søger nye og spændende projekter inden for IT-sikkerhed". Dette er overskriften på dit CV og vil blive vist på kortet til dit CV.'
+                      onkeyup="countChars(this)"
+                      data-key="Overskrift_placeholder_pro">{{overskrift}}</textarea>
             <p id="charNum">255 tegn</p>
             <p id="overskriftError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
         </div>
@@ -19,8 +20,9 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlInput1" data-key="Email_adresse">Email adresse</label>
-                        <input type="email" class="form-control" placeholder="fx name@example.com" id="email" name="email"
-                            title="Du skal skrive din email her og mindst
+                        <input type="email" class="form-control" placeholder="fx name@example.com" id="email"
+                               name="email"
+                               title="Du skal skrive din email her og mindst
                             bruge et @" value={{email}}>
                         <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal
                             skrive din email her og mindst
@@ -56,30 +58,32 @@
                     <div class="form-group required">
                         <label for="exampleFormControlSelect1" data-key="Arbejdssted">Arbejdssted</label>
                         <input class="form-control" id="arbejdssted" name="arbejdssted" value='{{arbejdssted}}'
-                               placeholder="fx Zealand Sjællands Erhvervsakademi, Næstved">
+                               placeholder="fx Zealand Sjællands Erhvervsakademi">
                         <p id="arbejdsstedError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
                             udfyldes</p>
                     </div>
                 </div>
                 <!-- Postnr med inputfelt -->
                 <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="exampleFormControlInput1" data-key="Postnummer">Postnummer</label>
+                    <div class="form-group required">
+                        <label for="exampleFormControlInput1" data-key="Postnummer">Postnummer for dit arbejdssted</label>
                         <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                            title="Når du indtaster postnummer vises den knyttede by automatisk på CV'et. Feltet her gør det muligt for virksomheder at fokusere deres søgning baseret på afstand og kan hjælpe med at gøre dig synlig for dem. Kun danske postnumre er understøttet."
-                            data-Key="Postnummer_tooltip">?</span>
+                              title="Når du indtaster postnummer vises den knyttede by automatisk på CV'et. Kun danske postnumre er understøttet."
+                              data-Key="Postnummer_tooltip">?</span>
                         <input class="form-control" id="postcode" name="postcode" value='{{postcode}}'
-                               placeholder="fx 4700">
-                        <p id="postcodeError" class="CVErrorColor" hidden="true" data-key="Postnummer_errorCV">Kun
-                            danske postnumre er tilladte og angiv kun tallene. Den tilhørende by vil blive fundet
-                            automatisk.</p>
+                               placeholder="fx 4600">
+                        <p id="postcodeError" class="CVErrorColor" hidden="true" data-key="Postnummer_errorCV">Du skal
+                            angive postnummeret for dit arbejdssted. Kun danske postnumre er tilladte og angiv kun
+                            tallene.
+                        </p>
                     </div>
                 </div>
                 <!-- Sprog med inputfelt -->
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlInput1" data-key="Sprog">Sprog</label>
-                        <input class="form-control" placeholder="fx dansk, engelsk" id="sprog" name="sprog" value='{{sprog}}'>
+                        <input class="form-control" placeholder="fx dansk, engelsk" id="sprog" name="sprog"
+                               value='{{sprog}}'>
                         <p id="sprogError" class="CVErrorColor" hidden="true" data-key="Sprog_error">Du skal skrive dit
                             ønskede sprog her</p>
                     </div>
@@ -95,47 +99,49 @@
                             <option selected disabled hidden value="" data-key="Vaelg_en_uddannelse">Vælg din stilling
                             </option>
                             {{#each positions}}
-                            <option {{selectState name ../position }} value={{id}} data-key="{{name}}">{{name}}
-                            </option>
+                                <option {{selectState name ../position }} value={{id}} data-key="{{name}}">{{name}}
+                                </option>
                             {{/each}}
                         </select>
                         <p id="stillingError" class="CVErrorColor" hidden="false"
-                            data-key="Vaelg_en_uddannelse_error">Du skal vælge en Stilling</p>
+                           data-key="Vaelg_en_uddannelse_error">Du skal vælge en Stilling</p>
                     </div>
                 </div>
                 <!-- udannelse med inputfelt -->
                 <div class="col-sm-4">
                     <div class="form-group required">
-                                <label for="education" data-key="Tilknyttet_uddannelse">Tilknyttet uddannelse</label>
-                                <div class="selectBox" onclick="showCheckboxes()">
-                                    <select id="educationSelect" class="form-control outsideClickHide">
-                                        <option id="educationSelectedText" data-key="Vaelg_en_uddannelse">Vælg en eller flere uddannelser</option>
-                                    </select>
-                                    <div id="overSelect" class="overSelect outsideClickHide"></div>
-                                </div>
-                                <div id="checkboxes" class="outsideClickHide">
-                                    <label for="selectAll" id="selectAllLabel">
-                                        <input type="checkbox" id="selectAll" class="mr-1" data-key="Vaelg_alle"
-                                            onchange="selectAllCheckboxes()" />Vælg alle</label>
-                                    {{#each educations}}
-                                    <label for="{{id}}">
-                                        <input type="checkbox" id="{{id}}" class="mr-1 educationCheckbox"
-                                            data-key="{{name}}" value="{{id}}" />{{name}}</label>
-                                    {{/each}}
-                                    <input type="hidden" id="educations" name="educations">
-                                </div>
-                                <p id="educationError" class="CVErrorColor" hidden="true"
-                                    data-key="Vaelg_en_uddannelse_error">Du skal angive en uddannelse</p>
-                                <p id="educationNote" hidden="true" data-key="Vaelg_en_uddannelse_note">Den valgte
-                                    uddannelse har lønnet praktik</p>
-                            </div>
+                        <label for="education" data-key="Tilknyttet_uddannelse">Tilknyttet uddannelse</label>
+                        <div class="selectBox" onclick="showCheckboxes()">
+                            <select id="educationSelect" class="form-control outsideClickHide">
+                                <option id="educationSelectedText" data-key="Vaelg_en_uddannelse">Vælg en eller flere
+                                    uddannelser
+                                </option>
+                            </select>
+                            <div id="overSelect" class="overSelect outsideClickHide"></div>
+                        </div>
+                        <div id="checkboxes" class="outsideClickHide">
+                            <label for="selectAll" id="selectAllLabel">
+                                <input type="checkbox" id="selectAll" class="mr-1" data-key="Vaelg_alle"
+                                       onchange="selectAllCheckboxes()"/>Vælg alle</label>
+                            {{#each educations}}
+                                <label for="{{id}}">
+                                    <input type="checkbox" id="{{id}}" class="mr-1 educationCheckbox"
+                                           data-key="{{name}}" value="{{id}}"/>{{name}}</label>
+                            {{/each}}
+                            <input type="hidden" id="educations" name="educations">
+                        </div>
+                        <p id="educationError" class="CVErrorColor" hidden="true"
+                           data-key="Vaelg_en_uddannelse_error">Du skal angive en uddannelse</p>
+                        <p id="educationNote" hidden="true" data-key="Vaelg_en_uddannelse_note">Den valgte
+                            uddannelse har lønnet praktik</p>
+                    </div>
                 </div>
                 <!-- underviser i med inputfelt -->
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1" data-key="Underviser_i">Underviser i</label>
                         <input class="form-control" id="teaches" name="teaches" value='{{teaches}}'
-                        placeholder="fx IT-sikkerhed, teknologi, programmering">
+                               placeholder="fx IT-sikkerhed, teknologi, programmering">
                     </div>
                 </div>
             </div>
@@ -143,32 +149,33 @@
             <div class="form-group">
                 <!-- textarea kort præsentation -->
                 <label for="exampleFormControlTextarea1" data-key="Kort_praesentation">Kort præsentation</label>
-                <textarea class="form-control" rows="3" id="about" name="about" placeholder="Her har du muligheden for skrive en kort præsentation om dig selv. Hvis du har nogle kvalifikationer, som ikke passer i de andre felter, kan du også nævne dem her."
-                    data-key="Om_mig_placeholder">{{about}}</textarea>
+                <textarea class="form-control" rows="3" id="about" name="about"
+                          placeholder="Her har du muligheden for skrive en kort præsentation om dig selv. Hvis du har nogle kvalifikationer, som ikke passer i de andre felter, kan du også nævne dem her."
+                          data-key="Om_mig_placeholder">{{about}}</textarea>
             </div>
             <div class="form-group required">
                 <!-- textarea med erhvervserfaring -->
                 <label for="exampleFormControlTextarea1" data-key="Erhvervserfaring">Erhvervserfaring</label>
                 <textarea class="form-control" rows="3" id="erhvervserfaring" name="erhvervserfaring"
-                    placeholder="fx
+                          placeholder="fx
 - 2002-nu: Adjunkt hos Zealand Sjællands Erhvervsakademi
 - 1996-2001: IT-konsulent hos Telia
 - 1993-1995: Salgsassistent hos Telia
 - 1987-1988: Flaskedreng i Netto"
-                    data-key="Erhvervserfaring_placeholder">{{erhvervserfaring}}</textarea>
+                          data-key="Erhvervserfaring_placeholder">{{erhvervserfaring}}</textarea>
                 <p id="erhvervserfaringError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
                     udfyldes</p>
             </div>
             <div class="form-group required">
                 <!-- textarea med uddannelse -->
                 <label for="exampleFormControlTextarea1" for="tidligere_uddannelse"
-                    data-key="Udannelse">Uddannelse</label>
+                       data-key="Udannelse">Uddannelse</label>
                 <textarea class="form-control" rows="3" id="tidligere_uddannelse" name="tidligere_uddannelse"
                           placeholder="fx
 - 2005: CCISP certifikat i IT-sikkerhed
 - 1991-1996: Cand.it. v. Københavns Universitet
 - 1988-1991: HHX Næstved"
-                    data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea>
+                          data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea>
                 <p id="tidligere_uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
                     udfyldes</p>
             </div>
@@ -186,7 +193,8 @@
                 <!-- textarea med interesser -->
                 <label for="exampleFormControlTextarea1" data-key="Interesser">Interesser</label>
                 <textarea class="form-control" rows="3" id="interesser" name="interesser"
-                    placeholder="fx bagning, fitness og badminton" data-key="Valgfri_placeholder">{{interesser}}</textarea>
+                          placeholder="fx bagning, fitness og badminton"
+                          data-key="Valgfri_placeholder">{{interesser}}</textarea>
             </div>
             <div class="form-group required">
                 <!-- it-kompetencer om mig -->
@@ -202,12 +210,16 @@
                 <label data-key="Tilgængelighed">Tilgængelighed</label>
                 <div class="form-radio ml-3 ">
                     <input {{checkedStateRadio offentlig 'tilgaengelighed1' }} type="radio" id="tilgaengelighed1"
-                        name="tilgaengelighed" class="form-control-input tilgaengelighed" value=1>
+                                                                               name="tilgaengelighed"
+                                                                               class="form-control-input tilgaengelighed"
+                                                                               value=1>
                     <label class="form-control-label" for="tilgaengelighed1" data-key="Offentlig">Offentlig</label>
                 </div>
                 <div class="form-radio tilgaengelighed ml-3">
                     <input {{checkedStateRadio offentlig 'tilgaengelighed2' }} type="radio" id="tilgaengelighed2"
-                        name="tilgaengelighed" class="form-control-input tilgaengelighed" value=0>
+                                                                               name="tilgaengelighed"
+                                                                               class="form-control-input tilgaengelighed"
+                                                                               value=0>
                     <label class="form-control-label" for="tilgaengelighed2" data-key="Privat">Privat</label>
                     <p id="tilgaengelighedError" class="CVErrorColor" hidden="true" data-key="Tilgængelighed_error">Du
                         skal vælge om dit CV skal være offentligt eller privat</p>
@@ -218,7 +230,8 @@
                     <div>
                         <div class="d-flex flex-row align-items-center h-100 mb-2">
                             <i class="fas fa-info-circle"></i>
-                            <h6 class="ml-1 font-weight-bold my-0" data-key="CV_info_box_title">Gyldigheden af dit CV</h6>
+                            <h6 class="ml-1 font-weight-bold my-0" data-key="CV_info_box_title">Gyldigheden af dit
+                                CV</h6>
                         </div>
                         <div data-key="CV_info_box">
                             Dit CV er gyldigt så længe du har været aktiv indenfor de seneste 6 måneder eller du
@@ -254,6 +267,7 @@
             });
         }
     }
+
     setDefaultSelect();
 
     let expanded = false;
@@ -282,7 +296,7 @@
             checkboxes.forEach(checkbox => {
                 checkbox.checked = false;
             });
-            
+
         }
         checkCount();
     }
