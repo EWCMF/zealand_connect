@@ -2,7 +2,7 @@
 function authorizeUser (...permittedRoles) {
     return (req, res, next) => {
         if (req.user == null) {
-            console.log(`IP address ${req.connection.remoteAddress} requested access to unauthorized route ${req.originalUrl}`)
+            console.log(`IP address ${req.ip} requested access to unauthorized route ${req.originalUrl}`)
             return res.redirect('/login')
         } else if (permittedRoles.includes('student') && res.locals.isStudent) {
             next();
@@ -11,7 +11,7 @@ function authorizeUser (...permittedRoles) {
         } else if (permittedRoles.includes('admin') && res.locals.isAdmin){
             next();
         } else {
-            console.log(`IP address ${req.connection.remoteAddress} requested access to unauthorized route ${req.originalUrl}`)
+            console.log(`IP address ${req.ip} requested access to unauthorized route ${req.originalUrl}`)
             return res.redirect('/login')
         }
     };
