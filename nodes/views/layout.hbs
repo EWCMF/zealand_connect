@@ -68,21 +68,25 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link hand-hover" href="/cookie-policy"
-                            data-key="Cookie-politik">Cookie-politik</a>
+                           data-key="Cookie-politik">Cookie-politik</a>
                     </li>
                     {{#if isStudent}}
                         <li class="nav-item">
                             <a class="nav-link hand-hover" href="/data-consent"
                                data-key="Samtykke">Samtykkeerklæring</a>
                         </li>
-                    {{/if}}
-                    {{#if isCompany}}
+                    {{else if isProfessor}}
+                        <li class="nav-item">
+                            <a class="nav-link hand-hover" href="/data-consent"
+                               data-key="Samtykke">Samtykkeerklæring</a>
+                        </li>
+                    {{else if isCompany}}
                         <li class="nav-item">
                             <a class="nav-link hand-hover" href="/data-consent/company"
                                data-key="Samtykke">Samtykkeerklæring</a>
                         </li>
                     {{/if}}
-                    
+
                     <!--
                     <li class="nav-item">
                         <a class="nav-link" href="/om" data-key="Om_ZealandConnect">Om Zealand Connect</a>

@@ -150,7 +150,8 @@ function getLangdata() {
 
                 // Navbar
                 "aKontakt": "Contact",
-                "aAlleCVer": "All CV's",
+                "aStudentCVer": "Student CV's",
+                "aProfessorCVer": "Professor CV's",
                 "aAllePraktikopslag": "All company posts",
                 "aAlleVirksomheder": "All companies",
                 "aLavPraktikOpslag": "Create post",
