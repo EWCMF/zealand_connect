@@ -87,6 +87,8 @@ app.use(cookieSession({
   keys: ["this_is_the_secret_cookie_encryption_key"]
 }));
 
+app.set('trust proxy', '172.18.0.1');
+
 // Opdaterer session hvis et minut er gået siden sidst (Bevarer login session).
 app.use(function (req, res, next) {
   req.session.nowInMinutes = Math.floor(Date.now() / 60e3)
