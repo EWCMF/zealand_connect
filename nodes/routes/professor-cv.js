@@ -271,4 +271,262 @@ router.get('/delete', authorizeUser('professor'), async function (req, res, next
     }
 });
 
+router.get('/:id/create_pdf', function (req, res, next) {
+    let id = req.params.id
+
+    const pdf = require('pdfkit'); // bruger pdfkit til at lave gennerer vores pdf
+    const fs = require('fs');
+
+    const today = new Date();
+    const date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+    let myDoc = new pdf({
+        bufferPages: true,
+        size: 'A4'
+    });
+    let cvOutside;
+    const pdfStream = fs.createWriteStream('public/pdf/temp.pdf', {
+        encoding: 'utf8'
+    });
+    myDoc.pipe(pdfStream);
+    models.ProfessorCV.findOne({
+        raw: true,
+        nest: true,
+        where: {
+            id: parseInt(id)
+        },
+        include: [{
+            model: models.Professor,
+            as: 'student'
+        }],
+    }).then((cv) => {
+        cvOutside = cv;
+        for (const key in cv) {
+            if (Object.hasOwnProperty.call(cv, key)) {
+                const element = cv[key];
+
+                if (typeof element === 'string') {
+                    cv[key] = element.replace(/(\r\n|\n|\r)/gm, "\n");
+                }
+            }
+        }
+
+        let picPath;
+        if (cv.professor.profilbillede != null) {
+            picPath = uploadFolder + cv.professor.profilbillede;
+        } else {
+            picPath = 'public/images/dummy-profile-pic.jpg';
+        }
+
+        // Håndter oversættelse
+        let lang = reqLang(req, res);
+        let texts;
+        if (lang == 'en') {
+            texts = {
+                dato_downloadet: "Date downloaded: ",
+                telefon: "Phone:",
+                arbejdssted: "Workplace:",
+                by: "City:",
+                stilling: "Position:",
+                tilknyttet_uddannelse: "Associated education:",
+                teaches: "Teaches:",
+                overskrift: "CV (Curriculum Vitae)",
+                om_mig: "About me",
+                erhvervserfaring: "Work experience",
+                uddannelse: "Education",
+                tidligere_uddannelse: "Past education",
+                interesser: "Hobbies",
+                it_kompetencer: "IT skills",
+                sprog: "Language",
+                ikke_angivet: "Not specified",
+                side: "Page ",
+                af: " of "
+            }
+        } else {
+            texts = {
+                dato_downloadet: "Dato downloadet: ",
+                telefon: "Telefon:",
+                arbejdssted: "Arbejdssted:",
+                by: "By:",
+                stilling: "Stilling: ",
+                tilknyttet_uddannelse: "Tilknyttet uddannelse: ",
+                teaches: "Underviser i:",
+                overskrift: "Overskrift",
+                om_mig: "Om mig",
+                erhvervserfaring: "Erhvervserfaring",
+                uddannelse: "Uddannelse",
+                tidligere_uddannelse: "Tidligere uddannelse",
+                interesser: "Interesser",
+                it_kompetencer: "It-kompetencer",
+                sprog: "Sprog",
+                ikke_angivet: "Ikke angivet",
+                side: "Side ",
+                af: " af "
+            }
+        }
+
+        // Før linie
+        myDoc.font(path.normalize('fonts/arial.ttf'));
+
+        myDoc.fillColor('black')
+            .fontSize(10)
+            .text(texts.dato_downloadet + date, 12, 12);
+
+        myDoc.image(picPath, 40, 40, {
+            width: 150,
+            height: 150
+        });
+
+        myDoc.fontSize(24)
+            .lineGap(16)
+            .text(cv.student.fornavn + " " + cv.student.efternavn, 220, 40);
+
+        myDoc.fontSize(11)
+            .lineGap(16.5)
+            .text('Email:')
+            .moveUp()
+            .text(cv.email, 300);
+
+        myDoc.text(texts.telefon, 220)
+            .moveUp()
+            .text(cv.telefon, 300);
+
+        let city = cv.postcode != null && cv.postcode != '' ? cv.postcode + " " + cv.city : texts.ikke_angivet;
+        myDoc.text(texts.by, 220)
+            .moveUp()
+            .text(city, 300);
+
+        let linkedIn = cv.linkedIn != null && cv.linkedIn != '' ? cv.linkedIn : texts.ikke_angivet;
+        myDoc.text('LinkedIn:', 220)
+            .moveUp()
+            .text(linkedIn, 300);
+
+        myDoc.fillColor('black')
+        myDoc.moveTo(8, myDoc.y);
+
+        let a4Width = 595.28;
+        myDoc.lineTo(a4Width - 8, myDoc.y)
+            .stroke()
+
+        // Efter linie
+
+        myDoc.lineGap(8)
+        myDoc.moveDown();
+
+        // Overskrift
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.overskrift, 50);
+
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.overskrift);
+
+        myDoc.moveDown(2);
+
+
+        // Om mig
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.om_mig, 50);
+
+        let om_mig = cv.erhvervserfaring ? cv.erhvervserfaring : texts.ikke_angivet
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(om_mig);
+
+        myDoc.moveDown(2);
+
+        // Erhvervserfaring
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.erhvervserfaring);
+
+        let erhvervserfaring = cv.erhvervserfaring != null && cv.erhvervserfaring != '' ? cv.erhvervserfaring : texts.ikke_angivet
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(erhvervserfaring);
+
+        myDoc.moveDown(2);
+
+        // Uddannelse
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.uddannelse);
+
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.education.name);
+
+        myDoc.moveDown(2);
+
+
+        // Interesser
+        let interesser = cv.interesser != null && cv.interesser != '' ? cv.interesser : texts.ikke_angivet
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.interesser);
+
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(interesser);
+
+        myDoc.moveDown(2);
+
+
+        // It-kompetencer
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.it_kompetencer);
+
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.it_kompetencer);
+
+        myDoc.moveDown(2);
+
+
+        // Sprog
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.sprog);
+
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.sprog);
+
+
+        let a4Height = 841.89;
+        const range = myDoc.bufferedPageRange();
+        for (i = range.start, end = range.start + range.count, range.start <= end; i < end; i++) {
+            myDoc.switchToPage(i);
+            myDoc.text(texts.side + `${i + 1}` + texts.af + `${range.count}`, a4Width - 64, a4Height - 32);
+        }
+
+        myDoc.end();
+    });
+    pdfStream.addListener('finish', function () {
+        res.setHeader('content-type', 'application/pdf'),
+            res.download('public/pdf/temp.pdf', cvOutside.professor.fornavn + '_' + cvOutside.professor.efternavn + '.pdf')
+    });
+
+    async function deleteFile() {
+        try {
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => resolve(
+                    fs.unlinkSync('public/pdf/temp.pdf', (err) => {
+                        if (err) {
+                            console.error(err)
+                            return
+                        }
+                    })), 1000)
+            });
+            await promise;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    deleteFile();
+});
+
 module.exports = router;
