@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../models');
+const models = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
-const deleteCV = require('../persistence/cv-mapping').deleteCV;
+const deleteProCV = require('../persistence/cv-mapping').deleteProCV;
 const { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
 const { emailRegex, phoneRegex, linkRegex, postcodeRegex } = require('../constants/regex');
@@ -12,13 +12,13 @@ router.get('/', authorizeUser('professor'), async function (req, res, next) {
     var professor = res.locals.user;
 
     if (professor.cv == null) {
-        const educations = await db.Uddannelse.findAll({
+        const educations = await models.Uddannelse.findAll({
             order: [
                 ['name', 'ASC']
             ]
         });
 
-        let positions = await db.ProfessorPosition.findAll({
+        let positions = await models.ProfessorPosition.findAll({
             order: [
                 ['name', 'ASC']
             ]
@@ -33,14 +33,14 @@ router.get('/', authorizeUser('professor'), async function (req, res, next) {
         });
     }
 
-    db.ProfessorCV.findOne({
+    models.ProfessorCV.findOne({
         raw: true,
         nest: true,
         where: {
             id: parseInt(professor.cv.id)
         },
         include: [{
-            model: db.Professor,
+            model: models.Professor,
             as: 'professor'
         }]
     }).then((cv) => {
@@ -137,7 +137,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
         tidligere_projekter
     }
 
-    const [cv, created] = await db.ProfessorCV.findOrCreate({
+    const [cv, created] = await models.ProfessorCV.findOrCreate({
         where: {
             professor_id: professor.id
         },
@@ -145,13 +145,13 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     });
 
     if (!created) {
-        await db.ProfessorCV.update(json, {
+        await models.ProfessorCV.update(json, {
             where: {
                 id: cv.id
             }
         });
 
-        let associatedEducations = await db.ProfessorCV_Education.findAll({
+        let associatedEducations = await models.ProfessorCV_Education.findAll({
             where: {
                 cv_id: cv.id
             }
@@ -171,7 +171,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
         }
 
         for (const education of educations) {
-            await db.ProfessorCV_Education.findOrCreate({
+            await models.ProfessorCV_Education.findOrCreate({
                 where: {
                     cv_id: cv.id,
                     education_id: education
@@ -180,7 +180,7 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
         }
     } else {
         for (const education of educations) {
-            await db.ProfessorCV_Education.create({
+            await models.ProfessorCV_Education.create({
                 cv_id: cv.id,
                 education_id: education
             });
@@ -199,25 +199,25 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         res.status(403).render('error403', {layout: false});
     }
 
-    let educations = await db.Uddannelse.findAll({
+    let educations = await models.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]
     });
 
-    let positions = await db.ProfessorPosition.findAll({
+    let positions = await models.ProfessorPosition.findAll({
         order: [
             ['name', 'ASC']
         ]
     });
 
-    let cvEducations = await db.ProfessorCV_Education.findAll({
+    let cvEducations = await models.ProfessorCV_Education.findAll({
         where: {
             cv_id: professor.cv.id
         }
     });
 
-    let position = await db.ProfessorPosition.findByPk(professor.cv.position_id);
+    let position = await models.ProfessorPosition.findByPk(professor.cv.position_id);
 
     let educationIds = []
     for (const cvEducation of cvEducations) {
@@ -250,6 +250,25 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         postcode: professor.cv.postcode,
         teaches: professor.cv.teaches
     })
+});
+
+router.get('/delete', authorizeUser('professor'), async function (req, res, next) {
+    let user = res.locals.user;
+
+    if (user instanceof models.Professor){
+        try {
+            let CV = await models.ProfessorCV.findOne({
+                where: {
+                    professor_id: user.id
+                }
+            })
+            await deleteProCV(CV.id);
+            return res.redirect('/');
+        } catch (e) {
+            res.send('Couldn\'t delete CV');
+            console.log(e)
+        }
+    }
 });
 
 module.exports = router;

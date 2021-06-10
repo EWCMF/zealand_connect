@@ -292,8 +292,9 @@ router.get('/delete', authorizeUser('student'), async function (req, res, next) 
                     student_id: user.id
                 }
             })
-            deleteCV(CV.id)
+            await deleteCV(CV.id)
         } catch (e) {
+            res.send('Couldn\'t delete CV');
             console.log(e)
         }
     }
