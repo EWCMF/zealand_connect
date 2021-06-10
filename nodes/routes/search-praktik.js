@@ -436,7 +436,7 @@ router.get('/', async function (req, res, next) {
 
     let preconfigEducationFilter;
     if (user) {
-        if (user.cv && user instanceof db.Student) {
+        if (user.cv && user instanceof models.Student) {
             if (Object.keys(req.query).length === 0) {
                 req.query.udd = [user.cv.fk_education];
 
