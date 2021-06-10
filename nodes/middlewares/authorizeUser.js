@@ -2,7 +2,8 @@
 function authorizeUser (...permittedRoles) {
     return (req, res, next) => {
         if (req.user == null) {
-            return res.status(403).render('error403', {layout: false});
+            console.log(`IP address ${req.connection.remoteAddress} requested access to unauthorized route ${req.originalUrl}`)
+            return res.redirect('/login')
         } else if (permittedRoles.includes('student') && res.locals.isStudent) {
             next();
         } else if (permittedRoles.includes('company') && res.locals.isCompany) {
@@ -10,7 +11,8 @@ function authorizeUser (...permittedRoles) {
         } else if (permittedRoles.includes('admin') && res.locals.isAdmin){
             next();
         } else {
-            return res.status(403).render('error403', {layout: false});
+            console.log(`IP address ${req.connection.remoteAddress} requested access to unauthorized route ${req.originalUrl}`)
+            return res.redirect('/login')
         }
     };
 }
