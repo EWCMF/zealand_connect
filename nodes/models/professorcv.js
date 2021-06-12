@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'position_id',
         as: 'position'
       });
+
+      ProfessorCV.belongsTo(models.ProfessorCampus, {
+        foreignKey: 'campus_id',
+        as: 'campus',
+      })
     }
   };
   ProfessorCV.init({

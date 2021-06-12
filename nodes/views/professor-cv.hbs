@@ -53,29 +53,20 @@
             </div>
 
             <div class="row">
-                <!-- Arbejdssted med inputfelt -->
+                <!-- Afdeling med inputfelt -->
                 <div class="col-sm-4">
                     <div class="form-group required">
-                        <label for="exampleFormControlSelect1" data-key="Arbejdssted">Arbejdssted</label>
-                        <input class="form-control" id="arbejdssted" name="arbejdssted" value='{{arbejdssted}}'
-                               placeholder="fx Zealand Sjællands Erhvervsakademi">
-                        <p id="arbejdsstedError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
-                            udfyldes</p>
-                    </div>
-                </div>
-                <!-- Postnr med inputfelt -->
-                <div class="col-sm-4">
-                    <div class="form-group required">
-                        <label for="exampleFormControlInput1" data-key="Postnummer">Postnummer for dit arbejdssted</label>
-                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
-                              title="Når du indtaster postnummer vises den knyttede by automatisk på CV'et. Kun danske postnumre er understøttet."
-                              data-Key="Postnummer_tooltip">?</span>
-                        <input class="form-control" id="postcode" name="postcode" value='{{postcode}}'
-                               placeholder="fx 4600">
-                        <p id="postcodeError" class="CVErrorColor" hidden="true" data-key="Postnummer_errorCV">Du skal
-                            angive postnummeret for dit arbejdssted. Kun danske postnumre er tilladte og angiv kun
-                            tallene.
-                        </p>
+                        <label for="afdeling" data-key="Afdeling">Afdeling</label>
+                        <select class="form-control" id="afdeling" name="afdeling">
+                            <option selected disabled hidden value="" data-key="Vælg_din_afdeling">Vælg din afdeling
+                            </option>
+                            {{#each campuses}}
+                            <option {{selectState name ../campus }} value={{id}} data-key="{{name}}">{{name}}
+                            </option>
+                            {{/each}}
+                        </select>
+                        <p id="afdelingError" class="CVErrorColor" hidden="false"
+                            data-key="Afdeling_error">Du skal vælge en Afdeling</p>
                     </div>
                 </div>
                 <!-- Sprog med inputfelt -->
@@ -86,6 +77,15 @@
                                value='{{sprog}}'>
                         <p id="sprogError" class="CVErrorColor" hidden="true" data-key="Sprog_error">Du skal skrive dit
                             ønskede sprog her</p>
+                    </div>
+                </div>
+                <!-- Hjemmeside med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1" data-key="Hjemmeside">Hjemmeside</label>
+                        <input class="form-control" placeholder="fx https://www.eksempel.dk" id="hjemmeside" name="hjemmeside"
+                               value='{{sprog}}'>
+                        <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-key="Hjemmeside_error">Du skal skrive et gyldigt link</p>
                     </div>
                 </div>
             </div>

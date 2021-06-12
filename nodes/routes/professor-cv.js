@@ -18,7 +18,13 @@ router.get('/', authorizeUser('professor'), async function (req, res, next) {
             ]
         });
 
-        let positions = await models.ProfessorPosition.findAll({
+        const positions = await models.ProfessorPosition.findAll({
+            order: [
+                ['name', 'ASC']
+            ]
+        });
+
+        const campuses = await models.ProfessorCampus.findAll({
             order: [
                 ['name', 'ASC']
             ]
@@ -30,6 +36,7 @@ router.get('/', authorizeUser('professor'), async function (req, res, next) {
             profil: professor.fornavn + " " + professor.efternavn,
             email: professor.email,
             educations: educations,
+            campuses: campuses,
         });
     }
 
@@ -199,13 +206,19 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         res.status(403).render('error403', {layout: false});
     }
 
-    let educations = await models.Uddannelse.findAll({
+    const educations = await models.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]
     });
 
-    let positions = await models.ProfessorPosition.findAll({
+    const positions = await models.ProfessorPosition.findAll({
+        order: [
+            ['name', 'ASC']
+        ]
+    });
+
+    const campuses = await models.ProfessorCampus.findAll({
         order: [
             ['name', 'ASC']
         ]
@@ -218,6 +231,7 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
     });
 
     let position = await models.ProfessorPosition.findByPk(professor.cv.position_id);
+    let campus = await models.ProfessorCampus.findByPk(professor.cv.campus_id);
 
     let educationIds = []
     for (const cvEducation of cvEducations) {
@@ -230,6 +244,8 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         position: position.name,
         educations: educations,
         educationIds: JSON.stringify(educationIds),
+        campuses: campuses,
+        campus: campus,
         language: reqLang(req, res),
         uddannelse: professor.cv.uddannelse,
         arbejdssted: professor.cv.arbejdssted,
