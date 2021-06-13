@@ -25,6 +25,7 @@
     "formidable": "^1.2.2",
     "handlebars-paginate": "^0.1.0",
     "hbs": "^4.1.1",
+    "html-to-text": "^8.0.0",
     "http-errors": "~1.8.0",
     "image-size": "^0.9.3",
     "install": "^0.13.0",

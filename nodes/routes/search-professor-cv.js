@@ -535,6 +535,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
         ],
     }).then((cv) => {
         cvOutside = cv;
+        cv = cv.toJSON();
         for (const key in cv) {
             if (Object.hasOwnProperty.call(cv, key)) {
                 const element = cv[key];
@@ -652,7 +653,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
                 eduText += ", "
             }
         }
-        myDoc.text(eduText, 300)
+        eduText += "\n\n";
+        myDoc.text(eduText, 300, null, {
+            lineGap: 1
+        });
 
         let teaches = cv.teaches != null && cv.teaches != '' ? cv.teaches : texts.ikke_angivet;
         myDoc.text(texts.teaches, 220)
@@ -729,12 +733,13 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
         myDoc.moveDown(2);
 
-        // Tidligere uddannelse
+        // Tidligere projekter
         myDoc.fontSize(16)
             .lineGap(16)
             .text(texts.projekter);
-
-        let projekter = cv.tidligere_projekter != null && cv.tidligere_projekter != '' ? cv.tidligere_projekter : texts.ikke_angivet
+        
+        const { convert } = require('html-to-text');
+        let projekter = cv.tidligere_projekter != null && cv.tidligere_projekter != '' ? convert(cv.tidligere_projekter) : texts.ikke_angivet
         myDoc.fontSize(10)
             .lineGap(2)
             .text(projekter);
