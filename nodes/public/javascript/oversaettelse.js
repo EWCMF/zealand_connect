@@ -621,7 +621,7 @@ function getLangdata() {
                 "Tidligere_projekter": "Past projects",
                 "Interesser": "Hobbies",
                 "Hjemmeside:": "Website:",
-                "Afdeling:": "Department:",
+                "Afdeling:": "Campus:",
                 "Tilknyttet_uddannelse:": "Associated education:",
                 "Stilling:": "Position:",
                 "Underviser_i:  ": "Teaches:"
