@@ -614,7 +614,17 @@ function getLangdata() {
                 // Kontakt
                 "Praktikkoordinatorer": "Internship Coordinators",
                 "Contact_headline_2": "Development and support of Zealand Connect",
-                "Alle_uddannelser": "All educations"
+                "Alle_uddannelser": "All educations",
+
+                //Professor CV
+                "Kort_præsentation": "Short presentation",
+                "Tidligere_projekter": "Past projects",
+                "Interesser": "Hobbies",
+                "Hjemmeside:": "Website:",
+                "Afdeling:": "Department:",
+                "Tilknyttet_uddannelse:": "Associated education:",
+                "Stilling:": "Position:",
+                "Underviser_i:  ": "Teaches:"
             }
         }
     }

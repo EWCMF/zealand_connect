@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="row">
-                    <h6 class="row col-lg-3" data-key="Afdeling">
+                    <h6 class="row col-lg-3" data-key="Afdeling:">
                         Afdeling:
                     </h6>
                     <h6 class="row col-lg-7 mb-3">
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="row">
-                    <h6 class="row col-lg-3" data-key="Tilknyttet_uddannelse">
+                    <h6 class="row col-lg-3" data-key="Tilknyttet_uddannelse:">
                         Tilknyttet uddannelse:
                     </h6>
                     <h6 class="row col-lg-7 mb-3">
@@ -88,7 +88,7 @@
                         {{#if @last}}
                         <div data-key="{{name}}">{{name}}</div>
                         {{else}}
-                        <div data-key="{{name}}">{{name}},&nbsp;</div>
+                        <div data-key="{{name}}">{{name}}</div><div>,&nbsp;</div>
                         {{/if}}
 
                         {{/each}}
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="row">
-                    <h6 class="row col-lg-3">
+                    <h6 class="row col-lg-3" data-key="Stilling:">
                         Stilling:
                     </h6>
                     <h6 class="row col-lg-7 mb-3">
@@ -105,7 +105,7 @@
                 </div>
 
                 <div class="row">
-                    <h6 class="row col-lg-3">
+                    <h6 class="row col-lg-3" data-key="Underviser_i:">
                         Underviser i:
                     </h6>
                     {{#if json.teaches}}
