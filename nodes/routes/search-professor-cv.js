@@ -509,7 +509,6 @@ router.get('/:id/create_pdf', function (req, res, next) {
     });
     myDoc.pipe(pdfStream);
     models.ProfessorCV.findOne({
-        raw: true,
         nest: true,
         where: {
             id: parseInt(id)
@@ -517,7 +516,23 @@ router.get('/:id/create_pdf', function (req, res, next) {
         include: [{
             model: models.Professor,
             as: 'professor'
-        }],
+        },
+            {
+                model: models.Uddannelse,
+                attributes: ['name'],
+                through: models.ProfessorCV_Education
+            },
+            {
+                model: models.ProfessorPosition,
+                attributes: ['name'],
+                as: 'position'
+            },
+            {
+                model: models.ProfessorCampus,
+                attributes: ['name'],
+                as: 'campus'
+            }
+        ],
     }).then((cv) => {
         cvOutside = cv;
         for (const key in cv) {
@@ -544,16 +559,18 @@ router.get('/:id/create_pdf', function (req, res, next) {
             texts = {
                 dato_downloadet: "Date downloaded: ",
                 telefon: "Phone:",
-                arbejdssted: "Workplace:",
+                website: "Website:",
+                campus: "Campus:",
                 by: "City:",
-                stilling: "Position:",
-                tilknyttet_uddannelse: "Associated education:",
+                position: "Position:",
+                uddannelser: "Educations:",
                 teaches: "Teaches:",
                 overskrift: "CV (Curriculum Vitae)",
-                om_mig: "About me",
+                about: "Short presentation",
                 erhvervserfaring: "Work experience",
                 uddannelse: "Education",
                 tidligere_uddannelse: "Past education",
+                projekter: "Past projects",
                 interesser: "Hobbies",
                 it_kompetencer: "IT skills",
                 sprog: "Language",
@@ -565,16 +582,19 @@ router.get('/:id/create_pdf', function (req, res, next) {
             texts = {
                 dato_downloadet: "Dato downloadet: ",
                 telefon: "Telefon:",
+                website: "Hjemmeside:",
+                campus: "Afdeling:",
                 arbejdssted: "Arbejdssted:",
                 by: "By:",
-                stilling: "Stilling: ",
-                tilknyttet_uddannelse: "Tilknyttet uddannelse: ",
+                position: "Stilling: ",
+                uddannelser: "Uddannelser: ",
                 teaches: "Underviser i:",
-                overskrift: "Overskrift",
-                om_mig: "Om mig",
+                overskrift: "CV (Curriculum Vitae)",
+                about: "Kort præsentation",
                 erhvervserfaring: "Erhvervserfaring",
                 uddannelse: "Uddannelse",
                 tidligere_uddannelse: "Tidligere uddannelse",
+                projekter: "Tidligere projekter",
                 interesser: "Interesser",
                 it_kompetencer: "It-kompetencer",
                 sprog: "Sprog",
@@ -610,10 +630,39 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .moveUp()
             .text(cv.telefon, 300);
 
-        let city = cv.postcode != null && cv.postcode != '' ? cv.postcode + " " + cv.city : texts.ikke_angivet;
-        myDoc.text(texts.by, 220)
+        let campus = cv.campus != null && cv.campus != '' ? cv.campus.name : texts.ikke_angivet;
+        myDoc.text(texts.campus, 220)
             .moveUp()
-            .text(city, 300);
+            .text(campus, 300);
+
+        let position = cv.position != null && cv.position != '' ? cv.position.name : texts.ikke_angivet;
+        myDoc.text(texts.position, 220)
+            .moveUp()
+            .text(position, 300);
+
+        // Tilknyttede uddannelser
+        myDoc.text(texts.uddannelser, 220)
+            .moveUp()
+
+        let eduText = "";
+        for (let i = 0; i < cv.Uddannelses.length; i++) {
+            let education = cv.Uddannelses[i].name
+            eduText += education;
+            if (i < cv.Uddannelses.length - 1) {
+                eduText += ", "
+            }
+        }
+        myDoc.text(eduText, 300)
+
+        let teaches = cv.teaches != null && cv.teaches != '' ? cv.teaches : texts.ikke_angivet;
+        myDoc.text(texts.teaches, 220)
+            .moveUp()
+            .text(teaches, 300);
+
+        let website = cv.website != null && cv.website != '' ? cv.website : texts.ikke_angivet;
+        myDoc.text(texts.website, 220)
+            .moveUp()
+            .text(website, 300);
 
         let linkedIn = cv.linkedIn != null && cv.linkedIn != '' ? cv.linkedIn : texts.ikke_angivet;
         myDoc.text('LinkedIn:', 220)
@@ -647,12 +696,12 @@ router.get('/:id/create_pdf', function (req, res, next) {
         // Om mig
         myDoc.fontSize(16)
             .lineGap(16)
-            .text(texts.om_mig, 50);
+            .text(texts.about, 50);
 
-        let om_mig = cv.erhvervserfaring ? cv.erhvervserfaring : texts.ikke_angivet
+        let about = cv.about ? cv.about : texts.ikke_angivet
         myDoc.fontSize(10)
             .lineGap(2)
-            .text(om_mig);
+            .text(about);
 
         myDoc.moveDown(2);
 
@@ -668,6 +717,30 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
         myDoc.moveDown(2);
 
+        // Tidligere uddannelse
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.tidligere_uddannelse);
+
+        let tidligere_uddannelse = cv.tidligere_uddannelse != null && cv.tidligere_uddannelse != '' ? cv.tidligere_uddannelse : texts.ikke_angivet
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(tidligere_uddannelse);
+
+        myDoc.moveDown(2);
+
+        // Tidligere uddannelse
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.projekter);
+
+        let projekter = cv.tidligere_projekter != null && cv.tidligere_projekter != '' ? cv.tidligere_projekter : texts.ikke_angivet
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(projekter);
+
+        myDoc.moveDown(2);
+
         // Interesser
         let interesser = cv.interesser != null && cv.interesser != '' ? cv.interesser : texts.ikke_angivet
         myDoc.fontSize(16)
@@ -680,6 +753,14 @@ router.get('/:id/create_pdf', function (req, res, next) {
 
         myDoc.moveDown(2);
 
+        // Sprog
+        myDoc.fontSize(16)
+            .lineGap(16)
+            .text(texts.sprog);
+
+        myDoc.fontSize(10)
+            .lineGap(2)
+            .text(cv.sprog);
 
         // It-kompetencer
         myDoc.fontSize(16)
@@ -691,17 +772,6 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .text(cv.it_kompetencer);
 
         myDoc.moveDown(2);
-
-
-        // Sprog
-        myDoc.fontSize(16)
-            .lineGap(16)
-            .text(texts.sprog);
-
-        myDoc.fontSize(10)
-            .lineGap(2)
-            .text(cv.sprog);
-
 
         let a4Height = 841.89;
         const range = myDoc.bufferedPageRange();
