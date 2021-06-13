@@ -762,6 +762,8 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .lineGap(2)
             .text(cv.sprog);
 
+        myDoc.moveDown(2);
+
         // It-kompetencer
         myDoc.fontSize(16)
             .lineGap(16)
@@ -770,8 +772,6 @@ router.get('/:id/create_pdf', function (req, res, next) {
         myDoc.fontSize(10)
             .lineGap(2)
             .text(cv.it_kompetencer);
-
-        myDoc.moveDown(2);
 
         let a4Height = 841.89;
         const range = myDoc.bufferedPageRange();
