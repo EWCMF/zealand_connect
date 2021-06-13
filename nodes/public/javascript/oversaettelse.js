@@ -209,7 +209,7 @@ function getLangdata() {
                 "Administrationsøkonom": "Administration Management",
                 "International Handel og Markedsføring": "International Sales and Marketing",
                 "Innovation og Entrepreneurship": "Innovation and Entrepreneurship",
-                "Bygningskontruktør": "Constructing Architect",
+                "Bygningskonstruktør": "Constructing Architect",
                 "Byggetekniker": "Building Technician",
                 "Installatør, stærkstrøm": "Electrician",
                 "VVS-installatør": "Plumbing Installer",
@@ -223,6 +223,7 @@ function getLangdata() {
                 "Multimediedesigner": "Multimedia Design and Communication",
                 "Produktionsteknolog": "Production Technology",
                 "Web Development": "Web Development",
+                "IT-sikkerhed": "IT Security",
 
                 // search-praktik
                 "Opslag": "Posts",
