@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     telefon: DataTypes.STRING,
     sprog: DataTypes.STRING,
     linkedIn: DataTypes.STRING,
+    website: DataTypes.STRING,
     postcode: DataTypes.INTEGER,
     city: DataTypes.STRING,
     arbejdssted: DataTypes.STRING,
@@ -47,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     erhvervserfaring: DataTypes.TEXT,
     tidligere_uddannelse: DataTypes.TEXT,
     tidligere_projekter: DataTypes.TEXT,
-    offentlig: DataTypes.BOOLEAN
+    offentlig: DataTypes.BOOLEAN,
+    
   }, {
     sequelize,
     modelName: 'ProfessorCV',

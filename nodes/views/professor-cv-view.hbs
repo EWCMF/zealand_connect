@@ -28,21 +28,6 @@
                 </div>
 
                 <div class="row">
-                    <h6 class="row col-lg-3" data-key="By_kolon">
-                        By:
-                    </h6>
-                    {{#if json.postcode}}
-                    <h6 class="row col-lg-7 mb-3">
-                        {{json.postcode}} {{json.city}}
-                    </h6>
-                    {{else}}
-                    <h6 class="row col-lg-7 mb-3" data-key="Ikke_angivet">
-                        Ikke angivet
-                    </h6>
-                    {{/if}}
-                </div>
-
-                <div class="row">
                     <h6 class="row col-lg-3">
                         Mail:
                     </h6>
@@ -69,11 +54,28 @@
                 </div>
 
                 <div class="row">
-                    <h6 class="row col-lg-3" data-key="Arbejdssted">
-                        Arbejdssted:
+                    <h6 class="row col-lg-3" data-key="Hjemmeside:">
+                        Hjemmeside:
+                    </h6>
+                    {{#if json.website}}
+                    <a href="//{{json.website}}">
+                        <h6 class="row col-lg-7 mb-3">
+                            {{json.website}}
+                        </h6>
+                    </a>
+                    {{else}}
+                    <h6 class="row col-lg-7 mb-3" data-key="Ikke_angivet">
+                        Ikke angivet
+                    </h6>
+                    {{/if}}
+                </div>
+
+                <div class="row">
+                    <h6 class="row col-lg-3" data-key="Afdeling">
+                        Afdeling:
                     </h6>
                     <h6 class="row col-lg-7 mb-3">
-                        {{json.arbejdssted}}
+                        {{json.campus.name}}
                     </h6>
                 </div>
 

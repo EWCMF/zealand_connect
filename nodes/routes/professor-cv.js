@@ -65,8 +65,9 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let sprog = req.body.sprog;
     let telefon = req.body.telefon;
     let linkedIn = req.body.linkedIn;
-    let arbejdssted = req.body.arbejdssted;
-    let position_id = req.body.stilling;
+    let website = req.body.website;
+    let campus_id = req.body.campus_id;
+    let position_id = req.body.position_id;
     let educations = req.body.educations;
     let teaches = req.body.teaches;
     let about = req.body.about;
@@ -75,18 +76,33 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let tidligere_uddannelse = req.body.tidligere_uddannelse;
     let interesser = req.body.interesser;
     let offentlig = req.body.tilgaengelighed;
-    let postcode = req.body.postcode;
     let tidligere_projekter = req.body.tidligere_projekter;
 
     let emailWrittenCorrectly = emailRegex.test(email);
     let phoneCheck = phoneRegex.test(telefon);
     let linkedInKorrekt = linkedIn.length !== 0 ? linkRegex.test(linkedIn) : true;
-    let postcodeKorrekt = postcode.length !== 0 ? postcodeRegex.test(postcode) : true;
+    let websiteKorrekt = website.length !== 0 ? linkRegex.test(website) : true;
 
-    if (!emailWrittenCorrectly || !phoneCheck || !email || !overskrift ||
-        !sprog || !arbejdssted || !position_id || !tidligere_uddannelse || !erhvervserfaring ||
-        !educations || !it_kompetencer || !linkedInKorrekt || !postcodeKorrekt || !postcode) {
-        return res.send('One or more values in the form are missing');
+    let validation = [
+        emailWrittenCorrectly,
+        phoneCheck,
+        email,
+        overskrift,
+        sprog,
+        campus_id,
+        position_id,
+        tidligere_uddannelse,
+        erhvervserfaring,
+        educations,
+        it_kompetencer,
+        linkedInKorrekt,
+        websiteKorrekt
+    ]
+
+    for (const element of validation) {
+        if (element == false) {
+            return res.send('One or more values in the form are missing');
+        }
     }
 
     educations = JSON.parse(educations);
@@ -94,29 +110,29 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
     let lang = reqLang(req, res);
     let besked = lang !== 'en' ? "CV'et er gemt." : "The CV is saved."
 
-    let geo_lat;
-    let geo_lon;
-    let city;
+    // let geo_lat;
+    // let geo_lon;
+    // let city;
 
-    if (postcode.length != 0) {
-        const url = 'https://dawa.aws.dk/postnumre?nr=' + postcode;
-        const res = await fetch(url);
-        const data = await res.json();//assuming data is json
-        if (data[0].hasOwnProperty('href')) {
-            geo_lat = +data[0].visueltcenter[1];
-            geo_lon = +data[0].visueltcenter[0];
-            city = data[0].navn;
-        } else {
-            geo_lat = null;
-            geo_lon = null;
-            city = null;
-        }
-    } else {
-        postcode = null;
-        geo_lat = null;
-        geo_lon = null;
-        city = null;
-    }
+    // if (postcode.length != 0) {
+    //     const url = 'https://dawa.aws.dk/postnumre?nr=' + postcode;
+    //     const res = await fetch(url);
+    //     const data = await res.json();//assuming data is json
+    //     if (data[0].hasOwnProperty('href')) {
+    //         geo_lat = +data[0].visueltcenter[1];
+    //         geo_lon = +data[0].visueltcenter[0];
+    //         city = data[0].navn;
+    //     } else {
+    //         geo_lat = null;
+    //         geo_lon = null;
+    //         city = null;
+    //     }
+    // } else {
+    //     postcode = null;
+    //     geo_lat = null;
+    //     geo_lon = null;
+    //     city = null;
+    // }
 
 
     let professor_id = professor.id
@@ -125,22 +141,23 @@ router.post('/submit', authorizeUser('professor'), async function (req, res, nex
         overskrift,
         about,
         teaches,
-        arbejdssted,
+        campus_id,
         position_id,
         email,
         sprog,
         telefon,
         linkedIn,
+        website,
         it_kompetencer,
         erhvervserfaring,
         tidligere_uddannelse,
         interesser,
         offentlig,
         professor_id,
-        postcode,
-        city,
-        geo_lat,
-        geo_lon,
+        // postcode,
+        // city,
+        // geo_lat,
+        // geo_lon,
         tidligere_projekter
     }
 
@@ -245,7 +262,7 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         educations: educations,
         educationIds: JSON.stringify(educationIds),
         campuses: campuses,
-        campus: campus,
+        campus: campus.name,
         language: reqLang(req, res),
         uddannelse: professor.cv.uddannelse,
         arbejdssted: professor.cv.arbejdssted,
@@ -256,6 +273,7 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         sprog: professor.cv.sprog,
         telefon: professor.cv.telefon,
         linkedIn: professor.cv.linkedIn,
+        website: professor.cv.website,
         about: professor.cv.about,
         it_kompetencer: professor.cv.it_kompetencer,
         erhvervserfaring: professor.cv.erhvervserfaring,

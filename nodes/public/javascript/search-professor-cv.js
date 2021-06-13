@@ -152,14 +152,7 @@ function submitForm(formElement) {
 
     handleInputArrayAndSetToForm(formData, 'udd');
     handleInputArrayAndSetToForm(formData, 'lnd');
-
-    let pos = [];
-    if (document.getElementById('inputPost').value != 0) {
-        pos.push(document.getElementById('inputPost').value)
-        formData.set('pos', pos);
-    } else {
-        formData.delete('pos');
-    }
+    handleInputArrayAndSetToForm(formData, 'loc');
 
     let s = [];
     if (document.getElementById('inputSearch').value) {
@@ -230,6 +223,7 @@ function checkCollapse(key, collapse, collapseHeader) {
 }
 checkCollapse('udd', 'collapse1', 'collapse1Header');
 checkCollapse('lnd', 'collapse2', 'collapse2Header');
+checkCollapse('loc', 'collapse3', 'collapse3Header');
 
 function checkAddressSearch() {
     const url = new URL(window.location.href);
@@ -261,5 +255,4 @@ function checkCollapseSearch(id, key, collapse, collapseHeader) {
         document.getElementById(id).value = url.searchParams.get(key);
     }
 }
-checkCollapseSearch('inputPost', 'pos', 'collapse3', 'collapse3Header');
 checkCollapseSearch('inputSearch', 'search', 'collapse5', 'collapse5Header');

@@ -48,10 +48,14 @@ async function fetchData(page, parameters, res) {
         [Op.or]: []
     };
 
+    let campus_id = {
+        [Op.or]: []
+    }
+
     let where = {
         id,
         sprog,
-        postcode,
+        campus_id,
         offentlig: true
     };
 
@@ -117,14 +121,14 @@ async function fetchData(page, parameters, res) {
             }
         }
 
-        if (key.includes('pos')) {
+        if (key.includes('loc')) {
             let values = parameters[key];
             if (Array.isArray(values)) {
                 values.forEach(element => {
-                    postcode[Op.or].push(+element);
+                    campus_id[Op.or].push(+element);
                 });
             } else {
-                postcode[Op.or].push(+values);
+                campus_id[Op.or].push(+values);
             }
         }
     }
@@ -134,9 +138,6 @@ async function fetchData(page, parameters, res) {
             [Op.or]: []
         };
         let email = {
-            [Op.or]: []
-        };
-        let arbejdssted = {
             [Op.or]: []
         };
         let about = {
@@ -168,9 +169,6 @@ async function fetchData(page, parameters, res) {
             email[Op.or].push({
                 [Op.like]: element
             });
-            arbejdssted[Op.or].push({
-                [Op.like]: element
-            });
             about[Op.or].push({
                 [Op.like]: element
             });
@@ -196,9 +194,6 @@ async function fetchData(page, parameters, res) {
             },
             {
                 email
-            },
-            {
-                arbejdssted
             },
             {
                 it_kompetencer
@@ -239,6 +234,11 @@ async function fetchData(page, parameters, res) {
                 model: models.ProfessorPosition,
                 attributes: ['name'],
                 as: 'position'
+            },
+            {
+                model: models.ProfessorCampus,
+                attributes: ['name'],
+                as: 'campus'
             }
         ],
         where
@@ -302,6 +302,13 @@ router.get('/', async function (req, res, next) {
         });
     }
 
+    let campuses = await models.ProfessorCampus.findAll({
+        raw: true,
+        order: [
+            ['name', 'ASC']
+        ]
+    })
+
     let data = await fetchData(req.query.page, req.query, res);
 
     let count = data.count;
@@ -316,6 +323,7 @@ router.get('/', async function (req, res, next) {
     res.render('search-professor-cv', {
         language: reqLang(req, res),
         categories: categories,
+        campuses: campuses,
         json: rows,
         resultater: count,
         pagination: {
@@ -334,7 +342,7 @@ router.post('/query', function (req, res) {
     formData.parse(req, async function (error, fields, files) {
         makeArray(fields, 'udd');
         makeArray(fields, 'lnd');
-        makeArray(fields, 'pos');
+        makeArray(fields, 'loc');
 
         let fetchedData = await fetchData(parseInt(fields.page), fields, res);
 
@@ -438,6 +446,11 @@ router.get('/:id', async function (req, res) {
                 model: models.ProfessorPosition,
                 attributes: ['name'],
                 as: 'position'
+            },
+            {
+                model: models.ProfessorCampus,
+                attributes: ['name'],
+                as: 'campus'
             }
         ],
         order: [

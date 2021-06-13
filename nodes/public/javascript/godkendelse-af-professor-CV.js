@@ -1,13 +1,15 @@
+
 const inputs = Object.freeze({
     overskrift: document.getElementById("overskrift"),
+    sprog: document.getElementById("sprog"),
     email: document.getElementById('email'),
     telefon: document.getElementById("telefon"),
     linkedIn: document.getElementById("linkedIn"),
+    website: document.getElementById('website'),
     educationSelect: document.getElementById('educationSelect'),
-    arbejdssted: document.getElementById("arbejdssted"),
-    stilling: document.getElementById("stilling"),
+    campus_id: document.getElementById("campus_id"),
+    position_id: document.getElementById("position_id"),
     tidligere_uddannelse: document.getElementById("tidligere_uddannelse"),
-    sprog: document.getElementById("sprog"),
     it_kompetencer: document.getElementById("it_kompetencer"),
     om_mig: document.getElementById("about"),
     erhvervserfaring: document.getElementById("erhvervserfaring"),
@@ -23,13 +25,14 @@ const errors = Object.freeze({
     emailError: document.getElementById("emailError"),
     telefonError: document.getElementById("telefonError"),
     linkedInError: document.getElementById("linkedInError"),
+    websiteError: document.getElementById('websiteError'),
+    educationError: document.getElementById('educationError'),
+    campus_idError: document.getElementById("campus_idError"),
+    position_idError: document.getElementById("position_idError"),
+    tidligere_uddannelseError: document.getElementById("tidligere_uddannelseError"),
     it_kompetencerError: document.getElementById('it_kompetencerError'),
     erhvervserfaringError: document.getElementById("erhvervserfaringError"),
-    educationError: document.getElementById('educationError'),
-    arbejdsstedError: document.getElementById("arbejdsstedError"),
-    stillingError: document.getElementById("stillingError"),
     postcodeError: document.getElementById('postcodeError'),
-    tidligere_uddannelseError: document.getElementById("tidligere_uddannelseError"),
     tilgaengelighedError: document.getElementById("tilgaengelighedError")
 });
 
@@ -109,12 +112,12 @@ function addChangeEvents() {
         checkInputNotEmpty(inputs.overskrift, errors.overskriftError);
     });
 
-    inputs.arbejdssted.addEventListener('change', function () {
-        checkInputNotEmpty(inputs.arbejdssted, errors.arbejdsstedError);
+    inputs.campus_id.addEventListener('change', function () {
+        checkInputNotEmpty(inputs.campus_id, errors.campus_idError);
     });
 
-    inputs.stilling.addEventListener('change', function (){
-        checkInputNotEmpty(inputs.stilling, errors.stillingError);
+    inputs.position_id.addEventListener('change', function (){
+        checkInputNotEmpty(inputs.position_id, errors.position_idError);
     })
 
     inputs.email.addEventListener('change', function () {
@@ -129,10 +132,6 @@ function addChangeEvents() {
         checkInputRegex(inputs.telefon, errors.telefonError, phoneRegex)
     });
 
-    inputs.postcode.addEventListener('change', function () {
-        checkInputRegex(inputs.postcode, errors.postcodeError, postcodeRegex)
-    });
-
     inputs.linkedIn.addEventListener('change', function () {
         checkInputRegexOptional(inputs.linkedIn, errors.linkedInError, linkRegex);
     });
@@ -140,6 +139,10 @@ function addChangeEvents() {
     inputs.it_kompetencer.addEventListener('change', function () {
         checkInputNotEmpty(inputs.it_kompetencer, errors.it_kompetencerError);
     });
+
+    inputs.website.addEventListener('change', function () {
+        checkInputRegexOptional(inputs.website, errors.websiteError, linkRegex);
+    })
 
     inputs.tidligere_uddannelse.addEventListener('change', function () {
         checkInputNotEmpty(inputs.tidligere_uddannelse, errors.tidligere_uddannelseError);
@@ -194,12 +197,12 @@ function submitButton() {
         checkInputRegex(inputs.email, errors.emailError, emailRegex),
         checkInputNotEmpty(inputs.sprog, errors.sprogError),
         checkInputRegex(inputs.telefon, errors.telefonError, phoneRegex),
-        checkInputRegex(inputs.postcode, errors.postcodeError, postcodeRegex),
         checkInputRegexOptional(inputs.linkedIn, errors.linkedInError, linkRegex),
+        checkInputRegexOptional(inputs.website, errors.websiteError, linkRegex),
         checkInputNotEmpty(inputs.it_kompetencer, errors.it_kompetencerError),
         checkInputNotEmpty(inputs.tidligere_uddannelse, errors.tidligere_uddannelseError),
-        checkInputNotEmpty(inputs.arbejdssted, errors.arbejdsstedError),
-        checkInputNotEmpty(inputs.stilling, errors.stillingError),
+        checkInputNotEmpty(inputs.campus_id, errors.campus_idError),
+        checkInputNotEmpty(inputs.position_id, errors.position_idError),
         checkInputNotEmpty(inputs.erhvervserfaring, errors.erhvervserfaringError),
         checkTilgaengelighed()
     ];

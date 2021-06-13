@@ -57,7 +57,7 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="afdeling" data-key="Afdeling">Afdeling</label>
-                        <select class="form-control" id="afdeling" name="afdeling">
+                        <select class="form-control" id="campus_id" name="campus_id">
                             <option selected disabled hidden value="" data-key="Vælg_din_afdeling">Vælg din afdeling
                             </option>
                             {{#each campuses}}
@@ -65,14 +65,14 @@
                             </option>
                             {{/each}}
                         </select>
-                        <p id="afdelingError" class="CVErrorColor" hidden="false"
-                            data-key="Afdeling_error">Du skal vælge en Afdeling</p>
+                        <p id="campus_idError" class="CVErrorColor" hidden="false"
+                            data-key="Afdeling_error">Du skal vælge en afdeling</p>
                     </div>
                 </div>
                 <!-- Sprog med inputfelt -->
                 <div class="col-sm-4">
                     <div class="form-group required">
-                        <label for="exampleFormControlInput1" data-key="Sprog">Sprog</label>
+                        <label for="sprog" data-key="Sprog">Sprog</label>
                         <input class="form-control" placeholder="fx dansk, engelsk" id="sprog" name="sprog"
                                value='{{sprog}}'>
                         <p id="sprogError" class="CVErrorColor" hidden="true" data-key="Sprog_error">Du skal skrive dit
@@ -82,10 +82,10 @@
                 <!-- Hjemmeside med inputfelt -->
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1" data-key="Hjemmeside">Hjemmeside</label>
-                        <input class="form-control" placeholder="fx https://www.eksempel.dk" id="hjemmeside" name="hjemmeside"
-                               value='{{sprog}}'>
-                        <p id="hjemmesideError" class="CVErrorColor" hidden="true" data-key="Hjemmeside_error">Du skal skrive et gyldigt link</p>
+                        <label for="website" data-key="Hjemmeside">Hjemmeside</label>
+                        <input class="form-control" placeholder="fx https://www.eksempel.dk" id="website" name="website"
+                               value='{{website}}'>
+                        <p id="websiteError" class="CVErrorColor" hidden="true" data-key="Hjemmeside_error">Du skal skrive et gyldigt link</p>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
                 <div class="col-sm-4">
                     <div class="form-group required">
                         <label for="exampleFormControlSelect1" data-key="Stilling">Stilling</label>
-                        <select class="form-control" id="stilling" name="stilling">
+                        <select class="form-control" id="position_id" name="position_id">
                             <option selected disabled hidden value="" data-key="Vaelg_en_uddannelse">Vælg din stilling
                             </option>
                             {{#each positions}}
@@ -103,8 +103,8 @@
                                 </option>
                             {{/each}}
                         </select>
-                        <p id="stillingError" class="CVErrorColor" hidden="false"
-                           data-key="Vaelg_en_uddannelse_error">Du skal vælge en Stilling</p>
+                        <p id="position_idError" class="CVErrorColor" hidden="false"
+                           data-key="Stilling_error">Du skal vælge en stilling</p>
                     </div>
                 </div>
                 <!-- udannelse med inputfelt -->
@@ -367,7 +367,7 @@
         ['link'],
         ['clean']
     ];
-    let editor = new Quill('#editor', {
+    const editor = new Quill('#editor', {
         modules: {
             toolbar: toolbarOptions
         },
@@ -378,7 +378,12 @@
     });
 
     function copyQuillHtmlToHiddenInput() {
-        document.getElementById('tidligere_projekter').value = editor.root.innerHTML;
+        if (editor.getLength() > 1) {
+            document.getElementById('tidligere_projekter').value = editor.root.innerHTML;
+        } else {
+            document.getElementById('tidligere_projekter').value = '';
+        }
+        
         submitButton()
     }
 </script>
