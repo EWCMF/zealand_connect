@@ -1,0 +1,69 @@
+<div class="modal-header rounded-0 modalHeader">
+    <div class="container">
+        <div class="row">
+            <h5 class="modal-title text-white align-self-center pr-2">Zealand Connect</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="text-white" aria-hidden="true">&times;</span>
+                </button>
+        </div>
+    </div>
+</div>
+
+<form class="form-column" id="eventForm" method="POST" action="calendar/create-event">
+    <div class="modal-body container">
+        <div class="col">
+            <div class="form-group required">
+                <label for="startDate" data-key="Startdato">Startdato</label>
+                <input class="form-control" type="date" name="startDate" id="startDate">
+                <div hidden="true" class="col-form-label formError" id="startDateError" data-key="startDatoError">
+                    Startdato skal angives</div>
+            </div>
+            <div class="form-group">
+                <label for="endDate" data-key="Slutdato">Slutdato</label>
+                <input class="form-control" type="date" name="endDate" id="endDate">
+            </div>
+            <div class="form-group mt-5 form-inline">
+                <label class="mr-2" for="allDay">Hele dagen</label>
+                <input class="checkbox-inline" type="checkbox" name="allDay" id="allDay" onclick="greyOutTime()">
+            </div>
+            <div id="timeArea">
+                <div class="form-group">
+                    <label for="startDate" data-key="Startdato">Starttid</label>
+                    <input class="form-control" type="time" name="startTime" id="formStartTime">
+                </div>
+
+                <div class="form-group">
+                    <label for="endDate" data-key="Slutdato">Sluttid</label>
+                    <input class="form-control" type="time" name="endTime" id="formEndTime">
+                </div>
+            </div>
+            <div hidden="true" class="col-form-label formError" id="timeError" data-key="timeError">
+                    Hvis tidspunkt er angivet skal både starttid og sluttid udfyldes</div>
+            <div class="form-group required mt-5">
+                <label for="title">Titel</label>
+                <input class="form-control" type="text" name="title" id="formTitle">
+                <div class="col-form-label formError" hidden="true" id="titleError" data-key="descriptionError">Skal
+                    angives</div>
+            </div>
+            <div class="form-group">
+                <label for="location">Sted (Valgfrig)</label>
+                <input class="form-control" type="text" name="location" id="location">
+            </div>
+            <div class="form-group">
+                <label for="url">Link (Valgfrig)</label>
+                <input class="form-control" type="text" name="url" id="url">
+            </div>
+            <div class="form-group required">
+                <label for="description">Beskrivelse</label>
+                <textarea class="form-control" name="description" id="description"></textarea>
+                <div class="col-form-label formError" hidden="true" id="descriptionError" data-key="descriptionError">
+                    Skal angives</div>
+            </div>
+            <input type="hidden" name="id" id="EventId">
+        </div>
+    </div>
+</form>
+<div class="modal-footer">
+    <button id="validateButton" type="button" class="btn btn-success" onclick="validateEvent()"
+        data-key="Bekraeft">Bekræft</button>
+</div>

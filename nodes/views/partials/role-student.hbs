@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light container-fluid" id="nv1">
-    <a class="navbar-brand" id="zealand-tlf"href="/">Zealand</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <a class="navbar-brand" id="zealand-tlf" href="/">Zealand</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav">
@@ -25,37 +25,57 @@
                         Fakta om praktik
                     </a>
                 <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                    <a class="dropdown-item"href="/internship-info/#For_studerende" data-key="For_studerende">For den studerende</a>
-                    <a class="dropdown-item"href="/internship-info/#Arbejdstid_og_læringsmål" data-key="Arbejdstid_og_laeringsmaal">Arbejdstid og læringsmål</a>
-                    <a class="dropdown-item"href="/internship-info/#Løn" data-key="Loen">Løn</a>
-                    <a class="dropdown-item"href="/internship-info/#Forsikring" data-key="Forsikring">Forsikring</a>
-                    <a class="dropdown-item"href="/internship-info/#Praktikaftale" data-key="Praktikaftale">Praktikaftale</a>
-                    <a class="dropdown-item"href="/internship-info/#Praktikperiode" data-key="Praktikperiode">Praktikperiode</a>
+                    <a class="dropdown-item" href="/search-cv" data-key="aAlleCVer">Alle CV'er</a>
+                    <a class="dropdown-item" href="/search-praktik" data-key="aAllePraktikopslag">Alle opslag</a>
+                    <a class="dropdown-item" href="/search-virksomheder" data-key="aAlleVirksomheder">Alle
+                        virksomheder</a>
                 </div>
-                </li>
-                {{> kontakt-nav}}
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" id="en" href="#" onclick="changeLanguage('en');return false;">English</a>
-                    <a class="nav-link" id="da" href="#" onclick="changeLanguage('da');return false;">Dansk</a>
-                </li>
-                <li class="nav-item dropdown" id="profileDropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdownName" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{user.fornavn}} {{user.efternavn}}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                        <a class="dropdown-item" data-key="aProfil" href="/profil">Profil</a>
-                        <a id="cv" class="dropdown-item" data-key="aMitCV" href="/cv">Mit CV</a>
-                        <a id="favourites" class="dropdown-item" data-key="Mine_foretrukne_opslag" href="/favourites/posts">Mine foretrukne opslag</a>
-                    </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="flase" data-key="aFaktaOmPraktik">
+                    Fakta om praktik
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarOpslag">
+                    <a class="dropdown-item" href="/internship-info/#For_studerende" data-key="For_studerende">For den
+                        studerende</a>
+                    <a class="dropdown-item" href="/internship-info/#Arbejdstid_og_læringsmål"
+                        data-key="Arbejdstid_og_laeringsmaal">Arbejdstid og læringsmål</a>
+                    <a class="dropdown-item" href="/internship-info/#Løn" data-key="Loen">Løn</a>
+                    <a class="dropdown-item" href="/internship-info/#Forsikring" data-key="Forsikring">Forsikring</a>
+                    <a class="dropdown-item" href="/internship-info/#Praktikaftale"
+                        data-key="Praktikaftale">Praktikaftale</a>
+                    <a class="dropdown-item" href="/internship-info/#Praktikperiode"
+                        data-key="Praktikperiode">Praktikperiode</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="kalender" href="/calendar" data-key="aKalender">Kalender</a>
+            </li>
+            {{> kontakt-nav}}
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" id="en" href="#" onclick="changeLanguage('en');return false;">English</a>
+                <a class="nav-link" id="da" href="#" onclick="changeLanguage('da');return false;">Dansk</a>
+            </li>
+            <li class="nav-item dropdown" id="profileDropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdownName" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{user.fornavn}} {{user.efternavn}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarOpslag">
+                    <a class="dropdown-item" data-key="aProfil" href="/profil">Profil</a>
+                    <a id="cv" class="dropdown-item" data-key="aMitCV" href="/cv">Mit CV</a>
+                    <a id="favourites" class="dropdown-item" data-key="Mine_foretrukne_opslag"
+                        href="/favourites/posts">Mine foretrukne opslag</a>
+                </div>
 
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="logud" href="/login/logout" data-key="aLogud">Log ud</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <hr id="navbarLine">
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="logud" href="/login/logout" data-key="aLogud">Log ud</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<hr id="navbarLine">

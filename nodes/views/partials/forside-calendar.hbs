@@ -1,0 +1,59 @@
+<head>
+    <link href='fullcalendar/main.css' rel='stylesheet' />
+</head>
+
+<h1 class="mb-5" data-key="Kalender">
+    Kalender
+</h1>
+<div id='calendar'></div>
+
+{{> event-modal}}
+
+<script src='fullcalendar/main.js'></script>
+<script src='fullcalendar/locales/da.js'></script>
+<script src='javascript/calendar.js'></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let calendarEl = document.getElementById('calendar');
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'listMonth',
+            themeSystem: 'bootstrap',
+            height: 'auto',
+            headerToolbar: {
+                start: 'title', // will normally be on the left. if RTL, will be on the right
+                center: '',
+                end: 'prevYear,prev today next,nextYear' // will normally be on the right. if RTL, will be on the left
+            },
+            noEventsDidMount: function(arg){
+                arg.el.style.background = '#ffffff'
+                arg.el.parentElement.parentElement.style.border = 'none'
+            },
+            noEventsWillUnmount: function(arg){
+                arg.el.parentElement.parentElement.style.border = '1px solid #dee2e6'
+            },
+            noEventsContent: function(arg){
+                arg.text = arg.text += " for " + arg.view.title
+            },
+            titleFormat: {
+                year: 'numeric',
+                month: 'long'
+            },
+            locale: '{{language}}',
+            timeZone: 'local',
+            buttonText: {
+                today: '{{language}}' === 'en' ? 'today' : 'i dag',
+                month: '{{language}}' === 'en' ? 'month' : 'måned',
+                week: '{{language}}' === 'en' ? 'week' : 'uge',
+                day: '{{language}}' === 'en' ? 'day' : 'dag',
+                list: '{{language}}' === 'en' ? 'list' : 'liste'
+            },
+            eventClick: function (info) {
+                openEvent(info);
+            },
+        });
+
+        getEvents(calendar);
+        calendar.render();
+    });
+
+</script>

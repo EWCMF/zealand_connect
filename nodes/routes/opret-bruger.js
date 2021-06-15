@@ -1,5 +1,5 @@
 const express = require('express');
-//const {findUserByCVR} = require('../persistence/usermapping');
+const {findUserByCVR} = require('../persistence/usermapping');
 const router = express.Router();
 const {reqLang} = require('../public/javascript/request');
 const createVirksomhed = require('../persistence/usermapping').createVirksomhed;

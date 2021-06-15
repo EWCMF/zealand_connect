@@ -33,6 +33,7 @@ const favouritesRouter = require('./routes/favourites');
 const downloadRouter = require('./routes/download');
 const professorCVRouter = require('./routes/professor-cv');
 const searchProfessorCVRouter = require('./routes/search-professor-cv');
+const calendarRouter = require('./routes/calendar');
 
 const bodyParser = require('body-parser')
 
@@ -88,6 +89,8 @@ app.use(cookieSession({
   maxAge: 1000 * 60 * 60 * 2,
   keys: ["this_is_the_secret_cookie_encryption_key"]
 }));
+
+app.set('trust proxy', '127.0.0.1');
 
 // Opdaterer session hvis et minut er gået siden sidst (Bevarer login session).
 app.use(function (req, res, next) {
@@ -154,9 +157,12 @@ app.use('/favourites', favouritesRouter);
 app.use('/download', downloadRouter);
 app.use('/professor-cv', professorCVRouter);
 app.use('/search-professor-cv', searchProfessorCVRouter);
+app.use('/calendar', calendarRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));
+
+app.use('/fullcalendar', express.static(__dirname + '/node_modules/fullcalendar/'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

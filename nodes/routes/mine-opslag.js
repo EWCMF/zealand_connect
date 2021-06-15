@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const hbs = require('handlebars');
 const fs = require('fs');
-const models = require('../models');
+const db = require('../models');
 var formidable = require("formidable");
 const limit = 5;
 const {
@@ -29,7 +29,7 @@ async function fetchData(page, req, res) {
     const {
         count,
         rows
-    } = await models.InternshipPost.findAndCountAll({
+    } = await db.InternshipPost.findAndCountAll({
         limit: limit,
         nest: true,
         distinct: true,
@@ -37,17 +37,17 @@ async function fetchData(page, req, res) {
         order: [
             ['updatedAt', 'DESC'],
             [{
-                model: models.Uddannelse
+                model: db.Uddannelse
             }, 'name', 'ASC']
         ],
         include: [{
-                model: models.Virksomhed,
+                model: db.Virksomhed,
                 as: 'virksomhed'
             },
             {
-                model: models.Uddannelse,
+                model: db.Uddannelse,
                 attributes: ['name'],
-                through: models.InternshipPost_Education,
+                through: db.InternshipPost_Education,
             },
         ],
         where: {
@@ -219,7 +219,7 @@ router.post("/toggle-visibility", authorizeUser("company"), async function (req,
     console.log(req.body);
     let id = Number(req.body)
 
-    let internshipPost = await models.InternshipPost.findByPk(id);
+    let internshipPost = await db.InternshipPost.findByPk(id);
 
     if (res.locals.user.id !== internshipPost.fk_company) {
         return res.status(403);
