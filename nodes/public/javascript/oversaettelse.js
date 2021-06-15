@@ -151,7 +151,8 @@ function getLangdata() {
 
                 // Navbar
                 "aKontakt": "Contact",
-                "aAlleCVer": "All CV's",
+                "aStudentCVer": "Student CV's",
+                "aProfessorCVer": "Professor CV's",
                 "aAllePraktikopslag": "All company posts",
                 "aAlleVirksomheder": "All companies",
                 "aLavPraktikOpslag": "Create post",
@@ -223,7 +224,7 @@ function getLangdata() {
                 "Multimediedesigner": "Multimedia Design and Communication",
                 "Produktionsteknolog": "Production Technology",
                 "Web Development": "Web Development",
-                "IT-sikkerhed": "IT security",
+                "IT-sikkerhed": "IT Security",
 
                 // search-praktik
                 "Opslag": "Posts",
@@ -614,7 +615,17 @@ function getLangdata() {
                 // Kontakt
                 "Praktikkoordinatorer": "Internship Coordinators",
                 "Contact_headline_2": "Development and support of Zealand Connect",
-                "Alle_uddannelser": "All educations"
+                "Alle_uddannelser": "All educations",
+
+                //Professor CV
+                "Kort_præsentation": "Short presentation",
+                "Tidligere_projekter": "Past projects",
+                "Interesser": "Hobbies",
+                "Hjemmeside:": "Website:",
+                "Afdeling:": "Campus:",
+                "Tilknyttet_uddannelse:": "Associated education:",
+                "Stilling:": "Position:",
+                "Underviser_i:  ": "Teaches:"
             }
         }
     }

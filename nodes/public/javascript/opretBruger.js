@@ -1,12 +1,19 @@
 function showStudentOpret() {
     document.getElementById('studentOpret').style.display = "block";
     document.getElementById('virksomhedOpret').style.display = "none";
-
+    document.getElementById('professorOpret').style.display = "none";
 }
 
 function showVirksomhedOpret() {
     document.getElementById('virksomhedOpret').style.display = "block";
     document.getElementById('studentOpret').style.display = "none";
+    document.getElementById('professorOpret').style.display = "none";
+}
+
+function showProfessorOpret() {
+    document.getElementById('professorOpret').style.display = "block";
+    document.getElementById('studentOpret').style.display = "none";
+    document.getElementById('virksomhedOpret').style.display = "none";
 }
 
 document.querySelectorAll('div.formError').forEach(element => {
@@ -60,6 +67,25 @@ const errorsStudent = Object.freeze({
     efternavn: document.getElementById('efternavnErrorStudent'),
     telefon: document.getElementById('telefonnummerErrorStudent'),
     dato: document.getElementById('dateErrorStudent')
+});
+
+const inputsProfessor = Object.freeze({
+    email: document.getElementById('emailProfessor'),
+    gentagEmail: document.getElementById('gentagEmailProfessor'),
+    password: document.getElementById('adgangskodeProfessor'),
+    gentagPassword: document.getElementById('gentagAdgangskodeProfessor'),
+    fornavn: document.getElementById('fornavnProfessor'),
+    efternavn: document.getElementById('efternavnProfessor'),
+    consent: document.getElementById('professorConsent')
+});
+
+const errorsProfessor = Object.freeze({
+    email: document.getElementById('emailErrorProfessor'),
+    gentagEmail: document.getElementById('gentagEmailErrorProfessor'),
+    password: document.getElementById('adgangskodeErrorProfessor'),
+    gentagPassword: document.getElementById('gentagAdgangskodeErrorProfessor'),
+    fornavn: document.getElementById('fornavnErrorProfessor'),
+    efternavn: document.getElementById('efternavnErrorProfessor'),
 });
 
 
@@ -260,6 +286,7 @@ function checkDato() {
     return true;
 }
 
+// Company block
 inputs.email.addEventListener('change', function () {
     checkEmail(inputs.email.value, errors.email)
 });
@@ -363,6 +390,7 @@ async function submitOpretVirksomhed() {
     }));
 };
 
+// Student Block
 inputsStudent.email.addEventListener('change', function () {
     checkEmail(inputsStudent.email.value, errorsStudent.email)
 });
@@ -463,6 +491,114 @@ async function submitOpretStudent() {
     }));
 };
 
+// Professor Block
+inputsProfessor.email.addEventListener('change', function () {
+    checkEmail(inputsProfessor.email.value, errorsProfessor.email)
+});
+inputsProfessor.gentagEmail.addEventListener('change', function () {
+    checkGentagEmail(inputsProfessor.gentagEmail.value, errorsProfessor.gentagEmail, inputsProfessor.email.value);
+});
+inputsProfessor.password.addEventListener('change', function () {
+    checkAdgangskode(inputsProfessor.password.value, errorsProfessor.password);
+    if (inputsProfessor.gentagPassword.value) {
+        checkGentagAdgangskode(inputsProfessor.gentagPassword.value, errorsProfessor.gentagPassword,
+            inputsProfessor.password.value);
+    }
+});
+inputsProfessor.gentagPassword.addEventListener('change', function () {
+    checkGentagAdgangskode(inputsProfessor.gentagPassword.value, errorsProfessor.gentagPassword,
+        inputsProfessor.password.value);
+});
+inputsProfessor.fornavn.addEventListener('change', function () {
+    checkFeltIkkeTomt(inputsProfessor.fornavn, errorsProfessor.fornavn);
+});
+inputsProfessor.efternavn.addEventListener('change', function () {
+    checkFeltIkkeTomt(inputsProfessor.efternavn, errorsProfessor.efternavn);
+});
+
+async function submitOpretProfessor() {
+    console.log("test1")
+
+    document.getElementById('submitBtn_Professor').onclick = null;
+
+    console.log("test2")
+
+    let checks = [
+        checkGentagEmail(inputsProfessor.gentagEmail.value, errorsProfessor.gentagEmail, inputsProfessor.email.value),
+        checkAdgangskode(inputsProfessor.password.value, errorsProfessor.password),
+        checkGentagAdgangskode(inputsProfessor.gentagPassword.value, errorsProfessor.gentagPassword, inputsProfessor.password.value),
+        checkFeltIkkeTomt(inputsProfessor.fornavn.value, errorsProfessor.fornavn),
+        checkFeltIkkeTomt(inputsProfessor.efternavn.value, errorsProfessor.efternavn),
+    ];
+
+    console.log("test3")
+
+    let check = true;
+    checks.every(element => {
+        if (element == false) {
+            check = false;
+            return false;
+        }
+        return true;
+    });
+
+    console.log("test4")
+
+    if (!check) {
+        document.getElementById('submitBtn_Professor').onclick = submitOpretProfessor;
+        return;
+    }
+
+    console.log("test5")
+
+    let emailCheck = await checkEmail(inputsProfessor.email.value, errorsProfessor.email);
+
+    console.log("test6")
+
+    if (!emailCheck) {
+        document.getElementById('submitBtn_Professor').onclick = submitOpretProfessor;
+        return;
+    }
+
+    console.log("test7")
+
+    console.log(checks)
+    console.log(emailCheck)
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) { // hvis brugeren ikke er logget ind, så returnere kaldet undefined eller en email
+            let responseObject = JSON.parse(this.responseText)
+            // if there were no errors, then begin automatic login and redirect to profile
+            if (responseObject.areThereErrors == "false") { // send login request baseret på values i input felter
+                let xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        window.location.href = "../profil";
+                    }
+                }
+                xhttp.open("POST", "/login/authenticateUser", true); // ret her
+                xhttp.setRequestHeader("Content-Type", "text/plain")
+                xhttp.send(JSON.stringify({
+                    email: inputsProfessor.email.value,
+                    password: inputsProfessor.password.value
+                }));
+            }
+        }
+    }
+    xhttp.open("POST", "/opret-bruger/ProfessorCreate", true); // ret her
+    xhttp.setRequestHeader("Content-Type", "text/plain")
+    xhttp.send(JSON.stringify({
+        email: inputsProfessor.email.value,
+        gentagEmail: inputsProfessor.gentagEmail.value,
+        password: inputsProfessor.password.value,
+        gentagPassword: inputsProfessor.gentagPassword.value,
+        fornavn: inputsProfessor.fornavn.value,
+        efternavn: inputsProfessor.efternavn.value,
+        consent: inputsProfessor.consent.value
+    }));
+};
+
 function translateErrorMessage(key) {
     let texts = {
         "da": {
@@ -524,4 +660,11 @@ function checkConsentVirkOpretBruger(){
     let submitButtonStudent = document.getElementById("submitBtn");
 
     submitButtonStudent.disabled = !consentCheckbox.checked;
+}
+
+function checkConsentProOpretBruger(){
+    let consentCheckbox = document.getElementById("OpretBrugerProConsent");
+    let submitButtonProfessor = document.getElementById("submitBtn_Professor");
+
+    submitButtonProfessor.disabled = !consentCheckbox.checked;
 }

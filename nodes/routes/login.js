@@ -110,6 +110,16 @@ router.post('/authenticateUser', function (req, res, next) {
                     }
                 })
             }
+            else if (user instanceof models.Professor){
+                await models.Professor.update({
+                    last_login: new Date(),
+                    email_notification_date: null
+                }, {
+                    where: {
+                        id: user.id
+                    }
+                })
+            }
 
             return res.redirect('/login' + info.message);
         });

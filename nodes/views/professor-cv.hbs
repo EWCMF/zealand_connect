@@ -1,0 +1,385 @@
+<script src='/javascript/godkendelse-af-professor-CV.js' defer></script>
+<div class="container-fluid">
+    <!-- tekst med dit navn og start på form -->
+    <h3 class="text-center">{{profil}}</h3>
+    <form method="POST" action="../professor-cv/submit" id="cvForm" name="cvForm" target="">
+        <!-- Overskrift textarea -->
+        <div class="form-group required">
+            <label for="exampleFormControlInput1">CV (Curriculum Vitae)</label>
+            <textarea class="form-control" id="overskrift" name="overskrift" rows="2"
+                placeholder='fx "Adjunkt på datamatikeruddannelsen søger nye og spændende projekter inden for IT-sikkerhed". Dette er overskriften på dit CV og vil blive vist på kortet til dit CV.'
+                onkeyup="countChars(this)" data-key="Overskrift_placeholder_pro">{{overskrift}}</textarea>
+            <p id="charNum">255 tegn</p>
+            <p id="overskriftError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes</p>
+        </div>
+        <div class="form-group">
+
+            <div class="row">
+                <!-- email med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="exampleFormControlInput1" data-key="Email_adresse">Email adresse</label>
+                        <input type="email" class="form-control" placeholder="fx name@example.com" id="email"
+                            name="email" title="Du skal skrive din email her og mindst
+                            bruge et @" value={{email}}>
+                        <p id="emailError" class="CVErrorColor" hidden="true" data-key="Email_adresse_error">Du skal
+                            skrive din email her og mindst
+                            bruge et @</p>
+                    </div>
+                </div>
+                <!-- Telefon nummer med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="exampleFormControlInput1" data-key="Telefon">Telefon</label>
+                        <input type="number" class="form-control" id="telefon" name="telefon" placeholder="fx 12345678"
+                            title="Du skal skrive dit nummer, det skal præcist
+                            være 8 tal og må ikke starte med 0" value={{telefon}}>
+                        <p id="telefonError" class="CVErrorColor" hidden="true" data-key="Telefon_error">Du skal angive
+                            et telefonnummer</p>
+                    </div>
+                </div>
+                <!-- LinkedIn med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">LinkedIn</label>
+                        <input class="form-control" id="linkedIn" name="linkedIn" value='{{linkedIn}}'
+                            placeholder="fx https://www.linkedin.com/in/xxx-xxx-123456789">
+                        <p id="linkedInError" class="CVErrorColor" hidden="true" data-key="linkedIn_error">Du skal
+                            skrive et korrekt link til en LinkedIn Profil eller tømme feltet</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Afdeling med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="afdeling" data-key="Afdeling">Afdeling</label>
+                        <select class="form-control" id="campus_id" name="campus_id">
+                            <option selected disabled hidden value="" data-key="Vælg_din_afdeling">Vælg din afdeling
+                            </option>
+                            {{#each campuses}}
+                            <option {{selectState name ../campus }} value={{id}} data-key="{{name}}">{{name}}
+                            </option>
+                            {{/each}}
+                        </select>
+                        <p id="campus_idError" class="CVErrorColor" hidden="false" data-key="Afdeling_error">Du skal
+                            vælge en afdeling</p>
+                    </div>
+                </div>
+                <!-- Sprog med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="sprog" data-key="Sprog">Sprog</label>
+                        <input class="form-control" placeholder="fx dansk, engelsk" id="sprog" name="sprog"
+                            value='{{sprog}}'>
+                        <p id="sprogError" class="CVErrorColor" hidden="true" data-key="Sprog_error">Du skal skrive dit
+                            ønskede sprog her</p>
+                    </div>
+                </div>
+                <!-- Hjemmeside med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="website" data-key="Hjemmeside">Hjemmeside</label>
+                        <input class="form-control" placeholder="fx https://www.eksempel.dk" id="website" name="website"
+                            value='{{website}}'>
+                        <p id="websiteError" class="CVErrorColor" hidden="true" data-key="Hjemmeside_error">Du skal
+                            skrive et gyldigt link</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Stilling med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="exampleFormControlSelect1" data-key="Stilling">Stilling</label>
+                        <select class="form-control" id="position_id" name="position_id">
+                            <option selected disabled hidden value="" data-key="Vaelg_en_uddannelse">Vælg din stilling
+                            </option>
+                            {{#each positions}}
+                            <option {{selectState name ../position }} value={{id}} data-key="{{name}}">{{name}}
+                            </option>
+                            {{/each}}
+                        </select>
+                        <p id="position_idError" class="CVErrorColor" hidden="false" data-key="Stilling_error">Du skal
+                            vælge en stilling</p>
+                    </div>
+                </div>
+                <!-- udannelse med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group required">
+                        <label for="education" data-key="Tilknyttet_uddannelse">Tilknyttet uddannelse</label>
+                        <div class="selectBox" onclick="showCheckboxes()">
+                            <select id="educationSelect" class="form-control outsideClickHide">
+                                <option id="educationSelectedText" data-key="Vaelg_en_uddannelse">Vælg en eller flere
+                                    uddannelser
+                                </option>
+                            </select>
+                            <div id="overSelect" class="overSelect outsideClickHide"></div>
+                        </div>
+                        <div id="checkboxes" class="outsideClickHide">
+                            {{#each educations}}
+                            <label for="{{id}}">
+                                <input type="checkbox" id="{{id}}" class="mr-1 educationCheckbox" data-key="{{name}}"
+                                    value="{{id}}" />{{name}}</label>
+                            {{/each}}
+                            <input type="hidden" id="educations" name="educations">
+                        </div>
+                        <p id="educationError" class="CVErrorColor" hidden="true" data-key="Vaelg_en_uddannelse_error">
+                            Du skal angive en uddannelse</p>
+                        <p id="educationNote" hidden="true" data-key="Vaelg_en_uddannelse_note">Den valgte
+                            uddannelse har lønnet praktik</p>
+                    </div>
+                </div>
+                <!-- underviser i med inputfelt -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1" data-key="Underviser_i">Underviser i</label>
+                        <input class="form-control" id="teaches" name="teaches" value='{{teaches}}'
+                            placeholder="fx IT-sikkerhed, teknologi, programmering">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <!-- textarea kort præsentation -->
+                <label for="exampleFormControlTextarea1" data-key="Kort_praesentation">Kort præsentation</label>
+                <textarea class="form-control" rows="3" id="about" name="about"
+                    placeholder="Her har du muligheden for skrive en kort præsentation om dig selv. Hvis du har nogle kvalifikationer, som ikke passer i de andre felter, kan du også nævne dem her."
+                    data-key="Om_mig_placeholder">{{about}}</textarea>
+            </div>
+            <div class="form-group required">
+                <!-- textarea med erhvervserfaring -->
+                <label for="exampleFormControlTextarea1" data-key="Erhvervserfaring">Erhvervserfaring</label>
+                <textarea class="form-control" rows="3" id="erhvervserfaring" name="erhvervserfaring" placeholder="fx
+- 2002-nu: Adjunkt hos Zealand Sjællands Erhvervsakademi
+- 1996-2001: IT-konsulent hos Telia
+- 1993-1995: Salgsassistent hos Telia
+- 1987-1988: Flaskedreng i Netto" data-key="Erhvervserfaring_placeholder">{{erhvervserfaring}}</textarea>
+                <p id="erhvervserfaringError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                    udfyldes</p>
+            </div>
+            <div class="form-group required">
+                <!-- textarea med uddannelse -->
+                <label for="exampleFormControlTextarea1" for="tidligere_uddannelse"
+                    data-key="Udannelse">Uddannelse</label>
+                <textarea class="form-control" rows="3" id="tidligere_uddannelse" name="tidligere_uddannelse"
+                    placeholder="fx
+- 2005: CCISP certifikat i IT-sikkerhed
+- 1991-1996: Cand.it. v. Københavns Universitet
+- 1988-1991: HHX Næstved" data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea>
+                <p id="tidligere_uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
+                    udfyldes</p>
+            </div>
+            <div class="form-group">
+                <!-- textarea med tidligere projekter -->
+                <label for="exampleFormControlTextarea1" data-key="Tidligere_projekter">Tidligere projekter</label>
+                <div id="editor" spellcheck="false">{{{tidligere_projekter}}}</div>
+                <input type="hidden" name="tidligere_projekter" id="tidligere_projekter" />
+                <!--                <textarea class="form-control" rows="3" id="tidligere_projekter" name="tidligere_projekter"-->
+                <!--                          data-key="Projekter_placeholder" placeholder="fx-->
+                <!--- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)'-->
+                <!--- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)-->
+                <!--">{{tidligere_projekter}}</textarea>-->
+            </div>
+            <div class="form-group">
+                <!-- textarea med interesser -->
+                <label for="exampleFormControlTextarea1" data-key="Interesser">Interesser</label>
+                <textarea class="form-control" rows="3" id="interesser" name="interesser"
+                    placeholder="fx bagning, fitness og badminton"
+                    data-key="Valgfri_placeholder">{{interesser}}</textarea>
+            </div>
+            <div class="form-group required">
+                <!-- it-kompetencer -->
+                <label for="exampleFormControlTextarea1" data-key="It_kompetencer">IT kompetencer</label>
+                <textarea class="form-control" rows="3" id="it_kompetencer" name="it_kompetencer"
+                    placeholder="fx Office-pakken, Photoshop, InkScape, MySQL">{{it_kompetencer}}</textarea>
+                <p id="it_kompetencerError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal udfyldes
+                </p>
+            </div>
+
+            <!-- Radio til om en cv skal være offentlig -->
+            <div class="form-group required pb-3">
+                <label data-key="Tilgængelighed">Tilgængelighed</label>
+                <div class="form-radio ml-3 ">
+                    <input {{checkedStateRadioSimple offentlig 'tilgaengelighed1' }} type="radio" id="tilgaengelighed1"
+                        name="tilgaengelighed" class="form-control-input tilgaengelighed" value=1>
+                    <label class="form-control-label" for="tilgaengelighed1" data-key="Offentlig">Offentlig</label>
+                </div>
+                <div class="form-radio tilgaengelighed ml-3">
+                    <input {{checkedStateRadioSimple offentlig 'tilgaengelighed2' }} type="radio" id="tilgaengelighed2"
+                        name="tilgaengelighed" class="form-control-input tilgaengelighed" value=0>
+                    <label class="form-control-label" for="tilgaengelighed2" data-key="Privat">Privat</label>
+                    <p id="tilgaengelighedError" class="CVErrorColor" hidden="true" data-key="Tilgængelighed_error">Du
+                        skal vælge om dit CV skal være offentligt eller privat</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="alert alert-primary col-12 col-md-6" role="alert">
+                    <div>
+                        <div class="d-flex flex-row align-items-center h-100 mb-2">
+                            <i class="fas fa-info-circle"></i>
+                            <h6 class="ml-1 font-weight-bold my-0" data-key="CV_info_box_title">Gyldigheden af dit
+                                CV</h6>
+                        </div>
+                        <div data-key="CV_info_box">
+                            Dit CV er gyldigt så længe du har været aktiv indenfor de seneste 6 måneder eller du
+                            selv sletter det.
+                            Efter seks måneders inaktivitet, bliver CV'et privat - dvs. at kun du kan se det.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <!-- Button der sender informationen videre -->
+                <div>
+                    <button type="button" class="btn btn-success" id="gem" onclick="copyQuillHtmlToHiddenInput()"
+                        data-key="Gem">Gem</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/js/quill.min.js"></script>
+<script src="/js/quill-magic-url.min.js"></script>
+<script>
+    function setDefaultSelect() {
+        let update = '{{ update }}';
+        if (update != '') {
+            let reducations = JSON.parse('{{educationIds}}');
+
+            document.querySelectorAll('.educationCheckbox').forEach(element => {
+                for (reducation of reducations) {
+                    if (reducation === +element.value) {
+                        element.checked = true;
+                    }
+                }
+            });
+        }
+    }
+
+    setDefaultSelect();
+
+    let expanded = false;
+
+    function showCheckboxes() {
+        let checkboxes = document.getElementById("checkboxes");
+        document.getElementById('educationSelect').focus();
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+
+    window.onload = function () {
+        let checkboxes = document.getElementById('checkboxes');
+        document.onclick = function (e) {
+            if (e.target.closest('.outsideClickHide')) {
+                return;
+            }
+
+            if (expanded) {
+                checkboxes.style.display = 'none';
+                expanded = false;
+            }
+        };
+
+        document.querySelectorAll('.educationCheckbox').forEach(element => {
+            element.addEventListener('change', function () {
+                document.getElementById('educationSelect').focus();
+                checkCount();
+            })
+        });
+
+        let update = '{{update}}'
+        if (update) {
+            checkCount();
+        }
+    }
+
+    function checkCount() {
+        let lang = '{{language}}'
+
+        let texts = {
+            'da': [
+                'Vælg en eller flere uddannelser',
+                ' Uddannelse valgt',
+                ' Uddannelser valgt',
+                'Alle uddannelser valgt'
+            ],
+            'en': [
+                'Select one or more educations',
+                ' education selected',
+                ' educations selected',
+                'All educations selected',
+            ]
+        }
+
+        let selected = 0;
+        let checkboxes = document.querySelectorAll('.educationCheckbox');
+        let maximum = checkboxes.length;
+        document.querySelectorAll('.educationCheckbox').forEach(element => {
+            if (element.checked) {
+                selected++
+            }
+        });
+
+        if (selected < 1) {
+            educationSelectedText.text = texts[lang][0]
+        } else if (selected == 1) {
+            educationSelectedText.text = selected + texts[lang][1]
+        } else if (selected > 1 && selected < maximum) {
+            educationSelectedText.text = selected + texts[lang][2]
+        } else {
+            educationSelectedText.text = texts[lang][3]
+        }
+    }
+
+    let toolbarOptions = [
+        [{
+            'size': ['small', false, 'large', 'huge']
+        }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{
+            'align': []
+        }],
+        [{
+            'list': 'ordered'
+        }, {
+            'list': 'bullet'
+        }],
+        [{
+            'color': []
+        }, {
+            'background': []
+        }],
+        ['link'],
+        ['clean']
+    ];
+
+    const editor = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions,
+            magicUrl: true,
+        },
+        theme: 'snow',
+        placeholder: "fx " +
+            "\n- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)" +
+            "\n- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)"
+    });
+
+    function copyQuillHtmlToHiddenInput() {
+        if (editor.getLength() > 1) {
+            document.getElementById('tidligere_projekter').value = editor.root.innerHTML;
+        } else {
+            document.getElementById('tidligere_projekter').value = '';
+        }
+
+        submitButton()
+    }
+</script>

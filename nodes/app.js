@@ -31,6 +31,8 @@ const cookiePolicyRouter = require('./routes/cookie-policy');
 const internshipInfoRouter = require('./routes/internship-info');
 const favouritesRouter = require('./routes/favourites');
 const downloadRouter = require('./routes/download');
+const professorCVRouter = require('./routes/professor-cv');
+const searchProfessorCVRouter = require('./routes/search-professor-cv');
 const calendarRouter = require('./routes/calendar');
 
 const bodyParser = require('body-parser')
@@ -112,11 +114,15 @@ app.use(async function (req, res, next) {
       res.locals.isStudent = true;
       res.locals.missingConsent = !userRole.user_data_consent;
     }
-    if (userRole instanceof models.Virksomhed) {
+    else if (userRole instanceof models.Virksomhed) {
       res.locals.isCompany = true;
       res.locals.missingConsent = !userRole.user_data_consent;
     }
-    if (userRole instanceof models.Admin) {
+    else if (userRole instanceof models.Professor) {
+      res.locals.isProfessor = true;
+      res.locals.missingConsent = !userRole.user_data_consent;
+    }
+    else if (userRole instanceof models.Admin) {
       res.locals.isAdmin = true;
     }
     res.locals.user = userRole;
@@ -149,6 +155,8 @@ app.use('/cookie-policy', cookiePolicyRouter);
 app.use('/internship-info', internshipInfoRouter);
 app.use('/favourites', favouritesRouter);
 app.use('/download', downloadRouter);
+app.use('/professor-cv', professorCVRouter);
+app.use('/search-professor-cv', searchProfessorCVRouter);
 app.use('/calendar', calendarRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules

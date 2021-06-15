@@ -1,7 +1,6 @@
 const models = require("../models");
 
 async function deleteCV(id) {
-    let errorHappened = false;
     try {
         //find CV
         let CV = await models.CV.findOne({
@@ -10,8 +9,7 @@ async function deleteCV(id) {
             }
         });
         if(CV == null){
-            errorHappened = true;
-            return errorHappened;
+            return;
         }
 
         // Slet favourite associations
@@ -30,10 +28,28 @@ async function deleteCV(id) {
 
         //slet CV'et
         CV.destroy();
-        return errorHappened;
     } catch (e) {
         console.log(e);
     }
 }
 
-module.exports = { deleteCV }
+async function deleteProCV(id) {
+    try {
+        //find professor CV
+        let CV = await models.ProfessorCV.findOne({
+            where: {
+                id: id
+            }
+        });
+        if(CV == null){
+            return;
+        }
+
+        //slet CV'et
+        CV.destroy();
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+module.exports = { deleteCV, deleteProCV }

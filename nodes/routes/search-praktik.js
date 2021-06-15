@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var hbs = require('handlebars');
 var fs = require('fs');
-const db = require('../models');
+const models = require('../models');
 var formidable = require("formidable");
 var {
     reqLang
@@ -26,6 +26,13 @@ async function fetchData(page, parameters, res) {
         offset = 0;
     } else {
         offset = (page - 1) * limit;
+    }
+
+    let order;
+    if (!parameters.order) {
+        order = "DESC"
+    } else {
+        order = parameters.order
     }
 
     let id = {
@@ -56,8 +63,9 @@ async function fetchData(page, parameters, res) {
         postcode,
         post_type,
         post_start_date: {
-            [Op.or]: [
-                {[Op.gt]: year + "-" + month + "-" + day},
+            [Op.or]: [{
+                    [Op.gt]: year + "-" + month + "-" + day
+                },
                 ''
             ]
         },
@@ -78,7 +86,7 @@ async function fetchData(page, parameters, res) {
 
         if (key.includes("udd")) {
             let values = parameters[key];
-            const PostEducations = await db.InternshipPost_Education.findAll({
+            const PostEducations = await models.InternshipPost_Education.findAll({
                 where: {
                     education_id: values
                 },
@@ -143,8 +151,7 @@ async function fetchData(page, parameters, res) {
                             break;
                         case '5':
                             realName = 'Region Syddanmark';
-                    }
-                    ;
+                    };
                     region[Op.or].push(realName);
                 });
             } else {
@@ -164,12 +171,10 @@ async function fetchData(page, parameters, res) {
                         break;
                     case '5':
                         realName = 'Region Syddanmark';
-                }
-                ;
+                };
                 region[Op.or].push(realName);
             }
-        }
-        ;
+        };
 
         if (key.includes('pos')) {
             let values = parameters[key];
@@ -199,10 +204,9 @@ async function fetchData(page, parameters, res) {
             navn[Op.or].push({
                 [Op.like]: element
             });
-        }
-        ;
+        };
 
-        const virksomheder = await db.Virksomhed.findAll({
+        const virksomheder = await models.Virksomhed.findAll({
             where: {
                 [Op.or]: [{
                     navn
@@ -248,23 +252,23 @@ async function fetchData(page, parameters, res) {
             company_link[Op.or].push({
                 [Op.like]: element
             });
-        }
-        ;
+        };
 
         delete where[Op.or];
         where[Op.and] = [{
-            post_start_date: {
-                [Op.or]: [
-                    {[Op.gt]: year + "-" + month + "-" + day},
-                    ''
-                ]
+                post_start_date: {
+                    [Op.or]: [{
+                            [Op.gt]: year + "-" + month + "-" + day
+                        },
+                        ''
+                    ]
+                },
+                visible: true
             },
-            visible: true
-        },
             {
                 [Op.or]: [{
-                    fk_company
-                },
+                        fk_company
+                    },
                     {
                         title
                     },
@@ -288,32 +292,33 @@ async function fetchData(page, parameters, res) {
     const {
         count,
         rows
-    } = await db.InternshipPost.findAndCountAll({
+    } = await models.InternshipPost.findAndCountAll({
         limit: limit,
         nest: true,
         distinct: true,
         offset: offset,
         order: [
-            ['updatedAt', 'DESC'],
-            [{model: db.Uddannelse}, 'name', 'ASC']
+            ['updatedAt', order],
+            [{
+                model: models.Uddannelse
+            }, 'name', 'ASC']
         ],
-        include: [
-            {
-                model: db.Virksomhed,
+        include: [{
+                model: models.Virksomhed,
                 as: 'virksomhed'
             },
             {
-                model: db.Uddannelse,
+                model: models.Uddannelse,
                 attributes: ['name'],
-                through: db.InternshipPost_Education,
+                through: models.InternshipPost_Education,
             },
         ],
         where
     });
 
     let favouritePosts = [];
-    if (res.locals.user instanceof db.Student) {
-        favouritePosts = await db.FavouritePost.findAll({
+    if (res.locals.user instanceof models.Student) {
+        favouritePosts = await models.FavouritePost.findAll({
             raw: true,
             where: {
                 student_id: res.locals.user.id
@@ -384,7 +389,7 @@ async function fetchData(page, parameters, res) {
 }
 
 router.get('/', async function (req, res, next) {
-    let categoryQuery = await db.EducationCategory.findAll({
+    let categoryQuery = await models.EducationCategory.findAll({
         raw: true,
         attributes: ['id', 'name'],
         order: [
@@ -394,7 +399,7 @@ router.get('/', async function (req, res, next) {
 
     let categories = []
     for (const category of categoryQuery) {
-        const uddannelser = await db.Uddannelse.findAll({
+        const uddannelser = await models.Uddannelse.findAll({
             raw: true,
             where: {
                 fk_education_category: category.id
@@ -431,7 +436,7 @@ router.get('/', async function (req, res, next) {
 
     let preconfigEducationFilter;
     if (user) {
-        if (user.cv) {
+        if (user.cv && user instanceof models.Student) {
             if (Object.keys(req.query).length === 0) {
                 req.query.udd = [user.cv.fk_education];
 
@@ -519,7 +524,7 @@ router.post('/query', function (req, res) {
         }
 
         getFile(path.normalize('views/partials/search-praktik-card.hbs')).then((data) => {
-            hbs.registerHelper('ifCond', function(v1, operator, v2, options){
+            hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
                 switch (operator) {
                     case '==':
                         return (v1 == v2) ? options.fn(this) : options.inverse(this);

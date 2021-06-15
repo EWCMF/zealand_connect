@@ -68,6 +68,24 @@ const helpers = {
         return '';
     },
 
+    checkedStateRadioSimple: (state, id) => {
+        switch (state) {
+            case true:
+                if (id === 'tilgaengelighed1') {
+                    return 'checked'
+                }
+                break;
+            case false:
+                if (id === 'tilgaengelighed2') {
+                    return 'checked'
+                }
+                break;
+            default:
+                break;
+        }
+        return '';
+    },
+
     checkedStateURL: (url, key, value) => {
         if (url.indexOf(key + "=") == -1) {
             return '';

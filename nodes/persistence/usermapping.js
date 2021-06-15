@@ -1,6 +1,7 @@
 const models = require("../models");
 const deleteInternshipPost = require('../persistence/internship_post_mapping').deleteInternshipPost;
 const deleteCV = require('../persistence/cv-mapping').deleteCV;
+const deleteProCV = require('../persistence/cv-mapping').deleteProCV;
 const hashPassword = require('../encryption/password').hashPassword;
 const unlinkOldFiles = require("../utils/file-handling").unlinkOldFiles;
 
@@ -40,12 +41,27 @@ async function findUserByEmail(email) {
             }).then(() => {
                 models.Admin.findOne({where: {username: email}}).then((admin) => {
                     if (admin === null) {
-                        resolve(user);
+                        return;
                     }
                     if (admin instanceof models.Admin) {
                         user = admin;
                     }
-                    resolve(user);
+                }).then(() => {
+                    models.Professor.findOne({
+                        where: {email: email},
+                        include: {
+                            model: models.ProfessorCV,
+                            as: 'cv'
+                        }
+                    }).then((professor) => {
+                        if (professor === null) {
+                            resolve(user);
+                        }
+                        if (professor instanceof models.Professor) {
+                            user = professor;
+                        }
+                        resolve(user);
+                    })
                 })
             });
         })
@@ -111,6 +127,20 @@ async function createStudent(studentObj) {
             efternavn: studentObj.efternavn,
             foedselsdato: studentObj.foedselsdato,
             user_data_consent: studentObj.user_data_consent
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function createProfessor(professorObj) {
+    try {
+        await models.Professor.create({
+            email: professorObj.email,
+            password: professorObj.password,
+            fornavn: professorObj.fornavn,
+            efternavn: professorObj.efternavn,
+            user_data_consent: professorObj.user_data_consent
         })
     } catch (error) {
         console.log(error);
@@ -191,6 +221,39 @@ async function deleteStudent(email) {
     }
 }
 
+async function deleteProfessor(email) {
+    let errorHappened = false;
+    try {
+        let professor = await models.Professor.findOne({
+            include: [{
+                model: models.ProfessorCV,
+                as: 'cv',
+            }],
+            where: {
+                email: email,
+            }
+        });
+        if (professor == null) {
+            errorHappened = true;
+            return errorHappened;
+        } else {
+            //slet cv hvis det findes
+            if (professor.cv != null) {
+                deleteProCV(professor.cv.id)
+            }
+
+            if (professor.profilbillede) {
+                unlinkOldFiles(professor.profilbillede)
+            }
+
+            await professor.destroy();
+            return errorHappened;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function findUserByCVR(CVR) {
     let user = null;
     return new Promise(resolve => {
@@ -207,11 +270,25 @@ async function findUserByCVR(CVR) {
 }
 
 async function editStudent(email, fornavn, efternavn, telefon, profilbillede) {
-    let student = await models.Student.findOne({ where: {email: email}});
-    student.update({
+    findUserByEmail(email).then(user => {
+        if (user instanceof models.Student){
+            user.update({
+                fornavn: fornavn,
+                efternavn: efternavn,
+                tlfnr: telefon,
+                profilbillede: profilbillede
+            });
+        } else {
+            console.log("This user is not a student")
+        }
+    })
+}
+
+async function editProfessor(email, fornavn, efternavn, profilbillede) {
+    let professor = await models.Professor.findOne({ where: { email: email}});
+    professor.update({
         fornavn: fornavn,
         efternavn: efternavn,
-        tlfnr: telefon,
         profilbillede: profilbillede
     })
 }
@@ -226,8 +303,8 @@ async function editPassword(email, password) {
 }
 
 async function editProfilePic(email, profilbillede) {
-    findUserByEmail(email).then(student => {
-        student.update({
+    findUserByEmail(email).then(user => {
+        user.update({
             profilbillede: profilbillede
         });
     })
@@ -268,5 +345,6 @@ function findStudentByName(name) {
 
 module.exports = {
     findUserByEmail, createVirksomhed, deleteVirksomhed, editVirksomhed, findUserByCVR, editStudent, deleteStudent,
-    editProfilePic, createStudent, editPassword, searchVirksomhederByName, findStudentByName, findVirksomhedByCvr
+    editProfilePic, createStudent, editPassword, searchVirksomhederByName, findStudentByName, findVirksomhedByCvr,
+    createProfessor, editProfessor, deleteProfessor
 }

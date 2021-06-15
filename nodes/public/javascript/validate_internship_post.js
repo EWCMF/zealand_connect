@@ -202,10 +202,6 @@ function addChangeEvents() {
     checkInputRegexOptional(inputs.companyURL, errors.companylinkError, linkRegex);
   });
 
-  inputs.educationSelect.addEventListener('change', function () {
-    checkInputNotEmpty(inputs.educationSelect, errors.educationError);
-  });
-
   inputs.countrySelect.addEventListener('change', function () {
     checkInputNotEmpty(inputs.countrySelect, errors.countryError);
   });

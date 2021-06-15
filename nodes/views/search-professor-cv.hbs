@@ -1,0 +1,232 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1 id="cvOverskrift" data-key="CV'er">CV'er</h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row m-1">
+        <div class="col-12 col-lg-2 border rounded h-100">
+            <h5 class="m-2">Filter</h5>
+            <form class="mt-3 mb-3" id="filterForm" method="POST" action="search-professor-cv/query"
+                onsubmit="return submitForm(this);">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+
+                        <div class="panel-heading">
+                            <h6 id="collapse1Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse1" onclick="animateArrow(this)"
+                                data-key="Uddannelser_html">
+                                Uddannelser
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <ul class="pl-1 mr-2" style="list-style: none;">
+                                {{#each categories}}
+
+                                <div class="panel-heading">
+                                    <h6 id="panel{{id}}" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                        data-parent="#accordion" href="#category{{id}}" onclick="animateArrow(this)">
+                                        {{name}}
+                                        <img src="images/chevron-right.svg" {{#if showCategory}}class="arrow-rotate"
+                                            {{/if}} width="12" height="12">
+                                    </h6>
+                                </div>
+
+                                <div id="category{{id}}" class="panel-collapse collapse in {{showCategory}}">
+                                    <ul class="pl-1 mr-2" style="list-style: none;">
+                                        {{#each uddannelser}}
+                                        <li class="mb-2 d-flex flex-row">
+                                            <label class="form-check-label flex-fill" for="udd{{id}}" data-key="{{name}}">
+                                                {{name}}
+                                            </label>
+                                            <input class="align-self-center" type="checkbox" id="udd{{id}}" name="udd" value="{{id}}"
+                                                {{checkedStateURL ../../url 'udd' id}}
+                                                onclick="addFilter('udd', '{{id}}')">
+
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                {{/each}}
+                            </ul>
+                        </div>
+
+                        <div class="panel-heading">
+                            <h6 id="collapse2Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)"
+                                data-key="Land_html">
+                                Land
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+
+                        <div id="collapse2" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill" data-key="Indland">
+                                        Indland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="lnd" value="ind"
+                                        onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind' }}>
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill" data-key="Udland">
+                                        Udland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="lnd" value="ud"
+                                        onclick="addFilter('lnd','ud')" {{checkedStateURL url 'lnd' 'ud' }}>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="panel-heading">
+                            <h6 id="collapse3Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse3" onclick="animateArrow(this)"
+                                data-key="Afdelinger_html">
+                                Afdelinger
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+                        <div id="collapse3" class="panel-collapse collapse in">
+                            <ul class="pl-1 mr-2" style="list-style: none;">
+                                {{#each campuses}}
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill" for="loc{{id}}" data-key="{{name}}">
+                                        {{name}}
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" id="loc{{id}}" name="loc" value="{{id}}"
+                                        {{checkedStateURL ../url 'loc' id}} onclick="addFilter('loc', '{{id}}')">
+
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+
+                        {{!-- <div class="panel-heading">
+                            <h6 id="collapse3Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse3" onclick="animateArrow(this)"
+                                data-key="By_html">
+                                By
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+
+                        <div id="collapse3" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-column">
+                                    <label class="form-check-label flex-fill" data-key="Indtast_postnummer">
+                                        Indtast postnummer
+                                    </label>
+                                    <input id='inputPost' class="align-self-center" type="number" name="pos">
+
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-success"
+                                        onclick="addFilterSearch('pos', document.getElementById('inputPost').value)"
+                                        data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success"
+                                        onclick="removeFilterSearch('inputPost', 'pos')" data-key="Ryd">Ryd</button>
+                                </li>
+                            </ul>
+                        </div> --}}
+
+                        <div class="panel-heading">
+                            <h6 id="collapse5Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse5" onclick="animateArrow(this)"
+                                data-key="Fri_soegning_html">
+                                Fri søgning
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+
+                        <div id="collapse5" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-column">
+                                    <div>
+                                        <label class="form-check-label flex-fill" data-key="Soegefelt">
+                                            Søgefelt
+                                        </label>
+                                        <span class="tooltiphelp" data-toggle="tooltip" data-placement="top"
+                                            title="Indtast søgeord adskilt med mellemrum"
+                                            data-Key="Indtast_search_tooltip">?</span>
+                                    </div>
+                                    <input id='inputSearch' class="align-self-center">
+
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-success"
+                                        onclick="addFilterSearch('search', document.getElementById('inputSearch').value)"
+                                        data-key="Soeg">Søg</button>
+                                    <button type="button" class="btn btn-success"
+                                        onclick="removeFilterSearch('inputSearch', 'search')"
+                                        data-key="Ryd">Ryd</button>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <div class="mb-2 d-flex flex-row">
+                <label id="results" class="mb-0 flex align-self-center sorteringsContainer">
+                    {{resultater}}&nbsp;
+                </label>
+                <label class="mb-0 flex-fill align-self-center sorteringsContainer" data-key="resultater">
+                    resultater
+                </label>
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer" data-key="Sortering">
+                    Sortering:
+                </label>
+                <div class="btn-group">
+                    <button type="button" id="dropdownButton" class="btn btn-sm dropdown-toggle sorteringsContainer"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="updatedAt"
+                        data-key="Senest_opdateret">
+                        Senest opdateret
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <!--
+                        <a class="dropdown-item sorteringsContainer" id="senestOpdateret" onclick="changeSort(this, 'updatedAt')">Senest
+                            opdateret</a>
+
+                        <a class="dropdown-item sorteringsContainer" id="overskrift"
+                            onclick="changeSort(this, 'overskrift')">Stilling/status</a>
+                            -->
+                    </div>
+                </div>
+                <label class="mb-0 mr-1 align-self-center sorteringsContainer" data-key="Raekkefoelge">
+                    Rækkefølge:
+                </label>
+                <div class="btn-group">
+                    <button type="button" id="dropdownButton2" class="btn btn-sm dropdown-toggle sorteringsContainer"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="DESC"
+                        data-key="Faldende">
+                        Faldende
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item sorteringsContainer" id="ascending" onclick="changeOrder(this, 'ASC')"
+                            data-key="Stigende">Stigende</a>
+                        <a class="dropdown-item sorteringsContainer" id="descending" onclick="changeOrder(this, 'DESC')"
+                            data-key="Faldende">Faldende</a>
+                    </div>
+                </div>
+
+            </div>
+            <div id="cards">
+                {{> search-professor-cv-card}}
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center" id="pagination">
+        {{> search-pagination}}
+    </div>
+</div>
+<script src="/javascript/search-professor-cv.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
