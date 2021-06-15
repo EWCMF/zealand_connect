@@ -70,32 +70,32 @@ input::placeholder {
   line-height: 36px;
 }
 
-#editor {
-  min-height: 250px;
-}
-
 .btn {
   border-radius: 0;
 }
 
 .btn-success,
-.btn-success:hover {
-  background-color: #faee84;
-  color: black;
-  border-color: #faee84;
+.btn-success:hover, .btn-success:active, .btn-success:focus {
+  box-shadow: none !important;
+  background-color: #faee84 !important; 
+  color: black !important;
+  border-color: #faee84 !important;
 }
 
 .btn-danger,
-.btn-danger:hover {
-  background-color: black;
-  color: #faee84;
-  border-color: black;
+.btn-danger:hover, .btn-danger:active, .btn-danger:focus {
+  box-shadow: none !important;
+  background-color: black !important;
+  color: #faee84 !important;
+  border-color: black !important;
 }
 
-.btn-dark {
-  background-color: #faee84;
-  color: black;
-  border-color: #faee84;
+.btn-dark,
+.btn-dark:hover, .btn-dark:active, .btn-dark:focus {
+  box-shadow: none !important;
+  background-color: #faee84 !important;
+  color: black !important;
+  border-color: #faee84 !important;
 }
 
 .form-group.required>label:after {
@@ -721,7 +721,7 @@ input::placeholder {
   margin: 0;
 }
 
-.ql-editor, #editor{
+.ql-editor, #editor {
   min-height:250px;
 }
 
