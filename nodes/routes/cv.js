@@ -292,7 +292,8 @@ router.get('/delete', authorizeUser('student'), async function (req, res, next) 
                     student_id: user.id
                 }
             })
-            deleteCV(CV.id)
+            deleteCV(CV.id);
+            return res.redirect('/');
         } catch (e) {
             console.log(e)
         }
@@ -328,7 +329,7 @@ router.post('/preview', authorizeUser('student'), async function (req, res, next
         linkedIn : req.body.linkedIn,
         yt_link : req.body.youtube_link,
         om_mig : req.body.om,
-        it_kompetencer : req.body.iT_Kompetencer,
+        it_kompetencer : req.body.it_kompetencer,
         udenlandsophold_og_frivilligt_arbejde : req.body.UogFA,
         erhvervserfaring : req.body.erhvervserfaring,
         tidligere_uddannelse : req.body.tidligere_uddannelse,

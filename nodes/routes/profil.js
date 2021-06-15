@@ -223,12 +223,16 @@ async function getPosts(req, res, id, page) {
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getUTCFullYear();
 
+    let company = await models.Virksomhed.findByPk(id, {
+        raw: true,
+        attributes: ['cvrnr']
+    });
+
     const {
         count,
         rows
     } = await models.InternshipPost.findAndCountAll({
         where: {
-            fk_company: id,
             post_start_date: {
                 [Op.or]: [
                     {[Op.gt]: year + "-" + month + "-" + day},
@@ -247,7 +251,10 @@ async function getPosts(req, res, id, page) {
         include: [
             {
                 model: models.Virksomhed,
-                as: 'virksomhed'
+                as: 'virksomhed',
+                where: {
+                    cvrnr: company.cvrnr,
+                }
             },
             {
                 model: models.Uddannelse,

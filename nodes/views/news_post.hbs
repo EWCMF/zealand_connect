@@ -29,7 +29,7 @@
                     <label for="editor" data-key="Indhold">Indhold</label>
                     <p id="contentError" class="CVErrorColor" hidden="true" data-key="Content_error">Indhold må ikke
                     være tomt</p>
-                    <div id="editor">{{{newsPost.content}}}</div>
+                    <div id="editor" spellcheck="false">{{{newsPost.content}}}</div>
                 </div>
             </form>
             <button onclick="copyQuillHtmlToHiddenInput()" class="btn btn-success mr-2" data-key="Gem">Gem</button>

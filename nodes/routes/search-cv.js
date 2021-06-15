@@ -173,7 +173,7 @@ async function fetchData(page, parameters, req, res) {
         let om_mig = {
             [Op.or]: []
         };
-        let iT_Kompetencer = {
+        let it_kompetencer = {
             [Op.or]: []
         };
         let udenlandsophold_og_frivilligt_arbejde = {
@@ -205,7 +205,7 @@ async function fetchData(page, parameters, req, res) {
             om_mig[Op.or].push({
                 [Op.like]: element
             });
-            iT_Kompetencer[Op.or].push({
+            it_kompetencer[Op.or].push({
                 [Op.like]: element
             });
             udenlandsophold_og_frivilligt_arbejde[Op.or].push({
@@ -227,7 +227,7 @@ async function fetchData(page, parameters, req, res) {
             {email},
             {speciale},
             {om_mig},
-            {iT_Kompetencer},
+            {it_kompetencer},
             {udenlandsophold_og_frivilligt_arbejde},
             {erhvervserfaring},
             {tidligere_uddannelse},

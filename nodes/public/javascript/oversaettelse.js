@@ -135,7 +135,7 @@ function getLangdata() {
                 "student_quick_access_CV_headline": "Create CV",
                 "student_quick_access_CV_btn": "Create a CV or edit an existing CV.",
                 "company_quick_access_headline" : "For companies",
-                "company_quick_access_btn": "Make your company visible to students by creating internship advertisements or job vacancies. You can also search for a student on your own by screening the available CV's.",
+                "company_quick_access_btn": "Make your company visible to students by creating internship advertisements or job vacancies. You can also screen the available CV's.",
                 "company_quick_access_CV_headline": "Browse CV list",
                 "company_quick_access_CV_btn": "Find a suitable intern for your company.",
                 "company_quick_access_post_headline": "Create post",
@@ -209,7 +209,7 @@ function getLangdata() {
                 "Administrationsøkonom": "Administration Management",
                 "International Handel og Markedsføring": "International Sales and Marketing",
                 "Innovation og Entrepreneurship": "Innovation and Entrepreneurship",
-                "Bygningskontruktør": "Constructing Architect",
+                "Bygningskonstruktør": "Constructing Architect",
                 "Byggetekniker": "Building Technician",
                 "Installatør, stærkstrøm": "Electrician",
                 "VVS-installatør": "Plumbing Installer",
@@ -223,6 +223,7 @@ function getLangdata() {
                 "Multimediedesigner": "Multimedia Design and Communication",
                 "Produktionsteknolog": "Production Technology",
                 "Web Development": "Web Development",
+                "IT-sikkerhed": "IT security",
 
                 // search-praktik
                 "Opslag": "Posts",
@@ -609,6 +610,11 @@ function getLangdata() {
                 // Favourites
                 "Mine_foretrukne_cver": "My favourite CV's",
                 "Mine_foretrukne_opslag": "My favourite posts",
+
+                // Kontakt
+                "Praktikkoordinatorer": "Internship Coordinators",
+                "Contact_headline_2": "Development and support of Zealand Connect",
+                "Alle_uddannelser": "All educations"
             }
         }
     }
