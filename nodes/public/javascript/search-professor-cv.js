@@ -153,6 +153,7 @@ function submitForm(formElement) {
     handleInputArrayAndSetToForm(formData, 'udd');
     handleInputArrayAndSetToForm(formData, 'lnd');
     handleInputArrayAndSetToForm(formData, 'loc');
+    handleInputArrayAndSetToForm(formData, 'profPos');
 
     let s = [];
     if (document.getElementById('inputSearch').value) {
@@ -224,6 +225,7 @@ function checkCollapse(key, collapse, collapseHeader) {
 checkCollapse('udd', 'collapse1', 'collapse1Header');
 checkCollapse('lnd', 'collapse2', 'collapse2Header');
 checkCollapse('loc', 'collapse3', 'collapse3Header');
+checkCollapse('profPos', 'collapse4', 'collapse4Header');
 
 function checkAddressSearch() {
     const url = new URL(window.location.href);

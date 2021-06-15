@@ -54,31 +54,25 @@
                         </div>
 
                         <div class="panel-heading">
-                            <h6 id="collapse2Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
-                                data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)"
-                                data-key="Land_html">
-                                Land
+                            <h6 id="collapse4Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse4" onclick="animateArrow(this)"
+                                data-key="Afdelinger_html">
+                                Stilling
                                 <img src="images/chevron-right.svg" width="12" height="12">
                             </h6>
                         </div>
-
-                        <div id="collapse2" class="panel-collapse collapse in">
-                            <ul class="pl-3 mr-2" style="list-style: none;">
+                        <div id="collapse4" class="panel-collapse collapse in">
+                            <ul class="pl-1 mr-2" style="list-style: none;">
+                                {{#each professorPositions}}
                                 <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill" data-key="Indland">
-                                        Indland
+                                    <label class="form-check-label flex-fill" for="profPos{{id}}" data-key="{{name}}">
+                                        {{name}}
                                     </label>
-                                    <input class="align-self-center" type="checkbox" name="lnd" value="ind"
-                                        onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind' }}>
-                                </li>
-                                <li class="mb-2 d-flex flex-row">
-                                    <label class="form-check-label flex-fill" data-key="Udland">
-                                        Udland
-                                    </label>
-                                    <input class="align-self-center" type="checkbox" name="lnd" value="ud"
-                                        onclick="addFilter('lnd','ud')" {{checkedStateURL url 'lnd' 'ud' }}>
-                                </li>
+                                    <input class="align-self-center" type="checkbox" id="profPos{{id}}" name="profPos" value="{{id}}"
+                                        {{checkedStateURL ../url 'profPos' id}} onclick="addFilter('profPos', '{{id}}')">
 
+                                </li>
+                                {{/each}}
                             </ul>
                         </div>
 
@@ -132,6 +126,35 @@
                                 </li>
                             </ul>
                         </div> --}}
+
+                        <div class="panel-heading">
+                            <h6 id="collapse2Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
+                                data-parent="#accordion" href="#collapse2" onclick="animateArrow(this)"
+                                data-key="Land_html">
+                                Land
+                                <img src="images/chevron-right.svg" width="12" height="12">
+                            </h6>
+                        </div>
+
+                        <div id="collapse2" class="panel-collapse collapse in">
+                            <ul class="pl-3 mr-2" style="list-style: none;">
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill" data-key="Indland">
+                                        Indland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="lnd" value="ind"
+                                        onclick="addFilter('lnd', 'ind')" {{checkedStateURL url 'lnd' 'ind' }}>
+                                </li>
+                                <li class="mb-2 d-flex flex-row">
+                                    <label class="form-check-label flex-fill" data-key="Udland">
+                                        Udland
+                                    </label>
+                                    <input class="align-self-center" type="checkbox" name="lnd" value="ud"
+                                        onclick="addFilter('lnd','ud')" {{checkedStateURL url 'lnd' 'ud' }}>
+                                </li>
+
+                            </ul>
+                        </div>
 
                         <div class="panel-heading">
                             <h6 id="collapse5Header" class="panel-title mb-2 hand-hover" data-toggle="collapse"
