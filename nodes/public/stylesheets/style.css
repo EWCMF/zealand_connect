@@ -860,3 +860,14 @@ body {
 .modal-content {
   border: none;
 }
+
+.disable-form {
+  opacity:0.2; 
+  pointer-events:none;
+}
+
+.fc-prev-button, .fc-prevYear-button, .fc-next-button, .fc-nextYear-button, .fc-today-button {
+  color: #faee84 !important;
+  background-color: black !important;
+  border: none !important;
+}

@@ -34,7 +34,9 @@ router.get('/login', function (req, res, next) {
             res.redirect('/admin-funktioner');
             break;
         default:
-            res.render('login-admin');
+            res.render('login-admin', {
+                language: reqLang(req, res)
+            });
             break;
     }
 });

@@ -126,6 +126,7 @@ function getLangdata() {
 
                 "forside_slogan": "Zealand Connect - create your future",
                 "forside_slogan_body": "With Zealand Connect you can easily find your future internship or workplace as you will find all vacancies here.",
+                "Kalender": "Calendar",
 
                 "student_quick_access_headline" : "For students",
                 "student_quick_access_btn": "Find your next job or internship here. You can also increase your chances by creating a CV.",

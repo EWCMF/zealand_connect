@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../models');
+const db = require('../models');
 const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const deleteCV = require('../persistence/cv-mapping').deleteCV;
 const { reqLang } = require('../public/javascript/request');
@@ -16,7 +16,7 @@ router.get('/', authorizeUser('student'), async function (req, res, next) {
     var student = res.locals.user;
 
     if (student.cv == null) {
-        const udd = await models.Uddannelse.findAll({
+        const udd = await db.Uddannelse.findAll({
             order: [
                 ['name', 'ASC']
             ]
@@ -31,18 +31,18 @@ router.get('/', authorizeUser('student'), async function (req, res, next) {
         })
     }
 
-    models.CV.findOne({
+    db.CV.findOne({
         raw: true,
         nest: true,
         where: {
             id: parseInt(student.cv.id)
         },
         include: [{
-            model: models.Student,
+            model: db.Student,
             as: 'student'
         },
         {
-            model: models.Uddannelse,
+            model: db.Uddannelse,
             as: 'education'
         }]
     }).then((cv) => {
@@ -59,7 +59,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
 
     var student = res.locals.user;
 
-    const udd = await models.Uddannelse.findAll({
+    const udd = await db.Uddannelse.findAll({
         order: [
             ['name', 'ASC']
         ]
@@ -69,7 +69,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
         res.status(403).render('error403', {layout: false});
     }
 
-    const CVtypes = await models.CV_CVtype.findAll({
+    const CVtypes = await db.CV_CVtype.findAll({
         where: {
             cv_id: student.cv.id
         }
@@ -228,7 +228,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
         post_subscription
     }
 
-    const [cv, created] = await models.CV.findOrCreate({
+    const [cv, created] = await db.CV.findOrCreate({
         where: {
             student_id: student.id
         },
@@ -236,7 +236,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     });
 
     if (!created) {
-        await models.CV.update(json, {
+        await db.CV.update(json, {
             where: {
                 id: cv.id
             }
@@ -254,7 +254,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
 
     for (let i = 0; i < cvtypes.length; i++) {
         if (typeof cvtypes[i] !== 'undefined'){
-            const [cvtype, cvtypeCreated] = await models.CV_CVtype.findOrCreate({
+            const [cvtype, cvtypeCreated] = await db.CV_CVtype.findOrCreate({
                 where: {
                     cv_id: cv.id,
                     cvtype_id: i + 1
@@ -262,7 +262,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
             })
 
             if (!cvtypeCreated) {
-                await models.CV_CVtype.update(json, {
+                await db.CV_CVtype.update(json, {
                     where: {
                         cv_id: cv.id,
                         cvtype_id: i + 1
@@ -270,7 +270,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
                 })
             }
         } else {
-            await models.CV_CVtype.destroy({
+            await db.CV_CVtype.destroy({
                 where: {
                     cv_id: cv.id,
                     cvtype_id: i + 1
@@ -285,9 +285,9 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
 router.get('/delete', authorizeUser('student'), async function (req, res, next) {
     let user = res.locals.user;
 
-    if (user instanceof models.Student){
+    if (user instanceof db.Student){
         try {
-            let CV = await models.CV.findOne({
+            let CV = await db.CV.findOne({
                 where: {
                     student_id: user.id
                 }
@@ -303,7 +303,7 @@ router.get('/delete', authorizeUser('student'), async function (req, res, next) 
 router.post('/preview', authorizeUser('student'), async function (req, res, next) {
     let student = await findUserByEmail(req.user);
 
-    let udd = await models.Uddannelse.findByPk(req.body.uddannelse, {
+    let udd = await db.Uddannelse.findByPk(req.body.uddannelse, {
         attributes: ["name"]
     });
     if (udd == null) {

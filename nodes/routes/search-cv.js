@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 var hbs = require('handlebars');
 var fs = require('fs');
-const models = require('../models');
+const db = require('../models');
 var formidable = require("formidable");
-const { v4: uuidv4 } = require('uuid');
 const fetch = require('node-fetch');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var {
@@ -119,7 +118,7 @@ async function fetchData(page, parameters, req, res) {
         }
         if (key.includes("cvtype")) {
             let values = parameters[key];
-            const CVsWithType = await models.CV_CVtype.findAll({
+            const CVsWithType = await db.CV_CVtype.findAll({
                 where: {
                     cvtype_id: values
                 },
@@ -237,7 +236,7 @@ async function fetchData(page, parameters, req, res) {
     }
     ;
 
-    let rows = await models.CV.findAll({
+    let rows = await db.CV.findAll({
         limit: limit,
         raw: false,
         nest: true,
@@ -247,19 +246,19 @@ async function fetchData(page, parameters, req, res) {
         ],
         include: [
             {
-                model: models.Student,
+                model: db.Student,
                 as: 'student'
             },
             {
-                model: models.Uddannelse,
+                model: db.Uddannelse,
                 as: 'education',
                 attributes: ['name']
             },
             {
-                model: models.CVtype,
+                model: db.CVtype,
                 as: 'cvtype',
                 attributes: ['cvtype'],
-                through: models.CV_CVtype
+                through: db.CV_CVtype
             }
         ],
         where
@@ -294,8 +293,8 @@ async function fetchData(page, parameters, req, res) {
     });
 
     let favouriteCVs = [];
-    if (res.locals.user instanceof models.Virksomhed) {
-        favouriteCVs = await models.FavouriteCV.findAll({
+    if (res.locals.user instanceof db.Virksomhed) {
+        favouriteCVs = await db.FavouriteCV.findAll({
             raw: true,
             where: {
                 company_id: res.locals.user.id
@@ -311,7 +310,7 @@ async function fetchData(page, parameters, req, res) {
         });
     });
 
-    let count = await models.CV.count({
+    let count = await db.CV.count({
         where
     });
 
@@ -326,7 +325,7 @@ async function fetchData(page, parameters, req, res) {
 }
 
 router.get('/', async function (req, res, next) {
-    let categoryQuery = await models.EducationCategory.findAll({
+    let categoryQuery = await db.EducationCategory.findAll({
         raw: true,
         attributes: ['id', 'name'],
         order: [
@@ -336,7 +335,7 @@ router.get('/', async function (req, res, next) {
 
     let categories = []
     for (const category of categoryQuery) {
-        const uddannelser = await models.Uddannelse.findAll({
+        const uddannelser = await db.Uddannelse.findAll({
             raw: true,
             where: {
                 fk_education_category: category.id
@@ -371,7 +370,7 @@ router.get('/', async function (req, res, next) {
         );
     }
 
-    let cvtype = await models.CVtype.findAll({
+    let cvtype = await db.CVtype.findAll({
         attributes: ['id', 'cvType'],
         order: [
             ['cvType', 'ASC']
@@ -478,18 +477,18 @@ router.post('/query', function (req, res) {
 router.get('/:id', async function (req, res) {
     let id = req.params.id
 
-    var cv = await models.CV.findOne({
+    var cv = await db.CV.findOne({
         raw: true,
         nest: true,
         where: {
             id: parseInt(id)
         },
         include: [{
-            model: models.Student,
+            model: db.Student,
             as: 'student'
         },
             {
-                model: models.Uddannelse,
+                model: db.Uddannelse,
                 as: 'education'
             }
         ]
@@ -510,7 +509,7 @@ router.get('/:id', async function (req, res) {
     var ejer = false;
     if (req.user != null) {
         var found = res.locals.user;
-        if (found instanceof models.Student && found.id == cv.student_id) {
+        if (found instanceof db.Student && found.id == cv.student_id) {
             ejer = true;
         }
     }
@@ -556,24 +555,22 @@ router.get('/:id/create_pdf', function (req, res, next) {
         size: 'A4'
     });
     var cvOutside;
-    let uniqueId = uuidv4();
-    console.log(uniqueId)
-    var pdfStream = fs.createWriteStream('public/pdf/' + uniqueId + '.pdf', {
+    var pdfStream = fs.createWriteStream('public/pdf/temp.pdf', {
         encoding: 'utf8'
     });
     myDoc.pipe(pdfStream);
-    models.CV.findOne({
+    db.CV.findOne({
         raw: true,
         nest: true,
         where: {
             id: parseInt(id)
         },
         include: [{
-            model: models.Student,
+            model: db.Student,
             as: 'student'
         },
             {
-                model: models.Uddannelse,
+                model: db.Uddannelse,
                 as: 'education'
             }
         ],
@@ -829,14 +826,14 @@ router.get('/:id/create_pdf', function (req, res, next) {
     });
     pdfStream.addListener('finish', function () {
         res.setHeader('content-type', 'application/pdf'),
-            res.download('public/pdf/' + uniqueId + '.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
+            res.download('public/pdf/temp.pdf', cvOutside.student.fornavn + '_' + cvOutside.student.efternavn + '.pdf')
     });
 
     async function deleteFile() {
         try {
             let promise = new Promise((resolve, reject) => {
                 setTimeout(() => resolve(
-                    fs.unlinkSync('public/pdf/' + uniqueId + '.pdf', (err) => {
+                    fs.unlinkSync('public/pdf/temp.pdf', (err) => {
                         if (err) {
                             console.error(err)
                             return

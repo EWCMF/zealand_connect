@@ -31,6 +31,7 @@ const cookiePolicyRouter = require('./routes/cookie-policy');
 const internshipInfoRouter = require('./routes/internship-info');
 const favouritesRouter = require('./routes/favourites');
 const downloadRouter = require('./routes/download');
+const calendarRouter = require('./routes/calendar');
 
 const bodyParser = require('body-parser')
 
@@ -148,9 +149,12 @@ app.use('/cookie-policy', cookiePolicyRouter);
 app.use('/internship-info', internshipInfoRouter);
 app.use('/favourites', favouritesRouter);
 app.use('/download', downloadRouter);
+app.use('/calendar', calendarRouter);
 
 // Create static path mapping to dawa autocomplete directory in node_modules
 app.use('/dawa', express.static(__dirname + '/node_modules/dawa-autocomplete2/dist/'));
+
+app.use('/fullcalendar', express.static(__dirname + '/node_modules/fullcalendar/'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
