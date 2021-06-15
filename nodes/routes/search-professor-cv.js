@@ -44,7 +44,7 @@ async function fetchData(page, parameters, res) {
     let sprog = {
         [Op.or]: []
     };
-    let postcode = {
+    let position_id = {
         [Op.or]: []
     };
 
@@ -55,6 +55,7 @@ async function fetchData(page, parameters, res) {
     let where = {
         id,
         sprog,
+        position_id,
         campus_id,
         offentlig: true
     };
@@ -129,6 +130,17 @@ async function fetchData(page, parameters, res) {
                 });
             } else {
                 campus_id[Op.or].push(+values);
+            }
+        }
+
+        if (key.includes('profPos')) {
+            let values = parameters[key];
+            if (Array.isArray(values)) {
+                values.forEach(element => {
+                    position_id[Op.or].push(+element);
+                });
+            } else {
+                position_id[Op.or].push(+values);
             }
         }
     }
@@ -307,7 +319,15 @@ router.get('/', async function (req, res, next) {
         order: [
             ['name', 'ASC']
         ]
-    })
+    });
+
+    let professorPositions = await models.ProfessorPosition.findAll({
+        raw: true,
+        attributes: ['id', 'name'],
+        order: [
+            ['name', 'ASC']
+        ]
+    });
 
     let data = await fetchData(req.query.page, req.query, res);
 
@@ -324,6 +344,7 @@ router.get('/', async function (req, res, next) {
         language: reqLang(req, res),
         categories: categories,
         campuses: campuses,
+        professorPositions: professorPositions,
         json: rows,
         resultater: count,
         pagination: {
@@ -343,6 +364,7 @@ router.post('/query', function (req, res) {
         makeArray(fields, 'udd');
         makeArray(fields, 'lnd');
         makeArray(fields, 'loc');
+        makeArray(fields, 'profPos');
 
         let fetchedData = await fetchData(parseInt(fields.page), fields, res);
 
