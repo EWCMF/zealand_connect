@@ -721,6 +721,16 @@ input::placeholder {
   margin: 0;
 }
 
+.postTextContainer .ql-editor {
+  padding-top: 0;
+  white-space: normal;
+}
+
+.ql-container > * {
+  margin: 0;
+  line-height: 1.42;
+}
+
 .ql-editor, #editor {
   min-height:250px;
 }
@@ -750,11 +760,6 @@ body {
 
 .footer {
   flex-shrink: 0;
-}
-
-.postTextContainer .ql-editor {
-  padding-top: 0;
-  white-space: normal;
 }
 
 .consent-header {

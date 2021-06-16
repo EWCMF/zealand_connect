@@ -145,9 +145,11 @@
             <div class="form-group">
                 <!-- textarea kort præsentation -->
                 <label for="exampleFormControlTextarea1" data-key="Kort_praesentation">Kort præsentation</label>
-                <textarea class="form-control" rows="3" id="about" name="about"
+                <div id="editorKortPraesentation" spellcheck="false">{{{about}}}</div>
+                <input type="hidden" id="about" name="about">
+                {{!-- <textarea class="form-control" rows="3" id="about" name="about"
                     placeholder="Her har du mulighed for at skrive en fritekst. Skriv fx om dine faglige fokusområder, interesser og kvalifikationer, som ikke er nævnt i de andre felter."
-                    data-key="Om_mig_placeholder">{{about}}</textarea>
+                    data-key="Om_mig_placeholder">{{about}}</textarea> --}}
             </div>
             <div class="form-group required">
                 <!-- textarea med erhvervserfaring -->
@@ -344,6 +346,10 @@
         }
     }
 
+    /*let Block = Quill.import('blots/block');
+    Block.tagName = 'div';
+    Quill.register(Block, true);*/
+
     let toolbarOptions = [
         [{
             'size': ['small', false, 'large', 'huge']
@@ -365,6 +371,15 @@
         ['link'],
         ['clean']
     ];
+
+    const editorKortPraesentation = new Quill('#editorKortPraesentation', {
+        modules: {
+            toolbar: toolbarOptions,
+            magicUrl: true,
+        },
+        theme: 'snow',
+        placeholder: "Her har du mulighed for at skrive en fritekst. Skriv fx om dine faglige fokusområder, interesser og kvalifikationer, som ikke er nævnt i de andre felter."
+    });
 
     const editorErhvervserfaring = new Quill('#editorErhvervserfaring', {
         modules: {
@@ -403,6 +418,12 @@
     });
 
     function copyQuillHtmlToHiddenInput() {
+        if (editorKortPraesentation.getLength() > 1) {
+            document.getElementById('about').value = editorKortPraesentation.root.innerHTML;
+        } else {
+            document.getElementById('about').value = '';
+        }
+
         if (editorErhvervserfaring.getLength() > 1) {
             document.getElementById('erhvervserfaring').value = editorErhvervserfaring.root.innerHTML;
         } else {
