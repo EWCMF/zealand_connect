@@ -145,37 +145,43 @@
             <div class="form-group">
                 <!-- textarea kort præsentation -->
                 <label for="exampleFormControlTextarea1" data-key="Kort_praesentation">Kort præsentation</label>
-                <textarea class="form-control" rows="3" id="about" name="about"
+                <div id="editorKortPraesentation" spellcheck="false">{{{about}}}</div>
+                <input type="hidden" id="about" name="about">
+                {{!-- <textarea class="form-control" rows="3" id="about" name="about"
                     placeholder="Her har du mulighed for at skrive en fritekst. Skriv fx om dine faglige fokusområder, interesser og kvalifikationer, som ikke er nævnt i de andre felter."
-                    data-key="Om_mig_placeholder">{{about}}</textarea>
+                    data-key="Om_mig_placeholder">{{about}}</textarea> --}}
             </div>
             <div class="form-group required">
                 <!-- textarea med erhvervserfaring -->
-                <label for="exampleFormControlTextarea1" data-key="Erhvervserfaring">Erhvervserfaring</label>
-                <textarea class="form-control" rows="3" id="erhvervserfaring" name="erhvervserfaring" placeholder="fx
+                <label data-key="Erhvervserfaring">Erhvervserfaring</label>
+                <div id="editorErhvervserfaring" spellcheck="false">{{{erhvervserfaring}}}</div>
+                <input type="hidden" name="erhvervserfaring" id="erhvervserfaring" />
+                {{!-- <textarea class="form-control" rows="3" id="erhvervserfaring" name="erhvervserfaring" placeholder="fx
 - 2002-nu: Adjunkt hos Zealand Sjællands Erhvervsakademi
 - 1996-2001: IT-konsulent hos Telia
 - 1993-1995: Salgsassistent hos Telia
-- 1987-1988: Flaskedreng i Netto" data-key="Erhvervserfaring_placeholder">{{erhvervserfaring}}</textarea>
+- 1987-1988: Flaskedreng i Netto" data-key="Erhvervserfaring_placeholder">{{erhvervserfaring}}</textarea> --}}
                 <p id="erhvervserfaringError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
                     udfyldes</p>
             </div>
             <div class="form-group required">
                 <!-- textarea med uddannelse -->
-                <label for="exampleFormControlTextarea1" for="tidligere_uddannelse"
+                <label for="tidligere_uddannelse"
                     data-key="Udannelse">Uddannelse</label>
-                <textarea class="form-control" rows="3" id="tidligere_uddannelse" name="tidligere_uddannelse"
+                <div id="editorTidligereUddannelse" spellcheck="false">{{{tidligere_uddannelse}}}</div>
+                <input type="hidden" name="tidligere_uddannelse" id="tidligere_uddannelse">
+                {{!-- <textarea class="form-control" rows="3" id="tidligere_uddannelse" name="tidligere_uddannelse"
                     placeholder="fx
 - 2005: CCISP certifikat i IT-sikkerhed
 - 1991-1996: Cand.it. v. Københavns Universitet
-- 1988-1991: HHX Næstved" data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea>
+- 1988-1991: HHX Næstved" data-key="Tidligere_udannelse_placeholder">{{tidligere_uddannelse}}</textarea> --}}
                 <p id="tidligere_uddannelseError" class="CVErrorColor" hidden="true" data-key="Skal_udfyldes">Skal
                     udfyldes</p>
             </div>
             <div class="form-group">
                 <!-- textarea med tidligere projekter -->
                 <label for="exampleFormControlTextarea1" data-key="Tidligere_projekter">Tidligere projekter</label>
-                <div id="editor" spellcheck="false">{{{tidligere_projekter}}}</div>
+                <div id="editorTidligereProjekter" spellcheck="false">{{{tidligere_projekter}}}</div>
                 <input type="hidden" name="tidligere_projekter" id="tidligere_projekter" />
                 <!--                <textarea class="form-control" rows="3" id="tidligere_projekter" name="tidligere_projekter"-->
                 <!--                          data-key="Projekter_placeholder" placeholder="fx-->
@@ -340,6 +346,10 @@
         }
     }
 
+    /*let Block = Quill.import('blots/block');
+    Block.tagName = 'div';
+    Quill.register(Block, true);*/
+
     let toolbarOptions = [
         [{
             'size': ['small', false, 'large', 'huge']
@@ -362,7 +372,41 @@
         ['clean']
     ];
 
-    const editor = new Quill('#editor', {
+    const editorKortPraesentation = new Quill('#editorKortPraesentation', {
+        modules: {
+            toolbar: toolbarOptions,
+            magicUrl: true,
+        },
+        theme: 'snow',
+        placeholder: "Her har du mulighed for at skrive en fritekst. Skriv fx om dine faglige fokusområder, interesser og kvalifikationer, som ikke er nævnt i de andre felter."
+    });
+
+    const editorErhvervserfaring = new Quill('#editorErhvervserfaring', {
+        modules: {
+            toolbar: toolbarOptions,
+            magicUrl: true,
+        },
+        theme: 'snow',
+        placeholder: "fx" +
+"\n- 2002-nu: Adjunkt hos Zealand Sjællands Erhvervsakademi" +
+"\n- 1996-2001: IT-konsulent hos Telia" +
+"\n- 1993-1995: Salgsassistent hos Telia" +
+"\n- 1987-1988: Flaskedreng i Netto"
+    });
+
+    const editorTidligereUddannelse = new Quill('#editorTidligereUddannelse', {
+        modules: {
+            toolbar: toolbarOptions,
+            magicUrl: true,
+        },
+        theme: 'snow',
+        placeholder: "fx" +
+            "\n- 2005: CCISP certifikat i IT-sikkerhed" +
+            "\n- 1991-1996: Cand.it. v. Københavns Universitet" +
+            "\n- 1988-1991: HHX Næstved"
+    });
+
+    const editorTidligereProjekter = new Quill('#editorTidligereProjekter', {
         modules: {
             toolbar: toolbarOptions,
             magicUrl: true,
@@ -374,8 +418,26 @@
     });
 
     function copyQuillHtmlToHiddenInput() {
-        if (editor.getLength() > 1) {
-            document.getElementById('tidligere_projekter').value = editor.root.innerHTML;
+        if (editorKortPraesentation.getLength() > 1) {
+            document.getElementById('about').value = editorKortPraesentation.root.innerHTML;
+        } else {
+            document.getElementById('about').value = '';
+        }
+
+        if (editorErhvervserfaring.getLength() > 1) {
+            document.getElementById('erhvervserfaring').value = editorErhvervserfaring.root.innerHTML;
+        } else {
+            document.getElementById('erhvervserfaring').value = '';
+        }
+
+        if (editorTidligereUddannelse.getLength() > 1) {
+            document.getElementById('tidligere_uddannelse').value = editorTidligereUddannelse.root.innerHTML;
+        } else {
+            document.getElementById('tidligere_uddannelse').value = '';
+        }
+
+        if (editorTidligereProjekter.getLength() > 1) {
+            document.getElementById('tidligere_projekter').value = editorTidligereProjekter.root.innerHTML;
         } else {
             document.getElementById('tidligere_projekter').value = '';
         }

@@ -627,6 +627,41 @@ router.get('/:id/create_pdf', function (req, res, next) {
             }
         }
 
+        const { convert } = require('html-to-text');
+        const selectors = [
+            {
+                selector: 'br',
+                format: 'skip'
+            },
+            {
+                selector: 'a',
+                options: {
+                    hideLinkHrefIfSameAsText: true
+                } 
+            },
+            {
+                selector: 'ol',
+                options: {
+                    leadingLineBreaks: 1,
+                    trailingLineBreaks: 1,
+                }
+            },
+            {
+                selector: 'ul',
+                options: {
+                    leadingLineBreaks: 1,
+                    trailingLineBreaks: 1,
+                }
+            },
+            {
+                selector: 'p',
+                options: {
+                    leadingLineBreaks: 1,
+                    trailingLineBreaks: 1,
+                }
+            }
+        ];
+
         // Før linie
         myDoc.font(path.normalize('fonts/arial.ttf'));
 
@@ -724,7 +759,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .lineGap(16)
             .text(texts.about, 50);
 
-        let about = cv.about ? cv.about : texts.ikke_angivet
+        let about = cv.about ? convert(cv.about, {selectors: selectors}) : texts.ikke_angivet
         myDoc.fontSize(10)
             .lineGap(2)
             .text(about);
@@ -736,7 +771,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .lineGap(16)
             .text(texts.erhvervserfaring);
 
-        let erhvervserfaring = cv.erhvervserfaring != null && cv.erhvervserfaring != '' ? cv.erhvervserfaring : texts.ikke_angivet
+        let erhvervserfaring = cv.erhvervserfaring != null && cv.erhvervserfaring != '' ? convert(cv.erhvervserfaring, {selectors: selectors}) : texts.ikke_angivet
         myDoc.fontSize(10)
             .lineGap(2)
             .text(erhvervserfaring);
@@ -748,7 +783,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .lineGap(16)
             .text(texts.tidligere_uddannelse);
 
-        let tidligere_uddannelse = cv.tidligere_uddannelse != null && cv.tidligere_uddannelse != '' ? cv.tidligere_uddannelse : texts.ikke_angivet
+        let tidligere_uddannelse = cv.tidligere_uddannelse != null && cv.tidligere_uddannelse != '' ? convert(cv.tidligere_uddannelse, {selectors: selectors}) : texts.ikke_angivet
         myDoc.fontSize(10)
             .lineGap(2)
             .text(tidligere_uddannelse);
@@ -760,8 +795,8 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .lineGap(16)
             .text(texts.projekter);
         
-        const { convert } = require('html-to-text');
-        let projekter = cv.tidligere_projekter != null && cv.tidligere_projekter != '' ? convert(cv.tidligere_projekter) : texts.ikke_angivet
+        
+        let projekter = cv.tidligere_projekter != null && cv.tidligere_projekter != '' ? convert(cv.tidligere_projekter, {selectors: selectors}) : texts.ikke_angivet
         myDoc.fontSize(10)
             .lineGap(2)
             .text(projekter);

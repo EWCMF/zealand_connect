@@ -159,9 +159,9 @@
                 Kort præsentation
             </h4>
             {{#if json.about}}
-            <p class="autobreak">
-                {{json.about}}
-            </p>
+            <div class="ql-container">
+                {{{json.about}}}
+            </div>
             {{else}}
             <p class="autobreak" data-key="Ikke_angivet">
                 Ikke angivet
@@ -176,9 +176,9 @@
                 Erhvervserfaring
             </h4>
             {{#if json.erhvervserfaring}}
-            <p class="autobreak">
-                {{json.erhvervserfaring}}
-            </p>
+            <div class="ql-container">
+                {{{json.erhvervserfaring}}}
+            </div>
             {{else}}
             <p class="autobreak" data-key="Ikke_angivet">
                 Ikke angivet
@@ -193,9 +193,9 @@
                 Tidligere Uddannelse
             </h4>
             {{#if json.tidligere_uddannelse}}
-            <p class="autobreak">
-                {{json.tidligere_uddannelse}}
-            </p>
+            <div class="ql-container">
+                {{{json.tidligere_uddannelse}}}
+            </div>
             {{else}}
             <p class="autobreak" data-key="Ikke_angivet">
                 Ikke angivet
@@ -210,9 +210,9 @@
                 Tidligere projekter
             </h4>
             {{#if json.tidligere_projekter}}
-                <p class="autobreak">
+                <div class="ql-container">
                     {{{json.tidligere_projekter}}}
-                </p>
+                </div>
             {{else}}
                 <p class="autobreak" data-key="Ikke_angivet">
                     Ikke angivet
