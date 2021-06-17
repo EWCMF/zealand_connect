@@ -21,6 +21,8 @@
             <div class="form-group">
                 <label for="endDate" data-key="Slutdato">Slutdato</label>
                 <input class="form-control" type="date" name="endDate" id="endDate">
+                <div hidden="true" class="col-form-label formError" id="datesIncorrectError" data-key="datesIncorrectError">
+                    Slutdato skal være efter startdato</div>
             </div>
             <div class="form-group mt-5 form-inline">
                 <label class="mr-2" for="allDay">Hele dagen</label>
@@ -33,12 +35,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="endDate" data-key="Slutdato">Sluttid</label>
+                    <label for="formEndTime" data-key="Slutdato">Sluttid</label>
                     <input class="form-control" type="time" name="endTime" id="formEndTime">
                 </div>
             </div>
             <div hidden="true" class="col-form-label formError" id="timeError" data-key="timeError">
-                    Hvis tidspunkt er angivet skal både starttid og sluttid udfyldes</div>
+                    Hvis tidspunkt er angivet skal både starttid og sluttid angives</div>
+            <div hidden="true" class="col-form-label formError" id="missingTimeError" data-dismiss="missingTimeError">Tidspunkter eller 'Hele dagen' skal angives</div>
             <div class="form-group required mt-5">
                 <label for="title">Titel</label>
                 <input class="form-control" type="text" name="title" id="formTitle">

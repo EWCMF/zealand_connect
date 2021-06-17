@@ -109,9 +109,16 @@ router.post('/create-event', authorizeUser('admin'), function(req, res) {
             } else {
                 endDate = new Date(startDateCopy + "T" + endTime);
             }
+        } else if (startDate && endDate) {
+            startDate = new Date(startDate + "T" + '00:00:00');
+            endDate = new Date(endDate + "T" + '23:59:00');
         } else {
             return res.send('One or more values in the form are missing')
         }
+    }
+
+    if (startDate > endDate) {
+        return res.send('Start date can be after end date');
     }
 
     let json = {

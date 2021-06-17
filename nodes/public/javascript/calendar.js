@@ -179,10 +179,12 @@ function greyOutTime() {
 
 function validateEvent() {
     let startDate = document.getElementById('startDate').value;
+    let endDate = document.getElementById('endDate').value;
     let title = document.getElementById('formTitle').value
     let description = document.getElementById('description').value;
     let startTime = document.getElementById('formStartTime').value;
     let endTime = document.getElementById('formEndTime').value;
+    let allDay = document.getElementById('allDay').checked;
 
     let valid = true;
     if (!startDate) {
@@ -201,6 +203,24 @@ function validateEvent() {
         }
     } else {
         document.getElementById('timeError').hidden = true;
+    }
+
+    if (!endDate) {
+        if (!allDay) {
+            if (!startTime || !endTime) {
+                document.getElementById('missingTimeError').hidden = false;
+                valid = false;
+            }
+        } else {
+            document.getElementById('missingTimeError').hidden = true;
+        } 
+    } else {
+        if (startDate > endDate) {
+            document.getElementById('datesIncorrectError').hidden = false;
+            valid = false;
+        } else {
+            document.getElementById('datesIncorrectError').hidden = true;
+        }
     }
 
     if (!title) {
