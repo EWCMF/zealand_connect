@@ -1,30 +1,20 @@
 <nav class="navbar navbar navbar-expand-lg container-fluid" id="nv1">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-key="aOpslag">
-                        Opslag
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                        <a class="dropdown-item" href="/search-cv" data-key="aStudentCVer">CV'er for studerende</a>
-                        <a class="dropdown-item" href="/search-professor-cv" data-key="aProfessorCVer">CV'er for adjunkter/lektorer</a>
-                        <a class="dropdown-item" href="/search-praktik" data-key="aAllePraktikopslag">Alle opslag</a>
-                        <a class="dropdown-item" href="/search-virksomheder" data-key="aAlleVirksomheder">Alle virksomheder</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="flase" data-key="aFaktaOmPraktik">
-                        Fakta om praktik
-                    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-key="aOpslag">
+                    Opslag
+                </a>
                 <div class="dropdown-menu" aria-labelledby="navbarOpslag">
-                    <a class="dropdown-item" href="/search-cv" data-key="aAlleCVer">Alle CV'er</a>
+                    <a class="dropdown-item" href="/search-cv" data-key="aStudentCVer">CV'er for studerende</a>
+                    <a class="dropdown-item" href="/search-professor-cv" data-key="aProfessorCVer">CV'er for
+                        adjunkter/lektorer</a>
                     <a class="dropdown-item" href="/search-praktik" data-key="aAllePraktikopslag">Alle opslag</a>
                     <a class="dropdown-item" href="/search-virksomheder" data-key="aAlleVirksomheder">Alle
                         virksomheder</a>
@@ -32,7 +22,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="flase" data-key="aFaktaOmPraktik">
+                   aria-haspopup="true" aria-expanded="flase" data-key="aFaktaOmPraktik">
                     Fakta om praktik
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarOpslag">
@@ -41,11 +31,11 @@
                     <a class="dropdown-item" href="/internship-info/#Til_Virksomheder" data-key="For_virksomheden">For
                         virksomheden</a>
                     <a class="dropdown-item" href="/internship-info/#Arbejdstid_og_læringsmål"
-                        data-key="Arbejdstid_og_laeringsmaal">Arbejdstid og læringsmål</a>
+                       data-key="Arbejdstid_og_laeringsmaal">Arbejdstid og læringsmål</a>
                     <a class="dropdown-item" href="/internship-info/#Løn" data-key="Loen">Løn</a>
                     <a class="dropdown-item" href="/internship-info/#Forsikring" data-key="Forsikring">Forsikring</a>
                     <a class="dropdown-item" href="/internship-info/#Praktikaftale"
-                        data-key="Praktikaftale">Praktikaftale</a>
+                       data-key="Praktikaftale">Praktikaftale</a>
                     <a class="dropdown-item" href="/internship-info/#Praktikperiode" data-key="Loen">Praktikperiode</a>
                     {{!-- <a class="dropdown-item" href="/" data-key="aPraktikkontrakten">Praktikkontrakten</a>
                     <a class="dropdown-item" href="/" data-key="aEvtProblemer">Evt. problemer</a> --}}
@@ -56,7 +46,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/admin-funktioner"
-                    data-key="aAdministratorfunktioner">Administratorfunktioner</a>
+                   data-key="aAdministratorfunktioner">Administratorfunktioner</a>
             </li>
             </li>
         </ul>
@@ -67,7 +57,7 @@
             </li>
             <li class="nav-item dropdown" id="profileDropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdownName" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{user.fornavn}} {{user.efternavn}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarOpslag">
