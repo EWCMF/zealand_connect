@@ -627,7 +627,8 @@ function getLangdata() {
                 "Afdeling:": "Campus:",
                 "Tilknyttet_uddannelse:": "Associated education:",
                 "Stilling:": "Position:",
-                "Underviser_i:  ": "Teaches:"
+                "Underviser_i:  ": "Teaches:",
+                "Overskrift_placeholder_pro": "e.g. I'm a Professor in Computer Science and I'm looking for new and interesting research projects to participate in. This is the headline of your CV and will be shown in your card."
             }
         }
     }

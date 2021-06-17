@@ -382,8 +382,14 @@
             magicUrl: true,
         },
         theme: 'snow',
-        placeholder: "Her har du mulighed for at skrive en fritekst. Skriv fx om dine faglige fokusområder, interesser og kvalifikationer, som ikke er nævnt i de andre felter."
+        placeholder: '{{language}}' === 'da' ?
+                "Her har du mulighed for at skrive en fritekst. Skriv fx om dine faglige fokusområder, interesser og kvalifikationer, som ikke er nævnt i de andre felter."
+                : "Here you can write a free text. Write about your professional focus, interest and qualifications that are not mentioned in the other fields."
     });
+
+    let jobPlaceHolder = '{{language}}' === 'da'
+            ? "hej"
+            : "nej";
 
     const editorErhvervserfaring = new Quill('#editorErhvervserfaring', {
         modules: {
@@ -391,11 +397,17 @@
             magicUrl: true,
         },
         theme: 'snow',
-        placeholder: "fx" +
-"\n- 2002-nu: Adjunkt hos Zealand Sjællands Erhvervsakademi" +
-"\n- 1996-2001: IT-konsulent hos Telia" +
-"\n- 1993-1995: Salgsassistent hos Telia" +
-"\n- 1987-1988: Flaskedreng i Netto"
+        placeholder: '{{language}}' === 'da' ?
+                        "fx" +
+                        "\n- 2002-nu: Adjunkt hos Zealand Sjællands Erhvervsakademi" +
+                        "\n- 1996-2001: IT-konsulent hos Telia" +
+                        "\n- 1993-1995: Salgsassistent hos Telia" +
+                        "\n- 1987-1988: Flaskedreng i Netto"
+                : "e.g." +
+                        "\n- 2002-now: Professor at Zealand Sjællands Erhvervsakademi" +
+                        "\n- 1996-2001: IT consultant at Telia" +
+                        "\n- 1993-1995: Sales assistant at Telia" +
+                        "\n- 1987-1988: Bottle boy at Netto"
     });
 
     const editorTidligereUddannelse = new Quill('#editorTidligereUddannelse', {
@@ -404,10 +416,15 @@
             magicUrl: true,
         },
         theme: 'snow',
-        placeholder: "fx" +
-            "\n- 2005: CCISP certifikat i IT-sikkerhed" +
-            "\n- 1991-1996: Cand.it. v. Københavns Universitet" +
-            "\n- 1988-1991: HHX Næstved"
+        placeholder: '{{language}}' === 'da' ?
+                        "fx" +
+                        "\n- 2005: CCISP certifikat i IT-sikkerhed" +
+                        "\n- 1991-1996: Cand.it. v. Københavns Universitet" +
+                        "\n- 1988-1991: HHX Næstved"
+                : "e.g." +
+                        "\n- 2005: CCISP certificate in IT security" +
+                        "\n- 1991-1996: Cand.it. at Copenhagen University" +
+                        "\n- 1988-1991: HHX Næstved"
     });
 
     const editorTidligereProjekter = new Quill('#editorTidligereProjekter', {
@@ -416,9 +433,13 @@
             magicUrl: true,
         },
         theme: 'snow',
-        placeholder: "fx " +
-            "\n- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)" +
-            "\n- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)"
+        placeholder: '{{language}}' === 'da' ?
+                        "fx " +
+                        "\n- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)" +
+                        "\n- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)"
+                : "e.g." +
+                        "\n- 2018-2019: DigiGrow (https://www.eaviden.dk/project/digigrow/)" +
+                        "\n- 2016-2018: Personal Extreme Programming (https://www.eaviden.dk/project/personal-extreme-programming/)"
     });
 
     function copyQuillHtmlToHiddenInput() {
