@@ -39,15 +39,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/check-email', async (req, res) => {
-    console.log("test 500")
-
     let email = req.body;
 
-    console.log("test 501")
-
     let exists = await findUserByEmail(email);
-
-    console.log("test 502")
 
     if (exists == null) {
         return res.json({"email": "valid"});
@@ -144,8 +138,8 @@ router.post('/create', (req, res) => {
         atLeastOneErrorIsPresent = true;
     }
 
-    if (!validatePostcode(postnr)) {
-        errors.PostnrError = "Postnummer er ugyldig";
+    if (!postnr) {
+        errors.PostnrError = "Postnummer mangler";
         atLeastOneErrorIsPresent = true;
     }
 
