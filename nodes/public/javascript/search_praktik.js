@@ -1,8 +1,13 @@
 
 function changeSort(clicked, value) {
+    document.getElementById('dropdownButton').dataset.key = clicked.innerHTML;
     document.getElementById("dropdownButton").innerHTML = clicked.innerHTML;
     document.getElementById("dropdownButton").value = value;
-    
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort', value);
+    window.history.replaceState(null, null, url);
+
     removePageParam();
     let form = document.getElementById('filterForm');
     submitForm(form);
