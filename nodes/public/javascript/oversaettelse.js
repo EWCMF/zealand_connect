@@ -81,6 +81,8 @@ function getLangdata() {
                 "placeholderPostnummer": "Postcode",
                 "opretBruger": "Create user",
                 "Foedselsdato": "Date of birth",
+                "byError": "This field cannot be empty or contain numbers",
+                "notEmptyError": "This field cannot be empty",
                 "cookie": "Cookies must be enabled in your browser",
                 "virk_bekraeft_samtykke_html": 'You must accept our <a class="link-primary" onclick="openCompanyConsent()"><b>declaration of consent on the use of personal information</b></a> in order to create a user on Zealand Connect.',
                 "stud_bekraeft_samtykke_html": 'You must accept our <a class="link-primary" onclick="openDataConsent()"><b>declaration of consent on the use of personal information</b></a> in order to create a user on Zealand Connect.',

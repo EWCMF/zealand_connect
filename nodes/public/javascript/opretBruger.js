@@ -121,21 +121,15 @@ async function checkEmail(input, error) {
     return true;
 };
 
-async function checkCvrNummer() {
-    let regex = numbersRegex
-    let error = errors.cvrNummer;
-    let input = inputs.cvrNummer.value;
-
-    if (!regex.test(input)) {
+function checkCvrNummer(input, error) {
+    if (!input){
+        error.style.visibility = 'visible'
+        error.textContent = translateErrorMessage("feltIkkeTomt");
+        return false;
+    } else if (!cvrRegex.test(input)) {
         error.style.visibility = 'visible'
         error.textContent = translateErrorMessage("CvrFejl");
         return false;
-    }
-
-    error.style.visibility = 'visible';
-
-    if (error.classList.contains('formError')) {
-        error.classList.remove('formError');
     }
 
     error.style.visibility = 'hidden';
@@ -249,7 +243,7 @@ function checkTelefon(input, error) {
 };
 
 function checkPostnummer(input, error) {
-    let regex = postcodeRegex;
+    let regex = dkPostcodeRegex;
 
     if (!regex.test(input)) {
         error.style.visibility = 'visible';
@@ -286,6 +280,16 @@ function checkDato() {
     return true;
 }
 
+function checkInputRegex(input, error, regex) {
+    if (!regex.test(input) || !input) {
+        error.style.visibility = 'visible';
+        return false;
+    } else {
+        error.style.visibility = 'hidden';
+        return true;
+    }
+};
+
 // Company block
 inputs.email.addEventListener('change', function () {
     checkEmail(inputs.email.value, errors.email)
@@ -307,15 +311,17 @@ inputs.gentagPassword.addEventListener('change', function () {
 inputs.virksomhedNavn.addEventListener('change', function () {
     checkFeltIkkeTomt(inputs.virksomhedNavn.value, errors.virksomhedNavn);
 });
-inputs.cvrNummer.addEventListener('change', checkCvrNummer);
+inputs.cvrNummer.addEventListener('change', function() {
+    checkCvrNummer(inputs.cvrNummer.value, errors.cvrNummer)
+});
 inputs.telefon.addEventListener('change', function () {
     checkTelefon(inputs.telefon.value, errors.telefon);
 })
 inputs.by.addEventListener('change', function () {
-    checkFeltIkkeTomt(inputs.by.value, errors.by);
+    checkInputRegex(inputs.by.value, errors.by, cityRegex);
 });
 inputs.postnummer.addEventListener('change', function () {
-    checkPostnummer(inputs.postnummer.value, errors.postnummer);
+    checkFeltIkkeTomt(inputs.postnummer.value, errors.postnummer);
 });
 
 async function submitOpretVirksomhed() {
@@ -327,8 +333,9 @@ async function submitOpretVirksomhed() {
         checkGentagAdgangskode(inputs.gentagPassword.value, errors.gentagPassword, inputs.password.value),
         checkFeltIkkeTomt(inputs.virksomhedNavn.value, errors.virksomhedNavn),
         checkTelefon(inputs.telefon.value, errors.telefon),
-        checkFeltIkkeTomt(inputs.by.value, errors.by),
-        checkPostnummer(inputs.postnummer.value, errors.postnummer)
+        checkInputRegex(inputs.by.value, errors.by, cityRegex),
+        checkFeltIkkeTomt(inputs.postnummer.value, errors.postnummer),
+        checkCvrNummer(inputs.cvrNummer.value, errors.cvrNummer)
     ];
 
     let check = true;
@@ -346,9 +353,8 @@ async function submitOpretVirksomhed() {
     }
 
     let emailCheck = await checkEmail(inputs.email.value, errors.email);
-    let CVRcheck = await checkCvrNummer();
 
-    if (!emailCheck || !CVRcheck) {
+    if (!emailCheck) {
         document.getElementById('submitBtn').onclick = submitOpretVirksomhed;
         return;
     }
@@ -517,11 +523,7 @@ inputsProfessor.efternavn.addEventListener('change', function () {
 });
 
 async function submitOpretProfessor() {
-    console.log("test1")
-
     document.getElementById('submitBtn_Professor').onclick = null;
-
-    console.log("test2")
 
     let checks = [
         checkGentagEmail(inputsProfessor.gentagEmail.value, errorsProfessor.gentagEmail, inputsProfessor.email.value),
@@ -530,8 +532,6 @@ async function submitOpretProfessor() {
         checkFeltIkkeTomt(inputsProfessor.fornavn.value, errorsProfessor.fornavn),
         checkFeltIkkeTomt(inputsProfessor.efternavn.value, errorsProfessor.efternavn),
     ];
-
-    console.log("test3")
 
     let check = true;
     checks.every(element => {
@@ -542,28 +542,17 @@ async function submitOpretProfessor() {
         return true;
     });
 
-    console.log("test4")
-
     if (!check) {
         document.getElementById('submitBtn_Professor').onclick = submitOpretProfessor;
         return;
     }
 
-    console.log("test5")
-
     let emailCheck = await checkEmail(inputsProfessor.email.value, errorsProfessor.email);
-
-    console.log("test6")
 
     if (!emailCheck) {
         document.getElementById('submitBtn_Professor').onclick = submitOpretProfessor;
         return;
     }
-
-    console.log("test7")
-
-    console.log(checks)
-    console.log(emailCheck)
 
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
