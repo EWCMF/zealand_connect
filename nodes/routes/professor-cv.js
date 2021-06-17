@@ -5,7 +5,7 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const deleteProCV = require('../persistence/cv-mapping').deleteProCV;
 const { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
-const { emailRegex, phoneRegex, linkRegex, postcodeRegex } = require('../constants/regex');
+const { emailRegex, phoneRegex, linkRegex } = require('../constants/regex');
 
 router.get('/', authorizeUser('professor'), async function (req, res, next) {
     var professor = res.locals.user;

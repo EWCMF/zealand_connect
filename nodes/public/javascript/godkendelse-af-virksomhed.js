@@ -15,7 +15,6 @@ function submitButton() {
 
     let numbersOnly = phoneRegex.test(telefon);
     let numbersOnly2 = numbersRegex.test(cvrnr);
-    let numbersOnly3 = postcodeRegex.test(postnr);
 
     if (!navn) {
         document.getElementById("navnError").hidden = false;
@@ -33,7 +32,7 @@ function submitButton() {
     } else {
         document.getElementById("cvrnrError").hidden = true;
     }
-    if (!numbersOnly3) {
+    if (!postnr) {
         document.getElementById("postnrError").hidden = false;
     } else {
         document.getElementById("postnrError").hidden = true;
@@ -63,7 +62,7 @@ function submitButton() {
         document.getElementById("byError").hidden = true;
     }
 
-    if (navn && numbersOnly && numbersOnly2 && numbersOnly3 && by) {
+    if (navn && numbersOnly && numbersOnly2 && postnr && by) {
         document.forms["redigerVirksomhedForm"].submit();
     }
 

@@ -7,6 +7,6 @@ const dateRegex = /^\d{4}[.\/-]\d{2}[.\/-]\d{2}$/
 const linkRegex = /^(https?:\/\/|www\.)[\w-\.]+\.[\w-\.]+(\/([\S]+)?)?$/i
 const nameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
 const numbersRegex = /^[0-9]{8}$/;
-const postcodeRegex = /^[0-9]{4}$/;
+const dkPostcodeRegex = /^[0-9]{4}$/;
 
-module.exports = { emailRegex, cvrRegex, phoneRegex, cityRegex, dateRegex, linkRegex, nameRegex, numbersRegex, postcodeRegex}
+module.exports = { emailRegex, cvrRegex, phoneRegex, cityRegex, dateRegex, linkRegex, nameRegex, numbersRegex, dkPostcodeRegex}

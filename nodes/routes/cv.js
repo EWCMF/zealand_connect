@@ -5,7 +5,7 @@ const findUserByEmail = require('../persistence/usermapping').findUserByEmail;
 const deleteCV = require('../persistence/cv-mapping').deleteCV;
 const { reqLang } = require('../public/javascript/request');
 const authorizeUser = require("../middlewares/authorizeUser").authorizeUser;
-const { emailRegex, phoneRegex, linkRegex, postcodeRegex } = require('../constants/regex');
+const { emailRegex, phoneRegex, linkRegex, dkPostcodeRegex } = require('../constants/regex');
 const fetch = require('node-fetch');
 
 router.get('/', authorizeUser('student'), async function (req, res, next) {
@@ -150,7 +150,7 @@ router.post('/submit', authorizeUser('student'), async function (req, res, next)
     let hjemmesideKorrekt = hjemmeside.length != 0 ? linkRegex.test(hjemmeside) : true;
     let youtubeKorrekt = yt_link.length != 0 ? linkRegex.test(yt_link) : true;
     let linkedInKorrekt = linkedIn.length != 0 ? linkRegex.test(linkedIn) : true;
-    let postcodeKorrekt = postcode.length != 0 ? postcodeRegex.test(postcode) : true;
+    let postcodeKorrekt = postcode.length != 0 ? dkPostcodeRegex.test(postcode) : true;
 
     if (!emailWrittenCorrectly || !phoneCheck || !medOverskrift || !medSprog ||
         !medUddannelse || !medTidligere_uddannelse || !medIt_kompetencer ||

@@ -121,12 +121,12 @@ async function checkEmail(input, error) {
     return true;
 };
 
-async function checkCvrNummer() {
-    let regex = numbersRegex
-    let error = errors.cvrNummer;
-    let input = inputs.cvrNummer.value;
-
-    if (!regex.test(input)) {
+function checkCvrNummer(input, error) {
+    if (!input){
+        error.style.visibility = 'visible'
+        error.textContent = translateErrorMessage("feltIkkeTomt");
+        return false;
+    } else if (!cvrRegex.test(input)) {
         error.style.visibility = 'visible'
         error.textContent = translateErrorMessage("CvrFejl");
         return false;
@@ -249,7 +249,7 @@ function checkTelefon(input, error) {
 };
 
 function checkPostnummer(input, error) {
-    let regex = postcodeRegex;
+    let regex = dkPostcodeRegex;
 
     if (!regex.test(input)) {
         error.style.visibility = 'visible';
@@ -286,6 +286,16 @@ function checkDato() {
     return true;
 }
 
+function checkInputRegex(input, error, regex) {
+    if (!regex.test(input) || !input) {
+        error.style.visibility = 'visible';
+        return false;
+    } else {
+        error.style.visibility = 'hidden';
+        return true;
+    }
+};
+
 // Company block
 inputs.email.addEventListener('change', function () {
     checkEmail(inputs.email.value, errors.email)
@@ -307,15 +317,17 @@ inputs.gentagPassword.addEventListener('change', function () {
 inputs.virksomhedNavn.addEventListener('change', function () {
     checkFeltIkkeTomt(inputs.virksomhedNavn.value, errors.virksomhedNavn);
 });
-inputs.cvrNummer.addEventListener('change', checkCvrNummer);
+inputs.cvrNummer.addEventListener('change', function() {
+    checkCvrNummer(inputs.cvrNummer.value, errors.cvrNummer)
+});
 inputs.telefon.addEventListener('change', function () {
     checkTelefon(inputs.telefon.value, errors.telefon);
 })
 inputs.by.addEventListener('change', function () {
-    checkFeltIkkeTomt(inputs.by.value, errors.by);
+    checkInputRegex(inputs.by.value, errors.by, cityRegex);
 });
 inputs.postnummer.addEventListener('change', function () {
-    checkPostnummer(inputs.postnummer.value, errors.postnummer);
+    checkFeltIkkeTomt(inputs.postnummer.value, errors.postnummer);
 });
 
 async function submitOpretVirksomhed() {
@@ -327,8 +339,9 @@ async function submitOpretVirksomhed() {
         checkGentagAdgangskode(inputs.gentagPassword.value, errors.gentagPassword, inputs.password.value),
         checkFeltIkkeTomt(inputs.virksomhedNavn.value, errors.virksomhedNavn),
         checkTelefon(inputs.telefon.value, errors.telefon),
-        checkFeltIkkeTomt(inputs.by.value, errors.by),
-        checkPostnummer(inputs.postnummer.value, errors.postnummer)
+        checkInputRegex(inputs.by.value, errors.by, cityRegex),
+        checkFeltIkkeTomt(inputs.postnummer.value, errors.postnummer),
+        checkCvrNummer(inputs.cvrNummer.value, errors.cvrNummer)
     ];
 
     let check = true;
