@@ -897,7 +897,30 @@ body {
 }
 
 .fc-prev-button, .fc-prevYear-button, .fc-next-button, .fc-nextYear-button, .fc-today-button {
-  color: #faee84 !important;
-  background-color: black !important;
+  color: black !important;
+  background-color: #faee84 !important;
   border: none !important;
+}
+
+/* .fc-daygrid-block-event  {
+  background-color: black !important;
+}
+
+.fc-h-event {
+  border: 1px solid black !important
+}
+
+.fc-daygrid-event-dot {
+  border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid var(--fc-event-border-color, black) !important;
+} */
+
+.page-link {
+  background-color: white;
+  color: black;
+}
+
+.page-item.active .page-link {
+  background-color: black !important;
+  border-color: black;
+  color: white !important;
 }
