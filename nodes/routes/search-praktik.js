@@ -28,6 +28,13 @@ async function fetchData(page, parameters, res) {
         offset = (page - 1) * limit;
     }
 
+    let sort;
+    if (!parameters.sort) {
+        sort = "updatedAt";
+    } else {
+        sort = parameters.sort;
+    };
+
     let order;
     if (!parameters.order) {
         order = "DESC"
@@ -298,7 +305,7 @@ async function fetchData(page, parameters, res) {
         distinct: true,
         offset: offset,
         order: [
-            ['updatedAt', order],
+            [sort, order],
             [{
                 model: models.Uddannelse
             }, 'name', 'ASC']

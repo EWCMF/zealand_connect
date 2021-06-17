@@ -188,6 +188,8 @@ function getLangdata() {
                 "Sortering": "Sort by:",
                 "Senest_opdateret": "Recently updated",
                 "Senest_opdateret:": "Updated at:",
+                "Oprettelsesdato": "Date created",
+                "Ansøgningsfrist": "Application deadline",
                 "Raekkefoelge": "Order:",
                 "Faldende": "Descending",
                 "Stigende": "Ascending",
