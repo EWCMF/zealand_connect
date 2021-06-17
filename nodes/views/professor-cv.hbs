@@ -350,13 +350,13 @@
     Block.tagName = 'div';
     Quill.register(Block, true);*/
 
-    var Size = Quill.import('attributors/style/size');
-    Size.whitelist = ['14px', '16px', '18px'];
+    const Size = Quill.import('attributors/style/size');
+    Size.whitelist = ['10px', '14px', '18px', '24px'];
     Quill.register(Size, true);
 
     let toolbarOptions = [
         [{
-            'size': ['14px', '16px', '18px']
+            'size': ['10px', '14px', '18px', '24px']
         }],
         ['bold', 'italic', 'underline', 'strike'],
         [{
