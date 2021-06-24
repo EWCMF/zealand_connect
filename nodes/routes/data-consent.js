@@ -3,14 +3,14 @@ const router = express.Router();
 const models = require('../models');
 const {reqLang} = require('../public/javascript/request');
 
-router.get('/', async function (req, res, next) {
-    res.render('data-consent', {
+router.get('/student', async function (req, res, next) {
+    res.render('data-consent-student', {
         language: reqLang(req, res)
     });
 });
 
 router.get('/company', async function (req, res, next) {
-    res.render('company-consent', {
+    res.render('data-consent-company', {
         language: reqLang(req, res)
     });
 });
