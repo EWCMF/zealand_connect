@@ -1,10 +1,10 @@
-<div class="modal rounded-0" tabindex="-1" role="dialog" id="consentModal">
+<div class="modal rounded-0" tabindex="-1" role="dialog" id="professorConsentModal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content rounded-0">
-            <div id="consentModalHeader" class="modal-header rounded-0 modalHeader">
+            <div id="professorConsentModalHeader" class="modal-header rounded-0 modalHeader">
                 <div class="container">
                     <div class="row">
-                        <h5 id="consentModalTitle" class="modal-title text-white align-self-center pr-2">Zealand
+                        <h5 id="professorConsentModalTitle" class="modal-title text-white align-self-center pr-2">Zealand
                             Connect</h5>
                         <a onclick="changeLanguage('da')" class="modal-title text-muted pr-2 btn btn-link">Dansk</a>
                         <a onclick="changeLanguage('en')" class="modal-title text-muted btn btn-link">English</a>
@@ -44,9 +44,9 @@
                             </p>
                             <h5 class="consent-header" data-key="data_consent_header5">Formål og
                                 Behandlingsaktiviteter</h5>
-                            <p data-key="data_consent_paragraph5">
+                            <p data-key="professor_consent_paragraph5">
                                 Dine personoplysninger behandles med det formål at give virksomheder mulighed for at
-                                finde egnede praktikstuderende, og for at du kan finde en praktikplads.
+                                finde samarbejdspartnere til projekter.
                             </p>
                             <h5 class="consent-header" data-key="data_consent_header6">Eventuelle modtagere eller
                                 kategorier af modtagere af personoplysningerne</h5>
@@ -78,20 +78,20 @@
                     </div>
                 </div>
             </div>
-            <form id="formDataConsent" action="/data-consent" method="POST">
+            <form id="formDataProfessorConsent" action="/data-consent" method="POST">
                 <div class="modal-footer rounded-0 ml-3 mr-3">
                     <div class="container">
                         <div class="row align-self-center">
                             <div class="col-10">
                                 <div class="form-group pr-2 m-0">
                                     <input
-                                            id="consent"
+                                            id="professorConsent"
                                             class="form-check-input"
                                             type="checkbox"
-                                            name="consent"
-                                            onchange="checkConsent()"
+                                            name="professorConsent"
+                                            onchange="checkProfessorConsent()"
                                     >
-                                    <label class="consent-text" for="consent" data-key="bekraeft_samtykke">
+                                    <label class="consent-text" for="professorConsent" data-key="bekraeft_samtykke">
                                         Jeg bekræfter at have læst og forstået Zealand Connects
                                         samtykkeerklæring om personoplysninger,
                                         som baggrund for mit samtykke til behandling af mine personoplysninger til
@@ -101,13 +101,13 @@
                             </div>
                             <div class="col-2 align-self-center">
                                 <div class="row justify-content-end">
-                                    {{#if isStudent}}
+                                    {{#if isProfessor}}
                                         <button
-                                                id="consentButton"
+                                                id="professorConsentButton"
                                                 type="button"
                                                 class="btn stdBtn gulKnap"
                                                 data-key="Bekraeft"
-                                                onclick="submitDataConsent()"
+                                                onclick="submitProfessorConsent()"
                                                 data-dismiss="modal"
                                                 disabled
                                         >Bekræft
@@ -128,40 +128,27 @@
     </div>
 </div>
 <script>
-    function submitDataConsent() {
+    function submitProfessorConsent() {
         let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/data-consent', true);
+        xhr.open('POST', '/data-consent/professor', true);
         xhr.setRequestHeader('Content-type', 'text/plain');
-        xhr.send(document.getElementById('consent').checked);
+        xhr.send(document.getElementById('professorConsent').checked);
     }
 
-    function checkConsent() {
-        let consentCheckbox = document.getElementById("consent");
-        let studConsent = document.getElementById("studentConsent");
-        let proConsent = document.getElementById("professorConsent");
-        let consentButton = document.getElementById("consentButton");
-        let createStudentButton = document.getElementById("submitBtn_Student");
+    function checkProfessorConsent() {
+        let consentCheckbox = document.getElementById("professorConsent");
+        let professorConsent = document.getElementById("professorConsentCreate");
+        let consentButton = document.getElementById("professorConsentButton");
         let createProfessorButton = document.getElementById("submitBtn_Professor");
-        let consentText = document.getElementById("consentTextStudent");
         let consentTextPro = document.getElementById("consentTextProfessor");
 
         if (consentButton) {
             consentButton.disabled = !consentCheckbox.checked;
         }
 
-        if (createStudentButton) {
-            createStudentButton.disabled = !consentCheckbox.checked;
-            studConsent.value = consentCheckbox.checked;
-            if (consentCheckbox.checked) {
-                consentText.classList.remove('formError');
-            } else {
-                consentText.classList.add('formError');
-            }
-        }
-
         if (createProfessorButton) {
             createProfessorButton.disabled = !consentCheckbox.checked;
-            proConsent.value = consentCheckbox.checked;
+            professorConsent.value = consentCheckbox.checked;
             if (consentCheckbox.checked) {
                 consentTextPro.classList.remove('formError');
             } else {

@@ -520,7 +520,7 @@ function getLangdata() {
                 "data_consent_header1": "Zealand Connect",
                 "data_consent_paragraph1": "As part of your user registration at Zealand Connect, we need your consent to process your personal data in accordance with the General Data Protection Regulation.",
                 "data_consent_header2": "Project description",
-                "data_consent_paragraph2": "Zealand Connect is a platform where companies have the opportunity to find interns and where students can submit a CV to match with a company.",
+                "data_consent_paragraph2": "Zealand Connect is a platform where companies have the opportunity to find interns and where students and professors can submit a CV to match with a company.",
                 "data_consent_header3": "Data controller",
                 "data_consent_paragraph3": "Zealand, Lyngvej 21, 4600 Køge, CVR no. 31661471 is responsible for the processing of your personal information. For correspondence in regards to the responsibility of personal data please contact zcsupport@zealand.dk.",
                 "data_consent_header4": "Categories of personal information about you that are processed.",
@@ -528,7 +528,7 @@ function getLangdata() {
                 "data_consent_header5": "Purpose and processing activities",
                 "data_consent_paragraph5": "Your personal information is used with the intent to give companies the opportunity to find capable students for internship and for you to find a location for your internship.",
                 "data_consent_header6": "Possible recipients or categories of recipients of your the personal data",
-                "data_consent_paragraph6": "Your personal information will be published at https://connect.zealand.dk/ and will be made freely available to companies, fellow students, other stakeholders etc. This is not a closed forum.",
+                "data_consent_paragraph6": "Your personal information will be published at https://connect.zealand.dk/ and will be made freely available to companies, students, professors, other stakeholders etc. This is not a closed forum.",
                 "data_consent_header7": "Transferring to Third Country or International Organization",
                 "data_consent_paragraph7": "We will not hand over your personal information to anyone outside the EU/EEA.",
                 "data_consent_header8": "Storage time",
@@ -538,7 +538,8 @@ function getLangdata() {
 
                 "company_consent_paragraph4": "We process common personal information in the form of name, mailaddress, mobile number as well as other possible information that you provide.",
                 "company_consent_paragraph5": "The personal information is processed for the purpose of finding suitable students for internships in the company.",
-                "company_consent_paragraph6": "Information that you submit will be published at https://connect.zealand.dk/ and will be made freely available to companies, students, other stakeholders etc. This is not a closed forum.",
+
+                "professor_consent_paragraph5": "Your personal information is used with the intent to give companies the opportunity to find professors to cooperate with in projects.",
 
                 //cookie-policy
                 "Cookie-politik": "Cookie policy",

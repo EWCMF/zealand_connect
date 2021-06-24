@@ -51,4 +51,19 @@ router.post('/company', async function (req, res, next) {
     return res.status(200).end();
 });
 
+router.post('/professor', async function (req, res, next) {
+    let consent = req.body
+
+    if (consent){
+        await models.Professor.update({
+            user_data_consent: consent
+        }, {
+            where: {
+                id: res.locals.user.id
+            }
+        })
+    }
+    return res.status(200).end();
+});
+
 module.exports = router;
