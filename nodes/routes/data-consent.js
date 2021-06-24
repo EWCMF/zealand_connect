@@ -15,6 +15,12 @@ router.get('/company', async function (req, res, next) {
     });
 });
 
+router.get('/professor', async function (req, res, next) {
+    res.render('data-consent-professor', {
+        language: reqLang(req, res)
+    });
+});
+
 router.post('/', async function (req, res, next) {
     let consent = req.body
 
