@@ -76,7 +76,7 @@ const inputsProfessor = Object.freeze({
     gentagPassword: document.getElementById('gentagAdgangskodeProfessor'),
     fornavn: document.getElementById('fornavnProfessor'),
     efternavn: document.getElementById('efternavnProfessor'),
-    consent: document.getElementById('professorConsent')
+    consent: document.getElementById('professorConsentCreate')
 });
 
 const errorsProfessor = Object.freeze({
