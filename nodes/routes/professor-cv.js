@@ -11,7 +11,7 @@ router.get('/', authorizeUser('professor'), async function (req, res, next) {
     var professor = res.locals.user;
 
     if (professor.cv == null) {
-        const educations = await models.Uddannelse.findAll({
+        const educations = await models.Education.findAll({
             order: [
                 ['name', 'ASC']
             ]
@@ -222,7 +222,7 @@ router.get('/edit', authorizeUser('professor'), async function (req, res, next) 
         res.status(403).render('error403', {layout: false});
     }
 
-    const educations = await models.Uddannelse.findAll({
+    const educations = await models.Education.findAll({
         order: [
             ['name', 'ASC']
         ]

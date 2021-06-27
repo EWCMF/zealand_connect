@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'professor'
       });
 
-      ProfessorCV.belongsToMany(models.Uddannelse, {
+      ProfessorCV.belongsToMany(models.Education, {
         through: models.ProfessorCV_Education,
         foreignKey: 'cv_id'
       });

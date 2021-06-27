@@ -16,7 +16,7 @@ router.get('/', authorizeUser('student'), async function (req, res, next) {
     var student = res.locals.user;
 
     if (student.cv == null) {
-        const udd = await db.Uddannelse.findAll({
+        const udd = await db.Education.findAll({
             order: [
                 ['name', 'ASC']
             ]
@@ -42,7 +42,7 @@ router.get('/', authorizeUser('student'), async function (req, res, next) {
             as: 'student'
         },
         {
-            model: db.Uddannelse,
+            model: db.Education,
             as: 'education'
         }]
     }).then((cv) => {
@@ -59,7 +59,7 @@ router.get('/edit', authorizeUser('student'), async function (req, res, next) {
 
     var student = res.locals.user;
 
-    const udd = await db.Uddannelse.findAll({
+    const udd = await db.Education.findAll({
         order: [
             ['name', 'ASC']
         ]
@@ -304,7 +304,7 @@ router.get('/delete', authorizeUser('student'), async function (req, res, next) 
 router.post('/preview', authorizeUser('student'), async function (req, res, next) {
     let student = await findUserByEmail(req.user);
 
-    let udd = await db.Uddannelse.findByPk(req.body.uddannelse, {
+    let udd = await db.Education.findByPk(req.body.uddannelse, {
         attributes: ["name"]
     });
     if (udd == null) {

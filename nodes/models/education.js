@@ -3,37 +3,37 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Uddannelse extends Model {
+  class Education extends Model {
     static associate(models) {
       // define association here
-      Uddannelse.hasMany(models.CV, {
+      Education.hasMany(models.CV, {
         as: 'CVs',
         foreignKey: 'fk_education'
       });
 
-      Uddannelse.belongsToMany(models.InternshipPost, {
+      Education.belongsToMany(models.InternshipPost, {
         through: models.InternshipPost_Education,
         foreignKey: 'education_id'
       });
 
-      Uddannelse.belongsToMany(models.ProfessorCV, {
+      Education.belongsToMany(models.ProfessorCV, {
         through: models.ProfessorCV_Education,
         foreignKey: 'education_id'
       });
 
-      Uddannelse.belongsTo(models.EducationCategory, {
+      Education.belongsTo(models.EducationCategory, {
         foreignKey: "fk_education_category",
         as: "education_category"
       });
     }
   };
-  Uddannelse.init({
+  Education.init({
     name: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Uddannelse',
-    tableName: 'Uddannelser',
+    modelName: 'Education',
+    tableName: 'Educations',
     freezeTableName: true
   });
-  return Uddannelse;
+  return Education;
 };

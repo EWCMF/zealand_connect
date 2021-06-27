@@ -2,7 +2,7 @@ const models = require("../models");
 
 async function createUddanelse(nameobj) {
   try {
-    await models.Uddannelse.create({
+    await models.Education.create({
       name: nameobj,
     });
     return "uddannelseOprettet";
@@ -14,12 +14,12 @@ async function createUddanelse(nameobj) {
 async function findUddannelseByName(name) {
   let udd = null;
   return new Promise((resolve) => {
-    models.Uddannelse.findOne({
+    models.Education.findOne({
       where: { name: name },
     }).then((uddannelse) => {
       if (uddannelse === null) {
       }
-      if (uddannelse instanceof models.Uddannelse) {
+      if (uddannelse instanceof models.Education) {
         udd = uddannelse;
       }
       resolve(udd);
@@ -28,7 +28,7 @@ async function findUddannelseByName(name) {
 }
 async function sletUddannelse(name) {
   try {
-    await models.Uddannelse.destroy({
+    await models.Education.destroy({
       where: {
         name: name,
       },

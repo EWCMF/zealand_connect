@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'student_id'
       });
 
-      CV.belongsTo(models.Uddannelse, {
+      CV.belongsTo(models.Education, {
         as: "education",
         foreignKey: 'fk_education'
       })

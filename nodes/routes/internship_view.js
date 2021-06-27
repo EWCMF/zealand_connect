@@ -20,12 +20,12 @@ router.get('/:id', async function (req, res) {
             as: 'virksomhed'
         },
         {
-            model: models.Uddannelse,
+            model: models.Education,
             attributes: ['name'],
             through: models.InternshipPost_Education
         }],
         order: [
-            [{model: models.Uddannelse}, 'name', 'ASC']
+            [{model: models.Education}, 'name', 'ASC']
         ]
     });
 
@@ -88,7 +88,7 @@ router.get('/:id', async function (req, res) {
         remail: result['email'],
         rphone: result['phone_number'],
         rcontact: result['contact'],
-        reducation: result['Uddannelses'],
+        reducation: result['Education'],
         rcountry: country,
         rregion: result['region'],
         rpoststart/*start date*/: result['post_start_date'],

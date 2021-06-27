@@ -37,7 +37,7 @@ router.get('/posts', authorizeUser('student'), async function (req, res) {
                 as: 'virksomhed'
             },
             {
-                model: models.Uddannelse,
+                model: models.Education,
                 attributes: ['name']
             }
         ],
@@ -133,7 +133,7 @@ router.get('/cvs', authorizeUser('company'), async function (req, res) {
                 model: models.Student,
                 as: 'student'
             }, {
-                model: models.Uddannelse,
+                model: models.Education,
                 as: 'education',
                 attributes: ['name']
             },

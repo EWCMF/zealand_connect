@@ -356,7 +356,7 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
 
     var generatedEducationOptions = '';
 
-    const educations = await db.Uddannelse.findAll({
+    const educations = await db.Education.findAll({
         order: [
             ['name', 'ASC']
         ]

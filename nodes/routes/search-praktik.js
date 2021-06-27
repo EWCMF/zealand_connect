@@ -307,7 +307,7 @@ async function fetchData(page, parameters, res) {
         order: [
             [sort, order],
             [{
-                model: models.Uddannelse
+                model: models.Education
             }, 'name', 'ASC']
         ],
         include: [{
@@ -315,7 +315,7 @@ async function fetchData(page, parameters, res) {
                 as: 'virksomhed'
             },
             {
-                model: models.Uddannelse,
+                model: models.Education,
                 attributes: ['name'],
                 through: models.InternshipPost_Education,
             },
@@ -406,7 +406,7 @@ router.get('/', async function (req, res, next) {
 
     let categories = []
     for (const category of categoryQuery) {
-        const uddannelser = await models.Uddannelse.findAll({
+        const uddannelser = await models.Education.findAll({
             raw: true,
             where: {
                 fk_education_category: category.id

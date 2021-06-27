@@ -264,7 +264,7 @@ async function fetchData(page, parameters, req, res) {
                 as: 'student'
             },
             {
-                model: db.Uddannelse,
+                model: db.Education,
                 as: 'education',
                 attributes: ['name']
             },
@@ -349,7 +349,7 @@ router.get('/', async function (req, res, next) {
 
     let categories = []
     for (const category of categoryQuery) {
-        const uddannelser = await db.Uddannelse.findAll({
+        const uddannelser = await db.Education.findAll({
             raw: true,
             where: {
                 fk_education_category: category.id
@@ -502,7 +502,7 @@ router.get('/:id', async function (req, res) {
             as: 'student'
         },
             {
-                model: db.Uddannelse,
+                model: db.Education,
                 as: 'education'
             }
         ]
@@ -584,7 +584,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             as: 'student'
         },
             {
-                model: db.Uddannelse,
+                model: db.Education,
                 as: 'education'
             }
         ],

@@ -306,7 +306,7 @@ router.post('/', authorizeUser('company', 'admin'), function (req, res, next) {
 /* GET home page. */
 router.get('/', authorizeUser('company', 'admin'), async function (req, res, next) {
     
-    let educations = await db.Uddannelse.findAll({
+    let educations = await db.Education.findAll({
         order: [
             ['name', 'ASC']
         ]
@@ -314,13 +314,13 @@ router.get('/', authorizeUser('company', 'admin'), async function (req, res, nex
 
     let post = await db.InternshipPost.findByPk(req.query.id, {
         include: {
-            model: db.Uddannelse,
+            model: db.Education,
             through: db.InternshipPost_Education
         }
     });
 
     let postEducations = []
-    for (const uddannelse of post.Uddannelses) {
+    for (const uddannelse of post.Education) {
         postEducations.push(uddannelse.id);
     }
 

@@ -15,7 +15,7 @@
                     <div class="card-body newLineContent">
                         <h5 class="card-title">{{professor.fornavn}} {{professor.efternavn}}, {{position.name}}</h5>
                         <div class="row ml-0 mb-2">
-                            {{#each Uddannelses}}
+                            {{#each Education}}
                                 {{#ifCond @index '<' 5}}
                                     {{#if @last}}
                                         <h6 class="mb-0" data-key="{{name}}">{{name}}</h6>

@@ -270,7 +270,7 @@ async function getPosts(req, res, id, page) {
                 }
             },
             {
-                model: models.Uddannelse,
+                model: models.Education,
                 attributes: ['name'],
                 through: models.InternshipPost_Education,
             },

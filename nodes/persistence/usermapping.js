@@ -19,7 +19,7 @@ async function findUserByEmail(email) {
                 model: models.CV,
                 as: 'cv',
                 include: {
-                    model: models.Uddannelse,
+                    model: models.Education,
                     as: 'education',
                 }
             }

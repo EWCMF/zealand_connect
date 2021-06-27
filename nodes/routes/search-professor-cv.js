@@ -245,7 +245,7 @@ async function fetchData(page, parameters, res) {
                 as: 'professor'
             },
             {
-                model: models.Uddannelse,
+                model: models.Education,
                 attributes: ['name'],
                 through: models.ProfessorCV_Education,
             },
@@ -288,7 +288,7 @@ router.get('/', async function (req, res, next) {
 
     let categories = []
     for (const category of categoryQuery) {
-        const uddannelser = await models.Uddannelse.findAll({
+        const uddannelser = await models.Education.findAll({
             raw: true,
             where: {
                 fk_education_category: category.id
@@ -467,7 +467,7 @@ router.get('/:id', async function (req, res) {
                 as: 'professor'
             },
             {
-                model: models.Uddannelse,
+                model: models.Education,
                 attributes: ['name'],
                 through: models.ProfessorCV_Education
             },
@@ -484,7 +484,7 @@ router.get('/:id', async function (req, res) {
         ],
         order: [
             [{
-                model: models.Uddannelse
+                model: models.Education
             }, 'name', 'ASC']
         ]
     });
@@ -514,7 +514,7 @@ router.get('/:id', async function (req, res) {
     res.render('professor-cv-view', {
         language: reqLang(req, res),
         json: cv,
-        educations: cv.Uddannelses,
+        educations: cv.Education,
         ejer: ejer
     });
 
@@ -547,7 +547,7 @@ router.get('/:id/create_pdf', function (req, res, next) {
             as: 'professor'
         },
             {
-                model: models.Uddannelse,
+                model: models.Education,
                 attributes: ['name'],
                 through: models.ProfessorCV_Education
             },
@@ -710,10 +710,10 @@ router.get('/:id/create_pdf', function (req, res, next) {
             .moveUp()
 
         let eduText = "";
-        for (let i = 0; i < cv.Uddannelses.length; i++) {
-            let education = cv.Uddannelses[i].name
+        for (let i = 0; i < cv.Education.length; i++) {
+            let education = cv.Education[i].name
             eduText += education;
-            if (i < cv.Uddannelses.length - 1) {
+            if (i < cv.Education.length - 1) {
                 eduText += ", "
             }
         }

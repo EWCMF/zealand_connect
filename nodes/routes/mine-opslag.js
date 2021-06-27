@@ -37,7 +37,7 @@ async function fetchData(page, req, res) {
         order: [
             ['updatedAt', 'DESC'],
             [{
-                model: db.Uddannelse
+                model: db.Education
             }, 'name', 'ASC']
         ],
         include: [{
@@ -45,7 +45,7 @@ async function fetchData(page, req, res) {
                 as: 'virksomhed'
             },
             {
-                model: db.Uddannelse,
+                model: db.Education,
                 attributes: ['name'],
                 through: db.InternshipPost_Education,
             },
