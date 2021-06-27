@@ -11,7 +11,7 @@ We use the node framework **Express** to handle the backend. All routes can be f
 
 # Views
 We use the framework **Handlebars** to handle the frontend views. It's a minimalistic templating language that lets you 
-inject variables into HTML code. For more information see the Handlebars documentation.
+inject variables into HTML code. For more information see the [Handlebars documentation](https://handlebarsjs.com/).
 All views can be found in the folder **/nodes/views**.
 
 # Models
