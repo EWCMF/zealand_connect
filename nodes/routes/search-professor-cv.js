@@ -495,6 +495,12 @@ router.get('/:id', async function (req, res) {
         }
     }
 
+    if (cv.website) {
+        if (cv.website.includes("://")) {
+            cv.website = cv.website.substring(cv.website.indexOf("://") + 3);
+        }
+    }
+
     let ejer = false;
     if (req.user != null) {
         let found = res.locals.user;

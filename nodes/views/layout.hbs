@@ -72,12 +72,12 @@
                     </li>
                     {{#if isStudent}}
                         <li class="nav-item">
-                            <a class="nav-link hand-hover" href="/data-consent"
+                            <a class="nav-link hand-hover" href="/data-consent/student"
                                data-key="Samtykke">Samtykkeerklæring</a>
                         </li>
                     {{else if isProfessor}}
                         <li class="nav-item">
-                            <a class="nav-link hand-hover" href="/data-consent"
+                            <a class="nav-link hand-hover" href="/data-consent/professor"
                                data-key="Samtykke">Samtykkeerklæring</a>
                         </li>
                     {{else if isCompany}}
@@ -100,8 +100,9 @@
 
 
 {{> cookie-consent-modal}}
-{{> stud-data-consent-modal}}
-{{> virk-data-consent-modal}}
+{{> data-consent-modal-student}}
+{{> data-consent-modal-company}}
+{{> data-consent-modal-professor}}
 <!-- JQuery and Bootstrap linked here -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
@@ -137,6 +138,8 @@
             openDataConsent()
         } else if ("{{isCompany}}") {
             openCompanyConsent()
+        } else if ("{{isProfessor}}") {
+            openProfessorConsent()
         }
     }
 
@@ -148,6 +151,17 @@
             });
 
             $("#companyConsentModal").modal('show');
+        });
+    }
+
+    function openProfessorConsent() {
+        $(document).ready(function () {
+            $('#professorConsentModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+
+            $("#professorConsentModal").modal('show');
         });
     }
 
